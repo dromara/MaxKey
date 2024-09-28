@@ -99,7 +99,7 @@ public class JdbcOrganizationService extends AbstractSynchronizerService impleme
                 try {
                     setFieldValue(org,field,value);
                 } catch (Exception e) {
-                    _logger.error("setProperty {}", e);
+                    _logger.error("setProperty Exception", e);
                 }
             }
         }
@@ -143,7 +143,7 @@ public class JdbcOrganizationService extends AbstractSynchronizerService impleme
                     try {
                         PropertyUtils.setSimpleProperty(org, mapper.getField(), value);
                     } catch (Exception e) {
-                        _logger.error("setSimpleProperty {}", e);
+                        _logger.error("setSimpleProperty Exception", e);
                     }
                 }
             }

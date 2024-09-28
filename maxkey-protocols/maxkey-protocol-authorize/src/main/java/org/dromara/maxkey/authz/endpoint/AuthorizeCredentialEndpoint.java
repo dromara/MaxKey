@@ -28,13 +28,7 @@ import org.dromara.maxkey.entity.Accounts;
 import org.dromara.maxkey.entity.Message;
 import org.dromara.maxkey.entity.apps.Apps;
 import org.dromara.maxkey.entity.idm.UserInfo;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author Crystal.Sea
@@ -44,7 +38,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(value = { "/authz/credential" })
 public class AuthorizeCredentialEndpoint extends AuthorizeBaseEndpoint{
 
-	@RequestMapping("/get/{appId}")
+	@GetMapping("/get/{appId}")
 	public Message<Accounts>  get(
 			@PathVariable("appId") String appId,
 			@CurrentUser UserInfo currentUser){
@@ -64,30 +58,30 @@ public class AuthorizeCredentialEndpoint extends AuthorizeBaseEndpoint{
 			account.setCreateType("manual");
 			account.setStatus(ConstsStatus.ACTIVE);
 		}
-		return new Message<Accounts>(account);
+		return new Message<>(account);
 	}
 	
-	@RequestMapping("/update")
+	@PutMapping("/update")
 	public Message<Accounts>  update(
 			@RequestBody  Accounts account,
 			@CurrentUser UserInfo currentUser){
-		if(StringUtils.isNotEmpty(account.getRelatedPassword())
+		if(StringUtils.isNotEmpty(account.getRelatedUsername())
 				&&StringUtils.isNotEmpty(account.getRelatedPassword())){
 			account.setInstId(currentUser.getInstId());
 			account.setRelatedPassword(
 					PasswordReciprocal.getInstance().encode(account.getRelatedPassword()));
 			if(accountsService.get(account.getId()) == null) {
 				if(accountsService.insert(account)){
-					return new Message<Accounts>();
+					return new Message<>();
 				}
 			}else {
 				if(accountsService.update(account)){
-					return new Message<Accounts>();
+					return new Message<>();
 				}
 			}
 		}
 		
-		return new Message<Accounts>(Message.FAIL);
+		return new Message<>(Message.FAIL);
 	}
 			
 }

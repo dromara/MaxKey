@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.constants.ConstsRoles;
 import org.dromara.maxkey.constants.ConstsStatus;
@@ -88,7 +88,7 @@ public class LoginRepository {
         	 listUserInfo = findByUsernameOrMobileOrEmail(username,password);
         }
         _logger.debug("load UserInfo : {}" , listUserInfo);
-        return (ObjectUtils.isNotEmpty(listUserInfo))? listUserInfo.get(0) : null;
+        return (CollectionUtils.isNotEmpty(listUserInfo) ? listUserInfo.get(0) : null);
     }
 
     public List<UserInfo> findByUsername(String username, String password) {

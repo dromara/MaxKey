@@ -39,11 +39,11 @@ import org.dromara.maxkey.web.HttpResponseConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
@@ -54,9 +54,8 @@ import jakarta.servlet.http.HttpServletResponse;
  * https://apereo.github.io/cas/6.2.x/protocol/CAS-Protocol-V2-Specification.html
  */
 @Tag(name = "2-3-CAS API文档模块")
-@Controller
+@RestController
 public class Cas20AuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
-
 	static final  Logger _logger = LoggerFactory.getLogger(Cas20AuthorizeEndpoint.class);
 	
 	/**
@@ -176,7 +175,6 @@ For all error codes, it is RECOMMENDED that CAS provide a more detailed message 
 	 */
 	@Operation(summary = "CAS 2.0 ticket验证接口", description = "通过ticket获取当前登录用户信息",method="POST")
 	@RequestMapping(value=CasConstants.ENDPOINT.ENDPOINT_SERVICE_VALIDATE,produces =MediaType.APPLICATION_XML_VALUE,method={RequestMethod.GET,RequestMethod.POST})
-	@ResponseBody
 	public String serviceValidate(
 			HttpServletRequest request,
 			HttpServletResponse response,
@@ -185,13 +183,7 @@ For all error codes, it is RECOMMENDED that CAS provide a more detailed message 
 			@RequestParam(value = CasConstants.PARAMETER.PROXY_CALLBACK_URL,required=false) String pgtUrl,
 			@RequestParam(value = CasConstants.PARAMETER.RENEW,required=false) String renew,
 			@RequestParam(value = CasConstants.PARAMETER.FORMAT,required=false,defaultValue=HttpResponseConstants.FORMAT_TYPE.XML) String format){
-	    _logger.debug("serviceValidate " 
-                + " ticket " + ticket 
-                +" , service " + service 
-                +" , pgtUrl " + pgtUrl
-                +" , renew " + renew
-                +" , format " + format
-        );
+	    _logger.debug("serviceValidate  ticket {} , service {} , pgtUrl {} , renew {} , format {}" , ticket,service,pgtUrl,renew,format);
 	    
 		Ticket storedTicket=null;
 		if(ticket.startsWith(CasConstants.PREFIX.SERVICE_TICKET_PREFIX)) {
@@ -303,8 +295,8 @@ Response on ticket validation failure:
 	 */
 	
 	@Operation(summary = "CAS 2.0 ticket代理验证接口", description = "通过ticket获取当前登录用户信息",method="POST")
-	@RequestMapping(value=CasConstants.ENDPOINT.ENDPOINT_PROXY_VALIDATE,produces =MediaType.APPLICATION_XML_VALUE)
-	@ResponseBody
+	@RequestMapping(value=CasConstants.ENDPOINT.ENDPOINT_PROXY_VALIDATE,produces =MediaType.APPLICATION_XML_VALUE,method={RequestMethod.GET,RequestMethod.POST})
+	
 	public String proxy(
 			HttpServletRequest request,
 			HttpServletResponse response,
@@ -313,13 +305,7 @@ Response on ticket validation failure:
 			@RequestParam(value = CasConstants.PARAMETER.PROXY_CALLBACK_URL,required=false) String pgtUrl,
 			@RequestParam(value = CasConstants.PARAMETER.RENEW,required=false) String renew,
 			@RequestParam(value = CasConstants.PARAMETER.FORMAT,required=false,defaultValue=HttpResponseConstants.FORMAT_TYPE.XML) String format){
-	    _logger.debug("proxyValidate " 
-                + " ticket " + ticket 
-                +" , service " + service 
-                +" , pgtUrl " + pgtUrl
-                +" , renew " + renew
-                +" , format " + format
-        );
+	    _logger.debug("proxyValidate ticket {} , service {} , pgtUrl {} , renew {} , format {}" ,ticket,service, pgtUrl,renew,format);
 		
 		Ticket storedTicket=null;
 		if(ticket.startsWith(CasConstants.PREFIX.PROXY_TICKET_PREFIX)) {
@@ -408,25 +394,21 @@ INTERNAL_ERROR - an internal error occurred during ticket validation
 
 For all error codes, it is RECOMMENDED that CAS provide a more detailed message as the body of the <cas:authenticationFailure> block of the XML response.
 	 */
-	@RequestMapping(value=CasConstants.ENDPOINT.ENDPOINT_PROXY ,produces =MediaType.APPLICATION_XML_VALUE)
-	@ResponseBody
+	@RequestMapping(value=CasConstants.ENDPOINT.ENDPOINT_PROXY ,produces =MediaType.APPLICATION_XML_VALUE,method={RequestMethod.GET,RequestMethod.POST})
+	
 	public String proxy(
 			HttpServletRequest request,
 			HttpServletResponse response,
 			@RequestParam(value = CasConstants.PARAMETER.PROXY_GRANTING_TICKET) String pgt,
 			@RequestParam(value = CasConstants.PARAMETER.TARGET_SERVICE) String targetService,
 			@RequestParam(value = CasConstants.PARAMETER.FORMAT,required=false,defaultValue=HttpResponseConstants.FORMAT_TYPE.XML) String format){
-	    _logger.debug("proxy " 
-                + " pgt " + pgt 
-                +" , targetService " + targetService 
-                +" , format " + format
-        );
+	    _logger.debug("proxy  pgt {} , targetService {} , format {}" ,pgt,targetService, format);
 	    ProxyServiceResponseBuilder proxyServiceResponseBuilder=new ProxyServiceResponseBuilder(format);
 	    
 	    ProxyGrantingTicketImpl proxyGrantingTicketImpl = (ProxyGrantingTicketImpl)casProxyGrantingTicketServices.get(pgt);
 	    if(proxyGrantingTicketImpl != null) {
-	    	ProxyTicketImpl ProxyTicketImpl = new ProxyTicketImpl(proxyGrantingTicketImpl.getAuthentication(),proxyGrantingTicketImpl.getCasDetails());
-	    	String proxyTicket =ticketServices.createTicket(ProxyTicketImpl);
+	    	ProxyTicketImpl proxyTicketImpl = new ProxyTicketImpl(proxyGrantingTicketImpl.getAuthentication(),proxyGrantingTicketImpl.getCasDetails());
+	    	String proxyTicket =ticketServices.createTicket(proxyTicketImpl);
 	 		proxyServiceResponseBuilder.success().setTicket(proxyTicket).setFormat(format);
 	    }else {
 	    	proxyServiceResponseBuilder.success().setTicket("").setFormat(format);

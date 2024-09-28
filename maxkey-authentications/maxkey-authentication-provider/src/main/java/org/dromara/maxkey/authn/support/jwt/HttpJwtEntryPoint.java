@@ -22,22 +22,22 @@ import org.dromara.maxkey.authn.jwt.AuthTokenService;
 import org.dromara.maxkey.authn.provider.AbstractAuthenticationProvider;
 import org.dromara.maxkey.configuration.ApplicationConfig;
 import org.dromara.maxkey.constants.ConstsLoginType;
-import org.dromara.maxkey.entity.Institutions;
 import org.dromara.maxkey.entity.Message;
 import org.dromara.maxkey.web.WebConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.nimbusds.jwt.SignedJWT;
 
 
-@Controller
+@RestController
 @RequestMapping(value = "/login")
 public class HttpJwtEntryPoint {
 	private static final Logger _logger = LoggerFactory.getLogger(HttpJwtEntryPoint.class);
@@ -54,11 +54,11 @@ public class HttpJwtEntryPoint {
     @Autowired
 	JwtLoginService jwtLoginService;
 	
-	@RequestMapping(value={"/jwt"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	@RequestMapping(value={"/jwt"}, produces = {MediaType.APPLICATION_JSON_VALUE},method={RequestMethod.GET,RequestMethod.POST})
 	public Message<AuthJwt> jwt(@RequestParam(value = WebConstants.JWT_TOKEN_PARAMETER, required = true) String jwt) {
 		try {
 			//for jwt Login
-			 _logger.debug("jwt : " + jwt);
+			 _logger.debug("jwt : {}" , jwt);
 	
 			 SignedJWT signedJWT = jwtLoginService.jwtTokenValidation(jwt);
 			 
@@ -66,15 +66,15 @@ public class HttpJwtEntryPoint {
 				 String username =signedJWT.getJWTClaimsSet().getSubject();
 				 LoginCredential loginCredential =new LoginCredential(username,"",ConstsLoginType.JWT);
 				 Authentication  authentication = authenticationProvider.authenticate(loginCredential,true);
-				 _logger.debug("JWT Logined in , username " + username);
+				 _logger.debug("JWT Logined in , username {}" , username);
 				 AuthJwt authJwt = authTokenService.genAuthJwt(authentication);
-		 		 return new Message<AuthJwt>(authJwt);
+		 		 return new Message<>(authJwt);
 			 }
 		}catch(Exception e) {
 			_logger.error("Exception ",e);
 		}
 		
-		 return new Message<AuthJwt>(Message.FAIL);
+		 return new Message<>(Message.FAIL);
 	}
 	
 	/**
@@ -82,25 +82,25 @@ public class HttpJwtEntryPoint {
 	 * @param jwt
 	 * @return
 	 */
-	@RequestMapping(value={"/jwt/trust"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	@RequestMapping(value={"/jwt/trust"}, produces = {MediaType.APPLICATION_JSON_VALUE},method={RequestMethod.GET,RequestMethod.POST})
 	public Message<AuthJwt> jwtTrust(@RequestParam(value = WebConstants.JWT_TOKEN_PARAMETER, required = true) String jwt) {
 		try {
 			//for jwt Login
-			 _logger.debug("jwt : " + jwt);
+			 _logger.debug("jwt : {}" , jwt);
 
 			 if(authTokenService.validateJwtToken(jwt)) {
 				 String username =authTokenService.resolve(jwt).getSubject();
 				 LoginCredential loginCredential =new LoginCredential(username,"",ConstsLoginType.JWT);
 				 Authentication  authentication = authenticationProvider.authenticate(loginCredential,true);
-				 _logger.debug("JWT Logined in , username " + username);
+				 _logger.debug("JWT Logined in , username {}" , username);
 				 AuthJwt authJwt = authTokenService.genAuthJwt(authentication);
-		 		 return new Message<AuthJwt>(authJwt);
+		 		 return new Message<>(authJwt);
 			 }
 		}catch(Exception e) {
 			_logger.error("Exception ",e);
 		}
 		
-		 return new Message<AuthJwt>(Message.FAIL);
+		 return new Message<>(Message.FAIL);
 	}
 
 

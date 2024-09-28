@@ -26,8 +26,8 @@ import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.web.WebConstants;
 import org.dromara.maxkey.web.WebContext;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -39,27 +39,27 @@ import jakarta.servlet.http.HttpServletRequest;
 @Controller
 public class AuthorizeProtectedEndpoint{
 
-	@RequestMapping("/authz/protected/forward")
+	@GetMapping("/authz/protected/forward")
 	public ModelAndView forwardProtectedForward(
 			HttpServletRequest request ){
-		String redirect_uri=request.getAttribute("redirect_uri").toString();
+		String redirectUri=request.getAttribute("redirect_uri").toString();
 		ModelAndView modelAndView=new ModelAndView("authorize/protected/forward");
-		modelAndView.addObject("redirect_uri", redirect_uri);
+		modelAndView.addObject("redirect_uri", redirectUri);
 		return modelAndView;
 	}
 	
-	@RequestMapping("/authz/protected")
+	@GetMapping("/authz/protected")
 	public ModelAndView authorizeProtected(
 			@RequestParam("password") String password,
-			@RequestParam("redirect_uri") String redirect_uri,
+			@RequestParam("redirect_uri") String redirectUri,
 			@CurrentUser UserInfo currentUser){
 		if( currentUser.getAppLoginPassword().equals(PasswordReciprocal.getInstance().encode(password))){
-			WebContext.setAttribute(WebConstants.CURRENT_SINGLESIGNON_URI, redirect_uri);
-			return WebContext.redirect(redirect_uri);
+			WebContext.setAttribute(WebConstants.CURRENT_SINGLESIGNON_URI, redirectUri);
+			return WebContext.redirect(redirectUri);
 		}
 		
 		ModelAndView modelAndView=new ModelAndView("authorize/protected/forward");
-		modelAndView.addObject("redirect_uri", redirect_uri);
+		modelAndView.addObject("redirect_uri", redirectUri);
 		return modelAndView;
 	}
 			

@@ -19,6 +19,7 @@ package org.dromara.maxkey.web.config.contorller;
 
 import java.util.List;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.entity.Message;
 import org.dromara.maxkey.entity.apps.AppsAdapters;
@@ -29,13 +30,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -46,62 +41,57 @@ public class AdaptersController {
 	@Autowired
 	AppsAdaptersService appsAdaptersService;	
 	
-	@RequestMapping(value = { "/fetch" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-	@ResponseBody
-	public Message<?> fetch(@ModelAttribute AppsAdapters appsAdapter) {
+	@GetMapping(value = { "/fetch" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public Message<JpaPageResults<AppsAdapters>> fetch(@ModelAttribute AppsAdapters appsAdapter) {
 		logger.debug("fetch {}",appsAdapter);
-		return new Message<JpaPageResults<AppsAdapters>>(
+		return new Message<>(
 				appsAdaptersService.fetchPageResults(appsAdapter));
 	}
 
-	@ResponseBody
-	@RequestMapping(value={"/query"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<?> query(@ModelAttribute AppsAdapters appsAdapter,@CurrentUser UserInfo currentUser) {
+	@GetMapping(value={"/query"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public Message<AppsAdapters> query(@ModelAttribute AppsAdapters appsAdapter,@CurrentUser UserInfo currentUser) {
 		logger.debug("-query  : {}" , appsAdapter);
-		if (appsAdaptersService.query(appsAdapter)!=null) {
-			 return new Message<AppsAdapters>(Message.SUCCESS);
+		if (CollectionUtils.isNotEmpty(appsAdaptersService.query(appsAdapter))) {
+			 return new Message<>(Message.SUCCESS);
 		} else {
-			 return new Message<AppsAdapters>(Message.SUCCESS);
+			 return new Message<>(Message.FAIL);
 		}
 	}
 	
-	@RequestMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<?> get(@PathVariable("id") String id) {
+	@GetMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public Message<AppsAdapters> get(@PathVariable("id") String id) {
 		AppsAdapters appsAdapter=appsAdaptersService.get(id);
-		return new Message<AppsAdapters>(appsAdapter);
+		return new Message<>(appsAdapter);
 	}
 	
-	@ResponseBody
-	@RequestMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<?> insert(@RequestBody  AppsAdapters appsAdapter,@CurrentUser UserInfo currentUser) {
+	@PostMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public Message<AppsAdapters> insert(@RequestBody  AppsAdapters appsAdapter,@CurrentUser UserInfo currentUser) {
 		logger.debug("-Add  : {}" , appsAdapter);
 		
 		if (appsAdaptersService.insert(appsAdapter)) {
-			return new Message<AppsAdapters>(Message.SUCCESS);
+			return new Message<>(Message.SUCCESS);
 		} else {
-			return new Message<AppsAdapters>(Message.FAIL);
+			return new Message<>(Message.FAIL);
 		}
 	}
 	
-	@ResponseBody
-	@RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<?> update(@RequestBody  AppsAdapters appsAdapter,@CurrentUser UserInfo currentUser) {
+	@PutMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public Message<AppsAdapters> update(@RequestBody  AppsAdapters appsAdapter,@CurrentUser UserInfo currentUser) {
 		logger.debug("-update  : {}" , appsAdapter);
 		if (appsAdaptersService.update(appsAdapter)) {
-		    return new Message<AppsAdapters>(Message.SUCCESS);
+		    return new Message<>(Message.SUCCESS);
 		} else {
-			return new Message<AppsAdapters>(Message.FAIL);
+			return new Message<>(Message.FAIL);
 		}
 	}
 	
-	@ResponseBody
-	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<?> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
+	@DeleteMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public Message<AppsAdapters> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
 		logger.debug("-delete  ids : {} " , ids);
 		if (appsAdaptersService.deleteBatch(ids)) {
-			 return new Message<AppsAdapters>(Message.SUCCESS);
+			 return new Message<>(Message.SUCCESS);
 		} else {
-			return new Message<AppsAdapters>(Message.FAIL);
+			return new Message<>(Message.FAIL);
 		}
 	}
 }

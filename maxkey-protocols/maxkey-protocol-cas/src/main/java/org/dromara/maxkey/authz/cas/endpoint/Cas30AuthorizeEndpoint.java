@@ -67,13 +67,7 @@ public class Cas30AuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 			@RequestParam(value = CasConstants.PARAMETER.PROXY_CALLBACK_URL,required=false) String pgtUrl,
 			@RequestParam(value = CasConstants.PARAMETER.RENEW,required=false) String renew,
 			@RequestParam(value = CasConstants.PARAMETER.FORMAT,required=false,defaultValue=HttpResponseConstants.FORMAT_TYPE.XML) String format){
-	    _logger.debug("serviceValidate " 
-	                    + " ticket " + ticket 
-	                    +" , service " + service 
-	                    +" , pgtUrl " + pgtUrl
-	                    +" , renew " + renew
-	                    +" , format " + format
-	            );
+	    _logger.debug("serviceValidate  ticket {} , service {} , pgtUrl {} , renew {} , format {}", ticket,service,pgtUrl,renew,format);
 	    
 		Ticket storedTicket=null;
 		if(ticket.startsWith(CasConstants.PREFIX.SERVICE_TICKET_PREFIX)) {
@@ -123,23 +117,19 @@ public class Cas30AuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 	}
 	
 	@Operation(summary = "CAS 3.0 ProxyTicket代理验证接口", description = "通过ProxyGrantingTicket获取ProxyTicket",method="POST")
-	@RequestMapping(CasConstants.ENDPOINT.ENDPOINT_PROXY_V3)
+	@RequestMapping(value=CasConstants.ENDPOINT.ENDPOINT_PROXY_V3,method={RequestMethod.GET,RequestMethod.POST})
 	public void proxy(
 			HttpServletRequest request,
 			HttpServletResponse response,
 			@RequestParam(value = CasConstants.PARAMETER.PROXY_GRANTING_TICKET) String pgt,
 			@RequestParam(value = CasConstants.PARAMETER.TARGET_SERVICE) String targetService,
 			@RequestParam(value = CasConstants.PARAMETER.FORMAT,required=false,defaultValue=HttpResponseConstants.FORMAT_TYPE.XML) String format){
-	    _logger.debug("proxy " 
-                + " pgt " + pgt 
-                +" , targetService " + targetService 
-                +" , format " + format
-        );
+	    _logger.debug("proxy pgt {} , targetService {} , format {}" , pgt,targetService,format);
 	    ProxyServiceResponseBuilder proxyServiceResponseBuilder=new ProxyServiceResponseBuilder(format);
 	    ProxyGrantingTicketImpl proxyGrantingTicketImpl = (ProxyGrantingTicketImpl)casProxyGrantingTicketServices.get(pgt);
 	    if(proxyGrantingTicketImpl != null) {
-	    	ProxyTicketImpl ProxyTicketImpl = new ProxyTicketImpl(proxyGrantingTicketImpl.getAuthentication(),proxyGrantingTicketImpl.getCasDetails());
-	    	String proxyTicket =ticketServices.createTicket(ProxyTicketImpl);
+	    	ProxyTicketImpl proxyTicketImpl = new ProxyTicketImpl(proxyGrantingTicketImpl.getAuthentication(),proxyGrantingTicketImpl.getCasDetails());
+	    	String proxyTicket =ticketServices.createTicket(proxyTicketImpl);
 	 		proxyServiceResponseBuilder.success().setTicket(proxyTicket).setFormat(format);
 	    }else {
 	    	proxyServiceResponseBuilder.success().setTicket("").setFormat(format);
@@ -149,7 +139,7 @@ public class Cas30AuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 	}
 	
 	@Operation(summary = "CAS 3.0 ticket代理验证接口", description = "通过ProxyTicket获取当前登录用户信息",method="POST")
-	@RequestMapping(CasConstants.ENDPOINT.ENDPOINT_PROXY_VALIDATE_V3)
+	@RequestMapping(value=CasConstants.ENDPOINT.ENDPOINT_PROXY_VALIDATE_V3,method={RequestMethod.GET,RequestMethod.POST})
 	public void proxy(
 			HttpServletRequest request,
 			HttpServletResponse response,
@@ -158,13 +148,7 @@ public class Cas30AuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 			@RequestParam(value = CasConstants.PARAMETER.PROXY_CALLBACK_URL,required=false) String pgtUrl,
 			@RequestParam(value = CasConstants.PARAMETER.RENEW,required=false) String renew,
 			@RequestParam(value = CasConstants.PARAMETER.FORMAT,required=false,defaultValue=HttpResponseConstants.FORMAT_TYPE.XML) String format){
-	    _logger.debug("proxyValidate " 
-                + " ticket " + ticket 
-                +" , service " + service 
-                +" , pgtUrl " + pgtUrl
-                +" , renew " + renew
-                +" , format " + format
-        );
+	    _logger.debug("proxyValidate ticket {} , service {} , pgtUrl {} , renew {} , format {}" , ticket,service,pgtUrl,renew,format);
 		
 		Ticket storedTicket=null;
 		if(ticket.startsWith(CasConstants.PREFIX.PROXY_TICKET_PREFIX)) {

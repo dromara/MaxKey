@@ -17,6 +17,8 @@
 
 package org.dromara.maxkey.autoconfigure;
 
+import java.time.Duration;
+
 import org.dromara.maxkey.persistence.redis.RedisConnectionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,7 +72,7 @@ public class RedisAutoConfiguration {
         poolConfig.setMaxIdle(maxIdle);
         poolConfig.setMinIdle(minIdle);
         poolConfig.setMaxTotal(maxActive);
-        poolConfig.setMaxWaitMillis(maxWait);
+        poolConfig.setMaxWait(Duration.ofMillis(maxWait));
         
         factory.setPoolConfig(poolConfig);
         

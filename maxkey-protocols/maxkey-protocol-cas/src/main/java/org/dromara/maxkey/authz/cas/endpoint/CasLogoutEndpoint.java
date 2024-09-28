@@ -27,7 +27,7 @@ import org.dromara.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -54,7 +54,7 @@ public class CasLogoutEndpoint  extends CasBaseAuthorizeEndpoint{
 	 * @return
 	 */
 	@Operation(summary = "CAS注销接口", description = "CAS注销接口",method="GET")
-	@RequestMapping(CasConstants.ENDPOINT.ENDPOINT_LOGOUT)
+	@GetMapping(CasConstants.ENDPOINT.ENDPOINT_LOGOUT)
 	public ModelAndView logout(HttpServletRequest request , HttpServletResponse response,
 			@RequestParam(value = CasConstants.PARAMETER.SERVICE , required = false) String casService){
 		StringBuffer logoutUrl = new StringBuffer("/force/logout");

@@ -20,6 +20,7 @@ package org.dromara.maxkey.web.apps.contorller;
 
 import java.util.List;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.constants.ConstsProtocols;
 import org.dromara.maxkey.crypto.ReciprocalUtils;
@@ -30,14 +31,7 @@ import org.dromara.mybatis.jpa.entity.JpaPageResults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWEAlgorithm;
 import com.nimbusds.jose.JWSAlgorithm;
@@ -54,19 +48,18 @@ import com.nimbusds.jose.jwk.gen.RSAKeyGenerator;
 public class ApplicationsController extends BaseAppContorller {
 	static final Logger logger = LoggerFactory.getLogger(ApplicationsController.class);
 	
-	@RequestMapping(value = { "/init" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<?> init() {
+	@GetMapping(value = { "/init" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public Message<Apps> init() {
 		Apps app=new Apps();
 		app.setId(app.generateId());
 		app.setProtocol(ConstsProtocols.BASIC);
 		app.setSecret(ReciprocalUtils.generateKey(""));
-		return new Message<Apps>(app);
+		return new Message<>(app);
 	}
 	
 	
-	@RequestMapping(value = { "/fetch" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-	@ResponseBody
-	public Message<?> fetch(@ModelAttribute Apps apps,@CurrentUser UserInfo currentUser) {
+	@GetMapping(value = { "/fetch" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public Message<JpaPageResults<Apps>> fetch(@ModelAttribute Apps apps,@CurrentUser UserInfo currentUser) {
 		apps.setInstId(currentUser.getInstId());
 		JpaPageResults<Apps> appsList =appsService.fetchPageResults(apps);
 		for (Apps app : appsList.getRows()){
@@ -75,80 +68,73 @@ public class ApplicationsController extends BaseAppContorller {
 			app.setSharedPassword(null);
 		}
 		logger.debug("List {}" , appsList);
-		return new Message<JpaPageResults<Apps>>(appsList);
+		return new Message<>(appsList);
 	}
 
-	@ResponseBody
-	@RequestMapping(value={"/query"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<?> query(@ModelAttribute Apps apps,@CurrentUser UserInfo currentUser) {
+	@GetMapping(value={"/query"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public Message<Apps> query(@ModelAttribute Apps apps,@CurrentUser UserInfo currentUser) {
 		logger.debug("-query  : {}" , apps);
-		if (appsService.query(apps)!=null) {
-			 return new Message<Apps>(Message.SUCCESS);
+		if (CollectionUtils.isNotEmpty(appsService.query(apps))) {
+			 return new Message<>(Message.SUCCESS);
 		} else {
-			 return new Message<Apps>(Message.SUCCESS);
+			 return new Message<>(Message.FAIL);
 		}
 	}
 	
-	@RequestMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<?> get(@PathVariable("id") String id) {
+	@GetMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public Message<Apps> get(@PathVariable("id") String id) {
 		Apps apps = appsService.get(id);
 		decoderSecret(apps);
 		apps.transIconBase64();
-		return new Message<Apps>(apps);
+		return new Message<>(apps);
 	}
 	
-	@ResponseBody
-	@RequestMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<?> insert(@RequestBody Apps apps,@CurrentUser UserInfo currentUser) {
+	@PostMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public Message<Apps> insert(@RequestBody Apps apps,@CurrentUser UserInfo currentUser) {
 		logger.debug("-Add  : {}" , apps);
 		transform(apps);
 		apps.setInstId(currentUser.getInstId());
 		if (appsService.insert(apps)) {
-			return new Message<Apps>(Message.SUCCESS);
+			return new Message<>(Message.SUCCESS);
 		} else {
-			return new Message<Apps>(Message.FAIL);
+			return new Message<>(Message.FAIL);
 		}
 	}
 	
-	@ResponseBody
-	@RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<?> update(@RequestBody  Apps apps,@CurrentUser UserInfo currentUser) {
+	@PutMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public Message<Apps> update(@RequestBody  Apps apps,@CurrentUser UserInfo currentUser) {
 		logger.debug("-update  : {}" , apps);
 		transform(apps);
 		apps.setInstId(currentUser.getInstId());
 		if (appsService.update(apps)) {
-		    return new Message<Apps>(Message.SUCCESS);
+		    return new Message<>(Message.SUCCESS);
 		} else {
-			return new Message<Apps>(Message.FAIL);
+			return new Message<>(Message.FAIL);
 		}
 	}
 	
-	@ResponseBody
-	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<?> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
+	@DeleteMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public Message<Apps> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
 		logger.debug("-delete  ids : {} " , ids);
 		if (appsService.deleteBatch(ids)) {
-			 return new Message<Apps>(Message.SUCCESS);
+			 return new Message<>(Message.SUCCESS);
 		} else {
-			return new Message<Apps>(Message.FAIL);
+			return new Message<>(Message.FAIL);
 		}
 	}
 	
-	@ResponseBody
-	@RequestMapping(value = { "/updateExtendAttr" })
-	public Message<?> updateExtendAttr(@RequestBody Apps app) {
+	@PostMapping({ "/updateExtendAttr" })
+	public Message<Apps> updateExtendAttr(@RequestBody Apps app) {
 		logger.debug("-updateExtendAttr  id : {} , ExtendAttr : {}" , app.getId(),app.getExtendAttr());
 		if (appsService.updateExtendAttr(app)) {
-			return new Message<Apps>(Message.SUCCESS);
+			return new Message<>(Message.SUCCESS);
 		} else {
-			return new Message<Apps>(Message.FAIL);
+			return new Message<>(Message.FAIL);
 		}
 	}
 	
-	
-	@ResponseBody
-	@RequestMapping(value = { "/generate/secret/{type}" })
-	public Message<?> generateSecret(@PathVariable("type") String type,@RequestParam(name="id",required=false) String id) throws JOSEException {
+	@GetMapping({ "/generate/secret/{type}" })
+	public Message<String> generateSecret(@PathVariable("type") String type,@RequestParam(name="id",required=false) String id) throws JOSEException {
 		String secret="";
 		type=type.toLowerCase();
 		if(type.equals("des")){
@@ -203,7 +189,7 @@ public class ApplicationsController extends BaseAppContorller {
 			secret=ReciprocalUtils.generateKey("");
 		}
 		
-		return new Message<Object>(Message.SUCCESS,(Object)secret);
+		return new Message<>(Message.SUCCESS,secret);
 	}
 	
 	

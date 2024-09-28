@@ -41,9 +41,10 @@ import org.dromara.maxkey.authz.oauth2.provider.token.AccessTokenConverter;
 import org.dromara.maxkey.authz.oauth2.provider.token.DefaultAccessTokenConverter;
 import org.dromara.maxkey.authz.oauth2.provider.token.ResourceServerTokenServices;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -55,7 +56,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  * @author Joel D'sa
  */
 @Tag(name = "2-1-OAuth v2.0 API文档模块")
-@Controller
+@RestController
 public class CheckTokenEndpoint {
 
 	private ResourceServerTokenServices resourceServerTokenServices;
@@ -79,8 +80,7 @@ public class CheckTokenEndpoint {
 	}
 
 	@Operation(summary = "OAuth 2.0 token检查接口", description = "传递参数token",method="POST")
-	@RequestMapping(value = OAuth2Constants.ENDPOINT.ENDPOINT_CHECK_TOKEN)
-	@ResponseBody
+	@PostMapping(OAuth2Constants.ENDPOINT.ENDPOINT_CHECK_TOKEN)
 	public Map<String, ?> checkToken(@RequestParam(OAuth2Constants.PARAMETER.TOKEN) String value) {
 
 		OAuth2AccessToken token = resourceServerTokenServices.readAccessToken(value);

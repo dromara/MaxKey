@@ -32,11 +32,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -50,9 +52,8 @@ public class AccessController {
 	@Autowired
 	HistorySystemLogsService systemLog;
 	
-	@RequestMapping(value = { "/appsInGroup" })
-	@ResponseBody
-	public Message<?> appsInRole(
+	@GetMapping(value = { "/appsInGroup" })
+	public Message<JpaPageResults<Access>> appsInRole(
 			@ModelAttribute Access groupPermission,
 			@CurrentUser UserInfo currentUser) {
 		JpaPageResults<Access> groupPermissions;
@@ -64,12 +65,11 @@ public class AccessController {
 				app.transIconBase64();
 			}
 		}
-		return new Message<JpaPageResults<Access>>(Message.FAIL,groupPermissions);
+		return new Message<>(Message.FAIL,groupPermissions);
 	}
 	
-	@RequestMapping(value = { "/appsNotInGroup" })
-	@ResponseBody
-	public Message<?> appsNotInRole(
+	@GetMapping(value = { "/appsNotInGroup" })
+	public Message<JpaPageResults<Access>> appsNotInRole(
 				@ModelAttribute Access groupPermission,
 				@CurrentUser UserInfo currentUser) {
 		JpaPageResults<Access> groupPermissions;
@@ -81,16 +81,15 @@ public class AccessController {
 				app.transIconBase64();
 			}
 		}
-		return new Message<JpaPageResults<Access>>(Message.FAIL,groupPermissions);
+		return new Message<>(Message.FAIL,groupPermissions);
 	}
 
-	@RequestMapping(value = {"/add"})
-	@ResponseBody
-	public Message<?> insertPermission(
+	@PostMapping(value = {"/add"})
+	public Message<Access> insertPermission(
 				@RequestBody Access groupPermission,
 				@CurrentUser UserInfo currentUser) {
 		if (groupPermission == null || groupPermission.getGroupId() == null) {
-			return new Message<Access>(Message.FAIL);
+			return new Message<>(Message.FAIL);
 		}
 		String roleId = groupPermission.getGroupId();
 		
@@ -107,20 +106,19 @@ public class AccessController {
 				}
 			}
 			if(result) {
-				return new Message<Access>(Message.SUCCESS);
+				return new Message<>(Message.SUCCESS);
 			}
 		}
-		return new Message<Access>(Message.FAIL);
+		return new Message<>(Message.FAIL);
 	}
 	
-	@ResponseBody
-	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<?> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
+	@DeleteMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public Message<Access> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
 		logger.debug("-delete ids : {}" , ids);
 		if (accessService.deleteBatch(ids)) {
-			 return new Message<Access>(Message.SUCCESS);
+			 return new Message<>(Message.SUCCESS);
 		} else {
-			return new Message<Access>(Message.FAIL);
+			return new Message<>(Message.FAIL);
 		}
 	}
 

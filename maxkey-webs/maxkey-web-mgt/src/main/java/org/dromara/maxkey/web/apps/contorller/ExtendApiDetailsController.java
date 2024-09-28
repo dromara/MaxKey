@@ -30,12 +30,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -43,66 +38,61 @@ import org.springframework.web.bind.annotation.RestController;
 public class ExtendApiDetailsController  extends BaseAppContorller {
 	static final Logger logger = LoggerFactory.getLogger(ExtendApiDetailsController.class);
 
-	@RequestMapping(value = { "/init" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<?> init() {
+	@GetMapping(value = { "/init" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public Message<AppsExtendApiDetails> init() {
 		AppsExtendApiDetails extendApiDetails=new AppsExtendApiDetails();
 		extendApiDetails.setId(extendApiDetails.generateId());
 		extendApiDetails.setProtocol(ConstsProtocols.EXTEND_API);
 		extendApiDetails.setSecret(ReciprocalUtils.generateKey(""));
-		return new Message<AppsExtendApiDetails>(extendApiDetails);
+		return new Message<>(extendApiDetails);
 	}
 	
-	@RequestMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<?> get(@PathVariable("id") String id) {
+	@GetMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public Message<AppsExtendApiDetails> get(@PathVariable("id") String id) {
 		Apps application= appsService.get(id);
 		super.decoderSecret(application);
 		AppsExtendApiDetails extendApiDetails=new AppsExtendApiDetails();
 		BeanUtils.copyProperties(application, extendApiDetails);
 		extendApiDetails.transIconBase64();
-		return new Message<AppsExtendApiDetails>(extendApiDetails);
+		return new Message<>(extendApiDetails);
 	}
 	
-	@ResponseBody
-	@RequestMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<?> add(
+	@PostMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public Message<AppsExtendApiDetails> add(
 			@RequestBody AppsExtendApiDetails extendApiDetails,
 			@CurrentUser UserInfo currentUser) {
-		logger.debug("-Add  :" + extendApiDetails);
+		logger.debug("-Add  : {}" , extendApiDetails);
 		
 		transform(extendApiDetails);
 		extendApiDetails.setInstId(currentUser.getInstId());
 		if (appsService.insertApp(extendApiDetails)) {
-			return new Message<AppsExtendApiDetails>(Message.SUCCESS);
+			return new Message<>(Message.SUCCESS);
 		} else {
-			return new Message<AppsExtendApiDetails>(Message.FAIL);
+			return new Message<>(Message.FAIL);
 		}
 	}
 	
-	@ResponseBody
-	@RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<?> update(
+	@PutMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public Message<AppsExtendApiDetails> update(
 			@RequestBody AppsExtendApiDetails extendApiDetails,
 			@CurrentUser UserInfo currentUser) {
-		logger.debug("-update  :" + extendApiDetails);
+		logger.debug("-update  : {}" , extendApiDetails);
 		transform(extendApiDetails);
 		extendApiDetails.setInstId(currentUser.getInstId());
 		if (appsService.updateApp(extendApiDetails)) {
-		    return new Message<AppsExtendApiDetails>(Message.SUCCESS);
+		    return new Message<>(Message.SUCCESS);
 		} else {
-			return new Message<AppsExtendApiDetails>(Message.FAIL);
+			return new Message<>(Message.FAIL);
 		}
 	}
 	
-	@ResponseBody
-	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<?> delete(
-			@RequestParam("ids") List<String> ids,
-			@CurrentUser UserInfo currentUser) {
+	@DeleteMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public Message<AppsExtendApiDetails> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
 		logger.debug("-delete  ids : {} " , ids);
 		if (appsService.deleteBatch(ids)) {
-			 return new Message<AppsExtendApiDetails>(Message.SUCCESS);
+			 return new Message<>(Message.SUCCESS);
 		} else {
-			return new Message<AppsExtendApiDetails>(Message.FAIL);
+			return new Message<>(Message.FAIL);
 		}
 	}
 

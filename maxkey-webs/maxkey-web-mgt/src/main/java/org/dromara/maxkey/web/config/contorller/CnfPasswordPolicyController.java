@@ -29,10 +29,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 
 @RestController
@@ -43,21 +40,21 @@ public class CnfPasswordPolicyController {
 	@Autowired
 	CnfPasswordPolicyService passwordPolicyService;
 	
-	@RequestMapping(value={"/get"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<?> get(@CurrentUser UserInfo currentUser){
+	@GetMapping(value={"/get"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public Message<CnfPasswordPolicy> get(@CurrentUser UserInfo currentUser){
 		CnfPasswordPolicy passwordPolicy = passwordPolicyService.get(currentUser.getInstId());
-		return new Message<CnfPasswordPolicy>(passwordPolicy);
+		return new Message<>(passwordPolicy);
 	}
 
-	@RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<?> update(@Valid @RequestBody CnfPasswordPolicy passwordPolicy,@CurrentUser UserInfo currentUser,BindingResult result) {
+	@PutMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public Message<CnfPasswordPolicy> update(@Valid @RequestBody CnfPasswordPolicy passwordPolicy,@CurrentUser UserInfo currentUser,BindingResult result) {
 		logger.debug("updateRole passwordPolicy : {}" ,passwordPolicy);
 		//Message message = this.validate(result, passwordPolicy);
 		
 		if(passwordPolicyService.update(passwordPolicy)) {
-			return new Message<CnfPasswordPolicy>(Message.SUCCESS);
+			return new Message<>(Message.SUCCESS);
 		} else {
-			return new Message<CnfPasswordPolicy>(Message.ERROR);
+			return new Message<>(Message.ERROR);
 		}
 	}
 	

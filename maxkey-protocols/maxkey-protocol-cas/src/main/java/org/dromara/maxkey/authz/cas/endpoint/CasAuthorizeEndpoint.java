@@ -22,8 +22,8 @@ package org.dromara.maxkey.authz.cas.endpoint;
 
 import java.security.Principal;
 import java.util.Map;
+import java.util.Map.Entry;
 
-import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.authn.session.Session;
 import org.dromara.maxkey.authn.web.AuthorizationUtils;
 import org.dromara.maxkey.authz.cas.endpoint.ticket.CasConstants;
@@ -37,7 +37,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -113,7 +112,7 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 		
 	}
 	
-	@RequestMapping(CasConstants.ENDPOINT.ENDPOINT_SERVICE_TICKET_GRANTING)
+	@GetMapping(CasConstants.ENDPOINT.ENDPOINT_SERVICE_TICKET_GRANTING)
 	public ModelAndView grantingTicket( Principal principal,
 										HttpServletRequest request,
 										HttpServletResponse response){
@@ -148,8 +147,8 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
             Map <String, String> parameterMap = (Map <String, String>)WebContext.getAttribute(CasConstants.PARAMETER.PARAMETER_MAP);
     		parameterMap.remove(CasConstants.PARAMETER.TICKET);
     		parameterMap.remove(CasConstants.PARAMETER.SERVICE);
-    		for (String key : parameterMap.keySet()) {
-    		    callbackUrl.append("&").append(key).append("=").append(parameterMap.get(key));
+    		for (Entry<String, String> entry : parameterMap.entrySet()) {
+    		    callbackUrl.append("&").append(entry.getKey()).append("=").append(entry.getValue());
     		}
 		}
 		

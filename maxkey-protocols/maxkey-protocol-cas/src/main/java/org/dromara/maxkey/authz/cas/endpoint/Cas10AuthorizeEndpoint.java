@@ -27,10 +27,10 @@ import org.dromara.maxkey.authz.cas.endpoint.ticket.CasConstants;
 import org.dromara.maxkey.authz.cas.endpoint.ticket.Ticket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -42,7 +42,7 @@ import jakarta.servlet.http.HttpServletResponse;
  * https://apereo.github.io/cas/6.2.x/protocol/CAS-Protocol-Specification.html
  */
 @Tag(name = "2-3-CAS API文档模块")
-@Controller
+@RestController
 public class Cas10AuthorizeEndpoint   extends CasBaseAuthorizeEndpoint{
 
 	static final  Logger _logger = LoggerFactory.getLogger(Cas10AuthorizeEndpoint.class);
@@ -82,20 +82,14 @@ renew [OPTIONAL] - if this parameter is set, ticket validation will only succeed
 			<LF>
 	 */
 	@Operation(summary = "CAS 1.0 ticket验证接口", description = "通过ticket获取当前登录用户信息",method="POST")
-	@RequestMapping(CasConstants.ENDPOINT.ENDPOINT_VALIDATE)
-	@ResponseBody
+	@RequestMapping(value=CasConstants.ENDPOINT.ENDPOINT_VALIDATE,method={RequestMethod.GET,RequestMethod.POST})
 	public String validate(
 			HttpServletRequest request,
 			HttpServletResponse response,
 			@RequestParam(value = CasConstants.PARAMETER.TICKET) String ticket,
 			@RequestParam(value = CasConstants.PARAMETER.SERVICE) String service,
-			@RequestParam(value = CasConstants.PARAMETER.RENEW,required=false) String renew
-			 ){
-	    _logger.debug("serviceValidate " 
-                + " ticket " + ticket 
-                +" , service " + service
-                +" , renew " + renew
-        );
+			@RequestParam(value = CasConstants.PARAMETER.RENEW,required=false) String renew){
+	    _logger.debug("serviceValidate ticket {} , service {} , renew {}" , ticket,service,renew);
 	    
 		Ticket storedTicket = null;
 		try {
@@ -106,7 +100,7 @@ renew [OPTIONAL] - if this parameter is set, ticket validation will only succeed
 		
 		if(storedTicket != null){
 			String principal=((SignPrincipal)storedTicket.getAuthentication().getPrincipal()).getUsername();
-			_logger.debug("principal "+principal);
+			_logger.debug("principal {}",principal);
 			return new Service10ResponseBuilder().success()
 					.setUser(principal)
 					.serviceResponseBuilder();

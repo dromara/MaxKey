@@ -40,6 +40,6 @@ public class InstitutionsService  extends JpaService<Institutions>{
  
 	 public Institutions findByDomain(String domain) {
 		 return getMapper().findByDomain(domain);
-	 };
+	 }
 	 
 }

@@ -30,8 +30,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -52,13 +52,11 @@ public class AuthorizeEndpoint extends AuthorizeBaseEndpoint{
 	
 	//all single sign on url
 	@Operation(summary = "认证总地址接口", description = "参数应用ID，分发到不同应用的认证地址",method="GET")
-	@RequestMapping("/authz/{id}")
-	public ModelAndView authorize(
-			HttpServletRequest request,
-			@PathVariable("id") String id){
-		ModelAndView modelAndView=null;
-		Apps  app=getApp(id);
+	@GetMapping("/authz/{id}")
+	public ModelAndView authorize(HttpServletRequest request,@PathVariable("id") String id){
+		Apps  app = getApp(id);
 		WebContext.setAttribute(WebConstants.SINGLE_SIGN_ON_APP_ID, app.getId());
+		ModelAndView modelAndView = WebContext.redirect(app.getLoginUrl());
 		
 		if(app.getProtocol().equalsIgnoreCase(ConstsProtocols.EXTEND_API)){
 			modelAndView=WebContext.forward("/authz/api/"+app.getId());
@@ -81,13 +79,13 @@ public class AuthorizeEndpoint extends AuthorizeBaseEndpoint{
         }else if (app.getProtocol().equalsIgnoreCase(ConstsProtocols.BASIC)){
 			modelAndView=WebContext.redirect(app.getLoginUrl());
 		}
-		
-		_logger.debug(modelAndView.getViewName());
+
+		_logger.debug("redirect to view {}",modelAndView.getViewName());
 		
 		return modelAndView;
 	}
 	
-	@RequestMapping("/authz/refused")
+	@GetMapping("/authz/refused")
 	public ModelAndView refused(){
 		ModelAndView modelAndView = new ModelAndView("authorize/authorize_refused");
 		Apps app = (Apps)WebContext.getAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP);

@@ -30,12 +30,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -46,57 +41,54 @@ public class CasDetailsController  extends BaseAppContorller {
 	@Autowired
 	AppsCasDetailsService casDetailsService;
 	
-	@RequestMapping(value = { "/init" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<?> init() {
+	@GetMapping(value = { "/init" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public Message<AppsCasDetails> init() {
 		AppsCasDetails casDetails =new AppsCasDetails();
 		casDetails.setId(casDetails.generateId());
 		casDetails.setProtocol(ConstsProtocols.CAS);
 		casDetails.setSecret(ReciprocalUtils.generateKey(""));
-		return new Message<AppsCasDetails>(casDetails);
+		return new Message<>(casDetails);
 	}
 	
-	@RequestMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<?> get(@PathVariable("id") String id) {
+	@GetMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public Message<AppsCasDetails> get(@PathVariable("id") String id) {
 		AppsCasDetails casDetails=casDetailsService.getAppDetails(id , false);
 		super.decoderSecret(casDetails);
 		casDetails.transIconBase64();
-		return new Message<AppsCasDetails>(casDetails);
+		return new Message<>(casDetails);
 	}
 	
-	@ResponseBody
-	@RequestMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<?> insert(@RequestBody AppsCasDetails casDetails,@CurrentUser UserInfo currentUser) {
+	@PostMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public Message<AppsCasDetails> insert(@RequestBody AppsCasDetails casDetails,@CurrentUser UserInfo currentUser) {
 		logger.debug("-Add  : {}" , casDetails);
 		transform(casDetails);
 		casDetails.setInstId(currentUser.getInstId());
 		if (casDetailsService.insert(casDetails)&&appsService.insertApp(casDetails)) {
-			return new Message<AppsCasDetails>(Message.SUCCESS);
+			return new Message<>(Message.SUCCESS);
 		} else {
-			return new Message<AppsCasDetails>(Message.FAIL);
+			return new Message<>(Message.FAIL);
 		}
 	}
 	
-	@ResponseBody
-	@RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<?> update(@RequestBody AppsCasDetails casDetails,@CurrentUser UserInfo currentUser) {
+	@PutMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public Message<AppsCasDetails> update(@RequestBody AppsCasDetails casDetails,@CurrentUser UserInfo currentUser) {
 		logger.debug("-update  : {}" , casDetails);
 		transform(casDetails);
 		casDetails.setInstId(currentUser.getInstId());
 		if (casDetailsService.update(casDetails)&&appsService.updateApp(casDetails)) {
-		    return new Message<AppsCasDetails>(Message.SUCCESS);
+		    return new Message<>(Message.SUCCESS);
 		} else {
-			return new Message<AppsCasDetails>(Message.FAIL);
+			return new Message<>(Message.FAIL);
 		}
 	}
 	
-	@ResponseBody
-	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<?> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
+	@DeleteMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public Message<AppsCasDetails> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
 		logger.debug("-delete  ids : {} " , ids);
 		if (casDetailsService.deleteBatch(ids)&&appsService.deleteBatch(ids)) {
-			 return new Message<AppsCasDetails>(Message.SUCCESS);
+			 return new Message<>(Message.SUCCESS);
 		} else {
-			return new Message<AppsCasDetails>(Message.FAIL);
+			return new Message<>(Message.FAIL);
 		}
 	}
 	

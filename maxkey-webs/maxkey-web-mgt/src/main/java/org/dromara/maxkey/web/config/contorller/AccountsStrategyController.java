@@ -19,6 +19,7 @@ package org.dromara.maxkey.web.config.contorller;
 
 import java.util.List;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.entity.AccountsStrategy;
 import org.dromara.maxkey.entity.Message;
@@ -30,13 +31,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value={"/config/accountsstrategy"})
@@ -49,69 +44,63 @@ public class AccountsStrategyController {
 	@Autowired
 	AccountsService accountsService;
 	
-	@RequestMapping(value = { "/fetch" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-	@ResponseBody
-	public Message<?> fetch(@ModelAttribute AccountsStrategy accountsStrategy,@CurrentUser UserInfo currentUser) {
+	@GetMapping(value = { "/fetch" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public Message<JpaPageResults<AccountsStrategy>> fetch(@ModelAttribute AccountsStrategy accountsStrategy,@CurrentUser UserInfo currentUser) {
 		accountsStrategy.setInstId(currentUser.getInstId());
 		JpaPageResults<AccountsStrategy> accountsStrategyList =accountsStrategyService.fetchPageResults(accountsStrategy);
 		for (AccountsStrategy strategy : accountsStrategyList.getRows()){
 			strategy.transIconBase64();
 		}
 		logger.debug("Accounts Strategy {}" , accountsStrategyList);
-		return new Message<JpaPageResults<AccountsStrategy>>(
-				accountsStrategyList);
+		return new Message<>(accountsStrategyList);
 	}
 
-	@ResponseBody
-	@RequestMapping(value={"/query"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<?> query(@ModelAttribute AccountsStrategy accountsStrategy,@CurrentUser UserInfo currentUser) {
+	@GetMapping(value={"/query"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public Message<AccountsStrategy> query(@ModelAttribute AccountsStrategy accountsStrategy,@CurrentUser UserInfo currentUser) {
 		logger.debug("-query  : {}" , accountsStrategy);
-		if (accountsStrategyService.query(accountsStrategy)!=null) {
-			 return new Message<AccountsStrategy>(Message.SUCCESS);
+		if (CollectionUtils.isNotEmpty(accountsStrategyService.query(accountsStrategy))) {
+			 return new Message<>(Message.SUCCESS);
 		} else {
-			 return new Message<AccountsStrategy>(Message.SUCCESS);
+			 return new Message<>(Message.FAIL);
 		}
 	}
 	
-	@RequestMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<?> get(@PathVariable("id") String id) {
+	@GetMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public Message<AccountsStrategy> get(@PathVariable("id") String id) {
 		AccountsStrategy accountsStrategy = accountsStrategyService.get(id);
-		return new Message<AccountsStrategy>(accountsStrategy);
+		return new Message<>(accountsStrategy);
 	}
 	
-	@ResponseBody
-	@RequestMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<?> insert(@RequestBody AccountsStrategy accountsStrategy,@CurrentUser UserInfo currentUser) {
+	@PostMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public Message<AccountsStrategy> insert(@RequestBody AccountsStrategy accountsStrategy,@CurrentUser UserInfo currentUser) {
 		logger.debug("-Add  : {}" , accountsStrategy);
 		
 		if (accountsStrategyService.insert(accountsStrategy)) {
 			accountsService.refreshByStrategy(accountsStrategy);
-			return new Message<AccountsStrategy>(Message.SUCCESS);
+			return new Message<>(Message.SUCCESS);
 		} else {
-			return new Message<AccountsStrategy>(Message.FAIL);
+			return new Message<>(Message.FAIL);
 		}
 	}
 	
-	@ResponseBody
-	@RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<?> update(@RequestBody  AccountsStrategy accountsStrategy,@CurrentUser UserInfo currentUser) {
+	@PutMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public Message<AccountsStrategy> update(@RequestBody  AccountsStrategy accountsStrategy,@CurrentUser UserInfo currentUser) {
 		logger.debug("-update  : {}" , accountsStrategy);
 		if (accountsStrategyService.update(accountsStrategy)) {
 			accountsService.refreshByStrategy(accountsStrategy);
-		    return new Message<AccountsStrategy>(Message.SUCCESS);
+		    return new Message<>(Message.SUCCESS);
 		} else {
-			return new Message<AccountsStrategy>(Message.FAIL);
+			return new Message<>(Message.FAIL);
 		}
 	}
 	
-	@ResponseBody
-	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<?> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
+	@DeleteMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public Message<AccountsStrategy> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
 		logger.debug("-delete  ids : {} " , ids);
 		if (accountsStrategyService.deleteBatch(ids)) {
-			 return new Message<AccountsStrategy>(Message.SUCCESS);
+			 return new Message<>(Message.SUCCESS);
 		} else {
-			return new Message<AccountsStrategy>(Message.FAIL);
+			return new Message<>(Message.FAIL);
 		}
 	}
 }

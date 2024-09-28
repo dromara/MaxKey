@@ -217,13 +217,13 @@ public class PasswordPolicyValidator {
     */
    public void lockUser(UserInfo userInfo) {
        try {
-           if (userInfo != null && StringUtils.isNotEmpty(userInfo.getId())) {
-        	   if(userInfo.getIsLocked() == ConstsStatus.ACTIVE) {
-	               jdbcTemplate.update(LOCK_USER_UPDATE_STATEMENT,
-	                       new Object[] { ConstsStatus.LOCK, new Date(), userInfo.getId() },
-	                       new int[] { Types.VARCHAR, Types.TIMESTAMP, Types.VARCHAR });
-	               userInfo.setIsLocked(ConstsStatus.LOCK);
-        	   }
+           if (userInfo != null 
+        		   && StringUtils.isNotEmpty(userInfo.getId()) 
+        		   && userInfo.getIsLocked() == ConstsStatus.ACTIVE) {
+               jdbcTemplate.update(LOCK_USER_UPDATE_STATEMENT,
+                       new Object[] { ConstsStatus.LOCK, new Date(), userInfo.getId() },
+                       new int[] { Types.VARCHAR, Types.TIMESTAMP, Types.VARCHAR });
+               userInfo.setIsLocked(ConstsStatus.LOCK);
            }
        } catch (Exception e) {
            _logger.error("lockUser Exception",e);
@@ -297,10 +297,8 @@ public class PasswordPolicyValidator {
    }
    
    public void resetBadPasswordCount(UserInfo userInfo) {
-       if (userInfo != null && StringUtils.isNotEmpty(userInfo.getId())) {
-           if(userInfo.getBadPasswordCount()>0) {
-               setBadPasswordCount(userInfo.getId(),0);
-           } 
+       if (userInfo != null && StringUtils.isNotEmpty(userInfo.getId()) && userInfo.getBadPasswordCount()>0) {
+    	   setBadPasswordCount(userInfo.getId(),0);
        }
    }
    

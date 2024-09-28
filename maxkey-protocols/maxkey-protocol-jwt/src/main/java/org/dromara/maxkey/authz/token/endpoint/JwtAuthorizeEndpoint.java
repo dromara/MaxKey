@@ -29,7 +29,6 @@ import org.dromara.maxkey.authn.web.AuthorizationUtils;
 import org.dromara.maxkey.authz.endpoint.AuthorizeBaseEndpoint;
 import org.dromara.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.dromara.maxkey.authz.jwt.endpoint.adapter.JwtAdapter;
-import org.dromara.maxkey.configuration.ApplicationConfig;
 import org.dromara.maxkey.constants.ConstsBoolean;
 import org.dromara.maxkey.constants.ContentType;
 import org.dromara.maxkey.crypto.jose.keystore.JWKSetKeyStore;
@@ -67,9 +66,6 @@ public class JwtAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 	@Autowired
 	AppsJwtDetailsService jwtDetailsService;
 	
-	@Autowired
-	ApplicationConfig applicationConfig;
-	
 	@Operation(summary = "JWT应用ID认证接口", description = "应用ID")
 	@GetMapping("/authz/jwt/{id}")
 	public ModelAndView authorize(
@@ -80,7 +76,7 @@ public class JwtAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 		ModelAndView modelAndView=new ModelAndView();
 		Apps  application = getApp(id);
 		AppsJwtDetails jwtDetails = jwtDetailsService.getAppDetails(application.getId() , true);
-		_logger.debug(""+jwtDetails);
+		_logger.debug("jwtDetails {}",jwtDetails);
 		jwtDetails.setAdapter(application.getAdapter());
 		jwtDetails.setIsAdapter(application.getIsAdapter());
 		
@@ -94,8 +90,7 @@ public class JwtAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 			}
 			adapter = (AbstractAuthorizeAdapter)jwtAdapter;
 		}else{
-			JwtAdapter jwtAdapter =new JwtAdapter(jwtDetails);
-			adapter = (AbstractAuthorizeAdapter)jwtAdapter;
+			adapter =new JwtAdapter(jwtDetails);
 		}
 		
 		adapter.setPrincipal(AuthorizationUtils.getPrincipal());

@@ -57,8 +57,8 @@ public abstract class AbstractAuthorizeAdapter {
 			KeyStoreLoader keyStoreLoader = WebContext.getBean("keyStoreLoader",KeyStoreLoader.class);
 			try {	
 				byte[] signData= CertSigner.sign(data.toString().getBytes(), keyStoreLoader.getKeyStore(), keyStoreLoader.getEntityName(), keyStoreLoader.getKeystorePassword());
-				_logger.debug("signed Token : "+data);
-				_logger.debug("signature : "+signData.toString());
+				_logger.debug("signed Token : {}",data);
+				_logger.debug("signature : {}",signData.toString());
 				
 				return Base64Utils.base64UrlEncode(data.toString().getBytes("UTF-8"))+"."+Base64Utils.base64UrlEncode(signData);
 			} catch (UnsupportedEncodingException e) {
@@ -79,8 +79,8 @@ public abstract class AbstractAuthorizeAdapter {
 	public  Object encrypt(Object data,String algorithmKey,String algorithm){
 		
 		algorithmKey = PasswordReciprocal.getInstance().decoder(algorithmKey);
-		_logger.debug("algorithm : "+algorithm);
-		_logger.debug("algorithmKey : "+algorithmKey);
+		_logger.debug("algorithm : {}",algorithm);
+		_logger.debug("algorithmKey : {}",algorithmKey);
 		//Chinese , encode data to HEX
 		try {
 			data = new String(Hex.encodeHex(data.toString().getBytes("UTF-8")));
@@ -89,7 +89,7 @@ public abstract class AbstractAuthorizeAdapter {
 		}     
 		byte[] encodeData = ReciprocalUtils.encode(data.toString(), algorithmKey, algorithm);
 		String tokenString = Base64Utils.base64UrlEncode(encodeData);
-		_logger.trace("Reciprocal then HEX  Token : "+tokenString);
+		_logger.trace("Reciprocal then HEX  Token : {}",tokenString);
 		
 		return tokenString;
 	}

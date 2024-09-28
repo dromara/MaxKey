@@ -35,11 +35,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * AppListController.
@@ -47,7 +47,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author Administrator
  *
  */
-@Controller
+@RestController
 public class AppListController {
     static final Logger logger = LoggerFactory.getLogger(AppListController.class);
     
@@ -65,8 +65,7 @@ public class AppListController {
      * @param gridList 类型
      * @return
      */
-    @RequestMapping(value = { "/appList" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-	@ResponseBody
+    @GetMapping(value = { "/appList" }, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public Message<List<UserApps>> appList(
             @RequestParam(value = "gridList", required = false) String gridList,
             @CurrentUser UserInfo currentUser) {
@@ -78,13 +77,11 @@ public class AppListController {
         for (UserApps app : appList) {
         	app.transIconBase64();
         }
-        //AuthorizationUtils.setAuthentication(null);
-        return new Message<List<UserApps>>(appList);
+        return new Message<>(appList);
     }
  
     
-    @RequestMapping(value = { "/account/get" })
-    @ResponseBody
+    @GetMapping(value = { "/account/get" })
 	public Message<Accounts> getAccount(
     		@RequestParam("credential") String credential,
     		@RequestParam("appId") String appId,
@@ -107,8 +104,7 @@ public class AppListController {
 
     }
 
-    @RequestMapping(value = { "/account/update" })
-    @ResponseBody
+    @PutMapping(value = { "/account/update" })
 	public Message<Accounts> updateAccount(
     		@RequestParam("credential") String credential,
     		@ModelAttribute Accounts account,

@@ -78,7 +78,7 @@ public class AuthnProviderAutoConfiguration {
     }
 
 	@Bean
-	public ScanCodeAuthenticationProvider scanCodeAuthenticationProvider(
+	ScanCodeAuthenticationProvider scanCodeAuthenticationProvider(
 			AbstractAuthenticationRealm authenticationRealm,
 			SessionManager sessionManager
 	) {
@@ -89,7 +89,7 @@ public class AuthnProviderAutoConfiguration {
 	}
 
 	@Bean
-	public AppAuthenticationProvider appAuthenticationProvider(
+	AppAuthenticationProvider appAuthenticationProvider(
 			AbstractAuthenticationRealm authenticationRealm,
 			ApplicationConfig applicationConfig,
 			SessionManager sessionManager,
@@ -104,7 +104,7 @@ public class AuthnProviderAutoConfiguration {
 	}
 
     @Bean
-    public MobileAuthenticationProvider mobileAuthenticationProvider(
+    MobileAuthenticationProvider mobileAuthenticationProvider(
     		AbstractAuthenticationRealm authenticationRealm,
     		ApplicationConfig applicationConfig,
     	    SmsOtpAuthnService smsAuthnService,
@@ -120,7 +120,7 @@ public class AuthnProviderAutoConfiguration {
     }
 
     @Bean
-    public TrustedAuthenticationProvider trustedAuthenticationProvider(
+    TrustedAuthenticationProvider trustedAuthenticationProvider(
     		AbstractAuthenticationRealm authenticationRealm,
     		ApplicationConfig applicationConfig,
     	    SessionManager sessionManager
@@ -134,17 +134,17 @@ public class AuthnProviderAutoConfiguration {
     }
 
     @Bean
-    public PasswordPolicyValidator passwordPolicyValidator(JdbcTemplate jdbcTemplate,MessageSource messageSource) {
+    PasswordPolicyValidator passwordPolicyValidator(JdbcTemplate jdbcTemplate,MessageSource messageSource) {
         return new PasswordPolicyValidator(jdbcTemplate,messageSource);
     }
 
     @Bean
-    public LoginRepository loginRepository(JdbcTemplate jdbcTemplate) {
+    LoginRepository loginRepository(JdbcTemplate jdbcTemplate) {
         return new LoginRepository(jdbcTemplate);
     }
 
     @Bean
-    public LoginHistoryRepository loginHistoryRepository(JdbcTemplate jdbcTemplate) {
+    LoginHistoryRepository loginHistoryRepository(JdbcTemplate jdbcTemplate) {
         return new LoginHistoryRepository(jdbcTemplate);
     }
 
@@ -153,7 +153,7 @@ public class AuthnProviderAutoConfiguration {
      * @return
      */
     @Bean
-    public AbstractRemeberMeManager remeberMeManager(
+    AbstractRemeberMeManager remeberMeManager(
             @Value("${maxkey.server.persistence}") int persistence,
             @Value("${maxkey.login.remeberme.validity}") int validity,
             ApplicationConfig applicationConfig,

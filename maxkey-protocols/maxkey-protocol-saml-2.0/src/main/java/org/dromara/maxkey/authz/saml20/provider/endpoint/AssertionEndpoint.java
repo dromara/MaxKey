@@ -66,9 +66,9 @@ public class AssertionEndpoint {
 		logger.debug("saml20 assertion start.");
 		bindingAdapter = (BindingAdapter) request.getSession().getAttribute(
 		        WebConstants.AUTHORIZE_SIGN_ON_APP_SAMLV20_ADAPTER);
-		logger.debug("saml20 assertion get session samlv20Adapter "+bindingAdapter);
+		logger.debug("saml20 assertion get session samlv20Adapter {}",bindingAdapter);
 		AppsSAML20Details saml20Details = bindingAdapter.getSaml20Details();
-		logger.debug("saml20Details "+saml20Details.getExtendAttr());
+		logger.debug("saml20Details {}",saml20Details.getExtendAttr());
 		AuthnRequestInfo authnRequestInfo = bindingAdapter.getAuthnRequestInfo();
 		
 		if (authnRequestInfo == null) {
@@ -77,9 +77,8 @@ public class AssertionEndpoint {
 		}
 
 		logger.debug("AuthnRequestInfo: {}", authnRequestInfo);
-		HashMap <String,String>attributeMap=new HashMap<String,String>();
-		attributeMap.put(WebConstants.ONLINE_TICKET_NAME, 
-		        AuthorizationUtils.getPrincipal().getSessionId());
+		HashMap <String,String>attributeMap=new HashMap<>();
+		attributeMap.put(WebConstants.ONLINE_TICKET_NAME, AuthorizationUtils.getPrincipal().getSessionId());
 		
 		//saml20Details
 		Response authResponse = authnResponseGenerator.generateAuthnResponse(

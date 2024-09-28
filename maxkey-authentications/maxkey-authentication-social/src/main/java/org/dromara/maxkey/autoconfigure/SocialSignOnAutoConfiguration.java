@@ -17,8 +17,6 @@
 
 package org.dromara.maxkey.autoconfigure;
 
-import java.io.IOException;
-
 import org.dromara.maxkey.authn.support.socialsignon.service.JdbcSocialsAssociateService;
 import org.dromara.maxkey.authn.support.socialsignon.service.SocialSignOnProviderService;
 import org.dromara.maxkey.authn.support.socialsignon.token.RedisTokenStore;
@@ -42,11 +40,10 @@ public class SocialSignOnAutoConfiguration{
     
     @Bean(name = "socialSignOnProviderService")
     @ConditionalOnClass(SocialsProvider.class)
-    public SocialSignOnProviderService socialSignOnProviderService(
+    SocialSignOnProviderService socialSignOnProviderService(
             @Value("${maxkey.server.persistence}") int persistence,
             JdbcTemplate jdbcTemplate,
-            RedisConnectionFactory redisConnFactory
-                    ) throws IOException {
+            RedisConnectionFactory redisConnFactory) {
         SocialSignOnProviderService socialSignOnProviderService = new SocialSignOnProviderService(jdbcTemplate);
         //load default Social Providers from database
         socialSignOnProviderService.loadSocials("1");
@@ -59,7 +56,7 @@ public class SocialSignOnAutoConfiguration{
     }
     
     @Bean(name = "socialsAssociateService")
-    public JdbcSocialsAssociateService socialsAssociateService(
+    JdbcSocialsAssociateService socialsAssociateService(
                 JdbcTemplate jdbcTemplate) {
         JdbcSocialsAssociateService socialsAssociateService = new JdbcSocialsAssociateService(jdbcTemplate);
         _logger.debug("JdbcSocialsAssociateService inited.");

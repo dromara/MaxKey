@@ -50,8 +50,8 @@ public class FieldUtil {
         }
 
         if (fieldType == Integer.class || fieldType == int.class) {
-            if (value instanceof Boolean) {
-                return (Boolean) value ? 1 : 0;
+            if (value instanceof Boolean iValue) {
+                return Boolean.TRUE.equals(iValue) ? 1 : 0;
             }
             return Integer.parseInt(value.toString());
         } else if (fieldType == Long.class || fieldType == long.class) {
@@ -65,10 +65,10 @@ public class FieldUtil {
         } else if (fieldType == DateTime.class) {
             DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
             DateTime dateTime;
-            if (value instanceof Long) {
-                dateTime = new DateTime((Long) value);
-            } else if (value instanceof String) {
-                dateTime = DateTime.parse((String) value);
+            if (value instanceof Long iValue) {
+                dateTime = new DateTime(iValue);
+            } else if (value instanceof String iValue) {
+                dateTime = DateTime.parse(iValue);
             }else {
                 dateTime = new DateTime(value);
             }

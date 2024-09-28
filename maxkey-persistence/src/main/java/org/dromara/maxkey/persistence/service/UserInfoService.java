@@ -244,7 +244,7 @@ public class UserInfoService extends JpaService<UserInfo> {
 	    if(StringUtils.isNotBlank(changePassword.getPassword())) {
     	    String password = passwordEncoder.encode(changePassword.getPassword());
     	    changePassword.setDecipherable(PasswordReciprocal.getInstance().encode(changePassword.getPassword()));
-            _logger.debug("decipherable : "+changePassword.getDecipherable());
+            _logger.debug("decipherable : {}",changePassword.getDecipherable());
             changePassword.setPassword(password);
             changePassword.setPasswordLastSetTime(new Date());
             
@@ -303,10 +303,10 @@ public class UserInfoService extends JpaService<UserInfo> {
 	 */
     public boolean changePassword(ChangePassword changePassword,boolean passwordPolicy) {
         try {
-            _logger.debug("decipherable old : " + changePassword.getDecipherable());
-            _logger.debug("decipherable new : " + PasswordReciprocal.getInstance().encode(changePassword.getDecipherable()));
+            _logger.debug("decipherable old : {}" , changePassword.getDecipherable());
+            _logger.debug("decipherable new : {}" , PasswordReciprocal.getInstance().encode(changePassword.getDecipherable()));
 
-            if (passwordPolicy && passwordPolicyValidator.validator(changePassword) == false) {
+            if (passwordPolicy && !passwordPolicyValidator.validator(changePassword)) {
                 return false;
             }
 
@@ -333,10 +333,7 @@ public class UserInfoService extends JpaService<UserInfo> {
 	    if(changePassworded !=null && StringUtils.isNotBlank(changePassworded.getPassword())) {
 	    	UserInfo loadUserInfo = findByUsername(changePassworded.getUsername());
     	    ChangePassword changePassword = new ChangePassword(loadUserInfo);
-    	    provisionService.send(
-                    ProvisionTopic.PASSWORD_TOPIC, 
-                    changePassword, 
-                    ProvisionAct.PASSWORD);
+    	    provisionService.send(ProvisionTopic.PASSWORD_TOPIC, changePassword, ProvisionAct.PASSWORD);
 	    }
 	}
 	
