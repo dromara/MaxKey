@@ -27,7 +27,6 @@ import org.dromara.maxkey.synchronizer.AbstractSynchronizerService;
 import org.dromara.maxkey.synchronizer.ISynchronizerService;
 import org.dromara.maxkey.entity.SyncJobConfigField;
 import org.dromara.maxkey.synchronizer.service.SyncJobConfigFieldService;
-import org.dromara.maxkey.synchronizer.utils.MyResultSet;
 import org.dromara.maxkey.util.JdbcUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
