@@ -30,46 +30,23 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
 
-@ComponentScan(basePackages = {
-	"org.dromara.maxkey.authn",
-	"org.dromara.maxkey.configuration",
-	"org.dromara.maxkey.entity",
-    "org.dromara.maxkey.entity.apps",
-    "org.dromara.maxkey.entity.userinfo",
-    "org.dromara.maxkey.web.apis.identity.kafka",
-    "org.dromara.maxkey.web.apis.identity.rest",
-    "org.dromara.maxkey.web.apis.identity.scim",
-    "org.dromara.maxkey.persistence",
-    "org.dromara.maxkey.provision",
-    "org.dromara.maxkey.synchronizer",
-    "org.dromara.maxkey.web",
-    "org.dromara.maxkey.web.access.contorller", 
-    "org.dromara.maxkey.web.api.endpoint",
-    "org.dromara.maxkey.web.apps.contorller",
-    "org.dromara.maxkey.web.contorller",
-    "org.dromara.maxkey.web.endpoint",
-    "org.dromara.maxkey.web.interceptor",
-    "org.dromara.maxkey.web.permissions.contorller", 
-    "org.dromara.maxkey.web.tag"
-})
-@MapperScan("org.dromara.maxkey.persistence.mapper,")
 @SpringBootApplication
 @EnableDiscoveryClient
+@MapperScan("org.dromara.maxkey.persistence.mapper,")
 public class MaxKeyMgtApplication extends SpringBootServletInitializer {
-	private static final Logger logger = LoggerFactory.getLogger(MaxKeyMgtApplication.class);
+	static final Logger _logger = LoggerFactory.getLogger(MaxKeyMgtApplication.class);
 
 	public static void main(String[] args) {
-	    logger.info("Start MaxKeyMgt Application ...");
+		_logger.info("Start MaxKeyMgt Application ...");
 	    ProductEnvironment.listEnvVars();
 	    
 		ConfigurableApplicationContext  applicationContext = SpringApplication.run(MaxKeyMgtApplication.class, args);
 		new InitializeContext(applicationContext).init();
 		
-		logger.info("MaxKeyMgt at {}" , new DateTime());
-		logger.info("MaxKeyMgt Server Port {}" , WebContext.getProperty("server.port"));
-		logger.info("MaxKeyMgt started.");
+		_logger.info("MaxKeyMgt at {}" , new DateTime());
+		_logger.info("MaxKeyMgt Server Port {}" , WebContext.getProperty("server.port"));
+		_logger.info("MaxKeyMgt started.");
 		
 	}
 

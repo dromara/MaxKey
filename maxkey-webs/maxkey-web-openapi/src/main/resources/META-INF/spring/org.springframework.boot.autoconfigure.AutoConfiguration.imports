@@ -1,3 +1,2 @@
-org.dromara.maxkey.autoconfigure.Oauth20ClientAutoConfiguration
 org.dromara.maxkey.autoconfigure.MaxKeyOpenApiConfig
 org.dromara.maxkey.autoconfigure.MaxKeyOpenApiMvcConfig

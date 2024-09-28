@@ -31,41 +31,23 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
 
-@ComponentScan(basePackages = {
-	"org.dromara.maxkey.authn",
-	"org.dromara.maxkey.configuration",
-	"org.dromara.maxkey.entity",
-    "org.dromara.maxkey.entity.apps",
-    "org.dromara.maxkey.entity.userinfo",
-    "org.dromara.maxkey.web.apis.identity.kafka",
-    "org.dromara.maxkey.web.apis.identity.rest",
-    "org.dromara.maxkey.web.apis.identity.scim",
-    "org.dromara.maxkey.persistence",
-    "org.dromara.maxkey.provision",
-    "org.dromara.maxkey.web",
-    "org.dromara.maxkey.web.api.endpoint",
-    "org.dromara.maxkey.web.contorller",
-    "org.dromara.maxkey.web.endpoint",
-    "org.dromara.maxkey.web.interceptor",
-})
-@MapperScan("org.dromara.maxkey.persistence.mapper,")
 @SpringBootApplication
 @EnableDiscoveryClient
+@MapperScan("org.dromara.maxkey.persistence.mapper,")
 public class MaxKeyOpenApiApplication extends SpringBootServletInitializer {
-	private static final Logger logger = LoggerFactory.getLogger(MaxKeyOpenApiApplication.class);
+	static final Logger _logger = LoggerFactory.getLogger(MaxKeyOpenApiApplication.class);
 
 	public static void main(String[] args) {
-	    logger.info("Start MaxKey OpenApi Application ...");
+		_logger.info("Start MaxKey OpenApi Application ...");
 	    ProductEnvironment.listEnvVars();
 	    
 		ConfigurableApplicationContext  applicationContext = SpringApplication.run(MaxKeyOpenApiApplication.class, args);
 		new InitializeContext(applicationContext).init();
 		
-		logger.info("MaxKey OpenApi at {}" , new DateTime());
-		logger.info("MaxKey OpenApi Server Port {}" , WebContext.getProperty("server.port"));
-		logger.info("MaxKey OpenApi started.");
+		_logger.info("MaxKey OpenApi at {}" , new DateTime());
+		_logger.info("MaxKey OpenApi Server Port {}" , WebContext.getProperty("server.port"));
+		_logger.info("MaxKey OpenApi started.");
 		
 	}
 

@@ -37,22 +37,22 @@ import org.springframework.context.ConfigurableApplicationContext;
 @EnableDiscoveryClient
 @MapperScan("org.dromara.maxkey.persistence.mapper,")
 public class MaxKeyApplication extends SpringBootServletInitializer {
-    private static final Logger logger = LoggerFactory.getLogger(MaxKeyApplication.class);
+    static final Logger _logger = LoggerFactory.getLogger(MaxKeyApplication.class);
 
     /**
      * @param args start parameter 
      */
     public static void main(String[] args) {
-        logger.info("Start MaxKey Application ...");
+    	_logger.info("Start MaxKey Application ...");
         ProductEnvironment.listEnvVars();
         
         VFS.addImplClass(SpringBootVFS.class);
         ConfigurableApplicationContext applicationContext = SpringApplication.run(MaxKeyApplication.class, args);
         new InitializeContext(applicationContext).init();
         
-        logger.info("MaxKey at {}" , new DateTime());
-        logger.info("MaxKey Server Port {}" , WebContext.getProperty("server.port"));
-        logger.info("MaxKey started.");
+        _logger.info("MaxKey at {}" , new DateTime());
+        _logger.info("MaxKey Server Port {}" , WebContext.getProperty("server.port"));
+        _logger.info("MaxKey started.");
     }
 
     @Override
