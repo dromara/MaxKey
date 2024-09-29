@@ -1,4 +1,25 @@
-﻿MaxKey v 4.1.1 GA 2024/08/20
+﻿MaxKey v 4.1.2 GA 2024/09/30
+    *(MAXKEY-240601) timebased otp 优化
+    *(MAXKEY-240602) appCategoryService优化
+    *(MAXKEY-240603) 开源暑期 Flutter认证APP项目
+    *(MAXKEY-240604) 开源暑期同步器增加属性配置管理项目
+    *(MAXKEY-240605) APP扫码登录功能
+    *(MAXKEY-240606) maxkey-web-openapi访问路径/maxkey-openapi
+    *(MAXKEY-240607) APP扫码登录支持
+    *(MAXKEY-240608) 组和角色优化，增加角色动态任务，删除resumeTime和suspendTime
+    *(MAXKEY-240609) ProvisionAction 改为ProvisionAct
+    *(MAXKEY-240610) MaxKeyGatewayApplication移除exclude  DruidDataSourceAutoConfigure.class
+    *(MAXKEY-240611) 登录后台跳转功能修复
+    *(MAXKEY-240612) Oauth20Client代码优化，移除Oauth20ClientAutoConfiguration
+    *(MAXKEY-240613) core Repository移动到maxkey-persistence，以后的版本进行合并
+    *(MAXKEY-240613) 依赖项引用、更新和升级
+        mybatis-jpa-extra               3.3.1
+        springVersion                   6.1.13
+        springBootVersion               3.3.4
+        springDataVersion               3.3.4
+        tomcatVersion                   10.1.30
+    
+MaxKey v 4.1.1 GA 2024/08/20
     *(MAXKEY-240501) 构建方式优化
     *(MAXKEY-240502) 修复jwks转义问题 @奇健陀螺王
     *(MAXKEY-240503) 增加删除确认提醒
@@ -8,9 +29,9 @@
     *(MAXKEY-240507) APP扫码登录支持
     *(MAXKEY-240508) 历史日志数量从100改为15
     *(MAXKEY-240509) @Bean public to default
-	*(MAXKEY-240510) 大量框架代码的优化
+    *(MAXKEY-240510) 大量框架代码的优化
     *(MAXKEY-240511) 依赖项引用、更新和升级
-		
+        
 MaxKey v 4.1.0 GA 2024/07/19
     *(MAXKEY-240401) 本地StringUtils 调整成 StrUtils ，取消org.apache.commons.lang3.StringUtils继承关系
     *(MAXKEY-240402) 功能模块化，调整通用模块为starter,包括模块captcha、ip2location、otp、sms、web
@@ -21,7 +42,7 @@ MaxKey v 4.1.0 GA 2024/07/19
     *(MAXKEY-240407) 单点登录日志记录时间为空问题修复
     *(MAXKEY-240408) gradle-wrapper.properties地址优化 @杨坡 <yanghbu@163.com>
     *(MAXKEY-240409) 数据访问层升级和优化
-	*(MAXKEY-240410) AutoConfiguration自动加载优化
+    *(MAXKEY-240410) AutoConfiguration自动加载优化
     *(MAXKEY-240411) 依赖项引用、更新和升级
         mybatis-jpa-extra               3.3.0
 
