@@ -121,7 +121,7 @@ MaxKey注重企业级场景下的性能、安全和易用性，广泛应用于�
 
 | 版本       | 日期    |  下载              | 
 | --------   | :-----  | :----              | 
-| v 4.1.1   | 2024/08/20   | <a href="https://www.maxkey.top/zh/about/download.html" target="_blank">下载</a>|
+| v 4.1.2   | 2024/09/30   | <a href="https://www.maxkey.top/zh/about/download.html" target="_blank">下载</a>|
  
  
 # 安装部署
