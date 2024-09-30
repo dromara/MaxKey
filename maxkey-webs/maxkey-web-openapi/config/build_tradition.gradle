@@ -17,11 +17,12 @@ dependencies {
 	implementation project(":maxkey-authentications:maxkey-authentication-core")
 	implementation project(":maxkey-authentications:maxkey-authentication-provider")
 	
+	implementation project(":maxkey-protocols:maxkey-protocol-authorize")
    	implementation project(":maxkey-protocols:maxkey-protocol-oauth-2.0")
    	implementation project(":maxkey-protocols:maxkey-protocol-saml-2.0")   
    	
    	//webapis
    	implementation project(":maxkey-web-apis:maxkey-web-api-scim")   
-   	implementation project(":maxkey-web-apis:maxkey-web-api-rest")	
+   	implementation project(":maxkey-web-apis:maxkey-web-api-rest")
 
 }
