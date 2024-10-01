@@ -2,7 +2,7 @@
 --
 -- Host: 127.0.0.1    Database: maxkey
 -- ------------------------------------------------------
--- Server version	8.0.32
+-- Server version	8.4.0
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -14,6 +14,24 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `mxk_access`
+--
+
+DROP TABLE IF EXISTS `mxk_access`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `mxk_access` (
+  `ID` varchar(45) NOT NULL COMMENT 'ID',
+  `GROUPID` varchar(45) NOT NULL COMMENT 'GROUPID',
+  `APPID` varchar(45) NOT NULL COMMENT 'APPID',
+  `CREATEDDATE` datetime DEFAULT CURRENT_TIMESTAMP,
+  `INSTID` varchar(45) NOT NULL,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `GROUPID_APPID` (`GROUPID`,`APPID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `mxk_accounts`
@@ -36,9 +54,9 @@ CREATE TABLE `mxk_accounts` (
   `CREATETYPE` varchar(45) DEFAULT 'automatic',
   `STATUS` int DEFAULT NULL,
   `CREATEDBY` varchar(45) DEFAULT NULL,
-  `CREATEDDATE` date DEFAULT NULL,
+  `CREATEDDATE` datetime DEFAULT CURRENT_TIMESTAMP,
   `MODIFIEDBY` varchar(45) DEFAULT NULL,
-  `MODIFIEDDATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
+  `MODIFIEDDATE` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
   `INSTID` varchar(45) NOT NULL,
   PRIMARY KEY (`ID`),
   UNIQUE KEY `UNIQUE_USER_ACCOUNT` (`USERNAME`,`APPID`,`RELATEDUSERNAME`,`USERID`)
@@ -107,7 +125,7 @@ CREATE TABLE `mxk_apps_adapters` (
   `ADAPTER` varchar(500) DEFAULT NULL,
   `SORTINDEX` int DEFAULT NULL,
   `CREATEDBY` varchar(45) DEFAULT NULL,
-  `CREATEDDATE` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `CREATEDDATE` datetime DEFAULT CURRENT_TIMESTAMP,
   `MODIFIEDBY` varchar(45) DEFAULT NULL,
   `MODIFIEDDATE` datetime DEFAULT NULL,
   `DESCRIPTION` varchar(500) DEFAULT NULL,
@@ -266,6 +284,125 @@ CREATE TABLE `mxk_apps_token_based_details` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `mxk_cnf_email_senders`
+--
+
+DROP TABLE IF EXISTS `mxk_cnf_email_senders`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `mxk_cnf_email_senders` (
+  `id` varchar(50) NOT NULL,
+  `smtpHost` varchar(45) DEFAULT NULL,
+  `port` int DEFAULT NULL,
+  `account` varchar(45) DEFAULT NULL,
+  `credentials` varchar(500) DEFAULT NULL,
+  `sslswitch` int DEFAULT NULL,
+  `sender` varchar(45) DEFAULT NULL,
+  `protocol` varchar(45) DEFAULT NULL,
+  `encoding` varchar(45) DEFAULT NULL,
+  `status` int DEFAULT NULL,
+  `instId` varchar(45) DEFAULT NULL,
+  `description` varchar(45) DEFAULT NULL,
+  `createdBy` varchar(45) DEFAULT NULL,
+  `createdDate` datetime DEFAULT CURRENT_TIMESTAMP,
+  `modifiedBy` varchar(45) DEFAULT NULL,
+  `modifiedDate` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `mxk_cnf_ldap_context`
+--
+
+DROP TABLE IF EXISTS `mxk_cnf_ldap_context`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `mxk_cnf_ldap_context` (
+  `id` varchar(50) NOT NULL,
+  `product` varchar(45) DEFAULT NULL,
+  `sslswitch` varchar(45) DEFAULT NULL,
+  `providerurl` varchar(200) DEFAULT NULL,
+  `principal` varchar(100) DEFAULT NULL,
+  `credentials` varchar(500) DEFAULT NULL,
+  `basedn` varchar(500) DEFAULT NULL,
+  `filters` varchar(500) DEFAULT NULL,
+  `truststore` varchar(500) DEFAULT NULL,
+  `truststorepassword` varchar(100) DEFAULT NULL,
+  `msadDomain` varchar(100) DEFAULT NULL,
+  `accountMapping` varchar(45) DEFAULT 'YES',
+  `STATUS` int DEFAULT NULL,
+  `description` varchar(500) DEFAULT NULL,
+  `instId` varchar(45) DEFAULT NULL,
+  `CREATEDBY` varchar(45) DEFAULT NULL,
+  `CREATEDDATE` datetime DEFAULT CURRENT_TIMESTAMP,
+  `MODIFIEDBY` varchar(45) DEFAULT NULL,
+  `MODIFIEDDATE` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `mxk_cnf_password_policy`
+--
+
+DROP TABLE IF EXISTS `mxk_cnf_password_policy`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `mxk_cnf_password_policy` (
+  `ID` varchar(45) NOT NULL,
+  `MINLENGTH` tinyint unsigned DEFAULT '0' COMMENT 'MINLENGTH',
+  `MAXLENGTH` tinyint unsigned DEFAULT '0' COMMENT 'MAXLENGTH',
+  `LOWERCASE` tinyint unsigned DEFAULT '0' COMMENT 'LOWERCASE',
+  `UPPERCASE` tinyint unsigned DEFAULT '0' COMMENT 'UPPERCASE',
+  `DIGITS` tinyint unsigned DEFAULT '0' COMMENT 'DIGITS',
+  `SPECIALCHAR` tinyint unsigned DEFAULT '0' COMMENT 'SPECIALCHAR',
+  `ATTEMPTS` tinyint unsigned DEFAULT '0' COMMENT 'ATTEMPTS LOGIN FOR LOCK',
+  `DURATION` tinyint unsigned DEFAULT '0' COMMENT 'DURATION ',
+  `EXPIRATION` tinyint unsigned DEFAULT '0' COMMENT 'PASSWORD EXPIRATION',
+  `USERNAME` tinyint unsigned DEFAULT '0' COMMENT 'USERNAME IN PASSWORD',
+  `HISTORY` tinyint DEFAULT '0' COMMENT 'SIMPLEPASSWORDS NOT USE FOR PASSWORD',
+  `DICTIONARY` tinyint DEFAULT NULL,
+  `ALPHABETICAL` tinyint DEFAULT NULL,
+  `NUMERICAL` tinyint DEFAULT NULL,
+  `QWERTY` tinyint DEFAULT NULL,
+  `OCCURANCES` tinyint DEFAULT NULL,
+  `CREATEDBY` varchar(45) DEFAULT NULL COMMENT 'CREATEDBY',
+  `CREATEDDATE` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'CREATEDDATE',
+  `MODIFIEDBY` varchar(45) DEFAULT NULL COMMENT 'MODIFIEDBY',
+  `MODIFIEDDATE` datetime DEFAULT NULL COMMENT 'MODIFIEDDATE',
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='password policy';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `mxk_cnf_sms_provider`
+--
+
+DROP TABLE IF EXISTS `mxk_cnf_sms_provider`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `mxk_cnf_sms_provider` (
+  `id` varchar(50) NOT NULL,
+  `provider` varchar(100) DEFAULT NULL,
+  `message` varchar(500) DEFAULT NULL,
+  `appkey` varchar(100) DEFAULT NULL,
+  `appsecret` varchar(500) DEFAULT NULL,
+  `templateid` varchar(45) DEFAULT NULL,
+  `signname` varchar(45) DEFAULT NULL,
+  `smssdkappid` varchar(45) DEFAULT NULL COMMENT 'tencentcloud smssdkappid',
+  `STATUS` int DEFAULT NULL,
+  `description` varchar(500) DEFAULT NULL,
+  `instId` varchar(45) DEFAULT NULL,
+  `CREATEDBY` varchar(45) DEFAULT NULL,
+  `CREATEDDATE` datetime DEFAULT CURRENT_TIMESTAMP,
+  `MODIFIEDBY` varchar(45) DEFAULT NULL,
+  `MODIFIEDDATE` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `mxk_connectors`
 --
 
@@ -283,43 +420,15 @@ CREATE TABLE `mxk_connectors` (
   `filters` varchar(400) DEFAULT NULL,
   `STATUS` varchar(45) DEFAULT NULL,
   `CREATEDBY` varchar(45) DEFAULT NULL,
-  `CREATEDDATE` varchar(45) DEFAULT NULL,
-  `MODIFIEDDATE` varchar(45) DEFAULT NULL,
+  `CREATEDDATE` datetime DEFAULT CURRENT_TIMESTAMP,
   `MODIFIEDBY` varchar(45) DEFAULT NULL,
+  `MODIFIEDDATE` datetime DEFAULT NULL,
   `DESCRIPTION` varchar(45) DEFAULT NULL,
   `INSTID` varchar(45) NOT NULL,
   `APPID` varchar(45) DEFAULT NULL,
   `APPNAME` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='连接器';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `mxk_email_senders`
---
-
-DROP TABLE IF EXISTS `mxk_email_senders`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `mxk_email_senders` (
-  `id` varchar(50) NOT NULL,
-  `smtpHost` varchar(45) DEFAULT NULL,
-  `port` int DEFAULT NULL,
-  `account` varchar(45) DEFAULT NULL,
-  `credentials` varchar(500) DEFAULT NULL,
-  `sslswitch` int DEFAULT NULL,
-  `sender` varchar(45) DEFAULT NULL,
-  `protocol` varchar(45) DEFAULT NULL,
-  `encoding` varchar(45) DEFAULT NULL,
-  `status` int DEFAULT NULL,
-  `instId` varchar(45) DEFAULT NULL,
-  `description` varchar(45) DEFAULT NULL,
-  `createdBy` varchar(45) DEFAULT NULL,
-  `createdDate` varchar(45) DEFAULT NULL,
-  `modifiedBy` varchar(45) DEFAULT NULL,
-  `modifiedDate` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -336,7 +445,7 @@ CREATE TABLE `mxk_file_upload` (
   `ContentSize` int DEFAULT NULL,
   `ContentType` varchar(100) DEFAULT NULL,
   `createdBy` varchar(45) DEFAULT NULL,
-  `createdDate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `createdDate` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -354,42 +463,9 @@ CREATE TABLE `mxk_group_member` (
   `MEMBERID` varchar(100) NOT NULL COMMENT 'MEMBERID USERID OR GROUP ID',
   `TYPE` varchar(45) NOT NULL COMMENT 'TYPE  USER OR GROUP',
   `CREATEDDATE` datetime DEFAULT CURRENT_TIMESTAMP,
-  `INSTID` varchar(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `mxk_group_permissions`
---
-
-DROP TABLE IF EXISTS `mxk_group_permissions`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `mxk_group_permissions` (
-  `ID` varchar(45) NOT NULL COMMENT 'ID',
-  `GROUPID` varchar(45) NOT NULL COMMENT 'GROUPID',
-  `APPID` varchar(45) NOT NULL COMMENT 'APPID',
-  `CREATEDDATE` datetime DEFAULT CURRENT_TIMESTAMP,
-  `INSTID` varchar(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `mxk_group_privileges`
---
-
-DROP TABLE IF EXISTS `mxk_group_privileges`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `mxk_group_privileges` (
-  `id` varchar(50) NOT NULL,
-  `appid` varchar(50) DEFAULT NULL,
-  `groupid` varchar(50) DEFAULT NULL,
-  `resourceid` varchar(50) DEFAULT NULL,
-  `CREATEDBY` varchar(45) DEFAULT NULL,
-  `CREATEDDATE` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `status` int DEFAULT '1',
-  `INSTID` varchar(45) DEFAULT NULL
+  `INSTID` varchar(45) NOT NULL,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `GROUPID_MEMBERID` (`GROUPID`,`MEMBERID`,`TYPE`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -412,7 +488,7 @@ CREATE TABLE `mxk_groups` (
   `STATUS` tinyint unsigned DEFAULT NULL COMMENT 'STATUS',
   `CREATEDBY` varchar(45) DEFAULT NULL COMMENT 'CREATEDBY',
   `ISDEFAULT` tinyint unsigned DEFAULT NULL COMMENT 'ISDEFAULT',
-  `CREATEDDATE` datetime DEFAULT NULL COMMENT 'CREATEDDATE',
+  `CREATEDDATE` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'CREATEDDATE',
   `MODIFIEDBY` varchar(45) DEFAULT NULL COMMENT 'MODIFIEDBY',
   `MODIFIEDDATE` datetime DEFAULT NULL COMMENT 'MODIFIEDDATE',
   `DESCRIPTION` varchar(500) DEFAULT NULL COMMENT 'DESCRIPTION',
@@ -435,7 +511,7 @@ CREATE TABLE `mxk_history_connector` (
   `OBJECTID` varchar(45) DEFAULT NULL,
   `OBJECTNAME` varchar(500) DEFAULT NULL,
   `DESCRIPTION` varchar(1000) DEFAULT NULL,
-  `SYNCTIME` varchar(45) DEFAULT NULL,
+  `SYNCTIME` datetime DEFAULT CURRENT_TIMESTAMP,
   `RESULT` varchar(45) DEFAULT NULL,
   `INSTID` varchar(45) NOT NULL,
   `TOPIC` varchar(45) DEFAULT NULL,
@@ -456,7 +532,7 @@ CREATE TABLE `mxk_history_event` (
   `eventname` varchar(45) DEFAULT NULL,
   `datatype` varchar(45) DEFAULT NULL,
   `datacount` int DEFAULT NULL,
-  `executedatetime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `executedatetime` datetime DEFAULT CURRENT_TIMESTAMP,
   `INSTID` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb3;
@@ -488,8 +564,8 @@ CREATE TABLE `mxk_history_login` (
   `PLATFORM` varchar(45) DEFAULT NULL COMMENT 'PLATFORM',
   `APPLICATION` varchar(45) DEFAULT NULL COMMENT 'APPLICATION',
   `LOGINURL` varchar(450) DEFAULT NULL COMMENT 'LOGINURL',
-  `LOGINTIME` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'LOGINTIME',
-  `LOGOUTTIME` varchar(50) NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'LOGOUTTIME',
+  `LOGINTIME` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'LOGINTIME',
+  `LOGOUTTIME` datetime NOT NULL DEFAULT '1970-01-01 00:00:00' COMMENT 'LOGOUTTIME',
   `SESSIONSTATUS` int DEFAULT '1',
   `INSTID` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`ID`)
@@ -506,7 +582,7 @@ DROP TABLE IF EXISTS `mxk_history_login_apps`;
 CREATE TABLE `mxk_history_login_apps` (
   `ID` varchar(45) NOT NULL COMMENT 'ID',
   `SESSIONID` varchar(45) DEFAULT NULL COMMENT 'SESSIONID',
-  `LOGINTIME` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'LOGINTIME',
+  `LOGINTIME` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'LOGINTIME',
   `APPID` varchar(45) NOT NULL COMMENT 'ACCESS APPID',
   `APPNAME` varchar(45) DEFAULT NULL COMMENT 'APPNAME',
   `USERID` varchar(45) DEFAULT NULL COMMENT 'USERID',
@@ -529,7 +605,7 @@ CREATE TABLE `mxk_history_provisions` (
   `topic` varchar(45) DEFAULT NULL,
   `actionType` varchar(45) DEFAULT NULL,
   `content` longtext,
-  `sendTime` varchar(45) DEFAULT NULL,
+  `sendTime` datetime DEFAULT CURRENT_TIMESTAMP,
   `connected` tinyint DEFAULT NULL,
   `instId` int DEFAULT NULL,
   PRIMARY KEY (`ID`)
@@ -550,7 +626,7 @@ CREATE TABLE `mxk_history_synchronizer` (
   `OBJECTID` varchar(45) DEFAULT NULL COMMENT 'OBJECTID',
   `OBJECTNAME` varchar(45) DEFAULT NULL COMMENT 'OBJECTNAME',
   `OBJECTTYPE` varchar(45) DEFAULT NULL COMMENT 'OBJECTTYPE',
-  `SYNCTIME` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'SYNCTIME',
+  `SYNCTIME` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'SYNCTIME',
   `RESULT` varchar(45) DEFAULT NULL,
   `INSTID` varchar(45) NOT NULL,
   PRIMARY KEY (`ID`)
@@ -573,7 +649,7 @@ CREATE TABLE `mxk_history_system_logs` (
   `USERID` varchar(45) DEFAULT NULL COMMENT 'TID',
   `USERNAME` varchar(45) DEFAULT NULL COMMENT 'USERNAME',
   `DISPLAYNAME` varchar(45) DEFAULT NULL COMMENT 'CODE',
-  `EXECUTETIME` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'CREATEDDATE',
+  `EXECUTETIME` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'CREATEDDATE',
   `INSTID` varchar(45) NOT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='USER OPERATE LOGS';
@@ -613,43 +689,12 @@ CREATE TABLE `mxk_institutions` (
   `DESCRIPTION` varchar(200) DEFAULT NULL,
   `INSTID` varchar(45) DEFAULT NULL,
   `CREATEDBY` varchar(45) DEFAULT NULL,
-  `CREATEDDATE` datetime DEFAULT NULL,
+  `CREATEDDATE` datetime DEFAULT CURRENT_TIMESTAMP,
   `MODIFIEDBY` varchar(45) DEFAULT NULL,
   `MODIFIEDDATE` datetime DEFAULT NULL,
   PRIMARY KEY (`ID`),
   UNIQUE KEY `DOMAIN_UNIQUE` (`DOMAIN`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='institutions机构表，存放租户信息multi-tenancy';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `mxk_ldap_context`
---
-
-DROP TABLE IF EXISTS `mxk_ldap_context`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `mxk_ldap_context` (
-  `id` varchar(50) NOT NULL,
-  `product` varchar(45) DEFAULT NULL,
-  `sslswitch` varchar(45) DEFAULT NULL,
-  `providerurl` varchar(200) DEFAULT NULL,
-  `principal` varchar(100) DEFAULT NULL,
-  `credentials` varchar(500) DEFAULT NULL,
-  `basedn` varchar(500) DEFAULT NULL,
-  `filters` varchar(500) DEFAULT NULL,
-  `truststore` varchar(500) DEFAULT NULL,
-  `truststorepassword` varchar(100) DEFAULT NULL,
-  `msadDomain` varchar(100) DEFAULT NULL,
-  `accountMapping` varchar(45) DEFAULT 'YES',
-  `STATUS` int DEFAULT NULL,
-  `description` varchar(500) DEFAULT NULL,
-  `instId` varchar(45) DEFAULT NULL,
-  `CREATEDBY` varchar(45) DEFAULT NULL,
-  `CREATEDDATE` varchar(45) DEFAULT NULL,
-  `MODIFIEDDATE` varchar(45) DEFAULT NULL,
-  `MODIFIEDBY` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -693,7 +738,7 @@ CREATE TABLE `mxk_organizations` (
   `DESCRIPTION` varchar(200) DEFAULT NULL,
   `STATUS` tinyint unsigned DEFAULT NULL,
   `CREATEDBY` varchar(45) DEFAULT NULL,
-  `CREATEDDATE` datetime DEFAULT NULL,
+  `CREATEDDATE` datetime DEFAULT CURRENT_TIMESTAMP,
   `MODIFIEDBY` varchar(45) DEFAULT NULL,
   `MODIFIEDDATE` datetime DEFAULT NULL,
   `ADDRESS` varchar(200) DEFAULT NULL,
@@ -737,37 +782,51 @@ CREATE TABLE `mxk_organizations_cast` (
   `ORGID` varchar(45) DEFAULT NULL COMMENT 'MXK机构id',
   `ORGPARENTID` varchar(45) DEFAULT NULL COMMENT 'MXK机构PARENTID',
   `INSTID` varchar(45) NOT NULL,
+  `CREATEDBY` varchar(45) DEFAULT NULL COMMENT 'CREATEDBY',
+  `CREATEDDATE` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'CREATEDDATE',
+  `MODIFIEDBY` varchar(45) DEFAULT NULL COMMENT 'MODIFIEDBY',
+  `MODIFIEDDATE` datetime DEFAULT NULL COMMENT 'MODIFIEDDATE',
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='机构映射表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `mxk_password_policy`
+-- Table structure for table `mxk_permission`
 --
 
-DROP TABLE IF EXISTS `mxk_password_policy`;
+DROP TABLE IF EXISTS `mxk_permission`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `mxk_password_policy` (
-  `ID` varchar(45) NOT NULL,
-  `MINLENGTH` tinyint unsigned DEFAULT '0' COMMENT 'MINLENGTH',
-  `MAXLENGTH` tinyint unsigned DEFAULT '0' COMMENT 'MAXLENGTH',
-  `LOWERCASE` tinyint unsigned DEFAULT '0' COMMENT 'LOWERCASE',
-  `UPPERCASE` tinyint unsigned DEFAULT '0' COMMENT 'UPPERCASE',
-  `DIGITS` tinyint unsigned DEFAULT '0' COMMENT 'DIGITS',
-  `SPECIALCHAR` tinyint unsigned DEFAULT '0' COMMENT 'SPECIALCHAR',
-  `ATTEMPTS` tinyint unsigned DEFAULT '0' COMMENT 'ATTEMPTS LOGIN FOR LOCK',
-  `DURATION` tinyint unsigned DEFAULT '0' COMMENT 'DURATION ',
-  `EXPIRATION` tinyint unsigned DEFAULT '0' COMMENT 'PASSWORD EXPIRATION',
-  `USERNAME` tinyint unsigned DEFAULT '0' COMMENT 'USERNAME IN PASSWORD',
-  `HISTORY` tinyint DEFAULT '0' COMMENT 'SIMPLEPASSWORDS NOT USE FOR PASSWORD',
-  `DICTIONARY` tinyint DEFAULT NULL,
-  `ALPHABETICAL` tinyint DEFAULT NULL,
-  `NUMERICAL` tinyint DEFAULT NULL,
-  `QWERTY` tinyint DEFAULT NULL,
-  `OCCURANCES` tinyint DEFAULT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='password policy';
+CREATE TABLE `mxk_permission` (
+  `id` varchar(50) NOT NULL,
+  `appid` varchar(50) DEFAULT NULL,
+  `groupid` varchar(50) DEFAULT NULL,
+  `resourceid` varchar(50) DEFAULT NULL,
+  `CREATEDBY` varchar(45) DEFAULT NULL,
+  `CREATEDDATE` datetime DEFAULT CURRENT_TIMESTAMP,
+  `status` int DEFAULT '1',
+  `INSTID` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `mxk_permission_role`
+--
+
+DROP TABLE IF EXISTS `mxk_permission_role`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `mxk_permission_role` (
+  `id` varchar(50) NOT NULL,
+  `appid` varchar(50) DEFAULT NULL,
+  `roleid` varchar(50) DEFAULT NULL,
+  `resourceid` varchar(50) DEFAULT NULL,
+  `CREATEDBY` varchar(45) DEFAULT NULL,
+  `CREATEDDATE` datetime DEFAULT CURRENT_TIMESTAMP,
+  `status` int DEFAULT '1',
+  `INSTID` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -786,9 +845,9 @@ CREATE TABLE `mxk_register` (
   `instName` varchar(200) DEFAULT NULL,
   `status` int DEFAULT NULL,
   `createdBy` varchar(50) DEFAULT NULL,
-  `createdDate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `createdDate` datetime DEFAULT CURRENT_TIMESTAMP,
   `modifiedBy` varchar(50) DEFAULT NULL,
-  `modifiedDate` varchar(50) DEFAULT NULL,
+  `modifiedDate` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -826,9 +885,9 @@ CREATE TABLE `mxk_resources` (
   `STATUS` varchar(45) DEFAULT NULL,
   `DESCRIPTION` varchar(500) DEFAULT NULL,
   `CREATEDBY` varchar(45) DEFAULT NULL,
-  `CREATEDDATE` varchar(45) DEFAULT NULL,
+  `CREATEDDATE` datetime DEFAULT CURRENT_TIMESTAMP,
   `MODIFIEDBY` varchar(45) DEFAULT NULL,
-  `MODIFIEDDATE` varchar(45) DEFAULT NULL,
+  `MODIFIEDDATE` datetime DEFAULT NULL,
   `parentId` varchar(50) DEFAULT NULL,
   `parentname` varchar(200) DEFAULT NULL,
   `APPID` varchar(50) DEFAULT NULL,
@@ -856,47 +915,8 @@ CREATE TABLE `mxk_role_member` (
   `CREATEDDATE` datetime DEFAULT CURRENT_TIMESTAMP,
   `INSTID` varchar(45) NOT NULL,
   PRIMARY KEY (`ID`),
-  KEY `FK_APPROLEU_REFERENCE_APPROLES` (`ROLEID`)
+  UNIQUE KEY `ROLEID_MEMBERID` (`ROLEID`,`MEMBERID`,`TYPE`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='group member,USERS OR GROUPS';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `mxk_role_permissions`
---
-
-DROP TABLE IF EXISTS `mxk_role_permissions`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `mxk_role_permissions` (
-  `ID` varchar(45) NOT NULL COMMENT 'ID',
-  `ROLEID` varchar(45) NOT NULL COMMENT 'GROUPID',
-  `APPID` varchar(45) NOT NULL COMMENT 'APPID',
-  `CREATEDDATE` datetime DEFAULT CURRENT_TIMESTAMP,
-  `INSTID` varchar(45) NOT NULL,
-  PRIMARY KEY (`ID`),
-  KEY `FK_APPROLEA_REFERENCE_APPLICAT` (`APPID`),
-  KEY `FK_APPROLEA_REFERENCE_APPROLES` (`ROLEID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='group privileges';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `mxk_role_privileges`
---
-
-DROP TABLE IF EXISTS `mxk_role_privileges`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `mxk_role_privileges` (
-  `id` varchar(50) NOT NULL,
-  `appid` varchar(50) DEFAULT NULL,
-  `roleid` varchar(50) DEFAULT NULL,
-  `resourceid` varchar(50) DEFAULT NULL,
-  `CREATEDBY` varchar(45) DEFAULT NULL,
-  `CREATEDDATE` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `status` int DEFAULT '1',
-  `INSTID` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -916,42 +936,16 @@ CREATE TABLE `mxk_roles` (
   `RESUMETIME` varchar(45) DEFAULT NULL COMMENT 'RESUMETIME',
   `SUSPENDTIME` varchar(45) DEFAULT NULL COMMENT 'SUSPENDTIME',
   `STATUS` tinyint unsigned DEFAULT NULL COMMENT 'STATUS',
-  `CREATEDBY` varchar(45) DEFAULT NULL COMMENT 'CREATEDBY',
   `ISDEFAULT` tinyint unsigned DEFAULT NULL COMMENT 'ISDEFAULT',
-  `CREATEDDATE` datetime DEFAULT NULL COMMENT 'CREATEDDATE',
+  `CREATEDBY` varchar(45) DEFAULT NULL COMMENT 'CREATEDBY',
+  `CREATEDDATE` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'CREATEDDATE',
   `MODIFIEDBY` varchar(45) DEFAULT NULL COMMENT 'MODIFIEDBY',
   `MODIFIEDDATE` datetime DEFAULT NULL COMMENT 'MODIFIEDDATE',
   `DESCRIPTION` varchar(500) DEFAULT NULL COMMENT 'DESCRIPTION',
   `INSTID` varchar(45) NOT NULL,
+  `APPID` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='groups';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `mxk_sms_provider`
---
-
-DROP TABLE IF EXISTS `mxk_sms_provider`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `mxk_sms_provider` (
-  `id` varchar(50) NOT NULL,
-  `provider` varchar(100) DEFAULT NULL,
-  `message` varchar(500) DEFAULT NULL,
-  `appkey` varchar(100) DEFAULT NULL,
-  `appsecret` varchar(500) DEFAULT NULL,
-  `templateid` varchar(45) DEFAULT NULL,
-  `signname` varchar(45) DEFAULT NULL,
-  `smssdkappid` varchar(45) DEFAULT NULL COMMENT 'tencentcloud smssdkappid',
-  `STATUS` int DEFAULT NULL,
-  `description` varchar(500) DEFAULT NULL,
-  `instId` varchar(45) DEFAULT NULL,
-  `CREATEDBY` varchar(45) DEFAULT NULL,
-  `CREATEDDATE` varchar(45) DEFAULT NULL,
-  `MODIFIEDBY` varchar(45) DEFAULT NULL,
-  `MODIFIEDDATE` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -970,8 +964,8 @@ CREATE TABLE `mxk_socials_associate` (
   `SOCIALUSERID` varchar(100) NOT NULL COMMENT 'SOCIALUSERID',
   `EXATTRIBUTE` text,
   `ACCESSTOKEN` text,
-  `CREATEDDATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `UPDATEDDATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `CREATEDDATE` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `UPDATEDDATE` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `TRANSMISSION` varchar(45) DEFAULT 'automatic',
   `INSTID` varchar(45) NOT NULL,
   PRIMARY KEY (`ID`)
@@ -998,9 +992,9 @@ CREATE TABLE `mxk_socials_provider` (
   `scancode` varchar(45) DEFAULT 'none',
   `status` int DEFAULT '1',
   `CREATEDBY` varchar(45) DEFAULT NULL,
-  `CREATEDDATE` varchar(45) DEFAULT NULL,
+  `CREATEDDATE` datetime DEFAULT CURRENT_TIMESTAMP,
   `MODIFIEDBY` varchar(45) DEFAULT NULL,
-  `MODIFIEDDATE` varchar(45) DEFAULT NULL,
+  `MODIFIEDDATE` datetime DEFAULT NULL,
   `INSTID` varchar(45) NOT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
@@ -1025,7 +1019,7 @@ CREATE TABLE `mxk_synchro_related` (
   `originId2` varchar(200) DEFAULT NULL,
   `originId3` varchar(200) DEFAULT NULL,
   `instId` varchar(45) DEFAULT NULL,
-  `synctime` varchar(45) DEFAULT NULL,
+  `synctime` datetime DEFAULT CURRENT_TIMESTAMP,
   `originname` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
@@ -1061,9 +1055,9 @@ CREATE TABLE `mxk_synchronizers` (
   `SYNCSTARTTIME` int DEFAULT '0' COMMENT '同步时间范围（单位天）',
   `STATUS` varchar(45) DEFAULT NULL,
   `CREATEDBY` varchar(45) DEFAULT NULL,
-  `CREATEDDATE` varchar(45) DEFAULT NULL,
-  `MODIFIEDDATE` varchar(45) DEFAULT NULL,
+  `CREATEDDATE` datetime DEFAULT CURRENT_TIMESTAMP,
   `MODIFIEDBY` varchar(45) DEFAULT NULL,
+  `MODIFIEDDATE` datetime DEFAULT NULL,
   `DESCRIPTION` varchar(45) DEFAULT NULL,
   `INSTID` varchar(45) NOT NULL,
   `APPID` varchar(45) DEFAULT NULL,
@@ -1134,7 +1128,7 @@ CREATE TABLE `mxk_userinfo` (
   `ENTRYDATE` varchar(45) DEFAULT NULL COMMENT '入司时间',
   `STARTWORKDATE` varchar(45) DEFAULT NULL COMMENT '开始工作时间',
   `QUITDATE` varchar(45) DEFAULT NULL COMMENT '离职日期',
-  `SORTORDER` tinyint unsigned DEFAULT '1' COMMENT '部门内排序',
+  `SORTINDEX` tinyint unsigned DEFAULT '1' COMMENT '部门内排序',
   `WORKEMAIL` varchar(45) DEFAULT NULL COMMENT '工作-邮件',
   `WORKPHONENUMBER` varchar(45) DEFAULT NULL COMMENT '工作-电话',
   `WORKCOUNTRY` varchar(45) DEFAULT 'CHN' COMMENT '工作-国家',
@@ -1175,7 +1169,7 @@ CREATE TABLE `mxk_userinfo` (
   `HOMEFAX` varchar(45) DEFAULT NULL COMMENT '家庭-传真',
   `EXTRAATTRIBUTE` varchar(4000) DEFAULT NULL COMMENT '用户扩展属性',
   `CREATEDBY` varchar(45) DEFAULT NULL COMMENT '创建人',
-  `CREATEDDATE` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `CREATEDDATE` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `MODIFIEDBY` varchar(45) DEFAULT NULL COMMENT '修改人',
   `MODIFIEDDATE` datetime DEFAULT NULL COMMENT '修改时间',
   `DESCRIPTION` varchar(400) DEFAULT NULL COMMENT '描述',
@@ -1190,47 +1184,29 @@ CREATE TABLE `mxk_userinfo` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `mxk_userinfo_adjunct`
+-- Table structure for table `sync_job_config_field`
 --
 
-DROP TABLE IF EXISTS `mxk_userinfo_adjunct`;
+DROP TABLE IF EXISTS `sync_job_config_field`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `mxk_userinfo_adjunct` (
-  `ID` varchar(45) NOT NULL COMMENT '编号',
-  `USERID` varchar(45) NOT NULL COMMENT '用户编号',
-  `ORGANIZATION` varchar(45) DEFAULT NULL COMMENT '机构',
-  `DEPARTMENTID` varchar(45) DEFAULT NULL COMMENT '部门编号',
-  `DEPARTMENT` varchar(45) DEFAULT NULL COMMENT '部门',
-  `JOBTITLE` varchar(45) DEFAULT NULL COMMENT '职务',
-  `JOBLEVEL` varchar(45) DEFAULT NULL COMMENT '工作职级',
-  `MANAGERID` varchar(45) DEFAULT NULL COMMENT '经理编号',
-  `MANAGER` varchar(45) DEFAULT NULL COMMENT '经理名字',
-  `ASSISTANTID` varchar(45) DEFAULT NULL COMMENT '助理编号',
-  `ASSISTANT` varchar(45) DEFAULT NULL COMMENT '助理名字',
-  `ENTRYDATE` varchar(45) DEFAULT NULL COMMENT '入司时间',
-  `STARTWORKDATE` varchar(45) DEFAULT NULL COMMENT '开始工作时间',
-  `QUITDATE` varchar(45) DEFAULT NULL COMMENT '离职日期',
-  `SORTORDER` tinyint unsigned DEFAULT '0' COMMENT '部门内排序',
-  `WORKEMAIL` varchar(45) DEFAULT NULL COMMENT '工作-邮件',
-  `WORKPHONENUMBER` varchar(45) DEFAULT NULL COMMENT '工作-电话',
-  `WORKCOUNTRY` varchar(45) DEFAULT NULL COMMENT '工作-国家',
-  `WORKREGION` varchar(45) DEFAULT NULL COMMENT '工作-省/市',
-  `WORKLOCALITY` varchar(45) DEFAULT NULL COMMENT '工作-城市',
-  `WORKSTREETADDRESS` varchar(45) DEFAULT NULL COMMENT '工作-街道',
-  `WORKADDRESSFORMATTED` varchar(45) DEFAULT NULL COMMENT '工作-地址全称',
-  `WORKPOSTALCODE` varchar(45) DEFAULT NULL COMMENT '工作-邮编',
-  `WORKFAX` varchar(45) DEFAULT NULL COMMENT '工作-传真',
-  `CREATEDBY` varchar(45) DEFAULT NULL COMMENT '创建人',
-  `CREATEDDATE` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `MODIFIEDBY` varchar(45) DEFAULT NULL COMMENT '修改人',
-  `MODIFIEDDATE` datetime DEFAULT NULL COMMENT '修改时间',
-  `DESCRIPTION` varchar(400) DEFAULT NULL COMMENT '描述',
-  `COSTCENTER` varchar(45) DEFAULT NULL,
-  `DIVISION` varchar(45) DEFAULT NULL,
-  `INSTID` varchar(45) NOT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='USER INFO Adjunct';
+CREATE TABLE `sync_job_config_field` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `jobid` bigint NOT NULL DEFAULT '0' COMMENT '同步任务ID',
+  `name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT '' COMMENT '规则名',
+  `objecttype` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT '' COMMENT '类型',
+  `targetfield` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT '' COMMENT '目标字段',
+  `targetfieldname` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT '' COMMENT '目标字段描述',
+  `sourcefield` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT '' COMMENT '来源字段',
+  `sourcefieldname` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT '' COMMENT '来源字段描述',
+  `description` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT '' COMMENT '描述',
+  `createuser` bigint DEFAULT '0' COMMENT '创建人',
+  `createtime` datetime DEFAULT NULL COMMENT '创建时间',
+  `updateuser` bigint DEFAULT '0' COMMENT '修改人',
+  `updatetime` datetime DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `idx_job_id` (`jobid`) USING BTREE COMMENT '同步任务ID索引'
+) ENGINE=InnoDB AUTO_INCREMENT=214 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC COMMENT='同步任务字段映射表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -1242,4 +1218,4 @@ CREATE TABLE `mxk_userinfo_adjunct` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-03-15  9:31:45
+-- Dump completed on 2024-09-28 22:30:00

@@ -1,4 +1,6 @@
-FROM openjdk:17-jdk-alpine
+FROM eclipse-temurin:17.0.12_7-jdk-alpine
+
+LABEL authors="MaxKey <support@maxsso.net>"
 
 RUN mkdir -p /maxkey-openapi
 

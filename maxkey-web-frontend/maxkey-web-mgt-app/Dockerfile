@@ -2,7 +2,7 @@
 
 FROM node:16.14.2
 
-LABEL authors="MaxKey <maxkeysupport@163.com>"
+LABEL authors="MaxKey <support@maxsso.net>"
 
 WORKDIR /usr/src/app
 

@@ -2,7 +2,7 @@ echo "network create "
 
 docker network create maxkey.top
 
-mysql_version=8.0.32
+mysql_version=8.4.2
 #MySQL
 docker pull mysql:$mysql_version
 docker image tag mysql:$mysql_version maxkeytop/mysql
