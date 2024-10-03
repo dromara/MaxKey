@@ -80,6 +80,7 @@ allprojects {
     compileJava.options.encoding = 'UTF-8'
     
     eclipse {
+        /*设置工程字符集*/
         jdt  {
             File prefs = file('.settings/org.eclipse.core.resources.prefs')
             if (prefs.exists()) {

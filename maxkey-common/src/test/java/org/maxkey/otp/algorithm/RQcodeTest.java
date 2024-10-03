@@ -64,7 +64,8 @@ EMAIL:forrestgump@example.com
 REV:20080424T195243Z
 END:VCARD
 	 */
-	public static void main(String[] args) {
+	  // 编码  
+	public static void main(String[] args) { 
         try {  
         	
         	 String str = "BEGIN:VCARD\n" +
@@ -78,6 +79,7 @@ END:VCARD
         			    "Connsec\n" +
         			    "TITLE:技术总监\n" +
         			    //"URL:http://blog.csdn.net/lidew521\n" +
+        			    //"NOTE:呼呼测试下吧。。。\n" +
         			    "END:VCARD";
         	 
         	 String str1 = "BEGIN:VCARD\n" +
@@ -94,7 +96,8 @@ END:VCARD
         	 "END:VCARD\n" ;
         	 
         	 System.out.println(str);
-            String path = "D:\\hwy.png";
+            //String str = "CN:男;COP:公司;ZW:职务";// 二维码内容  
+            String path = "D:\\hwy.png";  
             BitMatrix byteMatrix;  
             byteMatrix = new MultiFormatWriter().encode(new String(str1.getBytes("UTF-8"),"iso-8859-1"),  
                     BarcodeFormat.QR_CODE, 300, 300);  
