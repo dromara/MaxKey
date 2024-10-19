@@ -32,6 +32,9 @@ public class SignPrincipal implements  UserDetails {
     
     UserDetails userDetails;
     
+    String instId;
+    String userId;
+    
     String sessionId;
     
     List<GrantedAuthority> grantedAuthority;
@@ -61,6 +64,8 @@ public class SignPrincipal implements  UserDetails {
      */
     public SignPrincipal(UserInfo userInfo) {
         this.userInfo = userInfo;
+        this.userId =userInfo.getId();
+        this.instId = userInfo.getInstId();
         this.authenticated = true;
         this.accountNonExpired = true;
         this.accountNonLocked  = true;
@@ -70,6 +75,8 @@ public class SignPrincipal implements  UserDetails {
     
     public SignPrincipal(UserInfo userInfo,Session session) {
         this.userInfo = userInfo;
+        this.userId =userInfo.getId();
+        this.instId = userInfo.getInstId();
         this.authenticated = true;
         this.accountNonExpired = true;
         this.accountNonLocked  = true;
@@ -156,6 +163,14 @@ public class SignPrincipal implements  UserDetails {
 
 	public void setSessionId(String sessionId) {
 		this.sessionId = sessionId;
+	}
+	
+	public String getInstId() {
+		return instId;
+	}
+
+	public String getUserId() {
+		return userId;
 	}
 
 	@Override
