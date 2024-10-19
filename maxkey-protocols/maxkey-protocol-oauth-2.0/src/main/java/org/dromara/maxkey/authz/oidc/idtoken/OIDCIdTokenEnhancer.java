@@ -40,7 +40,6 @@ import org.dromara.maxkey.crypto.jwt.encryption.service.impl.DefaultJwtEncryptio
 import org.dromara.maxkey.crypto.jwt.signer.service.impl.DefaultJwtSigningAndValidationService;
 import org.dromara.maxkey.entity.apps.oauth2.provider.ClientDetails;
 import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
 
 import com.nimbusds.jose.util.Base64URL;
 import org.slf4j.Logger;

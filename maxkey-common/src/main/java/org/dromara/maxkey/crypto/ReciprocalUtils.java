@@ -32,7 +32,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.LogFactory;
 import org.dromara.maxkey.util.Instance;
 import org.dromara.maxkey.util.StringGenerator;
-import org.dromara.maxkey.util.StrUtils;
 
 /**
  * Reciprocal cipher or Symmetric-key algorithm

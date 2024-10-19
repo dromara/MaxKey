@@ -40,10 +40,8 @@ import org.dromara.maxkey.authz.oauth2.provider.OAuth2Authentication;
 import org.dromara.maxkey.authz.oauth2.provider.token.AccessTokenConverter;
 import org.dromara.maxkey.authz.oauth2.provider.token.DefaultAccessTokenConverter;
 import org.dromara.maxkey.authz.oauth2.provider.token.ResourceServerTokenServices;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.Operation;

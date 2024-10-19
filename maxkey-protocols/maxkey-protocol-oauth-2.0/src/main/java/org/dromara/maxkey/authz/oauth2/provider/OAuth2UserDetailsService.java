@@ -12,7 +12,6 @@
  */
 package org.dromara.maxkey.authz.oauth2.provider;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.dromara.maxkey.authn.SignPrincipal;

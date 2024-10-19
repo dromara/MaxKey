@@ -24,7 +24,6 @@ import org.dromara.maxkey.authn.provider.AbstractAuthenticationProvider;
 import org.dromara.maxkey.authn.web.AuthorizationUtils;
 import org.dromara.maxkey.configuration.ApplicationConfig;
 import org.dromara.maxkey.constants.ConstsLoginType;
-import org.dromara.maxkey.util.StrUtils;
 import org.opensaml.saml1.core.impl.AssertionImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

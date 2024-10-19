@@ -15,8 +15,6 @@
  */
 package org.dromara.maxkey.ip2location.online;
 
-import java.io.IOException;
-
 import org.dromara.maxkey.ip2location.AbstractIpLocation;
 import org.dromara.maxkey.ip2location.IpLocation;
 import org.dromara.maxkey.ip2location.Region;

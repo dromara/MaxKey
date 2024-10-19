@@ -24,7 +24,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.authn.SignPrincipal;
 import org.dromara.maxkey.crypto.jwt.HMAC512Service;
 import org.dromara.maxkey.entity.idm.UserInfo;
-import org.dromara.maxkey.util.StrUtils;
 import org.dromara.maxkey.web.WebContext;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;

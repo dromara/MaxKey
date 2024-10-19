@@ -27,8 +27,6 @@ import org.dromara.maxkey.entity.idm.Groups;
 import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.service.GroupMemberService;
 import org.dromara.maxkey.persistence.service.GroupsService;
-import org.dromara.maxkey.util.DateUtils;
-import org.dromara.maxkey.util.StrUtils;
 import org.dromara.maxkey.web.apis.identity.scim.resources.ScimGroup;
 import org.dromara.maxkey.web.apis.identity.scim.resources.ScimMemberRef;
 import org.dromara.maxkey.web.apis.identity.scim.resources.ScimMeta;

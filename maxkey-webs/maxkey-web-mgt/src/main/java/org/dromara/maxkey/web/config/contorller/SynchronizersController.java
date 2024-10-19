@@ -28,8 +28,6 @@ import org.dromara.maxkey.entity.Connectors;
 import org.dromara.maxkey.entity.Message;
 import org.dromara.maxkey.entity.Synchronizers;
 import org.dromara.maxkey.entity.idm.UserInfo;
-import org.dromara.maxkey.persistence.service.SynchronizersService;
-import org.dromara.maxkey.synchronizer.ISynchronizerService;
 import org.dromara.maxkey.util.StrUtils;
 import org.dromara.maxkey.web.WebContext;
 import org.slf4j.Logger;
@@ -37,7 +35,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;

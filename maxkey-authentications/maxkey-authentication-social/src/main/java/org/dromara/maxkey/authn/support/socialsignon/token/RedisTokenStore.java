@@ -19,10 +19,6 @@ package org.dromara.maxkey.authn.support.socialsignon.token;
 
 import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.constants.ConstsTimeInterval;
-import org.dromara.maxkey.persistence.redis.RedisConnection;
-import org.dromara.maxkey.persistence.redis.RedisConnectionFactory;
-import org.joda.time.DateTime;
-
 import java.util.concurrent.ConcurrentHashMap;
 
 public class RedisTokenStore {

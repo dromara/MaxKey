@@ -17,20 +17,16 @@
 
 package org.dromara.maxkey.authn.provider.scancode;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.dromara.maxkey.authn.session.Session;
-import org.dromara.maxkey.authn.session.SessionManager;
 import org.dromara.maxkey.exception.BusinessException;
 import org.dromara.maxkey.persistence.cache.MomentaryService;
 import org.dromara.maxkey.util.IdGenerator;
-import org.dromara.maxkey.util.JsonUtils;
 import org.dromara.maxkey.util.TimeJsonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.time.Duration;
 import java.util.Objects;
 
 /**

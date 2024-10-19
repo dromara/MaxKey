@@ -17,8 +17,6 @@
 
 package org.dromara.maxkey.exception;
 
-import java.io.Serial;
-
 /**
  * @description:
  * @author: orangeBabu

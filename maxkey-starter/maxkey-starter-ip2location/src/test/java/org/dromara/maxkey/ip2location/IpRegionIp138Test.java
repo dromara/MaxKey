@@ -17,7 +17,6 @@
 package org.dromara.maxkey.ip2location;
 
  
-import org.dromara.maxkey.ip2location.IpLocation;
 import org.dromara.maxkey.ip2location.online.Ip138;
 import org.junit.Test;
 

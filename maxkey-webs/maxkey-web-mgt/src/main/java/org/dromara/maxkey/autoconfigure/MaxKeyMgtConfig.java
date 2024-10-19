@@ -25,8 +25,6 @@ import org.dromara.maxkey.persistence.repository.LoginHistoryRepository;
 import org.dromara.maxkey.persistence.repository.LoginRepository;
 import org.dromara.maxkey.persistence.repository.PasswordPolicyValidator;
 import org.dromara.maxkey.persistence.service.UserInfoService;
-import org.dromara.maxkey.synchronizer.ISynchronizerService;
-import org.dromara.maxkey.synchronizer.ldap.LdapSynchronizerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
