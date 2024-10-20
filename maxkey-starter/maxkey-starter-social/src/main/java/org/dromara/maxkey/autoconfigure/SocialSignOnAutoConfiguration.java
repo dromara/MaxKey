@@ -56,8 +56,7 @@ public class SocialSignOnAutoConfiguration{
     }
     
     @Bean(name = "socialsAssociateService")
-    JdbcSocialsAssociateService socialsAssociateService(
-                JdbcTemplate jdbcTemplate) {
+    JdbcSocialsAssociateService socialsAssociateService(JdbcTemplate jdbcTemplate) {
         JdbcSocialsAssociateService socialsAssociateService = new JdbcSocialsAssociateService(jdbcTemplate);
         _logger.debug("JdbcSocialsAssociateService inited.");
         return socialsAssociateService;

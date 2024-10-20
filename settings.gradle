@@ -30,12 +30,12 @@ include ('maxkey-starter:maxkey-starter-captcha')
 include ('maxkey-starter:maxkey-starter-ip2location')
 include ('maxkey-starter:maxkey-starter-otp')
 include ('maxkey-starter:maxkey-starter-sms')
+include ('maxkey-starter:maxkey-starter-social')
 include ('maxkey-starter:maxkey-starter-web')
 
 //authentications
 include ('maxkey-authentications:maxkey-authentication-core')
 include ('maxkey-authentications:maxkey-authentication-provider')
-include ('maxkey-authentications:maxkey-authentication-social')
 
 //rest apis
 include ('maxkey-web-apis:maxkey-web-api-rest')
