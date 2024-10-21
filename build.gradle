@@ -50,8 +50,11 @@ allprojects {
         /*设置工程字符集*/
         jdt  {
             File prefs = file('.settings/org.eclipse.core.resources.prefs')
+            if(!prefs.getParentFile().exists()){
+            	prefs.getParentFile().mkdirs();
+            }
             if (!prefs.exists()) {
-               prefs.createNewFile();
+            	prefs.createNewFile();
             }
             prefs.write('eclipse.preferences.version=1\n')
             prefs.append('encoding/<project>=UTF-8') //use UTF-8
