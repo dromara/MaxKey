@@ -20,6 +20,10 @@
     <a target="_blank" href="http://www.maxkey.top/zh/about/licenses.html">
         <img src="https://img.shields.io/github/license/dromara/MaxKey" />
     </a>
+	<a target="_blank" href="https://www.bt.cn/u/AjsXmi">
+        <img src="https://img.shields.io/badge/BT_Deploy-Install-20a53a" />
+    </a>
+	
 </p>
 
 # 概述
