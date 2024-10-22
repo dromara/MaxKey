@@ -197,12 +197,12 @@ public class Oauth20AutoConfiguration implements InitializingBean {
             RedisConnectionFactory redisConnFactory) {  
         _logger.debug("OAuth 2 Authorization Code Services init.");
         AuthorizationCodeServices authorizationCodeServices = null;
-        if (persistence == ConstsPersistence.INMEMORY) {
-            authorizationCodeServices = new InMemoryAuthorizationCodeServices();
-            _logger.debug("InMemoryAuthorizationCodeServices");
-        } else if (persistence == ConstsPersistence.REDIS) {
+        if (persistence == ConstsPersistence.REDIS) {
             authorizationCodeServices = new RedisAuthorizationCodeServices(redisConnFactory);
             _logger.debug("RedisAuthorizationCodeServices");
+        }else {
+        	authorizationCodeServices = new InMemoryAuthorizationCodeServices();
+            _logger.debug("InMemoryAuthorizationCodeServices");
         }
         return authorizationCodeServices;
     }
@@ -218,12 +218,12 @@ public class Oauth20AutoConfiguration implements InitializingBean {
             RedisConnectionFactory redisConnFactory) {
         _logger.debug("OAuth 2 TokenStore init.");
         TokenStore tokenStore = null;
-        if (persistence == ConstsPersistence.INMEMORY) {
-            tokenStore = new InMemoryTokenStore();
-            _logger.debug("InMemoryTokenStore");
-        } else if (persistence == ConstsPersistence.REDIS) {
+        if (persistence == ConstsPersistence.REDIS) {
             tokenStore = new RedisTokenStore(redisConnFactory);
             _logger.debug("RedisTokenStore");
+        }else {
+        	 tokenStore = new InMemoryTokenStore();
+             _logger.debug("InMemoryTokenStore");
         }
         return tokenStore;
     }

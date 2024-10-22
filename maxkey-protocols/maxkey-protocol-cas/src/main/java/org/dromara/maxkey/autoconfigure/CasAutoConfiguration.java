@@ -53,12 +53,12 @@ public class CasAutoConfiguration implements InitializingBean {
             RedisConnectionFactory redisConnFactory) {
     	_logger.debug("init casTicketServices.");
     	TicketServices casTicketServices = null;
-        if (persistence == ConstsPersistence.INMEMORY) {
-            casTicketServices = new InMemoryTicketServices();
-            _logger.debug("InMemoryTicketServices");
-        } else if (persistence == ConstsPersistence.REDIS) {
+        if (persistence == ConstsPersistence.REDIS) {
             casTicketServices = new RedisTicketServices(redisConnFactory);
             _logger.debug("RedisTicketServices");
+        }else {
+        	casTicketServices = new InMemoryTicketServices();
+            _logger.debug("InMemoryTicketServices");
         }
         return casTicketServices;
     }
@@ -75,12 +75,12 @@ public class CasAutoConfiguration implements InitializingBean {
             RedisConnectionFactory redisConnFactory) {
     	_logger.debug("init casTicketGrantingTicketServices.");
     	TicketServices casTicketServices = null;
-        if (persistence == ConstsPersistence.INMEMORY) {
-            casTicketServices = new InMemoryTicketGrantingTicketServices();
-            _logger.debug("InMemoryTicketGrantingTicketServices");
-        } else if (persistence == ConstsPersistence.REDIS) {
+        if (persistence == ConstsPersistence.REDIS) {
             casTicketServices = new RedisTicketGrantingTicketServices(redisConnFactory);
             _logger.debug("RedisTicketGrantingTicketServices");
+        }else {
+        	casTicketServices = new InMemoryTicketGrantingTicketServices();
+            _logger.debug("InMemoryTicketGrantingTicketServices");
         }
         return casTicketServices;
     }
@@ -91,12 +91,12 @@ public class CasAutoConfiguration implements InitializingBean {
             RedisConnectionFactory redisConnFactory) {
     	_logger.debug("init casTicketGrantingTicketServices.");
     	TicketServices casTicketServices = null;
-        if (persistence == ConstsPersistence.INMEMORY) {
-            casTicketServices = new InMemoryProxyGrantingTicketServices();
-            _logger.debug("InMemoryProxyGrantingTicketServices");
-        } else if (persistence == ConstsPersistence.REDIS) {
+        if (persistence == ConstsPersistence.REDIS) {
             casTicketServices = new RedisProxyGrantingTicketServices(redisConnFactory);
             _logger.debug("RedisProxyGrantingTicketServices");
+        }else {
+        	casTicketServices = new InMemoryProxyGrantingTicketServices();
+            _logger.debug("InMemoryProxyGrantingTicketServices");
         }
         return casTicketServices;
     }
