@@ -18,9 +18,13 @@
 package org.dromara.maxkey.autoconfigure;
 
 import org.dromara.maxkey.authz.cas.endpoint.ticket.TicketServices;
-import org.dromara.maxkey.authz.cas.endpoint.ticket.pgt.ProxyGrantingTicketServicesFactory;
-import org.dromara.maxkey.authz.cas.endpoint.ticket.st.TicketServicesFactory;
-import org.dromara.maxkey.authz.cas.endpoint.ticket.tgt.TicketGrantingTicketServicesFactory;
+import org.dromara.maxkey.authz.cas.endpoint.ticket.pgt.InMemoryProxyGrantingTicketServices;
+import org.dromara.maxkey.authz.cas.endpoint.ticket.pgt.RedisProxyGrantingTicketServices;
+import org.dromara.maxkey.authz.cas.endpoint.ticket.st.InMemoryTicketServices;
+import org.dromara.maxkey.authz.cas.endpoint.ticket.st.RedisTicketServices;
+import org.dromara.maxkey.authz.cas.endpoint.ticket.tgt.InMemoryTicketGrantingTicketServices;
+import org.dromara.maxkey.authz.cas.endpoint.ticket.tgt.RedisTicketGrantingTicketServices;
+import org.dromara.maxkey.constants.ConstsPersistence;
 import org.dromara.maxkey.persistence.redis.RedisConnectionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +33,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.jdbc.core.JdbcTemplate;
 
 @AutoConfiguration
 @ComponentScan(basePackages = {
@@ -47,11 +50,17 @@ public class CasAutoConfiguration implements InitializingBean {
     @Bean(name = "casTicketServices")
     TicketServices casTicketServices(
             @Value("${maxkey.server.persistence}") int persistence,
-            @Value("${maxkey.login.remeberme.validity}") int validity,
-            JdbcTemplate jdbcTemplate,
             RedisConnectionFactory redisConnFactory) {
     	_logger.debug("init casTicketServices.");
-        return new TicketServicesFactory().getService(persistence, jdbcTemplate, redisConnFactory);
+    	TicketServices casTicketServices = null;
+        if (persistence == ConstsPersistence.INMEMORY) {
+            casTicketServices = new InMemoryTicketServices();
+            _logger.debug("InMemoryTicketServices");
+        } else if (persistence == ConstsPersistence.REDIS) {
+            casTicketServices = new RedisTicketServices(redisConnFactory);
+            _logger.debug("RedisTicketServices");
+        }
+        return casTicketServices;
     }
 
     /**
@@ -63,21 +72,33 @@ public class CasAutoConfiguration implements InitializingBean {
     @Bean(name = "casTicketGrantingTicketServices")
     TicketServices casTicketGrantingTicketServices(
             @Value("${maxkey.server.persistence}") int persistence,
-            @Value("${maxkey.login.remeberme.validity}") int validity,
-            JdbcTemplate jdbcTemplate,
             RedisConnectionFactory redisConnFactory) {
     	_logger.debug("init casTicketGrantingTicketServices.");
-        return new TicketGrantingTicketServicesFactory().getService(persistence, jdbcTemplate, redisConnFactory);
+    	TicketServices casTicketServices = null;
+        if (persistence == ConstsPersistence.INMEMORY) {
+            casTicketServices = new InMemoryTicketGrantingTicketServices();
+            _logger.debug("InMemoryTicketGrantingTicketServices");
+        } else if (persistence == ConstsPersistence.REDIS) {
+            casTicketServices = new RedisTicketGrantingTicketServices(redisConnFactory);
+            _logger.debug("RedisTicketGrantingTicketServices");
+        }
+        return casTicketServices;
     }
 
     @Bean(name = "casProxyGrantingTicketServices")
     TicketServices casProxyGrantingTicketServices(
             @Value("${maxkey.server.persistence}") int persistence,
-            @Value("${maxkey.login.remeberme.validity}") int validity,
-            JdbcTemplate jdbcTemplate,
             RedisConnectionFactory redisConnFactory) {
     	_logger.debug("init casTicketGrantingTicketServices.");
-        return new ProxyGrantingTicketServicesFactory().getService(persistence, jdbcTemplate, redisConnFactory);
+    	TicketServices casTicketServices = null;
+        if (persistence == ConstsPersistence.INMEMORY) {
+            casTicketServices = new InMemoryProxyGrantingTicketServices();
+            _logger.debug("InMemoryProxyGrantingTicketServices");
+        } else if (persistence == ConstsPersistence.REDIS) {
+            casTicketServices = new RedisProxyGrantingTicketServices(redisConnFactory);
+            _logger.debug("RedisProxyGrantingTicketServices");
+        }
+        return casTicketServices;
     }
     
     

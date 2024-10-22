@@ -32,14 +32,19 @@ import org.dromara.maxkey.authz.oauth2.provider.client.ClientDetailsUserDetailsS
 import org.dromara.maxkey.authz.oauth2.provider.client.JdbcClientDetailsService;
 import org.dromara.maxkey.authz.oauth2.provider.code.AuthorizationCodeServices;
 import org.dromara.maxkey.authz.oauth2.provider.code.AuthorizationCodeServicesFactory;
+import org.dromara.maxkey.authz.oauth2.provider.code.InMemoryAuthorizationCodeServices;
+import org.dromara.maxkey.authz.oauth2.provider.code.RedisAuthorizationCodeServices;
 import org.dromara.maxkey.authz.oauth2.provider.endpoint.TokenEndpointAuthenticationFilter;
 import org.dromara.maxkey.authz.oauth2.provider.request.DefaultOAuth2RequestFactory;
 import org.dromara.maxkey.authz.oauth2.provider.token.DefaultTokenServices;
 import org.dromara.maxkey.authz.oauth2.provider.token.TokenStore;
+import org.dromara.maxkey.authz.oauth2.provider.token.store.InMemoryTokenStore;
 import org.dromara.maxkey.authz.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.dromara.maxkey.authz.oauth2.provider.token.store.RedisTokenStore;
 import org.dromara.maxkey.authz.oauth2.provider.token.store.TokenStoreFactory;
 import org.dromara.maxkey.authz.oidc.idtoken.OIDCIdTokenEnhancer;
 import org.dromara.maxkey.configuration.oidc.OIDCProviderMetadataDetails;
+import org.dromara.maxkey.constants.ConstsPersistence;
 import org.dromara.maxkey.crypto.jose.keystore.JWKSetKeyStore;
 import org.dromara.maxkey.crypto.jwt.encryption.service.impl.DefaultJwtEncryptionAndDecryptionService;
 import org.dromara.maxkey.crypto.jwt.signer.service.impl.DefaultJwtSigningAndValidationService;
@@ -192,10 +197,17 @@ public class Oauth20AutoConfiguration implements InitializingBean {
     @Bean(name = "oauth20AuthorizationCodeServices")
     AuthorizationCodeServices oauth20AuthorizationCodeServices(
             @Value("${maxkey.server.persistence}") int persistence,
-            JdbcTemplate jdbcTemplate,
             RedisConnectionFactory redisConnFactory) {  
         _logger.debug("OAuth 2 Authorization Code Services init.");
-        return new AuthorizationCodeServicesFactory().getService(persistence, jdbcTemplate, redisConnFactory);
+        AuthorizationCodeServices authorizationCodeServices = null;
+        if (persistence == ConstsPersistence.INMEMORY) {
+            authorizationCodeServices = new InMemoryAuthorizationCodeServices();
+            _logger.debug("InMemoryAuthorizationCodeServices");
+        } else if (persistence == ConstsPersistence.REDIS) {
+            authorizationCodeServices = new RedisAuthorizationCodeServices(redisConnFactory);
+            _logger.debug("RedisAuthorizationCodeServices");
+        }
+        return authorizationCodeServices;
     }
 
     /**
@@ -206,10 +218,17 @@ public class Oauth20AutoConfiguration implements InitializingBean {
     @Bean(name = "oauth20TokenStore")
     TokenStore oauth20TokenStore(
             @Value("${maxkey.server.persistence}") int persistence,
-            JdbcTemplate jdbcTemplate,
             RedisConnectionFactory redisConnFactory) {
         _logger.debug("OAuth 2 TokenStore init.");
-        return new TokenStoreFactory().getTokenStore(persistence, jdbcTemplate, redisConnFactory);
+        TokenStore tokenStore = null;
+        if (persistence == ConstsPersistence.INMEMORY) {
+            tokenStore = new InMemoryTokenStore();
+            _logger.debug("InMemoryTokenStore");
+        } else if (persistence == ConstsPersistence.REDIS) {
+            tokenStore = new RedisTokenStore(redisConnFactory);
+            _logger.debug("RedisTokenStore");
+        }
+        return tokenStore;
     }
 
     /**
