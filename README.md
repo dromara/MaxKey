@@ -129,9 +129,10 @@ App Management UI
 
 |  OS       | Manual    | 
 | --------      | :-----  |
-| Windows  | <a href="http://maxkey.top/zh/conf/tutorial.html?#windows"  target="_blank">Document</a>  |
-| Linux    | <a href="http://maxkey.top/zh/conf/tutorial.html?#linux"  target="_blank">Document</a>  |
-| Docker   | <a href="http://maxkey.top/zh/conf/deploy_docker.html"  target="_blank">Document</a>  |
+| Windows  | <a href="https://www.maxkey.top/zh/about/download.html"  target="_blank">Document</a>  |
+| Linux    | <a href="https://www.maxkey.top/zh/about/download.html"  target="_blank">Document</a>  |
+| Docker   | <a href="https://www.maxkey.top/zh/about/download.html"  target="_blank">Document</a>  |
+| 宝塔     | <a href="https://www.maxkey.top/zh/about/download.html"  target="_blank">Document</a>  |
 
 # License
  

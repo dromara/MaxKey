@@ -132,9 +132,10 @@ MaxKey注重企业级场景下的性能、安全和易用性，广泛应用于�
 
 | 操作系统       | 安装手册    | 
 | --------      | :-----  |
-| Windows  | <a href="http://maxkey.top/zh/conf/tutorial.html?#windows"  target="_blank">链接</a>  |
-| Linux    | <a href="http://maxkey.top/zh/conf/tutorial.html?#linux"  target="_blank">链接</a>  |
-| Docker   | <a href="http://maxkey.top/zh/conf/deploy_docker.html"  target="_blank">链接</a>  |
+| Windows  | <a href="https://www.maxkey.top/zh/about/download.html"  target="_blank">链接</a>  |
+| Linux    | <a href="https://www.maxkey.top/zh/about/download.html"  target="_blank">链接</a>  |
+| Docker   | <a href="https://www.maxkey.top/zh/about/download.html"  target="_blank">链接</a>  |
+| 宝塔     | <a href="https://www.maxkey.top/zh/about/download.html"  target="_blank">链接</a>  |
  
 # License
  
