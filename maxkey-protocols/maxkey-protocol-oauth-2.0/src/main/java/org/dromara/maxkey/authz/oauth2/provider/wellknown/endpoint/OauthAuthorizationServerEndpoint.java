@@ -185,6 +185,7 @@ public class OauthAuthorizationServerEndpoint extends AbstractEndpoint {
 			oauthConfig.setIssuer(baseUrl + "/maxkey");
 			Set<String>  response_types_supported = new HashSet<String>();
 			response_types_supported.add("code");
+			response_types_supported.add("authorization_code");
 			response_types_supported.add("code id_token");
 			response_types_supported.add("id_token");
 			oauthConfig.setResponse_types_supported(response_types_supported);

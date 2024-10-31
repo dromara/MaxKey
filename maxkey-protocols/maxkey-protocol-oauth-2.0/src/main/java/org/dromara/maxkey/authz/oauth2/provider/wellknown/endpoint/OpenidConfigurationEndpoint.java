@@ -98,7 +98,11 @@ public class OpenidConfigurationEndpoint extends AbstractEndpoint {
 			openidConfig.setIntrospection_endpoint_auth_methods_supported(introspection_endpoint_auth_methods_supported);                                                  
 			                                                  
 			openidConfig.setIssuer(clientDetails.getIssuer());
-			openidConfig.setResponse_types_supported(clientDetails.getAuthorizedGrantTypes());
+			Set<String> response_types_supported =clientDetails.getAuthorizedGrantTypes();
+			if(response_types_supported.contains("authorization_code")) {
+				response_types_supported.add("code");
+			}
+			openidConfig.setResponse_types_supported(response_types_supported);
 			
 			Set<String>  response_modes_supported = new HashSet<String>();
 			response_modes_supported.add("query");
@@ -176,6 +180,7 @@ public class OpenidConfigurationEndpoint extends AbstractEndpoint {
 			openidConfig.setIssuer(baseUrl + "/maxkey");
 			Set<String>  response_types_supported = new HashSet<String>();
 			response_types_supported.add("code");
+			response_types_supported.add("authorization_code");
 			response_types_supported.add("code id_token");
 			response_types_supported.add("id_token");
 			openidConfig.setResponse_types_supported(response_types_supported);

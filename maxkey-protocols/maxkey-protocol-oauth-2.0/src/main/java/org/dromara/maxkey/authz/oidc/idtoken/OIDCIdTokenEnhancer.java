@@ -86,11 +86,12 @@ public class OIDCIdTokenEnhancer implements TokenEnhancer {
 			
 			DefaultJwtSigningAndValidationService jwtSignerService = null;
 			JWSAlgorithm signingAlg = null;
+			String signerKeyId = clientDetails.getClientId() + "_sig";
 			try {//jwtSignerService
 				if (StringUtils.isNotBlank(clientDetails.getSignature()) && !clientDetails.getSignature().equalsIgnoreCase("none")) {
 					jwtSignerService = new DefaultJwtSigningAndValidationService(
 							clientDetails.getSignatureKey(),
-							clientDetails.getClientId() + "_sig",
+							signerKeyId,
 							clientDetails.getSignature()
 						);
 
@@ -117,7 +118,7 @@ public class OIDCIdTokenEnhancer implements TokenEnhancer {
 					&& jwtSignerService != null
 					&& clientDetails.getIssuer().equalsIgnoreCase("https://self-issued.me") 
 					){
-				builder.claim("sub_jwk", jwtSignerService.getAllPublicKeys().get(jwtSignerService.getDefaultSignerKeyId()));
+				builder.claim("sub_jwk", jwtSignerService.getAllPublicKeys().get(signerKeyId));
 			}
 			
 			// if the auth time claim was explicitly requested OR if the client always wants the auth time, put it in
@@ -133,6 +134,7 @@ public class OIDCIdTokenEnhancer implements TokenEnhancer {
 			if (!Strings.isNullOrEmpty(nonce)) {
 				builder.claim("nonce", nonce);
 			}
+			//add at_hash
 			if(jwtSignerService != null) {
 				SignedJWT signed = new SignedJWT(new JWSHeader(signingAlg), builder.build());
 				Set<String> responseTypes = request.getResponseTypes();
@@ -148,9 +150,10 @@ public class OIDCIdTokenEnhancer implements TokenEnhancer {
 			if (StringUtils.isNotBlank(clientDetails.getSignature()) 
 					&& !clientDetails.getSignature().equalsIgnoreCase("none")) {
 				try {
-					builder.claim("kid", jwtSignerService.getDefaultSignerKeyId());
+					builder.claim("kid", signerKeyId);
 					// signed ID token
-					JWT idToken = new SignedJWT(new JWSHeader(signingAlg), builder.build());
+					JWSHeader jwsHeader =   new JWSHeader.Builder(signingAlg).keyID(signerKeyId).build();
+					JWT idToken = new SignedJWT(jwsHeader, builder.build());
 					// sign it with the server's key
 					jwtSignerService.signJwt((SignedJWT) idToken);
 					idTokenString = idToken.serialize();
@@ -161,10 +164,11 @@ public class OIDCIdTokenEnhancer implements TokenEnhancer {
 			}else if (StringUtils.isNotBlank(clientDetails.getAlgorithm()) 
 					&& !clientDetails.getAlgorithm().equalsIgnoreCase("none")) {
 				try {
+					String encryptionKeyId = clientDetails.getClientId()  + "_enc";
 					DefaultJwtEncryptionAndDecryptionService jwtEncryptionService = 
 								new DefaultJwtEncryptionAndDecryptionService(
 										clientDetails.getAlgorithmKey(),
-										clientDetails.getClientId()  + "_enc",
+										encryptionKeyId,
 										clientDetails.getAlgorithm()
 									);
 					Payload payload = builder.build().toPayload();
@@ -177,6 +181,7 @@ public class OIDCIdTokenEnhancer implements TokenEnhancer {
 					JWEObject jweObject = new JWEObject(
 						    new JWEHeader.Builder(jweHeader)
 						        .contentType("JWT") // required to indicate nested JWT
+						        .keyID(encryptionKeyId)
 						        .build(),
 						        payload);
 					
