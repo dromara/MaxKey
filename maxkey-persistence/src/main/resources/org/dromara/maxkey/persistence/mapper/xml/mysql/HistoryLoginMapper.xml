@@ -50,10 +50,10 @@
 			code,
 			provider,
 			sourceip,
+			location,
 			browser,
 			platform,
 			application,
-			loginurl,
 			logintime,
 			logouttime
     	from mxk_history_login
@@ -76,10 +76,10 @@
             code,
             provider,
             sourceip,
+            location,
             browser,
             platform,
             application,
-            loginurl,
             logintime,
             logouttime
         from mxk_history_login

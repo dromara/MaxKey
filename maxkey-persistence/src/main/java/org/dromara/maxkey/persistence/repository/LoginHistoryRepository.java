@@ -47,10 +47,9 @@ public class LoginHistoryRepository {
                     browser , 
                     platform , 
                     application , 
-                    loginurl , 
                     sessionstatus ,
                     instid)
-                values( ? , ? , ? , ? , ? , ? , ? , ? , ?, ? , ? , ? , ?, ?, ? , ? , ?, ? , ? , ?)
+                values( ? , ? , ? , ? , ? , ? , ? , ?, ? , ? , ? , ?, ?, ? , ? , ?, ? , ? , ?)
     		""";
 
     protected JdbcTemplate jdbcTemplate;
@@ -61,7 +60,6 @@ public class LoginHistoryRepository {
         
     public void login(HistoryLogin historyLogin) {
         historyLogin.setId(WebContext.genId());
-        historyLogin.setLoginUrl(WebContext.getRequest().getRequestURI());
         //Thread insert 
         new Thread(new HistoryLoginRunnable(jdbcTemplate,historyLogin)).start();
     }
@@ -101,12 +99,10 @@ public class LoginHistoryRepository {
 	                        historyLogin.getBrowser(),
 	                        historyLogin.getPlatform(),
 	                        "Browser",
-	                        historyLogin.getLoginUrl(),
 	                        historyLogin.getSessionStatus(),
 	                        historyLogin.getInstId()
 	                        },
 	                new int[] { 
-	                        Types.VARCHAR,
 	                        Types.VARCHAR,
 	                        Types.VARCHAR,
 	                        Types.VARCHAR,

@@ -79,8 +79,6 @@ public class HistoryLogin  extends JpaEntity  implements Serializable{
 	@Column
 	String application;
 	@Column
-	String loginUrl;
-	@Column
 	Date loginTime;
 	@Column
 	Date logoutTime;
@@ -234,14 +232,6 @@ public class HistoryLogin  extends JpaEntity  implements Serializable{
 		this.application = application;
 	}
 
-	public String getLoginUrl() {
-		return loginUrl;
-	}
-
-	public void setLoginUrl(String loginUrl) {
-		this.loginUrl = loginUrl;
-	}
-
 	public Date getLoginTime() {
 		return loginTime;
 	}
@@ -335,8 +325,6 @@ public class HistoryLogin  extends JpaEntity  implements Serializable{
 		builder.append(platform);
 		builder.append(", application=");
 		builder.append(application);
-		builder.append(", loginUrl=");
-		builder.append(loginUrl);
 		builder.append(", loginTime=");
 		builder.append(loginTime);
 		builder.append(", logoutTime=");

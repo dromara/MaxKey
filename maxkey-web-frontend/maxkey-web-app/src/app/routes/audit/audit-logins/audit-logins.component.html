@@ -67,6 +67,7 @@
         <th nzAlign="center">{{ 'mxk.history.login.message' | i18n }}</th>
         <th nzAlign="center">{{ 'mxk.history.login.loginType' | i18n }}</th>
         <th nzAlign="center">{{ 'mxk.history.login.sourceIp' | i18n }}</th>
+        <th nzAlign="center">{{ 'mxk.history.login.location' | i18n }}</th>
         <th nzAlign="center">{{ 'mxk.history.login.browser' | i18n }}</th>
         <th nzAlign="center">{{ 'mxk.history.login.platform' | i18n }}</th>
         <th nzAlign="center">{{ 'mxk.history.login.loginTime' | i18n }}</th>
@@ -80,9 +81,10 @@
         </td>
         <td nzAlign="left">{{ data.username }}</td>
         <td nzAlign="left">{{ data.displayName }}</td>
-        <td nzAlign="left">{{ data.provider }}</td>
+        <td nzAlign="left">{{ data.message }}</td>
         <td nzAlign="left">{{ data.loginType }}</td>
         <td nzAlign="left">{{ data.sourceIp }}</td>
+        <td nzAlign="left">{{ data.location }}</td>
         <td nzAlign="left">{{ data.browser }}</td>
         <td nzAlign="left">{{ data.platform }}</td>
         <td nzAlign="left">{{ data.loginTime }}</td>

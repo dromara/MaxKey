@@ -603,6 +603,7 @@
 			"login.message": "狀態",
 			"login.loginType": "登錄方式",
 			"login.sourceIp": "訪問地址",
+			"login.location": "归属地",
 			"login.browser": "瀏覽器",
 			"login.loginTime": "登錄時間",
 			"login.logoutTime": "退出時間",
