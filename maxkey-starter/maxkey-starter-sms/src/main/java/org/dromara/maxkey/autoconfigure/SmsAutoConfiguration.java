@@ -49,8 +49,7 @@ public class SmsAutoConfiguration  {
             smsOtpAuthnService.setRedisOptTokenStore(redisOptTokenStore);
         }
         
-        _logger.debug("SmsOtpAuthnService {} inited." , 
-        				persistence == ConstsPersistence.REDIS ? "Redis" : "InMemory");
+        _logger.debug("SmsOtpAuthnService {} inited." , persistence == ConstsPersistence.REDIS ? "Redis" : "InMemory");
         return smsOtpAuthnService;
     }
    

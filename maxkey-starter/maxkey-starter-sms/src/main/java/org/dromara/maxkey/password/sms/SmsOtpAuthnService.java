@@ -17,7 +17,6 @@
 
 package org.dromara.maxkey.password.sms;
 
-import java.sql.Types;
 import java.util.concurrent.TimeUnit;
 
 import org.dromara.maxkey.configuration.EmailConfig;
@@ -33,17 +32,16 @@ import org.dromara.maxkey.password.sms.impl.SmsOtpAuthnTencentCloud;
 import org.dromara.maxkey.password.sms.impl.SmsOtpAuthnYunxin;
 import org.dromara.maxkey.persistence.service.CnfEmailSendersService;
 import org.dromara.maxkey.persistence.service.CnfSmsProviderService;
+import org.dromara.mybatis.jpa.query.LambdaQuery;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 
 public class SmsOtpAuthnService {
 
-    protected static final Cache<String, AbstractOtpAuthn> smsAuthnStore = 
-            Caffeine.newBuilder()
-                .expireAfterWrite(60, TimeUnit.MINUTES)
-                .build();
-    
+	static final Cache<String, AbstractOtpAuthn> smsAuthnStore = 
+			Caffeine.newBuilder().expireAfterWrite(60, TimeUnit.MINUTES).build();
+
     CnfSmsProviderService smsProviderService;
     
     CnfEmailSendersService emailSendersService;
@@ -62,69 +60,51 @@ public class SmsOtpAuthnService {
 	}
 
 	public AbstractOtpAuthn getByInstId(String instId) {
-    	AbstractOtpAuthn otpAuthn = smsAuthnStore.getIfPresent(instId);
-    	if(otpAuthn == null) {
-    		CnfSmsProvider smsProvider = 
-    				smsProviderService.findOne("where instid = ? ", new Object[]{instId}, new int[]{Types.VARCHAR});
+    	AbstractOtpAuthn smsOtpAuthn = smsAuthnStore.getIfPresent(instId);
+    	if(smsOtpAuthn == null) {
+    		LambdaQuery<CnfSmsProvider> lambdaQuery = new LambdaQuery<CnfSmsProvider>();
+    		lambdaQuery.eq(CnfSmsProvider::getInstId, instId);
+    		CnfSmsProvider smsProvider = smsProviderService.get(lambdaQuery);
     		if(smsProvider != null ) {
-    			
     			if(smsProvider.getProvider().equalsIgnoreCase("aliyun")) {
-    				SmsOtpAuthnAliyun aliyun = new SmsOtpAuthnAliyun(
-													smsProvider.getAppKey(),
-													PasswordReciprocal.getInstance().decoder(smsProvider.getAppSecret()),
-													smsProvider.getTemplateId(),
-													smsProvider.getSignName()
-												);
-    				if(redisOptTokenStore != null) {
-    					aliyun.setOptTokenStore(redisOptTokenStore);
-    				}
-    				otpAuthn = aliyun;
+					smsOtpAuthn = new SmsOtpAuthnAliyun(
+							smsProvider.getAppKey(),
+							PasswordReciprocal.getInstance().decoder(smsProvider.getAppSecret()),
+							smsProvider.getTemplateId(), 
+							smsProvider.getSignName());
     			}else if(smsProvider.getProvider().equalsIgnoreCase("tencentcloud")) {
-    				SmsOtpAuthnTencentCloud tencentCloud = new SmsOtpAuthnTencentCloud(
-    												smsProvider.getAppKey(),
-													PasswordReciprocal.getInstance().decoder(smsProvider.getAppSecret()),
-    												smsProvider.getSmsSdkAppId(),
-    												smsProvider.getTemplateId(),
-    												smsProvider.getSignName()
-    											);
-    				if(redisOptTokenStore != null) {
-    					tencentCloud.setOptTokenStore(redisOptTokenStore);
-    				}
-    				otpAuthn = tencentCloud;
+					smsOtpAuthn = new SmsOtpAuthnTencentCloud(
+							smsProvider.getAppKey(),
+							PasswordReciprocal.getInstance().decoder(smsProvider.getAppSecret()),
+							smsProvider.getSmsSdkAppId(), 
+							smsProvider.getTemplateId(), smsProvider.getSignName());
     			}else if(smsProvider.getProvider().equalsIgnoreCase("neteasesms")) {
-    				SmsOtpAuthnYunxin yunxin = new SmsOtpAuthnYunxin(
-    												smsProvider.getAppKey(),
-													PasswordReciprocal.getInstance().decoder(smsProvider.getAppSecret()),
-    												smsProvider.getTemplateId()
-    											);
-    				if(redisOptTokenStore != null) {
-    					yunxin.setOptTokenStore(redisOptTokenStore);
-    				}
-    				otpAuthn = yunxin;
+					smsOtpAuthn = new SmsOtpAuthnYunxin(
+							smsProvider.getAppKey(),
+							PasswordReciprocal.getInstance().decoder(smsProvider.getAppSecret()),
+							smsProvider.getTemplateId());
     			}else if(smsProvider.getProvider().equalsIgnoreCase("email")) {
-    				CnfEmailSenders emailSender = 
-    						emailSendersService.findOne("where instid = ? ", new Object[]{instId}, new int[]{Types.VARCHAR});
-    				
-    				String credentials = PasswordReciprocal.getInstance().decoder(emailSender.getCredentials());
-    				EmailConfig emailConfig = 
-    								new EmailConfig(
-    										emailSender.getAccount(),
-    										credentials,
-    										emailSender.getSmtpHost(),
-    										emailSender.getPort(),
-    										ConstsBoolean.isTrue(emailSender.getSslSwitch()),
-    										emailSender.getSender());
-    				MailOtpAuthn mailOtpAuthn = new MailOtpAuthn(emailConfig);
-    				if(redisOptTokenStore != null) {
-    					mailOtpAuthn.setOptTokenStore(redisOptTokenStore);
-    				}
-    				otpAuthn = mailOtpAuthn;
+    				LambdaQuery<CnfEmailSenders> emailSenderslambdaQuery = new LambdaQuery<CnfEmailSenders>();
+    				emailSenderslambdaQuery.eq(CnfEmailSenders::getInstId, instId);
+    				CnfEmailSenders emailSender = emailSendersService.get(emailSenderslambdaQuery);
+					String credentials = PasswordReciprocal.getInstance().decoder(emailSender.getCredentials());
+					EmailConfig emailConfig = new EmailConfig(
+							emailSender.getAccount(), 
+							credentials,
+							emailSender.getSmtpHost(),
+							emailSender.getPort(),
+							ConstsBoolean.isTrue(emailSender.getSslSwitch()), 
+							emailSender.getSender());
+    				smsOtpAuthn = new MailOtpAuthn(emailConfig);
     			}
     			
-    			smsAuthnStore.put(instId, otpAuthn);	
+    			if(redisOptTokenStore != null) {
+    				smsOtpAuthn.setOptTokenStore(redisOptTokenStore);
+				}
+    			smsAuthnStore.put(instId, smsOtpAuthn);	
     		}
     	}
-    	return otpAuthn;
+    	return smsOtpAuthn;
     }
 
 	public void setRedisOptTokenStore(RedisOtpTokenStore redisOptTokenStore) {

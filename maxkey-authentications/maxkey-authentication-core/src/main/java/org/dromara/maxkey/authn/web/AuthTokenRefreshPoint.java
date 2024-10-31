@@ -65,8 +65,7 @@ public class AuthTokenRefreshPoint {
  		_logger.trace("refresh token {} " , refreshToken);
  		if(_logger.isTraceEnabled()) {WebContext.printRequest(request);}
  		try {
-	 		if(StringUtils.isNotBlank(refreshToken) 
-	 				&& refreshTokenService.validateJwtToken(refreshToken)) {
+	 		if(refreshTokenService.validateJwtToken(refreshToken)) {
 	 			String sessionId = refreshTokenService.resolveJWTID(refreshToken);
 	 			_logger.trace("Try to  refresh sessionId [{}]" , sessionId);
 		 		Session session = sessionManager.refresh(sessionId);
