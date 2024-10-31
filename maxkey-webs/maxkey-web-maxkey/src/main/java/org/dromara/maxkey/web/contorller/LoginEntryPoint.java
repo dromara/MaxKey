@@ -17,38 +17,26 @@
 
 package org.dromara.maxkey.web.contorller;
 
-import java.awt.image.BufferedImage;
 import java.text.ParseException;
 import java.util.HashMap;
-import java.util.Objects;
-
 import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.authn.LoginCredential;
-import org.dromara.maxkey.authn.QrCodeCredentialDto;
-import org.dromara.maxkey.authn.ScanCode;
 import org.dromara.maxkey.authn.jwt.AuthJwt;
 import org.dromara.maxkey.authn.jwt.AuthTokenService;
 import org.dromara.maxkey.authn.provider.AbstractAuthenticationProvider;
-import org.dromara.maxkey.authn.session.Session;
 import org.dromara.maxkey.authn.session.SessionManager;
 import org.dromara.maxkey.authn.support.kerberos.KerberosService;
 import org.dromara.maxkey.authn.support.rememberme.AbstractRemeberMeManager;
 import org.dromara.maxkey.authn.support.rememberme.RemeberMe;
 import org.dromara.maxkey.authn.support.socialsignon.service.SocialSignOnProviderService;
-import org.dromara.maxkey.authn.web.AuthorizationUtils;
 import org.dromara.maxkey.configuration.ApplicationConfig;
 import org.dromara.maxkey.constants.ConstsLoginType;
-import org.dromara.maxkey.crypto.Base64Utils;
-import org.dromara.maxkey.crypto.password.PasswordReciprocal;
 import org.dromara.maxkey.entity.*;
 import org.dromara.maxkey.entity.idm.UserInfo;
-import org.dromara.maxkey.exception.BusinessException;
 import org.dromara.maxkey.password.onetimepwd.AbstractOtpAuthn;
 import org.dromara.maxkey.password.sms.SmsOtpAuthnService;
-import org.dromara.maxkey.authn.provider.scancode.ScanCodeService;
 import org.dromara.maxkey.persistence.service.SocialsAssociatesService;
 import org.dromara.maxkey.persistence.service.UserInfoService;
-import org.dromara.maxkey.util.QRCodeUtils;
 import org.dromara.maxkey.web.WebConstants;
 import org.dromara.maxkey.web.WebContext;
 import org.slf4j.Logger;
@@ -56,7 +44,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -69,8 +56,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-import static org.reflections.Reflections.log;
 
 /**
  * @author Crystal.Sea
@@ -110,9 +95,6 @@ public class LoginEntryPoint {
     SmsOtpAuthnService smsAuthnService;
 
 	@Autowired
-	ScanCodeService scanCodeService;
-
-	@Autowired
 	AbstractRemeberMeManager remeberMeManager;
 
 	@Autowired
@@ -127,8 +109,7 @@ public class LoginEntryPoint {
 	public Message<?> get(@RequestParam(value = "remember_me", required = false) String rememberMeJwt) {
 		logger.debug("/get.");
 		//Remember Me
-		if(StringUtils.isNotBlank(rememberMeJwt)
-				&& authTokenService.validateJwtToken(rememberMeJwt)) {
+		if(authTokenService.validateJwtToken(rememberMeJwt)) {
 			try {
 				RemeberMe remeberMe = remeberMeManager.resolve(rememberMeJwt);
 				if(remeberMe != null) {
@@ -278,70 +259,4 @@ public class LoginEntryPoint {
  		}
  		return new Message<>(Message.FAIL);
  	}
-
-	 @Operation(summary = "生成登录扫描二维码", description = "生成登录扫描二维码", method = "GET")
-	 @GetMapping("/genScanCode")
-	 public Message<HashMap<String,String>> genScanCode() {
-		 log.debug("/genScanCode.");
-		 String ticket = scanCodeService.createTicket();
-		 log.debug("ticket: {}",ticket);
-		 String encodeTicket = PasswordReciprocal.getInstance().encode(ticket);
-		 BufferedImage bufferedImage  =  QRCodeUtils.write2BufferedImage(encodeTicket, "gif", 300, 300);
-		 String rqCode = Base64Utils.encodeImage(bufferedImage);
-		 HashMap<String,String> codeMap = new HashMap<>();
-		 codeMap.put("rqCode", rqCode);
-		 codeMap.put("ticket", encodeTicket);
-		 return new Message<>(Message.SUCCESS, codeMap);
-	 }
-
-	@Operation(summary = "web二维码登录", description = "web二维码登录", method = "POST")
-	@PostMapping("/sign/qrcode")
-	public Message<AuthJwt> signByQrcode(@Validated @RequestBody ScanCode scanCode) {
-		LoginCredential loginCredential = new LoginCredential();
-		loginCredential.setAuthType(scanCode.getAuthType());
-		loginCredential.setUsername(scanCode.getCode());
-
-		if(authTokenService.validateJwtToken(scanCode.getState())){
-			try {
-				Authentication authentication = authenticationProvider.authenticate(loginCredential);
-				if (Objects.nonNull(authentication)) {
-					//success
-					AuthJwt authJwt = authTokenService.genAuthJwt(authentication);
-					return new Message<>(authJwt);
-				} else {
-					return new Message<>(Message.FAIL, "尚未扫码");
-				}
-			} catch (BusinessException businessException) {
-				return new Message<>(businessException.getCode(), businessException.getMessage());
-			}
-		} else {
-			return new Message<>(20005, "state失效重新获取");
-		}
-	}
-
-	@Operation(summary = "app扫描二维码", description = "扫描二维码登录", method = "POST")
-	@PostMapping("/scanCode")
-	public Message<String> scanCode(@Validated @RequestBody QrCodeCredentialDto credentialDto) throws ParseException {
-		log.debug("/scanCode.");
-		String jwtToken = credentialDto.getJwtToken();
-		String code = credentialDto.getCode();
-		try {
-			//获取登录会话
-			Session session = AuthorizationUtils.getSession(sessionManager, jwtToken);
-			if (Objects.isNull(session)) {
-				return new Message<>(Message.FAIL, "登录会话失效，请重新登录");
-			}
-			//查询二维码是否过期
-			String ticketString = PasswordReciprocal.getInstance().decoder(code);
-			boolean codeResult = scanCodeService.validateTicket(ticketString, session);
-			if (!codeResult) {
-				return new Message<>(Message.FAIL, "二维码已过期，请重新获取");
-			}
-
-		} catch (ParseException e) {
-			log.error("ParseException.",e);
-			return new Message<>(Message.FAIL, "token格式错误");
-		}
-		return new Message<>(Message.SUCCESS, "成功");
-	}
 }
