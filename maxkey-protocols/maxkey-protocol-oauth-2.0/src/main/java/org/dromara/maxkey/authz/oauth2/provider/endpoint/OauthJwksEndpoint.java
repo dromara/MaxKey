@@ -48,8 +48,8 @@ public class OauthJwksEndpoint extends AbstractEndpoint {
 					method={RequestMethod.POST, RequestMethod.GET})
 	@ResponseBody
 	public String  keysMetadataByParam(HttpServletRequest request , HttpServletResponse response, 
-			@RequestParam(required = false) String inst_id,
-			@RequestParam(required = false) String client_id) {
+			@RequestParam(value="inst_id",required = false) String inst_id,
+			@RequestParam(value="client_id",required = false) String client_id) {
 		return buildMetadata(request,response,inst_id,client_id,ContentType.JSON);
 	}
 	
@@ -58,7 +58,8 @@ public class OauthJwksEndpoint extends AbstractEndpoint {
 					method={RequestMethod.POST, RequestMethod.GET})
 	@ResponseBody
 	public String  keysMetadatabyPath(HttpServletRequest request , HttpServletResponse response, 
-			@PathVariable String instId,@PathVariable String clientId) {
+			@PathVariable(value="instId") String instId,
+			@PathVariable(value="clientId") String clientId) {
 		return buildMetadata(request,response,instId,clientId,ContentType.JSON);
 	}
 	
@@ -68,8 +69,8 @@ public class OauthJwksEndpoint extends AbstractEndpoint {
 			method={RequestMethod.POST, RequestMethod.GET})
 	@ResponseBody
 	public String metadata(HttpServletRequest request , HttpServletResponse response,
-			@PathVariable(value="clientId", required = false) String clientId,
-			@PathVariable(value="mediaType", required = false) String mediaType) {
+			@PathVariable(value="clientId") String clientId,
+			@PathVariable(value="mediaType") String mediaType) {
 		return buildMetadata(request,response,null,clientId,mediaType);
 	}
 	

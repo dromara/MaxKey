@@ -93,7 +93,7 @@ public class OpenidConfigurationEndpoint extends AbstractEndpoint {
 				jwksUri.append("?");
 				jwksUri.append("client_id").append("=").append(clientDetails.getClientId());
 				if(StringUtils.isNotBlank(instId)) {
-					jwksUri.append("&").append("inst_id").append("=").append(clientDetails.getClientId());
+					jwksUri.append("&").append("inst_id").append("=").append(instId);
 				}
 				openidConfig.setJwks_uri(jwksUri.toString());
 			}else {

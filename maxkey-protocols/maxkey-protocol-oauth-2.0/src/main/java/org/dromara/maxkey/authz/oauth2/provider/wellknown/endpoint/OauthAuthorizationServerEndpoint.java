@@ -99,7 +99,7 @@ public class OauthAuthorizationServerEndpoint extends AbstractEndpoint {
 				jwksUri.append("?");
 				jwksUri.append("client_id").append("=").append(clientDetails.getClientId());
 				if(StringUtils.isNotBlank(instId)) {
-					jwksUri.append("&").append("inst_id").append("=").append(clientDetails.getClientId());
+					jwksUri.append("&").append("inst_id").append("=").append(instId);
 				}
 				oauthConfig.setJwks_uri(jwksUri.toString());
 			}else {
