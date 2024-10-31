@@ -20,8 +20,6 @@ package org.dromara.maxkey.authz.oauth2.provider.wellknown.endpoint;
 import com.alibaba.cloud.commons.lang.StringUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.dromara.maxkey.authz.oauth2.common.OAuth2Constants;
 import org.dromara.maxkey.authz.oauth2.provider.endpoint.AbstractEndpoint;
 import org.dromara.maxkey.authz.oauth2.provider.wellknown.OpenidConfiguration;
@@ -41,41 +39,40 @@ public class OpenidConfigurationEndpoint extends AbstractEndpoint {
 	static final  Logger _logger = LoggerFactory.getLogger(OpenidConfigurationEndpoint.class);
 	
 
-	@Operation(summary = "OpenID Connect metadata 元数据接口", description = "参数client_id",method="GET,POST")
-	@RequestMapping(
-			value = {
-					OAuth2Constants.ENDPOINT.ENDPOINT_BASE + "/.well-known/openid-configuration"},
-			produces = "application/json",
-			method={RequestMethod.POST, RequestMethod.GET})
+	@Operation(summary = "OpenID Connect metadata 元数据接口", description = "参数inst_id,client_id",method="GET,POST")
+	@RequestMapping(value = {OAuth2Constants.ENDPOINT.ENDPOINT_BASE + "/.well-known/openid-configuration"},
+					produces = "application/json",
+					method={RequestMethod.POST, RequestMethod.GET})
 	@ResponseBody
-	public OpenidConfiguration  configuration(
-			HttpServletRequest request,
-			HttpServletResponse response,
+	public OpenidConfiguration  configurationByParam(
+			@RequestParam(value = "inst_id", required = false) String inst_id,
 			@RequestParam(value = "client_id", required = false) String client_id) {
-		return configurationMetadata(request,response, null,client_id);
+		_logger.debug("Configuration By Param");
+		return configurationMetadata(inst_id,client_id,"RequestParam");
 	}
 	
-	@Operation(summary = "OpenID Connect metadata 元数据接口", description = "参数client_id",method="GET,POST")
-	@RequestMapping(
-			value = {
-					OAuth2Constants.ENDPOINT.ENDPOINT_BASE + "/{instId}/.well-known/openid-configuration"},
-			produces = "application/json",
-			method={RequestMethod.POST, RequestMethod.GET})
+	@Operation(summary = "OpenID Connect metadata 元数据接口", description = "参数Path",method="GET,POST")
+	@RequestMapping(value = {OAuth2Constants.ENDPOINT.ENDPOINT_BASE + "/{instId}/{clientId}/.well-known/openid-configuration"},
+					produces = "application/json",
+					method={RequestMethod.POST, RequestMethod.GET})
 	@ResponseBody
-	public OpenidConfiguration  configurationMetadata(
-			HttpServletRequest request,
-			HttpServletResponse response, 
-			@PathVariable("instId") String instId,
-			@RequestParam(value = "client_id", required = false) String client_id) {
-		_logger.debug("instId {} , client_id {}" , instId ,client_id);
+	public OpenidConfiguration  configurationByPath(
+			@PathVariable("instId") String instId , 
+			@PathVariable(value = "clientId") String clientId) {
+		_logger.debug("Configuration By Path");
+		return configurationMetadata(instId,clientId,"PathVariable");
+	}
+	
+	public OpenidConfiguration  configurationMetadata(String instId,String clientId,String param) {
+		_logger.debug("instId {} , client_id {}" , instId ,clientId);
 		
 		String baseUrl = WebContext.getContextPath(true);
 		
 		ClientDetails  clientDetails = null;
 		
-		if(StringUtils.isNotBlank(client_id)) {
+		if(StringUtils.isNotBlank(clientId)) {
 			try {
-				clientDetails = getClientDetailsService().loadClientByClientId(client_id,true);
+				clientDetails = getClientDetailsService().loadClientByClientId(clientId,true);
 			}catch(Exception e) {
 				_logger.error("getClientDetailsService", e);
 			}
@@ -90,8 +87,18 @@ public class OpenidConfigurationEndpoint extends AbstractEndpoint {
 		openidConfig.setEnd_session_endpoint(baseUrl + "/force/logout");
 		
 		if(clientDetails != null) {
-			openidConfig.setClient_id(client_id);
-			openidConfig.setJwks_uri(baseUrl + OAuth2Constants.ENDPOINT.ENDPOINT_BASE + "/jwks?client_id=" + clientDetails.getClientId());
+			openidConfig.setClient_id(clientId);
+			if(param.equals("RequestParam")){
+				StringBuffer jwksUri = new StringBuffer(baseUrl + OAuth2Constants.ENDPOINT.ENDPOINT_BASE + "/jwks");
+				jwksUri.append("?");
+				jwksUri.append("client_id").append("=").append(clientDetails.getClientId());
+				if(StringUtils.isNotBlank(instId)) {
+					jwksUri.append("&").append("inst_id").append("=").append(clientDetails.getClientId());
+				}
+				openidConfig.setJwks_uri(jwksUri.toString());
+			}else {
+				openidConfig.setJwks_uri(baseUrl + OAuth2Constants.ENDPOINT.ENDPOINT_BASE + "/"+instId+"/"+clientId+"/jwks");
+			}
 	
 			Set<String>  introspection_endpoint_auth_methods_supported = new HashSet<String>();
 			introspection_endpoint_auth_methods_supported.add("client_secret_basic");
@@ -170,7 +177,7 @@ public class OpenidConfigurationEndpoint extends AbstractEndpoint {
 			
 			openidConfig.setClaims_supported(claims_supported);
 		}else {
-			openidConfig.setClient_id(client_id);
+			openidConfig.setClient_id(clientId);
 			openidConfig.setJwks_uri(baseUrl + OAuth2Constants.ENDPOINT.ENDPOINT_BASE + "/jwks");
 			
 			Set<String>  introspection_endpoint_auth_methods_supported = new HashSet<String>();

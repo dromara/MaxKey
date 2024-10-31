@@ -38,34 +38,46 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import java.io.IOException;
-
 @Tag(name = "2-1-OAuth v2.0 API文档模块")
 @Controller
 public class OauthJwksEndpoint extends AbstractEndpoint {
 	static final  Logger _logger = LoggerFactory.getLogger(OauthJwksEndpoint.class);
 
-	@Operation(summary = "OAuth JWk 元数据接口", description = "参数mxk_metadata_APPID",method="GET")
-	@RequestMapping(
-			value = OAuth2Constants.ENDPOINT.ENDPOINT_BASE + "/jwks",
-			method={RequestMethod.POST, RequestMethod.GET})
+	@Operation(summary = "OAuth JWk 元数据接口", description = "参数inst_id , client_id",method="GET")
+	@RequestMapping(value = OAuth2Constants.ENDPOINT.ENDPOINT_BASE + "/jwks",
+					method={RequestMethod.POST, RequestMethod.GET})
 	@ResponseBody
-	public void  keysMetadata(HttpServletRequest request , HttpServletResponse response,
-			@RequestParam(value = "client_id", required = false) String client_id) throws IOException {
-		metadata(request,response,client_id,null);
+	public String  keysMetadataByParam(HttpServletRequest request , HttpServletResponse response, 
+			@RequestParam(required = false) String inst_id,
+			@RequestParam(required = false) String client_id) {
+		return buildMetadata(request,response,inst_id,client_id,ContentType.JSON);
 	}
 	
-	@Operation(summary = "OAuth JWk 元数据接口", description = "参数mxk_metadata_APPID",method="GET")
+	@Operation(summary = "OAuth JWk 元数据接口", description = "参数instId , clientId",method="GET")
+	@RequestMapping(value = OAuth2Constants.ENDPOINT.ENDPOINT_BASE + "/{instId}/{clientId}/jwks",
+					method={RequestMethod.POST, RequestMethod.GET})
+	@ResponseBody
+	public String  keysMetadatabyPath(HttpServletRequest request , HttpServletResponse response, 
+			@PathVariable String instId,@PathVariable String clientId) {
+		return buildMetadata(request,response,instId,clientId,ContentType.JSON);
+	}
+	
+	@Operation(summary = "OAuth JWk 元数据接口", description = "参数mxk_metadata_clientId",method="GET")
 	@RequestMapping(
-			value = "/metadata/oauth/v20/" + WebConstants.MXK_METADATA_PREFIX + "{appid}.{mediaType}",
+			value = "/metadata/oauth/v20/" + WebConstants.MXK_METADATA_PREFIX + "{clientId}.{mediaType}",
 			method={RequestMethod.POST, RequestMethod.GET})
 	@ResponseBody
-	public void  metadata(HttpServletRequest request , HttpServletResponse response,
-			@PathVariable(value="appid", required = false) String appId,
-			@PathVariable(value="mediaType", required = false) String mediaType) throws IOException {
+	public String metadata(HttpServletRequest request , HttpServletResponse response,
+			@PathVariable(value="clientId", required = false) String clientId,
+			@PathVariable(value="mediaType", required = false) String mediaType) {
+		return buildMetadata(request,response,null,clientId,mediaType);
+	}
+	
+	public String  buildMetadata(HttpServletRequest request , HttpServletResponse response,
+			String instId,String clientId,String mediaType){
 		ClientDetails  clientDetails = null;
 		try {
-			clientDetails = getClientDetailsService().loadClientByClientId(appId,true);
+			clientDetails = getClientDetailsService().loadClientByClientId(clientId,true);
 		}catch(Exception e) {
 			_logger.error("getClientDetailsService", e);
 		}
@@ -83,18 +95,15 @@ public class OauthJwksEndpoint extends AbstractEndpoint {
 			}
 			JWKSetKeyStore jwkSetKeyStore = new JWKSetKeyStore("{\"keys\": [" + jwkSetString + "]}");
 			
-			if(StringUtils.hasText(mediaType) 
-					&& mediaType.equalsIgnoreCase(ContentType.XML)) {
+			if(StringUtils.hasText(mediaType) && mediaType.equalsIgnoreCase(ContentType.XML)) {
 				response.setContentType(ContentType.APPLICATION_XML_UTF8);
 			}else {
 				response.setContentType(ContentType.APPLICATION_JSON_UTF8);
 			}
-			response.getWriter().write(jwkSetKeyStore.toString(mediaType));
+			return jwkSetKeyStore.toString(mediaType);
 		} else {
-			response.getWriter().write(appId + " not exist . \n" + WebContext.version());
+			return clientId + " not exist . \n" + WebContext.version();
 		}
-
-
 	}
 
 }

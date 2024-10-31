@@ -20,11 +20,11 @@ package org.dromara.maxkey.authz.oauth2.provider.wellknown.endpoint;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.authz.oauth2.common.OAuth2Constants;
 import org.dromara.maxkey.authz.oauth2.provider.endpoint.AbstractEndpoint;
 import org.dromara.maxkey.authz.oauth2.provider.wellknown.OauthServerConfiguration;
 import org.dromara.maxkey.entity.apps.oauth2.provider.ClientDetails;
-import org.dromara.maxkey.pretty.impl.JsonPretty;
 import org.dromara.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,52 +35,46 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.cloud.commons.lang.StringUtils;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+
 @Tag(name = "2-1-OAuth v2.0 API文档模块")
 @Controller
 public class OauthAuthorizationServerEndpoint extends AbstractEndpoint {
 	static final  Logger _logger = LoggerFactory.getLogger(OauthAuthorizationServerEndpoint.class);
 	
 	@Operation(summary = "OAuth v2 metadata 元数据接口", description = "参数client_id",method="GET,POST")
-	@RequestMapping(
-			value = {
-					OAuth2Constants.ENDPOINT.ENDPOINT_BASE + "/.well-known/oauth-authorization-server"},
-			produces = "application/json",
-			method={RequestMethod.POST, RequestMethod.GET})
+	@RequestMapping(value = {OAuth2Constants.ENDPOINT.ENDPOINT_BASE + "/.well-known/oauth-authorization-server"},
+					produces = "application/json",
+					method={RequestMethod.POST, RequestMethod.GET})
 	@ResponseBody
-	public String  configuration(
-			HttpServletRequest request,
-			HttpServletResponse response,
+	public OauthServerConfiguration  configurationByParam(
+			@RequestParam(value = "inst_id", required = false) String inst_id,
 			@RequestParam(value = "client_id", required = false) String client_id) {
-		return configurationMetadata(request,response, null,client_id);
+		return configurationMetadata( inst_id,client_id,"RequestParam");
 	}
 	
-	@Operation(summary = "OAuth v2 metadata 元数据接口", description = "参数client_id",method="GET,POST")
-	@RequestMapping(
-			value = {
-					OAuth2Constants.ENDPOINT.ENDPOINT_BASE + "/{instId}/.well-known/oauth-authorization-server"},
-			produces = "application/json",
-			method={RequestMethod.POST, RequestMethod.GET})
+	@Operation(summary = "OAuth v2 metadata 元数据接口", description = "参数instId,client_id",method="GET,POST")
+	@RequestMapping(value = {OAuth2Constants.ENDPOINT.ENDPOINT_BASE + "/{instId}/{clientId}/.well-known/oauth-authorization-server"},
+					produces = "application/json",
+					method={RequestMethod.POST, RequestMethod.GET})
 	@ResponseBody
-	public String  configurationMetadata(
-			HttpServletRequest request,
-			HttpServletResponse response, 
+	public OauthServerConfiguration  configurationByPath(
 			@PathVariable("instId") String instId,
-			@RequestParam(value = "client_id", required = false) String client_id) {
-		_logger.debug("instId {} , client_id {}" , instId ,client_id);
+			@PathVariable(value = "clientId", required = false) String clientId) {
+		return configurationMetadata(instId,clientId,"PathVariable");
+	}
+	
+	public OauthServerConfiguration  configurationMetadata(String instId,String clientId,String param) {
+		_logger.debug("instId {} , client_id {}" , instId ,clientId);
 		
 		String baseUrl = WebContext.getContextPath(true);
 		
 		ClientDetails  clientDetails = null;
 		
-		if(StringUtils.isNotBlank(client_id)) {
+		if(StringUtils.isNotBlank(clientId)) {
 			try {
-				clientDetails = getClientDetailsService().loadClientByClientId(client_id,true);
+				clientDetails = getClientDetailsService().loadClientByClientId(clientId,true);
 			}catch(Exception e) {
 				_logger.error("getClientDetailsService", e);
 			}
@@ -99,15 +93,29 @@ public class OauthAuthorizationServerEndpoint extends AbstractEndpoint {
 		oauthConfig.setCode_challenge_methods_supported(code_challenge_methods_supported);
 		
 		if(clientDetails != null) {
-			oauthConfig.setClient_id(client_id);
-			oauthConfig.setJwks_uri(baseUrl + OAuth2Constants.ENDPOINT.ENDPOINT_BASE + "/jwks?client_id="+ clientDetails.getClientId());
+			oauthConfig.setClient_id(clientId);
+			if(param.equals("RequestParam")){
+				StringBuffer jwksUri = new StringBuffer(baseUrl + OAuth2Constants.ENDPOINT.ENDPOINT_BASE + "/jwks");
+				jwksUri.append("?");
+				jwksUri.append("client_id").append("=").append(clientDetails.getClientId());
+				if(StringUtils.isNotBlank(instId)) {
+					jwksUri.append("&").append("inst_id").append("=").append(clientDetails.getClientId());
+				}
+				oauthConfig.setJwks_uri(jwksUri.toString());
+			}else {
+				oauthConfig.setJwks_uri(baseUrl + OAuth2Constants.ENDPOINT.ENDPOINT_BASE + "/"+instId+"/"+clientId+"/jwks");
+			}
 
 			Set<String>  introspection_endpoint_auth_methods_supported = new HashSet<String>();
 			introspection_endpoint_auth_methods_supported.add("client_secret_basic");
 			oauthConfig.setIntrospection_endpoint_auth_methods_supported(introspection_endpoint_auth_methods_supported);                                                  
 			                                                  
 			oauthConfig.setIssuer(clientDetails.getIssuer());
-			oauthConfig.setResponse_types_supported(clientDetails.getAuthorizedGrantTypes());
+			Set<String> response_types_supported =clientDetails.getAuthorizedGrantTypes();
+			if(response_types_supported.contains("authorization_code")) {
+				response_types_supported.add("code");
+			}
+			oauthConfig.setResponse_types_supported(response_types_supported);
 			
 			Set<String>  response_modes_supported = new HashSet<String>();
 			response_modes_supported.add("query");
@@ -175,7 +183,7 @@ public class OauthAuthorizationServerEndpoint extends AbstractEndpoint {
 			
 			oauthConfig.setClaims_supported(claims_supported);
 		}else {
-			oauthConfig.setClient_id(client_id);
+			oauthConfig.setClient_id(clientId);
 			oauthConfig.setJwks_uri(baseUrl + OAuth2Constants.ENDPOINT.ENDPOINT_BASE + "/jwks");
 			
 			Set<String>  introspection_endpoint_auth_methods_supported = new HashSet<String>();
@@ -265,6 +273,6 @@ public class OauthAuthorizationServerEndpoint extends AbstractEndpoint {
 			
 			oauthConfig.setClaims_supported(claims_supported);
 		}
-		return JsonPretty.getInstance().format(oauthConfig,true);
+		return oauthConfig;
 	}
 }
