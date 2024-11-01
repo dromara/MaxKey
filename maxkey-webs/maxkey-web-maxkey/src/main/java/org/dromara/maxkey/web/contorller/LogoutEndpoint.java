@@ -41,6 +41,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -65,6 +66,7 @@ public class LogoutEndpoint {
 	 */
 	@Operation(summary = "前端注销接口", description = "前端注销接口",method="GET")
 	@GetMapping(value={"/logout"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	@ResponseBody
  	public  Message<String> logout(@CurrentUser UserInfo currentUser){
 		//if logined in have onlineTicket ,need remove or logout back
 		String sessionId = currentUser.getSessionId();
