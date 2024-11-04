@@ -176,9 +176,9 @@ export class AuthnService {
       if (this.redirect_uri != '') {
         console.log(`redirect_uri ${this.redirect_uri}`);
         location.href = this.redirect_uri;
+      } else {
+        this.router.navigateByUrl(url);
       }
-
-      this.router.navigateByUrl(url);
     });
   }
 }
