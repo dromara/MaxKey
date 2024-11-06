@@ -17,12 +17,11 @@
 
 package org.dromara.maxkey.web.contorller;
 
-import java.util.regex.Pattern;
-
 import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.authn.jwt.AuthTokenService;
 import org.dromara.maxkey.configuration.EmailConfig;
 import org.dromara.maxkey.constants.ConstsEntryType;
+import org.dromara.maxkey.constants.ConstsRegex;
 import org.dromara.maxkey.constants.ConstsAct;
 import org.dromara.maxkey.constants.ConstsActResult;
 import org.dromara.maxkey.entity.ChangePassword;
@@ -47,10 +46,6 @@ import org.springframework.web.bind.annotation.*;
 public class ForgotPasswordContorller {
     private static Logger logger = LoggerFactory.getLogger(ForgotPasswordContorller.class);
 
-    static final Pattern emailRegex = Pattern.compile("^\\s*\\w+(?:\\.{0,1}[\\w-]+)*@[a-zA-Z0-9]+(?:[-.][a-zA-Z0-9]+)*\\.[a-zA-Z]+\\s*$");
-    
-    static final Pattern mobileRegex = Pattern.compile("^[1][3,4,5,6,7,8,9][0-9]{9}$");
-    
     @Autowired
     EmailConfig emailConfig;
     
@@ -125,8 +120,8 @@ public class ForgotPasswordContorller {
         }
         
     	ChangePassword change = null;
-    	logger.debug("Mobile Regex matches {}",mobileRegex.matcher(mobile).matches());
-    	if(StringUtils.isNotBlank(mobile) && mobileRegex.matcher(mobile).matches()) {
+    	logger.debug("Mobile Regex matches {}",ConstsRegex.MOBILE_PATTERN.matcher(mobile).matches());
+    	if(StringUtils.isNotBlank(mobile) && ConstsRegex.MOBILE_PATTERN.matcher(mobile).matches()) {
     		UserInfo userInfo = userInfoService.findByEmailMobile(mobile);
     		if(userInfo != null) {
 	    		change = new ChangePassword(userInfo);
@@ -152,7 +147,7 @@ public class ForgotPasswordContorller {
         }
         
     	ChangePassword change = null;
-    	if(StringUtils.isNotBlank(email) && emailRegex.matcher(email).matches()) {
+    	if(StringUtils.isNotBlank(email) && ConstsRegex.EMAIL_PATTERN.matcher(email).matches()) {
     		UserInfo userInfo = userInfoService.findByEmailMobile(email);
     		if(userInfo != null) {
 	    		change = new ChangePassword(userInfo);
