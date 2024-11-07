@@ -23,7 +23,7 @@ import java.util.Date;
 import org.dromara.maxkey.authn.SignPrincipal;
 import org.dromara.maxkey.authn.jwt.AuthTokenService;
 import org.dromara.maxkey.configuration.ApplicationConfig;
-import org.dromara.maxkey.crypto.jwt.HMAC512Service;
+import org.dromara.maxkey.crypto.jwt.Hmac512Service;
 import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.util.DateUtils;
 import org.dromara.maxkey.web.WebContext;
@@ -107,7 +107,7 @@ public abstract class AbstractRemeberMeManager {
 				.jwtID(remeberMe.getId())
 				.issueTime(remeberMe.getLastLoginTime())
 				.expirationTime(remeberMe.getExpirationTime())
-				.claim("kid", HMAC512Service.MXK_AUTH_JWK)
+				.claim("kid", Hmac512Service.MXK_AUTH_JWK)
 				.build();
 		
 		return authTokenService.signedJWT(remeberMeJwtClaims);

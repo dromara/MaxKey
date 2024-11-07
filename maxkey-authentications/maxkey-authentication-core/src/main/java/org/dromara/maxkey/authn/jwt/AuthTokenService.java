@@ -20,7 +20,7 @@ package org.dromara.maxkey.authn.jwt;
 import java.text.ParseException;
 import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.configuration.AuthJwkConfig;
-import org.dromara.maxkey.crypto.jwt.HMAC512Service;
+import org.dromara.maxkey.crypto.jwt.Hmac512Service;
 import org.dromara.maxkey.persistence.cache.MomentaryService;
 import org.dromara.maxkey.web.WebContext;
 import org.slf4j.Logger;
@@ -54,7 +54,7 @@ public class AuthTokenService  extends AuthJwtService{
 		
 		this.refreshTokenService = refreshTokenService;
 		
-		this.hmac512Service = new HMAC512Service(authJwkConfig.getSecret());
+		this.hmac512Service = new Hmac512Service(authJwkConfig.getSecret());
 		
 	}
 	

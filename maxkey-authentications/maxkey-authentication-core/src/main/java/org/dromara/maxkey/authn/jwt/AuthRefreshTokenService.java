@@ -18,7 +18,7 @@
 package org.dromara.maxkey.authn.jwt;
 
 import org.dromara.maxkey.configuration.AuthJwkConfig;
-import org.dromara.maxkey.crypto.jwt.HMAC512Service;
+import org.dromara.maxkey.crypto.jwt.Hmac512Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -33,7 +33,7 @@ public class AuthRefreshTokenService extends AuthJwtService{
 	public AuthRefreshTokenService(AuthJwkConfig authJwkConfig) throws JOSEException {
 		this.authJwkConfig = authJwkConfig;
 		
-		this.hmac512Service = new HMAC512Service(authJwkConfig.getRefreshSecret());
+		this.hmac512Service = new Hmac512Service(authJwkConfig.getRefreshSecret());
 	}
 	
 	/**

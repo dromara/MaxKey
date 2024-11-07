@@ -31,7 +31,7 @@ import com.nimbusds.jose.jwk.KeyUse;
 import com.nimbusds.jose.jwk.OctetSequenceKey;
 import com.nimbusds.jose.util.Base64URL;
 
-public class HMAC512Service {
+public class Hmac512Service {
 
 	public static final  String MXK_AUTH_JWK = "mxk_auth_jwk";
 	
@@ -39,11 +39,11 @@ public class HMAC512Service {
 	
 	MACVerifier verifier;
 	
-	public HMAC512Service() {
+	public Hmac512Service() {
 		super();
 	}
 	
-	public HMAC512Service(String secretString) throws JOSEException {
+	public Hmac512Service(String secretString) throws JOSEException {
 		Base64URL secret=new Base64URL(secretString);
 		OctetSequenceKey octKey=  new OctetSequenceKey.Builder(secret)
 				.keyID(MXK_AUTH_JWK)
