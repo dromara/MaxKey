@@ -64,9 +64,6 @@ public class ApplicationConfig {
     @Value("${server.port:8080}")
     private int port;
     
-    @Value("${server.servlet.session.timeout:1800}")
-    private int sessionTimeout;
-
     @Value("${maxkey.server.provision:false}")
     private boolean provision;
     
@@ -218,14 +215,6 @@ public class ApplicationConfig {
 
 	public void setAuthzUri(String authzUri) {
 		this.authzUri = authzUri;
-	}
-
-	public int getSessionTimeout() {
-		return sessionTimeout;
-	}
-
-	public void setSessionTimeout(int sessionTimeout) {
-		this.sessionTimeout = sessionTimeout;
 	}
 
 	public boolean isNoticesVisible() {
