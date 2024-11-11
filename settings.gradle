@@ -36,6 +36,7 @@ include ('maxkey-starter:maxkey-starter-web')
 //authentications
 include ('maxkey-authentications:maxkey-authentication-core')
 include ('maxkey-authentications:maxkey-authentication-provider')
+include ('maxkey-authentications:maxkey-authentication-provider-mgt')
 
 //rest apis
 include ('maxkey-web-apis:maxkey-web-api-rest')

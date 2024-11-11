@@ -1,0 +1,19 @@
+
+description = "maxkey-authentication-provider-mgt"
+
+
+dependencies {
+	//local jars
+	implementation fileTree(dir: '../maxkey-lib/', include: '*/*.jar')
+	
+	implementation project(":maxkey-common")
+	implementation project(":maxkey-core")
+	implementation project(":maxkey-persistence")
+	
+	implementation project(":maxkey-starter:maxkey-starter-ip2location")
+	implementation project(":maxkey-starter:maxkey-starter-otp")
+	implementation project(":maxkey-starter:maxkey-starter-sms")
+	
+	implementation project(":maxkey-authentications:maxkey-authentication-core")
+   
+}
