@@ -66,6 +66,7 @@ Code Hosting <a href="https://github.com/dromara/MaxKey" target="_blank"><b>GitH
 | 1.8     | ExtendApi                   	| LOW   |
 | 1.9     | EXT                         	| LOW   |
 
+
 2. Authentication
 
 | No.     | SignIn Support  | Support   |
@@ -125,6 +126,7 @@ App Management UI
 | --------   | :----- | :----           | 
 | v 4.1.2   | 2024/09/30   | <a href="https://www.maxkey.top/zh/about/download.html"  target="_blank">Download</a> |
 
+
 # Install
 
 |  OS       | Manual    | 
@@ -133,6 +135,7 @@ App Management UI
 | Linux    | <a href="https://www.maxkey.top/zh/about/download.html"  target="_blank">Document</a>  |
 | Docker   | <a href="https://www.maxkey.top/zh/about/download.html"  target="_blank">Document</a>  |
 | 宝塔     | <a href="https://www.maxkey.top/zh/about/download.html"  target="_blank">Document</a>  |
+
 
 # License
  

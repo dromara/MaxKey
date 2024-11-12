@@ -68,6 +68,7 @@ MaxKey注重企业级场景下的性能、安全和易用性，广泛应用于�
 | 1.8     | ExtendApi                       |  低  |
 | 1.9     | EXT                             |  低  |
 
+
 2. 登录支持
 
 | 序号    | 登录方式      |   支持  |
@@ -136,6 +137,7 @@ MaxKey注重企业级场景下的性能、安全和易用性，广泛应用于�
 | Linux    | <a href="https://www.maxkey.top/zh/about/download.html"  target="_blank">链接</a>  |
 | Docker   | <a href="https://www.maxkey.top/zh/about/download.html"  target="_blank">链接</a>  |
 | 宝塔     | <a href="https://www.maxkey.top/zh/about/download.html"  target="_blank">链接</a>  |
+ 
  
 # License
  
