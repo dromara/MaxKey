@@ -15,7 +15,7 @@
  */
  
 
-package org.dromara.maxkey.ldap.constants;
+package org.dromara.maxkey.ldap.activedirectory.constants;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;

@@ -23,8 +23,8 @@ import java.util.concurrent.TimeUnit;
 import org.dromara.maxkey.authn.realm.IAuthenticationServer;
 import org.dromara.maxkey.crypto.password.PasswordReciprocal;
 import org.dromara.maxkey.entity.cnf.CnfLdapContext;
-import org.dromara.maxkey.ldap.ActiveDirectoryUtils;
 import org.dromara.maxkey.ldap.LdapUtils;
+import org.dromara.maxkey.ldap.activedirectory.ActiveDirectoryUtils;
 import org.dromara.maxkey.persistence.service.CnfLdapContextService;
 
 import com.github.benmanes.caffeine.cache.Cache;

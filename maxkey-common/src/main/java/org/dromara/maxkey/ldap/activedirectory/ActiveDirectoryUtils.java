@@ -15,7 +15,7 @@
  */
  
 
-package org.dromara.maxkey.ldap;
+package org.dromara.maxkey.ldap.activedirectory;
 
 import java.util.Properties;
 
@@ -23,6 +23,7 @@ import javax.naming.Context;
 import javax.naming.directory.DirContext;
 import javax.naming.directory.SearchControls;
 
+import org.dromara.maxkey.ldap.LdapUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

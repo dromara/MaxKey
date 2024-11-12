@@ -15,7 +15,7 @@
  */
  
 
-package org.dromara.maxkey.ldap.constants;
+package org.dromara.maxkey.ldap.activedirectory.constants;
 
 /** userAccountControl值得说明
  * http://support.microsoft.com/zh-cn/kb/305144
