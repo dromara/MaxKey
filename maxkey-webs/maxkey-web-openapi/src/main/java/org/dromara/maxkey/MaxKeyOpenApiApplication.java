@@ -46,7 +46,7 @@ public class MaxKeyOpenApiApplication extends SpringBootServletInitializer {
 		new InitializeContext(applicationContext).init();
 		
 		_logger.info("MaxKey OpenApi at {}" , new DateTime());
-		_logger.info("MaxKey OpenApi Server Port {}" , WebContext.getProperty("server.port"));
+		_logger.info("MaxKey OpenApi Server Port {}" , WebContext.getServerPort());
 		_logger.info("MaxKey OpenApi started.");
 		
 	}

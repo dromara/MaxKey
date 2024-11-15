@@ -150,6 +150,10 @@ public final class WebContext {
     public static String getProperty(String key) {
     	return properties.getProperty(key);
     }
+    
+    public static String getServerPort() {
+    	return getProperty("server.port");
+    }
 
     // below method is common HttpServlet method
     /**

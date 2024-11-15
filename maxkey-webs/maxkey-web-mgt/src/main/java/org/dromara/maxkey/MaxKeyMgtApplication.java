@@ -45,7 +45,7 @@ public class MaxKeyMgtApplication extends SpringBootServletInitializer {
 		new InitializeContext(applicationContext).init();
 		
 		_logger.info("MaxKeyMgt at {}" , new DateTime());
-		_logger.info("MaxKeyMgt Server Port {}" , WebContext.getProperty("server.port"));
+		_logger.info("MaxKeyMgt Server Port {}" , WebContext.getServerPort());
 		_logger.info("MaxKeyMgt started.");
 		
 	}
