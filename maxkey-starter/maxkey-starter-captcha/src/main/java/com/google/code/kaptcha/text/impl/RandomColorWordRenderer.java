@@ -38,6 +38,9 @@ import com.google.code.kaptcha.util.Configurable;
 public class RandomColorWordRenderer extends Configurable implements WordRenderer
 {
 	ConfigHelper configHelper = new ConfigHelper();
+	
+	Random random = new SecureRandom();
+	
 	/**
 	 * Renders a word to an image.
 	 * 
@@ -69,8 +72,7 @@ public class RandomColorWordRenderer extends Configurable implements WordRendere
 		g2D.setRenderingHints(hints);
 
 		FontRenderContext frc = g2D.getFontRenderContext();
-		Random random = new SecureRandom();
-
+		
 		int startPosY = (height - fontSize) / 5 + fontSize;
 
 		char[] wordChars = word.toCharArray();
