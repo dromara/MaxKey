@@ -1,5 +1,5 @@
 /*
- * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2024] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,39 +20,14 @@ package org.dromara.maxkey.persistence.service;
 import java.util.List;
 
 import org.dromara.maxkey.entity.permissions.Permission;
-import org.dromara.maxkey.persistence.mapper.PermissionMapper;
-import org.dromara.mybatis.jpa.JpaService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Repository;
+import org.dromara.mybatis.jpa.IJpaService;
 
-@Repository
-public class PermissionService  extends JpaService<Permission>{
-	static final  Logger _logger = LoggerFactory.getLogger(PermissionService.class);
-   
-    
-	public PermissionService() {
-		super(PermissionMapper.class);
-	}
+public interface PermissionService  extends IJpaService<Permission>{
 
-	/* (non-Javadoc)
-	 * @see com.connsec.db.service.BaseService#getMapper()
-	 */
-	@Override
-	public PermissionMapper getMapper() {
-		return (PermissionMapper)super.getMapper();
-	}
-	
-	public boolean insertGroupPrivileges(List<Permission> rolePermissionsList) {
-	    return getMapper().insertGroupPrivileges(rolePermissionsList)>0;
-	};
+	public boolean insertGroupPrivileges(List<Permission> rolePermissionsList) ;
     
-	public boolean deleteGroupPrivileges(List<Permission> rolePermissionsList) {
-	     return getMapper().deleteGroupPrivileges(rolePermissionsList)>=0;
-	 }
+	public boolean deleteGroupPrivileges(List<Permission> rolePermissionsList);
 	
-    public List<Permission> queryGroupPrivileges(Permission rolePermissions){
-        return getMapper().queryGroupPrivileges(rolePermissions);
-    }    
+    public List<Permission> queryGroupPrivileges(Permission rolePermissions);
 
 }

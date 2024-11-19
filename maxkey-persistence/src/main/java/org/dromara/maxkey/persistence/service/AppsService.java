@@ -1,5 +1,5 @@
 /*
- * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2024] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,74 +18,23 @@
 package org.dromara.maxkey.persistence.service;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-
 import org.dromara.maxkey.entity.apps.Apps;
 import org.dromara.maxkey.entity.apps.UserApps;
-import org.dromara.maxkey.persistence.mapper.AppsMapper;
-import org.dromara.mybatis.jpa.JpaService;
-import org.springframework.stereotype.Repository;
+import org.dromara.mybatis.jpa.IJpaService;
 
-import com.github.benmanes.caffeine.cache.Cache;
-import com.github.benmanes.caffeine.cache.Caffeine;
-
-@Repository
-public class AppsService extends JpaService<Apps>{
-	//maxkey-mgt
-	public static final  	String MGT_APP_ID 		= "622076759805923328";
+public interface AppsService extends IJpaService<Apps>{
 	
-	public static final  	String DETAIL_SUFFIX	=	"_detail";
+	public boolean insertApp(Apps app) ;
 	
-	protected static final   Cache<String, Apps> detailsCacheStore = 
-										Caffeine.newBuilder()
-							                .expireAfterWrite(30, TimeUnit.MINUTES)
-							                .build();
+	public boolean updateApp(Apps app) ;
 	
-	public AppsService() {
-		super(AppsMapper.class);
-	}
-
-	/* (non-Javadoc)
-	 * @see com.connsec.db.service.BaseService#getMapper()
-	 */
-	@Override
-	public AppsMapper getMapper() {
-		return (AppsMapper)super.getMapper();
-	}
+	public boolean updateExtendAttr(Apps app) ;
 	
-	public boolean insertApp(Apps app) {
-		return ((AppsMapper)super.getMapper()).insertApp(app)>0;
-	};
-	public boolean updateApp(Apps app) {
-		return ((AppsMapper)super.getMapper()).updateApp(app)>0;
-	};
-	
-	public boolean updateExtendAttr(Apps app) {
-		return ((AppsMapper)super.getMapper()).updateExtendAttr(app)>0;
-	}
-	
-    public List<UserApps> queryMyApps(UserApps userApplications){
-        return getMapper().queryMyApps(userApplications);
-    }
+    public List<UserApps> queryMyApps(UserApps userApplications);
 
     //cache for running
-    public void put(String appId, Apps appDetails) {
-    	detailsCacheStore.put(appId + DETAIL_SUFFIX, appDetails);
-	}
+    public void put(String appId, Apps appDetails) ;
 	
-    public Apps get(String appId, boolean cached) {
-    	appId = appId.equalsIgnoreCase("maxkey_mgt") ? MGT_APP_ID : appId;
-    	Apps appDetails = null;
-    	if(cached) {
-    		appDetails = detailsCacheStore.getIfPresent(appId + DETAIL_SUFFIX); 
-    		if(appDetails == null) {
-    			appDetails = this.get(appId);
-    			detailsCacheStore.put(appId, appDetails);
-    		}
-    	}else {
-    		appDetails = this.get(appId);
-    	}
-        return appDetails;
-    }
+    public Apps get(String appId, boolean cached);
     
 }

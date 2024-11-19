@@ -18,30 +18,8 @@
 package org.dromara.maxkey.persistence.service;
 
 import org.dromara.maxkey.entity.Synchronizers;
-import org.dromara.maxkey.persistence.mapper.SynchronizersMapper;
-import org.dromara.mybatis.jpa.JpaService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Repository;
+import org.dromara.mybatis.jpa.IJpaService;
 
-@Repository
-public class SynchronizersService  extends JpaService<Synchronizers>{
-    static final  Logger _logger = LoggerFactory.getLogger(SynchronizersService.class);
-    
-	public SynchronizersService() {
-		super(SynchronizersMapper.class);
-	}
-
-	/* (non-Javadoc)
-	 * @see com.connsec.db.service.BaseService#getMapper()
-	 */
-	@Override
-	public SynchronizersMapper getMapper() {
-		return (SynchronizersMapper)super.getMapper();
-	}
-	
-	
-
-
+public interface SynchronizersService  extends IJpaService<Synchronizers>{
 	
 }

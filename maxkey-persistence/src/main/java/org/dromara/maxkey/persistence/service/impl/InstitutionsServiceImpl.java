@@ -15,8 +15,19 @@
  */
  
 
-/**
- * 
- * Mysql DAO Mapper XML Configuration.
-*/
-package org.dromara.maxkey.persistence.service;
+package org.dromara.maxkey.persistence.service.impl;
+
+import org.dromara.maxkey.entity.Institutions;
+import org.dromara.maxkey.persistence.mapper.InstitutionsMapper;
+import org.dromara.mybatis.jpa.service.impl.JpaServiceImpl;
+import org.springframework.stereotype.Repository;
+
+
+@Repository
+public class InstitutionsServiceImpl  extends JpaServiceImpl<InstitutionsMapper,Institutions>{
+
+	 public Institutions findByDomain(String domain) {
+		 return getMapper().findByDomain(domain);
+	 }
+	 
+}

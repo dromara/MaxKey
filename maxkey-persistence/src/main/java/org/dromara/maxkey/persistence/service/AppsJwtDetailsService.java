@@ -1,5 +1,5 @@
 /*
- * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2024] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,48 +17,10 @@
 
 package org.dromara.maxkey.persistence.service;
 
-import java.util.concurrent.TimeUnit;
-
 import org.dromara.maxkey.entity.apps.AppsJwtDetails;
-import org.dromara.maxkey.persistence.mapper.AppsJwtDetailsMapper;
-import org.dromara.mybatis.jpa.JpaService;
-import org.springframework.stereotype.Repository;
+import org.dromara.mybatis.jpa.IJpaService;
 
-import com.github.benmanes.caffeine.cache.Cache;
-import com.github.benmanes.caffeine.cache.Caffeine;
+public interface AppsJwtDetailsService  extends IJpaService<AppsJwtDetails>{
 
-@Repository
-public class AppsJwtDetailsService  extends JpaService<AppsJwtDetails>{
-
-	protected static final   Cache<String, AppsJwtDetails> detailsCache = 
-            Caffeine.newBuilder()
-                .expireAfterWrite(30, TimeUnit.MINUTES)
-                .maximumSize(200000)
-                .build();
-	
-	public AppsJwtDetailsService() {
-		super(AppsJwtDetailsMapper.class);
-	}
-
-	/* (non-Javadoc)
-	 * @see com.connsec.db.service.BaseService#getMapper()
-	 */
-	@Override
-	public AppsJwtDetailsMapper getMapper() {
-		return (AppsJwtDetailsMapper)super.getMapper();
-	}
-	
-	public  AppsJwtDetails  getAppDetails(String id , boolean cached) {
-		AppsJwtDetails details = null;
-		if(cached) {
-			details = detailsCache.getIfPresent(id);
-			if(details == null) {
-				details = getMapper().getAppDetails(id);
-				detailsCache.put(id, details);
-			}
-		}else {
-			details = getMapper().getAppDetails(id);
-		}
-		return details;
-	}
+	public  AppsJwtDetails  getAppDetails(String id , boolean cached) ;
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2024] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,47 +18,8 @@
 package org.dromara.maxkey.persistence.service;
 
 import org.dromara.maxkey.entity.history.HistoryLoginApps;
-import org.dromara.maxkey.persistence.mapper.HistoryLoginAppsMapper;
-import org.dromara.mybatis.jpa.JpaService;
-import org.springframework.stereotype.Repository;
+import org.dromara.mybatis.jpa.IJpaService;
 
-@Repository
-public class HistoryLoginAppsService  extends JpaService<HistoryLoginApps>{
+public interface HistoryLoginAppsService  extends IJpaService<HistoryLoginApps>{
 
-	public HistoryLoginAppsService() {
-		super(HistoryLoginAppsMapper.class);
-	}
-
-	
-	@Override
-	public HistoryLoginAppsMapper getMapper() {
-		return (HistoryLoginAppsMapper)super.getMapper();
-	}
-	
-	@Override
-	public boolean  insert(HistoryLoginApps loginAppsHistory){
-		//new Thread insert login app history
-		new Thread(new HistoryLoginAppsRunnable(getMapper(),loginAppsHistory)).start();
-		return true;
-	}
-	
-	public class HistoryLoginAppsRunnable implements Runnable{
-
-		HistoryLoginAppsMapper historyLoginAppsMapper;
-		
-		HistoryLoginApps loginAppsHistory;
-		
-		public HistoryLoginAppsRunnable(HistoryLoginAppsMapper historyLoginAppsMapper,
-				HistoryLoginApps loginAppsHistory) {
-			super();
-			this.historyLoginAppsMapper = historyLoginAppsMapper;
-			this.loginAppsHistory = loginAppsHistory;
-		}
-
-		@Override
-		public void run() {
-			historyLoginAppsMapper.insert(loginAppsHistory);
-		}
-		
-	}
 }

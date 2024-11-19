@@ -18,28 +18,8 @@
 package org.dromara.maxkey.persistence.service;
 
 import org.dromara.maxkey.entity.SocialsProvider;
-import org.dromara.maxkey.persistence.mapper.SocialsProviderMapper;
-import org.dromara.mybatis.jpa.JpaService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Repository;
+import org.dromara.mybatis.jpa.IJpaService;
 
-@Repository
-public class SocialsProviderService  extends JpaService<SocialsProvider>{
-    static final  Logger _logger = LoggerFactory.getLogger(SocialsProviderService.class);
-    
-    
-	public SocialsProviderService() {
-		super(SocialsProviderMapper.class);
-	}
-
-	/* (non-Javadoc)
-	 * @see com.connsec.db.service.BaseService#getMapper()
-	 */
-	@Override
-	public SocialsProviderMapper getMapper() {
-		return (SocialsProviderMapper)super.getMapper();
-	}
-	
+public interface SocialsProviderService  extends IJpaService<SocialsProvider>{
 
 }

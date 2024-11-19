@@ -18,27 +18,10 @@
 package org.dromara.maxkey.persistence.service;
 
 import org.dromara.maxkey.entity.history.HistoryLogin;
-import org.dromara.maxkey.persistence.mapper.HistoryLoginMapper;
-import org.dromara.mybatis.jpa.JpaService;
+import org.dromara.mybatis.jpa.IJpaService;
 import org.dromara.mybatis.jpa.entity.JpaPageResults;
-import org.springframework.stereotype.Repository;
 
-@Repository
-public class HistoryLoginService  extends JpaService<HistoryLogin>{
+public interface HistoryLoginService  extends IJpaService<HistoryLogin>{
 
-	public HistoryLoginService() {
-		super(HistoryLoginMapper.class);
-	}
-	
-	/* (non-Javadoc)
-	 * @see com.connsec.db.service.BaseService#getMapper()
-	 */
-	@Override
-	public HistoryLoginMapper getMapper() {
-		return (HistoryLoginMapper)super.getMapper();
-	}
-	
-	public JpaPageResults<HistoryLogin> queryOnlineSession(HistoryLogin historyLogin) {
-	    return this.fetchPageResults("queryOnlineSession",historyLogin);
-	}
+	public JpaPageResults<HistoryLogin> queryOnlineSession(HistoryLogin historyLogin);
 }

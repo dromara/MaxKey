@@ -18,25 +18,9 @@
 package org.dromara.maxkey.persistence.service;
 
 import org.dromara.maxkey.entity.cnf.CnfSmsProvider;
-import org.dromara.maxkey.persistence.mapper.CnfSmsProviderMapper;
-import org.dromara.mybatis.jpa.JpaService;
-import org.springframework.stereotype.Repository;
+import org.dromara.mybatis.jpa.IJpaService;
 
 
-@Repository
-public class CnfSmsProviderService  extends JpaService<CnfSmsProvider>{
+public interface CnfSmsProviderService  extends IJpaService<CnfSmsProvider>{ 
 	
-	public CnfSmsProviderService() {
-		super(CnfSmsProviderMapper.class);
-	}
-
-	/* (non-Javadoc)
-	 * @see com.connsec.db.service.BaseService#getMapper()
-	 */
-	@Override
-	public CnfSmsProviderMapper getMapper() {
-		return (CnfSmsProviderMapper)super.getMapper();
-	}
- 
-	 
 }

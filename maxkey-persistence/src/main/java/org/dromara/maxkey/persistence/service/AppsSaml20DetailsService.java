@@ -1,5 +1,5 @@
 /*
- * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2024] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,48 +17,10 @@
 
 package org.dromara.maxkey.persistence.service;
 
-import java.util.concurrent.TimeUnit;
-
 import org.dromara.maxkey.entity.apps.AppsSAML20Details;
-import org.dromara.maxkey.persistence.mapper.AppsSaml20DetailsMapper;
-import org.dromara.mybatis.jpa.JpaService;
-import org.springframework.stereotype.Repository;
+import org.dromara.mybatis.jpa.IJpaService;
 
-import com.github.benmanes.caffeine.cache.Cache;
-import com.github.benmanes.caffeine.cache.Caffeine;
+public interface AppsSaml20DetailsService  extends IJpaService<AppsSAML20Details>{
 
-@Repository
-public class AppsSaml20DetailsService  extends JpaService<AppsSAML20Details>{
-
-	protected static final   Cache<String, AppsSAML20Details> detailsCache = 
-            Caffeine.newBuilder()
-                .expireAfterWrite(30, TimeUnit.MINUTES)
-                .maximumSize(200000)
-                .build();
-	
-	public AppsSaml20DetailsService() {
-		super(AppsSaml20DetailsMapper.class);
-	}
-
-	/* (non-Javadoc)
-	 * @see com.connsec.db.service.BaseService#getMapper()
-	 */
-	@Override
-	public AppsSaml20DetailsMapper getMapper() {
-		return (AppsSaml20DetailsMapper)super.getMapper();
-	}
-	
-	public  AppsSAML20Details  getAppDetails(String id , boolean cached){
-		AppsSAML20Details details = null;
-		if(cached) {
-			details = detailsCache.getIfPresent(id);
-			if(details == null) {
-				details = getMapper().getAppDetails(id);
-				detailsCache.put(id, details);
-			}
-		}else {
-			details = getMapper().getAppDetails(id);
-		}
-		return details;
-	}
+	public  AppsSAML20Details  getAppDetails(String id , boolean cached);
 }

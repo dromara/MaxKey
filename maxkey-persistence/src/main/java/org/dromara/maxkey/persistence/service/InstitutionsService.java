@@ -1,5 +1,5 @@
 /*
- * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2024] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,28 +18,10 @@
 package org.dromara.maxkey.persistence.service;
 
 import org.dromara.maxkey.entity.Institutions;
-import org.dromara.maxkey.persistence.mapper.InstitutionsMapper;
-import org.dromara.mybatis.jpa.JpaService;
-import org.springframework.stereotype.Repository;
+import org.dromara.mybatis.jpa.IJpaService;
 
+public interface InstitutionsService  extends IJpaService<Institutions>{
 
-@Repository
-public class InstitutionsService  extends JpaService<Institutions>{
-	
-	public InstitutionsService() {
-		super(InstitutionsMapper.class);
-	}
-
-	/* (non-Javadoc)
-	 * @see com.connsec.db.service.BaseService#getMapper()
-	 */
-	@Override
-	public InstitutionsMapper getMapper() {
-		return (InstitutionsMapper)super.getMapper();
-	}
- 
-	 public Institutions findByDomain(String domain) {
-		 return getMapper().findByDomain(domain);
-	 }
+	 public Institutions findByDomain(String domain) ;
 	 
 }

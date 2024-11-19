@@ -1,5 +1,5 @@
 /*
- * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2024] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,33 +17,12 @@
 
 package org.dromara.maxkey.persistence.service;
 
-import java.util.List;
-
 import org.dromara.maxkey.entity.Register;
 import org.dromara.maxkey.entity.idm.UserInfo;
-import org.dromara.maxkey.persistence.mapper.RegisterMapper;
-import org.dromara.mybatis.jpa.JpaService;
-import org.springframework.stereotype.Repository;
+import org.dromara.mybatis.jpa.IJpaService;
 
-@Repository
-public class RegisterService  extends JpaService<Register>{
+public interface RegisterService  extends IJpaService<Register>{
 
-	public RegisterService() {
-		super(RegisterMapper.class);
-	}
-
-	/* (non-Javadoc)
-	 * @see com.connsec.db.service.BaseService#getMapper()
-	 */
-	@Override
-	public RegisterMapper getMapper() {
-		return (RegisterMapper)super.getMapper();
-	}
-	
-	
-	public UserInfo findByEmail(String email){
-		List<UserInfo> listUserInfo=getMapper().findByEmail(email);
-		return listUserInfo.size()>0?listUserInfo.get(0):null;
-	}
+	public UserInfo findByEmail(String email);
 	
 }

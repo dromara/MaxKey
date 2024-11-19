@@ -1,5 +1,5 @@
 /*
- * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2024] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,26 +20,9 @@ package org.dromara.maxkey.persistence.service;
 import java.util.List;
 
 import org.dromara.maxkey.entity.permissions.Resources;
-import org.dromara.maxkey.persistence.mapper.ResourcesMapper;
-import org.dromara.mybatis.jpa.JpaService;
-import org.springframework.stereotype.Repository;
+import org.dromara.mybatis.jpa.IJpaService;
 
-@Repository
-public class ResourcesService  extends JpaService<Resources>{
+public interface ResourcesService  extends IJpaService<Resources>{
 	
-	public ResourcesService() {
-		super(ResourcesMapper.class);
-	}
-
-	/* (non-Javadoc)
-	 * @see com.connsec.db.service.BaseService#getMapper()
-	 */
-	@Override
-	public ResourcesMapper getMapper() {
-		return (ResourcesMapper)super.getMapper();
-	}
-	
-	public List<Resources> queryResourcesTree(Resources resource){
-	   return  getMapper().fetchPageResults(resource);
-	}
+	public List<Resources> queryResourcesTree(Resources resource);
 }

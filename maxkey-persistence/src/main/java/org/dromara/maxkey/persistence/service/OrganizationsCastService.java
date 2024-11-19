@@ -18,33 +18,10 @@
 package org.dromara.maxkey.persistence.service;
 
 import org.dromara.maxkey.entity.OrganizationsCast;
-import org.dromara.maxkey.persistence.mapper.OrganizationsCastMapper;
-import org.dromara.mybatis.jpa.JpaService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Repository;
+import org.dromara.mybatis.jpa.IJpaService;
 
+public interface OrganizationsCastService  extends IJpaService<OrganizationsCast>{
 
-@Repository
-public class OrganizationsCastService  extends JpaService<OrganizationsCast>{
-
-	static final  Logger _logger = LoggerFactory.getLogger(OrganizationsCastService.class);
-
-    
-	public OrganizationsCastService() {
-		super(OrganizationsCastMapper.class);
-	}
-
-	/* (non-Javadoc)
-	 * @see com.connsec.db.service.BaseService#getMapper()
-	 */
-	@Override
-	public OrganizationsCastMapper getMapper() {
-		return (OrganizationsCastMapper)super.getMapper();
-	}
-
-	public boolean updateCast(OrganizationsCast organizationsCast) {
-		return getMapper().updateCast(organizationsCast) > 0;
-	}
+	public boolean updateCast(OrganizationsCast organizationsCast) ;
 
 }

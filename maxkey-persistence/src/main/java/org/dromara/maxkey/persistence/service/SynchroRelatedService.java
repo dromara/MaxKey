@@ -1,5 +1,5 @@
 /*
- * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2024] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,61 +17,19 @@
 
 package org.dromara.maxkey.persistence.service;
 
-import java.sql.Types;
-import java.util.Date;
 import java.util.List;
 
 import org.dromara.maxkey.entity.SynchroRelated;
 import org.dromara.maxkey.entity.Synchronizers;
-import org.dromara.maxkey.entity.idm.Organizations;
-import org.dromara.maxkey.persistence.mapper.SynchroRelatedMapper;
-import org.dromara.maxkey.util.DateUtils;
-import org.dromara.mybatis.jpa.JpaService;
-import org.springframework.stereotype.Repository;
+import org.dromara.mybatis.jpa.IJpaService;
 
-@Repository
-public class SynchroRelatedService  extends JpaService<SynchroRelated>{
+public interface SynchroRelatedService  extends IJpaService<SynchroRelated>{
 
-	public SynchroRelatedService() {
-		super(SynchroRelatedMapper.class);
-	}
-
-	/* (non-Javadoc)
-	 * @see com.connsec.db.service.BaseService#getMapper()
-	 */
-	@Override
-	public SynchroRelatedMapper getMapper() {
-		return (SynchroRelatedMapper)super.getMapper();
-	}
+	public int updateSyncTime(SynchroRelated synchroRelated);
 	
-	public int updateSyncTime(SynchroRelated synchroRelated) {
-		return getMapper().updateSyncTime(synchroRelated);
-	}
+	public List<SynchroRelated> findOrgs(Synchronizers synchronizer) ;
 	
-	public List<SynchroRelated> findOrgs(Synchronizers synchronizer) {
-		return find(
-				"instid = ? and syncid = ? and objecttype = ? ",
-		 		new Object[] { synchronizer.getInstId() ,synchronizer.getId(),Organizations.CLASS_TYPE},
-                new int[] { Types.VARCHAR,Types.VARCHAR,Types.VARCHAR}
-				);
-	}
+	public SynchroRelated findByOriginId(Synchronizers synchronizer,String originId,String classType) ;
 	
-	public SynchroRelated findByOriginId(Synchronizers synchronizer,String originId,String classType) {
-		return findOne("instid = ? and syncId = ? and originid = ? and objecttype = ? ",
-		 		new Object[] { synchronizer.getInstId(),synchronizer.getId(),originId,classType },
-                new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,Types.VARCHAR});
-	}
-	
-	public void updateSynchroRelated(Synchronizers synchronizer,SynchroRelated synchroRelated,String classType) {
-		SynchroRelated loadSynchroRelated = 
-				findByOriginId(
-						synchronizer,synchroRelated.getOriginId(),classType );
-		if(loadSynchroRelated == null) {
-			insert(synchroRelated);
-		}else {
-			synchroRelated.setId(loadSynchroRelated.getId());
-			synchroRelated.setSyncTime(DateUtils.formatDateTime(new Date()));
-			updateSyncTime(synchroRelated);
-		}
-	}
+	public void updateSynchroRelated(Synchronizers synchronizer,SynchroRelated synchroRelated,String classType) ;
 }

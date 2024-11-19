@@ -18,22 +18,8 @@
 package org.dromara.maxkey.persistence.service;
 
 import org.dromara.maxkey.entity.history.HistoryConnector;
-import org.dromara.maxkey.persistence.mapper.HistoryConnectorMapper;
-import org.dromara.mybatis.jpa.JpaService;
-import org.springframework.stereotype.Repository;
+import org.dromara.mybatis.jpa.IJpaService;
 
-@Repository
-public class HistoryConnectorService  extends JpaService<HistoryConnector>{
+public interface HistoryConnectorService  extends IJpaService<HistoryConnector>{
 
-	public HistoryConnectorService() {
-		super(HistoryConnectorMapper.class);
-	}
-	
-	/* (non-Javadoc)
-	 * @see com.connsec.db.service.BaseService#getMapper()
-	 */
-	@Override
-	public HistoryConnectorMapper getMapper() {
-		return (HistoryConnectorMapper)super.getMapper();
-	}
 }

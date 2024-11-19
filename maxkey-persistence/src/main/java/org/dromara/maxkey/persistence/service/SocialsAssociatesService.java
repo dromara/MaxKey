@@ -21,29 +21,11 @@ import java.util.List;
 
 import org.dromara.maxkey.entity.SocialsAssociate;
 import org.dromara.maxkey.entity.idm.UserInfo;
-import org.dromara.maxkey.persistence.mapper.SocialsAssociateMapper;
-import org.dromara.mybatis.jpa.JpaService;
-import org.springframework.stereotype.Repository;
+import org.dromara.mybatis.jpa.IJpaService;
 
 
-@Repository
-public class SocialsAssociatesService  extends JpaService<SocialsAssociate>{
-	
-	public SocialsAssociatesService() {
-		super(SocialsAssociateMapper.class);
-	}
+public interface SocialsAssociatesService  extends IJpaService<SocialsAssociate>{
 
-	/* (non-Javadoc)
-	 * @see com.connsec.db.service.BaseService#getMapper()
-	 */
-	@Override
-	public SocialsAssociateMapper getMapper() {
-		return (SocialsAssociateMapper)super.getMapper();
-	}
- 
-	
-	public List<SocialsAssociate>  queryByUser(UserInfo user) {
-		return getMapper().queryByUser(user);
-	}
+	public List<SocialsAssociate>  queryByUser(UserInfo user);
 	 
 }

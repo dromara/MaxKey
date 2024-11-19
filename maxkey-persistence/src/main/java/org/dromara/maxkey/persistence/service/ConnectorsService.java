@@ -18,25 +18,8 @@
 package org.dromara.maxkey.persistence.service;
 
 import org.dromara.maxkey.entity.Connectors;
-import org.dromara.maxkey.persistence.mapper.ConnectorsMapper;
-import org.dromara.mybatis.jpa.JpaService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Repository;
+import org.dromara.mybatis.jpa.IJpaService;
 
-@Repository
-public class ConnectorsService  extends JpaService<Connectors>{
-    static final  Logger _logger = LoggerFactory.getLogger(ConnectorsService.class);
-    
-	public ConnectorsService() {
-		super(ConnectorsMapper.class);
-	}
-
-	/* (non-Javadoc)
-	 * @see com.connsec.db.service.BaseService#getMapper()
-	 */
-	@Override
-	public ConnectorsMapper getMapper() {
-		return (ConnectorsMapper)super.getMapper();
-	}
+public interface ConnectorsService  extends IJpaService<Connectors>{
+ 
 }

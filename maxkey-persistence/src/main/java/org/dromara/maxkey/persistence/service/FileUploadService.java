@@ -18,22 +18,8 @@
 package org.dromara.maxkey.persistence.service;
 
 import org.dromara.maxkey.entity.FileUpload;
-import org.dromara.maxkey.persistence.mapper.FileUploadMapper;
-import org.dromara.mybatis.jpa.JpaService;
-import org.springframework.stereotype.Repository;
+import org.dromara.mybatis.jpa.IJpaService;
 
-@Repository
-public class FileUploadService  extends JpaService<FileUpload>{
+public interface FileUploadService  extends IJpaService<FileUpload>{
 
-	public FileUploadService() {
-		super(FileUploadMapper.class);
-	}
-
-	/* (non-Javadoc)
-	 * @see com.connsec.db.service.BaseService#getMapper()
-	 */
-	@Override
-	public FileUploadMapper getMapper() {
-		return (FileUploadMapper)super.getMapper();
-	}
 }

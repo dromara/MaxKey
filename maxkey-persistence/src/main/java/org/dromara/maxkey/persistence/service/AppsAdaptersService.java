@@ -1,5 +1,5 @@
 /*
- * Copyright [2021] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2024] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,22 +18,8 @@
 package org.dromara.maxkey.persistence.service;
 
 import org.dromara.maxkey.entity.apps.AppsAdapters;
-import org.dromara.maxkey.persistence.mapper.AppsAdaptersMapper;
-import org.dromara.mybatis.jpa.JpaService;
-import org.springframework.stereotype.Repository;
+import org.dromara.mybatis.jpa.IJpaService;
 
-@Repository
-public class AppsAdaptersService  extends JpaService<AppsAdapters>{
+public interface AppsAdaptersService  extends IJpaService<AppsAdapters>{
 
-	public AppsAdaptersService() {
-		super(AppsAdaptersMapper.class);
-	}
-
-	/* (non-Javadoc)
-	 * @see com.connsec.db.service.BaseService#getMapper()
-	 */
-	@Override
-	public AppsAdaptersMapper getMapper() {
-		return (AppsAdaptersMapper)super.getMapper();
-	}
 }
