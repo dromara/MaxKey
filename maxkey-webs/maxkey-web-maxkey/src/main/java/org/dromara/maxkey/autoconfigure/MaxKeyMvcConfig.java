@@ -24,7 +24,7 @@ import org.dromara.maxkey.authn.support.kerberos.HttpKerberosEntryPoint;
 import org.dromara.maxkey.authn.support.kerberos.KerberosService;
 import org.dromara.maxkey.authn.web.interceptor.PermissionInterceptor;
 import org.dromara.maxkey.configuration.ApplicationConfig;
-import org.dromara.maxkey.web.interceptor.HistorySignOnAppInterceptor;
+import org.dromara.maxkey.web.interceptor.HistorySingleSignOnInterceptor;
 import org.dromara.maxkey.web.interceptor.SingleSignOnInterceptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,7 +65,7 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
     SingleSignOnInterceptor singleSignOnInterceptor;
     
     @Autowired
-    HistorySignOnAppInterceptor historySignOnAppInterceptor;
+    HistorySingleSignOnInterceptor historySingleSignOnInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -162,7 +162,7 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
         ;
         logger.debug("add Single SignOn Interceptor");
         
-        registry.addInterceptor(historySignOnAppInterceptor)
+        registry.addInterceptor(historySingleSignOnInterceptor)
                 .addPathPatterns("/authz/basic/*")
                 .addPathPatterns("/authz/ltpa/*")
                 //Extend api
