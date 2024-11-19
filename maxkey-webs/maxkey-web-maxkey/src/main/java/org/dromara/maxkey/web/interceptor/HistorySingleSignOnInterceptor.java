@@ -39,8 +39,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Component
-public class HistorySignOnAppInterceptor  implements AsyncHandlerInterceptor  {
-    private static final Logger logger = LoggerFactory.getLogger(HistorySignOnAppInterceptor.class);
+public class HistorySingleSignOnInterceptor  implements AsyncHandlerInterceptor  {
+    private static final Logger logger = LoggerFactory.getLogger(HistorySingleSignOnInterceptor.class);
 
     @Autowired
     HistoryLoginAppsService historyLoginAppsService;
