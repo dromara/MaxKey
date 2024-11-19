@@ -33,6 +33,7 @@ import org.dromara.maxkey.entity.permissions.Resources;
 import org.dromara.maxkey.entity.permissions.RoleMember;
 import org.dromara.maxkey.entity.permissions.Roles;
 import org.dromara.maxkey.persistence.mapper.HistorySystemLogsMapper;
+import org.dromara.maxkey.persistence.service.HistorySystemLogsService;
 import org.dromara.maxkey.util.JsonUtils;
 import org.dromara.mybatis.jpa.service.impl.JpaServiceImpl;
 import org.slf4j.Logger;
@@ -40,7 +41,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class HistorySystemLogsServiceImpl  extends JpaServiceImpl<HistorySystemLogsMapper,HistorySystemLogs>{
+public class HistorySystemLogsServiceImpl  extends JpaServiceImpl<HistorySystemLogsMapper,HistorySystemLogs> implements HistorySystemLogsService{
 	static final Logger _logger = LoggerFactory.getLogger(HistorySystemLogsServiceImpl.class);
 
 	public void insert(String topic,Object entity,String action,String result,UserInfo operator) {

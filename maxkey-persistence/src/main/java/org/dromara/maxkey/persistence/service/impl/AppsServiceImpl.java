@@ -23,6 +23,7 @@ import java.util.concurrent.TimeUnit;
 import org.dromara.maxkey.entity.apps.Apps;
 import org.dromara.maxkey.entity.apps.UserApps;
 import org.dromara.maxkey.persistence.mapper.AppsMapper;
+import org.dromara.maxkey.persistence.service.AppsService;
 import org.dromara.mybatis.jpa.service.impl.JpaServiceImpl;
 import org.springframework.stereotype.Repository;
 
@@ -30,7 +31,7 @@ import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 
 @Repository
-public class AppsServiceImpl extends JpaServiceImpl<AppsMapper,Apps>{
+public class AppsServiceImpl extends JpaServiceImpl<AppsMapper,Apps> implements AppsService{
 	//maxkey-mgt
 	public static final  	String MGT_APP_ID 		= "622076759805923328";
 	

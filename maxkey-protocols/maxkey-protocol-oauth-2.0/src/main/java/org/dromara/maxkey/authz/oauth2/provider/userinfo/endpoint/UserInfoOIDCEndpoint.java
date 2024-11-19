@@ -85,11 +85,9 @@ public class UserInfoOIDCEndpoint {
 	
 	
 	@Autowired
-	@Qualifier("userInfoService")
 	private UserInfoService userInfoService;
 	
 	@Autowired
-	@Qualifier("appsService")
 	protected AppsService appsService;
 	
 	OAuthDefaultUserInfoAdapter defaultOAuthUserInfoAdapter=new OAuthDefaultUserInfoAdapter();

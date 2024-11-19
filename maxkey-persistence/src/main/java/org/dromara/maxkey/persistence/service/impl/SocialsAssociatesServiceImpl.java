@@ -22,12 +22,13 @@ import java.util.List;
 import org.dromara.maxkey.entity.SocialsAssociate;
 import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.mapper.SocialsAssociateMapper;
+import org.dromara.maxkey.persistence.service.SocialsAssociatesService;
 import org.dromara.mybatis.jpa.service.impl.JpaServiceImpl;
 import org.springframework.stereotype.Repository;
 
 
 @Repository
-public class SocialsAssociatesServiceImpl  extends JpaServiceImpl<SocialsAssociateMapper,SocialsAssociate>{
+public class SocialsAssociatesServiceImpl  extends JpaServiceImpl<SocialsAssociateMapper,SocialsAssociate> implements SocialsAssociatesService{
 
 	public List<SocialsAssociate>  queryByUser(UserInfo user) {
 		return getMapper().queryByUser(user);

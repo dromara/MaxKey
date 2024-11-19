@@ -19,12 +19,13 @@ package org.dromara.maxkey.persistence.service.impl;
 
 import org.dromara.maxkey.entity.history.HistoryLogin;
 import org.dromara.maxkey.persistence.mapper.HistoryLoginMapper;
+import org.dromara.maxkey.persistence.service.HistoryLoginService;
 import org.dromara.mybatis.jpa.entity.JpaPageResults;
 import org.dromara.mybatis.jpa.service.impl.JpaServiceImpl;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class HistoryLoginServiceImpl  extends JpaServiceImpl<HistoryLoginMapper,HistoryLogin>{
+public class HistoryLoginServiceImpl  extends JpaServiceImpl<HistoryLoginMapper,HistoryLogin> implements HistoryLoginService{
 
 	public JpaPageResults<HistoryLogin> queryOnlineSession(HistoryLogin historyLogin) {
 	    return this.fetchPageResults("queryOnlineSession",historyLogin);

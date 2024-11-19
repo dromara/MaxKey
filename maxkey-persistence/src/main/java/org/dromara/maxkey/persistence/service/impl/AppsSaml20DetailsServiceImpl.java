@@ -21,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.dromara.maxkey.entity.apps.AppsSAML20Details;
 import org.dromara.maxkey.persistence.mapper.AppsSaml20DetailsMapper;
+import org.dromara.maxkey.persistence.service.AppsSaml20DetailsService;
 import org.dromara.mybatis.jpa.service.impl.JpaServiceImpl;
 import org.springframework.stereotype.Repository;
 
@@ -28,7 +29,7 @@ import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 
 @Repository
-public class AppsSaml20DetailsServiceImpl  extends JpaServiceImpl<AppsSaml20DetailsMapper,AppsSAML20Details>{
+public class AppsSaml20DetailsServiceImpl  extends JpaServiceImpl<AppsSaml20DetailsMapper,AppsSAML20Details> implements AppsSaml20DetailsService{
 
 	protected static final   Cache<String, AppsSAML20Details> detailsCache = 
             Caffeine.newBuilder()

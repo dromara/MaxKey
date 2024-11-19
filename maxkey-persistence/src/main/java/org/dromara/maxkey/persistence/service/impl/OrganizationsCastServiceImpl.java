@@ -19,6 +19,7 @@ package org.dromara.maxkey.persistence.service.impl;
 
 import org.dromara.maxkey.entity.OrganizationsCast;
 import org.dromara.maxkey.persistence.mapper.OrganizationsCastMapper;
+import org.dromara.maxkey.persistence.service.OrganizationsCastService;
 import org.dromara.mybatis.jpa.service.impl.JpaServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +27,7 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public class OrganizationsCastServiceImpl  extends JpaServiceImpl<OrganizationsCastMapper,OrganizationsCast>{
+public class OrganizationsCastServiceImpl  extends JpaServiceImpl<OrganizationsCastMapper,OrganizationsCast> implements OrganizationsCastService{
 	static final  Logger _logger = LoggerFactory.getLogger(OrganizationsCastServiceImpl.class);
 
 

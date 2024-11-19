@@ -19,10 +19,11 @@ package org.dromara.maxkey.persistence.service.impl;
 
 import org.dromara.maxkey.entity.Access;
 import org.dromara.maxkey.persistence.mapper.AccessMapper;
+import org.dromara.maxkey.persistence.service.AccessService;
 import org.dromara.mybatis.jpa.service.impl.JpaServiceImpl;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class AccessServiceImpl  extends JpaServiceImpl<AccessMapper,Access>{
+public class AccessServiceImpl  extends JpaServiceImpl<AccessMapper,Access> implements AccessService{
 
 }

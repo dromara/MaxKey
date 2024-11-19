@@ -21,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.dromara.maxkey.entity.apps.AppsTokenBasedDetails;
 import org.dromara.maxkey.persistence.mapper.AppsTokenBasedDetailsMapper;
+import org.dromara.maxkey.persistence.service.AppsTokenBasedDetailsService;
 import org.dromara.mybatis.jpa.service.impl.JpaServiceImpl;
 import org.springframework.stereotype.Repository;
 
@@ -28,7 +29,7 @@ import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 
 @Repository
-public class AppsTokenBasedDetailsServiceImpl  extends JpaServiceImpl<AppsTokenBasedDetailsMapper,AppsTokenBasedDetails>{
+public class AppsTokenBasedDetailsServiceImpl  extends JpaServiceImpl<AppsTokenBasedDetailsMapper,AppsTokenBasedDetails> implements AppsTokenBasedDetailsService{
 
 	protected static final   Cache<String, AppsTokenBasedDetails> detailsCache = 
             Caffeine.newBuilder()

@@ -19,10 +19,11 @@ package org.dromara.maxkey.persistence.service.impl;
 
 import org.dromara.maxkey.entity.history.HistoryConnector;
 import org.dromara.maxkey.persistence.mapper.HistoryConnectorMapper;
+import org.dromara.maxkey.persistence.service.HistoryConnectorService;
 import org.dromara.mybatis.jpa.service.impl.JpaServiceImpl;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class HistoryConnectorServiceImpl  extends JpaServiceImpl<HistoryConnectorMapper,HistoryConnector>{
+public class HistoryConnectorServiceImpl  extends JpaServiceImpl<HistoryConnectorMapper,HistoryConnector> implements HistoryConnectorService{
 
 }

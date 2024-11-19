@@ -21,13 +21,14 @@ import java.util.List;
 
 import org.dromara.maxkey.entity.permissions.Permission;
 import org.dromara.maxkey.persistence.mapper.PermissionMapper;
+import org.dromara.maxkey.persistence.service.PermissionService;
 import org.dromara.mybatis.jpa.service.impl.JpaServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class PermissionServiceImpl  extends JpaServiceImpl<PermissionMapper,Permission>{
+public class PermissionServiceImpl  extends JpaServiceImpl<PermissionMapper,Permission> implements PermissionService{
 	static final  Logger _logger = LoggerFactory.getLogger(PermissionServiceImpl.class);
 
 	public boolean insertGroupPrivileges(List<Permission> rolePermissionsList) {

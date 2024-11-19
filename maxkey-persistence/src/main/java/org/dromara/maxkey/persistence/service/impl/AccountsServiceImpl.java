@@ -27,6 +27,7 @@ import org.dromara.maxkey.entity.AccountsStrategy;
 import org.dromara.maxkey.entity.OrganizationsCast;
 import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.mapper.AccountsMapper;
+import org.dromara.maxkey.persistence.service.AccountsService;
 import org.dromara.maxkey.persistence.service.AccountsStrategyService;
 import org.dromara.maxkey.persistence.service.OrganizationsCastService;
 import org.dromara.maxkey.persistence.service.UserInfoService;
@@ -45,7 +46,7 @@ import net.sourceforge.pinyin4j.format.HanyuPinyinVCharType;
 import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
 
 @Repository
-public class AccountsServiceImpl  extends JpaServiceImpl<AccountsMapper,Accounts>{
+public class AccountsServiceImpl  extends JpaServiceImpl<AccountsMapper,Accounts>  implements AccountsService{
 
     @Autowired
     ProvisionService provisionService;

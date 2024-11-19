@@ -27,6 +27,9 @@ import org.dromara.maxkey.constants.ConstsStatus;
 import org.dromara.maxkey.entity.Institutions;
 import org.dromara.maxkey.entity.permissions.Roles;
 import org.dromara.maxkey.persistence.mapper.RolesMapper;
+import org.dromara.maxkey.persistence.service.InstitutionsService;
+import org.dromara.maxkey.persistence.service.RoleMemberService;
+import org.dromara.maxkey.persistence.service.RolesService;
 import org.dromara.maxkey.util.StrUtils;
 import org.dromara.mybatis.jpa.service.impl.JpaServiceImpl;
 import org.slf4j.Logger;
@@ -35,14 +38,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class RolesServiceImpl  extends JpaServiceImpl<RolesMapper,Roles> {
+public class RolesServiceImpl  extends JpaServiceImpl<RolesMapper,Roles> implements RolesService{
     static final  Logger _logger = LoggerFactory.getLogger(RolesServiceImpl.class);
     
     @Autowired
-    RoleMemberServiceImpl roleMemberService;
+    RoleMemberService roleMemberService;
     
     @Autowired
-    InstitutionsServiceImpl institutionsService;
+    InstitutionsService institutionsService;
 
 	
 	public List<Roles> queryDynamicRoles(Roles groups){

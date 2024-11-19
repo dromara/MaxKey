@@ -19,11 +19,12 @@ package org.dromara.maxkey.persistence.service.impl;
 
 import org.dromara.maxkey.entity.cnf.CnfLdapContext;
 import org.dromara.maxkey.persistence.mapper.CnfLdapContextMapper;
+import org.dromara.maxkey.persistence.service.CnfLdapContextService;
 import org.dromara.mybatis.jpa.service.impl.JpaServiceImpl;
 import org.springframework.stereotype.Repository;
 
 
 @Repository
-public class CnfLdapContextServiceImpl  extends JpaServiceImpl<CnfLdapContextMapper,CnfLdapContext>{
+public class CnfLdapContextServiceImpl  extends JpaServiceImpl<CnfLdapContextMapper,CnfLdapContext> implements CnfLdapContextService{
  
 }

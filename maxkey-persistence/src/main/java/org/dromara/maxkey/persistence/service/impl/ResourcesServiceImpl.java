@@ -21,11 +21,12 @@ import java.util.List;
 
 import org.dromara.maxkey.entity.permissions.Resources;
 import org.dromara.maxkey.persistence.mapper.ResourcesMapper;
+import org.dromara.maxkey.persistence.service.ResourcesService;
 import org.dromara.mybatis.jpa.service.impl.JpaServiceImpl;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ResourcesServiceImpl  extends JpaServiceImpl<ResourcesMapper,Resources>{
+public class ResourcesServiceImpl  extends JpaServiceImpl<ResourcesMapper,Resources> implements ResourcesService{
 	
 	public List<Resources> queryResourcesTree(Resources resource){
 	   return  getMapper().fetchPageResults(resource);

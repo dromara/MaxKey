@@ -19,11 +19,12 @@ package org.dromara.maxkey.persistence.service.impl;
 
 import org.dromara.maxkey.entity.history.HistoryLoginApps;
 import org.dromara.maxkey.persistence.mapper.HistoryLoginAppsMapper;
+import org.dromara.maxkey.persistence.service.HistoryLoginAppsService;
 import org.dromara.mybatis.jpa.service.impl.JpaServiceImpl;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class HistoryLoginAppsServiceImpl  extends JpaServiceImpl<HistoryLoginAppsMapper,HistoryLoginApps>{
+public class HistoryLoginAppsServiceImpl  extends JpaServiceImpl<HistoryLoginAppsMapper,HistoryLoginApps> implements HistoryLoginAppsService{
 
 	@Override
 	public boolean  insert(HistoryLoginApps loginAppsHistory){

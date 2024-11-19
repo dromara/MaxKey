@@ -25,12 +25,13 @@ import org.dromara.maxkey.entity.SynchroRelated;
 import org.dromara.maxkey.entity.Synchronizers;
 import org.dromara.maxkey.entity.idm.Organizations;
 import org.dromara.maxkey.persistence.mapper.SynchroRelatedMapper;
+import org.dromara.maxkey.persistence.service.SynchroRelatedService;
 import org.dromara.maxkey.util.DateUtils;
 import org.dromara.mybatis.jpa.service.impl.JpaServiceImpl;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class SynchroRelatedServiceImpl  extends JpaServiceImpl<SynchroRelatedMapper,SynchroRelated>{
+public class SynchroRelatedServiceImpl  extends JpaServiceImpl<SynchroRelatedMapper,SynchroRelated> implements SynchroRelatedService{
 
 	public int updateSyncTime(SynchroRelated synchroRelated) {
 		return getMapper().updateSyncTime(synchroRelated);

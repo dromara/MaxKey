@@ -21,12 +21,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.dromara.maxkey.persistence.mapper.ReportMapper;
+import org.dromara.maxkey.persistence.service.ReportService;
 import org.dromara.mybatis.jpa.entity.JpaEntity;
 import org.dromara.mybatis.jpa.service.impl.JpaServiceImpl;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ReportServiceImpl  extends JpaServiceImpl<ReportMapper,JpaEntity>{
+public class ReportServiceImpl  extends JpaServiceImpl<ReportMapper,JpaEntity> implements ReportService{
 
 	public Integer analysisDay(HashMap<String,Object> reportParameter) {
 		return getMapper().analysisDay(reportParameter);

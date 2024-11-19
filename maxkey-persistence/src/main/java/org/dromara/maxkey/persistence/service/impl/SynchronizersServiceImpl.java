@@ -19,13 +19,14 @@ package org.dromara.maxkey.persistence.service.impl;
 
 import org.dromara.maxkey.entity.Synchronizers;
 import org.dromara.maxkey.persistence.mapper.SynchronizersMapper;
+import org.dromara.maxkey.persistence.service.SynchronizersService;
 import org.dromara.mybatis.jpa.service.impl.JpaServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class SynchronizersServiceImpl  extends JpaServiceImpl<SynchronizersMapper,Synchronizers>{
+public class SynchronizersServiceImpl  extends JpaServiceImpl<SynchronizersMapper,Synchronizers> implements SynchronizersService{
     static final  Logger _logger = LoggerFactory.getLogger(SynchronizersServiceImpl.class);
 	
 }

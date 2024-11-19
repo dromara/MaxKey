@@ -27,6 +27,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.dromara.maxkey.entity.idm.Organizations;
 import org.dromara.maxkey.persistence.mapper.OrganizationsMapper;
+import org.dromara.maxkey.persistence.service.OrganizationsService;
 import org.dromara.maxkey.provision.ProvisionAct;
 import org.dromara.maxkey.provision.ProvisionService;
 import org.dromara.maxkey.provision.ProvisionTopic;
@@ -39,7 +40,7 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public class OrganizationsServiceImpl  extends JpaServiceImpl<OrganizationsMapper,Organizations>{
+public class OrganizationsServiceImpl  extends JpaServiceImpl<OrganizationsMapper,Organizations> implements OrganizationsService{
 	static final Logger _logger = LoggerFactory.getLogger(OrganizationsServiceImpl.class);
 	
     @Autowired

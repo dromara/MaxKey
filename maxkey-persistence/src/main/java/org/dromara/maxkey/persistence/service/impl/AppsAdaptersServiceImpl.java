@@ -19,10 +19,11 @@ package org.dromara.maxkey.persistence.service.impl;
 
 import org.dromara.maxkey.entity.apps.AppsAdapters;
 import org.dromara.maxkey.persistence.mapper.AppsAdaptersMapper;
+import org.dromara.maxkey.persistence.service.AppsAdaptersService;
 import org.dromara.mybatis.jpa.service.impl.JpaServiceImpl;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class AppsAdaptersServiceImpl  extends JpaServiceImpl<AppsAdaptersMapper,AppsAdapters>{
+public class AppsAdaptersServiceImpl  extends JpaServiceImpl<AppsAdaptersMapper,AppsAdapters> implements AppsAdaptersService{
 
 }

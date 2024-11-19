@@ -64,11 +64,9 @@ public class UserInfoEndpoint {
 	private DefaultTokenServices oauth20tokenServices;
 	
 	@Autowired
-	@Qualifier("userInfoService")
 	private UserInfoService userInfoService;
 	
 	@Autowired
-	@Qualifier("appsService")
 	protected AppsService appsService;
 
     @Autowired

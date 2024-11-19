@@ -22,11 +22,12 @@ import java.util.List;
 import org.dromara.maxkey.entity.Register;
 import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.mapper.RegisterMapper;
+import org.dromara.maxkey.persistence.service.RegisterService;
 import org.dromara.mybatis.jpa.service.impl.JpaServiceImpl;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class RegisterServiceImpl  extends JpaServiceImpl<RegisterMapper,Register>{
+public class RegisterServiceImpl  extends JpaServiceImpl<RegisterMapper,Register> implements RegisterService{
 	
 	public UserInfo findByEmail(String email){
 		List<UserInfo> listUserInfo=getMapper().findByEmail(email);

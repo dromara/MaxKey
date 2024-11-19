@@ -25,7 +25,6 @@ import org.dromara.mybatis.jpa.entity.JpaPageResults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -48,7 +47,6 @@ public class RestUserInfoController {
 	static final Logger _logger = LoggerFactory.getLogger(RestUserInfoController.class);
 	
     @Autowired
-    @Qualifier("userInfoService")
     UserInfoService userInfoService;
     
     @GetMapping(value = "/{id}")

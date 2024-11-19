@@ -22,17 +22,16 @@ import java.util.List;
 import org.dromara.maxkey.entity.AccountsStrategy;
 import org.dromara.maxkey.entity.permissions.Roles;
 import org.dromara.maxkey.persistence.mapper.AccountsStrategyMapper;
+import org.dromara.maxkey.persistence.service.AccountsStrategyService;
 import org.dromara.mybatis.jpa.service.impl.JpaServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class AccountsStrategyServiceImpl  extends JpaServiceImpl<AccountsStrategyMapper,AccountsStrategy> {
+public class AccountsStrategyServiceImpl  extends JpaServiceImpl<AccountsStrategyMapper,AccountsStrategy> implements AccountsStrategyService{
     static final  Logger _logger = LoggerFactory.getLogger(AccountsStrategyServiceImpl.class);
 
-	
-	
 	public List<Roles> queryDynamicGroups(Roles groups){
 	    return this.getMapper().queryDynamicGroups(groups);
 	}

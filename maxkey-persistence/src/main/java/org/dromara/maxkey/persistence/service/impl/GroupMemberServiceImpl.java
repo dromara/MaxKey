@@ -23,6 +23,7 @@ import org.dromara.maxkey.entity.idm.GroupMember;
 import org.dromara.maxkey.entity.idm.Groups;
 import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.mapper.GroupMemberMapper;
+import org.dromara.maxkey.persistence.service.GroupMemberService;
 import org.dromara.mybatis.jpa.entity.JpaPageResults;
 import org.dromara.mybatis.jpa.service.impl.JpaServiceImpl;
 import org.slf4j.Logger;
@@ -30,7 +31,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class GroupMemberServiceImpl  extends JpaServiceImpl<GroupMemberMapper,GroupMember>{
+public class GroupMemberServiceImpl  extends JpaServiceImpl<GroupMemberMapper,GroupMember> implements GroupMemberService{
 	static final  Logger _logger = LoggerFactory.getLogger(GroupMemberServiceImpl.class);
 
 	public int addDynamicMember(Groups dynamicGroup) {
@@ -51,27 +52,18 @@ public class GroupMemberServiceImpl  extends JpaServiceImpl<GroupMemberMapper,Gr
 	
 	
 	public JpaPageResults<Groups> noMember(GroupMember entity) {
-		entity.setPageSelectId(entity.generateId());
-		entity.setStartRow(calculateStartRow(entity.getPageNumber() ,entity.getPageSize()));
-		
-		entity.setPageable(true);
+		beforePageResults(entity);
 		List<Groups> resultslist = null;
 		try {
 			resultslist = getMapper().noMember(entity);
 		} catch (Exception e) {
 			_logger.error("queryPageResults Exception " , e);
 		}
-		entity.setPageable(false);
-		Integer totalPage = resultslist.size();
-		
-		Integer totalCount = 0;
-		if(entity.getPageNumber() == 1 && totalPage < entity.getPageSize()) {
-			totalCount = totalPage;
-		}else {
-			totalCount = parseCount(getMapper().fetchCount(entity));
-		}
-		
-		return new JpaPageResults<Groups>(entity.getPageNumber(),entity.getPageSize(),totalPage,totalCount,resultslist);
+		//当前页记录数
+		Integer records = parseRecords(resultslist);
+		//总页数
+		Integer totalCount =fetchCount(entity, resultslist);
+		return new JpaPageResults<Groups>(entity.getPageNumber(),entity.getPageSize(),records,totalCount,resultslist);
 	}
 	
 }

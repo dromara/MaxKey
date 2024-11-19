@@ -26,6 +26,9 @@ import org.dromara.maxkey.entity.Institutions;
 import org.dromara.maxkey.entity.idm.Groups;
 import org.dromara.maxkey.entity.permissions.Roles;
 import org.dromara.maxkey.persistence.mapper.GroupsMapper;
+import org.dromara.maxkey.persistence.service.GroupMemberService;
+import org.dromara.maxkey.persistence.service.GroupsService;
+import org.dromara.maxkey.persistence.service.InstitutionsService;
 import org.dromara.maxkey.util.StrUtils;
 import org.dromara.mybatis.jpa.service.impl.JpaServiceImpl;
 import org.slf4j.Logger;
@@ -34,14 +37,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class GroupsServiceImpl  extends JpaServiceImpl<GroupsMapper,Groups>{
+public class GroupsServiceImpl  extends JpaServiceImpl<GroupsMapper,Groups> implements GroupsService{
     static final  Logger _logger = LoggerFactory.getLogger(GroupsServiceImpl.class);
 
     @Autowired
-    GroupMemberServiceImpl groupMemberService;
+    GroupMemberService groupMemberService;
     
     @Autowired
-    InstitutionsServiceImpl institutionsService;
+    InstitutionsService institutionsService;
     
 	public List<Groups> queryDynamicGroups(Groups groups){
 	    return this.getMapper().queryDynamic(groups);

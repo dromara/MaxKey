@@ -19,10 +19,11 @@ package org.dromara.maxkey.persistence.service.impl;
 
 import org.dromara.maxkey.entity.cnf.CnfPasswordPolicy;
 import org.dromara.maxkey.persistence.mapper.CnfPasswordPolicyMapper;
+import org.dromara.maxkey.persistence.service.CnfPasswordPolicyService;
 import org.dromara.mybatis.jpa.service.impl.JpaServiceImpl;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class CnfPasswordPolicyServiceImpl  extends JpaServiceImpl<CnfPasswordPolicyMapper,CnfPasswordPolicy>{
+public class CnfPasswordPolicyServiceImpl  extends JpaServiceImpl<CnfPasswordPolicyMapper,CnfPasswordPolicy> implements CnfPasswordPolicyService{
 
 }

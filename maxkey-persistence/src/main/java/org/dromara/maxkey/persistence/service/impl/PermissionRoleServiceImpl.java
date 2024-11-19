@@ -22,13 +22,14 @@ import java.util.List;
 
 import org.dromara.maxkey.entity.permissions.PermissionRole;
 import org.dromara.maxkey.persistence.mapper.PermissionRoleMapper;
+import org.dromara.maxkey.persistence.service.PermissionRoleService;
 import org.dromara.mybatis.jpa.service.impl.JpaServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class PermissionRoleServiceImpl  extends JpaServiceImpl<PermissionRoleMapper,PermissionRole>{
+public class PermissionRoleServiceImpl  extends JpaServiceImpl<PermissionRoleMapper,PermissionRole> implements PermissionRoleService{
 	static final Logger _logger = LoggerFactory.getLogger(PermissionRoleServiceImpl.class);
  
 	

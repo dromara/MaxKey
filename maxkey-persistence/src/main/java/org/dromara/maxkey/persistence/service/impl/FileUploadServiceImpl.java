@@ -19,10 +19,11 @@ package org.dromara.maxkey.persistence.service.impl;
 
 import org.dromara.maxkey.entity.FileUpload;
 import org.dromara.maxkey.persistence.mapper.FileUploadMapper;
+import org.dromara.maxkey.persistence.service.FileUploadService;
 import org.dromara.mybatis.jpa.service.impl.JpaServiceImpl;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class FileUploadServiceImpl  extends JpaServiceImpl<FileUploadMapper,FileUpload>{
+public class FileUploadServiceImpl  extends JpaServiceImpl<FileUploadMapper,FileUpload> implements FileUploadService{
 
 }

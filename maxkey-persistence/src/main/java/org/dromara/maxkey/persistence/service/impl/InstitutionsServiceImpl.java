@@ -19,12 +19,13 @@ package org.dromara.maxkey.persistence.service.impl;
 
 import org.dromara.maxkey.entity.Institutions;
 import org.dromara.maxkey.persistence.mapper.InstitutionsMapper;
+import org.dromara.maxkey.persistence.service.InstitutionsService;
 import org.dromara.mybatis.jpa.service.impl.JpaServiceImpl;
 import org.springframework.stereotype.Repository;
 
 
 @Repository
-public class InstitutionsServiceImpl  extends JpaServiceImpl<InstitutionsMapper,Institutions>{
+public class InstitutionsServiceImpl  extends JpaServiceImpl<InstitutionsMapper,Institutions> implements InstitutionsService{
 
 	 public Institutions findByDomain(String domain) {
 		 return getMapper().findByDomain(domain);

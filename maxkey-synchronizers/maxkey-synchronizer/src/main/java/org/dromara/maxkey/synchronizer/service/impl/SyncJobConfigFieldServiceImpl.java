@@ -5,13 +5,13 @@ import org.dromara.maxkey.entity.SyncJobConfigField;
 import org.dromara.maxkey.persistence.mapper.SyncJobConfigFieldMapper;
 import org.dromara.maxkey.synchronizer.service.SyncJobConfigFieldService;
 import org.dromara.mybatis.jpa.service.impl.JpaServiceImpl;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
+@Repository
 public class SyncJobConfigFieldServiceImpl extends JpaServiceImpl<SyncJobConfigFieldMapper,SyncJobConfigField>  implements SyncJobConfigFieldService {
 
     public List<SyncJobConfigField> findByJobIdAndObjectType(Long jobId, String objectType) {

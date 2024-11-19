@@ -25,7 +25,6 @@ import org.dromara.maxkey.persistence.service.UserInfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,7 +39,6 @@ public class RestUserPasswordController {
 	static final Logger _logger = LoggerFactory.getLogger(RestUserPasswordController.class);
 	
     @Autowired
-    @Qualifier("userInfoService")
     UserInfoService userInfoService;
     
   

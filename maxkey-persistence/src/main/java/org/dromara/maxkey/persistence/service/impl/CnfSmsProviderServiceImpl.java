@@ -19,11 +19,12 @@ package org.dromara.maxkey.persistence.service.impl;
 
 import org.dromara.maxkey.entity.cnf.CnfSmsProvider;
 import org.dromara.maxkey.persistence.mapper.CnfSmsProviderMapper;
+import org.dromara.maxkey.persistence.service.CnfSmsProviderService;
 import org.dromara.mybatis.jpa.service.impl.JpaServiceImpl;
 import org.springframework.stereotype.Repository;
 
 
 @Repository
-public class CnfSmsProviderServiceImpl  extends JpaServiceImpl<CnfSmsProviderMapper,CnfSmsProvider>{
+public class CnfSmsProviderServiceImpl  extends JpaServiceImpl<CnfSmsProviderMapper,CnfSmsProvider> implements CnfSmsProviderService{
  
 }

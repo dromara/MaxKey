@@ -30,6 +30,7 @@ import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.mapper.UserInfoMapper;
 import org.dromara.maxkey.persistence.repository.PasswordPolicyValidator;
 import org.dromara.maxkey.persistence.service.AccountsService;
+import org.dromara.maxkey.persistence.service.UserInfoService;
 import org.dromara.maxkey.provision.ProvisionAct;
 import org.dromara.maxkey.provision.ProvisionService;
 import org.dromara.maxkey.provision.ProvisionTopic;
@@ -47,7 +48,7 @@ import org.springframework.stereotype.Repository;
  *
  */
 @Repository
-public class UserInfoServiceImpl extends JpaServiceImpl<UserInfoMapper,UserInfo> {
+public class UserInfoServiceImpl extends JpaServiceImpl<UserInfoMapper,UserInfo> implements UserInfoService{
 	static final  Logger _logger = LoggerFactory.getLogger(UserInfoServiceImpl.class);
 	
 	@Autowired

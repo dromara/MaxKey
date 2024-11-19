@@ -20,11 +20,12 @@ package org.dromara.maxkey.persistence.service.impl;
 
 import org.dromara.maxkey.entity.cnf.CnfEmailSenders;
 import org.dromara.maxkey.persistence.mapper.CnfEmailSendersMapper;
+import org.dromara.maxkey.persistence.service.CnfEmailSendersService;
 import org.dromara.mybatis.jpa.service.impl.JpaServiceImpl;
 import org.springframework.stereotype.Repository;
 
 
 @Repository
-public class CnfEmailSendersServiceImpl  extends JpaServiceImpl<CnfEmailSendersMapper,CnfEmailSenders>{
+public class CnfEmailSendersServiceImpl  extends JpaServiceImpl<CnfEmailSendersMapper,CnfEmailSenders> implements CnfEmailSendersService{
 	 
 }

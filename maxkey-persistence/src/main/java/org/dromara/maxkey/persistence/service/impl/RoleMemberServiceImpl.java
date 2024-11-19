@@ -24,6 +24,7 @@ import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.entity.permissions.RoleMember;
 import org.dromara.maxkey.entity.permissions.Roles;
 import org.dromara.maxkey.persistence.mapper.RoleMemberMapper;
+import org.dromara.maxkey.persistence.service.RoleMemberService;
 import org.dromara.mybatis.jpa.entity.JpaPageResults;
 import org.dromara.mybatis.jpa.service.impl.JpaServiceImpl;
 import org.slf4j.Logger;
@@ -31,7 +32,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class RoleMemberServiceImpl  extends JpaServiceImpl<RoleMemberMapper,RoleMember>{
+public class RoleMemberServiceImpl  extends JpaServiceImpl<RoleMemberMapper,RoleMember> implements RoleMemberService{
 	static final  Logger _logger = LoggerFactory.getLogger(RoleMemberServiceImpl.class);
 
 	public int addDynamicRoleMember(Roles dynamicGroup) {
@@ -52,27 +53,18 @@ public class RoleMemberServiceImpl  extends JpaServiceImpl<RoleMemberMapper,Role
 	
 	
 	public JpaPageResults<Roles> rolesNoMember(RoleMember entity) {
-		entity.setPageSelectId(entity.generateId());
-		entity.setStartRow(calculateStartRow(entity.getPageNumber() ,entity.getPageSize()));
-		
-		entity.setPageable(true);
+		beforePageResults(entity);
 		List<Roles> resultslist = null;
 		try {
 			resultslist = getMapper().rolesNoMember(entity);
 		} catch (Exception e) {
 			_logger.error("fetchPageResults Exception " , e);
 		}
-		entity.setPageable(false);
-		Integer totalPage = resultslist.size();
-		
-		Integer totalCount = 0;
-		if(entity.getPageNumber() == 1 && totalPage < entity.getPageSize()) {
-			totalCount = totalPage;
-		}else {
-			totalCount = parseCount(getMapper().fetchCount(entity));
-		}
-		
-		return new JpaPageResults<Roles>(entity.getPageNumber(),entity.getPageSize(),totalPage,totalCount,resultslist);
+		//当前页记录数
+		Integer records = parseRecords(resultslist);
+		//总页数
+		Integer totalCount =fetchCount(entity, resultslist);
+		return new JpaPageResults<Roles>(entity.getPageNumber(),entity.getPageSize(),records,totalCount,resultslist);
 	}
 	
 }

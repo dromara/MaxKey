@@ -59,7 +59,6 @@ public class OAuth20AccessConfirmationEndpoint {
 	static final Logger _logger = LoggerFactory.getLogger(OAuth20AccessConfirmationEndpoint.class);
 	 
     @Autowired
-    @Qualifier("appsService")
     protected AppsService appsService;
     
     @Autowired

@@ -78,7 +78,6 @@ public class AbstractEndpoint implements InitializingBean {
 	AuthenticationManager authenticationManager;
 	
 	@Autowired
-    @Qualifier("appsService")
     protected AppsService appsService;
 	
 	@Autowired 
