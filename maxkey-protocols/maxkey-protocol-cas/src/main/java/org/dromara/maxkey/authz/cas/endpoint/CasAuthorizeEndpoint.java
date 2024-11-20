@@ -24,7 +24,7 @@ import java.security.Principal;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.dromara.maxkey.authn.session.Session;
+import org.dromara.maxkey.authn.session.VisitedDto;
 import org.dromara.maxkey.authn.web.AuthorizationUtils;
 import org.dromara.maxkey.authz.cas.endpoint.ticket.CasConstants;
 import org.dromara.maxkey.authz.cas.endpoint.ticket.ServiceTicketImpl;
@@ -155,15 +155,9 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 		if(casDetails.getLogoutType()==LogoutType.BACK_CHANNEL) {
 			_logger.debug("CAS LogoutType BACK_CHANNEL ... ");
 			String sessionId = AuthorizationUtils.getPrincipal().getSessionId();
-			_logger.trace("get session by id {} . ",sessionId);
-		    Session session  = sessionManager.get(sessionId);
-		    _logger.trace("current session {}  ",session);
-		    //set cas ticket as OnlineTicketId
-		    casDetails.setOnlineTicket(ticket);
-		    session.setAuthorizedApp(casDetails);
-		    _logger.trace("session store ticket  {} .",ticket);
-		    sessionManager.create(sessionId, session);
-		    _logger.debug("CAS LogoutType session store ticket to AuthorizedApp .");
+		    VisitedDto visited = new VisitedDto(casDetails,ticket);
+		    sessionManager.visited(sessionId, visited);
+		    _logger.debug("App id {} , name {} , CAS LogoutType BACK_CHANNEL ... " , casDetails.getId(),casDetails.getAppName());
 		}
 		
 		_logger.debug("redirect to CAS Client URL {}" , callbackUrl);

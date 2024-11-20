@@ -18,7 +18,7 @@
 package org.dromara.maxkey.autoconfigure;
 
 import org.dromara.maxkey.authn.session.SessionManager;
-import org.dromara.maxkey.authn.session.SessionManagerFactory;
+import org.dromara.maxkey.authn.session.impl.SessionManagerImpl;
 import org.dromara.maxkey.authn.web.HttpSessionListenerAdapter;
 import org.dromara.maxkey.authn.web.SavedRequestAwareAuthenticationSuccessHandler;
 import org.dromara.maxkey.persistence.redis.RedisConnectionFactory;
@@ -50,7 +50,7 @@ public class SessionAutoConfiguration  {
             @Value("${maxkey.auth.session.timeout:1800}") int timeout
             ) {
     	_logger.debug("session timeout {}" , timeout);
-        return new SessionManagerFactory(
+        return new SessionManagerImpl(
         		persistence, jdbcTemplate, redisConnFactory,timeout);
     }
 

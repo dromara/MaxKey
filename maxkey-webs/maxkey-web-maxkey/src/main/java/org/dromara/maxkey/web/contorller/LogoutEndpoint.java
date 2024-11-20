@@ -25,6 +25,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.authn.session.Session;
 import org.dromara.maxkey.authn.session.SessionManager;
+import org.dromara.maxkey.authn.session.VisitedDto;
+import org.dromara.maxkey.authz.oauth2.provider.token.DefaultTokenServices;
 import org.dromara.maxkey.authz.singlelogout.DefaultSingleLogout;
 import org.dromara.maxkey.authz.singlelogout.LogoutType;
 import org.dromara.maxkey.authz.singlelogout.SamlSingleLogout;
@@ -32,7 +34,6 @@ import org.dromara.maxkey.authz.singlelogout.SingleLogout;
 import org.dromara.maxkey.configuration.ApplicationConfig;
 import org.dromara.maxkey.constants.ConstsProtocols;
 import org.dromara.maxkey.entity.Message;
-import org.dromara.maxkey.entity.apps.Apps;
 import org.dromara.maxkey.entity.idm.UserInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,6 +60,9 @@ public class LogoutEndpoint {
 	@Autowired
     SessionManager sessionManager;
 	
+	@Autowired
+	DefaultTokenServices oauth20TokenServices;
+	
 	/**
 	 * for front end
 	 * @param currentUser
@@ -73,11 +77,12 @@ public class LogoutEndpoint {
  		Session session = sessionManager.get(sessionId);
  		if(session != null) {
  			logger.debug("/logout frontend clean Session id {}",session.getId());
-	 		Set<Entry<String, Apps>> entrySet = session.getAuthorizedApps().entrySet();
+	 		Set<Entry<String, VisitedDto>> entrySet = session.getVisited().entrySet();
 	 
-	        Iterator<Entry<String, Apps>> iterator = entrySet.iterator();
+	        Iterator<Entry<String, VisitedDto>> iterator = entrySet.iterator();
 	        while (iterator.hasNext()) {
-	            Entry<String, Apps> mapEntry = iterator.next();
+	            Entry<String, VisitedDto> mapEntry = iterator.next();
+	            VisitedDto visited = mapEntry.getValue();
 	            logger.debug("App Id : {} , {} " ,  mapEntry.getKey() ,mapEntry.getValue());
 	            if( mapEntry.getValue().getLogoutType() == LogoutType.BACK_CHANNEL){
 	                SingleLogout singleLogout;
@@ -86,7 +91,14 @@ public class LogoutEndpoint {
 	                }else {
 	                    singleLogout = new DefaultSingleLogout();
 	                }
-	                singleLogout.sendRequest(session.getAuthentication(), mapEntry.getValue());
+	                singleLogout.sendRequest(session.getAuthentication(), visited);
+	            }
+	            //oauth , oidc revoke token
+	            if(visited.getProtocol().equalsIgnoreCase(ConstsProtocols.OAUTH20)
+	            		||visited.getProtocol().equalsIgnoreCase(ConstsProtocols.OAUTH21)
+	            		||visited.getProtocol().equalsIgnoreCase(ConstsProtocols.OPEN_ID_CONNECT10)) {
+	            	oauth20TokenServices.revokeToken(visited.getToken());
+	            	logger.debug("revoke token");
 	            }
 	        }
 	        //terminate session

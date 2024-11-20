@@ -170,8 +170,6 @@ public class Apps extends JpaEntity implements Serializable {
 	private String instName;
     
     protected String loginDateTime;
-
-    protected String onlineTicket;
     
     public Apps() {
         super();
@@ -600,14 +598,6 @@ public class Apps extends JpaEntity implements Serializable {
         this.loginDateTime = loginDateTime;
     }
 
-    public String getOnlineTicket() {
-        return onlineTicket;
-    }
-
-    public void setOnlineTicket(String onlineTicket) {
-        this.onlineTicket = onlineTicket;
-    }
-
     public String getAdapterId() {
 		return adapterId;
 	}
@@ -713,8 +703,6 @@ public class Apps extends JpaEntity implements Serializable {
 		builder.append(description);
 		builder.append(", loginDateTime=");
 		builder.append(loginDateTime);
-		builder.append(", onlineTicket=");
-		builder.append(onlineTicket);
 		builder.append("]");
 		return builder.toString();
 	}

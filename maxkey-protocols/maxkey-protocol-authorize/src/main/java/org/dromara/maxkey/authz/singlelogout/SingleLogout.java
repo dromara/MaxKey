@@ -19,7 +19,7 @@ package org.dromara.maxkey.authz.singlelogout;
 
 import java.util.Map;
 
-import org.dromara.maxkey.entity.apps.Apps;
+import org.dromara.maxkey.authn.session.VisitedDto;
 import org.dromara.maxkey.web.HttpRequestAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +28,7 @@ import org.springframework.security.core.Authentication;
 public abstract class SingleLogout {
     private static final Logger _logger = LoggerFactory.getLogger(SingleLogout.class);
     
-    public abstract void sendRequest(Authentication authentication,Apps logoutApp) ;
+    public abstract void sendRequest(Authentication authentication,VisitedDto visited) ;
     
     public void postMessage(String url,Map<String, Object> paramMap) {
     	_logger.debug("post logout message to url {}" , url);

@@ -15,12 +15,15 @@
  */
  
 
-package org.dromara.maxkey.authn.session;
+package org.dromara.maxkey.authn.session.impl;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.dromara.maxkey.authn.session.Session;
+import org.dromara.maxkey.authn.session.SessionManager;
+import org.dromara.maxkey.authn.session.VisitedDto;
 import org.dromara.maxkey.entity.history.HistoryLogin;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -111,6 +114,16 @@ public class InMemorySessionManager implements SessionManager{
 	@Override
 	public void terminate(String sessionId, String userId, String username) {
 		// not need implement
+	}
+
+	@Override
+	public void visited(String sessionId, VisitedDto visited) {
+		Session session  = this.get(sessionId);
+	    //set token or ticket to Visited , bind user session
+		session.visited(visited);
+		//override the session
+	    this.create(sessionId, session);
+	    _logger.debug("session {} store visited  {} ." , sessionId , visited);
 	}
 
 }

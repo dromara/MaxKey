@@ -20,7 +20,7 @@ package org.dromara.maxkey.authz.singlelogout;
 import java.util.HashMap;
 import java.util.UUID;
 
-import org.dromara.maxkey.entity.apps.Apps;
+import org.dromara.maxkey.authn.session.VisitedDto;
 import org.dromara.maxkey.util.DateUtils;
 import org.springframework.security.core.Authentication;
 
@@ -43,17 +43,17 @@ public class SamlSingleLogout extends SingleLogout{
             + "</saml:NameID><samlp:SessionIndex>%s</samlp:SessionIndex></samlp:LogoutRequest>";
 
     @Override
-    public void sendRequest(Authentication authentication,Apps logoutApp) {
+    public void sendRequest(Authentication authentication,VisitedDto visited) {
         String requestMessage = String.format(logoutRequestMessage, 
                 UUID.randomUUID().toString(),
                 DateUtils.getCurrentDateAsString(DateUtils.FORMAT_DATE_ISO_TIMESTAMP),
                 authentication.getName(),
-                logoutApp.getOnlineTicket()
+                visited.getTicket()
                 );
         
         HashMap<String,Object> logoutParameters  = new HashMap<String,Object>();
         logoutParameters.put(LOGOUT_REQUEST_PARAMETER, requestMessage);
-        postMessage(logoutApp.getLogoutUrl(),logoutParameters);
+        postMessage(visited.getLogoutUrl(),logoutParameters);
     }
 
     public SamlSingleLogout() {

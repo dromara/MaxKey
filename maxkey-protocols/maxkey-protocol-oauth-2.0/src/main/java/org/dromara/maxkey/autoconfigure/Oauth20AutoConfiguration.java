@@ -23,6 +23,7 @@ import java.security.spec.InvalidKeySpecException;
 
 import javax.sql.DataSource;
 
+import org.dromara.maxkey.authn.session.SessionManager;
 import org.dromara.maxkey.authz.oauth2.common.OAuth2Constants;
 import org.dromara.maxkey.authz.oauth2.provider.ClientDetailsService;
 import org.dromara.maxkey.authz.oauth2.provider.OAuth2UserDetailsService;
@@ -48,6 +49,7 @@ import org.dromara.maxkey.crypto.jwt.encryption.service.impl.DefaultJwtEncryptio
 import org.dromara.maxkey.crypto.jwt.signer.service.impl.DefaultJwtSigningAndValidationService;
 import org.dromara.maxkey.persistence.redis.RedisConnectionFactory;
 import org.dromara.maxkey.persistence.repository.LoginRepository;
+import org.dromara.maxkey.persistence.service.AppsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -259,12 +261,16 @@ public class Oauth20AutoConfiguration implements InitializingBean {
     DefaultTokenServices defaultTokenServices(
             JdbcClientDetailsService oauth20JdbcClientDetailsService,
             TokenStore oauth20TokenStore,
-            OIDCIdTokenEnhancer tokenEnhancer) {
+            OIDCIdTokenEnhancer tokenEnhancer,
+            AppsService appsService,
+            SessionManager sessionManager) {
         DefaultTokenServices tokenServices = new DefaultTokenServices();
         tokenServices.setClientDetailsService(oauth20JdbcClientDetailsService);
         tokenServices.setTokenEnhancer(tokenEnhancer);
         tokenServices.setTokenStore(oauth20TokenStore);
         tokenServices.setSupportRefreshToken(true);
+        tokenServices.setAppsService(appsService);
+        tokenServices.setSessionManager(sessionManager);
         _logger.debug("OAuth 2 Token Services init.");
         return tokenServices;
     }

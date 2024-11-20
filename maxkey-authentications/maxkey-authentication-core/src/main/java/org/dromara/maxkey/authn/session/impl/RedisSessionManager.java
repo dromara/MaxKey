@@ -15,11 +15,14 @@
  */
  
 
-package org.dromara.maxkey.authn.session;
+package org.dromara.maxkey.authn.session.impl;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.dromara.maxkey.authn.session.Session;
+import org.dromara.maxkey.authn.session.SessionManager;
+import org.dromara.maxkey.authn.session.VisitedDto;
 import org.dromara.maxkey.entity.history.HistoryLogin;
 import org.dromara.maxkey.persistence.redis.RedisConnection;
 import org.dromara.maxkey.persistence.redis.RedisConnectionFactory;
@@ -135,5 +138,15 @@ public class RedisSessionManager implements SessionManager {
 		// not need implement
 	}
 
+	@Override
+	public void visited(String sessionId, VisitedDto visited) {
+		Session session  = this.get(sessionId);
+	    //set token or ticket to Visited , bind user session
+		session.visited(visited);
+		//override the session
+	    this.create(sessionId, session);
+	    _logger.debug("session {} store visited  {} ." , sessionId , visited);
+		
+	}
 	
 }

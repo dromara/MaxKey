@@ -20,8 +20,8 @@ package org.dromara.maxkey.authn.session;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.Map;
 
-import org.dromara.maxkey.entity.apps.Apps;
 import org.dromara.maxkey.web.WebContext;
 import org.springframework.security.core.Authentication;
 
@@ -40,7 +40,7 @@ public class Session implements Serializable{
     
     public Authentication authentication;
     
-    private HashMap<String , Apps> authorizedApps = new HashMap<String , Apps>();
+    Map<String , VisitedDto> visited = new HashMap<>();
     
     public Session() {
         super();
@@ -105,19 +105,19 @@ public class Session implements Serializable{
         this.authentication = authentication;
     }
 
-    public HashMap<String, Apps> getAuthorizedApps() {
-        return authorizedApps;
+    public void visited(VisitedDto visited) {
+        this.visited.put(visited.getAppId(), visited);
     }
 
-    public void setAuthorizedApps(HashMap<String, Apps> authorizedApps) {
-        this.authorizedApps = authorizedApps;
-    }
-    
-    public void setAuthorizedApp(Apps authorizedApp) {
-        this.authorizedApps.put(authorizedApp.getId(), authorizedApp);
-    }
+    public Map<String, VisitedDto> getVisited() {
+		return visited;
+	}
 
-    @Override
+	public void setVisited(Map<String, VisitedDto> visited) {
+		this.visited = visited;
+	}
+
+	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Session [id=");

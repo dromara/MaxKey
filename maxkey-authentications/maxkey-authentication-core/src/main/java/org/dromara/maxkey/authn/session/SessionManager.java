@@ -39,4 +39,6 @@ public interface SessionManager {
     public int getValiditySeconds();
 
     public void terminate(String sessionId,String userId,String username);
+    
+    public void visited(String sessionId , VisitedDto visited);
 }

@@ -101,8 +101,7 @@ public class SingleSignOnInterceptor  implements AsyncHandlerInterceptor {
 	        		logger.debug("appId {}",appId);
 		        	app = appsService.get(appId,true);
 	        	}else if(requestURI.contains("/authz/oauth/v20/authorize")) {//oauth
-		        	app = appsService.get(
-		        			request.getParameter(OAuth2Constants.PARAMETER.CLIENT_ID),true);
+		        	app = appsService.get(request.getParameter(OAuth2Constants.PARAMETER.CLIENT_ID),true);
 	        	}
 	        }
 	        

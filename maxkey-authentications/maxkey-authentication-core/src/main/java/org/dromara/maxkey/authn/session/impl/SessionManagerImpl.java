@@ -15,7 +15,7 @@
  */
  
 
-package org.dromara.maxkey.authn.session;
+package org.dromara.maxkey.authn.session.impl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,6 +24,9 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
+import org.dromara.maxkey.authn.session.Session;
+import org.dromara.maxkey.authn.session.SessionManager;
+import org.dromara.maxkey.authn.session.VisitedDto;
 import org.dromara.maxkey.constants.ConstsPersistence;
 import org.dromara.maxkey.entity.history.HistoryLogin;
 import org.dromara.maxkey.entity.idm.UserInfo;
@@ -42,9 +45,9 @@ import org.springframework.jdbc.core.RowMapper;
  * @author shimh
  *
  */
-public class SessionManagerFactory implements SessionManager{
+public class SessionManagerImpl implements SessionManager{
 	private static final  Logger _logger = 
-            LoggerFactory.getLogger(SessionManagerFactory.class);
+            LoggerFactory.getLogger(SessionManagerImpl.class);
 	
 	private static final String DEFAULT_DEFAULT_SELECT_STATEMENT = 
 			"select id,sessionid,userId,username,displayname,logintime from mxk_history_login where sessionstatus = 1";
@@ -68,7 +71,7 @@ public class SessionManagerFactory implements SessionManager{
 	
 	private int validitySeconds ;
 	
-	public SessionManagerFactory(int persistence,
+	public SessionManagerImpl(int persistence,
 			 	JdbcTemplate jdbcTemplate,
 	            RedisConnectionFactory redisConnFactory,
 	            int validitySeconds) {
@@ -190,6 +193,15 @@ public class SessionManagerFactory implements SessionManager{
 			history.setDisplayName(rs.getString(5));
 			history.setLoginTime(rs.getTimestamp(6));
 			return history;
+		}
+	}
+
+	@Override
+	public void visited(String sessionId, VisitedDto visited) {
+		if(isRedis) {
+			redisSessionManager.visited(sessionId,visited);
+		}else {
+			inMemorySessionManager.visited(sessionId,visited);
 		}
 	}
 }
