@@ -155,8 +155,8 @@ subprojects {
         //httpcomponents v5
         implementation group: 'org.apache.httpcomponents.core5', name: 'httpcore5', version: "${httpcomponentscore5Version}"
         implementation group: 'org.apache.httpcomponents.core5', name: 'httpcore5-h2', version: "${httpcomponentscore5Version}"
-        implementation group: 'org.apache.httpcomponents.client5', name: 'httpclient5', version: "${httpcomponentscore5Version}"
-        implementation group: 'org.apache.httpcomponents.client5', name: 'httpclient5-fluent', version: "${httpcomponentscore5Version}"
+        implementation group: 'org.apache.httpcomponents.client5', name: 'httpclient5', version: "${httpcomponentsclient5Version}"
+        implementation group: 'org.apache.httpcomponents.client5', name: 'httpclient5-fluent', version: "${httpcomponentsclient5Version}"
         implementation group: 'org.apache.velocity', name: 'velocity', version: "${velocityVersion}"
         implementation group: 'velocity', name: 'velocity-dep', version: "${velocitydepVersion}"
         implementation group: 'org.freemarker', name: 'freemarker', version: "${freemarkerVersion}"
