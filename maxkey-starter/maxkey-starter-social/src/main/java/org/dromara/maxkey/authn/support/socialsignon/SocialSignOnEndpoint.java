@@ -35,7 +35,6 @@ import org.dromara.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -47,17 +46,14 @@ import java.util.Map;
  * @author Crystal.Sea
  *
  */
-@Controller
+@RestController
 @RequestMapping(value = "/logon/oauth20")
 public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 	static final  Logger _logger = LoggerFactory.getLogger(SocialSignOnEndpoint.class);
 
-	@RequestMapping(value={"/authorize/{provider}"}, method = RequestMethod.GET)
-	@ResponseBody
-	public Message<Object> authorize( HttpServletRequest request,
-										@PathVariable("provider") String provider
-									) {
-		_logger.trace("SocialSignOn provider : " + provider);
+	@GetMapping("/authorize/{provider}")
+	public Message<Object> authorize( HttpServletRequest request,@PathVariable("provider") String provider) {
+		_logger.trace("SocialSignOn provider : {}" , provider);
 		String instId = WebContext.getInst().getId();
 		String originURL =WebContext.getContextPath(request,false);
     	String authorizationUrl =
@@ -67,14 +63,12 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 						originURL + applicationConfig.getFrontendUri()
 				).authorize(authTokenService.genRandomJwt());
 
-		_logger.trace("authorize SocialSignOn : " + authorizationUrl);
-		return new Message<Object>((Object)authorizationUrl);
+		_logger.trace("authorize SocialSignOn : {}" , authorizationUrl);
+		return new Message<Object>(authorizationUrl);
 	}
 
-	@RequestMapping(value={"/scanqrcode/{provider}"}, method = RequestMethod.GET)
-	@ResponseBody
-	public Message<SocialsProvider> scanQRCode(HttpServletRequest request,
-										@PathVariable("provider") String provider) {
+	@GetMapping("/scanqrcode/{provider}")
+	public Message<SocialsProvider> scanQRCode(HttpServletRequest request,@PathVariable("provider") String provider) {
 		String instId = WebContext.getInst().getId();
 		String originURL =WebContext.getContextPath(request,false);
 	    AuthRequest authRequest = 
@@ -82,30 +76,30 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 						instId,
 						provider,
 						originURL + applicationConfig.getFrontendUri());
-	   
-	    if(authRequest == null ) {
-	        _logger.error("build authRequest fail .");
+	    SocialsProvider scanQrProvider = null;
+	    if(authRequest != null ) {
+	        String state = UUID.generate().toString();
+		    //String state = authTokenService.genRandomJwt();
+		    authRequest.authorize(state);
+		    
+			SocialsProvider socialSignOnProvider = socialSignOnProviderService.get(instId,provider);
+			scanQrProvider = new SocialsProvider(socialSignOnProvider);
+			scanQrProvider.setState(state);
+			scanQrProvider.setRedirectUri(
+					socialSignOnProviderService.getRedirectUri(
+							originURL + applicationConfig.getFrontendUri(), provider));
+			//缓存state票据在缓存或者是redis中五分钟过期
+			if (provider.equalsIgnoreCase(AuthMaxkeyRequest.KEY)) {
+				socialSignOnProviderService.setToken(state);
+			}
+	    }else {
+	    	 _logger.error("build authRequest fail .");
 	    }
-		String state = UUID.generate().toString();
-	    //String state = authTokenService.genRandomJwt();
-	    authRequest.authorize(state);
-	    
-		SocialsProvider socialSignOnProvider = socialSignOnProviderService.get(instId,provider);
-		SocialsProvider scanQrProvider = new SocialsProvider(socialSignOnProvider);
-		scanQrProvider.setState(state);
-		scanQrProvider.setRedirectUri(
-				socialSignOnProviderService.getRedirectUri(
-						originURL + applicationConfig.getFrontendUri(), provider));
-		//缓存state票据在缓存或者是redis中五分钟过期
-		if (provider.equalsIgnoreCase(AuthMaxkeyRequest.KEY)) {
-			socialSignOnProviderService.setToken(state);
-		}
 		
-		return new Message<SocialsProvider>(scanQrProvider);
+		return new Message<>(scanQrProvider);
 	}
 
-	
-	@RequestMapping(value={"/bind/{provider}"}, method = RequestMethod.GET)
+	@GetMapping("/bind/{provider}")
 	public Message<AuthJwt> bind(@PathVariable("provider") String provider,
 								  @CurrentUser UserInfo userInfo,
 								  HttpServletRequest request) {
@@ -118,24 +112,18 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 		    socialsAssociate.setUserId(userInfo.getId());
 			socialsAssociate.setUsername(userInfo.getUsername());
 			socialsAssociate.setInstId(userInfo.getInstId());
-			//socialsAssociate.setAccessToken(JsonUtils.object2Json(accessToken));
-			//socialsAssociate.setExAttribute(JsonUtils.object2Json(accessToken.getResponseObject()));
-			_logger.debug("Social Bind : "+socialsAssociate);
+			_logger.debug("Social Bind : {}",socialsAssociate);
 			this.socialsAssociateService.delete(socialsAssociate);
 			this.socialsAssociateService.insert(socialsAssociate);
-			return new Message<AuthJwt>();
+			return new Message<>();
 	    }catch(Exception e) {
 	        _logger.error("callback Exception  ",e);
 	    }
-	    
-	    return new Message<AuthJwt>(Message.ERROR);
+	    return new Message<>(Message.ERROR);
 	}
 
-
-
-	@RequestMapping(value={"/callback/{provider}"}, method = RequestMethod.GET)
-	public Message<AuthJwt> callback(@PathVariable("provider") String provider,
-									  HttpServletRequest request) {
+	@GetMapping("/callback/{provider}")
+	public Message<AuthJwt> callback(@PathVariable("provider") String provider,HttpServletRequest request) {
 		 //auth call back may exception 
 	    try {
 	    	String originURL =WebContext.getContextPath(request,false);
@@ -145,36 +133,38 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 
 			SocialsAssociate socialssssociate1 = this.socialsAssociateService.get(socialsAssociate);
 		
-	    	_logger.debug("Loaded SocialSignOn Socials Associate : "+socialssssociate1);
+	    	_logger.debug("Loaded SocialSignOn Socials Associate : {}",socialssssociate1);
 		
 	    	if (null == socialssssociate1) {
 				//如果存在第三方ID并且在数据库无法找到映射关系，则进行绑定逻辑
 				if (StringUtils.isNotEmpty(socialsAssociate.getSocialUserId())) {
 					//返回message为第三方用户标识
-					return new Message<AuthJwt>(Message.PROMPT,socialsAssociate.getSocialUserId());
+					return new Message<>(Message.PROMPT,socialsAssociate.getSocialUserId());
 				}
 			}
 
 			socialsAssociate = socialssssociate1;
-	    	_logger.debug("Social Sign On from {} mapping to user {}",
+	    	if(socialsAssociate != null) {
+	    		_logger.debug("Social Sign On from {} mapping to user {}",
 		                socialsAssociate.getProvider(),socialsAssociate.getUsername());
-		
-	    	LoginCredential loginCredential =new LoginCredential(
-	    			socialsAssociate.getUsername(),"",ConstsLoginType.SOCIALSIGNON);
-	    	SocialsProvider socialSignOnProvider = socialSignOnProviderService.get(instId,provider);
-	    	loginCredential.setProvider(socialSignOnProvider.getProviderName());
-	    	
-	    	Authentication  authentication = authenticationProvider.authenticate(loginCredential,true);
-	    	//socialsAssociate.setAccessToken(JsonUtils.object2Json(this.accessToken));
-	    	socialsAssociate.setSocialUserInfo(accountJsonString);
-	    	//socialsAssociate.setExAttribute(JsonUtils.object2Json(accessToken.getResponseObject()));
-		
-	    	this.socialsAssociateService.update(socialsAssociate);
-	    	return new Message<AuthJwt>(authTokenService.genAuthJwt(authentication));
+		    	LoginCredential loginCredential =new LoginCredential(
+		    			socialsAssociate.getUsername(),"",ConstsLoginType.SOCIALSIGNON);
+		    	SocialsProvider socialSignOnProvider = socialSignOnProviderService.get(instId,provider);
+		    	loginCredential.setProvider(socialSignOnProvider.getProviderName());
+		    	
+		    	Authentication  authentication = authenticationProvider.authenticate(loginCredential,true);
+		    	socialsAssociate.setSocialUserInfo(accountJsonString);
+			
+		    	this.socialsAssociateService.update(socialsAssociate);
+		    	return new Message<>(authTokenService.genAuthJwt(authentication));
+	    	}else {
+	    		
+	    	}
 	    }catch(Exception e) {
 	    	 _logger.error("callback Exception  ",e);
-	    	 return new Message<AuthJwt>(Message.ERROR);
+	    	 
 	    }
+	    return new Message<>(Message.ERROR);
 	}
 
 
@@ -182,14 +172,14 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 	 * 提供给第三方应用关联用户接口
 	 * @return
 	 */
-	@RequestMapping(value={"/workweixin/qr/auth/login"}, method = {RequestMethod.POST})
+	@PostMapping("/workweixin/qr/auth/login")
 	public Message<AuthJwt> qrAuthLogin(
 			@RequestParam Map<String, String> param,
 			HttpServletRequest request) {
 
 		try {
 			if (null == param){
-				return new Message<AuthJwt>(Message.ERROR);
+				return new Message<>(Message.ERROR);
 			}
 			String token = param.get("token");
 			String username = param.get("username");
@@ -199,15 +189,15 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 				//设置token和用户绑定
 				boolean flag = this.socialSignOnProviderService.bindtoken(token,username);
 				if (flag) {
-					return new Message<AuthJwt>();
+					return new Message<>();
 				}
 			} else {
-				return new Message<AuthJwt>(Message.WARNING,"Invalid token");
+				return new Message<>(Message.WARNING,"Invalid token");
 			}
 		}catch(Exception e) {
 			_logger.error("qrAuthLogin Exception  ",e);
 		}
-		return new Message<AuthJwt>(Message.ERROR);
+		return new Message<>(Message.ERROR);
 	}
 
 
@@ -218,23 +208,23 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value={"/qrcallback/{provider}/{state}"}, method = RequestMethod.GET)
+	@PostMapping("/qrcallback/{provider}/{state}")
 	public Message<AuthJwt> qrcallback(@PathVariable("provider") String provider,@PathVariable("state") String state,
 										HttpServletRequest request) {
 		try {
 			//判断只有maxkey扫码
 			if (!provider.equalsIgnoreCase(AuthMaxkeyRequest.KEY)) {
-				return new Message<AuthJwt>(Message.ERROR);
+				return new Message<>(Message.ERROR);
 			}
 
 			String loginName = socialSignOnProviderService.getToken(state);
 			if (StringUtils.isEmpty(loginName)) {
 				//二维码过期
-				return new Message<AuthJwt>(Message.PROMPT);
+				return new Message<>(Message.PROMPT);
 			}
 			if("-1".equalsIgnoreCase(loginName)){
 				//暂无用户扫码
-				return new Message<AuthJwt>(Message.WARNING);
+				return new Message<>(Message.WARNING);
 			}
 			String instId = WebContext.getInst().getId();
 
@@ -246,13 +236,11 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 
 			socialsAssociate = this.socialsAssociateService.get(socialsAssociate);
 
-			_logger.debug("qrcallback Loaded SocialSignOn Socials Associate : "+socialsAssociate);
+			_logger.debug("qrcallback Loaded SocialSignOn Socials Associate : {}",socialsAssociate);
 
 			if(null == socialsAssociate) {
-				return new Message<AuthJwt>(Message.ERROR);
+				return new Message<>(Message.ERROR);
 			}
-
-			_logger.debug("qrcallback Social Sign On from {} mapping to user {}", socialsAssociate.getProvider(),socialsAssociate.getUsername());
 
 			LoginCredential loginCredential =new LoginCredential(
 					socialsAssociate.getUsername(),"",ConstsLoginType.SOCIALSIGNON);
@@ -260,15 +248,13 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 			loginCredential.setProvider(socialSignOnProvider.getProviderName());
 
 			Authentication  authentication = authenticationProvider.authenticate(loginCredential,true);
-			//socialsAssociate.setAccessToken(JsonUtils.object2Json(this.accessToken));
 			socialsAssociate.setSocialUserInfo(accountJsonString);
-			//socialsAssociate.setExAttribute(JsonUtils.object2Json(accessToken.getResponseObject()));
 
 			this.socialsAssociateService.update(socialsAssociate);
-			return new Message<AuthJwt>(authTokenService.genAuthJwt(authentication));
+			return new Message<>(authTokenService.genAuthJwt(authentication));
 		}catch(Exception e) {
 			_logger.error("qrcallback Exception  ",e);
-			return new Message<AuthJwt>(Message.ERROR);
+			return new Message<>(Message.ERROR);
 		}
 	}
 }

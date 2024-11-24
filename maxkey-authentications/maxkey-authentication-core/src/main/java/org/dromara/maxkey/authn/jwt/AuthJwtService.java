@@ -119,7 +119,7 @@ public class AuthJwtService {
 	 * @return true or false
 	 */
 	public boolean validateJwtToken(String authToken) {
-		if(StringUtils.isNotBlank(authToken)) {
+		if(StringUtils.isNotBlank(authToken) && authToken.length() > 20) {
 			try {
 				JWTClaimsSet claims = resolve(authToken);
 				boolean isExpiration = claims.getExpirationTime().after(DateTime.now().toDate());

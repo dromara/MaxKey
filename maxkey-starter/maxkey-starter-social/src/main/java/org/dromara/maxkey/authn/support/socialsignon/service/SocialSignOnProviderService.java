@@ -43,7 +43,7 @@ import me.zhyd.oauth.model.AuthUser;
 import me.zhyd.oauth.request.*;
 
 public class SocialSignOnProviderService{
-	private static Logger _logger = LoggerFactory.getLogger(SocialSignOnProviderService.class);
+	private static final Logger _logger = LoggerFactory.getLogger(SocialSignOnProviderService.class);
 	
 	private static final String DEFAULT_SELECT_STATEMENT = "select * from mxk_socials_provider where instid = ? and status = 1  order by sortindex";
 	
@@ -52,7 +52,7 @@ public class SocialSignOnProviderService{
                 .expireAfterWrite(ConstsTimeInterval.ONE_HOUR, TimeUnit.MINUTES)
                 .build();
 	
-	HashMap<String ,SocialsProvider>socialSignOnProviderMaps = new HashMap<String ,SocialsProvider>();
+	HashMap<String ,SocialsProvider>socialSignOnProviderMaps = new HashMap<>();
 	
 	private final JdbcTemplate jdbcTemplate;
 
@@ -199,9 +199,9 @@ public class SocialSignOnProviderService{
 		    List<SocialsProvider> listSocialsProvider = jdbcTemplate.query(
 		            DEFAULT_SELECT_STATEMENT,
 	                new SocialsProviderRowMapper(),instId);
-	        _logger.trace("query SocialsProvider " + listSocialsProvider);
+	        _logger.trace("query SocialsProvider {}" , listSocialsProvider);
 	        
-	        List<SocialsProvider> socialSignOnProviders = new ArrayList<SocialsProvider>();
+	        List<SocialsProvider> socialSignOnProviders = new ArrayList<>();
 	        socialsLogin = new SocialsProviderLogin(socialSignOnProviders);
 	        for(SocialsProvider socialsProvider : listSocialsProvider){
 	            _logger.debug("Social Provider {} ({})" ,

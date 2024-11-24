@@ -19,9 +19,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ReuseTabService } from '@delon/abc/reuse-tab';
 import { SettingsService } from '@delon/theme';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
+
 import { AuthnService } from '../../service/authn.service';
 import { SocialsProviderService } from '../../service/socials-provider.service';
-import {SocialsProviderBindUserComponent} from "./socials-provider-bind-user/socials-provider-bind-user.component";
+import { SocialsProviderBindUserComponent } from './socials-provider-bind-user/socials-provider-bind-user.component';
 
 @Component({
   selector: 'app-callback',
@@ -52,10 +53,9 @@ export class CallbackComponent implements OnInit {
           this.reuseTabService.clear();
           // 设置用户Token信息
           this.authnService.auth(res.data);
-        }
-        else if (res.code === 102) {
+        } else if (res.code === 102) {
           //绑定用户
-          this.openBindUser(res.message)
+          this.openBindUser(res.message);
           return;
         }
         this.authnService.navigate({});
@@ -70,7 +70,7 @@ export class CallbackComponent implements OnInit {
   }
 
   openBindUser(socialUserId: String) {
-    console.log("bind user : ",this.provider,socialUserId);
+    console.log('bind user : ', this.provider, socialUserId);
     const modal = this.modalService.create({
       nzContent: SocialsProviderBindUserComponent,
       nzViewContainerRef: this.viewContainerRef,
@@ -83,10 +83,7 @@ export class CallbackComponent implements OnInit {
     // Return a result when closed
     modal.afterClose.subscribe(result => {
       if (result.refresh) {
-
       }
     });
-
-
   }
 }

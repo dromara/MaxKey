@@ -51,7 +51,7 @@ export class SocialsProviderService extends BaseService<SocialsProvider> {
     return this.getByParams(params, `/logon/oauth20/bind/${provider}?_allow_anonymous=true`);
   }
 
-  qrcallback(provider: string, token: string ): Observable<Message<SocialsProvider>> {
+  qrcallback(provider: string, token: string): Observable<Message<SocialsProvider>> {
     return this.getByParams({}, `/logon/oauth20/qrcallback/${provider}/${token}?_allow_anonymous=true`);
   }
 }

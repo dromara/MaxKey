@@ -107,11 +107,11 @@ public class AbstractSocialSignOnEndpoint {
         }
   		
   		AuthResponse<?> authResponse=authRequest.login(authCallback);
-  		_logger.debug("Response  : " + authResponse.getData());
+  		_logger.debug("Response  : {}" , authResponse.getData());
+  		String socialUserId = socialSignOnProviderService.getAccountId(provider, authResponse);
   		socialsAssociate =new SocialsAssociate();
 		socialsAssociate.setProvider(provider);
-		socialsAssociate.setSocialUserId(
-				socialSignOnProviderService.getAccountId(provider, authResponse));
+		socialsAssociate.setSocialUserId(socialUserId);
 		socialsAssociate.setInstId(instId);
 		
  		return socialsAssociate;
