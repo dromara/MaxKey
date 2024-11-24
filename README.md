@@ -33,6 +33,8 @@ The product Support OAuth 2.x/OpenID Connect, SAML 2.0, JWT, CAS, SCIM and other
 
 MaxKey focuses on performance, security, and ease of use in enterprise scenarios, is widely used in industries such as healthcare, finance, government, and manufacturing.
 
+Apache License, Version 2.0 . Open Source, Secure, Compliance, Independent and Controllable . 
+
 Official Website <a href="https://www.maxkey.top/" target="_blank"><b>https://www.maxkey.top/</b></a>
 
 WeChat: 

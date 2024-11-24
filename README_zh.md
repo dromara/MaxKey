@@ -34,7 +34,7 @@ MaxKey注重企业级场景下的性能、安全和易用性，广泛应用于�
 
 MaxKey采用Apache License, Version 2.0，开源、安全、合规、自主可控。
 
-官方网站  <a href="http://www.maxkey.top/" target="_blank"><b>http://www.maxkey.top/</b></a> 
+官方网站  <a href="https://www.maxkey.top/" target="_blank"><b>https://www.maxkey.top/</b></a> 
 
 官方微信: 
 
