@@ -45,6 +45,10 @@ QQ : <b> 1054466084 </b>
 
 email: <b> support@maxsso.net </b>
 
+
+Issue guide <a href="https://gitee.com/dromara/MaxKey/issues?q=is%3Aclosed">Closed List</a>  | <a href="https://gitee.com/dromara/MaxKey/issues/I65IEQ">New Issue</a>
+
+
 Code Hosting <a href="https://github.com/dromara/MaxKey" target="_blank"><b>GitHub</b></a> | <a href="https://gitee.com/dromara/MaxKey" target="_blank"><b>Gitee</b></a>  | <a href="https://gitcode.com/dromara/MaxKey/overview" target="_blank"><b>GitCode</b></a>
 
 ><b> Single Sign On </b>(<b> SSO </b >),Users only need to login to the authentication center once , access all the trusted application systems without logging in again.
