@@ -1,4 +1,46 @@
-﻿MaxKey v 4.1.2 GA 2024/09/30
+﻿MaxKey v 4.1.3 GA 2024/11/29
+    *(MAXKEY-240701) #IAZNZS oauth2单点注销没有生效修复
+    *(MAXKEY-240702) #238 飞书扫码登录失败
+    *(MAXKEY-240703) 升级mybatis-jpa-extra-3.3.2 增加service接口和impl实现
+    *(MAXKEY-240704) 把activedirectory相关移动到org.dromara.maxkey.ldap.activedirectory下
+    *(MAXKEY-240705) 增加 maxkey-authentication-provider-mgt
+    *(MAXKEY-240706) maxkey.auth.session.timeout rename to maxkey.auth.jwt.refresh.expires
+    *(MAXKEY-240707) 增加公共规则 ConstsRegex
+    *(MAXKEY-240708) 认证后跳转判断优化
+    *(MAXKEY-240709) #IB1BC9 客户端调用单点注销接口或者maxkey-hmt管理后台页面退出报错：Circular view path [logout]
+    *(MAXKEY-240710) oidc wellknown接口优化
+    *(MAXKEY-240711) #IAEWN7 well-known/openid-configuration 接口 返回的response_types_supported问题
+    *(MAXKEY-240712) 短信验证码服务代码优化
+    *(MAXKEY-240713) 分离登录扫码接口
+    *(MAXKEY-240714) 登录会话和日志查询优化，增加IP地址归属地显示，删除loginUrl字段
+    *(MAXKEY-240715) 宝塔面板安装部署接入
+    *(MAXKEY-240716) bean初始化判断的优化
+    *(MAXKEY-240717) ALL Project UTF-8
+    *(MAXKEY-240718) maxkey-authentications\maxkey-authentication-social -> maxkey-starter\maxkey-starter-social
+    *(MAXKEY-240719) 数据库字段自动填充instId，createdBy，createdDate，modifiedBy，modifiedDate
+    *(MAXKEY-240720) #235 from khangdc2/circleci-project-setup
+    *(MAXKEY-240721) docker-compose & docker 部署更新和优化
+    *(MAXKEY-240722) gradle配置文件优化
+    *(MAXKEY-240723) 删除代码中无效引用，代码规范化
+    *(MAXKEY-240724) HistorySignOnAppInterceptor 改名 HistorySingleSignOnInterceptor 
+    *(MAXKEY-240725) mysql升级8.4.2
+    *(MAXKEY-240726) #IB71WC 前端本地启动 404 问题
+    *(MAXKEY-240727) saml metadata emailAddress support@maxsso.net
+    *(MAXKEY-240728) 依赖项引用、更新和升级
+            spring 6.2.0
+            springBoot 3.3.6
+            springSecurity 6.4.1
+            springData 3.4.0
+            springkafka 3.3.0
+            springcloud 4.1.4
+            httpcomponentscore5 5.3.1
+            httpcomponentsclient5 5.4.1
+            tomcat 10.1.33
+            log4j 2.24.1
+            gson 2.11.0
+            freemarker  2.3.33
+    
+MaxKey v 4.1.2 GA 2024/09/30
     *(MAXKEY-240601) timebased otp 优化
     *(MAXKEY-240602) appCategoryService优化
     *(MAXKEY-240603) 开源暑期 Flutter认证APP项目
@@ -12,7 +54,7 @@
     *(MAXKEY-240611) 登录后台跳转功能修复
     *(MAXKEY-240612) Oauth20Client代码优化，移除Oauth20ClientAutoConfiguration
     *(MAXKEY-240613) core Repository移动到maxkey-persistence，以后的版本进行合并
-    *(MAXKEY-240613) 依赖项引用、更新和升级
+    *(MAXKEY-240614) 依赖项引用、更新和升级
         mybatis-jpa-extra               3.3.1
         springVersion                   6.1.13
         springBootVersion               3.3.4
