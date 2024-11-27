@@ -107,14 +107,14 @@ export class DefaultInterceptor implements HttpInterceptor {
    */
   private refreshTokenRequest(): Observable<any> {
     const model = this.tokenSrv.get();
-    return this.http.post(`/auth/token/refresh?_allow_anonymous=true`, null, { refresh_token: model?.['refresh_token'] || '' });
+    return this.http.post(`/auth/token/refresh`, null, { refresh_token: model?.['refresh_token'] || '' });
   }
 
   // #region 刷新Token方式一：使用 401 重新刷新 Token
 
   private tryRefreshToken(ev: HttpResponseBase, req: HttpRequest<any>, next: HttpHandler): Observable<any> {
     // 1、若请求为刷新Token请求，表示来自刷新Token可以直接跳转登录页
-    if ([`/auth/token/refresh?_allow_anonymous=true`].some(url => req.url.includes(url))) {
+    if ([`/auth/token/refresh`].some(url => req.url.includes(url))) {
       this.toLogin();
       return throwError(ev);
     }
