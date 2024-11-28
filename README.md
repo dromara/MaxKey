@@ -45,6 +45,7 @@ QQ : <b> 1054466084 </b>
 
 email: <b> support@maxsso.net </b>
 
+Online Demo  <a href="https://maxkey.top/zh/about/demo.html" target="_blank"><b>Access</b></a> 
 
 Issue guide <a href="https://gitee.com/dromara/MaxKey/issues?q=is%3Aclosed">Closed List</a>  | <a href="https://gitee.com/dromara/MaxKey/issues/I65IEQ">New Issue</a>
 

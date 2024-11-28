@@ -44,6 +44,8 @@ MaxKey采用Apache License, Version 2.0，开源、安全、合规、自主可�
 
 邮箱email: <b>support@maxsso.net</b>
 
+在线演示  <a href="https://maxkey.top/zh/about/demo.html" target="_blank"><b>访问</b></a> 
+
 问题(Issue)指南 <a href="https://gitee.com/dromara/MaxKey/issues?q=is%3Aclosed">已解决问题列表</a>  | <a href="https://gitee.com/dromara/MaxKey/issues/I65IEQ">我要提新问题</a>
 
 代码托管 <a href="https://gitee.com/dromara/MaxKey" target="_blank"><b>Gitee</b></a> | <a href="https://github.com/dromara/MaxKey" target="_blank"><b>GitHub</b></a> | <a href="https://gitcode.com/dromara/MaxKey/overview" target="_blank"><b>GitCode</b></a>
