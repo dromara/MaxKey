@@ -32,6 +32,7 @@ public class LoginHistoryRepository {
             insert into mxk_history_login 
                 (   id , 
                     sessionid , 
+                    category ,
                     userid ,
                     username ,
                     displayname , 
@@ -49,7 +50,7 @@ public class LoginHistoryRepository {
                     application , 
                     sessionstatus ,
                     instid)
-                values( ? , ? , ? , ? , ? , ? , ? , ?, ? , ? , ? , ?, ?, ? , ? , ?, ? , ? , ?)
+                values( ? , ? , ? , ? , ? , ? , ? , ?, ? , ? , ? , ?, ?, ? , ? , ?, ? , ? , ? , ?)
     		""";
 
     protected JdbcTemplate jdbcTemplate;
@@ -84,6 +85,7 @@ public class LoginHistoryRepository {
 	                new Object[] { 
 	                        historyLogin.getId(),
 	                        historyLogin.getSessionId(),
+	                        historyLogin.getCategory(),
 	                        historyLogin.getUserId(),
 	                        historyLogin.getUsername(),
 	                        historyLogin.getDisplayName(),
@@ -105,6 +107,7 @@ public class LoginHistoryRepository {
 	                new int[] { 
 	                        Types.VARCHAR,
 	                        Types.VARCHAR,
+	                        Types.INTEGER,
 	                        Types.VARCHAR,
 	                        Types.VARCHAR,
 	                        Types.VARCHAR,

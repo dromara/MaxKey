@@ -49,6 +49,8 @@ public class HistoryLogin  extends JpaEntity  implements Serializable{
 	@Column
 	String sessionId;
 	@Column
+	int category;
+	@Column
 	String userId;
 	@Column
 	String username;
@@ -110,6 +112,14 @@ public class HistoryLogin  extends JpaEntity  implements Serializable{
 
 	public void setSessionId(String sessionId) {
 		this.sessionId = sessionId;
+	}
+
+	public int getCategory() {
+		return category;
+	}
+
+	public void setCategory(int category) {
+		this.category = category;
 	}
 
 	public String getUserId() {

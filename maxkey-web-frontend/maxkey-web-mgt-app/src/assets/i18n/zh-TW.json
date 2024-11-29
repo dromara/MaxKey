@@ -75,9 +75,13 @@
 			"monthAccessCount": "30日訪問情況統計",
 			"monthAppCount": "30日TOP10應用訪問統計",
 			"monthBrowserCount": "30日TOP10瀏覽器訪問統計",
+			"monthProvinceAccessCount": "30日TOP10各省份訪問統計",
 			"appName": "應用名稱",
 			"browser": "瀏覽器",
-			"accessCount": "訪問量"
+			"accessCount": "訪問量",
+			"number": "序號",
+			"province": "省份",
+			"accessPV": "瀏覽量(PV)"
 		},
 		"users": {
 			"tab.basic": "基本信息",

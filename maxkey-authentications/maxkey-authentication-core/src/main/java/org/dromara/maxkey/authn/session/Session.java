@@ -30,6 +30,13 @@ public class Session implements Serializable{
     
     public static final  int    MAX_EXPIRY_DURATION = 60 * 5; //default 5 minutes.
     
+    public class CATEGORY{
+    	
+    	 public static final  int    SIGN = 1;
+    	 
+    	 public static final  int    MGMT = 5;
+    }
+    
     public String id;
     
     public LocalDateTime startTimestamp;

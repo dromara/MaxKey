@@ -22,6 +22,7 @@ import java.util.List;
 
 import org.dromara.maxkey.authn.SignPrincipal;
 import org.dromara.maxkey.authn.realm.ldap.LdapAuthenticationRealmService;
+import org.dromara.maxkey.authn.session.Session.CATEGORY;
 import org.dromara.maxkey.entity.history.HistoryLogin;
 import org.dromara.maxkey.entity.idm.Groups;
 import org.dromara.maxkey.entity.idm.UserInfo;
@@ -148,6 +149,7 @@ public abstract class AbstractAuthenticationRealm {
         historyLogin.setUsername(userInfo.getUsername());
         historyLogin.setDisplayName(userInfo.getDisplayName());
         historyLogin.setInstId(userInfo.getInstId());
+        historyLogin.setCategory(CATEGORY.SIGN);
         
         Region ipRegion =ipLocationParser.region(userInfo.getLastLoginIp());
         if(ipRegion != null) {

@@ -75,9 +75,13 @@
 			"monthAccessCount": "30 Day Access Count",
 			"monthAppCount": "30 Day TOP 10 App Access Count",
 			"monthBrowserCount": "30 Day  TOP 10 Browser Access Count",
+			"monthProvinceAccessCount": "30 Day  TOP 10 Province Access Count",
 			"appName": "App",
 			"browser": "Browser",
-			"accessCount": "Count"
+			"accessCount": "Count",
+			"number": "Number",
+			"province": "Province",
+			"accessPV": "Access(PV)"
 		},
 		"users": {
 			"tab.basic": "Basic",
