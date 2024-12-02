@@ -23,11 +23,11 @@ import { SettingsService } from '@delon/theme';
 import { AuthnService } from '../../service/authn.service';
 
 @Component({
-  selector: 'app-jwt-auth',
+  selector: 'app-trust-auth',
   template: ``
 })
-export class JwtAuthComponent implements OnInit {
-  jwt = '';
+export class TrustAuthComponent implements OnInit {
+  ticket = '';
 
   constructor(
     private authnService: AuthnService,
@@ -39,9 +39,9 @@ export class JwtAuthComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.jwt = this.route.snapshot.queryParams['jwt'];
+    this.ticket = this.route.snapshot.queryParams['ticket'];
 
-    this.authnService.jwtAuth({ jwt: this.jwt }).subscribe(res => {
+    this.authnService.trustAuth({ ticket: this.ticket }).subscribe(res => {
       if (res.code !== 0) {
         this.router.navigateByUrl('/passport/login');
       } else {

@@ -61,8 +61,8 @@ export class AuthnService {
     return this.http.post('/login/congress?_allow_anonymous=true', authParam);
   }
 
-  jwtAuth(authParam: any) {
-    return this.http.get(`/login/jwt?_allow_anonymous=true`, authParam);
+  trustAuth(authParam: any) {
+    return this.http.get(`/login/trust?_allow_anonymous=true`, authParam);
   }
 
   logout() {

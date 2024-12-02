@@ -5,10 +5,7 @@ description = "maxkey-protocol-cas"
 dependencies {
 	//local jars
 	implementation fileTree(dir: '../maxkey-lib/*/', include: '*.jar')
-	
-	// https://mvnrepository.com/artifact/org.jasig.cas.client/cas-client-core
-	testImplementation group: 'org.jasig.cas.client', name: 'cas-client-core', version: '3.6.1'
-	
+
 	testImplementation group: 'org.pac4j', name: 'pac4j-core', version: '3.8.3'
 	// https://mvnrepository.com/artifact/org.pac4j/pac4j-cas
 	testImplementation group: 'org.pac4j', name: 'pac4j-cas', version: '3.8.3'

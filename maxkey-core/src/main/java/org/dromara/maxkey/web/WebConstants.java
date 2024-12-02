@@ -56,6 +56,8 @@ public class WebConstants {
     public static final  String REMEBER_ME_COOKIE = "sign_remeber_me";
 
     public static final  String JWT_TOKEN_PARAMETER = "jwt";
+    
+    public static final  String CAS_TICKET_PARAMETER = "ticket";
 
     public static final  String CURRENT_SINGLESIGNON_URI = "current_singlesignon_uri";
 

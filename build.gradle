@@ -282,6 +282,8 @@ subprojects {
         //oauth third party JustAuth
         implementation group: 'com.xkcoding.http', name: 'simple-http', version: "${simplehttpVersion}"
         implementation group: 'me.zhyd.oauth', name: 'JustAuth', version: "${JustAuthVersion}"
+        //cas
+        implementation group: 'org.apereo.cas.client', name: 'cas-client-core', version: "${casclientVersion}"
         //common
         implementation group: 'org.javassist', name: 'javassist', version: "${javassistVersion}"
         implementation group: 'org.owasp.esapi', name: 'esapi', version: "${esapiVersion}"

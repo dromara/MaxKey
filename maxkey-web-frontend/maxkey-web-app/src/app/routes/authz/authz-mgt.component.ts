@@ -37,6 +37,6 @@ export class AuthzMgtComponent implements OnInit {
     } else {
       baseUrl = environment.api.baseUrl;
     }
-    window.location.href = `${baseUrl}/authz/jwt/maxkey_mgt`;
+    window.location.href = `${baseUrl}/authz/maxkey_mgt`;
   }
 }

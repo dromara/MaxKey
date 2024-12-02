@@ -50,7 +50,7 @@ import { Console } from 'console';
   styleUrls: ['./home.component.less']
 })
 export class HomeComponent implements OnInit {
-  loading: boolean = false;
+  loading: boolean = true;
   appList: any[] = [];
   baseUrl: String = '';
   staticAppList: any[] = [];
@@ -114,6 +114,7 @@ export class HomeComponent implements OnInit {
       //console.log(res.data);
       this.appList = res.data;
       this.staticAppList = this.appList;
+      this.loading = false;
       this.cdr.detectChanges();
     });
   }

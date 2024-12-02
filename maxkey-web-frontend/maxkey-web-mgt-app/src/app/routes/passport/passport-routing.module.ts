@@ -19,11 +19,11 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { LayoutPassportComponent } from '../../layout/passport/passport.component';
 import { CallbackComponent } from './callback.component';
-import { JwtAuthComponent } from './jwt-auth.component';
 import { UserLockComponent } from './lock/lock.component';
 import { UserLoginComponent } from './login/login.component';
 import { UserRegisterResultComponent } from './register-result/register-result.component';
 import { UserRegisterComponent } from './register/register.component';
+import { TrustAuthComponent } from './trust-auth.component';
 
 const routes: Routes = [
   // passport
@@ -54,7 +54,7 @@ const routes: Routes = [
     ]
   },
   // 单页不包裹Layout
-  { path: 'passport/jwt/auth', component: JwtAuthComponent }
+  { path: 'passport/trust/auth', component: TrustAuthComponent }
 ];
 
 @NgModule({

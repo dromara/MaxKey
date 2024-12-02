@@ -24,10 +24,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.dromara.maxkey.authn.listener.SessionListenerAdapter;
 import org.dromara.maxkey.authn.realm.jdbc.JdbcAuthenticationRealm;
 import org.dromara.maxkey.authn.realm.ldap.LdapAuthenticationRealmService;
+import org.dromara.maxkey.authn.session.Session.CATEGORY;
+import org.dromara.maxkey.authn.session.SessionManager;
 import org.dromara.maxkey.authn.support.kerberos.KerberosProxy;
 import org.dromara.maxkey.authn.support.kerberos.RemoteKerberosService;
+import org.dromara.maxkey.configuration.ApplicationConfig;
 import org.dromara.maxkey.configuration.EmailConfig;
 import org.dromara.maxkey.constants.ConstsPersistence;
 import org.dromara.maxkey.ip2location.IpLocationParser;
@@ -43,37 +47,21 @@ import org.dromara.maxkey.persistence.repository.LoginRepository;
 import org.dromara.maxkey.persistence.repository.PasswordPolicyValidator;
 import org.dromara.maxkey.persistence.service.CnfLdapContextService;
 import org.dromara.maxkey.persistence.service.UserInfoService;
+import org.dromara.maxkey.schedule.ScheduleAdapterBuilder;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @AutoConfiguration
-@ComponentScan(basePackages = {
-		"org.maxkey.authn",
-        "org.maxkey.configuration",
-        "org.maxkey.domain",
-        "org.maxkey.domain.apps",
-        "org.maxkey.domain.userinfo",
-        "org.maxkey.api.v1.contorller",
-        "org.maxkey.web.endpoint",
-        "org.maxkey.web.contorller",
-        "org.maxkey.web.interceptor",
-        //single sign on protocol
-        "org.maxkey.authz.endpoint",
-        "org.maxkey.authz.desktop.endpoint",
-        "org.maxkey.authz.exapi.endpoint",
-        "org.maxkey.authz.formbased.endpoint",
-        "org.maxkey.authz.ltpa.endpoint",
-        "org.maxkey.authz.token.endpoint"
-})
 public class MaxKeyConfig  {
     private static final  Logger logger = LoggerFactory.getLogger(MaxKeyConfig.class);
 
@@ -211,6 +199,24 @@ public class MaxKeyConfig  {
         
         logger.debug("RemoteKerberosService inited.");
         return kerberosService;
+    }
+    
+    @Bean
+    String sessionListenerAdapter(
+            Scheduler scheduler,
+            ApplicationConfig applicationConfig,
+            SessionManager sessionManager) throws SchedulerException {
+    	if(applicationConfig.isPersistenceInmemory()) {
+	    	new ScheduleAdapterBuilder()
+	    		.setScheduler(scheduler)
+	    		.setCron("0 0/10 * * * ?")
+	    		.setJobClass(SessionListenerAdapter.class)
+	    		.setJobData("sessionManager",sessionManager)
+	    		.setJobData("category", CATEGORY.SIGN)
+	    		.build();
+	        logger.debug("Session ListenerAdapter inited .");
+    	}
+    	return "sessionListenerAdapter";
     }
     
 }

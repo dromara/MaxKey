@@ -37,6 +37,12 @@ public class LoginConfig {
     
     @Value("${maxkey.login.wsfederation}")
     boolean wsFederation;
+    
+    @Value("${maxkey.login.cas.serverUrlPrefix:http://sso.maxkey.top/sign/authz/cas}")
+    String casServerUrlPrefix;
+    
+    @Value("${maxkey.login.cas.service:http://mgt.maxkey.top/maxkey-mgt/passport/trust/auth}")
+    String casService;
 
     /**
      *  .
@@ -86,7 +92,23 @@ public class LoginConfig {
         this.wsFederation = wsFederation;
     }
     
-    @Override
+    public String getCasServerUrlPrefix() {
+		return casServerUrlPrefix;
+	}
+
+	public void setCasServerUrlPrefix(String casServerUrlPrefix) {
+		this.casServerUrlPrefix = casServerUrlPrefix;
+	}
+
+	public String getCasService() {
+		return casService;
+	}
+
+	public void setCasService(String casService) {
+		this.casService = casService;
+	}
+
+	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("LoginConfig [mfa=");
