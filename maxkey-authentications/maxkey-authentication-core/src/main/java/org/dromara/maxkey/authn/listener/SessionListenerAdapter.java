@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.dromara.maxkey.listener;
+package org.dromara.maxkey.authn.listener;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -36,6 +36,8 @@ public class SessionListenerAdapter extends ScheduleAdapter   implements Job , S
 	
 	transient SessionManager sessionManager;
 
+	Integer category;
+	
 	@Override
 	public void execute(JobExecutionContext context) throws JobExecutionException {
 		 if(jobStatus == JOBSTATUS.RUNNING) {return;}
@@ -46,7 +48,7 @@ public class SessionListenerAdapter extends ScheduleAdapter   implements Job , S
         try {
             if(sessionManager != null) { 
             	int sessionCount = 0;
-            	for (HistoryLogin login : sessionManager.querySessions()) {
+            	for (HistoryLogin login : sessionManager.querySessions(category)) {
             		Session session = sessionManager.get(login.getSessionId());
             		if(session == null) {
             			logger.debug("TimeOut user {} session {}  Login at {} and  at {} ." ,
@@ -86,6 +88,7 @@ public class SessionListenerAdapter extends ScheduleAdapter   implements Job , S
 		 super.init(context);
     	if(sessionManager == null) {
     		sessionManager = getParameter("sessionManager",SessionManager.class);
+    		category = getParameter("category",Integer.class);
         }
     }
 }

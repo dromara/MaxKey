@@ -34,7 +34,7 @@ public interface SessionManager {
 
     public Session refresh(String sessionId);
 
-    public List<HistoryLogin> querySessions();
+    public List<HistoryLogin> querySessions(Integer category);
 
     public int getValiditySeconds();
 

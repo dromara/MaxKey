@@ -128,7 +128,7 @@ public class RedisSessionManager implements SessionManager {
     }
 
 	@Override
-	public List<HistoryLogin> querySessions() {
+	public List<HistoryLogin> querySessions(Integer category) {
 		// not need implement
 		return null;
 	}

@@ -46,8 +46,7 @@ import org.springframework.jdbc.core.RowMapper;
  *
  */
 public class SessionManagerImpl implements SessionManager{
-	private static final  Logger _logger = 
-            LoggerFactory.getLogger(SessionManagerImpl.class);
+	private static final  Logger _logger = LoggerFactory.getLogger(SessionManagerImpl.class);
 	
 	private static final String DEFAULT_DEFAULT_SELECT_STATEMENT = 
 			"select id,sessionid,userId,username,displayname,logintime from mxk_history_login where sessionstatus = 1";
@@ -143,12 +142,17 @@ public class SessionManagerImpl implements SessionManager{
 	}
 
 	@Override
-	public List<HistoryLogin> querySessions() {
+	public List<HistoryLogin> querySessions(Integer category) {
 		//clear session id is null
 		jdbcTemplate.execute(NO_SESSION_UPDATE_STATEMENT);
+		String sessionSql =  DEFAULT_DEFAULT_SELECT_STATEMENT;
+		if(!isRedis) {
+			sessionSql = sessionSql + " and category = " + category;
+		}
+		 _logger.trace("sessionSql {} " ,sessionSql);
 		//query on line session
 		List<HistoryLogin> listSessions = jdbcTemplate.query(
-				DEFAULT_DEFAULT_SELECT_STATEMENT, 
+				sessionSql, 
 				new OnlineTicketRowMapper());
 		return listSessions;
 	}
