@@ -109,6 +109,34 @@
       <g2-bar *ngIf="mouthData" height="275" [data]="mouthData"></g2-bar>
     </nz-card>
   </div>
+
+  <div nz-col nzXs="24" nzMd="24">
+    <nz-card [nzTitle]="monthProvinceAccessCount" [nzBordered]="false">
+      <ng-template #monthProvinceAccessCount> {{ 'mxk.home.monthProvinceAccessCount' | i18n }} </ng-template>
+      <div style="display: flex">
+        <!-- 地图-->
+        <div id="mapChart" style="width: 900px; height: 500px"></div>
+        <div>
+          <nz-table #basicTable [nzData]="top10ProvinceTableData" [nzFrontPagination]="false" style="width: 450px">
+            <thead>
+              <tr>
+                <th style="width: 20%; text-align: center">{{ 'mxk.home.number' | i18n }}</th>
+                <th style="width: 50%; text-align: center">{{ 'mxk.home.province' | i18n }}</th>
+                <th style="width: 30%; text-align: center">{{ 'mxk.home.accessPV' | i18n }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of top10ProvinceTableData; let i = index">
+                <td style="text-align: center">{{ i + 1 }}</td>
+                <td style="text-align: center">{{ data.reportstring }}</td>
+                <td style="text-align: center">{{ data.reportcount }}</td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </div>
+      </div>
+    </nz-card>
+  </div>
   <div nz-col nzXs="24" nzMd="12">
     <nz-card [nzTitle]="monthAppTitle" [nzBordered]="false">
       <ng-template #monthAppTitle> {{ 'mxk.home.monthAppCount' | i18n }} </ng-template>

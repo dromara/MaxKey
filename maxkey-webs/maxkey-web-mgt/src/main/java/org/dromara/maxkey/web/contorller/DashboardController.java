@@ -56,6 +56,8 @@ public class DashboardController {
 		reportParameter.put("reportMonth", reportService.analysisMonth(reportParameter));
 		reportParameter.put("reportDayHour", reportService.analysisDayHour(reportParameter));
 		
+		reportParameter.put("reportProvince", reportService.analysisProvince(reportParameter));
+		
 		reportParameter.put("reportBrowser", reportService.analysisBrowser(reportParameter));
 		reportParameter.put("reportApp", reportService.analysisApp(reportParameter));
 		return new Message<HashMap<?,?>>(reportParameter);

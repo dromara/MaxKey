@@ -107,5 +107,19 @@
     	group by appname order by reportcount desc
     	limit 10
     </select>
+    
+    <!-- 30天各省份的访问统计 -->
+	<select id="analysisProvince" parameterType="java.util.HashMap" resultType="Map">
+		select
+			count(id) as reportcount,
+			coalesce(province,'Other') as reportstring
+		from mxk_history_login
+		where  instid   =   #{instId}
+		  and logintime >date_add(curdate(), interval - day(curdate()) -31 day)
+		  and province !=''
+		group by reportstring
+		order by reportcount desc
+			limit 1000
+	</select>
 
 </mapper>

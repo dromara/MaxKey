@@ -42,4 +42,5 @@ public interface ReportService  extends IJpaService<JpaEntity>{
 	
 	public List<Map<String,Object>> analysisApp(HashMap<String,Object> reportParameter);
 
+	public List<Map<String,Object>> analysisProvince(HashMap<String,Object> reportParameter);
 }

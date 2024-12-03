@@ -17,6 +17,7 @@
 
 package org.dromara.maxkey.persistence.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,6 +61,29 @@ public class ReportServiceImpl  extends JpaServiceImpl<ReportMapper,JpaEntity> i
 	
 	public List<Map<String,Object>> analysisApp(HashMap<String,Object> reportParameter){
 		return getMapper().analysisApp(reportParameter);
+	}
+	
+	public List<Map<String,Object>> analysisProvince(HashMap<String,Object> reportParameter){
+		List<Map<String,Object>> maps = getMapper().analysisProvince(reportParameter);
+		if(null == maps) {
+			return new ArrayList<>();
+		}
+		for(Map<String,Object> map : maps) {
+			if(map.containsKey("reportstring")){
+				String name = map.get("reportstring").toString();
+				if (name.endsWith("省")
+						|| name.endsWith("市")
+						|| name.endsWith("特别行政区")
+						|| name.endsWith("自治区")) {
+					name = name.replace("省","")
+							.replace("市","")
+							.replace("特别行政区","")
+							.replace("自治区","");
+				}
+				map.put("name",name);
+			}
+		}
+		return maps;
 	}
 	
 }
