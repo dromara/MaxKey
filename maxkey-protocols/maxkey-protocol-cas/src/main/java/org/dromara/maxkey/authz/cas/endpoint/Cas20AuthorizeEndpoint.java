@@ -212,17 +212,19 @@ For all error codes, it is RECOMMENDED that CAS provide a more detailed message 
 			
 			if(ConstsBoolean.isTrue(storedTicket.getCasDetails().getIsAdapter())){
 				
-				Object samlAdapter = Instance.newInstance(storedTicket.getCasDetails().getAdapter());
+				Object casAdapter = Instance.newInstance(storedTicket.getCasDetails().getAdapter());
 				try {
-					BeanUtils.setProperty(samlAdapter, "serviceResponseBuilder", serviceResponseBuilder);
+					BeanUtils.setProperty(casAdapter, "serviceResponseBuilder", serviceResponseBuilder);
 				} catch (IllegalAccessException | InvocationTargetException e) {
 					_logger.error("setProperty error . ", e);
 				}
 				
-				AbstractAuthorizeAdapter adapter =(AbstractAuthorizeAdapter)samlAdapter;
+				AbstractAuthorizeAdapter adapter =(AbstractAuthorizeAdapter)casAdapter;
 				adapter.setPrincipal(authentication);
 				adapter.setApp(storedTicket.getCasDetails());
 				adapter.generateInfo();
+			}else {
+				_logger.error("Cas Adapter is not Set . ");
 			}
 		}else{
 			serviceResponseBuilder.failure()
@@ -320,17 +322,19 @@ Response on ticket validation failure:
 		if(storedTicket!=null){
 		    SignPrincipal authentication = ((SignPrincipal)storedTicket.getAuthentication().getPrincipal());
 			if(ConstsBoolean.isTrue(storedTicket.getCasDetails().getIsAdapter())){
-				Object samlAdapter = Instance.newInstance(storedTicket.getCasDetails().getAdapter());
+				Object casAdapter = Instance.newInstance(storedTicket.getCasDetails().getAdapter());
 				try {
-					BeanUtils.setProperty(samlAdapter, "serviceResponseBuilder", serviceResponseBuilder);
+					BeanUtils.setProperty(casAdapter, "serviceResponseBuilder", serviceResponseBuilder);
 				} catch (IllegalAccessException | InvocationTargetException e) {
 					_logger.error("setProperty error . ", e);
 				}
 				
-				AbstractAuthorizeAdapter adapter =(AbstractAuthorizeAdapter)samlAdapter;
+				AbstractAuthorizeAdapter adapter =(AbstractAuthorizeAdapter)casAdapter;
 				adapter.setPrincipal(authentication);
 				adapter.setApp(storedTicket.getCasDetails());
 				adapter.generateInfo();
+			}else {
+				_logger.error("Cas Adapter is not Set . ");
 			}
 		}else{
 			serviceResponseBuilder.failure()

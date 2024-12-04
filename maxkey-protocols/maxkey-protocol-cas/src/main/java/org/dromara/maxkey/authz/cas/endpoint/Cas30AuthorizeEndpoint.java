@@ -25,6 +25,7 @@ import java.lang.reflect.InvocationTargetException;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.authn.SignPrincipal;
+import org.dromara.maxkey.authz.cas.endpoint.adapter.CasPlainAdapter;
 import org.dromara.maxkey.authz.cas.endpoint.response.ProxyServiceResponseBuilder;
 import org.dromara.maxkey.authz.cas.endpoint.response.ServiceResponseBuilder;
 import org.dromara.maxkey.authz.cas.endpoint.ticket.CasConstants;
@@ -95,17 +96,19 @@ public class Cas30AuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 			}
 			
 			if(ConstsBoolean.isTrue(storedTicket.getCasDetails().getIsAdapter())){
-				Object samlAdapter = Instance.newInstance(storedTicket.getCasDetails().getAdapter());
+				Object casAdapter = Instance.newInstance(storedTicket.getCasDetails().getAdapter());
 				try {
-					BeanUtils.setProperty(samlAdapter, "serviceResponseBuilder", serviceResponseBuilder);
+					BeanUtils.setProperty(casAdapter, "serviceResponseBuilder", serviceResponseBuilder);
 				} catch (IllegalAccessException | InvocationTargetException e) {
 					_logger.error("setProperty error . ", e);
 				}
 				
-				AbstractAuthorizeAdapter adapter =(AbstractAuthorizeAdapter)samlAdapter;
+				AbstractAuthorizeAdapter adapter =(AbstractAuthorizeAdapter)casAdapter;
 				adapter.setPrincipal(authentication);
 				adapter.setApp(storedTicket.getCasDetails());
 				adapter.generateInfo();
+			}else {
+				_logger.error("Cas Adapter is not Set . ");
 			}
 		}else{
 			serviceResponseBuilder.failure()
@@ -163,17 +166,19 @@ public class Cas30AuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 		if(storedTicket!=null){
 		    SignPrincipal authentication = ((SignPrincipal)storedTicket.getAuthentication().getPrincipal());
 			if(ConstsBoolean.isTrue(storedTicket.getCasDetails().getIsAdapter())){
-				Object samlAdapter = Instance.newInstance(storedTicket.getCasDetails().getAdapter());
+				Object casAdapter = Instance.newInstance(storedTicket.getCasDetails().getAdapter());
 				try {
-					BeanUtils.setProperty(samlAdapter, "serviceResponseBuilder", serviceResponseBuilder);
+					BeanUtils.setProperty(casAdapter, "serviceResponseBuilder", serviceResponseBuilder);
 				} catch (IllegalAccessException | InvocationTargetException e) {
 					_logger.error("setProperty error . ", e);
 				}
 				
-				AbstractAuthorizeAdapter adapter =(AbstractAuthorizeAdapter)samlAdapter;
+				AbstractAuthorizeAdapter adapter =(AbstractAuthorizeAdapter)casAdapter;
 				adapter.setPrincipal(authentication);
 				adapter.setApp(storedTicket.getCasDetails());
 				adapter.generateInfo();
+			}else {
+				_logger.error("Cas Adapter is not Set . ");
 			}
 		}else{
 			serviceResponseBuilder.failure()
