@@ -58,7 +58,7 @@ public class ChangePasswodController {
 		return new Message<>(passwordPolicy);
 	}
 
-	@PostMapping(value = { "/changePassword" })
+	@PutMapping(value = { "/changePassword" })
 	public Message<ChangePassword> changePasswod(
 			@RequestBody ChangePassword changePassword,
 			@CurrentUser UserInfo currentUser) {
