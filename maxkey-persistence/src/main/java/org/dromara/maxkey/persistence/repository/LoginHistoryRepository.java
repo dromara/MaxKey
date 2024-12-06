@@ -19,6 +19,7 @@ package org.dromara.maxkey.persistence.repository;
 
 import java.sql.Types;
 
+import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.entity.history.HistoryLogin;
 import org.dromara.maxkey.web.WebContext;
 import org.slf4j.Logger;
@@ -61,6 +62,9 @@ public class LoginHistoryRepository {
         
     public void login(HistoryLogin historyLogin) {
         historyLogin.setId(WebContext.genId());
+        if(StringUtils.isBlank(historyLogin.getInstId())) {
+        	historyLogin.setInstId("1");
+        }
         //Thread insert 
         new Thread(new HistoryLoginRunnable(jdbcTemplate,historyLogin)).start();
     }
