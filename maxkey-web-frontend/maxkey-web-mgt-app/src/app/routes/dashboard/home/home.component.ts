@@ -59,14 +59,19 @@ export class HomeComponent implements OnInit {
   top10ProvinceTableData: any[] = [];
 
   mapSplitList: any[] = [
-    { start: 400, end: 500 },
-    { start: 300, end: 400 },
-    { start: 200, end: 300 },
-    { start: 100, end: 200 },
-    { start: 0, end: 100 }
+    { start: 90, end: 100 },
+    { start: 80, end: 90 },
+    { start: 70, end: 80 },
+    { start: 60, end: 70 },
+    { start: 50, end: 60 },
+    { start: 40, end: 50 },
+    { start: 30, end: 40 },
+    { start: 20, end: 30 },
+    { start: 10, end: 20 },
+    { start: 0, end: 10 }
   ];
 
-  mapColor: any[] = ['#5475f5', '#9feaa5', '#85daef', '#e6ac53', '#9fb5ea'];
+  mapColor: any[] = ['#DC143C', '#33A1C9', '#EE82EE', '#4B0082', '#5475f5', '#9feaa5', '#85daef', '#e6ac53', '#FAEBD7', '#F0F8FF'];
 
   constructor(
     private analysisService: AnalysisService,
@@ -150,67 +155,102 @@ export class HomeComponent implements OnInit {
     }
     console.log(`maxMapCount ${maxMapCount}`);
     if (maxMapCount <= 100) {
-      //100以内
+      //100以内，10
       this.mapSplitList = [
-        { start: 80, end: 100 },
-        { start: 60, end: 80 },
-        { start: 40, end: 60 },
-        { start: 20, end: 40 },
-        { start: 0, end: 20 }
+        { start: 90, end: 100 },
+        { start: 80, end: 90 },
+        { start: 70, end: 80 },
+        { start: 60, end: 70 },
+        { start: 50, end: 60 },
+        { start: 40, end: 50 },
+        { start: 30, end: 40 },
+        { start: 20, end: 30 },
+        { start: 10, end: 20 },
+        { start: 0, end: 10 }
       ];
     } else if (maxMapCount <= 500) {
-      //500以内
+      //500以内 50
       this.mapSplitList = [
+        { start: 450, end: 500 },
+        { start: 400, end: 450 },
+        { start: 350, end: 400 },
+        { start: 300, end: 350 },
+        { start: 250, end: 300 },
+        { start: 200, end: 250 },
+        { start: 150, end: 200 },
+        { start: 100, end: 150 },
+        { start: 50, end: 100 },
+        { start: 0, end: 50 }
+      ];
+    } else if (maxMapCount <= 1000) {
+      //1000以内 100
+      this.mapSplitList = [
+        { start: 900, end: 100 },
+        { start: 800, end: 900 },
+        { start: 700, end: 800 },
+        { start: 600, end: 700 },
+        { start: 500, end: 600 },
         { start: 400, end: 500 },
         { start: 300, end: 400 },
         { start: 200, end: 300 },
         { start: 100, end: 200 },
         { start: 0, end: 100 }
       ];
-    } else if (maxMapCount <= 1000) {
-      //1000以内
-      this.mapSplitList = [
-        { start: 800, end: 1000 },
-        { start: 600, end: 800 },
-        { start: 400, end: 600 },
-        { start: 200, end: 400 },
-        { start: 0, end: 200 }
-      ];
     } else if (maxMapCount <= 5000) {
-      //5000以内
+      //5000以内 500
       this.mapSplitList = [
+        { start: 4500, end: 5000 },
+        { start: 4000, end: 4500 },
+        { start: 3500, end: 4000 },
+        { start: 3000, end: 3500 },
+        { start: 2500, end: 3000 },
+        { start: 2000, end: 2500 },
+        { start: 1500, end: 2000 },
+        { start: 1000, end: 1500 },
+        { start: 500, end: 1000 },
+        { start: 0, end: 500 }
+      ];
+    } else if (maxMapCount <= 10000) {
+      //10000以内 1000
+      this.mapSplitList = [
+        { start: 9000, end: 1000 },
+        { start: 8000, end: 9000 },
+        { start: 7000, end: 8000 },
+        { start: 6000, end: 7000 },
+        { start: 5000, end: 6000 },
         { start: 4000, end: 5000 },
         { start: 3000, end: 4000 },
         { start: 2000, end: 3000 },
         { start: 1000, end: 2000 },
         { start: 0, end: 1000 }
       ];
-    } else if (maxMapCount <= 10000) {
-      //10000以内
-      this.mapSplitList = [
-        { start: 8000, end: 10000 },
-        { start: 6000, end: 8000 },
-        { start: 4000, end: 6000 },
-        { start: 2000, end: 4000 },
-        { start: 0, end: 2000 }
-      ];
     } else if (maxMapCount <= 50000) {
-      //50000以内
+      //50000以内 5000
       this.mapSplitList = [
+        { start: 45000, end: 50000 },
+        { start: 40000, end: 45000 },
+        { start: 35000, end: 40000 },
+        { start: 30000, end: 35000 },
+        { start: 25000, end: 30000 },
+        { start: 20000, end: 25000 },
+        { start: 15000, end: 20000 },
+        { start: 10000, end: 15000 },
+        { start: 5000, end: 10000 },
+        { start: 0, end: 5000 }
+      ];
+    } else if (maxMapCount <= 100000) {
+      //100000以内 10000
+      this.mapSplitList = [
+        { start: 90000, end: 10000 },
+        { start: 80000, end: 90000 },
+        { start: 70000, end: 80000 },
+        { start: 60000, end: 70000 },
+        { start: 50000, end: 60000 },
         { start: 40000, end: 50000 },
         { start: 30000, end: 40000 },
         { start: 20000, end: 30000 },
         { start: 10000, end: 20000 },
         { start: 0, end: 10000 }
-      ];
-    } else if (maxMapCount <= 100000) {
-      //100000以内
-      this.mapSplitList = [
-        { start: 80000, end: 100000 },
-        { start: 60000, end: 80000 },
-        { start: 40000, end: 60000 },
-        { start: 20000, end: 40000 },
-        { start: 0, end: 20000 }
       ];
     }
     for (let i = 0; i < this.provinceMapData.length; i++) {
