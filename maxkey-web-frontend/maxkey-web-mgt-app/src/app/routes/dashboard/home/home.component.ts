@@ -144,10 +144,11 @@ export class HomeComponent implements OnInit {
         name: this.provinceTableData[i].name,
         itemStyle: { color: this.mapColor.length - 1 }
       });
-      if (maxMapCount < this.provinceMapData[i].reportcount) {
-        maxMapCount = this.provinceMapData[i].reportcount;
+      if (maxMapCount < this.provinceMapData[i].value) {
+        maxMapCount = this.provinceMapData[i].value;
       }
     }
+    console.log(`maxMapCount ${maxMapCount}`);
     if (maxMapCount <= 100) {
       //100以内
       this.mapSplitList = [
