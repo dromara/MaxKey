@@ -23,6 +23,6 @@ import org.dromara.mybatis.jpa.IJpaMapper;
 
 public interface InstitutionsMapper extends IJpaMapper<Institutions> {
 
-	@Select("select * from  mxk_institutions where domain = #{value} and status = " + ConstsStatus.ACTIVE)
+	@Select("select * from  mxk_institutions where  (id = #{value} or domain = #{value} or consoledomain = #{value} ) and status = " + ConstsStatus.ACTIVE)
 	public Institutions findByDomain(String domain);
 }

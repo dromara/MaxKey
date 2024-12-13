@@ -23,7 +23,7 @@ import java.io.IOException;
 import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.configuration.ApplicationConfig;
 import org.dromara.maxkey.entity.Institutions;
-import org.dromara.maxkey.persistence.repository.InstitutionsRepository;
+import org.dromara.maxkey.persistence.service.InstitutionsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.filter.GenericFilterBean;
@@ -43,7 +43,7 @@ public class WebInstRequestFilter  extends GenericFilterBean {
 	
 	public static final  String  HEADER_ORIGIN		= "Origin";	
 	
-	InstitutionsRepository institutionsRepository;
+	InstitutionsService institutionsService;
 	
 	ApplicationConfig applicationConfig;
 	
@@ -70,7 +70,7 @@ public class WebInstRequestFilter  extends GenericFilterBean {
 				_logger.trace("domain split {}",host);
 			}
 			_logger.trace("host {}",host);
-			Institutions institution = institutionsRepository.get(host);
+			Institutions institution = institutionsService.get(host);
 			_logger.trace("{}" ,institution);
 			request.getSession().setAttribute(WebConstants.CURRENT_INST, institution);
 			
@@ -83,9 +83,9 @@ public class WebInstRequestFilter  extends GenericFilterBean {
         chain.doFilter(servletRequest, servletResponse);
 	}
 
-	public WebInstRequestFilter(InstitutionsRepository institutionsRepository,ApplicationConfig applicationConfig) {
+	public WebInstRequestFilter(InstitutionsService institutionsService,ApplicationConfig applicationConfig) {
 		super();
-		this.institutionsRepository = institutionsRepository;
+		this.institutionsService = institutionsService;
 		this.applicationConfig = applicationConfig;
 	}
 

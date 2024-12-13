@@ -21,7 +21,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.configuration.ApplicationConfig;
 import org.dromara.maxkey.entity.Institutions;
 import org.dromara.maxkey.entity.Message;
-import org.dromara.maxkey.persistence.repository.InstitutionsRepository;
+import org.dromara.maxkey.persistence.service.InstitutionsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +42,7 @@ public class InstitutionEndpoint {
 	public static final  String  HEADER_HOSTNAME 	= "hostname";
 	
 	@Autowired
-	InstitutionsRepository institutionsRepository;
+	InstitutionsService institutionsService;
 	
 	@Autowired
 	ApplicationConfig applicationConfig;
@@ -72,14 +72,8 @@ public class InstitutionEndpoint {
 			_logger.trace("domain split {}",host);
 		}
 		
-		Institutions inst = institutionsRepository.get(host);
-		if(inst != null) {
-			_logger.debug("inst {}",inst);
-			return new Message<>(inst);
-		}else {
-			Institutions defaultInst = institutionsRepository.get("1");
-			_logger.debug("default inst {}",inst);
-			return new Message<>(defaultInst);
-		}
+		Institutions inst = institutionsService.get(host);
+		_logger.debug("inst {}",inst);
+		return new Message<>(inst);
  	}
 }
