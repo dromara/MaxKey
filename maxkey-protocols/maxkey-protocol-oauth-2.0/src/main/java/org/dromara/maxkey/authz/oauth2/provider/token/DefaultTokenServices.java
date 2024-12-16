@@ -147,7 +147,10 @@ public class DefaultTokenServices implements AuthorizationServerTokenServices, R
 			Apps app = appsService.get(clientId, true);
 			VisitedDto visited = new VisitedDto(app,principal.getSessionId());
 			visited.setToken(accessToken.getValue());
-			visited.setRefreshToken(accessToken.getRefreshToken().getValue());
+			//TODO: RefreshToken null 
+			if (refreshToken != null) {
+				visited.setRefreshToken(accessToken.getRefreshToken().getValue());
+			}
 			sessionManager.visited(principal.getSessionId(), visited);
 		}
 		return accessToken;
