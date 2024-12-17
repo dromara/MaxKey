@@ -25,7 +25,6 @@ import org.dromara.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.dromara.maxkey.authn.session.SessionManager;
 import org.dromara.maxkey.configuration.ApplicationConfig;
 import org.dromara.maxkey.password.sms.SmsOtpAuthnService;
-import org.dromara.maxkey.persistence.repository.LoginHistoryRepository;
 import org.dromara.maxkey.persistence.repository.LoginRepository;
 import org.dromara.maxkey.persistence.repository.PasswordPolicyValidator;
 import org.slf4j.Logger;
@@ -107,11 +106,6 @@ public class AuthnProviderAutoConfiguration {
     @Bean
     LoginRepository loginRepository(JdbcTemplate jdbcTemplate) {
         return new LoginRepository(jdbcTemplate);
-    }
-
-    @Bean
-    LoginHistoryRepository loginHistoryRepository(JdbcTemplate jdbcTemplate) {
-        return new LoginHistoryRepository(jdbcTemplate);
     }
 
 }

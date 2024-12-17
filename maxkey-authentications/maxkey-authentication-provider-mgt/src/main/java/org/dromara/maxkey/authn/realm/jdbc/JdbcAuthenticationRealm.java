@@ -26,9 +26,9 @@ import org.dromara.maxkey.entity.ChangePassword;
 import org.dromara.maxkey.entity.cnf.CnfPasswordPolicy;
 import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.ip2location.IpLocationParser;
-import org.dromara.maxkey.persistence.repository.LoginHistoryRepository;
 import org.dromara.maxkey.persistence.repository.LoginRepository;
 import org.dromara.maxkey.persistence.repository.PasswordPolicyValidator;
+import org.dromara.maxkey.persistence.service.HistoryLoginService;
 import org.dromara.maxkey.persistence.service.UserInfoService;
 import org.dromara.maxkey.web.WebConstants;
 import org.dromara.maxkey.web.WebContext;
@@ -60,7 +60,7 @@ public class JdbcAuthenticationRealm extends AbstractAuthenticationRealm {
     		PasswordEncoder passwordEncoder,
     		PasswordPolicyValidator passwordPolicyValidator,
     		LoginRepository loginRepository,
-    		LoginHistoryRepository loginHistoryRepository,
+    		HistoryLoginService historyLoginService,
     		UserInfoService userInfoService,
     		IpLocationParser ipLocationParser,
     	    JdbcTemplate jdbcTemplate) {
@@ -68,7 +68,7 @@ public class JdbcAuthenticationRealm extends AbstractAuthenticationRealm {
     	this.passwordEncoder =passwordEncoder;
     	this.passwordPolicyValidator=passwordPolicyValidator;
     	this.loginRepository = loginRepository;
-    	this.loginHistoryRepository = loginHistoryRepository;
+    	this.historyLoginService = historyLoginService;
     	this.userInfoService = userInfoService;
     	this.ipLocationParser = ipLocationParser;
         this.jdbcTemplate = jdbcTemplate;
@@ -78,7 +78,7 @@ public class JdbcAuthenticationRealm extends AbstractAuthenticationRealm {
     		PasswordEncoder passwordEncoder,
     		PasswordPolicyValidator passwordPolicyValidator,
     		LoginRepository loginRepository,
-    		LoginHistoryRepository loginHistoryRepository,
+    		HistoryLoginService historyLoginService,
     		UserInfoService userInfoService,
     		IpLocationParser ipLocationParser,
     	    JdbcTemplate jdbcTemplate,
@@ -86,7 +86,7 @@ public class JdbcAuthenticationRealm extends AbstractAuthenticationRealm {
 		this.passwordEncoder = passwordEncoder;
 		this.passwordPolicyValidator = passwordPolicyValidator;
 		this.loginRepository = loginRepository;
-		this.loginHistoryRepository = loginHistoryRepository;
+		this.historyLoginService = historyLoginService;
 		this.userInfoService = userInfoService;
 		this.ipLocationParser = ipLocationParser;
 		this.jdbcTemplate = jdbcTemplate;

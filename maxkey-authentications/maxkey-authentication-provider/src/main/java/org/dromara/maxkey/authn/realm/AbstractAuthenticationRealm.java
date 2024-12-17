@@ -28,9 +28,9 @@ import org.dromara.maxkey.entity.idm.Groups;
 import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.ip2location.IpLocationParser;
 import org.dromara.maxkey.ip2location.Region;
-import org.dromara.maxkey.persistence.repository.LoginHistoryRepository;
 import org.dromara.maxkey.persistence.repository.LoginRepository;
 import org.dromara.maxkey.persistence.repository.PasswordPolicyValidator;
+import org.dromara.maxkey.persistence.service.HistoryLoginService;
 import org.dromara.maxkey.persistence.service.UserInfoService;
 import org.dromara.maxkey.web.WebConstants;
 import org.dromara.maxkey.web.WebContext;
@@ -54,7 +54,7 @@ public abstract class AbstractAuthenticationRealm {
     
     protected LoginRepository loginRepository;
 
-    protected LoginHistoryRepository loginHistoryRepository;
+    protected HistoryLoginService historyLoginService;
     
     protected UserInfoService userInfoService;
     
@@ -158,7 +158,7 @@ public abstract class AbstractAuthenticationRealm {
         	historyLogin.setCity(ipRegion.getCity());
         	historyLogin.setLocation(ipRegion.getAddr());
         }
-        loginHistoryRepository.login(historyLogin);
+        historyLoginService.login(historyLogin);
         
         loginRepository.updateLastLogin(userInfo);
 

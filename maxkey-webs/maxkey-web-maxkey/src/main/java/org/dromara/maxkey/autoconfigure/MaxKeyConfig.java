@@ -42,10 +42,10 @@ import org.dromara.maxkey.password.onetimepwd.impl.MailOtpAuthn;
 import org.dromara.maxkey.password.onetimepwd.impl.TimeBasedOtpAuthn;
 import org.dromara.maxkey.password.onetimepwd.token.RedisOtpTokenStore;
 import org.dromara.maxkey.persistence.redis.RedisConnectionFactory;
-import org.dromara.maxkey.persistence.repository.LoginHistoryRepository;
 import org.dromara.maxkey.persistence.repository.LoginRepository;
 import org.dromara.maxkey.persistence.repository.PasswordPolicyValidator;
 import org.dromara.maxkey.persistence.service.CnfLdapContextService;
+import org.dromara.maxkey.persistence.service.HistoryLoginService;
 import org.dromara.maxkey.persistence.service.UserInfoService;
 import org.dromara.maxkey.schedule.ScheduleAdapterBuilder;
 import org.quartz.Scheduler;
@@ -90,7 +90,7 @@ public class MaxKeyConfig  {
                 @Qualifier("passwordEncoder") PasswordEncoder passwordEncoder,
                 PasswordPolicyValidator passwordPolicyValidator,
                 LoginRepository loginService,
-                LoginHistoryRepository loginHistoryService,
+                HistoryLoginService historyLoginService,
                 UserInfoService userInfoService,
                 IpLocationParser  ipLocationParser,
                 JdbcTemplate jdbcTemplate,
@@ -101,7 +101,7 @@ public class MaxKeyConfig  {
         		passwordEncoder,
         		passwordPolicyValidator,
         		loginService,
-        		loginHistoryService,
+        		historyLoginService,
         		userInfoService,
         		ipLocationParser,
         		jdbcTemplate,
