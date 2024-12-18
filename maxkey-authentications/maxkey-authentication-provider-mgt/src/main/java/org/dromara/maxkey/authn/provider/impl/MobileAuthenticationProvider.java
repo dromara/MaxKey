@@ -97,7 +97,7 @@ public class MobileAuthenticationProvider extends AbstractAuthenticationProvider
             mobileCaptchaValid(loginCredential.getPassword(),userInfo);
 
             //apply PasswordSetType and resetBadPasswordCount
-            authenticationRealm.getPasswordPolicyValidator().applyPasswordPolicy(userInfo);
+            authenticationRealm.getLoginRepository().applyPasswordPolicy(userInfo);
 
             authenticationToken = createOnlineTicket(loginCredential,userInfo);
             // user authenticated

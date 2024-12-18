@@ -65,8 +65,9 @@
     <update id="updateLocked" parameterType="UserInfo" >
     	update mxk_userinfo set
     		<if test="isLocked != null">
-    		islocked		=	#{isLocked},
+    		islocked			=	#{isLocked},
 			</if>
+			unlockdate			=	current_timestamp
 			modifieddate		=	current_timestamp
 		where 
 			id	=	#{id}
@@ -75,14 +76,29 @@
     <update id="updateLockout" parameterType="UserInfo" >
     	update mxk_userinfo set
     		<if test="isLocked != null">
-    		islocked		=	#{isLocked},
-    		badpwdcount		=	0,
+    		islocked			=	#{isLocked},
+    		badpasswordcount	=	0,
 			</if>
 			unlockdate			=	current_timestamp,
 			modifieddate		=	current_timestamp
 		where 
 			id	=	#{id}
     </update>
+    
+    <update id="badPasswordCount" parameterType="UserInfo" >
+    	update mxk_userinfo set 
+	    	badpasswordcount = badpasswordcount + 1 , 
+	    	badpasswordtime = current_timestamp  
+    	where id = #{id}
+    </update>
+    
+    <update id="badPasswordCountReset" parameterType="UserInfo" >
+    	update mxk_userinfo set 
+	    	badpasswordcount = 0 , 
+	    	islocked = 1  ,
+	    	unlocktime = current_timestamp  
+    	where id = #{id}
+    </update>	
     	
 	<update id="changePassword" parameterType="ChangePassword" >
     	update mxk_userinfo set

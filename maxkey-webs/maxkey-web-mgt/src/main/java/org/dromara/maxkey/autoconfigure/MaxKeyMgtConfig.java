@@ -22,8 +22,8 @@ import org.dromara.maxkey.ip2location.IpLocationParser;
 import org.dromara.maxkey.password.onetimepwd.AbstractOtpAuthn;
 import org.dromara.maxkey.password.onetimepwd.impl.TimeBasedOtpAuthn;
 import org.dromara.maxkey.persistence.repository.LoginRepository;
-import org.dromara.maxkey.persistence.repository.PasswordPolicyValidator;
 import org.dromara.maxkey.persistence.service.HistoryLoginService;
+import org.dromara.maxkey.persistence.service.PasswordPolicyValidatorService;
 import org.dromara.maxkey.persistence.service.UserInfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,7 +42,7 @@ public class MaxKeyMgtConfig  {
     JdbcAuthenticationRealm authenticationRealm(
                 @Qualifier("passwordEncoder")
                 PasswordEncoder passwordEncoder,
-                PasswordPolicyValidator passwordPolicyValidator,
+                PasswordPolicyValidatorService passwordPolicyValidatorService,
                 LoginRepository loginRepository,
                 HistoryLoginService historyLoginService,
                 UserInfoService userInfoService,
@@ -51,7 +51,7 @@ public class MaxKeyMgtConfig  {
 		
         JdbcAuthenticationRealm authenticationRealm = new JdbcAuthenticationRealm(
         		passwordEncoder,
-        		passwordPolicyValidator,
+        		passwordPolicyValidatorService,
         		loginRepository,
         		historyLoginService,
         		userInfoService,

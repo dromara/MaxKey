@@ -29,8 +29,8 @@ import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.ip2location.IpLocationParser;
 import org.dromara.maxkey.ip2location.Region;
 import org.dromara.maxkey.persistence.repository.LoginRepository;
-import org.dromara.maxkey.persistence.repository.PasswordPolicyValidator;
 import org.dromara.maxkey.persistence.service.HistoryLoginService;
+import org.dromara.maxkey.persistence.service.PasswordPolicyValidatorService;
 import org.dromara.maxkey.persistence.service.UserInfoService;
 import org.dromara.maxkey.web.WebConstants;
 import org.dromara.maxkey.web.WebContext;
@@ -50,7 +50,7 @@ public abstract class AbstractAuthenticationRealm {
 
     protected JdbcTemplate jdbcTemplate;
     
-    protected PasswordPolicyValidator passwordPolicyValidator;
+    protected PasswordPolicyValidatorService passwordPolicyValidatorService;
     
     protected LoginRepository loginRepository;
 
@@ -74,8 +74,8 @@ public abstract class AbstractAuthenticationRealm {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public PasswordPolicyValidator getPasswordPolicyValidator() {
-        return passwordPolicyValidator;
+    public PasswordPolicyValidatorService getPasswordPolicyValidatorService() {
+        return passwordPolicyValidatorService;
     }
 
     public LoginRepository getLoginRepository() {

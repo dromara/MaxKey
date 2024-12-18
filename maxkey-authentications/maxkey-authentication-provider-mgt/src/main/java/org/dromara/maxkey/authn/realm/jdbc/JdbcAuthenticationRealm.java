@@ -27,8 +27,8 @@ import org.dromara.maxkey.entity.cnf.CnfPasswordPolicy;
 import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.ip2location.IpLocationParser;
 import org.dromara.maxkey.persistence.repository.LoginRepository;
-import org.dromara.maxkey.persistence.repository.PasswordPolicyValidator;
 import org.dromara.maxkey.persistence.service.HistoryLoginService;
+import org.dromara.maxkey.persistence.service.PasswordPolicyValidatorService;
 import org.dromara.maxkey.persistence.service.UserInfoService;
 import org.dromara.maxkey.web.WebConstants;
 import org.dromara.maxkey.web.WebContext;
@@ -58,7 +58,7 @@ public class JdbcAuthenticationRealm extends AbstractAuthenticationRealm {
     
     public JdbcAuthenticationRealm(
     		PasswordEncoder passwordEncoder,
-    		PasswordPolicyValidator passwordPolicyValidator,
+    		PasswordPolicyValidatorService passwordPolicyValidatorService,
     		LoginRepository loginRepository,
     		HistoryLoginService historyLoginService,
     		UserInfoService userInfoService,
@@ -66,7 +66,7 @@ public class JdbcAuthenticationRealm extends AbstractAuthenticationRealm {
     	    JdbcTemplate jdbcTemplate) {
     	
     	this.passwordEncoder =passwordEncoder;
-    	this.passwordPolicyValidator=passwordPolicyValidator;
+    	this.passwordPolicyValidatorService=passwordPolicyValidatorService;
     	this.loginRepository = loginRepository;
     	this.historyLoginService = historyLoginService;
     	this.userInfoService = userInfoService;
@@ -76,7 +76,7 @@ public class JdbcAuthenticationRealm extends AbstractAuthenticationRealm {
   
     public JdbcAuthenticationRealm(
     		PasswordEncoder passwordEncoder,
-    		PasswordPolicyValidator passwordPolicyValidator,
+    		PasswordPolicyValidatorService passwordPolicyValidatorService,
     		LoginRepository loginRepository,
     		HistoryLoginService historyLoginService,
     		UserInfoService userInfoService,
@@ -84,7 +84,7 @@ public class JdbcAuthenticationRealm extends AbstractAuthenticationRealm {
     	    JdbcTemplate jdbcTemplate,
     	    LdapAuthenticationRealmService ldapAuthenticationRealmService) {
 		this.passwordEncoder = passwordEncoder;
-		this.passwordPolicyValidator = passwordPolicyValidator;
+		this.passwordPolicyValidatorService = passwordPolicyValidatorService;
 		this.loginRepository = loginRepository;
 		this.historyLoginService = historyLoginService;
 		this.userInfoService = userInfoService;
@@ -126,9 +126,9 @@ public class JdbcAuthenticationRealm extends AbstractAuthenticationRealm {
         }
         _logger.debug("passwordvalid : {}" , passwordMatches);
         if (!passwordMatches) {
-            passwordPolicyValidator.plusBadPasswordCount(userInfo);
+        	loginRepository.plusBadPasswordCount(userInfo);
             insertLoginHistory(userInfo, ConstsLoginType.LOCAL, "", "xe00000004", WebConstants.LOGIN_RESULT.PASSWORD_ERROE);
-            CnfPasswordPolicy passwordPolicy = passwordPolicyValidator.getPasswordPolicyRepository().getPasswordPolicy();
+            CnfPasswordPolicy passwordPolicy = passwordPolicyValidatorService.getPasswordPolicy();
             if(userInfo.getBadPasswordCount()>=(passwordPolicy.getAttempts()/2)) {
                 throw new BadCredentialsException(
                         WebContext.getI18nValue("login.error.password.attempts",

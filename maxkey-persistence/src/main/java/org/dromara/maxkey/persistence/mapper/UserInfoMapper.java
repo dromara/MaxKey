@@ -49,7 +49,9 @@ public interface UserInfoMapper  extends IJpaMapper<UserInfo>{
 
 	public void updateLockout(UserInfo userInfo);
 
-	public void updateBadPWDCount(UserInfo userInfo);
+	public void badPasswordCount(UserInfo userInfo);
+	
+	public void badPasswordCountReset(UserInfo userInfo);
 	
 	public int 	changePassword(ChangePassword changePassword);
 	

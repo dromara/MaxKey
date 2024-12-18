@@ -89,13 +89,13 @@ public class MfaAuthenticationProvider extends AbstractAuthenticationProvider {
 	        mfacaptchaValid(loginCredential.getOtpCaptcha(),userInfo);
 	        
 	        //Validate PasswordPolicy
-	        authenticationRealm.getPasswordPolicyValidator().passwordPolicyValid(userInfo);
+	        authenticationRealm.getLoginRepository().passwordPolicyValid(userInfo);
 	             
 	        //Match password 
 	        authenticationRealm.passwordMatches(userInfo, loginCredential.getPassword());
 
 	        //apply PasswordSetType and resetBadPasswordCount
-	        authenticationRealm.getPasswordPolicyValidator().applyPasswordPolicy(userInfo);
+	        authenticationRealm.getLoginRepository().applyPasswordPolicy(userInfo);
 	        
 	        authenticationToken = createOnlineTicket(loginCredential,userInfo);
 	        // user authenticated

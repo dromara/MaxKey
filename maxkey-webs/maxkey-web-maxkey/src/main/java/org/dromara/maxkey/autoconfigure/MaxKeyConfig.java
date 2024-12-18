@@ -43,9 +43,9 @@ import org.dromara.maxkey.password.onetimepwd.impl.TimeBasedOtpAuthn;
 import org.dromara.maxkey.password.onetimepwd.token.RedisOtpTokenStore;
 import org.dromara.maxkey.persistence.redis.RedisConnectionFactory;
 import org.dromara.maxkey.persistence.repository.LoginRepository;
-import org.dromara.maxkey.persistence.repository.PasswordPolicyValidator;
 import org.dromara.maxkey.persistence.service.CnfLdapContextService;
 import org.dromara.maxkey.persistence.service.HistoryLoginService;
+import org.dromara.maxkey.persistence.service.PasswordPolicyValidatorService;
 import org.dromara.maxkey.persistence.service.UserInfoService;
 import org.dromara.maxkey.schedule.ScheduleAdapterBuilder;
 import org.quartz.Scheduler;
@@ -88,7 +88,7 @@ public class MaxKeyConfig  {
     @Bean
     JdbcAuthenticationRealm authenticationRealm(
                 @Qualifier("passwordEncoder") PasswordEncoder passwordEncoder,
-                PasswordPolicyValidator passwordPolicyValidator,
+                PasswordPolicyValidatorService passwordPolicyValidatorService,
                 LoginRepository loginService,
                 HistoryLoginService historyLoginService,
                 UserInfoService userInfoService,
@@ -99,7 +99,7 @@ public class MaxKeyConfig  {
     	LdapAuthenticationRealmService ldapRealmService = new LdapAuthenticationRealmService(ldapContextService);
         return new JdbcAuthenticationRealm(
         		passwordEncoder,
-        		passwordPolicyValidator,
+        		passwordPolicyValidatorService,
         		loginService,
         		historyLoginService,
         		userInfoService,

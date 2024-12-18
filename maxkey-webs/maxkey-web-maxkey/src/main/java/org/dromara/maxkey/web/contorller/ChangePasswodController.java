@@ -26,10 +26,10 @@ import org.dromara.maxkey.entity.ChangePassword;
 import org.dromara.maxkey.entity.Message;
 import org.dromara.maxkey.entity.cnf.CnfPasswordPolicy;
 import org.dromara.maxkey.entity.idm.UserInfo;
-import org.dromara.maxkey.persistence.repository.PasswordPolicyValidator;
 import org.dromara.maxkey.persistence.service.HistorySystemLogsService;
 import org.dromara.maxkey.persistence.service.CnfPasswordPolicyService;
 import org.dromara.maxkey.persistence.service.UserInfoService;
+import org.dromara.maxkey.persistence.service.impl.PasswordPolicyValidatorServiceImpl;
 import org.dromara.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -78,7 +78,7 @@ public class ChangePasswodController {
 					currentUser);
 			return new Message<>();
 		}else {
-			String message = (String) WebContext.getAttribute(PasswordPolicyValidator.PASSWORD_POLICY_VALIDATE_RESULT);
+			String message = (String) WebContext.getAttribute(PasswordPolicyValidatorServiceImpl.PASSWORD_POLICY_VALIDATE_RESULT);
 			logger.info("-message: {}",message);
 			return new Message<>(Message.ERROR,message);
 		}

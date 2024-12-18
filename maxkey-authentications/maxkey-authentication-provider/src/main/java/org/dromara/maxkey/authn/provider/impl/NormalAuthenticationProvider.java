@@ -87,7 +87,7 @@ public class NormalAuthenticationProvider extends AbstractAuthenticationProvider
 	        isUserExist(loginCredential , userInfo);
 	        
 	        //Validate PasswordPolicy
-	        authenticationRealm.getPasswordPolicyValidator().passwordPolicyValid(userInfo);
+	        authenticationRealm.getLoginRepository().passwordPolicyValid(userInfo);
 	        
 	        statusValid(loginCredential , userInfo);
 	        
@@ -95,7 +95,7 @@ public class NormalAuthenticationProvider extends AbstractAuthenticationProvider
 	        authenticationRealm.passwordMatches(userInfo, loginCredential.getPassword());
 
 	        //apply PasswordSetType and resetBadPasswordCount
-	        authenticationRealm.getPasswordPolicyValidator().applyPasswordPolicy(userInfo);
+	        authenticationRealm.getLoginRepository().applyPasswordPolicy(userInfo);
 	        
 	        authenticationToken = createOnlineTicket(loginCredential,userInfo);
 	        // user authenticated

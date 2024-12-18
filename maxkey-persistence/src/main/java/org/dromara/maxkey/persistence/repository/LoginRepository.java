@@ -26,32 +26,31 @@ import java.util.List;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.dromara.maxkey.constants.ConstsPasswordSetType;
 import org.dromara.maxkey.constants.ConstsRoles;
 import org.dromara.maxkey.constants.ConstsStatus;
+import org.dromara.maxkey.entity.cnf.CnfPasswordPolicy;
 import org.dromara.maxkey.entity.idm.Groups;
 import org.dromara.maxkey.entity.idm.UserInfo;
+import org.dromara.maxkey.persistence.service.CnfPasswordPolicyService;
+import org.dromara.maxkey.persistence.service.UserInfoService;
+import org.dromara.maxkey.web.WebConstants;
+import org.dromara.maxkey.web.WebContext;
+import org.joda.time.DateTime;
+import org.joda.time.Duration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 public class LoginRepository {
     private static final Logger _logger = LoggerFactory.getLogger(LoginRepository.class);
 
-    private static final String LOCK_USER_UPDATE_STATEMENT = "update mxk_userinfo set islocked = ?  , unlocktime = ? where id = ?";
-
-    private static final String UNLOCK_USER_UPDATE_STATEMENT = "update mxk_userinfo set islocked = ? , unlocktime = ? where id = ?";
-
-    private static final String BADPASSWORDCOUNT_UPDATE_STATEMENT = "update mxk_userinfo set badpasswordcount = ? , badpasswordtime = ?  where id = ?";
-
-    private static final String BADPASSWORDCOUNT_RESET_UPDATE_STATEMENT = "update mxk_userinfo set badpasswordcount = ? , islocked = ? ,unlocktime = ?  where id = ?";
-
     private static final String LOGIN_USERINFO_UPDATE_STATEMENT = "update mxk_userinfo set lastlogintime = ?  , lastloginip = ? , logincount = ?, online = "
             + UserInfo.ONLINE.ONLINE + "  where id = ?";
-
-
 
     private static final String GROUPS_SELECT_STATEMENT = "select distinct g.id,g.groupcode,g.groupname from mxk_userinfo u,mxk_groups g,mxk_group_member gm where u.id = ?  and u.id=gm.memberid and gm.groupid=g.id ";
 
@@ -64,6 +63,10 @@ public class LoginRepository {
     private static final String DEFAULT_MYAPPS_SELECT_STATEMENT = "select distinct app.id,app.appname from mxk_apps app,mxk_access gp,mxk_groups g  where app.id=gp.appid and app.status = 1 and gp.groupid=g.id and g.id in(%s)";
 
     protected JdbcTemplate jdbcTemplate;
+    
+    UserInfoService userInfoService;
+    
+    CnfPasswordPolicyService cnfPasswordPolicyService;
 
     /**
      * 1 (USERNAME)  2 (USERNAME | MOBILE) 3 (USERNAME | MOBILE | EMAIL)
@@ -74,8 +77,10 @@ public class LoginRepository {
 
     }
 
-    public LoginRepository(JdbcTemplate jdbcTemplate){
+    public LoginRepository(UserInfoService userInfoService,CnfPasswordPolicyService cnfPasswordPolicyService,JdbcTemplate jdbcTemplate){
         this.jdbcTemplate=jdbcTemplate;
+        this.userInfoService = userInfoService;
+        this.cnfPasswordPolicyService = cnfPasswordPolicyService;
     }
 
     public UserInfo find(String username, String password) {
@@ -116,36 +121,135 @@ public class LoginRepository {
     }
 
 
+    
     /**
-     * 閿佸畾鐢ㄦ埛锛歩slock锛�1 鐢ㄦ埛瑙ｉ攣 2 鐢ㄦ埛閿佸畾
-     *
+     * dynamic passwordPolicy Valid for user login.
+     * @param userInfo
+     * @return boolean
+     */
+    public boolean passwordPolicyValid(UserInfo userInfo) {
+        
+ 	   CnfPasswordPolicy passwordPolicy = cnfPasswordPolicyService.getPasswordPolicy();
+ 	   
+        DateTime currentdateTime = new DateTime();
+         /*
+          * check login attempts fail times
+          */
+         if (userInfo.getBadPasswordCount() >= passwordPolicy.getAttempts() && userInfo.getBadPasswordTime() != null) {
+             _logger.debug("login Attempts is {} , bad Password Time {}" , userInfo.getBadPasswordCount(),userInfo.getBadPasswordTime());
+            
+             Duration duration = new Duration(new DateTime(userInfo.getBadPasswordTime()), currentdateTime);
+             int intDuration = Integer.parseInt(duration.getStandardMinutes() + "");
+             _logger.debug("bad Password duration {} , " + 
+                           "password policy Duration {} , "+
+                           "validate result {}" ,
+                           intDuration,
+                           passwordPolicy.getDuration(), 
+                           (intDuration > passwordPolicy.getDuration())
+                     );
+             //auto unlock attempts when intDuration >= set Duration
+             if(intDuration >= passwordPolicy.getDuration()) {
+                 _logger.debug("resetAttempts ...");
+                 resetAttempts(userInfo);
+             }else {
+                 lockUser(userInfo);
+                 throw new BadCredentialsException(
+                         WebContext.getI18nValue("login.error.attempts",
+                                 new Object[]{userInfo.getBadPasswordCount(),passwordPolicy.getDuration()}) 
+                         );
+             }
+         }
+         
+         //locked
+         if(userInfo.getIsLocked()==ConstsStatus.LOCK) {
+             throw new BadCredentialsException(
+                                 userInfo.getUsername()+ " "+
+                                 WebContext.getI18nValue("login.error.locked")
+                                 );
+         }
+         // inactive
+         if(userInfo.getStatus()!=ConstsStatus.ACTIVE) {
+             throw new BadCredentialsException(
+                                 userInfo.getUsername()+ 
+                                 WebContext.getI18nValue("login.error.inactive") 
+                                 );
+         }
+
+         return true;
+     }
+    
+    public void applyPasswordPolicy(UserInfo userInfo) {
+ 	   CnfPasswordPolicy passwordPolicy = cnfPasswordPolicyService.getPasswordPolicy();
+ 	   
+        DateTime currentdateTime = new DateTime();
+        //initial password need change
+        if(userInfo.getLoginCount()<=0) {
+            WebContext.getSession().setAttribute(WebConstants.CURRENT_USER_PASSWORD_SET_TYPE,
+                    ConstsPasswordSetType.INITIAL_PASSWORD);
+        }
+        
+        if (userInfo.getPasswordSetType() != ConstsPasswordSetType.PASSWORD_NORMAL) {
+            WebContext.getSession().setAttribute(WebConstants.CURRENT_USER_PASSWORD_SET_TYPE,
+                        userInfo.getPasswordSetType());
+            return;
+        } else {
+            WebContext.getSession().setAttribute(WebConstants.CURRENT_USER_PASSWORD_SET_TYPE,
+                    ConstsPasswordSetType.PASSWORD_NORMAL);
+        }
+
+        /*
+         * check password is Expired,Expiration is Expired date ,if Expiration equals 0,not need check
+         *
+         */
+        if (passwordPolicy.getExpiration() > 0 && userInfo.getPasswordLastSetTime() != null) {
+            _logger.info("last password set date {}" , userInfo.getPasswordLastSetTime());
+            Duration duration = new Duration(new DateTime(userInfo.getPasswordLastSetTime()), currentdateTime);
+            int intDuration = Integer.parseInt(duration.getStandardDays() + "");
+            _logger.debug("password Last Set duration day {} , " +
+                          "password policy Expiration {} , " +
+                          "validate result {}", 
+                     intDuration,
+                     passwordPolicy.getExpiration(),
+                     intDuration <= passwordPolicy.getExpiration()
+                 );
+            if (intDuration > passwordPolicy.getExpiration()) {
+                WebContext.getSession().setAttribute(WebConstants.CURRENT_USER_PASSWORD_SET_TYPE,
+                        ConstsPasswordSetType.PASSWORD_EXPIRED);
+            }
+        }
+        
+        resetBadPasswordCount(userInfo);
+    }
+    
+    /**
+     * lockUser
+     * 
      * @param userInfo
      */
-    public void updateLock(UserInfo userInfo) {
+    public void lockUser(UserInfo userInfo) {
         try {
-            if (userInfo != null && StringUtils.isNotEmpty(userInfo.getId())) {
-                jdbcTemplate.update(LOCK_USER_UPDATE_STATEMENT,
-                        new Object[] { ConstsStatus.LOCK, new Date(), userInfo.getId() },
-                        new int[] { Types.VARCHAR, Types.TIMESTAMP, Types.VARCHAR });
+            if (userInfo != null 
+         		   && StringUtils.isNotEmpty(userInfo.getId()) 
+         		   && userInfo.getIsLocked() == ConstsStatus.ACTIVE) {
                 userInfo.setIsLocked(ConstsStatus.LOCK);
+                userInfoService.locked(userInfo);
             }
         } catch (Exception e) {
             _logger.error("lockUser Exception",e);
         }
     }
+    
 
     /**
-     * 閿佸畾鐢ㄦ埛锛歩slock锛�1 鐢ㄦ埛瑙ｉ攣 2 鐢ㄦ埛閿佸畾
-     *
+     * unlockUser
+     * 
      * @param userInfo
      */
-    public void updateUnlock(UserInfo userInfo) {
+    public void unlockUser(UserInfo userInfo) {
         try {
             if (userInfo != null && StringUtils.isNotEmpty(userInfo.getId())) {
-                jdbcTemplate.update(UNLOCK_USER_UPDATE_STATEMENT,
-                        new Object[] { ConstsStatus.ACTIVE, new Date(), userInfo.getId() },
-                        new int[] { Types.VARCHAR, Types.TIMESTAMP, Types.VARCHAR });
                 userInfo.setIsLocked(ConstsStatus.ACTIVE);
+                userInfoService.lockout(userInfo);
             }
         } catch (Exception e) {
             _logger.error("unlockUser Exception",e);
@@ -154,39 +258,52 @@ public class LoginRepository {
 
     /**
     * reset BadPasswordCount And Lockout
-     *
+     * 
      * @param userInfo
      */
-    public void updateLockout(UserInfo userInfo) {
+    public void resetAttempts(UserInfo userInfo) {
         try {
             if (userInfo != null && StringUtils.isNotEmpty(userInfo.getId())) {
-                jdbcTemplate.update(BADPASSWORDCOUNT_RESET_UPDATE_STATEMENT,
-                        new Object[] { 0, ConstsStatus.ACTIVE, new Date(), userInfo.getId() },
-                        new int[] { Types.INTEGER, Types.INTEGER, Types.TIMESTAMP, Types.VARCHAR });
                 userInfo.setIsLocked(ConstsStatus.ACTIVE);
+                userInfo.setBadPasswordCount(0);
+                userInfoService.badPasswordCountReset(userInfo);
             }
         } catch (Exception e) {
-            _logger.error("resetBadPasswordCountAndLockout Exception",e);
+            _logger.error("resetAttempts Exception",e);
         }
     }
 
     /**
      * if login password is error ,BadPasswordCount++ and set bad date
-     *
+     * 
      * @param userInfo
      */
-    public void updateBadPasswordCount(UserInfo userInfo) {
+    private void setBadPasswordCount(String userId,int badPasswordCount) {
         try {
-            if (userInfo != null && StringUtils.isNotEmpty(userInfo.getId())) {
-                int badPasswordCount = userInfo.getBadPasswordCount() + 1;
-                userInfo.setBadPasswordCount(badPasswordCount);
-                jdbcTemplate.update(BADPASSWORDCOUNT_UPDATE_STATEMENT,
-                        new Object[] { badPasswordCount, new Date(), userInfo.getId() },
-                        new int[] { Types.INTEGER, Types.TIMESTAMP, Types.VARCHAR });
-            }
+     	   UserInfo user = new UserInfo();
+     	   user.setId(userId);
+     	   user.setBadPasswordCount(badPasswordCount);
+     	   userInfoService.badPasswordCount(user);
         } catch (Exception e) {
-            e.printStackTrace();
-            _logger.error(e.getMessage());
+            _logger.error("setBadPasswordCount Exception",e);
+        }
+    }
+    
+    public void plusBadPasswordCount(UserInfo userInfo) {
+        if (userInfo != null && StringUtils.isNotEmpty(userInfo.getId())) {
+            setBadPasswordCount(userInfo.getId(),userInfo.getBadPasswordCount());
+            CnfPasswordPolicy passwordPolicy = cnfPasswordPolicyService.getPasswordPolicy();
+            if(userInfo.getBadPasswordCount() >= passwordPolicy.getAttempts()) {
+         	   _logger.debug("Bad Password Count {} , Max Attempts {}",
+         			   userInfo.getBadPasswordCount() + 1,passwordPolicy.getAttempts());
+         	   this.lockUser(userInfo);
+            }
+        }
+    }
+    
+    public void resetBadPasswordCount(UserInfo userInfo) {
+        if (userInfo != null && StringUtils.isNotEmpty(userInfo.getId()) && userInfo.getBadPasswordCount()>0) {
+     	   setBadPasswordCount(userInfo.getId(),0);
         }
     }
 

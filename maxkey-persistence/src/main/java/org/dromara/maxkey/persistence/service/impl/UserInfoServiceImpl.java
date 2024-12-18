@@ -28,8 +28,8 @@ import org.dromara.maxkey.entity.Accounts;
 import org.dromara.maxkey.entity.ChangePassword;
 import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.mapper.UserInfoMapper;
-import org.dromara.maxkey.persistence.repository.PasswordPolicyValidator;
 import org.dromara.maxkey.persistence.service.AccountsService;
+import org.dromara.maxkey.persistence.service.PasswordPolicyValidatorService;
 import org.dromara.maxkey.persistence.service.UserInfoService;
 import org.dromara.maxkey.provision.ProvisionAct;
 import org.dromara.maxkey.provision.ProvisionService;
@@ -55,7 +55,7 @@ public class UserInfoServiceImpl extends JpaServiceImpl<UserInfoMapper,UserInfo>
 	private PasswordEncoder passwordEncoder;
 	
 	@Autowired
-	PasswordPolicyValidator passwordPolicyValidator;
+	PasswordPolicyValidatorService passwordPolicyValidatorService;
 	
 	@Autowired
 	ProvisionService provisionService;
@@ -256,7 +256,7 @@ public class UserInfoServiceImpl extends JpaServiceImpl<UserInfoMapper,UserInfo>
 	 */
 	public boolean changePassword(  ChangePassword changePassword) {
 		try {
-		    WebContext.setAttribute(PasswordPolicyValidator.PASSWORD_POLICY_VALIDATE_RESULT, "");
+		    WebContext.setAttribute(PasswordPolicyValidatorServiceImpl.PASSWORD_POLICY_VALIDATE_RESULT, "");
 		    UserInfo userInfo = this.findByUsername(changePassword.getUsername());
 	        if(changePassword.getPassword().equals(changePassword.getConfirmPassword())){
 	            if(StringUtils.isNotBlank(changePassword.getOldPassword()) &&
@@ -268,15 +268,15 @@ public class UserInfoServiceImpl extends JpaServiceImpl<UserInfoMapper,UserInfo>
 	            }else {
 	                if(StringUtils.isNotBlank(changePassword.getOldPassword())&&
 	                        passwordEncoder.matches(changePassword.getPassword(), userInfo.getPassword())) {
-	                    WebContext.setAttribute(PasswordPolicyValidator.PASSWORD_POLICY_VALIDATE_RESULT, 
+	                    WebContext.setAttribute(PasswordPolicyValidatorServiceImpl.PASSWORD_POLICY_VALIDATE_RESULT, 
 	                            WebContext.getI18nValue("PasswordPolicy.OLD_PASSWORD_MATCH"));
 	                }else {
-	                    WebContext.setAttribute(PasswordPolicyValidator.PASSWORD_POLICY_VALIDATE_RESULT, 
+	                    WebContext.setAttribute(PasswordPolicyValidatorServiceImpl.PASSWORD_POLICY_VALIDATE_RESULT, 
 	                        WebContext.getI18nValue("PasswordPolicy.OLD_PASSWORD_NOT_MATCH"));
 	                }
 	            }
 	        }else {
-	            WebContext.setAttribute(PasswordPolicyValidator.PASSWORD_POLICY_VALIDATE_RESULT, 
+	            WebContext.setAttribute(PasswordPolicyValidatorServiceImpl.PASSWORD_POLICY_VALIDATE_RESULT, 
 	                    WebContext.getI18nValue("PasswordPolicy.CONFIRMPASSWORD_NOT_MATCH"));
 	        }
 		 } catch (Exception e) {
@@ -297,7 +297,7 @@ public class UserInfoServiceImpl extends JpaServiceImpl<UserInfoMapper,UserInfo>
             _logger.debug("decipherable old : {}" , changePassword.getDecipherable());
             _logger.debug("decipherable new : {}" , PasswordReciprocal.getInstance().encode(changePassword.getDecipherable()));
 
-            if (passwordPolicy && !passwordPolicyValidator.validator(changePassword)) {
+            if (passwordPolicy && !passwordPolicyValidatorService.validator(changePassword)) {
                 return false;
             }
 
@@ -317,7 +317,7 @@ public class UserInfoServiceImpl extends JpaServiceImpl<UserInfoMapper,UserInfo>
     }
 	
 	public String randomPassword() {
-	    return passwordPolicyValidator.generateRandomPassword();
+	    return passwordPolicyValidatorService.generateRandomPassword();
 	}
 	
 	public void changePasswordProvisioning(ChangePassword changePassworded) {
@@ -340,10 +340,10 @@ public class UserInfoServiceImpl extends JpaServiceImpl<UserInfoMapper,UserInfo>
 	
 	
 	/**
-	 * 锁定用户：islock：1 用户解锁 2 用户锁定
+	 * 锁定用户：islock：1 解锁 5 锁定
 	 * @param userInfo
 	 */
-	public void updateLocked(UserInfo userInfo) {
+	public void locked(UserInfo userInfo) {
 		try {
 			if(userInfo != null && StringUtils.isNotEmpty(userInfo.getId())) {
 				userInfo.setIsLocked(ConstsStatus.LOCK);
@@ -358,10 +358,10 @@ public class UserInfoServiceImpl extends JpaServiceImpl<UserInfoMapper,UserInfo>
 	 * 用户登录成功后，重置错误密码次数和解锁用户
 	 * @param userInfo
 	 */
-	public void updateLockout(UserInfo userInfo) {
+	public void lockout(UserInfo userInfo) {
 		try {
 			if(userInfo != null && StringUtils.isNotEmpty(userInfo.getId())) {
-				userInfo.setIsLocked(ConstsStatus.START);
+				userInfo.setIsLocked(ConstsStatus.ACTIVE);
 				userInfo.setBadPasswordCount(0);
 				getMapper().updateLockout(userInfo);
 			}
@@ -374,12 +374,26 @@ public class UserInfoServiceImpl extends JpaServiceImpl<UserInfoMapper,UserInfo>
 	 * 更新错误密码次数
 	 * @param userInfo
 	 */
-	public void updateBadPasswordCount(UserInfo userInfo) {
+	public void badPasswordCount(UserInfo userInfo) {
 		try {
 			if(userInfo != null && StringUtils.isNotEmpty(userInfo.getId())) {
 				int updateBadPWDCount = userInfo.getBadPasswordCount() + 1;
 				userInfo.setBadPasswordCount(updateBadPWDCount);
-				getMapper().updateBadPWDCount(userInfo);
+				getMapper().badPasswordCount(userInfo);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 重置错误密码次数
+	 * @param userInfo
+	 */
+	public void badPasswordCountReset(UserInfo userInfo) {
+		try {
+			if(userInfo != null && StringUtils.isNotEmpty(userInfo.getId())) {
+				getMapper().badPasswordCountReset(userInfo);
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -412,10 +426,6 @@ public class UserInfoServiceImpl extends JpaServiceImpl<UserInfoMapper,UserInfo>
     
     public boolean 	updateStatus(UserInfo userInfo) {
     	return getMapper().updateStatus(userInfo) > 0;
-    }
-
-    public void setPasswordPolicyValidator(PasswordPolicyValidator passwordPolicyValidator) {
-        this.passwordPolicyValidator = passwordPolicyValidator;
     }
 
 }

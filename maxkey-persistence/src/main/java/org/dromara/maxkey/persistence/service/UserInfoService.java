@@ -20,7 +20,6 @@ package org.dromara.maxkey.persistence.service;
 
 import org.dromara.maxkey.entity.ChangePassword;
 import org.dromara.maxkey.entity.idm.UserInfo;
-import org.dromara.maxkey.persistence.repository.PasswordPolicyValidator;
 import org.dromara.mybatis.jpa.IJpaService;
 
 /**
@@ -84,19 +83,21 @@ public interface UserInfoService extends IJpaService<UserInfo> {
 	 * 锁定用户：islock：1 用户解锁 2 用户锁定
 	 * @param userInfo
 	 */
-	public void updateLocked(UserInfo userInfo) ;
+	public void locked(UserInfo userInfo) ;
 
 	/**
 	 * 用户登录成功后，重置错误密码次数和解锁用户
 	 * @param userInfo
 	 */
-	public void updateLockout(UserInfo userInfo) ;
+	public void lockout(UserInfo userInfo) ;
 
 	/**
 	 * 更新错误密码次数
 	 * @param userInfo
 	 */
-	public void updateBadPasswordCount(UserInfo userInfo) ;
+	public void badPasswordCount(UserInfo userInfo) ;
+	
+	public void badPasswordCountReset(UserInfo userInfo);
 
 	public boolean updateSharedSecret(UserInfo userInfo);
 	
@@ -111,7 +112,5 @@ public interface UserInfoService extends IJpaService<UserInfo> {
     public int updateProfile(UserInfo userInfo);
     
     public boolean 	updateStatus(UserInfo userInfo);
-
-    public void setPasswordPolicyValidator(PasswordPolicyValidator passwordPolicyValidator);
 
 }
