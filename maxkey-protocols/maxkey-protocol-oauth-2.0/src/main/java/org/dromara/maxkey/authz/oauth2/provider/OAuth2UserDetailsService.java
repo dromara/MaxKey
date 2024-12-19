@@ -18,7 +18,7 @@ import org.dromara.maxkey.authn.SignPrincipal;
 import org.dromara.maxkey.authn.provider.AbstractAuthenticationProvider;
 import org.dromara.maxkey.authn.session.Session;
 import org.dromara.maxkey.entity.idm.UserInfo;
-import org.dromara.maxkey.persistence.repository.LoginRepository;
+import org.dromara.maxkey.persistence.service.LoginService;
 import org.dromara.maxkey.web.WebConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +35,7 @@ public class OAuth2UserDetailsService implements UserDetailsService {
 	 private static final Logger _logger = 
 	            LoggerFactory.getLogger(OAuth2UserDetailsService.class);
 	
-    LoginRepository loginRepository;
+    LoginService loginRepository;
 	
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		UserInfo userInfo;
@@ -68,7 +68,7 @@ public class OAuth2UserDetailsService implements UserDetailsService {
 		return principal;
 	}
 
-	public void setLoginRepository(LoginRepository loginRepository) {
+	public void setLoginRepository(LoginService loginRepository) {
 		this.loginRepository = loginRepository;
 	}
 

@@ -28,8 +28,8 @@ import org.dromara.maxkey.entity.idm.Groups;
 import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.ip2location.IpLocationParser;
 import org.dromara.maxkey.ip2location.Region;
-import org.dromara.maxkey.persistence.repository.LoginRepository;
 import org.dromara.maxkey.persistence.service.HistoryLoginService;
+import org.dromara.maxkey.persistence.service.LoginService;
 import org.dromara.maxkey.persistence.service.PasswordPolicyValidatorService;
 import org.dromara.maxkey.persistence.service.UserInfoService;
 import org.dromara.maxkey.web.WebConstants;
@@ -52,7 +52,7 @@ public abstract class AbstractAuthenticationRealm {
     
     protected PasswordPolicyValidatorService passwordPolicyValidatorService;
     
-    protected LoginRepository loginRepository;
+    protected LoginService loginService;
 
     protected HistoryLoginService historyLoginService;
     
@@ -78,18 +78,18 @@ public abstract class AbstractAuthenticationRealm {
         return passwordPolicyValidatorService;
     }
 
-    public LoginRepository getLoginRepository() {
-        return loginRepository;
+    public LoginService getLoginService() {
+        return loginService;
     }
 
     public UserInfo loadUserInfo(String username, String password) {
-        return loginRepository.find(username, password);
+        return loginService.find(username, password);
     }
 
     public abstract boolean passwordMatches(UserInfo userInfo, String password);
     
     public List<Groups> queryGroups(UserInfo userInfo) {
-       return loginRepository.queryGroups(userInfo);
+       return loginService.queryGroups(userInfo);
     }
 
     /**
@@ -99,7 +99,7 @@ public abstract class AbstractAuthenticationRealm {
      * @return ArrayList<GrantedAuthority>
      */
     public List<GrantedAuthority> grantAuthority(UserInfo userInfo) {
-        return loginRepository.grantAuthority(userInfo);
+        return loginService.grantAuthority(userInfo);
     }
     
     /**
@@ -109,7 +109,7 @@ public abstract class AbstractAuthenticationRealm {
      * @return ArrayList<GrantedAuthority Apps>
      */
     public List<GrantedAuthority> queryAuthorizedApps(List<GrantedAuthority> grantedAuthoritys) {
-        return loginRepository.queryAuthorizedApps(grantedAuthoritys);
+        return loginService.queryAuthorizedApps(grantedAuthoritys);
     }
 
     /**
@@ -160,7 +160,7 @@ public abstract class AbstractAuthenticationRealm {
         }
         historyLoginService.login(historyLogin);
         
-        loginRepository.updateLastLogin(userInfo);
+        loginService.updateLastLogin(userInfo);
 
         return true;
     }

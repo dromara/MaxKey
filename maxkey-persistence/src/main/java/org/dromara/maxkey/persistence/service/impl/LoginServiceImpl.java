@@ -1,5 +1,5 @@
 /*
- * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2024] [MaxKey of copyright http://www.maxkey.top]
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,13 +15,12 @@
  */
 
 
-package org.dromara.maxkey.persistence.repository;
+package org.dromara.maxkey.persistence.service.impl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.collections4.CollectionUtils;
@@ -33,6 +32,7 @@ import org.dromara.maxkey.entity.cnf.CnfPasswordPolicy;
 import org.dromara.maxkey.entity.idm.Groups;
 import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.service.CnfPasswordPolicyService;
+import org.dromara.maxkey.persistence.service.LoginService;
 import org.dromara.maxkey.persistence.service.UserInfoService;
 import org.dromara.maxkey.web.WebConstants;
 import org.dromara.maxkey.web.WebContext;
@@ -40,14 +40,17 @@ import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.stereotype.Repository;
 
-public class LoginRepository {
-    private static final Logger _logger = LoggerFactory.getLogger(LoginRepository.class);
+@Repository
+public class LoginServiceImpl  implements LoginService{
+    private static final Logger _logger = LoggerFactory.getLogger(LoginServiceImpl.class);
 
     private static final String LOGIN_USERINFO_UPDATE_STATEMENT = "update mxk_userinfo set lastlogintime = ?  , lastloginip = ? , logincount = ?, online = "
             + UserInfo.ONLINE.ONLINE + "  where id = ?";
@@ -62,10 +65,13 @@ public class LoginRepository {
 
     private static final String DEFAULT_MYAPPS_SELECT_STATEMENT = "select distinct app.id,app.appname from mxk_apps app,mxk_access gp,mxk_groups g  where app.id=gp.appid and app.status = 1 and gp.groupid=g.id and g.id in(%s)";
 
-    protected JdbcTemplate jdbcTemplate;
+    @Autowired
+    JdbcTemplate jdbcTemplate;
     
+    @Autowired
     UserInfoService userInfoService;
     
+    @Autowired
     CnfPasswordPolicyService cnfPasswordPolicyService;
 
     /**
@@ -73,14 +79,8 @@ public class LoginRepository {
      */
     public  static  int LOGIN_ATTRIBUTE_TYPE = 2;
 
-    public LoginRepository(){
+    public LoginServiceImpl(){
 
-    }
-
-    public LoginRepository(UserInfoService userInfoService,CnfPasswordPolicyService cnfPasswordPolicyService,JdbcTemplate jdbcTemplate){
-        this.jdbcTemplate=jdbcTemplate;
-        this.userInfoService = userInfoService;
-        this.cnfPasswordPolicyService = cnfPasswordPolicyService;
     }
 
     public UserInfo find(String username, String password) {

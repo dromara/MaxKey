@@ -48,8 +48,8 @@ import org.dromara.maxkey.crypto.jose.keystore.JWKSetKeyStore;
 import org.dromara.maxkey.crypto.jwt.encryption.service.impl.DefaultJwtEncryptionAndDecryptionService;
 import org.dromara.maxkey.crypto.jwt.signer.service.impl.DefaultJwtSigningAndValidationService;
 import org.dromara.maxkey.persistence.redis.RedisConnectionFactory;
-import org.dromara.maxkey.persistence.repository.LoginRepository;
 import org.dromara.maxkey.persistence.service.AppsService;
+import org.dromara.maxkey.persistence.service.LoginService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -329,7 +329,7 @@ public class Oauth20AutoConfiguration implements InitializingBean {
     ProviderManager oauth20UserAuthenticationManager(
             @Qualifier("passwordEncoder")
             PasswordEncoder passwordEncoder,
-            LoginRepository loginRepository
+            LoginService loginRepository
     ) {
         
         OAuth2UserDetailsService userDetailsService =new OAuth2UserDetailsService();
