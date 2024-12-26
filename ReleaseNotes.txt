@@ -1,4 +1,4 @@
-﻿MaxKey v 4.1.4 GA 2024/14/27
+﻿MaxKey v 4.1.4 GA 2024/12/27
     *(MAXKEY-240801) 部署在线演示系统
     *(MAXKEY-240802) mysql数据库连接参数 serverTimezone=GMT+8
     *(MAXKEY-240803) map地图优化
