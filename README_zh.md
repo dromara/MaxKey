@@ -32,7 +32,7 @@ Dromara <b>MaxKey</b>单点登录认证系统是<b>业界领先的IAM-IDaas身�
 
 MaxKey注重企业级场景下的性能、安全和易用性，广泛应用于医疗、金融、政府和制造等行业。
 
-MaxKey 遵循 Apache License, Version 2.0 开源免费，开源、安全、合规、自主可控。
+MaxKey <b>遵循 Apache License, Version 2.0 开源免费</b>，开源、安全、合规、自主可控。
 
 官方网站  <a href="https://www.maxkey.top/" target="_blank"><b>https://www.maxkey.top/</b></a> 
 
