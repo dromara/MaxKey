@@ -58,6 +58,7 @@ services:
       - DATABASE_NAME=maxkey
       - DATABASE_USER=root
       - DATABASE_PWD=maxkey
+      - LOGIN_CAS_SERVER=http://maxkey/sign/authz/cas
     ports:
       - "9526:9526"
     networks:
