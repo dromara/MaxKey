@@ -26,6 +26,9 @@ public class LoginConfig {
 	@Value("${maxkey.login.captcha}")
     boolean captcha;
 	
+	@Value("${maxkey.login.captcha.type}")
+    String captchaType;
+	
     @Value("${maxkey.login.mfa}")
     boolean mfa;
     
@@ -106,6 +109,14 @@ public class LoginConfig {
 
 	public void setCasService(String casService) {
 		this.casService = casService;
+	}
+
+	public String getCaptchaType() {
+		return captchaType;
+	}
+
+	public void setCaptchaType(String captchaType) {
+		this.captchaType = captchaType;
 	}
 
 	@Override

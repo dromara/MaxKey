@@ -142,7 +142,9 @@ public class LoginEntryPoint {
 		Institutions inst = (Institutions)WebContext.getAttribute(WebConstants.CURRENT_INST);
 		model.put("inst", inst);
 		if(applicationConfig.getLoginConfig().isCaptcha()) {
-			model.put("captcha", "true");
+			model.put("captcha", applicationConfig.getLoginConfig().getCaptchaType());
+		}else {
+			model.put("captcha", "NONE");
 		}
 		model.put("state", authTokenService.genRandomJwt());
 		//load Social Sign On Providers

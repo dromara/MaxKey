@@ -67,6 +67,7 @@ export class UserLoginComponent implements OnInit, OnDestroy {
   type = 0;
   loading = false;
   state = '';
+  captchaType = '';
   imageCaptcha = '';
   passwordVisible = false;
 
@@ -96,8 +97,9 @@ export class UserLoginComponent implements OnInit, OnDestroy {
           // 清空路由复用信息
           //console.log(res.data);
           this.state = res.data.state;
+          this.captchaType = res.data.captcha;
           //init image captcha
-          this.imageCaptchaService.captcha({ state: this.state }).subscribe(res => {
+          this.imageCaptchaService.captcha({ state: this.state, captcha: this.captchaType }).subscribe(res => {
             this.imageCaptcha = res.data.image;
             this.cdr.detectChanges();
           });
@@ -110,7 +112,7 @@ export class UserLoginComponent implements OnInit, OnDestroy {
   }
 
   getImageCaptcha(): void {
-    this.imageCaptchaService.captcha({ state: this.state }).subscribe(res => {
+    this.imageCaptchaService.captcha({ state: this.state, captcha: this.captchaType }).subscribe(res => {
       this.imageCaptcha = res.data.image;
       this.cdr.detectChanges();
     });
