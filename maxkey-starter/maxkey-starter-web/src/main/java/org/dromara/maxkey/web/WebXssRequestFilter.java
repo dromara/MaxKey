@@ -85,11 +85,26 @@ public class WebXssRequestFilter  extends GenericFilterBean {
 		          String value = request.getParameter(key);
 		          _logger.trace("parameter name {} , value {}" , key, value);
 		          String tempValue = value;
+		          String  lowerCaseTempValue = tempValue.toLowerCase();
+		          /**
+		           * StringEscapeUtils.escapeHtml4
+		           * " 转义为 &quot;
+		           * & 转义为 &amp;
+		           * < 转义为 &lt;
+		           * > 转义为 &gt;
+		           * 
+		           * 以下符号过滤
+		           * ' 
+		           * script
+		           * eval
+		           * 
+		           */
 		          if(!StringEscapeUtils.escapeHtml4(tempValue).equals(value)
-		        		  ||tempValue.toLowerCase().indexOf("script")>-1
-		        		  ||tempValue.toLowerCase().replace(" ", "").indexOf("eval(")>-1) {
+		        		  ||lowerCaseTempValue.indexOf("'")>-1
+		        		  ||lowerCaseTempValue.indexOf("script")>-1
+		        		  ||lowerCaseTempValue.replace(" ", "").indexOf("eval(")>-1) {
 		        	  isWebXss = true;
-		        	  _logger.error("parameter name {} , value {}, contains dangerous content ! ",key,value);
+		        	  _logger.error("dangerous ! parameter {} , value {}",key,value);
 		        	  break;
 		          }
 	          }
