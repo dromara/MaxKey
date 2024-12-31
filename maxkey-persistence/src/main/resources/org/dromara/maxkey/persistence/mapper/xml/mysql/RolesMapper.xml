@@ -7,7 +7,7 @@
 			and	id	=	#{id}
 		</if> 
 		<if test="roleName != null and roleName != ''">
-			and rolename like '%${roleName}%'
+			and rolename like concat('%',#{roleName},'%') 
 		</if>
 		<if test="appId != null and appId != ''">
 			and	appid	=	#{appId}

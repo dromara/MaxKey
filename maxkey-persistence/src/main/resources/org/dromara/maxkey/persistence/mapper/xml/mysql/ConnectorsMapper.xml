@@ -7,7 +7,7 @@
 			and	id	=	#{id}
 		</if> 
 		<if test="connName != null and connName != ''">
-			and connname like '%${connName}%'
+			and connname like  concat('%',#{connName},'%')
 		</if>
     </sql>
     	

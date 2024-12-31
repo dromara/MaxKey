@@ -112,7 +112,7 @@
 					and u.username = #{username}
 				</if>
 				<if test="displayName != null and displayName != ''">
-					and u.displayname   like  '%${displayName}%'
+					and u.displayname   like   concat('%',#{displayName},'%')
 				</if>
 				and	gm.type		in(	'USER','USER-DYNAMIC')
 				and	gm.groupid	=	g.id	
@@ -180,7 +180,7 @@
 			and u.username = #{username}
 		</if>
 		<if test="displayName != null and displayName != ''">
-			and u.displayname   like  '%${displayName}%'
+			and u.displayname   like   concat('%',#{displayName},'%')
 		</if>
 	</select>
 	

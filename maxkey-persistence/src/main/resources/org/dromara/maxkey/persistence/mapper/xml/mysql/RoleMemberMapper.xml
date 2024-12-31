@@ -42,8 +42,8 @@
 				</if>
 				<if test="memberName != null and memberName != ''">
 					and (
-					  u.username like '%${memberName}%'
-					  or u.displayname   like  '%${memberName}%'
+					  u.username like concat('%',#{memberName},'%') 
+					  or u.displayname   like  concat('%',#{memberName},'%') 
 					)
 				</if>
 	</select>
@@ -81,7 +81,7 @@
 			and u.username = #{username}
 		</if>
 		<if test="displayName != null and displayName != ''">
-			and u.displayname   like  '%${displayName}%'
+			and u.displayname   like   concat('%',#{displayName},'%')
 		</if>
 		
 	</select>

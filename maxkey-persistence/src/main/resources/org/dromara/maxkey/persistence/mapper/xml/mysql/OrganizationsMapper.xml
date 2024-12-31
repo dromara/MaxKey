@@ -7,13 +7,13 @@
 			and	id	=	#{id} 	
 		</if> 
 		<if test="orgName != null and orgName != '' ">
-			and orgname like '%${orgName}%'
+			and orgname like concat('%',#{orgName},'%') 
 		</if>
 		<if test="parentId != null and parentId != '' ">
 			and	parentid	=	#{parentId}
 		</if>
 		<if test="parentName != null and parentName != ''">
-			and parentName like '%${parentName}%'
+			and parentName like concat('%',#{parentName},'%') 
 		</if>
 
     </sql>

@@ -13,7 +13,7 @@
             and res.parentid  =   #{parentId}
         </if> 
 		<if test="resourceName != null and resourceName != ''">
-			and res.resourcename like '%${resourceName}%'
+			and res.resourcename like concat('%',#{resourceName},'%')
 		</if>
     </sql>
     

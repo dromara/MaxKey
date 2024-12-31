@@ -7,7 +7,7 @@
             and id = #{id}
         </if>
         <if test="providerName != null and providerName != ''">
-            and providerName like '%${providerName}%'
+            and providerName like concat('%',#{providerName},'%')
         </if>
     </sql>
 

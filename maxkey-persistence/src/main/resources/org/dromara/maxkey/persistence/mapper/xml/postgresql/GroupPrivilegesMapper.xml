@@ -7,7 +7,7 @@
             and apps.id = #{id}
         </if>
         <if test="name != null and name != ''">
-            and apps.name like '%${name}%'
+            and apps.name like  concat('%',#{name},'%')
         </if>
         <if test="protocol != null and protocol != ''">
             and apps.protocol = #{protocol}

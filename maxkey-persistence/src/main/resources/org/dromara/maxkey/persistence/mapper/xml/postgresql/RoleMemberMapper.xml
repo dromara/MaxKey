@@ -105,7 +105,7 @@
             and u.username = #{username}
         </if>
         <if test="displayName != null and displayName != ''">
-            and u.displayname like '%${displayName}%'
+            and u.displayname like concat('%',#{displayName},'%')
         </if>
         and rm.type in( 'USER','USER-DYNAMIC')
         and rm.roleid = r.id
@@ -174,7 +174,7 @@
             and u.username = #{username}
         </if>
         <if test="displayName != null and displayName != ''">
-            and u.displayname like '%${displayName}%'
+            and u.displayname like concat('%',#{displayName},'%')
         </if>
     </select>
 

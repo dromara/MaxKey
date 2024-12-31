@@ -44,7 +44,7 @@
         </if>
 
         <if test="description != null and description != ''">
-            and description like '%${description}%'
+            and description like concat('%',#{description},'%')
         </if>
     </sql>
 

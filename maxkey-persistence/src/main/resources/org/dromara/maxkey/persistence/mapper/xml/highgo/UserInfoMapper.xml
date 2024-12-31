@@ -63,7 +63,7 @@
 			and usertype = #{userType}
 		</if>
 		<if test="displayName != null and displayName != ''">
-			and displayname   like  '%${displayName}%'
+			and displayname   like  concat('%',#{displayName},'%') 
 		</if>
 		<if test="departmentId != null and departmentId != ''">
 			and departmentid = #{departmentId}

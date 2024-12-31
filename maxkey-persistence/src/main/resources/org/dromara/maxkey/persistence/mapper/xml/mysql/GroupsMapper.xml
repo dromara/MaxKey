@@ -7,7 +7,7 @@
 			and	id	=	#{id}
 		</if> 
 		<if test="groupName != null and groupName != ''">
-			and groupname like '%${groupName}%'
+			and groupname like  concat('%',#{groupName},'%')
 		</if>
     </sql>
     

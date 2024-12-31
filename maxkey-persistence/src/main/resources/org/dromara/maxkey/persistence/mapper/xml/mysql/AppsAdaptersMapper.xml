@@ -7,7 +7,7 @@
 			and	id	=	#{id}
 		</if> 
 		<if test="name != null and name != ''">
-			and name  like  '%${name}%'
+			and name  like   concat('%',#{name},'%')
 		</if> 
 		<if test="protocol != null and protocol != ''">
 			and	protocol	=	#{protocol}
