@@ -122,7 +122,7 @@ public class AuthJwtService {
 		if(StringUtils.isNotBlank(authToken) && authToken.length() > 20) {
 			try {
 				JWTClaimsSet claims = resolve(authToken);
-				boolean isExpiration = claims.getExpirationTime().after(DateTime.now().toDate());
+				boolean isExpiration = claims.getExpirationTime().before(DateTime.now().toDate());
 				boolean isVerify = hmac512Service.verify(authToken);
 				_logger.debug("JWT Validate {} " , isVerify && isExpiration);
 				
