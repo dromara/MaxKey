@@ -67,7 +67,7 @@
     		<if test="isLocked != null">
     		islocked			=	#{isLocked},
 			</if>
-			unlockdate			=	current_timestamp,
+			unlocktime			=	current_timestamp,
 			modifieddate		=	current_timestamp
 		where 
 			id	=	#{id}
@@ -79,7 +79,7 @@
     		islocked			=	#{isLocked},
     		badpasswordcount	=	0,
 			</if>
-			unlockdate			=	current_timestamp,
+			unlocktime			=	current_timestamp,
 			modifieddate		=	current_timestamp
 		where 
 			id	=	#{id}
