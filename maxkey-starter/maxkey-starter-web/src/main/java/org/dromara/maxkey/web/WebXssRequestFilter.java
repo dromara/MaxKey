@@ -20,7 +20,7 @@ package org.dromara.maxkey.web;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.concurrent.ConcurrentHashMap;
-
+import java.util.regex.Pattern;
 
 import org.apache.commons.text.StringEscapeUtils;
 import org.slf4j.Logger;
@@ -39,6 +39,11 @@ public class WebXssRequestFilter  extends GenericFilterBean {
 	
 	static final  ConcurrentHashMap <String,String> skipUrlMap = new  ConcurrentHashMap <>();
 	static final  ConcurrentHashMap <String,String> skipParameterName = new  ConcurrentHashMap <>();
+	
+	/**
+	 * 特殊字符 ' -- #
+	 */
+	public final static Pattern specialCharacterRegex = Pattern.compile(".*((\\%27)|(')|(\\')|(--)|(\\-\\-)|(\\%23)|(#)).*", Pattern.CASE_INSENSITIVE);
 	
 	static {
 		//add or update
@@ -95,12 +100,15 @@ public class WebXssRequestFilter  extends GenericFilterBean {
 		           * 
 		           * 以下符号过滤
 		           * ' 
+		           * --
+		           * #
+		           * 
 		           * script
 		           * eval
 		           * 
 		           */
 		          if(!StringEscapeUtils.escapeHtml4(tempValue).equals(value)
-		        		  ||lowerCaseTempValue.indexOf("'")>-1
+		        		  ||specialCharacterRegex.matcher(value).matches()
 		        		  ||lowerCaseTempValue.indexOf("script")>-1
 		        		  ||lowerCaseTempValue.replace(" ", "").indexOf("eval(")>-1) {
 		        	  isWebXss = true;
