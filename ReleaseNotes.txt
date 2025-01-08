@@ -1,4 +1,14 @@
-﻿MaxKey v 4.1.4 GA 2024/12/27
+﻿MaxKey v 4.1.5 GA 2025/01/10
+    *(MAXKEY-250101) 登录验证码配置优化，默认配置启用
+    *(MAXKEY-250102) SQL语法表达式增强
+    *(MAXKEY-250103) unlockdate 修改为 unlocktime
+    *(MAXKEY-250104) Xss 安全防护优化
+    *(MAXKEY-250105) #IBFGSI knife4j bug by zwj
+    *(MAXKEY-250106) 在线文档升级和优化
+    *(MAXKEY-250107) 依赖项引用、更新和升级
+            mybatis-jpa-extra		3.3.3
+
+MaxKey v 4.1.4 GA 2024/12/27
     *(MAXKEY-240801) 部署在线演示系统
     *(MAXKEY-240802) mysql数据库连接参数 serverTimezone=GMT+8
     *(MAXKEY-240803) map地图优化
