@@ -207,6 +207,7 @@ public final class WebContext {
     	_logger.info("getRequestURL : {} " , request.getRequestURL());
 		_logger.info("URL : {}" , request.getRequestURI().substring(request.getContextPath().length()));
     	_logger.info("getMethod : {} " , request.getMethod());
+    	_logger.info("Request IpAddress : {} " , getRequestIpAddress(request));
     	
         Enumeration<String> headerNames = request.getHeaderNames();
         while (headerNames.hasMoreElements()) {
