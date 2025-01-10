@@ -23,22 +23,22 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class LoginConfig {
     
-	@Value("${maxkey.login.captcha}")
+	@Value("${maxkey.login.captcha:true}")
     boolean captcha;
 	
-	@Value("${maxkey.login.captcha.type}")
+	@Value("${maxkey.login.captcha.type:TEXT}")
     String captchaType;
 	
-    @Value("${maxkey.login.mfa}")
+    @Value("${maxkey.login.mfa:false}")
     boolean mfa;
     
-    @Value("${maxkey.login.kerberos}")
+    @Value("${maxkey.login.kerberos:false}")
     boolean kerberos;
     
-    @Value("${maxkey.login.remeberme}")
+    @Value("${maxkey.login.remeberme:false}")
     boolean remeberMe;
     
-    @Value("${maxkey.login.wsfederation}")
+    @Value("${maxkey.login.wsfederation:false}")
     boolean wsFederation;
     
     @Value("${maxkey.login.cas.serverUrlPrefix:http://sso.maxkey.top/sign/authz/cas}")
