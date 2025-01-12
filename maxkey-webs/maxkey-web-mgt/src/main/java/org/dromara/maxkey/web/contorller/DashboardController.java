@@ -36,15 +36,15 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class DashboardController {
-	
 	private static Logger logger = LoggerFactory.getLogger(DashboardController.class);
+	
 	@Autowired
 	ReportService reportService;
 
 	@GetMapping(value={"/dashboard"})
 	public Message<?> dashboard(@CurrentUser UserInfo currentUser) {
 		logger.debug("dashboard . ");
-		HashMap<String,Object> reportParameter = new HashMap<String,Object>();
+		HashMap<String,Object> reportParameter = new HashMap<>();
 		reportParameter.put("instId", currentUser.getInstId());
 		
 		reportParameter.put("dayCount", reportService.analysisDay(reportParameter));
@@ -58,9 +58,12 @@ public class DashboardController {
 		
 		reportParameter.put("reportProvince", reportService.analysisProvince(reportParameter));
 		
+		reportParameter.put("reportCountry", reportService.analysisCountry(reportParameter));
+		
 		reportParameter.put("reportBrowser", reportService.analysisBrowser(reportParameter));
+		
 		reportParameter.put("reportApp", reportService.analysisApp(reportParameter));
-		return new Message<HashMap<?,?>>(reportParameter);
+		return new Message<>(reportParameter);
 	}
 
 }

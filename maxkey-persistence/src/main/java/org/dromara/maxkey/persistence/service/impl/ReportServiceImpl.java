@@ -86,4 +86,8 @@ public class ReportServiceImpl  extends JpaServiceImpl<ReportMapper,JpaEntity> i
 		return maps;
 	}
 	
+	public List<Map<String,Object>> analysisCountry(HashMap<String,Object> reportParameter){
+		return getMapper().analysisCountry(reportParameter);
+	}
+	
 }

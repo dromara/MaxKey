@@ -74,13 +74,16 @@
 			"monthAccessCount": "30日访问情况统计",
 			"monthAppCount": "30日TOP10应用访问统计",
 			"monthBrowserCount": "30日TOP10浏览器访问统计",
-			"monthProvinceAccessCount": "30日TOP10各省份访问统计",
+			"monthProvinceAccessCount": "30日TOP10访问统计",
 			"appName": "应用名称",
 			"browser": "浏览器",
 			"accessCount": "访问量",
+      "maptype.china":"中国地图",
+      "maptype.world":"世界地图",
 			"number": "序号",
-      		"province": "省份",
-      		"accessPV": "浏览量(PV)"
+      "country": "国家",
+      "province": "省份",
+      "accessPV": "浏览量(PV)"
 		},
 		"users": {
 			"tab.basic": "基本信息",
