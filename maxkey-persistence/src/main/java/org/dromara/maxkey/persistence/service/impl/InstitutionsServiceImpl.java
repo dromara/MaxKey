@@ -17,7 +17,6 @@
 
 package org.dromara.maxkey.persistence.service.impl;
 
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 import org.dromara.maxkey.entity.Institutions;
@@ -42,10 +41,6 @@ public class InstitutionsServiceImpl  extends JpaServiceImpl<InstitutionsMapper,
             Caffeine.newBuilder()
                 	.expireAfterWrite(60, TimeUnit.MINUTES)
                 	.build();
-
-    //id domain mapping
-    protected static final  ConcurrentHashMap<String,String> mapper = new ConcurrentHashMap<>();
-
     
 	 public Institutions findByDomain(String domain) {
 		 return getMapper().findByDomain(domain);
@@ -63,14 +58,14 @@ public class InstitutionsServiceImpl  extends JpaServiceImpl<InstitutionsMapper,
 
 	    private Institutions getByDomain(String instIdOrDomain) {
 	        _logger.trace(" instId {}" , instIdOrDomain);
-	        Institutions inst = institutionsStore.getIfPresent(mapper.get(instIdOrDomain)==null ? DEFAULT_INSTID : mapper.get(instIdOrDomain) );
+	        Institutions inst = institutionsStore.getIfPresent(instIdOrDomain);
 	        if(inst == null) {
 		        Institutions institution = findByDomain(instIdOrDomain);
 		        if(institution != null ) {
 		        	inst = institution;
 			        institutionsStore.put(inst.getDomain(), inst);
 			        institutionsStore.put(inst.getConsoleDomain(), inst);
-			        mapper.put(inst.getId(), inst.getDomain());
+			        institutionsStore.put(inst.getId(), inst);
 		        }
 	        }
 
