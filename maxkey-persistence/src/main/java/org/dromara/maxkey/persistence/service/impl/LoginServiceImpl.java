@@ -52,7 +52,7 @@ import org.springframework.stereotype.Repository;
 public class LoginServiceImpl  implements LoginService{
     private static final Logger _logger = LoggerFactory.getLogger(LoginServiceImpl.class);
 
-    private static final String LOGIN_USERINFO_UPDATE_STATEMENT = "update mxk_userinfo set lastlogintime = ?  , lastloginip = ? , logincount = ?, online = "
+    private static final String LOGIN_USERINFO_UPDATE_STATEMENT = "update mxk_userinfo set badpasswordcount = 0 , logincount = logincount + 1 , lastlogintime = ?  , lastloginip = ? , online = "
             + UserInfo.ONLINE.ONLINE + "  where id = ?";
 
     private static final String GROUPS_SELECT_STATEMENT = "select distinct g.id,g.groupcode,g.groupname from mxk_userinfo u,mxk_groups g,mxk_group_member gm where u.id = ?  and u.id=gm.memberid and gm.groupid=g.id ";
@@ -369,10 +369,9 @@ public class LoginServiceImpl  implements LoginService{
                 new Object[] {
                 				userInfo.getLastLoginTime(),
                 				userInfo.getLastLoginIp(),
-                				userInfo.getLoginCount() + 1,
                 				userInfo.getId()
                 			},
-                new int[] { Types.TIMESTAMP, Types.VARCHAR, Types.INTEGER, Types.VARCHAR });
+                new int[] { Types.TIMESTAMP, Types.VARCHAR, Types.VARCHAR });
     }
 
     public class UserInfoRowMapper implements RowMapper<UserInfo> {

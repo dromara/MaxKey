@@ -160,7 +160,9 @@ public abstract class AbstractAuthenticationRealm {
         }
         historyLoginService.login(historyLogin);
         
-        loginService.updateLastLogin(userInfo);
+        if(WebConstants.LOGIN_RESULT.SUCCESS.equalsIgnoreCase(message)) {
+        	loginService.updateLastLogin(userInfo);
+        }
 
         return true;
     }
