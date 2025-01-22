@@ -202,10 +202,9 @@ public class SessionManagerImpl implements SessionManager{
 
 	@Override
 	public void visited(String sessionId, VisitedDto visited) {
+        inMemorySessionManager.visited(sessionId,visited);
 		if(isRedis) {
 			redisSessionManager.visited(sessionId,visited);
-		}else {
-			inMemorySessionManager.visited(sessionId,visited);
 		}
 	}
 }
