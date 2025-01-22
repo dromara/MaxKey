@@ -34,6 +34,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -77,7 +78,7 @@ public class LoginSessionController {
         		);
     }
 
-    @GetMapping(value="/terminate")  
+    @DeleteMapping(value="/terminate")  
     public Message<HistoryLogin> terminate(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
         logger.debug("ids {}",ids);
         boolean isTerminated = false;
