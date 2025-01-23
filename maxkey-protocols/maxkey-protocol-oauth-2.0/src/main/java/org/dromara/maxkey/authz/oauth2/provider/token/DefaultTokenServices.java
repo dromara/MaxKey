@@ -91,6 +91,23 @@ public class DefaultTokenServices implements AuthorizationServerTokenServices, R
 		Assert.notNull(tokenStore, "tokenStore must be set");
 	}
 
+    private void saveVisited(OAuth2Authentication authentication, OAuth2AccessToken accessToken) {
+		//存储oauth、oidc等的token,用户退出时清除
+		if(authentication.getUserAuthentication().getPrincipal() instanceof SignPrincipal principal) {
+			_logger.debug("{}({}) , session {} access for logout clear ",
+					principal.getUsername(),principal.getUserId(),principal.getSessionId());
+			String clientId = authentication.getOAuth2Request().getRequestParameters().get(OAuth2Constants.PARAMETER.CLIENT_ID);
+			_logger.debug("client_id {} token {}",clientId, accessToken);
+			Apps app = appsService.get(clientId, true);
+			VisitedDto visited = new VisitedDto(app,principal.getSessionId());
+			visited.setToken(accessToken.getValue());
+			if (Objects.nonNull(accessToken.getRefreshToken())) {
+				visited.setRefreshToken(accessToken.getRefreshToken().getValue());
+			}
+			sessionManager.visited(principal.getSessionId(), visited);
+		}
+	}
+
 	@Transactional
 	public OAuth2AccessToken createAccessToken(OAuth2Authentication authentication) throws AuthenticationException {
 
@@ -110,6 +127,7 @@ public class DefaultTokenServices implements AuthorizationServerTokenServices, R
 			else {
 				// Re-store the access token in case the authentication has changed
 				tokenStore.storeAccessToken(existingAccessToken, authentication);
+                saveVisited(authentication, existingAccessToken);
 				return enhancerToken(existingAccessToken, authentication);
 			}
 		}
@@ -138,21 +156,7 @@ public class DefaultTokenServices implements AuthorizationServerTokenServices, R
 		if (refreshToken != null) {
 			tokenStore.storeRefreshToken(refreshToken, authentication);
 		}
-		//存储oauth、oidc等的token,用户退出时清除
-		if(authentication.getUserAuthentication().getPrincipal() instanceof SignPrincipal principal) {
-			_logger.debug("{}({}) , session {} access for logout clear ",
-					principal.getUsername(),principal.getUserId(),principal.getSessionId());
-			String clientId = authentication.getOAuth2Request().getRequestParameters().get(OAuth2Constants.PARAMETER.CLIENT_ID);
-			_logger.debug("client_id {} token {}",clientId,accessToken);
-			Apps app = appsService.get(clientId, true);
-			VisitedDto visited = new VisitedDto(app,principal.getSessionId());
-			visited.setToken(accessToken.getValue());
-			//TODO: RefreshToken null 
-			if (refreshToken != null) {
-				visited.setRefreshToken(accessToken.getRefreshToken().getValue());
-			}
-			sessionManager.visited(principal.getSessionId(), visited);
-		}
+		saveVisited(authentication, accessToken);
 		return accessToken;
 
 	}
