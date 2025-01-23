@@ -204,9 +204,9 @@ public class MvcAutoConfiguration implements WebMvcConfigurer {
         // https://github.com/springdoc/springdoc-openapi/issues/2143
         // 解决方案
         httpMessageConverterList.add(new ByteArrayHttpMessageConverter());
+        httpMessageConverterList.add(stringHttpMessageConverter);
         httpMessageConverterList.add(mappingJacksonHttpMessageConverter);
         httpMessageConverterList.add(marshallingHttpMessageConverter);
-        httpMessageConverterList.add(stringHttpMessageConverter);
         _logger.debug("stringHttpMessageConverter {}",stringHttpMessageConverter.getDefaultCharset());   
         
         requestMappingHandlerAdapter.setMessageConverters(httpMessageConverterList);
