@@ -14,6 +14,7 @@
 package org.dromara.maxkey.authz.oauth2.provider.token;
 
 import java.util.Date;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
