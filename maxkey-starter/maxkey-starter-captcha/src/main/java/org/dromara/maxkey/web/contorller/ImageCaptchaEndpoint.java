@@ -65,6 +65,8 @@ public class ImageCaptchaEndpoint {
             String kaptchaText = captchaProducer.createText();
             String kaptchaValue = kaptchaText;
             if (captchaType.equalsIgnoreCase("Arithmetic")) {
+            	//去除0，增加计算复杂度
+            	kaptchaText = kaptchaText.replace("0", "");
                 Integer minuend = Integer.valueOf(kaptchaText.substring(0, 1));
                 Integer subtrahend = Integer.valueOf(kaptchaText.substring(1, 2));
                 if (minuend - subtrahend > 0) {
