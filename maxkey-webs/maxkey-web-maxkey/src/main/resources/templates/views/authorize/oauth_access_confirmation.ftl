@@ -3,7 +3,7 @@
 <head>
 	<#include  "authorize_common.ftl">
 	<script type="text/javascript">
-	   window.top.location.href = "${model.authorizeApproveUri}?oauth_approval=${model.oauth_approval}&clientId=${model.client.clientId!}";
+	   self.location.href = "${model.authorizeApproveUri}?oauth_approval=${model.oauth_approval}&clientId=${model.client.clientId!}";
 	</script>
 </head>
 
