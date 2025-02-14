@@ -27,7 +27,7 @@ export const environment = {
   production: false,
   useHash: true,
   api: {
-    baseUrl: 'http://mgt.maxkey.top/maxkey-mgt-api',
+    baseUrl: 'http://localhost:9526/maxkey-mgt-api',
     refreshTokenEnabled: true,
     refreshTokenType: 're-request'
   },
