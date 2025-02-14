@@ -67,7 +67,13 @@ import { LayoutDefaultOptions } from '../../theme/layout-default';
           </div>
         </a>
       </layout-default-header-item>
-
+      <layout-default-header-item direction="right" hidden="mobile">
+        <div layout-default-header-item-trigger>
+          <a href="https://www.maxkey.top/zh/about/download.html" target="_blank" style="color: black;">
+            <i nz-icon nzType="github" nzTheme="outline"></i>
+          </a>
+        </div>
+      </layout-default-header-item>
       <layout-default-header-item direction="right" hidden="mobile">
         <div layout-default-header-item-trigger>
           <header-i18n></header-i18n>
