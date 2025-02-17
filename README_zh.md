@@ -132,7 +132,7 @@ MaxKey <b>遵循 Apache License, Version 2.0 开源免费</b>，开源、安全�
 
 | 版本       | 日期    |  下载              | 
 | --------   | :-----  | :----              | 
-| v 4.1.5   | 2024/01/09   | <a href="https://www.maxkey.top/zh/about/download.html" target="_blank">下载</a>|
+| v 4.1.6   | 2024/02/20   | <a href="https://www.maxkey.top/zh/about/download.html" target="_blank">下载</a>|
  
  
 # 安装部署
