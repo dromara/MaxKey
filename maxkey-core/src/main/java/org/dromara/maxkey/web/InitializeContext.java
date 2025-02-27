@@ -142,12 +142,12 @@ public class InitializeContext extends HttpServlet {
      */
     public void showLicense() {
         logger.info(WebConstants.DELIMITER);
-        logger.info("+                      MaxKey Community  Edition ");
-        logger.info("+                      Single   Sign  On ( SSO ) ");
-        logger.info("+                           Version {}", 
+        logger.info("                      MaxKey Community  Edition ");
+        logger.info("                      Single   Sign  On ( SSO ) ");
+        logger.info("                           Version {}", 
                         WebContext.properties.getProperty("application.formatted-version"));
-        logger.info("+");
-        logger.info("+                 {}Copyright 2018 - {} https://www.maxkey.top/",
+        logger.info("");
+        logger.info("                 {}Copyright 2018 - {} https://www.maxkey.top/",
         			    (char)0xA9 , new DateTime().getYear()
         			);
         logger.info("+                 Licensed under the Apache License, Version 2.0 ");
