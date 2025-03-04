@@ -119,11 +119,13 @@ public class InMemorySessionManager implements SessionManager{
 	@Override
 	public void visited(String sessionId, VisitedDto visited) {
 		Session session  = this.get(sessionId);
-	    //set token or ticket to Visited , bind user session
-		session.visited(visited);
-		//override the session
-	    this.create(sessionId, session);
-	    _logger.debug("session {} store visited  {} ." , sessionId , visited);
+		if(session != null) {
+		    //set token or ticket to Visited , bind user session
+			session.visited(visited);
+			//override the session
+		    this.create(sessionId, session);
+		    _logger.debug("session {} store visited  {} ." , sessionId , visited);
+		}
 	}
 
 }
