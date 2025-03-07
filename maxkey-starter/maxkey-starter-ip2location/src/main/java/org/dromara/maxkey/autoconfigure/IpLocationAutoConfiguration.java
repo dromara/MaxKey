@@ -21,7 +21,6 @@ import org.dromara.maxkey.ip2location.IpLocation;
 import org.dromara.maxkey.ip2location.IpLocationParser;
 import org.dromara.maxkey.ip2location.offline.GeoIP2V4;
 import org.dromara.maxkey.ip2location.offline.Ip2regionV2;
-import org.dromara.maxkey.ip2location.online.Ip138;
 import org.lionsoul.ip2region.xdb.Searcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -94,23 +93,7 @@ public class IpLocationAutoConfiguration {
 		return ipLocationOffLine;
 	}
 	
-	/**
-	 * builder Online Provider IpLocation
-	 * @param onlineProvider
-	 * @return IpLocation
-	 */
-	public IpLocation builderOnlineProvider(String onlineProvider) {
-		//need on line provider
-		IpLocation ipLocationOnLine = null;
-		if(onlineProvider.equalsIgnoreCase("none")) {
-			//do nothing
-			_logger.debug("IpLocation online Provider none");
-		}else if(onlineProvider.equalsIgnoreCase("Ip138")){
-			ipLocationOnLine = new Ip138();
-			_logger.debug("IpLocation online Provider Ip138");
-		}
-		return ipLocationOnLine;
-	}
+
 	
 	/**
 	 * IP转换区域地址解析
@@ -127,7 +110,7 @@ public class IpLocationAutoConfiguration {
 			@Value("${maxkey.login.iplocation.offline.provider:Ip2Region}") String offlineProvider) throws Exception {
         return new IpLocationParser(
         		isIplocation,
-				builderOnlineProvider(onlineProvider),
+				null,
 				builderOfflineProvider(offlineProvider)
 		);
 	}
