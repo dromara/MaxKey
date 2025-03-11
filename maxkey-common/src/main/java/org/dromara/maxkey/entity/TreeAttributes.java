@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.dromara.maxkey.web.component;
+package org.dromara.maxkey.entity;
 
 import java.util.ArrayList;
 

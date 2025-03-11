@@ -17,8 +17,6 @@
 
 package org.dromara.maxkey.web.interceptor;
 
-import java.util.concurrent.ConcurrentHashMap;
-
 import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.authn.web.AuthorizationUtils;
 import org.dromara.maxkey.authz.oauth2.provider.OAuth2Authentication;
@@ -52,8 +50,6 @@ public class RestApiPermissionAdapter  implements AsyncHandlerInterceptor  {
 
 	@Autowired
 	ProviderManager oauth20ClientAuthenticationManager;
-	
-	static  ConcurrentHashMap<String ,String >navigationsMap=null;
 	
 	/*
 	 * 请求前处理

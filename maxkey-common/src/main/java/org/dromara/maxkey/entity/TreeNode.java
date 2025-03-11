@@ -15,7 +15,7 @@
  */
  
 
-package org.dromara.maxkey.web.component;
+package org.dromara.maxkey.entity;
 
 /**
  * 数控件的节点 使用HashMap<String,Object> attr存储节点数据.
