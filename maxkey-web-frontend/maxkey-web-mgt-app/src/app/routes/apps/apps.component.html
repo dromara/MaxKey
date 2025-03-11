@@ -34,7 +34,7 @@
       </div>
       <div nz-col [nzSpan]="query.expandForm ? 24 : 4" [class.text-right]="query.expandForm">
         <nz-form-item>
-          <button nz-button type="submit" [nzType]="'primary'" [nzLoading]="query.submitLoading">{{ 'mxk.text.query' |
+          <button nz-button type="submit" [nzType]="'primary'" >{{ 'mxk.text.query' |
             i18n }}</button>
           <button nz-button type="reset" (click)="onReset()" class="mx-sm" style="display: none">{{ 'mxk.text.reset' |
             i18n }}</button>

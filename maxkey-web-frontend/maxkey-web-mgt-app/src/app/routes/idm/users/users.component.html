@@ -7,18 +7,23 @@
         <nz-form-item>
           <nz-form-label nzFor="name">{{ 'mxk.users.username' | i18n }}</nz-form-label>
           <nz-form-control>
-            <input nz-input [(ngModel)]="query.params.username" [ngModelOptions]="{ standalone: true }" name="username"
-              placeholder="" id="username" />
+            <input
+              nz-input
+              [(ngModel)]="query.params.username"
+              [ngModelOptions]="{ standalone: true }"
+              name="username"
+              placeholder=""
+              id="username"
+            />
           </nz-form-control>
         </nz-form-item>
       </div>
       <div nz-col [nzSpan]="query.expandForm ? 24 : 8" [class.text-right]="query.expandForm">
-        <button nz-button type="submit" [nzType]="'primary'" [nzLoading]="query.submitLoading">{{ 'mxk.text.query' |
-          i18n }}</button>
-        <button nz-button type="reset" (click)="onReset()" class="mx-sm" style="display: none">{{ 'mxk.text.reset' |
-          i18n }}</button>
+        <button nz-button type="submit" [nzType]="'primary'">{{ 'mxk.text.query' | i18n }}</button>
+        <button nz-button type="reset" (click)="onReset()" class="mx-sm" style="display: none">{{ 'mxk.text.reset' | i18n }}</button>
         <button nz-button (click)="query.expandForm = !query.expandForm" class="mx-sm" style="display: none">
-          {{ query.expandForm ? ('mxk.text.collapse' | i18n) : ('mxk.text.expand' | i18n) }}</button>
+          {{ query.expandForm ? ('mxk.text.collapse' | i18n) : ('mxk.text.expand' | i18n) }}</button
+        >
       </div>
     </div>
   </form>
@@ -32,16 +37,32 @@
       <button nz-button type="button" [nzType]="'primary'" (click)="changePassword($event)">
         {{ 'mxk.text.changepassword' | i18n }}
       </button>
-      <button nz-button type="button" nz-popconfirm nzPopconfirmTitle="{{ 'mxk.text.delete.popconfirm.title' | i18n }}"
-        nzPopconfirmPlacement="left" [nzCancelText]="'mxk.text.delete.popconfirm.cancelText' | i18n"
-        [nzOkText]="'mxk.text.delete.popconfirm.okText' | i18n" (nzOnConfirm)="onBatchDelete()" [nzType]="'primary'"
-        nzDanger class="mx-sm">
+      <button
+        nz-button
+        type="button"
+        nz-popconfirm
+        nzPopconfirmTitle="{{ 'mxk.text.delete.popconfirm.title' | i18n }}"
+        nzPopconfirmPlacement="left"
+        [nzCancelText]="'mxk.text.delete.popconfirm.cancelText' | i18n"
+        [nzOkText]="'mxk.text.delete.popconfirm.okText' | i18n"
+        (nzOnConfirm)="onBatchDelete()"
+        [nzType]="'primary'"
+        nzDanger
+        class="mx-sm"
+      >
         {{ 'mxk.text.batchDelete' | i18n }}
       </button>
     </div>
     <div nz-col [nzSpan]="6" class="grid-border">
-      <nz-tree nzShowLine="false" [nzCheckable]="treeNodes.checkable" nzBlockNode [nzData]="treeNodes.nodes"
-        (nzClick)="activeNode($event)" (nzDblClick)="openFolder($event)" [nzTreeTemplate]="nzTreeTemplate"></nz-tree>
+      <nz-tree
+        nzShowLine="false"
+        [nzCheckable]="treeNodes.checkable"
+        nzBlockNode
+        [nzData]="treeNodes.nodes"
+        (nzClick)="activeNode($event)"
+        (nzDblClick)="openFolder($event)"
+        [nzTreeTemplate]="nzTreeTemplate"
+      ></nz-tree>
       <ng-template #nzTreeTemplate let-node let-origin="origin">
         <span class="custom-node">
           <span *ngIf="!node.isLeaf" (contextmenu)="contextMenu($event, menu)">
@@ -62,15 +83,26 @@
       </nz-dropdown-menu>
     </div>
     <div nz-col nzMd="18" nzSm="24" class="grid-border">
-      <nz-table #dynamicTable nzTableLayout="auto" nzSize="small" nzBordered sizeChanger="true" nzShowSizeChanger
-        [nzData]="query.results.rows" [nzFrontPagination]="false" [nzTotal]="query.results.records"
-        [nzPageSizeOptions]="query.params.pageSizeOptions" [nzPageSize]="query.params.pageSize"
-        [nzPageIndex]="query.params.pageNumber" [nzLoading]="this.query.tableLoading"
-        (nzQueryParams)="onQueryParamsChange($event)" nzWidth="100%">
+      <nz-table
+        #dynamicTable
+        nzTableLayout="auto"
+        nzSize="small"
+        nzBordered
+        sizeChanger="true"
+        nzShowSizeChanger
+        [nzData]="query.results.rows"
+        [nzFrontPagination]="false"
+        [nzTotal]="query.results.records"
+        [nzPageSizeOptions]="query.params.pageSizeOptions"
+        [nzPageSize]="query.params.pageSize"
+        [nzPageIndex]="query.params.pageNumber"
+        [nzLoading]="this.query.tableLoading"
+        (nzQueryParams)="onQueryParamsChange($event)"
+        nzWidth="100%"
+      >
         <thead>
           <tr>
-            <th [nzChecked]="query.checked" [nzIndeterminate]="query.indeterminate"
-              (nzCheckedChange)="onTableAllChecked($event)"></th>
+            <th [nzChecked]="query.checked" [nzIndeterminate]="query.indeterminate" (nzCheckedChange)="onTableAllChecked($event)"></th>
             <th nzAlign="center" style="display: none">{{ 'mxk.text.id' | i18n }}</th>
             <th nzAlign="center">{{ 'mxk.users.username' | i18n }}</th>
             <th nzAlign="center">{{ 'mxk.users.displayName' | i18n }}</th>
@@ -84,8 +116,11 @@
         </thead>
         <tbody>
           <tr *ngFor="let data of query.results.rows">
-            <td [nzChecked]="query.tableCheckedId.has(data.id)" [nzDisabled]="data.disabled"
-              (nzCheckedChange)="onTableItemChecked(data.id, $event)"></td>
+            <td
+              [nzChecked]="query.tableCheckedId.has(data.id)"
+              [nzDisabled]="data.disabled"
+              (nzCheckedChange)="onTableItemChecked(data.id, $event)"
+            ></td>
             <td nzAlign="left" style="display: none">
               <span>{{ data.id }}</span>
             </td>
@@ -94,8 +129,7 @@
             <td nzAlign="left"> {{ data.employeeNumber }}</td>
             <td nzAlign="left"> {{ data.department }}</td>
             <td nzAlign="left"> {{ data.jobTitle }}</td>
-            <td nzAlign="center"> {{ data.gender == 1 ? ('mxk.users.gender.female' | i18n) : ('mxk.users.gender.male' |
-              i18n) }}</td>
+            <td nzAlign="center"> {{ data.gender == 1 ? ('mxk.users.gender.female' | i18n) : ('mxk.users.gender.male' | i18n) }}</td>
             <td nzAlign="center">
               <a title="{{ 'mxk.users.status.active' | i18n }}" *ngIf="data.status == 1">
                 <i nz-icon nzType="check-circle" nzTheme="fill" style="color: green"> </i>
@@ -128,31 +162,36 @@
                 </button>
                 <nz-dropdown-menu #menuMoreAction="nzDropdownMenu">
                   <ul nz-menu>
-                    <li nz-menu-item *ngIf="data.status == 1"
-                      (click)="onNavToUrl($event, data.id, data.username, 'groups')">{{
+                    <li nz-menu-item *ngIf="data.status == 1" (click)="onNavToUrl($event, data.id, data.username, 'groups')">{{
                       'mxk.text.groups' | i18n
-                      }}</li>
+                    }}</li>
                     <li nz-menu-item *ngIf="data.status == 1" (click)="changePasswordById($event, data.id)">{{
                       'mxk.text.changepassword' | i18n
-                      }}</li>
-                    <li nz-menu-item *ngIf="data.status == 1" (click)="onUpdateStatus($event, data.id, 5)">{{
-                      'mxk.text.lock' | i18n }}</li>
+                    }}</li>
+                    <li nz-menu-item *ngIf="data.status == 1" (click)="onUpdateStatus($event, data.id, 5)">{{ 'mxk.text.lock' | i18n }}</li>
                     <li nz-menu-item *ngIf="data.status == 1" (click)="onUpdateStatus($event, data.id, 4)">{{
                       'mxk.text.disable' | i18n
-                      }}</li>
+                    }}</li>
                     <li nz-menu-item *ngIf="data.status == 2" (click)="onUpdateStatus($event, data.id, 1)">{{
                       'mxk.text.enable' | i18n
-                      }}</li>
+                    }}</li>
                     <li nz-menu-item *ngIf="data.status == 4" (click)="onUpdateStatus($event, data.id, 1)">{{
                       'mxk.text.enable' | i18n
-                      }}</li>
+                    }}</li>
                     <li nz-menu-item *ngIf="data.status == 5" (click)="onUpdateStatus($event, data.id, 1)">{{
                       'mxk.text.unlock' | i18n
-                      }}</li>
-                    <li nz-menu-item nz-popconfirm nzPopconfirmTitle="{{ 'mxk.text.delete.popconfirm.title' | i18n }}"
-                      nzPopconfirmPlacement="left" [nzCancelText]="'mxk.text.delete.popconfirm.cancelText' | i18n"
-                      [nzOkText]="'mxk.text.delete.popconfirm.okText' | i18n" (nzOnConfirm)="onDelete(data.id)"
-                      nzDanger>{{ 'mxk.text.delete' | i18n }}</li>
+                    }}</li>
+                    <li
+                      nz-menu-item
+                      nz-popconfirm
+                      nzPopconfirmTitle="{{ 'mxk.text.delete.popconfirm.title' | i18n }}"
+                      nzPopconfirmPlacement="left"
+                      [nzCancelText]="'mxk.text.delete.popconfirm.cancelText' | i18n"
+                      [nzOkText]="'mxk.text.delete.popconfirm.okText' | i18n"
+                      (nzOnConfirm)="onDelete(data.id)"
+                      nzDanger
+                      >{{ 'mxk.text.delete' | i18n }}</li
+                    >
                   </ul>
                 </nz-dropdown-menu>
               </div>

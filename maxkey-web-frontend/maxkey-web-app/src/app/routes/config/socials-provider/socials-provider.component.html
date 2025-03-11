@@ -20,7 +20,7 @@
       </div>
 
       <div nz-col [nzSpan]="query.expandForm ? 24 : 8" [class.text-right]="query.expandForm">
-        <button nz-button type="submit" [nzType]="'primary'" [nzLoading]="query.submitLoading">{{ 'mxk.text.query' | i18n }}</button>
+        <button nz-button type="submit" [nzType]="'primary'" >{{ 'mxk.text.query' | i18n }}</button>
         <button nz-button type="reset" (click)="onReset()" class="mx-sm" style="display: none">{{ 'mxk.text.reset' | i18n }}</button>
         <button nz-button (click)="query.expandForm = !query.expandForm" class="mx-sm" style="display: none">
           {{ query.expandForm ? ('mxk.text.collapse' | i18n) : ('mxk.text.expand' | i18n) }}</button
