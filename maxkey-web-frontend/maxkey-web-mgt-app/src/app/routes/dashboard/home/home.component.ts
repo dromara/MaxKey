@@ -111,11 +111,12 @@ export class HomeComponent implements OnInit {
 
       const beginDay = new Date().getTime();
       const fakeY = [7, 5, 4, 2, 4, 7, 5, 6, 5, 9, 6, 3, 1, 5, 3, 6, 5];
+      this.simulateData = [fakeY.length];
       for (let i = 0; i < fakeY.length; i += 1) {
-        this.simulateData.push({
+        this.simulateData[i] = {
           x: format(new Date(beginDay + 1000 * 60 * 60 * 24 * i), 'yyyy-MM-dd'),
           y: fakeY[i]
-        });
+        };
       }
       this.dayData = [];
       for (let i = 0; i < res.data.reportDayHour.length; i += 1) {
