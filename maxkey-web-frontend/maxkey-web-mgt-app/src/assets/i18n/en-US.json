@@ -79,10 +79,10 @@
 			"appName": "App",
 			"browser": "Browser",
 			"accessCount": "Count",
-      "maptype.china":"China",
-      "maptype.world":"World",
+			"maptype.china":"China",
+			"maptype.world":"World",
 			"number": "Number",
-      "country": "Country",
+     	 	"country": "Country",
 			"province": "Province",
 			"accessPV": "Access(PV)"
 		},

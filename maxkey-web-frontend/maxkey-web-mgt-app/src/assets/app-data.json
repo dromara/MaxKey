@@ -196,7 +196,7 @@
               "children": []
             },
             {
-              "text": "应用登录日志",
+              "text": "访问日志",
               "i18n": "mxk.menu.audit.loginapps",
               "link": "/audit/audit-login-apps",
               "icon": "anticon-audit",
@@ -217,7 +217,7 @@
               "children": []
             },
             {
-              "text": "管理日志",
+              "text": "系统日志",
               "i18n": "mxk.menu.audit.operate",
               "link": "/audit/audit-system-logs",
               "icon": "anticon-audit",

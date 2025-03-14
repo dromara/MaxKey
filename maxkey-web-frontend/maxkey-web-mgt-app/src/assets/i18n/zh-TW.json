@@ -59,11 +59,11 @@
 			},
 			"audit": {
 				"": "日誌審計",
-				"logins": "系統登錄日誌",
-				"loginapps": "應用訪問日誌",
+				"logins": "登錄日誌",
+				"loginapps": "訪問日誌",
 				"synchronizer": "同步器日誌",
 				"connector": "連接器日誌",
-				"operate": "系統管理日誌"
+				"operate": "系統日誌"
 			}
 		},
 		"home": {
@@ -79,10 +79,10 @@
 			"appName": "應用名稱",
 			"browser": "瀏覽器",
 			"accessCount": "訪問量",
-      "maptype.china":"中国地图",
-      "maptype.world":"世界地图",
+			"maptype.china":"中国地图",
+			"maptype.world":"世界地图",
 			"number": "序號",
-      "country": "国家",
+      		"country": "国家",
 			"province": "省份",
 			"accessPV": "瀏覽量(PV)"
 		},

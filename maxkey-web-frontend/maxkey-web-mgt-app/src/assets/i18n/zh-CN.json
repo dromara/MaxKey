@@ -58,11 +58,11 @@
 			},
 			"audit": {
 				"": "日志审计",
-				"logins": "系统登录日志",
-				"loginapps": "应用访问日志",
+				"logins": "登录日志",
+				"loginapps": "访问日志",
 				"synchronizer": "同步器日志",
 				"connector": "连接器日志",
-				"operate": "系统管理日志"
+				"operate": "系统日志"
 			}
 		},
 		"home": {
@@ -78,12 +78,12 @@
 			"appName": "应用名称",
 			"browser": "浏览器",
 			"accessCount": "访问量",
-      "maptype.china":"中国地图",
-      "maptype.world":"世界地图",
+			"maptype.china":"中国地图",
+			"maptype.world":"世界地图",
 			"number": "序号",
-      "country": "国家",
-      "province": "省份",
-      "accessPV": "浏览量(PV)"
+			"country": "国家",
+			"province": "省份",
+			"accessPV": "浏览量(PV)"
 		},
 		"users": {
 			"tab.basic": "基本信息",
