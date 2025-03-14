@@ -85,11 +85,11 @@ public class HistoryLogin  extends JpaEntity  implements Serializable{
 	@Column
 	Date logoutTime;
 	@Column
+	int sessionStatus;
+	@Column
 	private String instId;
 
 	private String instName;
-	
-	int sessionStatus;
 	
 	String startDate;
 	String endDate;
