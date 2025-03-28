@@ -130,6 +130,15 @@ export class UserEditerComponent implements OnInit {
       }
     }
   }
+
+  onPassword(e: MouseEvent): void {
+    e.preventDefault();
+    this.usersService.generatePassword({}).subscribe(res => {
+      this.form.model.password = res.data;
+      this.cdr.detectChanges();
+    });
+  }
+
   onDeptChange(key: string): void {
     let node = this.orgTree.getTreeNodeByKey(key);
     if (node) {
