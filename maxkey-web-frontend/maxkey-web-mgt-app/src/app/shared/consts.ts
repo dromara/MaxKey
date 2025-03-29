@@ -16,7 +16,7 @@
 
 export const CONSTS = {
   CONGRESS: 'congress',
-  INST: 'inst',
+  INST: 'inst_mgt',
   REDIRECT_URI: 'redirect_uri',
   REMEMBER: 'remember',
   VERSION: 'v4.1.7 GA'
