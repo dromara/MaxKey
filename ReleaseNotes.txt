@@ -1,4 +1,29 @@
-﻿MaxKey v 4.1.6 GA 2025/02/20
+﻿MaxKey v 4.1.7 GA 2025/04/01
+    *(MAXKEY-250301) #IBQEYU 使用 AccessToken 验证身份报错session is null
+    *(MAXKEY-250302) org.dromara.maxkey.web.component to org.dromara.maxkey.entity
+    *(MAXKEY-250303) remove query submitLoading
+    *(MAXKEY-250304) 编译后可能导致图无法显示问题
+    *(MAXKEY-250305) sessionStatus优化
+    *(MAXKEY-250306) 菜单名称优化
+    *(MAXKEY-250307) 新增用户密码生成功能
+    *(MAXKEY-250308) 管理端前端存储INST值改为inst_mgt
+    *(MAXKEY-250309) 代码优化
+    *(MAXKEY-250310) 依赖项引用、更新和升级
+            springVersion                 6.2.5
+            springBootVersion             3.4.4
+            springSecurityVersion         6.4.4
+            springDataVersion             3.4.4
+            springkafkaVersion            3.3.4
+            tomcatVersion                 10.1.39
+            slf4jVersion                  2.0.17
+            jacksonVersion                2.18.3
+            druidVersion                  1.2.24
+            druidspringbootstarterVersion 1.2.24
+            mybatisVersion                3.5.19
+            mybatisspringVersion          3.0.4
+            mybatis-jpa-extra             3.3.5
+            
+MaxKey v 4.1.6 GA 2025/02/20
     *(MAXKEY-250201) 无效请求地址全局优化
     *(MAXKEY-250202) loginConfig,captchaType属性补写,修复openApi运行失败问题 by zhangzhongjie
     *(MAXKEY-250203) #IBGVOI LoginConfig 设置默认值
