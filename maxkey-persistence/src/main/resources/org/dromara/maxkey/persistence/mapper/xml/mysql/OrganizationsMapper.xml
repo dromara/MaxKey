@@ -36,7 +36,7 @@
     	from mxk_organizations 
     	where	instid   =   #{instId} 
     	<include refid="dao_where_statement"/>
-    	order by sortindex,id
+    	order by status,sortindex,id
     </select>
   
     <update id="logisticDelete" parameterType="Organizations" >
