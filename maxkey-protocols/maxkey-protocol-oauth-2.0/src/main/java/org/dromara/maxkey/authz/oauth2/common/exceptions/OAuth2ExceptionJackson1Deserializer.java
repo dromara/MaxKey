@@ -43,7 +43,7 @@ public class OAuth2ExceptionJackson1Deserializer extends JsonDeserializer<OAuth2
 		Map<String, Object> errorParams = new HashMap<String, Object>();
 		for (; t == JsonToken.FIELD_NAME; t = jp.nextToken()) {
 			// Must point to field name
-			String fieldName = jp.getCurrentName();
+			String fieldName = jp.currentName();
 			// And then the value...
 			t = jp.nextToken();
 			// Note: must handle null explicitly here; value deserializers won't

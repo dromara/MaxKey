@@ -16,7 +16,6 @@ package org.dromara.maxkey.crypto.jose.keystore;
  * limitations under the License.
  ******************************************************************************/
 
-import com.google.common.base.Charsets;
 import com.google.common.io.CharStreams;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.jwk.JWK;
@@ -25,6 +24,7 @@ import com.nimbusds.jose.jwk.RSAKey;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.security.PublicKey;
 import java.text.ParseException;
 import java.util.List;
@@ -77,7 +77,7 @@ public class JWKSetKeyStore {
                         _logger.debug("JWK location " + location.getURL());
                         // read in the file from disk
                         String s = CharStreams
-                                .toString(new InputStreamReader(location.getInputStream(), Charsets.UTF_8));
+                                .toString(new InputStreamReader(location.getInputStream(), StandardCharsets.UTF_8));
 
                         // parse it into a jwkSet object
                         jwkSet = JWKSet.parse(s);

@@ -117,7 +117,7 @@ class JwtHeaderHelper {
 			String alg = null, enc = null, iv = null;
 			jp.nextToken();
 			while (jp.nextToken() != JsonToken.END_OBJECT) {
-				String fieldname = jp.getCurrentName();
+				String fieldname = jp.currentName();
 				jp.nextToken();
 				if (!JsonToken.VALUE_STRING.equals(jp.getCurrentToken())) {
 					throw new IllegalArgumentException("Header fields must be strings");

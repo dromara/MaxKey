@@ -62,7 +62,7 @@ public final class OAuth2AccessTokenJackson2Deserializer extends StdDeserializer
 
 		// What should occur if a parameter exists twice
 		while (jp.nextToken() != JsonToken.END_OBJECT) {
-			String name = jp.getCurrentName();
+			String name = jp.currentName();
 			jp.nextToken();
 			if (OAuth2AccessToken.ACCESS_TOKEN.equals(name)) {
 				tokenValue = jp.getText();

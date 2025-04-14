@@ -18,7 +18,6 @@
 package org.dromara.maxkey.authn.provider.scancode;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.dromara.maxkey.authn.session.Session;
 
 /**
  * @description:

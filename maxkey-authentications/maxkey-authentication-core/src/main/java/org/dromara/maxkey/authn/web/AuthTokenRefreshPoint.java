@@ -17,7 +17,6 @@
 
 package org.dromara.maxkey.authn.web;
 
-import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.authn.jwt.AuthJwt;
 import org.dromara.maxkey.authn.jwt.AuthRefreshTokenService;
 import org.dromara.maxkey.authn.jwt.AuthTokenService;

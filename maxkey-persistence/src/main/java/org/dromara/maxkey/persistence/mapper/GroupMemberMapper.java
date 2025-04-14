@@ -25,8 +25,6 @@ import java.util.List;
 import org.dromara.maxkey.entity.idm.GroupMember;
 import org.dromara.maxkey.entity.idm.Groups;
 import org.dromara.maxkey.entity.idm.UserInfo;
-import org.dromara.maxkey.entity.permissions.RoleMember;
-import org.dromara.maxkey.entity.permissions.Roles;
 import org.dromara.mybatis.jpa.IJpaMapper;
 
 /**

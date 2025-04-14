@@ -25,7 +25,6 @@ import java.lang.reflect.InvocationTargetException;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.authn.SignPrincipal;
-import org.dromara.maxkey.authz.cas.endpoint.adapter.CasPlainAdapter;
 import org.dromara.maxkey.authz.cas.endpoint.response.ProxyServiceResponseBuilder;
 import org.dromara.maxkey.authz.cas.endpoint.response.ServiceResponseBuilder;
 import org.dromara.maxkey.authz.cas.endpoint.ticket.CasConstants;
