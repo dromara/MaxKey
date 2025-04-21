@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 import org.dromara.maxkey.authn.listener.SessionListenerAdapter;
 import org.dromara.maxkey.authn.realm.jdbc.JdbcAuthenticationRealm;
 import org.dromara.maxkey.authn.realm.ldap.LdapAuthenticationRealmService;
-import org.dromara.maxkey.authn.session.Session.CATEGORY;
+import org.dromara.maxkey.authn.session.SessionCategory;
 import org.dromara.maxkey.authn.session.SessionManager;
 import org.dromara.maxkey.authn.support.kerberos.KerberosProxy;
 import org.dromara.maxkey.authn.support.kerberos.RemoteKerberosService;
@@ -212,7 +212,7 @@ public class MaxKeyConfig  {
 	    		.setCron("0 0/10 * * * ?")
 	    		.setJobClass(SessionListenerAdapter.class)
 	    		.setJobData("sessionManager",sessionManager)
-	    		.setJobData("category", CATEGORY.SIGN)
+	    		.setJobData("category", SessionCategory.SIGN)
 	    		.build();
 	        logger.debug("Session ListenerAdapter inited .");
     	}

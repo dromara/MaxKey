@@ -18,7 +18,7 @@
 package org.dromara.maxkey.autoconfigure;
 
 import org.dromara.maxkey.authn.listener.SessionListenerAdapter;
-import org.dromara.maxkey.authn.session.Session.CATEGORY;
+import org.dromara.maxkey.authn.session.SessionCategory;
 import org.dromara.maxkey.authn.session.SessionManager;
 import org.dromara.maxkey.configuration.ApplicationConfig;
 import org.dromara.maxkey.listener.DynamicGroupsListenerAdapter;
@@ -53,7 +53,7 @@ public class MaxKeyMgtListenerConfig  {
     		.setCron("0 0/10 * * * ?")
     		.setJobClass(SessionListenerAdapter.class)
     		.setJobData("sessionManager",sessionManager)
-    		.setJobData("category", CATEGORY.MGMT)
+    		.setJobData("category", SessionCategory.MGMT)
     		.build();
         logger.debug("Session ListenerAdapter inited .");
     	return "sessionListenerAdapter";
