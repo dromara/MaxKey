@@ -140,10 +140,7 @@ export class UserLoginComponent implements OnInit, OnDestroy {
               this.form.get('captcha')?.clearValidators();
             } else {
               //init image captcha
-              this.imageCaptchaService.captcha({ state: this.state, captcha: this.captchaType }).subscribe(res => {
-                this.imageCaptcha = res.data.image;
-                this.cdr.detectChanges();
-              });
+              this.getImageCaptcha();
             }
           }
         }
@@ -206,8 +203,13 @@ export class UserLoginComponent implements OnInit, OnDestroy {
   // #region get captcha
   getImageCaptcha(): void {
     this.imageCaptchaService.captcha({ state: this.state, captcha: this.captchaType }).subscribe(res => {
-      this.imageCaptcha = res.data.image;
-      this.cdr.detectChanges();
+      if (res.code == 0) {
+        this.imageCaptcha = res.data.image;
+        this.cdr.detectChanges();
+      } else {
+        //令牌失效时，重新刷新页面
+        window.location.reload();
+      }
     });
   }
 

@@ -78,10 +78,11 @@ public class ImageCaptchaEndpoint {
                 }
             }
             String kaptchaKey = "";
-            if(StringUtils.isNotBlank(state) 
-            		&& !state.equalsIgnoreCase("state")
-            		&& authTokenService.validateJwtToken(state)) {
+            if(StringUtils.isNotBlank(state) && !state.equalsIgnoreCase("state")) {
             	//just validate state Token
+            	if(!authTokenService.validateJwtToken(state)) {
+            		return new Message<>(Message.FAIL,"JwtToken is not Validate  ");
+            	}
             }else {
             	state = authTokenService.genRandomJwt();
             }
