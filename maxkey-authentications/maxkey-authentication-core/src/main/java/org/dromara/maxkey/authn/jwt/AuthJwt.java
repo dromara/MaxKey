@@ -25,7 +25,10 @@ import org.dromara.maxkey.authn.SignPrincipal;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 
 public class AuthJwt implements Serializable {
 	
@@ -48,6 +51,10 @@ public class AuthJwt implements Serializable {
 	
 	@JsonProperty(EXPIRES_IN)
 	private int expiresIn;
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING)
+	@Schema(name = "twoFactor", description = "二次认证类型")
+	int   twoFactor;
 
 	private String remeberMe;
 	private String id;
@@ -98,7 +105,7 @@ public class AuthJwt implements Serializable {
 		this.instId = principal.getUserInfo().getInstId();
 		this.instName = principal.getUserInfo().getInstName();
 		
-		this.authorities = new ArrayList<String>();
+		this.authorities = new ArrayList<>();
 		for(GrantedAuthority grantedAuthority :authentication.getAuthorities()) {
 			this.authorities.add(grantedAuthority.getAuthority());
 		}

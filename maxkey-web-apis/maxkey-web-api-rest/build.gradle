@@ -11,5 +11,7 @@ dependencies {
 	implementation project(":maxkey-common")
 	implementation project(":maxkey-core")
 	implementation project(":maxkey-persistence")
+	
+	implementation project(":maxkey-authentications:maxkey-authentication-core")
    
 }

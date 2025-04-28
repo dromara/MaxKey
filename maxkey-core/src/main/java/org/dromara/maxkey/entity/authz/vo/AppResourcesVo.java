@@ -15,16 +15,16 @@
  */
  
 
-package org.dromara.maxkey.persistence.service;
 
-import org.dromara.maxkey.entity.ChangePassword;
-import org.dromara.maxkey.entity.cnf.CnfPasswordPolicy;
 
-public interface PasswordPolicyValidatorService {
-	
-	public CnfPasswordPolicy getPasswordPolicy();
-	
-	public boolean validator(ChangePassword changePassword);
-	
-	public String generateRandomPassword() ;
+package org.dromara.maxkey.entity.authz.vo;
+
+import java.util.Set;
+
+import org.dromara.maxkey.entity.apps.Apps;
+import org.dromara.maxkey.entity.permissions.Resources;
+
+
+public record AppResourcesVo(Apps app,Set<Resources> functions) {
+
 }

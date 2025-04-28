@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.dromara.maxkey.persistence.mapper.AuthzResourceMapper" >
+
+	<select id="queryGroupsByMembers" parameterType="QueryGroupMembersDto" resultType="Groups">
+        select distinct mg.*
+        from mxk_groups mg
+        join mxk_group_member mgm
+        on mg.id = mgm.groupid
+        where mg.status = 1
+        and (
+        groupcode = 'ROLE_ALL_USER'
+        or mgm.memberid in(
+        <foreach collection="members" item="item" separator=",">
+            #{item}
+        </foreach>
+        )
+        )
+    </select>
+    
+    <select id="queryRolesByMembers" parameterType="QueryRoleMembersDto" resultType="Roles">
+        select distinct mr.*
+        from mxk_roles mr
+        join mxk_role_member mrm
+        on mr.id = mrm.roleid
+        where mr.status = 1
+        and mr.appid = #{appId}
+        and (
+        rolecode = 'ROLE_ALL_USER'
+        or mrm.memberid in(
+        <foreach collection="members" item="item" separator=",">
+            #{item}
+        </foreach>
+        )
+        )
+    </select>
+    
+	<select id="queryResourcesByGroupId" parameterType="QueryAppResourceDto" resultType="Resources">
+        SELECT distinct mr.*
+        FROM mxk_resources mr
+        join mxk_permission mp
+        on mr.id = mp.resourceid
+        where mr.appid = mp.appid
+        and mr.appid = #{appId}
+        and mr.status ='1'
+        and mp.appid = #{appId}
+        and mp.status =1
+        and mp.groupid in (
+        <foreach collection="groupIds" item="item" separator=",">
+            #{item}
+        </foreach>
+        )
+    </select>
+    
+    <select id="queryResourcesByRoleId" parameterType="QueryAppResourceDto" resultType="Resources">
+        SELECT distinct mr.*
+        FROM mxk_resources mr
+        join mxk_permission_role mpr
+        on mr.id = mpr.resourceid
+        where mr.appid = mpr.appid
+        and mr.appid = #{appId}
+        and mr.status ='1'
+        and mpr.appid = #{appId}
+        and mpr.status =1
+        and mpr.roleid in (
+        <foreach collection="roleIds" item="item" separator=",">
+            #{item}
+        </foreach>
+        )
+    </select>
+	
+</mapper>

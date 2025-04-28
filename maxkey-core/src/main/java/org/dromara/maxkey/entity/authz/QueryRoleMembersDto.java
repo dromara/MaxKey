@@ -15,16 +15,43 @@
  */
  
 
-package org.dromara.maxkey.persistence.service;
 
-import org.dromara.maxkey.entity.ChangePassword;
-import org.dromara.maxkey.entity.cnf.CnfPasswordPolicy;
+package org.dromara.maxkey.entity.authz;
 
-public interface PasswordPolicyValidatorService {
+import java.util.ArrayList;
+import java.util.List;
+
+public class QueryRoleMembersDto {
+	String appId;
 	
-	public CnfPasswordPolicy getPasswordPolicy();
+	List<String> members;
+
+	public QueryRoleMembersDto() {
+		members = new ArrayList<>();
+	}
+
+	public QueryRoleMembersDto(List<String> members) {
+		this.members = members;
+	}
 	
-	public boolean validator(ChangePassword changePassword);
+	public String getAppId() {
+		return appId;
+	}
+
+	public void setAppId(String appId) {
+		this.appId = appId;
+	}
 	
-	public String generateRandomPassword() ;
+	public void add(String memberId) {
+		this.members.add(memberId);
+	}
+
+	public List<String> getMembers() {
+		return members;
+	}
+
+	public void setMembers(List<String> members) {
+		this.members = members;
+	}
+	
 }

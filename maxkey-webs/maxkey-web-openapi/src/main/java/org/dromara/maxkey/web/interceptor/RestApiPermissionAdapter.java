@@ -17,17 +17,22 @@
 
 package org.dromara.maxkey.web.interceptor;
 
+import java.util.ArrayList;
+
 import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.authn.web.AuthorizationUtils;
 import org.dromara.maxkey.authz.oauth2.provider.OAuth2Authentication;
 import org.dromara.maxkey.authz.oauth2.provider.token.DefaultTokenServices;
+import org.dromara.maxkey.crypto.password.PasswordReciprocal;
+import org.dromara.maxkey.entity.apps.Apps;
+import org.dromara.maxkey.persistence.service.AppsService;
 import org.dromara.maxkey.util.AuthorizationHeader;
 import org.dromara.maxkey.util.AuthorizationHeaderUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.AsyncHandlerInterceptor;
@@ -45,11 +50,13 @@ import jakarta.servlet.http.HttpServletResponse;
 public class RestApiPermissionAdapter  implements AsyncHandlerInterceptor  {
 	private static final Logger logger = LoggerFactory.getLogger(RestApiPermissionAdapter.class);
 
+	static final String PASSWORD = "password";
+	
 	@Autowired
 	DefaultTokenServices oauth20TokenServices;
 
 	@Autowired
-	ProviderManager oauth20ClientAuthenticationManager;
+	AppsService appsService;
 	
 	/*
 	 * 请求前处理
@@ -68,11 +75,21 @@ public class RestApiPermissionAdapter  implements AsyncHandlerInterceptor  {
 			    if(StringUtils.isNotBlank(headerCredential.getUsername())&&
 			    		StringUtils.isNotBlank(headerCredential.getCredential())
 			    		) {
-			    	UsernamePasswordAuthenticationToken authRequest = 
-							new UsernamePasswordAuthenticationToken(
-									headerCredential.getUsername(),
-									headerCredential.getCredential());
-			    	authenticationToken= (UsernamePasswordAuthenticationToken)oauth20ClientAuthenticationManager.authenticate(authRequest);
+			    	String appId = headerCredential.getUsername();
+			    	String credential = headerCredential.getCredential();
+			    	Apps app = appsService.get(appId, true);
+			    	if(app != null ) {
+			    		if(	PasswordReciprocal.getInstance().matches(credential, app.getSecret())) {
+			    			ArrayList<SimpleGrantedAuthority> grantedAuthoritys = new ArrayList<>();
+			    			grantedAuthoritys.add(new SimpleGrantedAuthority("ROLE_USER"));
+			    			User user = new User(appId, PASSWORD, grantedAuthoritys);
+			    			authenticationToken= new UsernamePasswordAuthenticationToken(user, PASSWORD, grantedAuthoritys);
+			    		}else {
+			    			logger.trace("app {} secret not matches . ",appId);
+			    		}
+				    }else {
+				    	logger.trace("app {} not exists . ",appId);
+				    }
 			    }
 			}else if(StringUtils.isNotBlank(headerCredential.getCredential())){
 				logger.trace("Authentication bearer {}" , headerCredential.getCredential());
