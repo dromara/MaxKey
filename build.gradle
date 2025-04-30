@@ -29,6 +29,8 @@ configurations.all {
     transitive = false// 为本依赖关闭依赖传递特性
 }
 
+println  "OS " + System.getProperty("os.name")+ " , ARCH "+System.getProperty("os.arch")
+
 println  "Run with Java version [ " + JavaVersion.VERSION_17 + " ] . Your Java version is [ " + JavaVersion.current() + " ]"
     
 if (JavaVersion.current() < JavaVersion.VERSION_17) {
