@@ -44,4 +44,8 @@ export class UsersService extends BaseService<Users> {
   updateProfile(body: any): Observable<Message<Users>> {
     return this.http.put<Message<Users>>('/users/profile/update', body);
   }
+
+  updateAuthnType(body: any): Observable<Message<Users>> {
+    return this.http.put<Message<Users>>('/users/profile/updateAuthnType', body);
+  }
 }

@@ -17,6 +17,7 @@
 
 package org.dromara.maxkey.entity.idm;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.io.Serializable;
@@ -130,6 +131,7 @@ public class UserInfo extends JpaEntity  implements Serializable {
 
     // for security
     @Column
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     protected int authnType;
     @Column
     protected String email;

@@ -1,0 +1,55 @@
+<nz-card>
+  <form nz-form (ngSubmit)="onSubmit()">
+    <div nz-row style="width: 100%">
+      <div nz-col nzMd="16">
+        <nz-form-item style="display: none">
+          <nz-form-label [nzMd]="6" nzFor="id">id</nz-form-label>
+          <nz-form-control [nzMd]="18" nzErrorTip="The input is not valid id!">
+            <input [(ngModel)]="form.model.id" [ngModelOptions]="{ standalone: true }" nz-input name="id" id="id" value="id" />
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="displayName">{{ 'mxk.password.displayName' | i18n }}</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not displayName!">
+            <input nz-input disabled="true" [(ngModel)]="form.model.displayName" [ngModelOptions]="{ standalone: true }" value="0" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="username">{{ 'mxk.password.username' | i18n }}</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid username!">
+            <input nz-input disabled="true" [(ngModel)]="form.model.username" [ngModelOptions]="{ standalone: true }" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="mobile">{{ 'mxk.users.mobile' | i18n }}</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid mobile!">
+            <input nz-input disabled="true" [(ngModel)]="form.model.mobile" [ngModelOptions]="{ standalone: true }" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="email">{{ 'mxk.users.email' | i18n }}</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid email!">
+            <input nz-input disabled="true" [(ngModel)]="form.model.email" [ngModelOptions]="{ standalone: true }" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="authnType">{{ 'mxk.users.authnType' | i18n }}</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid authnType!">
+            <nz-radio-group [(ngModel)]="form.model.authnType" [ngModelOptions]="{ standalone: true }" nzButtonStyle="solid">
+              <label nz-radio-button nzValue="0">{{ 'mxk.users.authnType.0' | i18n }}</label>
+              <label nz-radio-button nzValue="1">{{ 'mxk.users.authnType.1' | i18n }}</label>
+              <label nz-radio-button nzValue="2">{{ 'mxk.users.authnType.2' | i18n }}</label>
+              <label nz-radio-button nzValue="3">{{ 'mxk.users.authnType.3' | i18n }}</label>
+            </nz-radio-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item style="width: 100%">
+          <nz-form-control [nzOffset]="10" [nzSpan]="12">
+            <button nz-button nzType="primary" type="submit" [nzLoading]="form.submitting">{{ 'mxk.text.save' | i18n }}</button>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </form>
+</nz-card>

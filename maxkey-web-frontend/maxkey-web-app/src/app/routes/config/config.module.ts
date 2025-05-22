@@ -28,6 +28,7 @@ import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { NzStepsModule } from 'ng-zorro-antd/steps';
 
 import { AccoutsComponent } from './accouts/accouts.component';
+import { MfaComponent } from './mfa/mfa.component';
 import { PasswordComponent } from './password/password.component';
 import { ProfileComponent } from './profile/profile.component';
 import { SocialsAssociateComponent } from './socials-associate/socials-associate.component';
@@ -50,6 +51,10 @@ const routes: Routes = [
   {
     path: 'timebased',
     component: TimebasedComponent
+  },
+  {
+    path: 'mfa',
+    component: MfaComponent
   }
 ];
 
@@ -63,7 +68,8 @@ const COMPONENTS = [ProfileComponent];
     SocialsAssociateComponent,
     PasswordComponent,
     ProfileComponent,
-    AccoutsComponent
+    AccoutsComponent,
+    MfaComponent
   ],
   imports: [SharedModule, CommonModule, RouterModule.forChild(routes)],
   exports: [RouterModule]

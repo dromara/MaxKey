@@ -44,6 +44,7 @@
 				"": "Settings",
 				"setting": "Setting",
 				"profile": "Profile",
+				"mfa": "MFA",
 				"password": "Password",
 				"socialsassociate": "Socials",
 				"timebased": "OTP Token"
@@ -162,17 +163,11 @@
 			"userstate.withdrawn": "Withdrawn",
 			"userstate.inactive": "Inactive",
 			"userstate.retiree": "Retiree",
-			"authnType": "AuthenticationType",
-			"authnType.authnType.1": "General login",
-			"authnType.authnType.2": "Mobile Token",
-			"authnType.authnType.3": "SMS Verification",
-			"authnType.authnType.4": "EMAIL Verification",
-			"authnType.authnType.5": "TIME BASED Token",
-			"authnType.authnType.6": "Counter Token",
-			"authnType.authnType.7": "HOTP Token",
-			"authnType.authnType.8": "RSA Token",
-			"authnType.authnType.9": "Digital Certificate",
-			"authnType.authnType.10": "USB Key"
+			"authnType": "MFA Type",
+			"authnType.0": "None",
+			"authnType.1": "TOTP",
+			"authnType.2": "Mail OTP",
+			"authnType.3": "SMS OTP"
 		},
 		"organizations": {
 			"tab.basic": "Basic",

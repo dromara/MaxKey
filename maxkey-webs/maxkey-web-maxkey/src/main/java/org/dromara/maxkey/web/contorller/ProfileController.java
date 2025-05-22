@@ -90,5 +90,22 @@ public class ProfileController {
         return new Message<UserInfo>(Message.FAIL);
         
     }
+	
+	/**
+     * AuthnType.
+     * 
+     * @param userInfo
+     * @param result
+     * @return
+     */
+	@PutMapping("/updateAuthnType")
+	public Message<UserInfo> updateAuthnType(@RequestBody UserInfo userInfo,@CurrentUser UserInfo currentUser) {
+		userInfo.setId(currentUser.getId());
+        logger.debug("updateAuthnType {}",userInfo);
+        if (userInfoService.updateAuthnType(userInfo)) {
+        	return new Message<>(Message.SUCCESS);
+        } 
+        return new Message<>(Message.FAIL);
+    }
 
 }

@@ -33,6 +33,7 @@ import { TreeNodes } from '../../../entity/TreeNodes';
 import { OrganizationsService } from '../../../service/organizations.service';
 import { UsersService } from '../../../service/users.service';
 import { set2String } from '../../../shared/index';
+import { MfaComponent } from './mfa/mfa.component';
 import { PasswordComponent } from './password/password.component';
 import { UserEditerComponent } from './user-editer/user-editer.component';
 
@@ -150,6 +151,7 @@ export class UsersComponent implements OnInit {
           nzWidth: 450,
           nzOnOk: () => new Promise(resolve => setTimeout(resolve, 1000))
         });
+        break;
       }
     }
   }
@@ -216,6 +218,26 @@ export class UsersComponent implements OnInit {
         this.fetch();
       }
     });
+  }
+
+  changeMfaById(userId: String): void {
+    for (var i = 0; i < this.query.results.rows.length; i++) {
+      let user = this.query.results.rows[i];
+      if (userId == user.id) {
+        const modal = this.modal.create({
+          nzContent: MfaComponent,
+          nzViewContainerRef: this.viewContainerRef,
+          nzComponentParams: {
+            id: user.id,
+            username: user.username,
+            displayName: user.displayName
+          },
+          nzWidth: 450,
+          nzOnOk: () => new Promise(resolve => setTimeout(resolve, 1000))
+        });
+        break;
+      }
+    }
   }
 
   onNavToUrl(e: MouseEvent, userId: String, username: String, navType: String) {

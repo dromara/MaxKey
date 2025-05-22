@@ -48,4 +48,8 @@ export class UsersService extends BaseService<Users> {
       params: this.parseParams(params)
     });
   }
+
+  updateAuthnType(params: NzSafeAny): Observable<Message<Users>> {
+    return this.http.put<Message<Users>>(`${this.server.urls.base}/updateAuthnType`, params);
+  }
 }

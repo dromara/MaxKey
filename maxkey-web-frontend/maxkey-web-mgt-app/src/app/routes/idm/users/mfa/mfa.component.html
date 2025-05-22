@@ -1,0 +1,39 @@
+<div *nzModalTitle> {{ 'mxk.users.authnType' | i18n }} </div>
+<div>
+  <form nz-form (ngSubmit)="onSubmit($event)" se-container="1">
+    <nz-form-item style="width: 100%" class="d-none">
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="id">{{ 'mxk.users.id' | i18n }} </nz-form-label>
+      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid id!">
+        <input [(ngModel)]="form.model.id" [ngModelOptions]="{ standalone: true }" nz-input name="id" id="id" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item style="width: 100%">
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="username">{{ 'mxk.users.username' | i18n }} </nz-form-label>
+      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid username!">
+        <input [(ngModel)]="form.model.username" disabled [ngModelOptions]="{ standalone: true }" nz-input />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item style="width: 100%">
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="displayName">{{ 'mxk.users.displayName' | i18n }} </nz-form-label>
+      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid displayName!">
+        <input [(ngModel)]="form.model.displayName" disabled [ngModelOptions]="{ standalone: true }" nz-input />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item style="width: 100%">
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="authnType">{{ 'mxk.users.authnType' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid authnType!">
+        <nz-select [(ngModel)]="form.model.authnType" [ngModelOptions]="{ standalone: true }">
+          <nz-option nzValue="0" nzLabel="{{ 'mxk.users.authnType.0' | i18n }}"></nz-option>
+          <nz-option nzValue="1" nzLabel="{{ 'mxk.users.authnType.1' | i18n }}"></nz-option>
+          <nz-option nzValue="2" nzLabel="{{ 'mxk.users.authnType.2' | i18n }}"></nz-option>
+          <nz-option nzValue="3" nzLabel="{{ 'mxk.users.authnType.3' | i18n }}"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</div>
+
+<div *nzModalFooter>
+  <button nz-button nzType="default" (click)="onClose($event)">{{ 'mxk.text.close' | i18n }}</button>
+  <button nz-button nzType="primary" (click)="onSubmit($event)">{{ 'mxk.text.submit' | i18n }}</button>
+</div>

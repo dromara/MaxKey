@@ -181,17 +181,11 @@
 			"userstate.withdrawn": "離職",
 			"userstate.inactive": "停薪留職",
 			"userstate.retiree": "退休",
-			"authnType": "登錄方式",
-			"authnType.authnType.1": "普通登錄",
-			"authnType.authnType.2": "手機令牌",
-			"authnType.authnType.3": "短信驗證",
-			"authnType.authnType.4": "郵件驗證",
-			"authnType.authnType.5": "時間令牌",
-			"authnType.authnType.6": "計數器令牌",
-			"authnType.authnType.7": "HOTP令牌",
-			"authnType.authnType.8": "RSA令牌",
-			"authnType.authnType.9": "數字證書",
-			"authnType.authnType.10": "USB Key"
+			"authnType": "二次认证",
+			"authnType.0": "无",
+			"authnType.1": "TOTP令牌",
+			"authnType.2": "邮件验证码",
+			"authnType.3": "短信验证码"
 		},
 		"organizations": {
 			"tab.basic": "基本信息",

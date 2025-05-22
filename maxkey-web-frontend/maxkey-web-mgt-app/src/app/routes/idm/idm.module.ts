@@ -29,6 +29,7 @@ import { GroupsComponent } from './groups/groups.component';
 import { SelectGroupsComponent } from './groups/select-groups/select-groups.component';
 import { OrganizationEditerComponent } from './organizations/organization-editer/organization-editer.component';
 import { OrganizationsComponent } from './organizations/organizations.component';
+import { MfaComponent } from './users/mfa/mfa.component';
 import { PasswordComponent } from './users/password/password.component';
 import { SelectUserComponent } from './users/select-user/select-user.component';
 import { UserEditerComponent } from './users/user-editer/user-editer.component';
@@ -57,7 +58,7 @@ const COMPONENTS = [
 ];
 
 @NgModule({
-  declarations: [...COMPONENTS],
+  declarations: [...COMPONENTS, MfaComponent],
   imports: [FormsModule, NzIconModule, SharedModule, CommonModule, RouterModule.forChild(routes)],
   exports: [RouterModule]
 })

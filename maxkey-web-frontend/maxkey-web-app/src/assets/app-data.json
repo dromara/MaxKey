@@ -44,6 +44,14 @@
               "acl": "ROLE_USER",
               "children": []
             },
+             {
+              "text": "二次认证",
+              "i18n": "mxk.menu.config.mfa",
+              "link": "/config/mfa",
+              "icon": "anticon-appstore",
+              "acl": "ROLE_USER",
+              "children": []
+            },
             {
               "text": "密码修改",
               "i18n": "mxk.menu.config.password",

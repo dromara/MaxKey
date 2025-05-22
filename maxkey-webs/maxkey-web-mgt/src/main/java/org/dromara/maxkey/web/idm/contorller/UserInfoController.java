@@ -59,6 +59,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -253,6 +254,22 @@ public class UserInfoController {
 			return new Message<UserInfo>(Message.FAIL);
 		}
 	}
+	
+	/**
+     * AuthnType.
+     * 
+     * @param userInfo
+     * @param result
+     * @return
+     */
+	@PutMapping("/updateAuthnType")
+	public Message<UserInfo> updateAuthnType(@RequestBody UserInfo userInfo) {
+        logger.debug("updateAuthnType {}",userInfo);
+        if (userInfoService.updateAuthnType(userInfo)) {
+        	return new Message<>(Message.SUCCESS);
+        } 
+        return new Message<>(Message.FAIL);
+    }
 	
     @RequestMapping(value = "/import")
     public Message<?> importingUsers(
