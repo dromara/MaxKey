@@ -1426,6 +1426,11 @@ public class UserInfo extends JpaEntity  implements Serializable {
 		this.setDecipherable("");
 		this.transPictureBase64();
 	}
+	
+	public void clearPassword() {
+		this.setPassword(null);
+		this.setDecipherable(null);
+	}
 
 	@Override
 	public String toString() {

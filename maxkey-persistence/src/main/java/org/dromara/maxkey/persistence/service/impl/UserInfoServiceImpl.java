@@ -44,6 +44,9 @@ import org.springframework.stereotype.Repository;
 
 
 /**
+ * 用户管理服务
+ * 
+ * 密码修改：1、插入用户，2、密码修改入口
  * @author Crystal.Sea
  *
  */
@@ -102,7 +105,8 @@ public class UserInfoServiceImpl extends JpaServiceImpl<UserInfoMapper,UserInfo>
 	
     @Override
     public boolean update(UserInfo userInfo) {
-    	ChangePassword changePassword = this.passwordEncoder(userInfo);
+    	//更新用户信息，不更新密码
+    	userInfo.clearPassword();
         if (super.update(userInfo)) {
         	if(provisionService.getApplicationConfig().isProvisionSupport()) {
                 UserInfo loadUserInfo = findUserRelated(userInfo.getId());
@@ -111,9 +115,6 @@ public class UserInfoServiceImpl extends JpaServiceImpl<UserInfoMapper,UserInfo>
                         ProvisionTopic.USERINFO_TOPIC, 
                         loadUserInfo,
                         ProvisionAct.UPDATE);
-            }
-            if(userInfo.getPassword() != null) {
-            	changePasswordProvisioning(changePassword);
             }
             return true;
         }
@@ -181,7 +182,6 @@ public class UserInfoServiceImpl extends JpaServiceImpl<UserInfoMapper,UserInfo>
 			insert(userInfo);
 		}else {
 			userInfo.setId(loadUserInfo.getId());
-			userInfo.setPassword(null);
 			update(userInfo);
 		}
 	}
