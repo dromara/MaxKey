@@ -57,7 +57,11 @@ MaxKey <b>遵循 Apache License, Version 2.0 开源免费</b>，开源、安全�
 >1) 所有应用系统共享一个身份认证系统
 >2) 所有应用系统能够识别和提取ticket信息
  
- 
+# 开源推荐
+- [[ JinBooks财务记账系统 ]](https://gitee.com/jinbooks/jinbooks)： 对标商业记账产品
+- [[ CeresCRM客户管理系统 ]](https://gitee.com/jinbooks/cerescrm)： 轻量级CRM客户关系管理产品
+- [[ surpass(Bootshiro)API权限开放平台 ]](https://gitee.com/jinbooks/cerescrm)： 基于RBAC的API和权限开放管理平台，通用API的自定义管理，无需编写代码
+
 # 产品特性
 
 1. 标准协议
