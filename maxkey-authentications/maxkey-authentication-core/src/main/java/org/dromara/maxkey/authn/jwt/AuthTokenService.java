@@ -126,7 +126,7 @@ public class AuthTokenService  extends AuthJwtService{
 			if(StringUtils.isNotBlank(jwtId) &&StringUtils.isNotBlank(captcha)) {
 				Object momentaryCaptcha = momentaryService.get("", jwtId);
 		        _logger.debug("captcha : {}, momentary Captcha : {}" ,captcha, momentaryCaptcha);
-		        if (!StringUtils.isBlank(captcha) && captcha.equals(momentaryCaptcha.toString())) {
+		        if (!StringUtils.isBlank(captcha) &&momentaryCaptcha != null && captcha.equals(momentaryCaptcha.toString())) {
 		        	momentaryService.remove("", jwtId);
 		        	return true;
 		        }
