@@ -6,7 +6,7 @@ dependencies {
 	//local jars
 	implementation fileTree(dir: '../maxkey-lib/', include: '*/*.jar')
 	
-	implementation project(":maxkey-common")
-	implementation project(":maxkey-core")
+	implementation project(":maxkey-commons:maxkey-common")
+	implementation project(":maxkey-entity")
    
 }

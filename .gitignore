@@ -55,3 +55,4 @@ maxkey-web-frontend/maxkey-web-app/yarn.lock
 maxkey-web-frontend/maxkey-web-app/dist
 
 **/out/*
+/.sonarlint

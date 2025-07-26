@@ -35,8 +35,8 @@ bootJar {
 }
 
 dependencies {
-	implementation project(":maxkey-common")
-	implementation project(":maxkey-core")
+	implementation project(":maxkey-commons:maxkey-common")
+	implementation project(":maxkey-entity")
 	implementation project(":maxkey-persistence")
    	
    	implementation project(":maxkey-starter:maxkey-starter-captcha")

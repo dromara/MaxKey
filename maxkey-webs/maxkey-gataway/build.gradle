@@ -5,7 +5,7 @@ apply plugin: 'java'
 
 
 dependencies {
-         implementation project(":maxkey-common")
+         implementation project(":maxkey-commons:maxkey-common")
          
          //spring-cloud gateway server
          implementation group: 'org.springframework.cloud', name: 'spring-cloud-gateway-server', version: "${springcloudVersion}"

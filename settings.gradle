@@ -20,9 +20,9 @@
  
 rootProject.name = 'MaxKey'
 
-//Common
-include ('maxkey-common')
-include ('maxkey-core')
+//Commons
+include ('maxkey-commons:maxkey-common')
+include ('maxkey-entity')
 include ('maxkey-persistence')
 
 //maxkey-starter

@@ -10,8 +10,8 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.pac4j/pac4j-cas
 	testImplementation group: 'org.pac4j', name: 'pac4j-cas', version: '3.8.3'
 	
-	implementation project(":maxkey-common")
-	implementation project(":maxkey-core")
+	implementation project(":maxkey-commons:maxkey-common")
+	implementation project(":maxkey-entity")
 	implementation project(":maxkey-persistence")
    	implementation project(":maxkey-protocols:maxkey-protocol-authorize")
    	implementation project(":maxkey-authentications:maxkey-authentication-core")

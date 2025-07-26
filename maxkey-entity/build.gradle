@@ -1,7 +1,7 @@
-description = "maxkey-core"
+description = "maxkey-entity"
 
 dependencies {
-	implementation project(":maxkey-common")
+	implementation project(":maxkey-commons:maxkey-common")
 
 	//local jars
 	implementation fileTree(dir: '../maxkey-lib/', include: '*/*.jar')
