@@ -28,4 +28,6 @@ public interface CnfPasswordPolicyService  extends IJpaService<CnfPasswordPolicy
 	public CnfPasswordPolicy getPasswordPolicy();
 	
 	public List<Rule> getPasswordPolicyRuleList();
+	
+	public void buildTipMessage(CnfPasswordPolicy passwordPolicy);
 }

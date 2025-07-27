@@ -21,11 +21,11 @@ import java.util.List;
 
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.constants.ConstsProtocols;
-import org.dromara.maxkey.crypto.ReciprocalUtils;
 import org.dromara.maxkey.entity.Message;
 import org.dromara.maxkey.entity.apps.AppsCasDetails;
 import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.service.AppsCasDetailsService;
+import org.dromara.maxkey.util.StringGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +46,7 @@ public class CasDetailsController  extends BaseAppContorller {
 		AppsCasDetails casDetails =new AppsCasDetails();
 		casDetails.setId(casDetails.generateId());
 		casDetails.setProtocol(ConstsProtocols.CAS);
-		casDetails.setSecret(ReciprocalUtils.generateKey(""));
+		casDetails.setSecret(StringGenerator.generateKey(""));
 		return new Message<>(casDetails);
 	}
 	

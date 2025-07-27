@@ -21,7 +21,12 @@
 rootProject.name = 'MaxKey'
 
 //Commons
+include ('maxkey-commons:maxkey-cache')
 include ('maxkey-commons:maxkey-common')
+include ('maxkey-commons:maxkey-core')
+include ('maxkey-commons:maxkey-crypto')
+include ('maxkey-commons:maxkey-ldap')
+
 include ('maxkey-entity')
 include ('maxkey-persistence')
 

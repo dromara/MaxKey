@@ -26,6 +26,7 @@ import org.dromara.maxkey.constants.ConstsProperties;
 import org.dromara.maxkey.entity.cnf.CnfPasswordPolicy;
 import org.dromara.maxkey.persistence.mapper.CnfPasswordPolicyMapper;
 import org.dromara.maxkey.persistence.service.CnfPasswordPolicyService;
+import org.dromara.maxkey.web.WebContext;
 import org.dromara.mybatis.jpa.query.LambdaQuery;
 import org.dromara.mybatis.jpa.service.impl.JpaServiceImpl;
 import org.passay.CharacterOccurrencesRule;
@@ -151,5 +152,61 @@ public class CnfPasswordPolicyServiceImpl  extends JpaServiceImpl<CnfPasswordPol
 	   getPasswordPolicy();
 		return passwordPolicyRuleList;
 	}
+   
+   public void buildTipMessage(CnfPasswordPolicy passwordPolicy){
+	   
+	   List<String> policMessageList = new ArrayList<>();
+	   
+       String msg;
+       if (passwordPolicy.getMinLength() != 0) {
+           // msg = "新密码长度为"+minLength+"-"+maxLength+"位";
+           msg =   WebContext.getI18nValue("PasswordPolicy.TOO_SHORT",
+                   new Object[]{passwordPolicy.getMinLength()});
+           policMessageList.add(msg);
+       }
+       if (passwordPolicy.getMaxLength() != 0) {
+           // msg = "新密码长度为"+minLength+"-"+maxLength+"位";
+           msg =   WebContext.getI18nValue("PasswordPolicy.TOO_LONG",
+                   new Object[]{passwordPolicy.getMaxLength()});
+           policMessageList.add(msg);
+       }
+
+       if (passwordPolicy.getLowerCase() > 0) {
+           //msg = "新密码至少需要包含"+lowerCase+"位【a-z】小写字母";
+           msg =   WebContext.getI18nValue("PasswordPolicy.INSUFFICIENT_LOWERCASE",
+                   new Object[]{passwordPolicy.getLowerCase()});
+           policMessageList.add(msg);
+       }
+
+       if (passwordPolicy.getUpperCase() > 0) {
+           //msg = "新密码至少需要包含"+upperCase+"位【A-Z】大写字母";
+           msg =   WebContext.getI18nValue("PasswordPolicy.INSUFFICIENT_UPPERCASE",
+                   new Object[]{passwordPolicy.getUpperCase()});
+           policMessageList.add(msg);
+       }
+
+       if (passwordPolicy.getDigits() > 0) {
+           //msg = "新密码至少需要包含"+digits+"位【0-9】阿拉伯数字";
+           msg =   WebContext.getI18nValue("PasswordPolicy.INSUFFICIENT_DIGIT",
+                   new Object[]{passwordPolicy.getDigits()});
+           policMessageList.add(msg);
+       }
+
+       if (passwordPolicy.getSpecialChar() > 0) {
+           //msg = "新密码至少需要包含"+specialChar+"位特殊字符";
+           msg =   WebContext.getI18nValue("PasswordPolicy.INSUFFICIENT_SPECIAL",
+                   new Object[]{passwordPolicy.getSpecialChar()});
+           policMessageList.add(msg);
+       }
+
+       if (passwordPolicy.getExpiration() > 0) {
+           //msg = "新密码有效期为"+expiration+"天";
+           msg =   WebContext.getI18nValue("PasswordPolicy.INSUFFICIENT_EXPIRES_DAY",
+                   new Object[]{passwordPolicy.getExpiration()});
+           policMessageList.add(msg);
+       }
+       
+       passwordPolicy.setPolicMessageList(policMessageList);
+   }
 
 }

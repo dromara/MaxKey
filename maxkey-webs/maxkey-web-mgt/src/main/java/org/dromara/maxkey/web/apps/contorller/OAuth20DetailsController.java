@@ -23,12 +23,12 @@ import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.authz.oauth2.common.OAuth2Constants;
 import org.dromara.maxkey.authz.oauth2.provider.client.JdbcClientDetailsService;
 import org.dromara.maxkey.constants.ConstsProtocols;
-import org.dromara.maxkey.crypto.ReciprocalUtils;
 import org.dromara.maxkey.entity.Message;
 import org.dromara.maxkey.entity.apps.Apps;
 import org.dromara.maxkey.entity.apps.AppsOAuth20Details;
 import org.dromara.maxkey.entity.apps.oauth2.provider.client.BaseClientDetails;
 import org.dromara.maxkey.entity.idm.UserInfo;
+import org.dromara.maxkey.util.StringGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +53,7 @@ public class OAuth20DetailsController  extends BaseAppContorller {
 	public Message<?> init() {
 		AppsOAuth20Details oauth20Details=new AppsOAuth20Details();
 		oauth20Details.setId(oauth20Details.generateId());
-		oauth20Details.setSecret(ReciprocalUtils.generateKey(""));
+		oauth20Details.setSecret(StringGenerator.generateKey(""));
 		oauth20Details.setClientId(oauth20Details.getId());
 		oauth20Details.setClientSecret(oauth20Details.getSecret());
 		oauth20Details.setProtocol(ConstsProtocols.OAUTH20);

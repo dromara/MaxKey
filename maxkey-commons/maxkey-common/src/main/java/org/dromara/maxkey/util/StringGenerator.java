@@ -26,6 +26,7 @@ import java.util.Random;
 import java.util.UUID;
 
 import org.dromara.maxkey.crypto.Base64Utils;
+import org.dromara.maxkey.crypto.ReciprocalUtils.Algorithm;
 
 public class StringGenerator {
 
@@ -169,4 +170,22 @@ public class StringGenerator {
         return uuidString.matches(uuidRegex);
     }
 
+    /**
+     * generate Key for DES , AES , Blowfish and DESede ,default is unique string 
+     * @param algorithm
+     * @return
+     */
+    public static String generateKey(String algorithm) {
+        if (algorithm.equals(Algorithm.DES)) {
+            return (new StringGenerator(8)).randomGenerate();
+        } else if (algorithm.equals(Algorithm.AES)) {
+            return (new StringGenerator(16)).randomGenerate();
+        } else if (algorithm.equals(Algorithm.Blowfish)) {
+            return (new StringGenerator(16)).randomGenerate();
+        } else if (algorithm.equals(Algorithm.DESede)) {
+            return (new StringGenerator(24)).randomGenerate();
+        } else {
+            return (new StringGenerator()).uniqueGenerate();
+        }
+    }
 }

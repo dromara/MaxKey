@@ -54,7 +54,7 @@ public class ChangePasswodController {
 	public Message<CnfPasswordPolicy> passwordpolicy(@CurrentUser UserInfo currentUser){
 		CnfPasswordPolicy passwordPolicy = passwordPolicyService.get(currentUser.getInstId());
 		//构建密码强度说明
-		passwordPolicy.buildMessage();
+		passwordPolicyService.buildTipMessage(passwordPolicy);
 		return new Message<>(passwordPolicy);
 	}
 

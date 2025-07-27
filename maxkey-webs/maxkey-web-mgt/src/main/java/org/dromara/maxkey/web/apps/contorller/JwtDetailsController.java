@@ -21,11 +21,11 @@ import java.util.List;
 
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.constants.ConstsProtocols;
-import org.dromara.maxkey.crypto.ReciprocalUtils;
 import org.dromara.maxkey.entity.Message;
 import org.dromara.maxkey.entity.apps.AppsJwtDetails;
 import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.service.AppsJwtDetailsService;
+import org.dromara.maxkey.util.StringGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +51,7 @@ public class JwtDetailsController  extends BaseAppContorller {
 		AppsJwtDetails jwtDetails =new AppsJwtDetails();
 		jwtDetails.setId(jwtDetails.generateId());
 		jwtDetails.setProtocol(ConstsProtocols.JWT);
-		jwtDetails.setSecret(ReciprocalUtils.generateKey(""));
+		jwtDetails.setSecret(StringGenerator.generateKey(""));
 		jwtDetails.setUserPropertys("userPropertys");
 		return new Message<AppsJwtDetails>(jwtDetails);
 	}

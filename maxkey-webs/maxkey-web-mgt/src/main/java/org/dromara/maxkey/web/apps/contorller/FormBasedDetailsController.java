@@ -21,11 +21,11 @@ import java.util.List;
 
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.constants.ConstsProtocols;
-import org.dromara.maxkey.crypto.ReciprocalUtils;
 import org.dromara.maxkey.entity.Message;
 import org.dromara.maxkey.entity.apps.AppsFormBasedDetails;
 import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.service.AppsFormBasedDetailsService;
+import org.dromara.maxkey.util.StringGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +51,7 @@ public class FormBasedDetailsController  extends BaseAppContorller {
 		AppsFormBasedDetails formBasedDetails=new AppsFormBasedDetails();
 		formBasedDetails.setId(formBasedDetails.generateId());
 		formBasedDetails.setProtocol(ConstsProtocols.FORMBASED);
-		formBasedDetails.setSecret(ReciprocalUtils.generateKey(""));
+		formBasedDetails.setSecret(StringGenerator.generateKey(""));
 		return new Message<AppsFormBasedDetails>(formBasedDetails);
 	}
 	

@@ -25,6 +25,7 @@ import java.util.List;
 
 import org.dromara.maxkey.constants.ConstsDatabase;
 import org.dromara.maxkey.entity.SocialsAssociate;
+import org.dromara.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -55,7 +56,7 @@ public class JdbcSocialsAssociateService   implements SocialsAssociateService{
 	public boolean insert(SocialsAssociate socialsAssociate) {
 		socialsAssociate.setId(socialsAssociate.generateId());
 		jdbcTemplate.update(
-		        ConstsDatabase.compare(ConstsDatabase.ORACLE)?
+				WebContext.compare(ConstsDatabase.ORACLE)?
 		                DEFAULT_DEFAULT_INSERT_STATEMENT_ORACLE:DEFAULT_DEFAULT_INSERT_STATEMENT, 
 				new Object[] { 
 					socialsAssociate.getId(),

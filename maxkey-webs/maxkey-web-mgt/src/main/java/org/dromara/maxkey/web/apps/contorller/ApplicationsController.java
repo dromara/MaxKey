@@ -27,6 +27,7 @@ import org.dromara.maxkey.crypto.ReciprocalUtils;
 import org.dromara.maxkey.entity.Message;
 import org.dromara.maxkey.entity.apps.Apps;
 import org.dromara.maxkey.entity.idm.UserInfo;
+import org.dromara.maxkey.util.StringGenerator;
 import org.dromara.mybatis.jpa.entity.JpaPageResults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,7 +54,7 @@ public class ApplicationsController extends BaseAppContorller {
 		Apps app=new Apps();
 		app.setId(app.generateId());
 		app.setProtocol(ConstsProtocols.BASIC);
-		app.setSecret(ReciprocalUtils.generateKey(""));
+		app.setSecret(StringGenerator.generateKey(""));
 		return new Message<>(app);
 	}
 	
@@ -138,13 +139,13 @@ public class ApplicationsController extends BaseAppContorller {
 		String secret="";
 		type=type.toLowerCase();
 		if(type.equals("des")){
-			secret=ReciprocalUtils.generateKey(ReciprocalUtils.Algorithm.DES);
+			secret=StringGenerator.generateKey(ReciprocalUtils.Algorithm.DES);
 		}else if(type.equals("desede")){
-			secret=ReciprocalUtils.generateKey(ReciprocalUtils.Algorithm.DESede);
+			secret=StringGenerator.generateKey(ReciprocalUtils.Algorithm.DESede);
 		}else if(type.equals("aes")){
-			secret=ReciprocalUtils.generateKey(ReciprocalUtils.Algorithm.AES);
+			secret=StringGenerator.generateKey(ReciprocalUtils.Algorithm.AES);
 		}else if(type.equals("blowfish")){
-			secret=ReciprocalUtils.generateKey(ReciprocalUtils.Algorithm.Blowfish);
+			secret=StringGenerator.generateKey(ReciprocalUtils.Algorithm.Blowfish);
 		}else if(type.equalsIgnoreCase("RS256")
 				||type.equalsIgnoreCase("RS384")
 				||type.equalsIgnoreCase("RS512")) {
@@ -186,7 +187,7 @@ public class ApplicationsController extends BaseAppContorller {
 					.generate();
 			secret = octKey.toJSONString();
 		}else{
-			secret=ReciprocalUtils.generateKey("");
+			secret=StringGenerator.generateKey("");
 		}
 		
 		return new Message<>(Message.SUCCESS,secret);

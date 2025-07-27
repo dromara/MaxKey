@@ -33,7 +33,6 @@ import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.authz.saml20.metadata.MetadataDescriptorUtil;
 import org.dromara.maxkey.configuration.ApplicationConfig;
 import org.dromara.maxkey.constants.ConstsProtocols;
-import org.dromara.maxkey.crypto.ReciprocalUtils;
 import org.dromara.maxkey.crypto.cert.X509CertUtils;
 import org.dromara.maxkey.crypto.keystore.KeyStoreLoader;
 import org.dromara.maxkey.crypto.keystore.KeyStoreUtil;
@@ -41,6 +40,7 @@ import org.dromara.maxkey.entity.Message;
 import org.dromara.maxkey.entity.apps.AppsSAML20Details;
 import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.service.AppsSaml20DetailsService;
+import org.dromara.maxkey.util.StringGenerator;
 import org.opensaml.common.xml.SAMLConstants;
 import org.opensaml.saml2.metadata.EntityDescriptor;
 import org.opensaml.saml2.metadata.SPSSODescriptor;
@@ -73,7 +73,7 @@ public class SAML20DetailsController   extends BaseAppContorller {
 	@RequestMapping(value = { "/init" }, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public Message<?> init() {
 		AppsSAML20Details saml20Details=new AppsSAML20Details();
-		saml20Details.setSecret(ReciprocalUtils.generateKey(""));
+		saml20Details.setSecret(StringGenerator.generateKey(""));
 		saml20Details.setProtocol(ConstsProtocols.SAML20);
 		saml20Details.setId(saml20Details.generateId());
 		return new Message<AppsSAML20Details>(saml20Details);

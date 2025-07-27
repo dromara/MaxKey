@@ -84,7 +84,7 @@ public class ForgotPasswordContorller {
 	public Message<CnfPasswordPolicy> passwordpolicy(){
 		CnfPasswordPolicy passwordPolicy = passwordPolicyService.get(WebContext.getInst().getId());
 		//构建密码强度说明
-		passwordPolicy.buildMessage();
+		passwordPolicyService.buildTipMessage(passwordPolicy);
 		return new Message<>(passwordPolicy);
 	}
 

@@ -21,11 +21,11 @@ import java.util.List;
 
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.constants.ConstsProtocols;
-import org.dromara.maxkey.crypto.ReciprocalUtils;
 import org.dromara.maxkey.entity.Message;
 import org.dromara.maxkey.entity.apps.Apps;
 import org.dromara.maxkey.entity.apps.AppsExtendApiDetails;
 import org.dromara.maxkey.entity.idm.UserInfo;
+import org.dromara.maxkey.util.StringGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -43,7 +43,7 @@ public class ExtendApiDetailsController  extends BaseAppContorller {
 		AppsExtendApiDetails extendApiDetails=new AppsExtendApiDetails();
 		extendApiDetails.setId(extendApiDetails.generateId());
 		extendApiDetails.setProtocol(ConstsProtocols.EXTEND_API);
-		extendApiDetails.setSecret(ReciprocalUtils.generateKey(""));
+		extendApiDetails.setSecret(StringGenerator.generateKey(""));
 		return new Message<>(extendApiDetails);
 	}
 	

@@ -22,7 +22,6 @@ package org.dromara.maxkey.entity.permissions;
 import java.io.Serializable;
 
 import org.dromara.maxkey.constants.ConstsStatus;
-import org.dromara.maxkey.web.WebContext;
 import org.dromara.mybatis.jpa.entity.JpaEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -71,8 +70,8 @@ public class PermissionRole  extends JpaEntity implements Serializable {
      * @param roleId String
      * @param resourceId String
      */
-    public PermissionRole(String appId, String roleId, String resourceId , String createdBy,String instId) {
-        this.id = WebContext.genId();
+    public PermissionRole(String id,String appId, String roleId, String resourceId , String createdBy,String instId) {
+        this.id = id;
         this.appId = appId;
         this.roleId = roleId;
         this.resourceId = resourceId;

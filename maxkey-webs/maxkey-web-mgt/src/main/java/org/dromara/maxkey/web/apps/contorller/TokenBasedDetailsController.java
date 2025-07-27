@@ -27,6 +27,7 @@ import org.dromara.maxkey.entity.apps.AppsJwtDetails;
 import org.dromara.maxkey.entity.apps.AppsTokenBasedDetails;
 import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.service.AppsTokenBasedDetailsService;
+import org.dromara.maxkey.util.StringGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,7 @@ public class TokenBasedDetailsController  extends BaseAppContorller {
 		AppsTokenBasedDetails tokenBasedDetails =new AppsTokenBasedDetails();
 		tokenBasedDetails.setId(tokenBasedDetails.generateId());
 		tokenBasedDetails.setProtocol(ConstsProtocols.TOKENBASED);
-		tokenBasedDetails.setSecret(ReciprocalUtils.generateKey(ReciprocalUtils.Algorithm.AES));
+		tokenBasedDetails.setSecret(StringGenerator.generateKey(ReciprocalUtils.Algorithm.AES));
 		tokenBasedDetails.setAlgorithmKey(tokenBasedDetails.getSecret());
 		tokenBasedDetails.setUserPropertys("userPropertys");
 		return new Message<AppsTokenBasedDetails>(tokenBasedDetails);

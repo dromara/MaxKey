@@ -26,7 +26,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import org.dromara.maxkey.constants.ConstsStatus;
-import org.dromara.maxkey.web.WebContext;
 
 @Entity
 @Table(name = "MXK_PERMISSION")
@@ -65,8 +64,8 @@ public class Permission  extends JpaEntity implements Serializable {
      * @param groupId String
      * @param resourceId String
      */
-    public Permission(String appId, String groupId, String resourceId , String instId) {
-        this.id = WebContext.genId();
+    public Permission(String id,String appId, String groupId, String resourceId , String instId) {
+        this.id = id;
         this.appId = appId;
         this.groupId = groupId;
         this.resourceId = resourceId;

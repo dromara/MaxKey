@@ -1,0 +1,10 @@
+description = "maxkey-cache"
+
+dependencies {
+	implementation project(":maxkey-commons:maxkey-common")
+	implementation project(":maxkey-commons:maxkey-crypto")
+
+	//local jars
+	implementation fileTree(dir: '../maxkey-lib/', include: '*/*.jar')
+	
+}

@@ -30,6 +30,7 @@ import org.dromara.maxkey.entity.permissions.PermissionRole;
 import org.dromara.maxkey.persistence.service.HistorySystemLogsService;
 import org.dromara.maxkey.persistence.service.PermissionRoleService;
 import org.dromara.maxkey.util.StrUtils;
+import org.dromara.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,6 +77,7 @@ public class PermissionRoleController {
 		HashMap<String,String >newPermissionRolesMap =new HashMap<>();
 		for(String resourceId : resourceIds) {
 		    PermissionRole newPermissionRole =new PermissionRole(
+		    		WebContext.genId(),
 		    		permissionRole.getAppId(),
 		    		permissionRole.getRoleId(),
                     resourceId,
