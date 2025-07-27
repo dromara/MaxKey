@@ -1,0 +1,101 @@
+<!--二次认证-->
+<form nz-form [formGroup]="form" (ngSubmit)="submit()" role="form">
+  <div nz-row>
+    <nz-alert *ngIf="error" style="width: 100%" [nzType]="'error'" [nzMessage]="error" [nzShowIcon]="true" class="mb-lg"></nz-alert>
+    <nz-radio-group nzSize="large" style="margin-bottom: 8px; width: 100%">
+      <label nz-radio-button nzValue="normal" style="width: 368px; text-align: center">
+        <i nz-icon nzType="safety" nzTheme="outline"></i>
+        {{ 'mxk.login.twoFactor' | i18n }}
+      </label>
+    </nz-radio-group>
+    <nz-form-item *ngIf="twoFactorType == '1'" style="width: 100%">
+      <nz-form-control [nzErrorTip]="'' | i18n">
+        <nz-input-group nzSize="large" nzPrefixIcon="lock" nzSearch>
+          <input nz-input formControlName="otpCaptcha" placeholder="{{ 'mxk.login.text.captcha' | i18n }}" />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item *ngIf="twoFactorType == '2'" style="width: 100%">
+      <nz-form-control [nzErrorTip]="">
+        <nz-input-group nzSize="large" nzPrefixIcon="user">
+          <input nz-input formControlName="twoFactorEmail" placeholder="{{ 'mxk.login.text.mobile' | i18n }}" />
+        </nz-input-group>
+        <ng-template #mobileErrorTip let-i>
+          <ng-container *ngIf="i.errors.required">
+            {{ 'validation.phone-number.required' | i18n }}
+          </ng-container>
+          <ng-container *ngIf="i.errors.pattern">
+            {{ 'validation.phone-number.wrong-format' | i18n }}
+          </ng-container>
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item *ngIf="twoFactorType == '2'" style="width: 100%">
+      <nz-form-control [nzErrorTip]="'' | i18n">
+        <nz-input-group nzSize="large" nzPrefixIcon="mail" nzSearch [nzAddOnAfter]="suffixSendOtpCodeButton">
+          <input nz-input formControlName="otpCaptcha" placeholder="{{ 'mxk.login.text.captcha' | i18n }}" />
+        </nz-input-group>
+        <ng-template #suffixSendOtpCodeButton>
+          <button
+            type="button"
+            nz-button
+            nzSize="large"
+            (click)="sendTwoFactorOtpCode()"
+            [disabled]="count > 0"
+            nzBlock
+            [nzLoading]="loading"
+          >
+            {{ count ? count + 's' : ('app.register.get-verification-code' | i18n) }}
+          </button>
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item *ngIf="twoFactorType == '3'" style="width: 100%">
+      <nz-form-control [nzErrorTip]="">
+        <nz-input-group nzSize="large" nzPrefixIcon="user">
+          <input nz-input formControlName="twoFactorMobile" placeholder="{{ 'mxk.login.text.mobile' | i18n }}" />
+        </nz-input-group>
+        <ng-template #mobileErrorTip let-i>
+          <ng-container *ngIf="i.errors.required">
+            {{ 'validation.phone-number.required' | i18n }}
+          </ng-container>
+          <ng-container *ngIf="i.errors.pattern">
+            {{ 'validation.phone-number.wrong-format' | i18n }}
+          </ng-container>
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item *ngIf="twoFactorType == '3'" style="width: 100%">
+      <nz-form-control [nzErrorTip]="'' | i18n">
+        <nz-input-group nzSize="large" nzPrefixIcon="mail" nzSearch [nzAddOnAfter]="suffixSendOtpCodeButton">
+          <input nz-input formControlName="otpCaptcha" placeholder="{{ 'mxk.login.text.captcha' | i18n }}" />
+        </nz-input-group>
+        <ng-template #suffixSendOtpCodeButton>
+          <button
+            type="button"
+            nz-button
+            nzSize="large"
+            (click)="sendTwoFactorOtpCode()"
+            [disabled]="count > 0"
+            nzBlock
+            [nzLoading]="loading"
+          >
+            {{ count ? count + 's' : ('app.register.get-verification-code' | i18n) }}
+          </button>
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+  <nz-form-item>
+    <nz-col [nzSpan]="12"></nz-col>
+    <nz-col [nzSpan]="12" class="text-right">
+      <a class="forgot" routerLink="/passport/login">{{ 'mxk.forgot.login' | i18n }}</a>
+    </nz-col>
+  </nz-form-item>
+  <nz-form-item>
+    <button nz-button type="submit" nzType="primary" nzSize="large" [nzLoading]="loading" nzBlock>
+      {{ 'app.login.login' | i18n }}
+    </button>
+  </nz-form-item>
+</form>

@@ -27,6 +27,8 @@ public interface LoginService {
     
     public UserInfo find(String username, String password);
 
+    public UserInfo findById(String userId);
+    
     public List<UserInfo> findByUsername(String username, String password);
 
     public List<UserInfo> findByUsernameOrMobile(String username, String password);

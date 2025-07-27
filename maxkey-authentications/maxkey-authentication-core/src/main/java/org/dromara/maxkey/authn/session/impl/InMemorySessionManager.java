@@ -38,21 +38,30 @@ public class InMemorySessionManager implements SessionManager{
     static final 	long 	CACHE_MAXIMUM_SIZE 	= 2000000;
     protected 		int 	validitySeconds 	= 60 * 30; //default 30 minutes.
     
-	protected  static  Cache<String, Session> sessionStore = 
-        	        Caffeine.newBuilder()
-        	            .expireAfterWrite(10, TimeUnit.MINUTES)
-        	            .maximumSize(CACHE_MAXIMUM_SIZE)
-        	            .build();
+	Cache<String, Session> sessionStore;
+	
+	Cache<String, Session> sessionTwoFactorStore;
 	
 	public InMemorySessionManager(int validitySeconds) {
         super();
         this.validitySeconds = validitySeconds;
+        if(validitySeconds > 0) {
         sessionStore = 
                 Caffeine.newBuilder()
                     .expireAfterWrite(validitySeconds, TimeUnit.SECONDS)
                     .maximumSize(CACHE_MAXIMUM_SIZE)
                     .build();
+        }else {
+        	sessionStore = Caffeine.newBuilder()
+		            .expireAfterWrite(10, TimeUnit.MINUTES)
+		            .maximumSize(CACHE_MAXIMUM_SIZE)
+		            .build();
+        }
         
+        sessionTwoFactorStore = Caffeine.newBuilder()
+            	.expireAfterWrite(10, TimeUnit.MINUTES)
+            	.maximumSize(CACHE_MAXIMUM_SIZE)
+            	.build();
     }
 
     @Override
@@ -126,6 +135,25 @@ public class InMemorySessionManager implements SessionManager{
 		    this.create(sessionId, session);
 		    _logger.debug("session {} store visited  {} ." , sessionId , visited);
 		}
+	}
+	
+	@Override
+	public void createTwoFactor(String sessionId, Session session) {
+		session.setExpiredTime(session.getLastAccessTime().plusSeconds(validitySeconds));
+		sessionTwoFactorStore.put(sessionId, session);
+	}
+
+	@Override
+	public Session removeTwoFactor(String sessionId) {
+		Session session = sessionTwoFactorStore.getIfPresent(sessionId);	
+		sessionTwoFactorStore.invalidate(sessionId);
+		return session;
+	}
+
+	@Override
+	public Session getTwoFactor(String sessionId) {
+		Session session = sessionTwoFactorStore.getIfPresent(sessionId);
+		return session;
 	}
 
 }

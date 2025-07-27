@@ -43,4 +43,19 @@ public class ConstsLoginType {
 
     public static final String HTTPHEADER 		= "HttpHeader";
 
+    
+    public static final class TwoFactor{
+    	/**
+    	 * 1=TOTP(动态验证码)  
+    	 */
+    	public static final String TWO_FACTOR_TOTP 		= "TwoFactorTotp";
+    	/**
+    	 * 2=邮箱验证码
+    	 */
+    	public static final String TWO_FACTOR_EMAIL 	= "TwoFactorEmail";
+    	/**
+    	 * 3=手机短信
+    	 */
+    	public static final String TWO_FACTOR_MOBILE 	= "TwoFactorMobile";
+    }
 }

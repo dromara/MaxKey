@@ -35,9 +35,14 @@ public class RedisSessionManager implements SessionManager {
 	
     protected int validitySeconds = 60 * 30; //default 30 minutes.
     
+    int twoFactorValidity 	= 10 * 60; //default 10 minutes.
+    
 	RedisConnectionFactory connectionFactory;
 	
-	public static String PREFIX="MXK_SESSION_";
+	public static final String PREFIX = "MXK_SESSION_";
+	
+	public static final String PREFIX_TWOFACTOR = "mxk:session:twofactor:%s";
+	
 	
 	public String getKey(String sessionId) {
 		return PREFIX + sessionId;
@@ -148,6 +153,36 @@ public class RedisSessionManager implements SessionManager {
 		    this.create(sessionId, session);
 		    _logger.debug("session {} store visited  {} ." , sessionId , visited);
 		}
+	}
+	
+	public String formatTwoFactorKey(String sessionId) {
+		return PREFIX_TWOFACTOR.formatted(sessionId) ;
+	}
+	
+	@Override
+	public void createTwoFactor(String sessionId, Session session) {
+		session.setExpiredTime(session.getLastAccessTime().plusSeconds(validitySeconds));
+		RedisConnection conn = connectionFactory.getConnection();
+		conn.setexObject( formatTwoFactorKey(sessionId), twoFactorValidity, session);
+		conn.close();
+		
+	}
+
+	@Override
+	public Session removeTwoFactor(String sessionId) {
+		RedisConnection conn = connectionFactory.getConnection();
+		Session ticket = conn.getObject(formatTwoFactorKey(sessionId));
+		conn.delete(formatTwoFactorKey(sessionId));
+		conn.close();
+		return ticket;
+	}
+
+	@Override
+	public Session getTwoFactor(String sessionId) {
+		RedisConnection conn = connectionFactory.getConnection();
+        Session session = conn.getObject(formatTwoFactorKey(sessionId));
+        conn.close();
+        return session;
 	}
 	
 }

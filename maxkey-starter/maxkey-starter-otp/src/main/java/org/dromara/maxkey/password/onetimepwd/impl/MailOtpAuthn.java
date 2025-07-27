@@ -121,6 +121,12 @@ public class MailOtpAuthn extends AbstractOtpAuthn {
     public void setMessageTemplate(String messageTemplate) {
         this.messageTemplate = messageTemplate;
     }
+
+	@Override
+	public boolean validate(String sharedSecret, String token) {
+		// TODO Auto-generated method stub
+		return false;
+	}
     
 
 }

@@ -56,4 +56,10 @@ public class SmsOtpAuthn extends AbstractOtpAuthn {
         
     }
 
+	@Override
+	public boolean validate(String sharedSecret, String token) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

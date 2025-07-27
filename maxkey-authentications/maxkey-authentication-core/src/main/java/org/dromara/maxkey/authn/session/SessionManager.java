@@ -41,4 +41,10 @@ public interface SessionManager {
     public void terminate(String sessionId,String userId,String username);
     
     public void visited(String sessionId , VisitedDto visited);
+    
+    public  void createTwoFactor(String sessionId, Session session);
+    
+    public  Session removeTwoFactor(String sessionId);
+    
+    public  Session getTwoFactor(String sessionId);
 }

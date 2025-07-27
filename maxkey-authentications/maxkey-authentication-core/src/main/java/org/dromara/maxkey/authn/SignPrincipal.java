@@ -37,6 +37,8 @@ public class SignPrincipal implements  UserDetails {
     
     String sessionId;
     
+    int   	twoFactor;
+    
     List<GrantedAuthority> grantedAuthority;
     
     List<GrantedAuthority> grantedAuthorityApps;
@@ -204,7 +206,19 @@ public class SignPrincipal implements  UserDetails {
         }  
     }
 
-    @Override
+    public int getTwoFactor() {
+		return twoFactor;
+	}
+
+	public void setTwoFactor(int twoFactor) {
+		this.twoFactor = twoFactor;
+	}
+	
+	public void clearTwoFactor() {
+		this.twoFactor = 0;
+	}
+
+	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Principal [username=");

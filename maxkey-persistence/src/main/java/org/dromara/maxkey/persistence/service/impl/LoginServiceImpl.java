@@ -58,6 +58,8 @@ public class LoginServiceImpl  implements LoginService{
     private static final String GROUPS_SELECT_STATEMENT = "select distinct g.id,g.groupcode,g.groupname from mxk_userinfo u,mxk_groups g,mxk_group_member gm where u.id = ?  and u.id=gm.memberid and gm.groupid=g.id ";
 
     private static final String DEFAULT_USERINFO_SELECT_STATEMENT = "select * from  mxk_userinfo where username = ? ";
+    
+    private static final String DEFAULT_USERINFO_SELECT_STATEMENT_BY_ID = "select * from  mxk_userinfo where id = ? ";
 
     private static final String DEFAULT_USERINFO_SELECT_STATEMENT_USERNAME_MOBILE = "select * from  mxk_userinfo where (username = ? or mobile = ?)";
 
@@ -491,6 +493,16 @@ public class LoginServiceImpl  implements LoginService{
             return userInfo;
         }
     }
+
+	@Override
+	public UserInfo findById(String userId) {
+		List<UserInfo> listUserInfo = jdbcTemplate.query(
+				DEFAULT_USERINFO_SELECT_STATEMENT_BY_ID,
+    			new UserInfoRowMapper(),
+    			userId
+    		);
+		return (CollectionUtils.isNotEmpty(listUserInfo) ? listUserInfo.get(0) : null);
+	}
 }
 
 

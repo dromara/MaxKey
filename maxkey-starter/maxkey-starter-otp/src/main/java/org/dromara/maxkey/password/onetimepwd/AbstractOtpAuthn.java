@@ -69,6 +69,8 @@ public abstract class AbstractOtpAuthn {
     public abstract boolean produce(UserInfo userInfo);
 
     public abstract boolean validate(UserInfo userInfo, String token);
+    
+    public abstract boolean validate(String sharedSecret, String token);
 
     protected String defaultProduce(UserInfo userInfo) {
         return genToken(userInfo);

@@ -207,4 +207,35 @@ public class SessionManagerImpl implements SessionManager{
 			redisSessionManager.visited(sessionId,visited);
 		}
 	}
+	
+	@Override
+	public void createTwoFactor(String sessionId, Session session) {
+		if(isRedis) {
+			redisSessionManager.createTwoFactor(sessionId, session);
+		}else {
+			inMemorySessionManager.createTwoFactor(sessionId, session);
+		}
+	}
+
+	@Override
+	public Session removeTwoFactor(String sessionId) {
+		Session session = null;
+		if(isRedis) {
+			session = redisSessionManager.removeTwoFactor(sessionId);
+		}else {
+			session = inMemorySessionManager.removeTwoFactor(sessionId);
+		}
+		return session;
+	}
+
+	@Override
+	public Session getTwoFactor(String sessionId) {
+		Session session = null;
+		if(isRedis) {
+			session = redisSessionManager.getTwoFactor(sessionId);
+		}else {
+			session = inMemorySessionManager.getTwoFactor(sessionId);
+		}
+		return session;
+	}
 }

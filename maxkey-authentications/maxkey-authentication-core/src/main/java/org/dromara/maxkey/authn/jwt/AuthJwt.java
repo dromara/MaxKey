@@ -104,7 +104,7 @@ public class AuthJwt implements Serializable {
 		this.email = principal.getUserInfo().getEmail();
 		this.instId = principal.getUserInfo().getInstId();
 		this.instName = principal.getUserInfo().getInstName();
-		
+		this.twoFactor =principal.getTwoFactor();
 		this.authorities = new ArrayList<>();
 		for(GrantedAuthority grantedAuthority :authentication.getAuthorities()) {
 			this.authorities.add(grantedAuthority.getAuthority());

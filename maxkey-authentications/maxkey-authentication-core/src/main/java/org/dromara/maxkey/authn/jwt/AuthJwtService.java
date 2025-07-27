@@ -22,6 +22,7 @@ import java.util.Date;
 
 import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.authn.SignPrincipal;
+import org.dromara.maxkey.constants.ConstsJwt;
 import org.dromara.maxkey.crypto.jwt.Hmac512Service;
 import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.web.WebContext;
@@ -61,7 +62,8 @@ public class AuthJwtService {
 				.expirationTime(expirationTime)
 				.claim("locale", userInfo.getLocale())
 				.claim("kid", Hmac512Service.MXK_AUTH_JWK)
-				.claim("institution", userInfo.getInstId())
+				.claim(ConstsJwt.USER_ID, userInfo.getId())
+				.claim(ConstsJwt.INST_ID, userInfo.getInstId())
 				.build();
 		
 		return signedJWT(jwtClaims);

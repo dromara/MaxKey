@@ -85,6 +85,10 @@ public abstract class AbstractAuthenticationRealm {
     public UserInfo loadUserInfo(String username, String password) {
         return loginService.find(username, password);
     }
+    
+    public UserInfo loadUserInfoById(String userId) {
+        return loginService.findById(userId);
+    }
 
     public abstract boolean passwordMatches(UserInfo userInfo, String password);
     

@@ -15,6 +15,7 @@
 			"sign-in-with": "其他登錄方式",
 			"signup": "用戶註冊",
 			"login": "登錄",
+      "twoFactor": "二次身份认证",
 			"text.username": "用戶名",
 			"text.mobile": "手機號碼",
 			"text.password": "密碼",

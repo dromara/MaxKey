@@ -291,9 +291,14 @@ export class UserLoginComponent implements OnInit, OnDestroy {
         } else {
           // 清空路由复用信息
           this.reuseTabService.clear();
-          // 设置用户Token信息
-          this.authnService.auth(res.data);
-          this.authnService.navigate({});
+          if (res.data.twoFactor === '0') {
+            // 设置用户Token信息
+            this.authnService.auth(res.data);
+            this.authnService.navigate({});
+          } else {
+            localStorage.setItem(CONSTS.TWO_FACTOR_DATA, JSON.stringify(res.data));
+            this.router.navigateByUrl('/passport/tfa');
+          }
         }
         this.cdr.detectChanges();
       });

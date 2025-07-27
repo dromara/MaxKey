@@ -26,6 +26,7 @@ import { UserLoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout.component';
 import { UserRegisterResultComponent } from './register-result/register-result.component';
 import { UserRegisterComponent } from './register/register.component';
+import { TfaComponent } from './tfa/tfa.component';
 
 const routes: Routes = [
   // passport
@@ -37,6 +38,11 @@ const routes: Routes = [
         path: 'login',
         component: UserLoginComponent,
         data: { title: '登录', titleI18n: 'app.login.login' }
+      },
+      {
+        path: 'tfa',
+        component: TfaComponent,
+        data: { title: '登录二次认证', titleI18n: 'app.login.login' }
       },
       {
         path: 'register',

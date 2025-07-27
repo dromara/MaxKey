@@ -20,6 +20,7 @@ package org.dromara.maxkey.authn.provider;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.authn.LoginCredential;
 import org.dromara.maxkey.authn.SignPrincipal;
 import org.dromara.maxkey.authn.jwt.AuthTokenService;
@@ -30,6 +31,7 @@ import org.dromara.maxkey.authn.web.AuthorizationUtils;
 import org.dromara.maxkey.configuration.ApplicationConfig;
 import org.dromara.maxkey.constants.ConstsLoginType;
 import org.dromara.maxkey.constants.ConstsStatus;
+import org.dromara.maxkey.constants.ConstsTwoFactor;
 import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.password.onetimepwd.AbstractOtpAuthn;
 import org.dromara.maxkey.password.onetimepwd.MailOtpAuthnService;
@@ -93,6 +95,10 @@ public abstract class AbstractAuthenticationProvider {
 
     public abstract Authentication doAuthenticate(LoginCredential authentication);
 
+    public Authentication doTwoFactorAuthenticate(LoginCredential credential , UserInfo user) {
+    	return null;
+    }
+    
     @SuppressWarnings("rawtypes")
     public boolean supports(Class authentication) {
         return (UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication));
@@ -147,6 +153,13 @@ public abstract class AbstractAuthenticationProvider {
          */
         session.setAuthentication(authenticationToken);
 
+        if(credential.getAuthType().equalsIgnoreCase(AuthType.NORMAL) 
+        		&& userInfo.getAuthnType() > ConstsTwoFactor.NONE ) {
+        	//用户配置二次认证
+        	principal.setTwoFactor(userInfo.getAuthnType());
+        	this.sessionManager.createTwoFactor(session.getId(), session);
+        }
+        
         //create session
         this.sessionManager.create(session.getId(), session);
 
@@ -256,6 +269,19 @@ public abstract class AbstractAuthenticationProvider {
                     WebConstants.LOGIN_RESULT.USER_INACTIVE
                 );
     	}
+        return true;
+    }
+    
+    /**
+     * check input otp empty.
+     * 
+     * @param password String
+     * @return
+     */
+    protected boolean emptyOtpCaptchaValid(String otpCaptcha) {
+        if (StringUtils.isBlank(otpCaptcha)) {
+            throw new BadCredentialsException(WebContext.getI18nValue("login.error.otpCaptcha.null"));
+        }
         return true;
     }
 
