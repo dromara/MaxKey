@@ -81,7 +81,7 @@ public class RedisConnection {
 	public  void setex(String key,long seconds, String value){
 		_logger.trace("setex key {} ..." , key);
 		if(seconds==0){
-			conn.setex(key, RedisConnectionFactory.DEFAULT_CONFIG.DEFAULT_LIFETIME, value);
+			conn.setex(key, RedisDefaultConfig.DEFAULT_LIFETIME, value);
 		}else{
 			conn.setex(key, seconds, value);
 		}
