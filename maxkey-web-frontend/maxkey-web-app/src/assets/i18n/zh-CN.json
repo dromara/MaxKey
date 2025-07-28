@@ -52,8 +52,8 @@
 			},
 			"audit": {
 				"": "审计",
-				"logins": "系统登录日志",
-				"loginapps": "应用访问日志",
+				"logins": "登录日志",
+				"loginapps": "访问日志",
 				"synchronizer": "同步器日志",
 				"connector": "连接器日志",
 				"operate": "管理日志"

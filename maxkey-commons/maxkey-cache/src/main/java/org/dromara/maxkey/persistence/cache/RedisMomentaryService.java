@@ -30,7 +30,8 @@ public class RedisMomentaryService implements MomentaryService {
 	
 	RedisConnectionFactory connectionFactory;
 	
-	public static String PREFIX="MXK_MOMENTARY_";
+	public static  final String PREFIX = "mxk:momentary:";
+	
 	/**
 	 * @param connectionFactory
 	 */
@@ -54,16 +55,18 @@ public class RedisMomentaryService implements MomentaryService {
 	@Override
 	public  void put(String sessionId , String name, Object value){
 		RedisConnection conn = connectionFactory.getConnection();
-		conn.setexObject(getSessionKey(sessionId , name), validitySeconds, value);
-		_logger.trace("key {}, validitySeconds {}, value {}",getSessionKey(sessionId , name),validitySeconds,value);
+		String sessionKey = getSessionKey(sessionId , name); 
+		conn.setexObject(sessionKey, validitySeconds, value);
+		_logger.trace("key {}, validitySeconds {}, value {}",sessionKey,validitySeconds,value);
 		conn.close();
 	}
 
     @Override
     public Object get(String sessionId , String name) {
         RedisConnection conn = connectionFactory.getConnection();
-        Object value = conn.getObject(getSessionKey(sessionId , name));
-        _logger.trace("key {}, value {}",getSessionKey(sessionId , name),value);
+        String sessionKey = getSessionKey(sessionId , name); 
+        Object value = conn.getObject(sessionKey);
+        _logger.trace("key {}, value {}",sessionKey,value);
         conn.close();
         return value;
     }
@@ -71,19 +74,16 @@ public class RedisMomentaryService implements MomentaryService {
 	@Override
 	public Object remove(String sessionId, String name) {
 		RedisConnection conn = connectionFactory.getConnection();
-        Object value = conn.getObject(getSessionKey(sessionId , name));
+		String sessionKey = getSessionKey(sessionId , name); 
+        Object value = conn.getObject(sessionKey);
         conn.delete(getSessionKey(sessionId , name));
         conn.close();
-        _logger.trace("key {}, value {}",getSessionKey(sessionId , name),value);
+        _logger.trace("key {}, value {}",sessionKey,value);
         return value;
 	}
 	
-
     private String getSessionKey(String sessionId , String name) {
     	return PREFIX + sessionId + name;
     }
 
-
-
-	
 }

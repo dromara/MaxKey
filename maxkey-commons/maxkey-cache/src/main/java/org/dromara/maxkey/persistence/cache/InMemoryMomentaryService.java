@@ -40,22 +40,25 @@ public class InMemoryMomentaryService implements MomentaryService{
 
     @Override
     public  void put(String sessionId , String name, Object value){
-    	 _logger.trace("key {}, value {}",getSessionKey(sessionId , name),value);
-    	momentaryStore.put(getSessionKey(sessionId,name), value);
+    	String sessionKey = getSessionKey(sessionId , name);
+    	 _logger.trace("key {}, value {}",sessionKey,value);
+    	momentaryStore.put(sessionKey, value);
 	}
 
 	@Override
 	public Object remove(String sessionId , String name) {
-		Object value = momentaryStore.getIfPresent(getSessionKey(sessionId,name));	
-		momentaryStore.invalidate(getSessionKey(sessionId,name));
-		 _logger.trace("key {}, value {}",getSessionKey(sessionId , name),value);
+		String sessionKey = getSessionKey(sessionId , name);
+		Object value = momentaryStore.getIfPresent(sessionKey);	
+		momentaryStore.invalidate(sessionKey);
+		 _logger.trace("key {}, value {}",sessionKey,value);
 		return value;
 	}
 
     @Override
     public Object get(String sessionId , String name) {
-    	 _logger.trace("key {}",getSessionKey(sessionId , name));
-    	return momentaryStore.getIfPresent(getSessionKey(sessionId,name));
+    	String sessionKey = getSessionKey(sessionId , name);
+    	 _logger.trace("key {}",sessionKey);
+    	return momentaryStore.getIfPresent(sessionKey);
     }
 
 

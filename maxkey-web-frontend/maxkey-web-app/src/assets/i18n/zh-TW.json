@@ -52,8 +52,8 @@
 			},
 			"audit": {
 				"": "審計",
-				"logins": "系統登錄日誌",
-				"loginapps": "應用訪問日誌",
+				"logins": "登錄日誌",
+				"loginapps": "訪問日誌",
 				"synchronizer": "同步器日誌",
 				"connector": "連接器日誌",
 				"operate": "管理日誌"

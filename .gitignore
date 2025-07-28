@@ -56,3 +56,4 @@ maxkey-web-frontend/maxkey-web-app/dist
 
 **/out/*
 /.sonarlint
+**/**/package-lock.json

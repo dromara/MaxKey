@@ -53,7 +53,7 @@
 			"audit": {
 				"": "Audits",
 				"logins": "Logins",
-				"loginapps": "LoginApps"
+				"loginapps": "AccessApps"
 			},
 			"mgt": "Management"
 		},
