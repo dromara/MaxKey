@@ -27,7 +27,7 @@ bootJar {
 	dependsOn jar
 	archiveBaseName = 'maxkey-openapi-boot'
     version = "${project.version}-ga"
-    mainClass = 'org.dromara.maxkey.MaxKeyOpenApiApplication'
+    mainClass = 'org.dromara.maxkey.MaxKeyApiApplication'
 	manifest {
 	        attributes(
                         "Implementation-Title": project.name,

@@ -40,7 +40,7 @@ jib {
 		
 	}
 	container {
-		mainClass 	= "org.dromara.maxkey.MaxKeyOpenApiApplication"
+		mainClass 	= "org.dromara.maxkey.MaxKeyApiApplication"
 		jvmFlags 	= ['-Dfile.encoding=utf-8', '-Dserver.port=9525','-Duser.timezone=Asia/Shanghai']
 		ports	 	= ['9525']
 	}
@@ -49,8 +49,12 @@ jib {
 //build.configure { finalizedBy jib }
 
 dependencies {
-	implementation project(":maxkey-common")
-	implementation project(":maxkey-core")
+	implementation project(":maxkey-commons:maxkey-cache")
+	implementation project(":maxkey-commons:maxkey-common")
+	implementation project(":maxkey-commons:maxkey-core")
+	implementation project(":maxkey-commons:maxkey-crypto")
+	
+	implementation project(":maxkey-entity")
 	implementation project(":maxkey-persistence")
 	
 	implementation project(":maxkey-starter:maxkey-starter-captcha")
@@ -68,6 +72,6 @@ dependencies {
    	
    	//webapis
    	implementation project(":maxkey-web-apis:maxkey-web-api-scim")   
-   	implementation project(":maxkey-web-apis:maxkey-web-api-rest")
+   	implementation project(":maxkey-web-apis:maxkey-web-api-rest")	
    	
 }

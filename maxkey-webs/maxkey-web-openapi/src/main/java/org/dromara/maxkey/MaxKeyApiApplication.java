@@ -35,25 +35,25 @@ import org.springframework.context.ConfigurableApplicationContext;
 @SpringBootApplication
 @EnableDiscoveryClient
 @MapperScan("org.dromara.maxkey.persistence.mapper,")
-public class MaxKeyOpenApiApplication extends SpringBootServletInitializer {
-	static final Logger _logger = LoggerFactory.getLogger(MaxKeyOpenApiApplication.class);
+public class MaxKeyApiApplication extends SpringBootServletInitializer {
+	static final Logger _logger = LoggerFactory.getLogger(MaxKeyApiApplication.class);
 
 	public static void main(String[] args) {
-		_logger.info("Start MaxKey OpenApi Application ...");
+		_logger.info("Start MaxKey Api Application ...");
 	    ProductEnvironment.listEnvVars();
 	    
-		ConfigurableApplicationContext  applicationContext = SpringApplication.run(MaxKeyOpenApiApplication.class, args);
+		ConfigurableApplicationContext  applicationContext = SpringApplication.run(MaxKeyApiApplication.class, args);
 		new InitializeContext(applicationContext).init();
 		
-		_logger.info("MaxKey OpenApi at {}" , new DateTime());
-		_logger.info("MaxKey OpenApi Server Port {}" , WebContext.getServerPort());
-		_logger.info("MaxKey OpenApi started.");
+		_logger.info("MaxKey Api at {}" , new DateTime());
+		_logger.info("MaxKey Api Server Port {}" , WebContext.getServerPort());
+		_logger.info("MaxKey Api started.");
 		
 	}
 
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		return application.sources(MaxKeyOpenApiApplication.class);
+		return application.sources(MaxKeyApiApplication.class);
 	}
 
 }

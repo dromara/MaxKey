@@ -27,7 +27,7 @@ bootJar {
 	dependsOn jar
 	archiveBaseName = 'maxkey-openapi-boot'
     version = "${project.version}-ga"
-    mainClass = 'org.dromara.maxkey.MaxKeyOpenApiApplication'
+    mainClass = 'org.dromara.maxkey.MaxKeyApiApplication'
 	manifest {
 	        attributes(
 						"Implementation-Title": project.name,
@@ -40,8 +40,12 @@ bootJar {
 }
 
 dependencies {
-	implementation project(":maxkey-common")
-	implementation project(":maxkey-core")
+	implementation project(":maxkey-commons:maxkey-cache")
+	implementation project(":maxkey-commons:maxkey-common")
+	implementation project(":maxkey-commons:maxkey-core")
+	implementation project(":maxkey-commons:maxkey-crypto")
+	
+	implementation project(":maxkey-entity")
 	implementation project(":maxkey-persistence")
 	
 	implementation project(":maxkey-starter:maxkey-starter-captcha")
