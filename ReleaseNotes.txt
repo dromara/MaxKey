@@ -1,4 +1,28 @@
-﻿MaxKey v 4.1.7 GA 2025/04/01
+﻿MaxKey v 4.1.8 GA 2025/08/01
+    *(MAXKEY-250401) 二次认证
+    *(MAXKEY-250402) MaxKeyOpenApiApplication name MaxKeyApiApplication
+    *(MAXKEY-250403) 缓存优化
+    *(MAXKEY-250404) maxkey-core 拆分 maxkey-entity maxkey-cache
+    *(MAXKEY-250405) maxkey-common 拆分maxkey-crypto、maxkey-ldap & maxkey-commons 
+    *(MAXKEY-250406) 缓存验证码过期异常问题
+    *(MAXKEY-250407) 二次认证的配置
+    *(MAXKEY-250408) /functionList 获取应用功能权限清单
+    *(MAXKEY-250409) #IBY0OL 长时间未操作，验证码无法登录
+    *(MAXKEY-250410) 用户和组织的排序优化
+    *(MAXKEY-250411) 密码修改入口优化
+    *(MAXKEY-250412) Groups.service.ts rename groups.service.ts
+    *(MAXKEY-250413) 代码整合和优化
+    *(MAXKEY-250414) 开源之夏任务讲解和具体事项说明
+    *(MAXKEY-250415) 依赖项引用、更新和升级
+            springVersion                   6.2.9
+            springBootVersion               3.4.8
+            springSecurityVersion           6.5.2
+            springDataVersion               3.5.2
+            springkafkaVersion              3.3.8
+            tomcatVersion                   10.1.43
+            jacksonVersion                  2.18.4
+            
+MaxKey v 4.1.7 GA 2025/04/01
     *(MAXKEY-250301) #IBQEYU 使用 AccessToken 验证身份报错session is null
     *(MAXKEY-250302) org.dromara.maxkey.web.component to org.dromara.maxkey.entity
     *(MAXKEY-250303) remove query submitLoading
