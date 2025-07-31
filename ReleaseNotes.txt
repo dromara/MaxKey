@@ -13,7 +13,8 @@
     *(MAXKEY-250412) Groups.service.ts rename groups.service.ts
     *(MAXKEY-250413) 代码整合和优化
     *(MAXKEY-250414) 开源之夏任务讲解和具体事项说明
-    *(MAXKEY-250415) 依赖项引用、更新和升级
+    *(MAXKEY-250415) angular.json optimize
+    *(MAXKEY-250416) 依赖项引用、更新和升级
             springVersion                   6.2.9
             springBootVersion               3.4.8
             springSecurityVersion           6.5.2
