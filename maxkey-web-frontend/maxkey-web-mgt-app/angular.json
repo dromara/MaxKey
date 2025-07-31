@@ -29,7 +29,7 @@
             "assets": ["src/assets", "src/favicon.ico"],
             "styles": ["src/styles.less"],
             "scripts": [],
-            "allowedCommonJsDependencies": ["ajv", "ajv-formats"],
+            "allowedCommonJsDependencies": ["ajv", "ajv-formats","crypto-js"],
             "stylePreprocessorOptions": {
               "includePaths": [
                 "node_modules/"
@@ -48,7 +48,7 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "2mb",
+                  "maximumWarning": "4mb",
                   "maximumError": "6mb"
                 },
                 {
