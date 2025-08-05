@@ -67,11 +67,11 @@ include ('maxkey-protocols:maxkey-protocol-saml-2.0')
 include ('maxkey-protocols:maxkey-protocol-tokenbased')
 
 //webs
-//gataway
-include ('maxkey-webs:maxkey-gataway')
 //maxkey(sign)
 include ('maxkey-webs:maxkey-web-maxkey')
 //management(mgt)
 include ('maxkey-webs:maxkey-web-mgt')
 //openapi(open)
 include ('maxkey-webs:maxkey-web-openapi')
+//gataway
+include ('maxkey-webs:maxkey-gataway')
