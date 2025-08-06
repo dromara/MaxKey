@@ -47,7 +47,7 @@ public class ReportServiceImpl  extends JpaServiceImpl<ReportMapper,JpaEntity> i
 	}
 	
 	public Integer totalUsers(HashMap<String,Object> reportParameter) {
-		return getMapper().totalDepts(reportParameter);
+		return getMapper().totalUsers(reportParameter);
 	}
 	
 	public Integer totalDepts(HashMap<String,Object> reportParameter) {
