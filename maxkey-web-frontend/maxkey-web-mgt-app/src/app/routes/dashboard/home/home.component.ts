@@ -36,7 +36,7 @@ import worldMap from '../../../shared/map/json/world.zh.json';
 export class HomeComponent implements OnInit {
   simulateData: any[] = [];
   //当月新增
-  newUsers!: any[];
+  newUsers: number = 0;
   //当月活动
   activeUsers: number = 0;
   //当天统计
@@ -48,7 +48,7 @@ export class HomeComponent implements OnInit {
 
   totalApps: number = 0;
   //在线用户
-  onlineUsers!: any[];
+  onlineUsers: number = 0;
   //当日
   dayData: any[] = [];
   //当月
