@@ -38,15 +38,15 @@ export class HomeComponent implements OnInit {
   //当月新增
   newUsers!: any[];
   //当月活动
-  activeUsers!: number;
+  activeUsers: number = 0;
   //当天统计
-  dayCount!: number;
+  dayCount: number = 0;
 
-  totalUsers!: number;
+  totalUsers: number = 0;
 
-  totalDepts!: number;
+  totalDepts: number = 0;
 
-  totalApps!: number;
+  totalApps: number = 0;
   //在线用户
   onlineUsers!: any[];
   //当日
