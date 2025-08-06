@@ -67,10 +67,13 @@
 			}
 		},
 		"home": {
-			"onlineUsers": "Online Users",
+			"onlineUsers": "Online",
 			"dayCount": "Day Count",
 			"newUsers": "Month News",
 			"activeUsers": "Month Actives",
+			"totalUsers": "Users",
+			"totalDepts": "Depts",
+			"totalApps": "Apps",
 			"dayAccessCount": "Today Access Count",
 			"monthAccessCount": "30 Day Access Count",
 			"monthAppCount": "30 Day TOP 10 App Access Count",

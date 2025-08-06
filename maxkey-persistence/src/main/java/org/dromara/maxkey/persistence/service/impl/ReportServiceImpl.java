@@ -32,19 +32,31 @@ public class ReportServiceImpl  extends JpaServiceImpl<ReportMapper,JpaEntity> i
 
 	public Integer analysisDay(HashMap<String,Object> reportParameter) {
 		return getMapper().analysisDay(reportParameter);
-	};
+	}
 	
 	public Integer analysisNewUsers(HashMap<String,Object> reportParameter) {
 		return getMapper().analysisNewUsers(reportParameter);
-	};
+	}
 	
 	public Integer analysisOnlineUsers(HashMap<String,Object> reportParameter) {
 		return getMapper().analysisOnlineUsers(reportParameter);
-	};
+	}
 	
 	public Integer analysisActiveUsers(HashMap<String,Object> reportParameter) {
 		return getMapper().analysisActiveUsers(reportParameter);
-	};
+	}
+	
+	public Integer totalUsers(HashMap<String,Object> reportParameter) {
+		return getMapper().totalDepts(reportParameter);
+	}
+	
+	public Integer totalDepts(HashMap<String,Object> reportParameter) {
+		return getMapper().totalDepts(reportParameter);
+	}
+	
+	public Integer totalApps(HashMap<String,Object> reportParameter) {
+		return getMapper().totalApps(reportParameter);
+	}
 	
 	public List<Map<String,Object>> analysisDayHour(HashMap<String,Object> reportParameter){
 		return getMapper().analysisDayHour(reportParameter);

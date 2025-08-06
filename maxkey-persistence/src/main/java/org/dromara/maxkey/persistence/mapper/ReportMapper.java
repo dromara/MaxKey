@@ -42,6 +42,12 @@ public  interface ReportMapper extends IJpaMapper<JpaEntity> {
 	
 	public Integer analysisActiveUsers(HashMap<String,Object> reportParameter);
 	
+	public Integer totalUsers(HashMap<String,Object> reportParameter);
+	
+	public Integer totalDepts(HashMap<String,Object> reportParameter);
+	
+	public Integer totalApps(HashMap<String,Object> reportParameter);
+	
 	public List<Map<String,Object>> analysisDayHour(HashMap<String,Object> reportParameter);
 	
 	public List<Map<String,Object>> analysisMonth(HashMap<String,Object> reportParameter);

@@ -135,5 +135,31 @@
 			limit 1000
 	</select>
 	
+	    <!-- 用户统计 -->
+    <select id="totalUsers" parameterType="java.util.HashMap" resultType="Integer">
+            select 
+                count(*) reportcount 
+            from mxk_userinfo 
+            where   instid   =   #{instId} 
+                and status = 1
+    </select>
+    
+    <!-- 部门统计 -->
+    <select id="totalDepts" parameterType="java.util.HashMap" resultType="Integer">
+            select 
+                count(*) reportcount 
+            from mxk_organizations 
+            where   instid   =   #{instId} 
+                and status = 1
+    </select>
+    
+    <!-- 应用统计 -->
+    <select id="totalApps" parameterType="java.util.HashMap" resultType="Integer">
+            select 
+                count(*) reportcount 
+            from mxk_apps 
+            where   instid   =   #{instId} 
+                and status = 1
+    </select>
 
 </mapper>

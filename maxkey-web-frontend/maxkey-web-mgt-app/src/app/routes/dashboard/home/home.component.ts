@@ -38,9 +38,15 @@ export class HomeComponent implements OnInit {
   //当月新增
   newUsers!: any[];
   //当月活动
-  activeUsers!: any[];
+  activeUsers!: number;
   //当天统计
-  dayCount!: any[];
+  dayCount!: number;
+
+  totalUsers!: number;
+
+  totalDepts!: number;
+
+  totalApps!: number;
   //在线用户
   onlineUsers!: any[];
   //当日
@@ -108,6 +114,9 @@ export class HomeComponent implements OnInit {
       this.dayCount = res.data.dayCount;
       this.newUsers = res.data.newUsers;
       this.activeUsers = res.data.activeUsers;
+      this.totalDepts = res.data.totalDepts;
+      this.totalUsers = res.data.totalUsers;
+      this.totalApps = res.data.totalApps;
 
       const beginDay = new Date().getTime();
       const fakeY = [7, 5, 4, 2, 4, 7, 5, 6, 5, 9, 6, 3, 1, 5, 3, 6, 5];

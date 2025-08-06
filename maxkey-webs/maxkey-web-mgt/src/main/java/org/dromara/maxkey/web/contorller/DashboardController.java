@@ -53,6 +53,10 @@ public class DashboardController {
 		reportParameter.put("onlineUsers", reportService.analysisOnlineUsers(reportParameter));
 		reportParameter.put("activeUsers", reportService.analysisActiveUsers(reportParameter));
 		
+		reportParameter.put("totalUsers", reportService.totalUsers(reportParameter));
+		reportParameter.put("totalDepts", reportService.totalDepts(reportParameter));
+		reportParameter.put("totalApps", reportService.totalApps(reportParameter));
+		
 		reportParameter.put("reportMonth", reportService.analysisMonth(reportParameter));
 		reportParameter.put("reportDayHour", reportService.analysisDayHour(reportParameter));
 		
