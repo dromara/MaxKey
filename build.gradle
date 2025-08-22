@@ -298,7 +298,7 @@ subprojects {
         implementation group: 'jakarta.validation', name: 'jakarta.validation-api', version: "${jakartavalidationapiVersion}"
         implementation group: 'jakarta.xml.bind', name: 'jakarta.xml.bind-api', version: "${jakartaxmlbindapiVersion}"
         //mail
-        implementation group: 'org.eclipse.angus', name: 'jakarta.mail', version: "${angusjakartamailVersion}"
+        implementation group: 'org.eclipse.angus', name: 'angus-mail', version: "${angusmailVersion}"
         implementation group: 'org.eclipse.angus', name: 'angus-activation', version: "${angusactivationVersion}"
         //sun.xml.bind
         implementation group: 'com.sun.xml.bind', name: 'jaxb-core', version: "${xmlbindjaxbcoreVersion}"
