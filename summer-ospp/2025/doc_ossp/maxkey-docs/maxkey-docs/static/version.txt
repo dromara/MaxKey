@@ -1,0 +1,2 @@
+jQuery v3.7.1
+layer-v3.5.1
