@@ -1,0 +1,8 @@
+{
+  "label": "管理端",
+  "position": 12,
+  "link": {
+    "type": "generated-index",
+    "description": "管理端."
+  }
+}
