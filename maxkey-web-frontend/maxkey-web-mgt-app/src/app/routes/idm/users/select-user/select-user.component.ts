@@ -182,6 +182,7 @@ export class SelectUserComponent implements OnInit {
   activeNode(data: NzFormatEmitEvent): void {
     this.treeNodes.activated = data.node!;
     this.query.params.departmentId = data.node!.key;
+    this.query.params.pageNumber = 1;
     this.fetch();
   }
 
