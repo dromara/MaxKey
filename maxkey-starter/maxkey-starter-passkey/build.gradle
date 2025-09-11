@@ -6,29 +6,10 @@ dependencies {
     
     implementation project(":maxkey-commons:maxkey-common")
     implementation project(":maxkey-commons:maxkey-crypto")
-    implementation project(":maxkey-commons:maxkey-ldap")
     implementation project(":maxkey-commons:maxkey-core")
     implementation project(":maxkey-entity")
     implementation project(":maxkey-persistence")
     implementation project(":maxkey-authentications:maxkey-authentication-core")
     implementation project(":maxkey-authentications:maxkey-authentication-provider")
     
-    // WebAuthn library for Passkey support
-    implementation "com.webauthn4j:webauthn4j-core:${webauthn4jVersion}"
-    implementation "com.webauthn4j:webauthn4j-util:${webauthn4jVersion}"
-    
-    // WebAuthn4J 的必需传递依赖
-    implementation "com.fasterxml.jackson.core:jackson-core:${jacksonVersion}"
-    implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
-    implementation "com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}"
-    implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-cbor:${jacksonVersion}"
-    implementation "commons-codec:commons-codec:${commonscodecVersion}"
-    implementation "org.bouncycastle:bcprov-jdk18on:${bouncycastleVersion}"
-    implementation "org.bouncycastle:bcpkix-jdk18on:${bouncycastleVersion}"
-    implementation "org.slf4j:slf4j-api:${slf4jVersion}"
-    
-    // 其他可能需要的依赖
-    implementation "org.apache.commons:commons-lang3:${commonslang3Version}"
 }
-
-configurations.all { transitive = false }

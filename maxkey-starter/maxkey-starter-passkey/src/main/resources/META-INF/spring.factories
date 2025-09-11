@@ -1,4 +1,0 @@
-# Spring Boot 2.x 兼容性配置
-# 自动配置类
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-org.dromara.maxkey.passkey.autoconfigure.PasskeyAutoConfiguration
