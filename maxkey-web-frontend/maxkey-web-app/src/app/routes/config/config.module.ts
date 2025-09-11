@@ -27,8 +27,14 @@ import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { NzStepsModule } from 'ng-zorro-antd/steps';
 
+import { NzEmptyModule } from 'ng-zorro-antd/empty';
+import { NzListModule } from 'ng-zorro-antd/list';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+
 import { AccoutsComponent } from './accouts/accouts.component';
 import { MfaComponent } from './mfa/mfa.component';
+
+import { PasskeyComponent } from './passkey/passkey.component';
 import { PasswordComponent } from './password/password.component';
 import { ProfileComponent } from './profile/profile.component';
 import { SocialsAssociateComponent } from './socials-associate/socials-associate.component';
@@ -43,6 +49,10 @@ const routes: Routes = [
   {
     path: 'password',
     component: PasswordComponent
+  },
+  {
+    path: 'passkey',
+    component: PasskeyComponent
   },
   {
     path: 'socialsassociate',
@@ -69,9 +79,10 @@ const COMPONENTS = [ProfileComponent];
     PasswordComponent,
     ProfileComponent,
     AccoutsComponent,
-    MfaComponent
+    MfaComponent,
+    PasskeyComponent
   ],
-  imports: [SharedModule, CommonModule, RouterModule.forChild(routes)],
+  imports: [SharedModule, CommonModule, RouterModule.forChild(routes), NzEmptyModule, NzListModule, NzPopconfirmModule],
   exports: [RouterModule]
 })
 export class ConfigModule {}

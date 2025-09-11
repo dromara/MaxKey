@@ -101,6 +101,12 @@
       {{ 'app.login.login' | i18n }}
     </button>
   </nz-form-item>
+  <nz-form-item *ngIf="loginType == 'normal'">
+      <button nz-button type="button" nzType="default" nzSize="large" (click)="passkeyLogin()" nzBlock>
+        <i nz-icon nzType="safety-certificate" nzTheme="outline"></i>
+        {{ 'mxk.login.passkey-login' | i18n }}
+      </button>
+    </nz-form-item>
 </form>
 <div class="other" *ngIf="loginType == 'normal'">
   {{ 'app.login.sign-in-with' | i18n }}
