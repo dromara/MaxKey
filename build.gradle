@@ -419,12 +419,17 @@ subprojects {
         implementation group: 'org.webjars', name: 'webjars-locator', version: "${webjarslocatorVersion}"
         implementation group: 'org.webjars', name: 'webjars-locator-lite', version: "${webjarslocatorliteVersion}"
         implementation group: 'org.webjars', name: 'swagger-ui', version: "${swaggeruiVersion}"
+        implementation "com.webauthn4j:webauthn4j-core:${webauthn4jVersion}"
+	    implementation "com.webauthn4j:webauthn4j-util:${webauthn4jVersion}"
+        implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-cbor', version: "${jacksonVersion}"
         //knife4j
         //implementation group: 'com.github.xiaoymin', name: 'knife4j-core', version: "${knife4jVersion}"
         //implementation group: 'com.github.xiaoymin', name: 'knife4j-openapi3-ui', version: "${knife4jVersion}"
         //implementation group: 'com.github.xiaoymin', name: 'knife4j-openapi3-jakarta-spring-boot-starter', version: "${knife4jVersion}"
         //local jars
+
         implementation fileTree(dir: "${rootDir}/maxkey-lib/", include: '*.jar')
+
     }
     
     jar {  
