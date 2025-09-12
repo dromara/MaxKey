@@ -1,0 +1,58 @@
+<nz-card nzTitle="Passkey 管理">
+  
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="24">
+      <div class="mb-md">
+        <p class="text-grey">Passkey 是一种更安全、更便捷的登录方式，使用您的设备生物识别或 PIN 码进行身份验证。</p>
+      </div>
+      
+      <div class="mb-lg">
+        <button 
+          nz-button 
+          nzType="primary" 
+          nzSize="large" 
+          [nzLoading]="loading" 
+          (click)="registerPasskey()">
+          <i nz-icon nzType="plus-circle" nzTheme="outline"></i>
+          注册新的 Passkey
+        </button>
+      </div>
+
+      <nz-divider nzText="已注册的 Passkey"></nz-divider>
+
+
+
+      <nz-table #basicTable [nzData]="passkeyList" [nzShowPagination]="false">
+        <thead>
+          <tr>
+            <th>凭证信息</th>
+            <th>签名统计</th>
+            <th>创建时间</th>
+            <th>最近访问时间</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of passkeyList; let i = index">
+            <td>
+              <div class="credential-info">
+                <div class="credential-id">{{ item.credentialId || item.id }}</div>
+                <div class="device-type">{{ item.deviceType === 'platform' ? '平台认证器' : '跨平台认证器' }}</div>
+              </div>
+            </td>
+            <td>{{ item.signatureCount || 0 }}</td>
+            <td>{{ item.createdDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+            <td>{{ item.lastUsedDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+            <td>
+              <button nz-button nzType="link" nzDanger nzSize="small" (click)="confirmDeletePasskey(item.credentialId || item.id)">
+                删除 passkey
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+
+
+    </div>
+  </div>
+</nz-card>

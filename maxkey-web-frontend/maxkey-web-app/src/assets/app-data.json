@@ -44,6 +44,14 @@
               "acl": "ROLE_USER",
               "children": []
             },
+            {
+              "text": "Passkey 注册",
+              "i18n": "mxk.menu.config.passkey",
+              "link": "/config/passkey",
+              "icon": "anticon-safety-certificate",
+              "acl": "ROLE_USER",
+              "children": []
+            },
              {
               "text": "二次认证",
               "i18n": "mxk.menu.config.mfa",

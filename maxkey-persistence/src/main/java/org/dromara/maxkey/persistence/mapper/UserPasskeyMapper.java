@@ -19,6 +19,7 @@ package org.dromara.maxkey.persistence.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
@@ -102,7 +103,7 @@ public interface UserPasskeyMapper extends IJpaMapper<UserPasskey> {
         @Result(column = "status", property = "status"),
         @Result(column = "inst_id", property = "instId")
     })
-    UserPasskey findByUserIdAndCredentialId(String userId, String credentialId);
+    UserPasskey findByUserIdAndCredentialId(@Param("userId") String userId, @Param("credentialId") String credentialId);
     
     /**
      * 更新签名计数器
@@ -112,7 +113,7 @@ public interface UserPasskeyMapper extends IJpaMapper<UserPasskey> {
      * @return 更新的记录数
      */
     @Update("UPDATE mxk_user_passkeys SET signature_count = #{signatureCount}, last_used_date = NOW() WHERE credential_id = #{credentialId}")
-    int updateSignatureCount(String credentialId, Long signatureCount);
+    int updateSignatureCount(@Param("credentialId") String credentialId, @Param("signatureCount") Long signatureCount);
     
     /**
      * 物理删除Passkey
@@ -122,7 +123,7 @@ public interface UserPasskeyMapper extends IJpaMapper<UserPasskey> {
      * @return 删除的记录数
      */
     @Delete("DELETE FROM mxk_user_passkeys WHERE user_id = #{userId} AND credential_id = #{credentialId}")
-    int deleteByUserIdAndCredentialId(String userId, String credentialId);
+    int deleteByUserIdAndCredentialId(@Param("userId") String userId, @Param("credentialId") String credentialId);
     
     /**
      * 物理删除过期的Passkey记录

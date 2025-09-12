@@ -77,7 +77,8 @@ export class UserLoginComponent implements OnInit, OnDestroy {
     private reuseTabService: ReuseTabService,
     private route: ActivatedRoute,
     private msg: NzMessageService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private http: _HttpClient
   ) {
     this.form = fb.group({
       userName: [null, [Validators.required]],
@@ -499,5 +500,282 @@ export class UserLoginComponent implements OnInit, OnDestroy {
       });
       this.cdr.detectChanges();
     }, 2000);
+  }
+
+  /**
+   * Passkey 无用户名登录
+   */
+  async passkeyLogin(): Promise<void> {
+    console.log('=== PASSKEY LOGIN DEBUG START ===');
+    console.log('Passkey usernameless login clicked at:', new Date().toISOString());
+    
+    try {
+      // 检查浏览器是否支持 WebAuthn
+      if (!window.PublicKeyCredential) {
+        console.error('WebAuthn not supported');
+        this.msg.error('您的浏览器不支持 WebAuthn/Passkey 功能');
+        return;
+      }
+      console.log('WebAuthn support confirmed');
+
+      this.loading = true;
+      this.cdr.detectChanges();
+      
+      // 1. 调用后端 API 获取认证选项（不传递任何用户信息）
+      console.log('Step 1: Requesting authentication options from backend...');
+      let authOptionsResponse;
+      try {
+        authOptionsResponse = await this.http.post<any>('/passkey/authentication/begin?_allow_anonymous=true', {}).toPromise();
+      } catch (httpError: any) {
+        console.error('HTTP error occurred:', httpError);
+        // 处理HTTP错误，提取错误信息
+        let errorMessage = '获取认证选项失败';
+        if (httpError.error && httpError.error.message) {
+          errorMessage = httpError.error.message;
+        } else if (httpError.message) {
+          errorMessage = httpError.message;
+        }
+        
+        // 检查是否是没有注册 Passkey 的错误
+        if (errorMessage.includes('没有注册任何 Passkey') || 
+            errorMessage.includes('No Passkeys registered') ||
+            errorMessage.includes('还没有注册任何 Passkey') ||
+            errorMessage.includes('系统中还没有注册任何 Passkey')) {
+          // 直接显示友好提示并返回，不抛出错误避免被全局拦截器捕获
+          this.msg.warning('还未注册 Passkey，请注册 Passkey');
+          console.log('=== PASSKEY LOGIN DEBUG END ===');
+          return;
+        }
+        throw new Error(errorMessage);
+      }
+      
+      console.log('Backend auth options response:', authOptionsResponse);
+      
+      if (!authOptionsResponse || authOptionsResponse.code !== 0) {
+        console.error('Failed to get auth options:', authOptionsResponse);
+        // 检查是否是没有注册 Passkey 的错误
+        const errorMessage = authOptionsResponse?.message || '获取认证选项失败';
+        if (errorMessage.includes('没有注册任何 Passkey') || 
+            errorMessage.includes('No Passkeys registered') ||
+            errorMessage.includes('还没有注册任何 Passkey') ||
+            errorMessage.includes('系统中还没有注册任何 Passkey')) {
+          // 直接显示友好提示并返回，不抛出错误避免被全局拦截器捕获
+          this.msg.warning('还未注册 Passkey，请注册 Passkey');
+          console.log('=== PASSKEY LOGIN DEBUG END ===');
+          return;
+        }
+        throw new Error(errorMessage);
+      }
+      
+      const authOptions = authOptionsResponse.data;
+      console.log('Auth options received:', authOptions);
+      
+      // 检查返回的数据是否有效
+      if (!authOptions || !authOptions.challenge) {
+        console.error('Invalid auth options:', authOptions);
+        throw new Error('服务器返回的认证选项无效');
+      }
+      
+      // 2. 转换认证选项格式
+      console.log('Step 2: Converting authentication options...');
+      const convertedOptions: PublicKeyCredentialRequestOptions = {
+        challenge: this.base64ToArrayBuffer(authOptions.challenge),
+        timeout: authOptions.timeout || 60000,
+        rpId: authOptions.rpId,
+        userVerification: authOptions.userVerification || 'preferred'
+        // 注意：不设置 allowCredentials，让认证器自动选择可用的凭据
+      };
+      console.log('Converted options:', {
+        challengeLength: convertedOptions.challenge.byteLength,
+        timeout: convertedOptions.timeout,
+        rpId: convertedOptions.rpId,
+        userVerification: convertedOptions.userVerification,
+        allowCredentials: convertedOptions.allowCredentials || 'undefined (auto-select)'
+      });
+
+      // 3. 调用 WebAuthn API 进行认证
+      console.log('Step 3: Calling WebAuthn API navigator.credentials.get()...');
+      console.log('Available authenticators will be queried automatically');
+      
+      const credential = await navigator.credentials.get({
+        publicKey: convertedOptions
+      }) as PublicKeyCredential;
+
+      if (!credential) {
+        console.error('No credential returned from WebAuthn API');
+        throw new Error('认证失败');
+      }
+      
+      console.log('=== CREDENTIAL DEBUG INFO ===');
+      console.log('Credential ID:', credential.id);
+      console.log('Credential ID length:', credential.id.length);
+      console.log('Credential type:', credential.type);
+      console.log('Credential rawId length:', credential.rawId.byteLength);
+      console.log('Credential rawId as base64:', this.arrayBufferToBase64(credential.rawId));
+      
+      // 验证 credential.id 和 rawId 的一致性
+      const rawIdBase64 = this.arrayBufferToBase64(credential.rawId);
+      console.log('ID consistency check:');
+      console.log('  credential.id:', credential.id);
+      console.log('  rawId as base64:', rawIdBase64);
+      console.log('  IDs match:', credential.id === rawIdBase64);
+      
+      const credentialResponse = credential.response as AuthenticatorAssertionResponse;
+      console.log('Authenticator response type:', credentialResponse.constructor.name);
+      console.log('User handle:', credentialResponse.userHandle ? this.arrayBufferToBase64(credentialResponse.userHandle) : 'null');
+      console.log('=== END CREDENTIAL DEBUG INFO ===');
+
+      // 4. 将认证结果发送到后端验证
+      console.log('Step 4: Sending credential to backend for verification...');
+      const requestPayload = {
+        challengeId: authOptions.challengeId,
+        credentialId: credential.id,
+        authenticatorData: this.arrayBufferToBase64(credentialResponse.authenticatorData),
+        clientDataJSON: this.arrayBufferToBase64(credentialResponse.clientDataJSON),
+        signature: this.arrayBufferToBase64(credentialResponse.signature),
+        userHandle: credentialResponse.userHandle ? this.arrayBufferToBase64(credentialResponse.userHandle) : null
+      };
+      console.log('Request payload to backend:', {
+        challengeId: requestPayload.challengeId,
+        credentialId: requestPayload.credentialId,
+        credentialIdLength: requestPayload.credentialId.length,
+        authenticatorDataLength: requestPayload.authenticatorData.length,
+        clientDataJSONLength: requestPayload.clientDataJSON.length,
+        signatureLength: requestPayload.signature.length,
+        userHandle: requestPayload.userHandle
+      });
+      
+      const finishResponse = await this.http.post<any>('/passkey/authentication/finish?_allow_anonymous=true', requestPayload).toPromise();
+      console.log('Backend finish response:', finishResponse);
+      
+      if (!finishResponse || finishResponse.code !== 0) {
+        console.error('Backend verification failed:', finishResponse);
+        throw new Error(finishResponse?.message || 'Passkey认证失败');
+      }
+
+      // 5. 认证成功，设置用户信息并跳转
+      console.log('Step 5: Authentication successful, setting user info...');
+      const authResult = finishResponse.data;
+      console.log('Auth result received:', authResult);
+      
+      this.msg.success(`Passkey 登录成功！欢迎 ${authResult.username || '用户'}`);
+      
+      // 清空路由复用信息
+      console.log('Clearing reuse tab service...');
+      this.reuseTabService.clear();
+      
+      // 设置用户Token信息
+      if (authResult && authResult.userId) {
+        console.log('Valid auth result with userId:', authResult.userId);
+        // 构建完整的认证信息对象，包含 SimpleGuard 所需的 token 和 ticket
+        const userInfo = {
+          id: authResult.userId,
+          userId: authResult.userId,
+          username: authResult.username,
+          displayName: authResult.displayName || authResult.username,
+          email: authResult.email || '',
+          authTime: authResult.authTime,
+          authType: 'passkey',
+          // 关键：包含认证所需的 token 和 ticket
+          token: authResult.token || authResult.congress || '',
+          ticket: authResult.ticket || authResult.onlineTicket || '',
+          // 其他可能需要的字段
+          remeberMe: false,
+          passwordSetType: authResult.passwordSetType || 'normal',
+          authorities: authResult.authorities || []
+        };
+        
+        console.log('Setting auth info:', userInfo);
+        
+        // 设置认证信息
+        this.authnService.auth(userInfo);
+        
+        // 使用 navigate 方法进行跳转，它会处理 StartupService 的重新加载
+        console.log('Navigating with auth result...');
+        this.authnService.navigate(authResult);
+        console.log('=== PASSKEY LOGIN SUCCESS ===');
+      } else {
+        console.error('Invalid auth result - missing userId:', authResult);
+        throw new Error('认证成功但用户数据无效');
+      }
+      
+    } catch (error: any) {
+      console.error('=== PASSKEY LOGIN ERROR ===');
+      console.error('Error type:', error.constructor.name);
+      console.error('Error message:', error.message);
+      console.error('Error stack:', error.stack);
+      console.error('Full error object:', error);
+      
+      // 检查是否是没有注册 Passkey 的错误
+      if (error.message && (error.message.includes('PASSKEY_NOT_REGISTERED') ||
+                           error.message.includes('没有找到可用的凭据') || 
+                           error.message.includes('No credentials available') ||
+                           error.message.includes('用户未注册') ||
+                           error.message.includes('credential not found') ||
+                           error.message.includes('没有注册任何 Passkey') ||
+                           error.message.includes('No Passkeys registered') ||
+                           error.message.includes('还没有注册任何 Passkey'))) {
+        this.msg.warning('还未注册 Passkey，请注册 Passkey');
+        console.log('=== PASSKEY LOGIN DEBUG END ===');
+        return;
+      }
+      
+      // 如果是 WebAuthn 相关错误，提供更详细的信息
+      if (error.name) {
+        console.error('WebAuthn error name:', error.name);
+        switch (error.name) {
+          case 'NotAllowedError':
+            console.error('User cancelled the operation or timeout occurred');
+            // 检查是否是因为没有可用凭据导致的取消
+            this.msg.warning('Passkey 登录已取消。如果您还没有注册 Passkey，请先注册后再使用');
+            break;
+          case 'SecurityError':
+            console.error('Security error - invalid domain or HTTPS required');
+            this.msg.error('安全错误：请确保在 HTTPS 环境下使用 Passkey 功能');
+            break;
+          case 'NotSupportedError':
+            console.error('Operation not supported by authenticator');
+            this.msg.error('您的设备不支持 Passkey 功能');
+            break;
+          case 'InvalidStateError':
+            console.error('Authenticator is in invalid state');
+            this.msg.error('认证器状态异常，请重试');
+            break;
+          case 'ConstraintError':
+            console.error('Constraint error in authenticator');
+            this.msg.error('认证器约束错误，请重试');
+            break;
+          default:
+            console.error('Unknown WebAuthn error');
+            this.msg.error('Passkey 登录失败：' + (error.message || '请重试或使用其他登录方式'));
+        }
+      } else {
+        this.msg.error('Passkey 登录失败：' + (error.message || '请重试或使用其他登录方式'));
+      }
+      console.log('=== PASSKEY LOGIN DEBUG END ===');
+    } finally {
+      this.loading = false;
+      this.cdr.detectChanges();
+      console.log('Login loading state reset');
+    }
+  }
+
+  // 添加辅助方法
+  private base64ToArrayBuffer(base64: string): ArrayBuffer {
+    const binaryString = atob(base64.replace(/-/g, '+').replace(/_/g, '/'));
+    const bytes = new Uint8Array(binaryString.length);
+    for (let i = 0; i < binaryString.length; i++) {
+      bytes[i] = binaryString.charCodeAt(i);
+    }
+    return bytes.buffer;
+  }
+
+  private arrayBufferToBase64(buffer: ArrayBuffer): string {
+    const bytes = new Uint8Array(buffer);
+    let binary = '';
+    for (let i = 0; i < bytes.byteLength; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
   }
 }
