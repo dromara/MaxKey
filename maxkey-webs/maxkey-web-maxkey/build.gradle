@@ -52,7 +52,6 @@ dependencies {
 	implementation project(":maxkey-starter:maxkey-starter-sms")
 	implementation project(":maxkey-starter:maxkey-starter-social")
 	implementation project(":maxkey-starter:maxkey-starter-web")
-	implementation project(":maxkey-starter:maxkey-starter-passkey")
 	
    	implementation project(":maxkey-authentications:maxkey-authentication-core")
 	implementation project(":maxkey-authentications:maxkey-authentication-provider")
@@ -65,11 +64,4 @@ dependencies {
    	implementation project(":maxkey-protocols:maxkey-protocol-oauth-2.0")
    	implementation project(":maxkey-protocols:maxkey-protocol-saml-2.0")
 	implementation project(":maxkey-protocols:maxkey-protocol-jwt")
-
-	// WebAuthn4J 完整依赖
-	implementation "com.webauthn4j:webauthn4j-core:${webauthn4jVersion}"
-	implementation "com.webauthn4j:webauthn4j-util:${webauthn4jVersion}"
-	implementation 'com.fasterxml.jackson.core:jackson-databind'
-	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-cbor'
-	implementation 'commons-codec:commons-codec'
 }

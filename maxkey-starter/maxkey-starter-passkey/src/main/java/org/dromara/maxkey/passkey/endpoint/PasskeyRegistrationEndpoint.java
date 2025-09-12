@@ -1,5 +1,5 @@
 /*
- * Copyright [2024] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2025] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -156,7 +156,7 @@ public class PasskeyRegistrationEndpoint {
      */
     @GetMapping("/list/{userId}")
     public ResponseEntity<?> getUserPasskeys(
-            @PathVariable String userId,
+            @PathVariable("userId") String userId,
             HttpServletRequest httpRequest,
             HttpServletResponse httpResponse) {
         
@@ -195,8 +195,8 @@ public class PasskeyRegistrationEndpoint {
      */
     @DeleteMapping("/delete/{userId}/{credentialId}")
     public ResponseEntity<?> deletePasskey(
-            @PathVariable String userId,
-            @PathVariable String credentialId,
+            @PathVariable("userId") String userId,
+            @PathVariable("credentialId") String credentialId,
             HttpServletRequest httpRequest,
             HttpServletResponse httpResponse) {
         
@@ -240,7 +240,7 @@ public class PasskeyRegistrationEndpoint {
      */
     @GetMapping("/stats/{userId}")
     public ResponseEntity<?> getPasskeyStats(
-            @PathVariable String userId,
+            @PathVariable("userId") String userId,
             HttpServletRequest httpRequest,
             HttpServletResponse httpResponse) {
         
@@ -273,7 +273,7 @@ public class PasskeyRegistrationEndpoint {
      */
     @GetMapping("/support/{userId}")
     public ResponseEntity<?> checkPasskeySupport(
-            @PathVariable String userId,
+            @PathVariable("userId") String userId,
             HttpServletRequest httpRequest,
             HttpServletResponse httpResponse) {
         

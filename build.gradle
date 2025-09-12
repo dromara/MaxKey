@@ -54,7 +54,6 @@ allprojects {
     targetCompatibility = 17
     compileJava.options.encoding = 'UTF-8'
     
-    compileJava.options.compilerArgs += ['-parameters']
     eclipse {
         /*设置工程字符集*/
         jdt  {

@@ -1,6 +1,6 @@
 {
   "name": "maxkey",
-  "version": "4.1.0",
+  "version": "4.1.x",
   "description": "Leading-Edge IAM Identity and Access Management",
   "author": "MaxKey <support@maxsso.net>",
   "repository": {

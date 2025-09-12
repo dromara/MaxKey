@@ -17,6 +17,7 @@
 package org.dromara.maxkey.persistence.mapper;
 
 import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
@@ -70,7 +71,7 @@ public interface PasskeyChallengeMapper extends IJpaMapper<PasskeyChallenge> {
         @Result(column = "status", property = "status"),
         @Result(column = "inst_id", property = "instId")
     })
-    PasskeyChallenge findLatestByUserIdAndType(String userId, String challengeType);
+    PasskeyChallenge findLatestByUserIdAndType(@Param("userId") String userId, @Param("challengeType") String challengeType);
     
     /**
      * 删除指定挑战ID的记录
@@ -106,7 +107,7 @@ public interface PasskeyChallengeMapper extends IJpaMapper<PasskeyChallenge> {
      * @return 清理的记录数
      */
     @Delete("DELETE FROM mxk_passkey_challenges WHERE user_id = #{userId} AND challenge_type = #{challengeType}")
-    int deleteByUserIdAndType(String userId, String challengeType);
+    int deleteByUserIdAndType(@Param("userId") String userId, @Param("challengeType") String challengeType);
     
     /**
      * 统计指定用户的挑战数量

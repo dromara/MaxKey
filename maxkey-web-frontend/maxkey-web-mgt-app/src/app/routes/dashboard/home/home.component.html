@@ -33,26 +33,6 @@
   <div nz-col nzXs="24" nzSm="12" nzMd="6" class="mb-md">
     <div nz-row nzType="flex" nzAlign="middle" class="bg-success rounded-md">
       <div nz-col nzSpan="12" class="p-md text-white">
-        <div class="h2 mt0">{{ dayCount }}</div>
-        <p class="text-nowrap mb0">{{ 'mxk.home.dayCount' | i18n }}</p>
-      </div>
-      <div nz-col nzSpan="12">
-        <g2-mini-bar
-          *ngIf="simulateData"
-          height="35"
-          color="#fff"
-          borderWidth="3"
-          [padding]="[5, 30]"
-          [data]="simulateData"
-          tooltipType="mini"
-          (ready)="fixDark($event)"
-        ></g2-mini-bar>
-      </div>
-    </div>
-  </div>
-  <div nz-col nzXs="24" nzSm="12" nzMd="6" class="mb-md">
-    <div nz-row nzType="flex" nzAlign="middle" class="bg-orange rounded-md">
-      <div nz-col nzSpan="12" class="p-md text-white">
         <div class="h2 mt0">{{ newUsers }}</div>
         <p class="text-nowrap mb0">{{ 'mxk.home.newUsers' | i18n }}</p>
       </div>
