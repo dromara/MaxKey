@@ -1,6 +1,6 @@
 #MaxKey Frontend Docker Build
 
-FROM node:16.14.2
+FROM node:16.14.2 as builder
 
 LABEL authors="MaxKey <support@maxsso.net>"
 
@@ -22,7 +22,7 @@ COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 
 #RUN rm -rf /usr/share/nginx/html/*
 
-COPY  dist /usr/share/nginx/html/maxkey
+COPY  --from=builder /usr/src/app/dist /usr/share/nginx/html/maxkey
 
 #CMD ["nginx", "-g", "daemon off;"]
 
