@@ -324,6 +324,7 @@ export class AccessComponent implements OnInit {
     this.refreshGroupTableCheckedStatus();
     this.query.params.groupId = groupId;
     this.query.params.groupName = groupName;
+    this.query.params.pageNumber = 1;
     this.fetch();
   }
 
