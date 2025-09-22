@@ -126,7 +126,8 @@ subprojects {
         testImplementation group: 'junit', name: 'junit', version: "${junitVersion}"
         compileOnly group: 'junit', name: 'junit', version: "${junitVersion}"
         testImplementation group: 'org.mockito', name: 'mockito-all', version: "${mockitoallVersion}"
-        testImplementation group: 'xmlunit', name: 'xmlunit', version: "${xmlunitVersion}"
+        testImplementation group: 'org.xmlunit', name: 'xmlunit-legacy', version: "${xmlunitVersion}"
+        testImplementation group: 'org.xmlunit', name: 'xmlunit-core', version: "${xmlunitVersion}"
         //apache
         implementation group: 'commons-beanutils', name: 'commons-beanutils', version: "${commonsbeanutilsVersion}"
         implementation group: 'commons-codec', name: 'commons-codec', version: "${commonscodecVersion}"
