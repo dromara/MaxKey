@@ -5,14 +5,10 @@ echo start time %START_TIME%
 
 call %GRADLE_HOME%/bin/gradle -q projects
 
-echo start clean . . .
-
-call %GRADLE_HOME%/bin/gradle clean
-
-echo clean complete . 
+echo start build . . .
 
 rem run task build
-call %GRADLE_HOME%/bin/gradle build -x test
+call %GRADLE_HOME%/bin/gradle clean build -x test
 
 set END_TIME="%date:~0,10% %time:~0,2%:%time:~3,5%"
 

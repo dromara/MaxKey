@@ -448,9 +448,7 @@ subprojects {
     
     tasks.register("buildRelease",Copy) {
         dependsOn   assemble
-        //项目名 项目所在的group version 版本号
-        println  "subproject " + project.name + ", group " + project.group +" , version " + project.version
-        
+
         //copy
         into "$rootDir/build/"
         from "$buildDir/libs/"
@@ -462,8 +460,6 @@ subprojects {
 }
 
 tasks.register("buildRelease")  {
-    //项目名 项目所在的group version 版本号
-    println  "Root project " + project.name + ", group " + project.group +" , version " + project.version
     //项目的绝对路径 to 项目的build文件绝对路径
     println "Root project projectDir " + project.projectDir +" to " + project.buildDir
 }
@@ -473,6 +469,9 @@ build.configure {
     
     println ""
     println "Gradle version is ${GradleVersion.current().version}"
+    println ""
+    //项目名 项目所在的group version 版本号
+    println  "Root project " + project.name + ", group " + project.group +" , version " + project.version
 }
 // In this section you declare the dependencies for your production and test code
 dependencies {
