@@ -96,7 +96,7 @@
     <nz-card [nzBordered]="false" [nzTitle]="dayAccessTitle">
       <ng-template #dayAccessTitle>
         {{ 'mxk.home.dayAccessCount' | i18n }}-
-        <nz-badge [nzCount]="dayCount" [nzOffset]="[10, 0]" [nzStyle]="{ backgroundColor: '#52c41a' }">
+        <nz-badge [nzCount]="dayCount" [nzOffset]="[20, 6]" [nzStyle]="{ backgroundColor: '#52c41a' }">
           <a class="head-badge">{{ 'mxk.home.dayCount' | i18n }}</a>
         </nz-badge>
       </ng-template>
@@ -108,7 +108,7 @@
     <nz-card [nzTitle]="monthAccessTitle" [nzBordered]="false">
       <ng-template #monthAccessTitle>
         {{ 'mxk.home.monthAccessCount' | i18n }}-
-        <nz-badge [nzCount]="activeUsers" [nzOffset]="[10, 0]" [nzStyle]="{ backgroundColor: '#52c41a' }">
+        <nz-badge [nzCount]="activeUsers" [nzOffset]="[20, 6]" [nzStyle]="{ backgroundColor: '#52c41a' }">
           <a class="head-badge">{{ 'mxk.home.activeUsers' | i18n }}</a>
         </nz-badge>
       </ng-template>
