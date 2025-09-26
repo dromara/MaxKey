@@ -224,6 +224,14 @@
               "children": []
             }
           ]
+        },
+        {
+          "text": "官方网站",
+          "i18n": "mxk.menu.website",
+          "icon": "anticon-global",
+          "externalLink": "http://www.maxkey.top",
+          "target":"_blank",
+          "children": []
         }
       ]
     }

@@ -64,7 +64,8 @@
 				"synchronizer": "同步器日誌",
 				"connector": "連接器日誌",
 				"operate": "系統日誌"
-			}
+			},
+			"website":"官方网站"
 		},
 		"home": {
 			"onlineUsers": "在線",

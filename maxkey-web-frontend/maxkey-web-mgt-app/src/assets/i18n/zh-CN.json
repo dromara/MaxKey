@@ -63,7 +63,8 @@
 				"synchronizer": "同步器日志",
 				"connector": "连接器日志",
 				"operate": "系统日志"
-			}
+			},
+			"website":"官方网站"
 		},
 		"home": {
 			"onlineUsers": "在线",

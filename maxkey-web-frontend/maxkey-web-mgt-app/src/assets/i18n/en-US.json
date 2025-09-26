@@ -64,7 +64,8 @@
 				"synchronizer": "Synchronizer",
 				"connector": "Connector",
 				"operate": "Management"
-			}
+			},
+			"website":"Official Website"
 		},
 		"home": {
 			"onlineUsers": "Online",
