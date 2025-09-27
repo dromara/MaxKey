@@ -19,7 +19,7 @@ package org.dromara.maxkey.persistence.service;
 import java.util.List;
 
 import org.dromara.maxkey.entity.passkey.UserPasskey;
-import org.dromara.mybatis.jpa.IJpaService;
+import org.dromara.mybatis.jpa.service.IJpaService;
 
 /**
  * UserPasskey Service 接口

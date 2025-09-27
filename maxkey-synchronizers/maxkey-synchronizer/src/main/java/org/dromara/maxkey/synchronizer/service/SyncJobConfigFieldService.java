@@ -19,7 +19,7 @@ package org.dromara.maxkey.synchronizer.service;
 
 import org.dromara.maxkey.entity.SyncJobConfigField;
 
-import org.dromara.mybatis.jpa.IJpaService;
+import org.dromara.mybatis.jpa.service.IJpaService;
 import java.util.List;
 
 public interface SyncJobConfigFieldService extends IJpaService<SyncJobConfigField> {

@@ -26,7 +26,7 @@ import org.dromara.maxkey.entity.apps.Apps;
 import org.dromara.maxkey.entity.authz.QueryAppResourceDto;
 import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.entity.permissions.Resources;
-import org.dromara.mybatis.jpa.IJpaService;
+import org.dromara.mybatis.jpa.service.IJpaService;
 
 public interface AuthzResourceService   extends IJpaService<UserInfo>{
 	

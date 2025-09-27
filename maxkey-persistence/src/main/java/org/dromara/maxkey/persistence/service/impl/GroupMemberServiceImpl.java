@@ -52,7 +52,7 @@ public class GroupMemberServiceImpl  extends JpaServiceImpl<GroupMemberMapper,Gr
 	
 	
 	public JpaPageResults<Groups> noMember(GroupMember entity) {
-		beforePageResults(entity);
+		entity.build();
 		List<Groups> resultslist = null;
 		try {
 			resultslist = getMapper().noMember(entity);
@@ -60,7 +60,7 @@ public class GroupMemberServiceImpl  extends JpaServiceImpl<GroupMemberMapper,Gr
 			_logger.error("queryPageResults Exception " , e);
 		}
 		//当前页记录数
-		Integer records = parseRecords(resultslist);
+		Integer records = JpaPageResults.parseRecords(resultslist);
 		//总页数
 		Integer totalCount =fetchCount(entity, resultslist);
 		return new JpaPageResults<Groups>(entity.getPageNumber(),entity.getPageSize(),records,totalCount,resultslist);

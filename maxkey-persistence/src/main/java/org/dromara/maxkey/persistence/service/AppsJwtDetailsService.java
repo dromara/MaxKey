@@ -18,7 +18,7 @@
 package org.dromara.maxkey.persistence.service;
 
 import org.dromara.maxkey.entity.apps.AppsJwtDetails;
-import org.dromara.mybatis.jpa.IJpaService;
+import org.dromara.mybatis.jpa.service.IJpaService;
 
 public interface AppsJwtDetailsService  extends IJpaService<AppsJwtDetails>{
 

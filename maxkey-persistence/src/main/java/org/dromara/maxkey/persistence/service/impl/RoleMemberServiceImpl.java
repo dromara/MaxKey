@@ -53,7 +53,7 @@ public class RoleMemberServiceImpl  extends JpaServiceImpl<RoleMemberMapper,Role
 	
 	
 	public JpaPageResults<Roles> rolesNoMember(RoleMember entity) {
-		beforePageResults(entity);
+		entity.build();
 		List<Roles> resultslist = null;
 		try {
 			resultslist = getMapper().rolesNoMember(entity);
@@ -61,7 +61,7 @@ public class RoleMemberServiceImpl  extends JpaServiceImpl<RoleMemberMapper,Role
 			_logger.error("fetchPageResults Exception " , e);
 		}
 		//当前页记录数
-		Integer records = parseRecords(resultslist);
+		Integer records = JpaPageResults.parseRecords(resultslist);
 		//总页数
 		Integer totalCount =fetchCount(entity, resultslist);
 		return new JpaPageResults<Roles>(entity.getPageNumber(),entity.getPageSize(),records,totalCount,resultslist);

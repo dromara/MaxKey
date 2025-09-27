@@ -19,7 +19,7 @@ package org.dromara.maxkey.persistence.service;
 
 import org.dromara.maxkey.entity.Register;
 import org.dromara.maxkey.entity.idm.UserInfo;
-import org.dromara.mybatis.jpa.IJpaService;
+import org.dromara.mybatis.jpa.service.IJpaService;
 
 public interface RegisterService  extends IJpaService<Register>{
 

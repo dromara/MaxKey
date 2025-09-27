@@ -20,7 +20,7 @@ package org.dromara.maxkey.persistence.service;
 import java.util.List;
 
 import org.dromara.maxkey.entity.permissions.Resources;
-import org.dromara.mybatis.jpa.IJpaService;
+import org.dromara.mybatis.jpa.service.IJpaService;
 
 public interface ResourcesService  extends IJpaService<Resources>{
 	

@@ -17,7 +17,7 @@
 package org.dromara.maxkey.persistence.service;
 
 import org.dromara.maxkey.entity.passkey.PasskeyChallenge;
-import org.dromara.mybatis.jpa.IJpaService;
+import org.dromara.mybatis.jpa.service.IJpaService;
 
 /**
  * PasskeyChallenge Service 接口

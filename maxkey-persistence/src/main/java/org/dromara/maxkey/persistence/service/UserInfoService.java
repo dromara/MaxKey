@@ -20,7 +20,7 @@ package org.dromara.maxkey.persistence.service;
 
 import org.dromara.maxkey.entity.ChangePassword;
 import org.dromara.maxkey.entity.idm.UserInfo;
-import org.dromara.mybatis.jpa.IJpaService;
+import org.dromara.mybatis.jpa.service.IJpaService;
 
 /**
  * @author Crystal.Sea

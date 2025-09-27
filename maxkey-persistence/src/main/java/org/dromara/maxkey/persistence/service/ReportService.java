@@ -20,7 +20,7 @@ package org.dromara.maxkey.persistence.service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.dromara.mybatis.jpa.IJpaService;
+import org.dromara.mybatis.jpa.service.IJpaService;
 import org.dromara.mybatis.jpa.entity.JpaEntity;
 
 public interface ReportService  extends IJpaService<JpaEntity>{

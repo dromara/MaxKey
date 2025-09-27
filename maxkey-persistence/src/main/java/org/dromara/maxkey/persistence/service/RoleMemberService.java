@@ -23,7 +23,7 @@ import java.util.List;
 import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.entity.permissions.RoleMember;
 import org.dromara.maxkey.entity.permissions.Roles;
-import org.dromara.mybatis.jpa.IJpaService;
+import org.dromara.mybatis.jpa.service.IJpaService;
 import org.dromara.mybatis.jpa.entity.JpaPageResults;
 
 public interface RoleMemberService  extends IJpaService<RoleMember>{
