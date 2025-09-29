@@ -54,7 +54,7 @@ const LANGS: { [key: string]: LangConfigData } = {
     zorro: zorroZhCN,
     date: dfZhCn,
     delon: delonZhCn,
-    abbr: '🇨🇳'
+    abbr: 'CN'
   },
   'zh-TW': {
     text: '繁体中文',
@@ -70,7 +70,7 @@ const LANGS: { [key: string]: LangConfigData } = {
     zorro: zorroEnUS,
     date: dfEn,
     delon: delonEnUS,
-    abbr: '🇬🇧'
+    abbr: 'EN'
   }
 };
 
