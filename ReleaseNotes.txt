@@ -1,4 +1,29 @@
-﻿MaxKey v 4.1.8 GA 2025/08/01
+﻿MaxKey v 4.1.9 GA 2025/10/*
+    *(MAXKEY-250501) #248 最新镜像 启动登陆异常
+    *(MAXKEY-250502) 仪表盘显示和数据优化，增加totalUsers、totalDepts、totalApps统计
+    *(MAXKEY-250503) 开源之夏-官方操作手册 by xiaoyvhuv
+    *(MAXKEY-250504) 开源之夏-WebAuth passkey认证支持 by Spock12138
+    *(MAXKEY-250505) #57 去掉密码策略校验 当密码错误次数超过6次被暂定锁定后，社交登录时也会报错被锁定 by zwj 
+    *(MAXKEY-250506) 点击部门分页问题修复
+    *(MAXKEY-250507) #67 modify dockerfile Merge pull request !1 from 乐淘
+    *(MAXKEY-250508) 访问控制分页问题修复
+    *(MAXKEY-250509) build.gradle优化
+    *(MAXKEY-250510) 管理端增加官方网站链接菜单
+    *(MAXKEY-250511) mybatis-jpa-extra升级优化
+    *(MAXKEY-250512) release.bat构建脚本优化
+    *(MAXKEY-250513) 依赖项引用、更新和升级
+            springVersion                   6.2.11
+            springBootVersion               3.4.10
+            springSecurityVersion           6.5.5
+            springDataVersion               3.5.4
+            springkafkaVersion              3.3.10
+            jakartaactivationVersion        2.1.4
+            jakartamailapiVersion           2.1.4
+            xmlunitVersion                  2.10.4
+            mybatis-jpa-extra               3.3.6
+            log4jVersion                    2.25.2
+            
+MaxKey v 4.1.8 GA 2025/08/01
     *(MAXKEY-250401) 二次认证
     *(MAXKEY-250402) MaxKeyOpenApiApplication name MaxKeyApiApplication
     *(MAXKEY-250403) 缓存优化
