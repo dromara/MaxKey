@@ -46,7 +46,7 @@
 				"": "配置管理",
 				"institutions": "机构配置",
 				"accountsstrategys": "账号策略",
-				"socialsproviders": "社交服务",
+				"socialsproviders": "社交登录",
 				"synchronizers": "同步器管理",
 				"connectors":"连接器管理",
 				"adapters": "适配器注册",
