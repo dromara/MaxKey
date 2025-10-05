@@ -488,7 +488,7 @@ public class PasskeyServiceImpl implements PasskeyService {
             
             // 标记挑战为已使用
             challenge.setStatus(1);
-            passkeyChallengeService.saveChallenge(challenge);
+            passkeyChallengeService.validateAndConsumeChallenge(challenge.getId(),challenge.getChallengeType());
             
             _logger.debug("Authentication verification completed successfully");
             return result;
