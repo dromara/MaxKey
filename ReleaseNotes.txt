@@ -1,4 +1,4 @@
-﻿MaxKey v 4.1.9 GA 2025/10/*
+﻿MaxKey v 4.1.9 GA 2025/10/10
     *(MAXKEY-250501) #248 最新镜像 启动登陆异常
     *(MAXKEY-250502) 仪表盘显示和数据优化，增加totalUsers、totalDepts、totalApps统计
     *(MAXKEY-250503) 开源之夏-官方操作手册 by xiaoyvhuv
@@ -11,7 +11,10 @@
     *(MAXKEY-250510) 管理端增加官方网站链接菜单
     *(MAXKEY-250511) mybatis-jpa-extra升级优化
     *(MAXKEY-250512) release.bat构建脚本优化
-    *(MAXKEY-250513) 依赖项引用、更新和升级
+    *(MAXKEY-250513) 社交服务 ->社交登录
+    *(MAXKEY-250514) 国际化切换图标修改，English abbr EN，zh-CN abbr CN
+    *(MAXKEY-250515) sql文件数据结构和数据合并成一个问题maxkey.sql
+    *(MAXKEY-250516) 依赖项引用、更新和升级
             springVersion                   6.2.11
             springBootVersion               3.4.10
             springSecurityVersion           6.5.5
