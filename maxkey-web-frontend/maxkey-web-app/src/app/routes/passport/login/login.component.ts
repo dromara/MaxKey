@@ -56,6 +56,8 @@ export class UserLoginComponent implements OnInit, OnDestroy {
   loading = false;
   passwordVisible = false;
   qrexpire = false;
+  passkeyEnabled = false;
+  passkeyAllowedOrigins = [];
   imageCaptcha = '';
   captchaType = '';
   state = '';
@@ -136,6 +138,25 @@ export class UserLoginComponent implements OnInit, OnDestroy {
             this.socials = res.data.socials;
             this.state = res.data.state;
             this.captchaType = res.data.captcha;
+            this.passkeyEnabled = res.data.passkeyEnabled;
+            this.passkeyAllowedOrigins = res.data.passkeyAllowedOrigins;
+            let passkeyAllowedOriginsMatch = false;
+            for (let allowedOrigin of this.passkeyAllowedOrigins) {
+              console.log(`passkey allowedOrigin ${allowedOrigin}`);
+              console.log(`location ${window.location.href}`);
+              if (
+                window.location.href.startsWith('http://localhost') ||
+                (window.location.href.startsWith('https') && window.location.href.indexOf(allowedOrigin) > -1)
+              ) {
+                console.log(window.location.href.indexOf(allowedOrigin) > -1);
+                passkeyAllowedOriginsMatch = true;
+              }
+            }
+            if (window.PublicKeyCredential && this.passkeyEnabled && passkeyAllowedOriginsMatch) {
+              this.passkeyEnabled = true;
+            } else {
+              this.passkeyEnabled = false;
+            }
             if (this.captchaType === 'NONE') {
               //清除校验规则
               this.form.get('captcha')?.clearValidators();
@@ -508,7 +529,7 @@ export class UserLoginComponent implements OnInit, OnDestroy {
   async passkeyLogin(): Promise<void> {
     console.log('=== PASSKEY LOGIN DEBUG START ===');
     console.log('Passkey usernameless login clicked at:', new Date().toISOString());
-    
+
     try {
       // 检查浏览器是否支持 WebAuthn
       if (!window.PublicKeyCredential) {
@@ -520,7 +541,7 @@ export class UserLoginComponent implements OnInit, OnDestroy {
 
       this.loading = true;
       this.cdr.detectChanges();
-      
+
       // 1. 调用后端 API 获取认证选项（不传递任何用户信息）
       console.log('Step 1: Requesting authentication options from backend...');
       let authOptionsResponse;
@@ -535,12 +556,14 @@ export class UserLoginComponent implements OnInit, OnDestroy {
         } else if (httpError.message) {
           errorMessage = httpError.message;
         }
-        
+
         // 检查是否是没有注册 Passkey 的错误
-        if (errorMessage.includes('没有注册任何 Passkey') || 
-            errorMessage.includes('No Passkeys registered') ||
-            errorMessage.includes('还没有注册任何 Passkey') ||
-            errorMessage.includes('系统中还没有注册任何 Passkey')) {
+        if (
+          errorMessage.includes('没有注册任何 Passkey') ||
+          errorMessage.includes('No Passkeys registered') ||
+          errorMessage.includes('还没有注册任何 Passkey') ||
+          errorMessage.includes('系统中还没有注册任何 Passkey')
+        ) {
           // 直接显示友好提示并返回，不抛出错误避免被全局拦截器捕获
           this.msg.warning('还未注册 Passkey，请注册 Passkey');
           console.log('=== PASSKEY LOGIN DEBUG END ===');
@@ -548,17 +571,19 @@ export class UserLoginComponent implements OnInit, OnDestroy {
         }
         throw new Error(errorMessage);
       }
-      
+
       console.log('Backend auth options response:', authOptionsResponse);
-      
+
       if (!authOptionsResponse || authOptionsResponse.code !== 0) {
         console.error('Failed to get auth options:', authOptionsResponse);
         // 检查是否是没有注册 Passkey 的错误
         const errorMessage = authOptionsResponse?.message || '获取认证选项失败';
-        if (errorMessage.includes('没有注册任何 Passkey') || 
-            errorMessage.includes('No Passkeys registered') ||
-            errorMessage.includes('还没有注册任何 Passkey') ||
-            errorMessage.includes('系统中还没有注册任何 Passkey')) {
+        if (
+          errorMessage.includes('没有注册任何 Passkey') ||
+          errorMessage.includes('No Passkeys registered') ||
+          errorMessage.includes('还没有注册任何 Passkey') ||
+          errorMessage.includes('系统中还没有注册任何 Passkey')
+        ) {
           // 直接显示友好提示并返回，不抛出错误避免被全局拦截器捕获
           this.msg.warning('还未注册 Passkey，请注册 Passkey');
           console.log('=== PASSKEY LOGIN DEBUG END ===');
@@ -566,16 +591,16 @@ export class UserLoginComponent implements OnInit, OnDestroy {
         }
         throw new Error(errorMessage);
       }
-      
+
       const authOptions = authOptionsResponse.data;
       console.log('Auth options received:', authOptions);
-      
+
       // 检查返回的数据是否有效
       if (!authOptions || !authOptions.challenge) {
         console.error('Invalid auth options:', authOptions);
         throw new Error('服务器返回的认证选项无效');
       }
-      
+
       // 2. 转换认证选项格式
       console.log('Step 2: Converting authentication options...');
       const convertedOptions: PublicKeyCredentialRequestOptions = {
@@ -596,30 +621,30 @@ export class UserLoginComponent implements OnInit, OnDestroy {
       // 3. 调用 WebAuthn API 进行认证
       console.log('Step 3: Calling WebAuthn API navigator.credentials.get()...');
       console.log('Available authenticators will be queried automatically');
-      
-      const credential = await navigator.credentials.get({
+
+      const credential = (await navigator.credentials.get({
         publicKey: convertedOptions
-      }) as PublicKeyCredential;
+      })) as PublicKeyCredential;
 
       if (!credential) {
         console.error('No credential returned from WebAuthn API');
         throw new Error('认证失败');
       }
-      
+
       console.log('=== CREDENTIAL DEBUG INFO ===');
       console.log('Credential ID:', credential.id);
       console.log('Credential ID length:', credential.id.length);
       console.log('Credential type:', credential.type);
       console.log('Credential rawId length:', credential.rawId.byteLength);
       console.log('Credential rawId as base64:', this.arrayBufferToBase64(credential.rawId));
-      
+
       // 验证 credential.id 和 rawId 的一致性
       const rawIdBase64 = this.arrayBufferToBase64(credential.rawId);
       console.log('ID consistency check:');
       console.log('  credential.id:', credential.id);
       console.log('  rawId as base64:', rawIdBase64);
       console.log('  IDs match:', credential.id === rawIdBase64);
-      
+
       const credentialResponse = credential.response as AuthenticatorAssertionResponse;
       console.log('Authenticator response type:', credentialResponse.constructor.name);
       console.log('User handle:', credentialResponse.userHandle ? this.arrayBufferToBase64(credentialResponse.userHandle) : 'null');
@@ -644,10 +669,10 @@ export class UserLoginComponent implements OnInit, OnDestroy {
         signatureLength: requestPayload.signature.length,
         userHandle: requestPayload.userHandle
       });
-      
+
       const finishResponse = await this.http.post<any>('/passkey/authentication/finish?_allow_anonymous=true', requestPayload).toPromise();
       console.log('Backend finish response:', finishResponse);
-      
+
       if (!finishResponse || finishResponse.code !== 0) {
         console.error('Backend verification failed:', finishResponse);
         throw new Error(finishResponse?.message || 'Passkey认证失败');
@@ -657,13 +682,13 @@ export class UserLoginComponent implements OnInit, OnDestroy {
       console.log('Step 5: Authentication successful, setting user info...');
       const authResult = finishResponse.data;
       console.log('Auth result received:', authResult);
-      
+
       this.msg.success(`Passkey 登录成功！欢迎 ${authResult.username || '用户'}`);
-      
+
       // 清空路由复用信息
       console.log('Clearing reuse tab service...');
       this.reuseTabService.clear();
-      
+
       // 设置用户Token信息
       if (authResult && authResult.userId) {
         console.log('Valid auth result with userId:', authResult.userId);
@@ -684,12 +709,12 @@ export class UserLoginComponent implements OnInit, OnDestroy {
           passwordSetType: authResult.passwordSetType || 'normal',
           authorities: authResult.authorities || []
         };
-        
+
         console.log('Setting auth info:', userInfo);
-        
+
         // 设置认证信息
         this.authnService.auth(userInfo);
-        
+
         // 使用 navigate 方法进行跳转，它会处理 StartupService 的重新加载
         console.log('Navigating with auth result...');
         this.authnService.navigate(authResult);
@@ -698,28 +723,30 @@ export class UserLoginComponent implements OnInit, OnDestroy {
         console.error('Invalid auth result - missing userId:', authResult);
         throw new Error('认证成功但用户数据无效');
       }
-      
     } catch (error: any) {
       console.error('=== PASSKEY LOGIN ERROR ===');
       console.error('Error type:', error.constructor.name);
       console.error('Error message:', error.message);
       console.error('Error stack:', error.stack);
       console.error('Full error object:', error);
-      
+
       // 检查是否是没有注册 Passkey 的错误
-      if (error.message && (error.message.includes('PASSKEY_NOT_REGISTERED') ||
-                           error.message.includes('没有找到可用的凭据') || 
-                           error.message.includes('No credentials available') ||
-                           error.message.includes('用户未注册') ||
-                           error.message.includes('credential not found') ||
-                           error.message.includes('没有注册任何 Passkey') ||
-                           error.message.includes('No Passkeys registered') ||
-                           error.message.includes('还没有注册任何 Passkey'))) {
+      if (
+        error.message &&
+        (error.message.includes('PASSKEY_NOT_REGISTERED') ||
+          error.message.includes('没有找到可用的凭据') ||
+          error.message.includes('No credentials available') ||
+          error.message.includes('用户未注册') ||
+          error.message.includes('credential not found') ||
+          error.message.includes('没有注册任何 Passkey') ||
+          error.message.includes('No Passkeys registered') ||
+          error.message.includes('还没有注册任何 Passkey'))
+      ) {
         this.msg.warning('还未注册 Passkey，请注册 Passkey');
         console.log('=== PASSKEY LOGIN DEBUG END ===');
         return;
       }
-      
+
       // 如果是 WebAuthn 相关错误，提供更详细的信息
       if (error.name) {
         console.error('WebAuthn error name:', error.name);
@@ -747,10 +774,10 @@ export class UserLoginComponent implements OnInit, OnDestroy {
             break;
           default:
             console.error('Unknown WebAuthn error');
-            this.msg.error('Passkey 登录失败：' + (error.message || '请重试或使用其他登录方式'));
+            this.msg.error(`Passkey 登录失败：${error.message || '请重试或使用其他登录方式'}`);
         }
       } else {
-        this.msg.error('Passkey 登录失败：' + (error.message || '请重试或使用其他登录方式'));
+        this.msg.error(`Passkey 登录失败：${error.message || '请重试或使用其他登录方式'}`);
       }
       console.log('=== PASSKEY LOGIN DEBUG END ===');
     } finally {

@@ -107,6 +107,8 @@ import {
   FileProtectOutline,
   HistoryOutline,
   UserAddOutline,
+  SafetyCertificateOutline,
+  PlusCircleOutline,
   AuditOutline
 } from '@ant-design/icons-angular/icons';
 import { QR_DEFULAT_CONFIG } from '@delon/abc/qr';
@@ -199,5 +201,7 @@ export const ICONS_AUTO = [
   FileProtectOutline,
   HistoryOutline,
   UserAddOutline,
+  SafetyCertificateOutline,
+  PlusCircleOutline,
   AuditOutline
 ];

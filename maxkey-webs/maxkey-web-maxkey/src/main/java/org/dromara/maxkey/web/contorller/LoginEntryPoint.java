@@ -33,6 +33,7 @@ import org.dromara.maxkey.configuration.ApplicationConfig;
 import org.dromara.maxkey.constants.ConstsLoginType;
 import org.dromara.maxkey.entity.*;
 import org.dromara.maxkey.entity.idm.UserInfo;
+import org.dromara.maxkey.passkey.config.PasskeyProperties;
 import org.dromara.maxkey.password.onetimepwd.AbstractOtpAuthn;
 import org.dromara.maxkey.password.sms.SmsOtpAuthnService;
 import org.dromara.maxkey.persistence.service.SocialsAssociatesService;
@@ -72,6 +73,9 @@ public class LoginEntryPoint {
 
 	@Autowired
   	ApplicationConfig applicationConfig;
+	
+	@Autowired
+    PasskeyProperties passkeyProperties;
 
 	@Autowired
 	AbstractAuthenticationProvider authenticationProvider ;
@@ -134,6 +138,8 @@ public class LoginEntryPoint {
 			model.put("otpType", tfaOtpAuthn.getOtpType());
 			model.put("otpInterval", tfaOtpAuthn.getInterval());
 		}
+		model.put("passkeyEnabled", passkeyProperties.isEnabled());
+		model.put("passkeyAllowedOrigins", passkeyProperties.getRelyingParty().getAllowedOrigins());
 
 		if( applicationConfig.getLoginConfig().isKerberos()){
 			model.put("userDomainUrlJson", kerberosService.buildKerberosProxys());

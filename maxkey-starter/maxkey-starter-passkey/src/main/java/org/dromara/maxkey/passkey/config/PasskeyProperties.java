@@ -21,7 +21,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 /**
  * Passkey配置属性
  */
-@ConfigurationProperties(prefix = "maxkey.passkey")
+@ConfigurationProperties(prefix = "maxkey.login.passkey")
 public class PasskeyProperties {
     
     /**
