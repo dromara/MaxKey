@@ -26,8 +26,8 @@ import { NzTableQueryParams } from 'ng-zorro-antd/table';
 
 import { SynchronizersService } from '../../../service/synchronizers.service';
 import { set2String } from '../../../shared/index';
-import { SynchronizerEditerComponent } from './synchronizer-editer/synchronizer-editer.component';
 import { SynchronizerConfigFieldComponent } from './synchronizer-config-field/synchronizer-config-field.component';
+import { SynchronizerEditerComponent } from './synchronizer-editer/synchronizer-editer.component';
 @Component({
   selector: 'app-synchronizers',
   templateUrl: './synchronizers.component.html',
@@ -150,7 +150,6 @@ export class SynchronizersComponent implements OnInit {
     });
   }
 
-
   onEdit(e: MouseEvent, editId: String): void {
     e.preventDefault();
     const modal = this.modalService.create({
@@ -190,8 +189,7 @@ export class SynchronizersComponent implements OnInit {
     });
   }
 
-
-  onDelete( deleteId: String): void {
+  onDelete(deleteId: String): void {
     this.synchronizersService.delete(deleteId).subscribe(res => {
       if (res.code == 0) {
         this.msg.success(this.i18n.fanyi('mxk.alert.delete.success'));
@@ -246,5 +244,9 @@ export class SynchronizersComponent implements OnInit {
   onTableAllChecked(checked: boolean): void {
     this.query.results.rows.filter(({ disabled }) => !disabled).forEach(({ id }) => this.updateTableCheckedSet(id, checked));
     this.refreshTableCheckedStatus();
+  }
+
+  tableHasCheckedItem(): boolean {
+    return this.query.tableCheckedId.size <= 0;
   }
 }

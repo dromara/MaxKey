@@ -37,6 +37,7 @@
       <button
         nz-button
         type="button"
+        [disabled]="tableHasCheckedItem()"
         nz-popconfirm
         nzPopconfirmTitle="{{ 'mxk.text.delete.popconfirm.title' | i18n }}"
         nzPopconfirmPlacement="left"

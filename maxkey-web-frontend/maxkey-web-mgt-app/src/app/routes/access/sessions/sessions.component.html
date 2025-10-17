@@ -71,7 +71,7 @@
       </div>
 
       <div nz-col [nzSpan]="query.expandForm ? 24 : 8" [class.text-right]="query.expandForm">
-        <button nz-button type="submit" [nzType]="'primary'" >{{ 'mxk.text.query' | i18n }}</button>
+        <button nz-button type="submit" [nzType]="'primary'">{{ 'mxk.text.query' | i18n }}</button>
         <button nz-button type="reset" (click)="onReset()" class="mx-sm">{{ 'mxk.text.reset' | i18n }}</button>
         <button nz-button (click)="query.expandForm = !query.expandForm" class="mx-sm">
           {{ query.expandForm ? ('mxk.text.collapse' | i18n) : ('mxk.text.expand' | i18n) }}</button
@@ -82,9 +82,16 @@
 </nz-card>
 <nz-card>
   <div nz-col [nzSpan]="24" class="table-list-toolbar">
-    <button nz-button type="button" (click)="onTerminate($event)" [nzType]="'primary'" nzDanger class="mx-sm">{{
-      'mxk.text.terminate' | i18n
-    }}</button>
+    <button
+      nz-button
+      type="button"
+      [disabled]="tableHasCheckedItem()"
+      (click)="onTerminate($event)"
+      [nzType]="'primary'"
+      nzDanger
+      class="mx-sm"
+      >{{ 'mxk.text.terminate' | i18n }}</button
+    >
   </div>
   <div nz-col [nzSpan]="24">
     <nz-table

@@ -269,6 +269,10 @@ export class ResourcesComponent implements OnInit {
     this.refreshTableCheckedStatus();
   }
 
+  tableHasCheckedItem(): boolean {
+    return this.query.tableCheckedId.size <= 0;
+  }
+
   openFolder(data: NzTreeNode | NzFormatEmitEvent): void {
     // do something if u want
     if (data instanceof NzTreeNode) {

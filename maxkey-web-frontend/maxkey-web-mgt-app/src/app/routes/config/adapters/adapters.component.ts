@@ -217,4 +217,8 @@ export class AdaptersComponent implements OnInit {
     this.query.results.rows.filter(({ disabled }) => !disabled).forEach(({ id }) => this.updateTableCheckedSet(id, checked));
     this.refreshTableCheckedStatus();
   }
+
+  tableHasCheckedItem(): boolean {
+    return this.query.tableCheckedId.size <= 0;
+  }
 }

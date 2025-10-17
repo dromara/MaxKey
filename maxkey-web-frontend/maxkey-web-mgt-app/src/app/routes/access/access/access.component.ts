@@ -242,6 +242,10 @@ export class AccessComponent implements OnInit {
     this.refreshTableCheckedStatus();
   }
 
+  tableHasCheckedItem(): boolean {
+    return this.query.tableCheckedId.size <= 0;
+  }
+
   //group list
   groupQuery: {
     params: {
