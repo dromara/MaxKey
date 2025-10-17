@@ -27,20 +27,6 @@
       </div>
       <div nz-col nzMd="8" nzSm="24" *ngIf="query.expandForm">
         <nz-form-item>
-          <nz-form-label nzFor="employeeNumber">{{ 'mxk.users.employeeNumber' | i18n }}</nz-form-label>
-          <nz-form-control>
-            <input
-              nz-input
-              [(ngModel)]="query.params.employeeNumber"
-              [ngModelOptions]="{ standalone: true }"
-              id="employeeNumber"
-              name="employeeNumber"
-            />
-          </nz-form-control>
-        </nz-form-item>
-      </div>
-      <div nz-col nzMd="8" nzSm="24" *ngIf="query.expandForm">
-        <nz-form-item>
           <nz-form-label nzFor="startDatePicker">{{ 'mxk.text.startDate' | i18n }}</nz-form-label>
           <nz-form-control>
             <nz-date-picker
@@ -73,7 +59,7 @@
       </div>
 
       <div nz-col [nzSpan]="query.expandForm ? 24 : 8" [class.text-right]="query.expandForm">
-        <button nz-button type="submit" [nzType]="'primary'" >{{ 'mxk.text.query' | i18n }}</button>
+        <button nz-button type="submit" [nzType]="'primary'">{{ 'mxk.text.query' | i18n }}</button>
         <button nz-button type="reset" (click)="onReset()" class="mx-sm">{{ 'mxk.text.reset' | i18n }}</button>
         <button nz-button (click)="query.expandForm = !query.expandForm" class="mx-sm">
           {{ query.expandForm ? ('mxk.text.collapse' | i18n) : ('mxk.text.expand' | i18n) }}</button
