@@ -40,6 +40,7 @@
                 [(nzFileList)]="fileList"
                 nzName="uploadFile"
                 [nzShowButton]="fileList.length < 1"
+                [nzShowUploadList]="{ showPreviewIcon: true, showRemoveIcon: true }"
                 [nzPreview]="handlePreview"
                 (nzChange)="uploadImageChange($event)"
               >

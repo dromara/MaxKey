@@ -84,6 +84,7 @@
                 nzName="uploadFile"
                 [nzShowButton]="fileList.length < 1"
                 [nzPreview]="handlePreview"
+                [nzShowUploadList]="{ showPreviewIcon: true, showRemoveIcon: true }"
                 (nzChange)="uploadImageChange($event)"
               >
                 <div>
