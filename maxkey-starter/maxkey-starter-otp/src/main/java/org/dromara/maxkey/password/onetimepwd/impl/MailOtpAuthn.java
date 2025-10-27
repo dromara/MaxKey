@@ -66,6 +66,8 @@ public class MailOtpAuthn extends AbstractOtpAuthn {
             javaMailSender.setPassword(emailConfig.getPassword());
             Properties properties = new Properties();
             properties.put("mail.smtp.auth","true");
+            properties.put("mail.smtp.ssl.enable", String.valueOf(emailConfig.isSsl()));
+            properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
             javaMailSender.setJavaMailProperties(properties);
             javaMailSender.setHost(emailConfig.getSmtpHost());
             javaMailSender.setPort(emailConfig.getPort());
