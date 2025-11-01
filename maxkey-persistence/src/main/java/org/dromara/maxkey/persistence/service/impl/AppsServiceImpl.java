@@ -32,48 +32,48 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 
 @Repository
 public class AppsServiceImpl extends JpaServiceImpl<AppsMapper,Apps> implements AppsService{
-	//maxkey-mgt
-	public static final  	String MGT_APP_ID 		= "622076759805923328";
-	
-	public static final  	String DETAIL_SUFFIX	=	"_detail";
-	
-	protected static final   Cache<String, Apps> detailsCacheStore = 
-										Caffeine.newBuilder()
-							                .expireAfterWrite(30, TimeUnit.MINUTES)
-							                .build();
-	
-	public boolean insertApp(Apps app) {
-		return ((AppsMapper)super.getMapper()).insertApp(app)>0;
-	};
-	public boolean updateApp(Apps app) {
-		return ((AppsMapper)super.getMapper()).updateApp(app)>0;
-	};
-	
-	public boolean updateExtendAttr(Apps app) {
-		return ((AppsMapper)super.getMapper()).updateExtendAttr(app)>0;
-	}
-	
+    //maxkey-mgt
+    public static final      String MGT_APP_ID         = "622076759805923328";
+    
+    public static final      String DETAIL_SUFFIX    =    "_detail";
+    
+    protected static final   Cache<String, Apps> detailsCacheStore = 
+                                        Caffeine.newBuilder()
+                                            .expireAfterWrite(30, TimeUnit.MINUTES)
+                                            .build();
+    
+    public boolean insertApp(Apps app) {
+        return ((AppsMapper)super.getMapper()).insertApp(app)>0;
+    };
+    public boolean updateApp(Apps app) {
+        return ((AppsMapper)super.getMapper()).updateApp(app)>0;
+    };
+    
+    public boolean updateExtendAttr(Apps app) {
+        return ((AppsMapper)super.getMapper()).updateExtendAttr(app)>0;
+    }
+    
     public List<UserApps> queryMyApps(UserApps userApplications){
         return getMapper().queryMyApps(userApplications);
     }
 
     //cache for running
     public void put(String appId, Apps appDetails) {
-    	detailsCacheStore.put(appId + DETAIL_SUFFIX, appDetails);
-	}
-	
+        detailsCacheStore.put(appId + DETAIL_SUFFIX, appDetails);
+    }
+    
     public Apps get(String appId, boolean cached) {
-    	appId = appId.equalsIgnoreCase("maxkey_mgt") ? MGT_APP_ID : appId;
-    	Apps appDetails = null;
-    	if(cached) {
-    		appDetails = detailsCacheStore.getIfPresent(appId + DETAIL_SUFFIX); 
-    		if(appDetails == null) {
-    			appDetails = this.get(appId);
-    			detailsCacheStore.put(appId, appDetails);
-    		}
-    	}else {
-    		appDetails = this.get(appId);
-    	}
+        appId = appId.equalsIgnoreCase("maxkey_mgt") ? MGT_APP_ID : appId;
+        Apps appDetails = null;
+        if(cached) {
+            appDetails = detailsCacheStore.getIfPresent(appId + DETAIL_SUFFIX); 
+            if(appDetails == null) {
+                appDetails = this.get(appId);
+                detailsCacheStore.put(appId, appDetails);
+            }
+        }else {
+            appDetails = this.get(appId);
+        }
         return appDetails;
     }
     

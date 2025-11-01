@@ -26,33 +26,33 @@ import org.opensaml.xml.security.credential.CredentialResolver;
 
 public class ExtractRedirectBindingAdapter extends ExtractPostBindingAdapter{
 
-	public ExtractRedirectBindingAdapter(SAMLMessageDecoder decoder) {
-		this.decoder = decoder;
-	}
-	
-	public ExtractRedirectBindingAdapter(SAMLMessageDecoder decoder,String issuingEntityName) {
-		this.decoder = decoder;
-		this.issuingEntityName = issuingEntityName;
-	}
-	
-	public ExtractRedirectBindingAdapter(SAMLMessageDecoder decoder,String issuingEntityName, SecurityPolicyResolver securityPolicyResolver) {
-		this.decoder = decoder;
-		this.issuingEntityName = issuingEntityName;
-		
-		this.securityPolicyResolver = securityPolicyResolver;
-	}
-	
-	@Override
-	public void buildSecurityPolicyResolver(KeyStore trustKeyStore) {
+    public ExtractRedirectBindingAdapter(SAMLMessageDecoder decoder) {
+        this.decoder = decoder;
+    }
+    
+    public ExtractRedirectBindingAdapter(SAMLMessageDecoder decoder,String issuingEntityName) {
+        this.decoder = decoder;
+        this.issuingEntityName = issuingEntityName;
+    }
+    
+    public ExtractRedirectBindingAdapter(SAMLMessageDecoder decoder,String issuingEntityName, SecurityPolicyResolver securityPolicyResolver) {
+        this.decoder = decoder;
+        this.issuingEntityName = issuingEntityName;
+        
+        this.securityPolicyResolver = securityPolicyResolver;
+    }
+    
+    @Override
+    public void buildSecurityPolicyResolver(KeyStore trustKeyStore) {
 
-		TrustResolver trustResolver = new TrustResolver(trustKeyStore,
-					keyStoreLoader.getEntityName(),
-					keyStoreLoader.getKeystorePassword(), 
-					issueInstantRule,
-					messageReplayRule,
-					"Redirect");
-		credentialResolver = (CredentialResolver)trustResolver.getKeyStoreCredentialResolver();
-		this.securityPolicyResolver = trustResolver.getStaticSecurityPolicyResolver();
-	}
+        TrustResolver trustResolver = new TrustResolver(trustKeyStore,
+                    keyStoreLoader.getEntityName(),
+                    keyStoreLoader.getKeystorePassword(), 
+                    issueInstantRule,
+                    messageReplayRule,
+                    "Redirect");
+        credentialResolver = (CredentialResolver)trustResolver.getKeyStoreCredentialResolver();
+        this.securityPolicyResolver = trustResolver.getStaticSecurityPolicyResolver();
+    }
 
 }

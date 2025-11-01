@@ -178,13 +178,13 @@ public final class ReciprocalUtils {
     }
     
     public static String encode2Hex(String simple, String secretKey) {
-    	String key = generatorDefaultKey(secretKey + defaultKey,Algorithm.DESede);
-    	return encode2Hex(simple,key, Algorithm.DESede);
+        String key = generatorDefaultKey(secretKey + defaultKey,Algorithm.DESede);
+        return encode2Hex(simple,key, Algorithm.DESede);
     }
 
     public static String decoderHex(String ciphers, String secretKey) {
-    	String key = generatorDefaultKey(secretKey + defaultKey,Algorithm.DESede);
-    	return decoderHex(ciphers,key,Algorithm.DESede);
+        String key = generatorDefaultKey(secretKey + defaultKey,Algorithm.DESede);
+        return decoderHex(ciphers,key,Algorithm.DESede);
     }
     
     private static boolean keyLengthCheck(String secretKey, String algorithm) {
@@ -234,16 +234,16 @@ public final class ReciprocalUtils {
         return decoderHex(ciphers, secretKey, Algorithm.AES);
     }
     
-	public static Object newInstance(String className) {
-		Class<?> cls;
-		try {
-			cls = Class.forName(className);
-			Constructor<?> constructor = cls.getConstructor();
-			return constructor.newInstance();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
+    public static Object newInstance(String className) {
+        Class<?> cls;
+        try {
+            cls = Class.forName(className);
+            Constructor<?> constructor = cls.getConstructor();
+            return constructor.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
 
-	}
+    }
 }

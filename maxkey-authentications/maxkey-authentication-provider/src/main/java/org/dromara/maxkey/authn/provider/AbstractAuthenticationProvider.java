@@ -58,19 +58,19 @@ public abstract class AbstractAuthenticationProvider {
     public static String PROVIDER_SUFFIX = "AuthenticationProvider";
 
     public class AuthType{
-    	public static final  String NORMAL 	= "normal";
-    	public static final  String TFA 		= "tfa";
-    	public static final  String MOBILE 	= "mobile";
-    	public static final  String TRUSTED 	= "trusted";
+        public static final  String NORMAL     = "normal";
+        public static final  String TFA         = "tfa";
+        public static final  String MOBILE     = "mobile";
+        public static final  String TRUSTED     = "trusted";
         /**
          * 扫描认证
          */
-        public static final  String SCAN_CODE 	= "scancode";
+        public static final  String SCAN_CODE     = "scancode";
 
         /**
          * 手机端APP
          */
-        public static final  String APP 		= "app";
+        public static final  String APP         = "app";
     }
 
     protected ApplicationConfig applicationConfig;
@@ -96,7 +96,7 @@ public abstract class AbstractAuthenticationProvider {
     public abstract Authentication doAuthenticate(LoginCredential authentication);
 
     public Authentication doTwoFactorAuthenticate(LoginCredential credential , UserInfo user) {
-    	return null;
+        return null;
     }
     
     @SuppressWarnings("rawtypes")
@@ -105,11 +105,11 @@ public abstract class AbstractAuthenticationProvider {
     }
 
     public Authentication authenticate(LoginCredential authentication){
-    	return null;
+        return null;
     }
 
     public Authentication authenticate(LoginCredential authentication,boolean trusted) {
-    	return null;
+        return null;
     }
 
     /**
@@ -130,7 +130,7 @@ public abstract class AbstractAuthenticationProvider {
 
         for(GrantedAuthority administratorsAuthority : grantedAdministratorsAuthoritys) {
             if(grantedAuthoritys.contains(administratorsAuthority)) {
-            	principal.setRoleAdministrators(true);
+                principal.setRoleAdministrators(true);
                 _logger.trace("ROLE ADMINISTRATORS Authentication .");
             }
         }
@@ -140,7 +140,7 @@ public abstract class AbstractAuthenticationProvider {
 
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(
-                		principal,
+                        principal,
                         "PASSWORD",
                         grantedAuthoritys
                 );
@@ -154,10 +154,10 @@ public abstract class AbstractAuthenticationProvider {
         session.setAuthentication(authenticationToken);
 
         if(credential.getAuthType().equalsIgnoreCase(AuthType.NORMAL) 
-        		&& userInfo.getAuthnType() > ConstsTwoFactor.NONE ) {
-        	//用户配置二次认证
-        	principal.setTwoFactor(userInfo.getAuthnType());
-        	this.sessionManager.createTwoFactor(session.getId(), session);
+                && userInfo.getAuthnType() > ConstsTwoFactor.NONE ) {
+            //用户配置二次认证
+            principal.setTwoFactor(userInfo.getAuthnType());
+            this.sessionManager.createTwoFactor(session.getId(), session);
         }
         
         //create session
@@ -241,34 +241,34 @@ public abstract class AbstractAuthenticationProvider {
             loginUser.setDisplayName("not exist");
             loginUser.setLoginCount(0);
             authenticationRealm.insertLoginHistory(
-            			loginUser,
-            			ConstsLoginType.LOCAL,
-            			"",
-            			i18nMessage,
-            			WebConstants.LOGIN_RESULT.USER_NOT_EXIST);
+                        loginUser,
+                        ConstsLoginType.LOCAL,
+                        "",
+                        i18nMessage,
+                        WebConstants.LOGIN_RESULT.USER_NOT_EXIST);
             throw new BadCredentialsException(i18nMessage);
         }
         return true;
     }
 
     protected boolean statusValid(LoginCredential loginCredential , UserInfo userInfo) {
-    	if(userInfo.getIsLocked()==ConstsStatus.LOCK) {
-    		authenticationRealm.insertLoginHistory(
-    				userInfo,
+        if(userInfo.getIsLocked()==ConstsStatus.LOCK) {
+            authenticationRealm.insertLoginHistory(
+                    userInfo,
                     loginCredential.getAuthType(),
                     loginCredential.getProvider(),
                     loginCredential.getCode(),
                     WebConstants.LOGIN_RESULT.USER_LOCKED
                 );
-    	}else if(userInfo.getStatus()!=ConstsStatus.ACTIVE) {
-    		authenticationRealm.insertLoginHistory(
-    				userInfo,
+        }else if(userInfo.getStatus()!=ConstsStatus.ACTIVE) {
+            authenticationRealm.insertLoginHistory(
+                    userInfo,
                     loginCredential.getAuthType(),
                     loginCredential.getProvider(),
                     loginCredential.getCode(),
                     WebConstants.LOGIN_RESULT.USER_INACTIVE
                 );
-    	}
+        }
         return true;
     }
     

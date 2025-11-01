@@ -92,8 +92,8 @@ public class ScimMeta implements Serializable {
     }
     
     public ScimMeta(String resourceType) {
-    	this.resourceType 	= 	resourceType;
-    	this.version 		= 	"1.0";
+        this.resourceType     =     resourceType;
+        this.version         =     "1.0";
     }
     
     public ScimMeta(String resourceType, Date created, Date lastModified, String location, String version,

@@ -37,20 +37,20 @@ import jakarta.servlet.http.HttpServletRequest;
 
 @FreemarkerTag("browser")
 public class BrowserTagDirective implements TemplateDirectiveModel {
-	@Autowired
+    @Autowired
     private HttpServletRequest request;
-	
-	@Override
-	@SuppressWarnings("rawtypes")
-	public void execute(Environment env, Map params, TemplateModel[] loopVars, TemplateDirectiveBody body)
-			throws TemplateException, IOException {
-		String browser = params.get("name").toString();
-		String userAgent = request.getHeader("User-Agent");
-		env.getOut().append("<!--<div style='display:none'>"+userAgent+"</div>-->");
-		
-		if(userAgent.indexOf(browser)>0){
-			body.render(env.getOut());
-		}
-	}
+    
+    @Override
+    @SuppressWarnings("rawtypes")
+    public void execute(Environment env, Map params, TemplateModel[] loopVars, TemplateDirectiveBody body)
+            throws TemplateException, IOException {
+        String browser = params.get("name").toString();
+        String userAgent = request.getHeader("User-Agent");
+        env.getOut().append("<!--<div style='display:none'>"+userAgent+"</div>-->");
+        
+        if(userAgent.indexOf(browser)>0){
+            body.render(env.getOut());
+        }
+    }
 
 }

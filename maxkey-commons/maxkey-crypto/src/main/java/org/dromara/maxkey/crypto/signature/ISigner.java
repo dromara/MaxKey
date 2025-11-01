@@ -35,14 +35,14 @@ package org.dromara.maxkey.crypto.signature;
  *
  */
 public  interface  ISigner {
-	
-	public byte[] sign(byte[] data,byte[] privateKey)throws Exception;
-	
-	public String signB64(String data,String privateKey)throws Exception;
-	
-	public boolean verify(byte[] data,byte[] publicKey,byte[] sign)throws Exception;
-	
-	public boolean verifyB64(String data,String publicKey,String sign)throws Exception;
-	
+    
+    public byte[] sign(byte[] data,byte[] privateKey)throws Exception;
+    
+    public String signB64(String data,String privateKey)throws Exception;
+    
+    public boolean verify(byte[] data,byte[] publicKey,byte[] sign)throws Exception;
+    
+    public boolean verifyB64(String data,String publicKey,String sign)throws Exception;
+    
 
 }

@@ -46,63 +46,63 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 public class AssertionEndpoint {
-	private static final  Logger logger = LoggerFactory.getLogger(AssertionEndpoint.class);
-	
-	private BindingAdapter bindingAdapter;
+    private static final  Logger logger = LoggerFactory.getLogger(AssertionEndpoint.class);
+    
+    private BindingAdapter bindingAdapter;
 
-	@Autowired
-	@Qualifier("endpointGenerator")
-	EndpointGenerator endpointGenerator;
-	
-	@Autowired
-	@Qualifier("authnResponseGenerator")
-	AuthnResponseGenerator authnResponseGenerator;
+    @Autowired
+    @Qualifier("endpointGenerator")
+    EndpointGenerator endpointGenerator;
+    
+    @Autowired
+    @Qualifier("authnResponseGenerator")
+    AuthnResponseGenerator authnResponseGenerator;
 
-	@RequestMapping(value = "/authz/saml20/assertion")
-	public ModelAndView assertion(
-			HttpServletRequest request,
-			HttpServletResponse response,
-			@CurrentUser UserInfo currentUser) throws Exception {
-		logger.debug("saml20 assertion start.");
-		bindingAdapter = (BindingAdapter) request.getSession().getAttribute(
-		        WebConstants.AUTHORIZE_SIGN_ON_APP_SAMLV20_ADAPTER);
-		logger.debug("saml20 assertion get session samlv20Adapter {}",bindingAdapter);
-		AppsSAML20Details saml20Details = bindingAdapter.getSaml20Details();
-		logger.debug("saml20Details {}",saml20Details.getExtendAttr());
-		AuthnRequestInfo authnRequestInfo = bindingAdapter.getAuthnRequestInfo();
-		
-		if (authnRequestInfo == null) {
-			logger.warn("Could not find AuthnRequest on the request.  Responding with SC_FORBIDDEN.");
-			throw new Exception();
-		}
+    @RequestMapping(value = "/authz/saml20/assertion")
+    public ModelAndView assertion(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            @CurrentUser UserInfo currentUser) throws Exception {
+        logger.debug("saml20 assertion start.");
+        bindingAdapter = (BindingAdapter) request.getSession().getAttribute(
+                WebConstants.AUTHORIZE_SIGN_ON_APP_SAMLV20_ADAPTER);
+        logger.debug("saml20 assertion get session samlv20Adapter {}",bindingAdapter);
+        AppsSAML20Details saml20Details = bindingAdapter.getSaml20Details();
+        logger.debug("saml20Details {}",saml20Details.getExtendAttr());
+        AuthnRequestInfo authnRequestInfo = bindingAdapter.getAuthnRequestInfo();
+        
+        if (authnRequestInfo == null) {
+            logger.warn("Could not find AuthnRequest on the request.  Responding with SC_FORBIDDEN.");
+            throw new Exception();
+        }
 
-		logger.debug("AuthnRequestInfo: {}", authnRequestInfo);
-		HashMap <String,String>attributeMap=new HashMap<>();
-		attributeMap.put(WebConstants.ONLINE_TICKET_NAME, AuthorizationUtils.getPrincipal().getSessionId());
-		
-		//saml20Details
-		Response authResponse = authnResponseGenerator.generateAuthnResponse(
-				saml20Details,
-				authnRequestInfo,
-				attributeMap,
-				bindingAdapter,
-				currentUser);
-		
-		Endpoint endpoint = endpointGenerator.generateEndpoint(saml20Details.getSpAcsUrl());
+        logger.debug("AuthnRequestInfo: {}", authnRequestInfo);
+        HashMap <String,String>attributeMap=new HashMap<>();
+        attributeMap.put(WebConstants.ONLINE_TICKET_NAME, AuthorizationUtils.getPrincipal().getSessionId());
+        
+        //saml20Details
+        Response authResponse = authnResponseGenerator.generateAuthnResponse(
+                saml20Details,
+                authnRequestInfo,
+                attributeMap,
+                bindingAdapter,
+                currentUser);
+        
+        Endpoint endpoint = endpointGenerator.generateEndpoint(saml20Details.getSpAcsUrl());
 
-		request.getSession().removeAttribute(AuthnRequestInfo.class.getName());
+        request.getSession().removeAttribute(AuthnRequestInfo.class.getName());
 
-		// we could use a different adapter to send the response based on
-		// request issuer...
-		try {
-			bindingAdapter.sendSAMLMessage(authResponse, endpoint, request,response);
-		} catch (MessageEncodingException mee) {
-			logger.error("Exception encoding SAML message", mee);
-			throw new Exception(mee);
-		}
-		return null;
-	}
-	
-	
+        // we could use a different adapter to send the response based on
+        // request issuer...
+        try {
+            bindingAdapter.sendSAMLMessage(authResponse, endpoint, request,response);
+        } catch (MessageEncodingException mee) {
+            logger.error("Exception encoding SAML message", mee);
+            throw new Exception(mee);
+        }
+        return null;
+    }
+    
+    
 
 }

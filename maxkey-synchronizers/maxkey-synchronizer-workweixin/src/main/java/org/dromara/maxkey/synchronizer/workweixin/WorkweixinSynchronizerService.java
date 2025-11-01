@@ -26,65 +26,65 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class WorkweixinSynchronizerService  implements ISynchronizerService{
-	static final  Logger _logger = LoggerFactory.getLogger(WorkweixinSynchronizerService.class);
-	Synchronizers synchronizer;
-	
-	@Autowired
-	WorkweixinUsersService workweixinUsersService;
-	
-	@Autowired
-	WorkweixinOrganizationService workweixinOrganizationService;
-	
+    static final  Logger _logger = LoggerFactory.getLogger(WorkweixinSynchronizerService.class);
+    Synchronizers synchronizer;
+    
+    @Autowired
+    WorkweixinUsersService workweixinUsersService;
+    
+    @Autowired
+    WorkweixinOrganizationService workweixinOrganizationService;
+    
 
-	WorkweixinAccessTokenService workweixinAccessTokenService = new WorkweixinAccessTokenService();
-	
-	public WorkweixinSynchronizerService() {
-		super();
-	}
+    WorkweixinAccessTokenService workweixinAccessTokenService = new WorkweixinAccessTokenService();
+    
+    public WorkweixinSynchronizerService() {
+        super();
+    }
 
-	public void sync() throws Exception {
-		_logger.info("Sync ...");
-		workweixinAccessTokenService.setCorpid(synchronizer.getPrincipal());
-		workweixinAccessTokenService.setCorpsecret(synchronizer.getCredentials());
-		String access_token=workweixinAccessTokenService.requestToken();
-		
-		workweixinOrganizationService.setSynchronizer(synchronizer);
-		workweixinOrganizationService.setAccess_token(access_token);
-		workweixinOrganizationService.sync();
-		
-		workweixinUsersService.setSynchronizer(synchronizer);
-		workweixinUsersService.setAccess_token(access_token);
-		workweixinUsersService.sync();
-	}
+    public void sync() throws Exception {
+        _logger.info("Sync ...");
+        workweixinAccessTokenService.setCorpid(synchronizer.getPrincipal());
+        workweixinAccessTokenService.setCorpsecret(synchronizer.getCredentials());
+        String access_token=workweixinAccessTokenService.requestToken();
+        
+        workweixinOrganizationService.setSynchronizer(synchronizer);
+        workweixinOrganizationService.setAccess_token(access_token);
+        workweixinOrganizationService.sync();
+        
+        workweixinUsersService.setSynchronizer(synchronizer);
+        workweixinUsersService.setAccess_token(access_token);
+        workweixinUsersService.sync();
+    }
 
-	public WorkweixinUsersService getWorkweixinUsersService() {
-		return workweixinUsersService;
-	}
+    public WorkweixinUsersService getWorkweixinUsersService() {
+        return workweixinUsersService;
+    }
 
-	public void setWorkweixinUsersService(WorkweixinUsersService workweixinUsersService) {
-		this.workweixinUsersService = workweixinUsersService;
-	}
+    public void setWorkweixinUsersService(WorkweixinUsersService workweixinUsersService) {
+        this.workweixinUsersService = workweixinUsersService;
+    }
 
-	public WorkweixinOrganizationService getWorkweixinOrganizationService() {
-		return workweixinOrganizationService;
-	}
+    public WorkweixinOrganizationService getWorkweixinOrganizationService() {
+        return workweixinOrganizationService;
+    }
 
-	public void setWorkweixinOrganizationService(WorkweixinOrganizationService workweixinOrganizationService) {
-		this.workweixinOrganizationService = workweixinOrganizationService;
-	}
+    public void setWorkweixinOrganizationService(WorkweixinOrganizationService workweixinOrganizationService) {
+        this.workweixinOrganizationService = workweixinOrganizationService;
+    }
 
-	public WorkweixinAccessTokenService getWorkweixinAccessTokenService() {
-		return workweixinAccessTokenService;
-	}
+    public WorkweixinAccessTokenService getWorkweixinAccessTokenService() {
+        return workweixinAccessTokenService;
+    }
 
-	public void setWorkweixinAccessTokenService(WorkweixinAccessTokenService workweixinAccessTokenService) {
-		this.workweixinAccessTokenService = workweixinAccessTokenService;
-	}
+    public void setWorkweixinAccessTokenService(WorkweixinAccessTokenService workweixinAccessTokenService) {
+        this.workweixinAccessTokenService = workweixinAccessTokenService;
+    }
 
-	@Override
-	public void setSynchronizer(Synchronizers synchronizer) {
-		this.synchronizer = synchronizer;
-		
-	}
+    @Override
+    public void setSynchronizer(Synchronizers synchronizer) {
+        this.synchronizer = synchronizer;
+        
+    }
 
 }

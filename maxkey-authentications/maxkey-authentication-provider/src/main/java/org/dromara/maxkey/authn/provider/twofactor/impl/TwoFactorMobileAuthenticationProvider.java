@@ -34,24 +34,24 @@ public class TwoFactorMobileAuthenticationProvider extends AbstractAuthenticatio
     }
  
     public TwoFactorMobileAuthenticationProvider(SmsOtpAuthnService smsOtpAuthnService) {
-		this.smsOtpAuthnService = smsOtpAuthnService;
-	}
+        this.smsOtpAuthnService = smsOtpAuthnService;
+    }
 
     @Override
-	public Authentication doAuthenticate(LoginCredential credential) {
-    	return null;
+    public Authentication doAuthenticate(LoginCredential credential) {
+        return null;
     }
     
     @Override
-	public Authentication doTwoFactorAuthenticate(LoginCredential credential,UserInfo user) {
-		UsernamePasswordAuthenticationToken authenticationToken = null;
-		logger.debug("loginCredential {}" , credential);
+    public Authentication doTwoFactorAuthenticate(LoginCredential credential,UserInfo user) {
+        UsernamePasswordAuthenticationToken authenticationToken = null;
+        logger.debug("loginCredential {}" , credential);
         try {
-	        //短信验证码校验
-	        matches(credential.getOtpCaptcha(),user);
-	        
-	        authenticationToken = new UsernamePasswordAuthenticationToken(credential.getUsername(),"mobile");
-	    
+            //短信验证码校验
+            matches(credential.getOtpCaptcha(),user);
+            
+            authenticationToken = new UsernamePasswordAuthenticationToken(credential.getUsername(),"mobile");
+        
         } catch (AuthenticationException e) {
             logger.error("Failed to authenticate user {} via {}: {}",credential.getPrincipal(),
                                     getProviderName(),
@@ -73,7 +73,7 @@ public class TwoFactorMobileAuthenticationProvider extends AbstractAuthenticatio
      * @param userInfo   UserInfo
      */
     protected void matches(String captcha, UserInfo userInfo) {
-    	// for mobile password
+        // for mobile password
         UserInfo validUserInfo = new UserInfo();
         validUserInfo.setUsername(userInfo.getUsername());
         validUserInfo.setId(userInfo.getId());

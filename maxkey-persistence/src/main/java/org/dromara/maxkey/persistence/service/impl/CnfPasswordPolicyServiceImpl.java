@@ -51,9 +51,9 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 
 @Repository
 public class CnfPasswordPolicyServiceImpl  extends JpaServiceImpl<CnfPasswordPolicyMapper,CnfPasswordPolicy> implements CnfPasswordPolicyService{
-	static final Logger _logger = LoggerFactory.getLogger(CnfPasswordPolicyServiceImpl.class);
-	
-	//Dictionary topWeakPassword Source
+    static final Logger _logger = LoggerFactory.getLogger(CnfPasswordPolicyServiceImpl.class);
+    
+    //Dictionary topWeakPassword Source
     public static final String TOPWEAKPASSWORD_PROPERTYSOURCE      = "classpath:/top_weak_password.txt";
     
     //Cache PasswordPolicy in memory ONE_HOUR
@@ -67,8 +67,8 @@ public class CnfPasswordPolicyServiceImpl  extends JpaServiceImpl<CnfPasswordPol
     ArrayList <Rule> passwordPolicyRuleList;
 
     private static final String PASSWORD_POLICY_KEY = "PASSWORD_POLICY_KEY";
-	
-	   /**
+    
+       /**
      * init PasswordPolicy and load Rules
      * @return
      */
@@ -76,8 +76,8 @@ public class CnfPasswordPolicyServiceImpl  extends JpaServiceImpl<CnfPasswordPol
         passwordPolicy = passwordPolicyStore.getIfPresent(PASSWORD_POLICY_KEY);
        
         if (passwordPolicy == null) {
-        	LambdaQuery<CnfPasswordPolicy>query = new LambdaQuery<>();
-        	query.notNull(CnfPasswordPolicy::getId);
+            LambdaQuery<CnfPasswordPolicy>query = new LambdaQuery<>();
+            query.notNull(CnfPasswordPolicy::getId);
             passwordPolicy = this.get(query);
             _logger.debug("query PasswordPolicy : {}" , passwordPolicy);
             passwordPolicyStore.put(PASSWORD_POLICY_KEY,passwordPolicy);
@@ -149,14 +149,14 @@ public class CnfPasswordPolicyServiceImpl  extends JpaServiceImpl<CnfPasswordPol
   
  
    public List<Rule> getPasswordPolicyRuleList() {
-	   getPasswordPolicy();
-		return passwordPolicyRuleList;
-	}
+       getPasswordPolicy();
+        return passwordPolicyRuleList;
+    }
    
    public void buildTipMessage(CnfPasswordPolicy passwordPolicy){
-	   
-	   List<String> policMessageList = new ArrayList<>();
-	   
+       
+       List<String> policMessageList = new ArrayList<>();
+       
        String msg;
        if (passwordPolicy.getMinLength() != 0) {
            // msg = "新密码长度为"+minLength+"-"+maxLength+"位";

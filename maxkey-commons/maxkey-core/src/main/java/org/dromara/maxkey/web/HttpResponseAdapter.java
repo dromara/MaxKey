@@ -39,10 +39,10 @@ public class HttpResponseAdapter {
         }
     }
     
-	public void write(HttpServletResponse response,String content, String format) {
+    public void write(HttpServletResponse response,String content, String format) {
 
-		setContentType(response , format);
-		
+        setContentType(response , format);
+        
         // Set to expire far in the past.
         response.setDateHeader("Expires", 0);
         // Set standard HTTP/1.1 no-cache headers.
@@ -52,21 +52,21 @@ public class HttpResponseAdapter {
         
         ServletOutputStream out = null;
             try {
-				out = response.getOutputStream();
-            	// write the data out
+                out = response.getOutputStream();
+                // write the data out
                 out.write(content.getBytes());
                 out.flush();
             }catch (IOException e) {
-				e.printStackTrace();
-			} finally {
+                e.printStackTrace();
+            } finally {
                 try {
-                	if(out != null) {
-                		out.close();
-                	}
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+                    if(out != null) {
+                        out.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-	}
+    }
     
 }

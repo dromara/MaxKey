@@ -70,131 +70,131 @@ public class AppsAdapters extends JpaEntity implements Serializable {
     }
 
 
-	public String getId() {
-		return id;
-	}
+    public String getId() {
+        return id;
+    }
 
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
 
-	public String getProtocol() {
-		return protocol;
-	}
+    public String getProtocol() {
+        return protocol;
+    }
 
 
-	public void setProtocol(String protocol) {
-		this.protocol = protocol;
-	}
+    public void setProtocol(String protocol) {
+        this.protocol = protocol;
+    }
 
 
-	public String getAdapter() {
-		return adapter;
-	}
+    public String getAdapter() {
+        return adapter;
+    }
 
 
-	public void setAdapter(String adapter) {
-		this.adapter = adapter;
-	}
+    public void setAdapter(String adapter) {
+        this.adapter = adapter;
+    }
 
 
-	public int getSortIndex() {
-		return sortIndex;
-	}
+    public int getSortIndex() {
+        return sortIndex;
+    }
 
 
-	public void setSortIndex(int sortIndex) {
-		this.sortIndex = sortIndex;
-	}
+    public void setSortIndex(int sortIndex) {
+        this.sortIndex = sortIndex;
+    }
 
 
-	public String getCreatedBy() {
-		return createdBy;
-	}
+    public String getCreatedBy() {
+        return createdBy;
+    }
 
 
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
-	}
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
 
 
-	public String getCreatedDate() {
-		return createdDate;
-	}
+    public String getCreatedDate() {
+        return createdDate;
+    }
 
 
-	public void setCreatedDate(String createdDate) {
-		this.createdDate = createdDate;
-	}
+    public void setCreatedDate(String createdDate) {
+        this.createdDate = createdDate;
+    }
 
 
-	public String getModifiedBy() {
-		return modifiedBy;
-	}
+    public String getModifiedBy() {
+        return modifiedBy;
+    }
 
 
-	public void setModifiedBy(String modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
+    public void setModifiedBy(String modifiedBy) {
+        this.modifiedBy = modifiedBy;
+    }
 
 
-	public String getModifiedDate() {
-		return modifiedDate;
-	}
+    public String getModifiedDate() {
+        return modifiedDate;
+    }
 
 
-	public void setModifiedDate(String modifiedDate) {
-		this.modifiedDate = modifiedDate;
-	}
+    public void setModifiedDate(String modifiedDate) {
+        this.modifiedDate = modifiedDate;
+    }
 
 
-	public String getDescription() {
-		return description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("AppsAdapters [id=");
-		builder.append(id);
-		builder.append(", name=");
-		builder.append(name);
-		builder.append(", protocol=");
-		builder.append(protocol);
-		builder.append(", adapter=");
-		builder.append(adapter);
-		builder.append(", sortIndex=");
-		builder.append(sortIndex);
-		builder.append(", createdBy=");
-		builder.append(createdBy);
-		builder.append(", createdDate=");
-		builder.append(createdDate);
-		builder.append(", modifiedBy=");
-		builder.append(modifiedBy);
-		builder.append(", modifiedDate=");
-		builder.append(modifiedDate);
-		builder.append(", description=");
-		builder.append(description);
-		builder.append("]");
-		return builder.toString();
-	}
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("AppsAdapters [id=");
+        builder.append(id);
+        builder.append(", name=");
+        builder.append(name);
+        builder.append(", protocol=");
+        builder.append(protocol);
+        builder.append(", adapter=");
+        builder.append(adapter);
+        builder.append(", sortIndex=");
+        builder.append(sortIndex);
+        builder.append(", createdBy=");
+        builder.append(createdBy);
+        builder.append(", createdDate=");
+        builder.append(createdDate);
+        builder.append(", modifiedBy=");
+        builder.append(modifiedBy);
+        builder.append(", modifiedDate=");
+        builder.append(modifiedDate);
+        builder.append(", description=");
+        builder.append(description);
+        builder.append("]");
+        return builder.toString();
+    }
 
 }

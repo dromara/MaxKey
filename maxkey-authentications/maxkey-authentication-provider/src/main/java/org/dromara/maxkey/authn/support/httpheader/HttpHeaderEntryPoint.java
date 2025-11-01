@@ -33,93 +33,93 @@ import jakarta.servlet.http.HttpServletResponse;
 
 
 public class HttpHeaderEntryPoint implements AsyncHandlerInterceptor {
-	private static final Logger _logger = LoggerFactory.getLogger(HttpHeaderEntryPoint.class);
-	
-	String headerName;
+    private static final Logger _logger = LoggerFactory.getLogger(HttpHeaderEntryPoint.class);
+    
+    String headerName;
     boolean enable;
     
     @Autowired
     @Qualifier("authenticationProvider")
     AbstractAuthenticationProvider authenticationProvider ;
-	
-	String []skipRequestURI={
-			"/oauth/v20/token",
-			"/oauth/v10a/request_token",
-			"/oauth/v10a/access_token"
-	};
-	
-	 @Override
-	 public boolean preHandle(HttpServletRequest request,HttpServletResponse response, Object handler) throws Exception {
-		 
-		 if(!enable){
-			 return true;
-		 }
-		 String requestPath=request.getServletPath();
-		 _logger.trace("HttpHeader Login Start ...");
-		 _logger.trace("Request url : "+ request.getRequestURL());
-		 _logger.trace("Request URI : "+ request.getRequestURI());
-		 _logger.trace("Request ContextPath : "+ request.getContextPath());
-		 _logger.trace("Request ServletPath : "+ request.getServletPath());
-		 _logger.trace("RequestSessionId : "+ request.getRequestedSessionId());
-		 _logger.trace("isRequestedSessionIdValid : "+ request.isRequestedSessionIdValid());
-		 _logger.trace("getSession : "+ request.getSession(false));
-		 
-		 for(int i=0;i<skipRequestURI.length;i++){
-			 if(skipRequestURI[i].indexOf(requestPath)>-1){
-				 _logger.trace("skip uri : "+ requestPath);
-				 return true;
-			 }
-		 }
-		
-		
-		 
-		// session not exists，session timeout，recreate new session
-		 if(request.getSession(false) == null) {
-		    _logger.trace("recreate new session .");
-			request.getSession(true);
-		 }
-		 
-		 _logger.trace("getSession.getId : "+ request.getSession().getId());
-		 String httpHeaderUsername = request.getHeader(headerName);
+    
+    String []skipRequestURI={
+            "/oauth/v20/token",
+            "/oauth/v10a/request_token",
+            "/oauth/v10a/access_token"
+    };
+    
+     @Override
+     public boolean preHandle(HttpServletRequest request,HttpServletResponse response, Object handler) throws Exception {
+         
+         if(!enable){
+             return true;
+         }
+         String requestPath=request.getServletPath();
+         _logger.trace("HttpHeader Login Start ...");
+         _logger.trace("Request url : "+ request.getRequestURL());
+         _logger.trace("Request URI : "+ request.getRequestURI());
+         _logger.trace("Request ContextPath : "+ request.getContextPath());
+         _logger.trace("Request ServletPath : "+ request.getServletPath());
+         _logger.trace("RequestSessionId : "+ request.getRequestedSessionId());
+         _logger.trace("isRequestedSessionIdValid : "+ request.isRequestedSessionIdValid());
+         _logger.trace("getSession : "+ request.getSession(false));
+         
+         for(int i=0;i<skipRequestURI.length;i++){
+             if(skipRequestURI[i].indexOf(requestPath)>-1){
+                 _logger.trace("skip uri : "+ requestPath);
+                 return true;
+             }
+         }
+        
+        
+         
+        // session not exists，session timeout，recreate new session
+         if(request.getSession(false) == null) {
+            _logger.trace("recreate new session .");
+            request.getSession(true);
+         }
+         
+         _logger.trace("getSession.getId : "+ request.getSession().getId());
+         String httpHeaderUsername = request.getHeader(headerName);
 
-		 _logger.trace("HttpHeader username : " + httpHeaderUsername);
-		
-		
-		 if(httpHeaderUsername==null||httpHeaderUsername.equals("")){
-			 _logger.info("Authentication fail HttpHeader is null . ");
-			 return false;
-		 }
-		 
-		 boolean isAuthenticated=false;
-		 
-		 if(SecurityContextHolder.getContext().getAuthentication() == null) {
-			 _logger.info("Security Authentication  is  null .");
-			 isAuthenticated=false;
-		 }else {
-			 _logger.info("Security Authentication   not null . ");
-			 UsernamePasswordAuthenticationToken authenticationToken = 
-					 (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
-			 String lastSessionUserName = authenticationToken.getPrincipal().toString();
-			 _logger.info("Authentication Principal : " + lastSessionUserName);
-			 if (lastSessionUserName != null && !lastSessionUserName.equals(httpHeaderUsername)) {
-				isAuthenticated=false;
-			 }else{
-				isAuthenticated=true;
-			 }
-		 }
-		 
-		 if(!isAuthenticated){
-			LoginCredential loginCredential =new LoginCredential(httpHeaderUsername,"",ConstsLoginType.HTTPHEADER);
+         _logger.trace("HttpHeader username : " + httpHeaderUsername);
+        
+        
+         if(httpHeaderUsername==null||httpHeaderUsername.equals("")){
+             _logger.info("Authentication fail HttpHeader is null . ");
+             return false;
+         }
+         
+         boolean isAuthenticated=false;
+         
+         if(SecurityContextHolder.getContext().getAuthentication() == null) {
+             _logger.info("Security Authentication  is  null .");
+             isAuthenticated=false;
+         }else {
+             _logger.info("Security Authentication   not null . ");
+             UsernamePasswordAuthenticationToken authenticationToken = 
+                     (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+             String lastSessionUserName = authenticationToken.getPrincipal().toString();
+             _logger.info("Authentication Principal : " + lastSessionUserName);
+             if (lastSessionUserName != null && !lastSessionUserName.equals(httpHeaderUsername)) {
+                isAuthenticated=false;
+             }else{
+                isAuthenticated=true;
+             }
+         }
+         
+         if(!isAuthenticated){
+            LoginCredential loginCredential =new LoginCredential(httpHeaderUsername,"",ConstsLoginType.HTTPHEADER);
             authenticationProvider.authenticate(loginCredential,true);
-			_logger.info("Authentication  "+httpHeaderUsername+" successful .");
-		 }
-		
-		 return true;
-	}
+            _logger.info("Authentication  "+httpHeaderUsername+" successful .");
+         }
+        
+         return true;
+    }
 
-	 public HttpHeaderEntryPoint() {
-	        super();
-	 }
+     public HttpHeaderEntryPoint() {
+            super();
+     }
 
     public HttpHeaderEntryPoint(String headerName, boolean enable) {
         super();
@@ -142,6 +142,6 @@ public class HttpHeaderEntryPoint implements AsyncHandlerInterceptor {
     public void setEnable(boolean enable) {
         this.enable = enable;
     }
-	 
-	
+     
+    
 }

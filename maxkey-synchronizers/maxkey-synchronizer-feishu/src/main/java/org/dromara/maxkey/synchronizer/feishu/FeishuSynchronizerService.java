@@ -26,50 +26,50 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class FeishuSynchronizerService  implements ISynchronizerService{
-	static final  Logger _logger = LoggerFactory.getLogger(FeishuSynchronizerService.class);
-	Synchronizers synchronizer;
-	
-	@Autowired
-	FeishuUsersService feishuUsersService;
-	
-	@Autowired
-	FeishuOrganizationService feishuOrganizationService;
-	
+    static final  Logger _logger = LoggerFactory.getLogger(FeishuSynchronizerService.class);
+    Synchronizers synchronizer;
+    
+    @Autowired
+    FeishuUsersService feishuUsersService;
+    
+    @Autowired
+    FeishuOrganizationService feishuOrganizationService;
+    
 
-	FeishuAccessTokenService feishuAccessTokenService = new FeishuAccessTokenService();
-	
-	public FeishuSynchronizerService() {
-		super();
-	}
+    FeishuAccessTokenService feishuAccessTokenService = new FeishuAccessTokenService();
+    
+    public FeishuSynchronizerService() {
+        super();
+    }
 
-	public void sync() throws Exception {
-		_logger.info("Sync ...");
-		feishuAccessTokenService.setAppId(synchronizer.getPrincipal());
-		feishuAccessTokenService.setAppSecret(synchronizer.getCredentials());
-		String access_token=feishuAccessTokenService.requestToken();
-		
-		feishuOrganizationService.setSynchronizer(synchronizer);
-		feishuOrganizationService.setAccess_token(access_token);
-		feishuOrganizationService.sync();
-		
-		feishuUsersService.setSynchronizer(synchronizer);
-		feishuUsersService.setAccess_token(access_token);
-		feishuUsersService.sync();
-	}
+    public void sync() throws Exception {
+        _logger.info("Sync ...");
+        feishuAccessTokenService.setAppId(synchronizer.getPrincipal());
+        feishuAccessTokenService.setAppSecret(synchronizer.getCredentials());
+        String access_token=feishuAccessTokenService.requestToken();
+        
+        feishuOrganizationService.setSynchronizer(synchronizer);
+        feishuOrganizationService.setAccess_token(access_token);
+        feishuOrganizationService.sync();
+        
+        feishuUsersService.setSynchronizer(synchronizer);
+        feishuUsersService.setAccess_token(access_token);
+        feishuUsersService.sync();
+    }
 
 
-	public void setFeishuUsersService(FeishuUsersService feishuUsersService) {
-		this.feishuUsersService = feishuUsersService;
-	}
+    public void setFeishuUsersService(FeishuUsersService feishuUsersService) {
+        this.feishuUsersService = feishuUsersService;
+    }
 
-	public void setFeishuOrganizationService(FeishuOrganizationService feishuOrganizationService) {
-		this.feishuOrganizationService = feishuOrganizationService;
-	}
+    public void setFeishuOrganizationService(FeishuOrganizationService feishuOrganizationService) {
+        this.feishuOrganizationService = feishuOrganizationService;
+    }
 
-	@Override
-	public void setSynchronizer(Synchronizers synchronizer) {
-		this.synchronizer = synchronizer;
-		
-	}
+    @Override
+    public void setSynchronizer(Synchronizers synchronizer) {
+        this.synchronizer = synchronizer;
+        
+    }
 
 }

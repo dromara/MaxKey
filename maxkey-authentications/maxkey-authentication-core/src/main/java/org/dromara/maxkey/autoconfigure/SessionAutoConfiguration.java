@@ -49,9 +49,9 @@ public class SessionAutoConfiguration  {
             RedisConnectionFactory redisConnFactory,
             @Value("${maxkey.auth.session.timeout:1800}") int timeout
             ) {
-    	_logger.debug("session timeout {}" , timeout);
+        _logger.debug("session timeout {}" , timeout);
         return new SessionManagerImpl(
-        		persistence, jdbcTemplate, redisConnFactory,timeout);
+                persistence, jdbcTemplate, redisConnFactory,timeout);
     }
 
     @Bean

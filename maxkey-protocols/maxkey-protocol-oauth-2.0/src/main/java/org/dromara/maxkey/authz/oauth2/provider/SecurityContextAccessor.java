@@ -25,14 +25,14 @@ import org.springframework.security.core.GrantedAuthority;
  */
 public interface SecurityContextAccessor {
 
-	/**
-	 * @return true if the current context represents a user
-	 */
-	boolean isUser();
+    /**
+     * @return true if the current context represents a user
+     */
+    boolean isUser();
 
-	/**
-	 * Get the current granted authorities (never null)
-	 */
-	Set<GrantedAuthority> getAuthorities();
+    /**
+     * Get the current granted authorities (never null)
+     */
+    Set<GrantedAuthority> getAuthorities();
 
 }

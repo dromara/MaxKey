@@ -43,9 +43,9 @@ public class Apps extends JpaEntity implements Serializable {
 
     public static final class CREDENTIALS {
         public static final String USER_DEFINED = "user_defined";
-        public static final String SHARED 		= "shared";
-        public static final String SYSTEM 		= "system";
-        public static final String NONE 		= "none";
+        public static final String SHARED         = "shared";
+        public static final String SYSTEM         = "system";
+        public static final String NONE         = "none";
     }
 
     public static final class VISIBLE {
@@ -147,9 +147,9 @@ public class Apps extends JpaEntity implements Serializable {
     @Column
     private String adapter;
 
-	@Column
-	private String frequently;
-	
+    @Column
+    private String frequently;
+    
     @Column
     protected int sortIndex;
     @Column
@@ -164,10 +164,10 @@ public class Apps extends JpaEntity implements Serializable {
     protected Date modifiedDate;
     @Column
     protected String description;
-	@Column
-	private String instId;
-	
-	private String instName;
+    @Column
+    private String instId;
+    
+    private String instName;
     
     protected String loginDateTime;
     
@@ -187,18 +187,18 @@ public class Apps extends JpaEntity implements Serializable {
     }
 
     public String getAppName() {
-		return appName;
-	}
+        return appName;
+    }
 
 
 
-	public void setAppName(String appName) {
-		this.appName = appName;
-	}
+    public void setAppName(String appName) {
+        this.appName = appName;
+    }
 
 
 
-	/**
+    /**
      * @return the loginUrl
      */
     public String getLoginUrl() {
@@ -256,14 +256,14 @@ public class Apps extends JpaEntity implements Serializable {
 
     
     public String getFrequently() {
-		return frequently;
-	}
+        return frequently;
+    }
 
-	public void setFrequently(String frequently) {
-		this.frequently = frequently;
-	}
+    public void setFrequently(String frequently) {
+        this.frequently = frequently;
+    }
 
-	/**
+    /**
      * @return the icon
      */
     public byte[] getIcon() {
@@ -286,28 +286,28 @@ public class Apps extends JpaEntity implements Serializable {
     }
 
     public String getIconBase64() {
-		return iconBase64;
-	}
+        return iconBase64;
+    }
 
-	public void setIconBase64(String iconBase64) {
-		this.iconBase64 = iconBase64;
-	}
-	
-	public void transIconBase64() {
-		if(icon !=null) {
-			this.iconBase64 = Base64Utils.encodeImage(icon);
-		}
-	}
+    public void setIconBase64(String iconBase64) {
+        this.iconBase64 = iconBase64;
+    }
+    
+    public void transIconBase64() {
+        if(icon !=null) {
+            this.iconBase64 = Base64Utils.encodeImage(icon);
+        }
+    }
 
     public String getIconId() {
-		return iconId;
-	}
+        return iconId;
+    }
 
-	public void setIconId(String iconId) {
-		this.iconId = iconId;
-	}
+    public void setIconId(String iconId) {
+        this.iconId = iconId;
+    }
 
-	/**
+    /**
      * @return the description
      */
     public String getDescription() {
@@ -521,42 +521,42 @@ public class Apps extends JpaEntity implements Serializable {
 
 
     /**
-	 * @return the createdDate
-	 */
-	public Date getCreatedDate() {
-		return createdDate;
-	}
+     * @return the createdDate
+     */
+    public Date getCreatedDate() {
+        return createdDate;
+    }
 
 
 
-	/**
-	 * @param createdDate the createdDate to set
-	 */
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
+    /**
+     * @param createdDate the createdDate to set
+     */
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
 
 
 
-	/**
-	 * @return the modifiedDate
-	 */
-	public Date getModifiedDate() {
-		return modifiedDate;
-	}
+    /**
+     * @return the modifiedDate
+     */
+    public Date getModifiedDate() {
+        return modifiedDate;
+    }
 
 
 
-	/**
-	 * @param modifiedDate the modifiedDate to set
-	 */
-	public void setModifiedDate(Date modifiedDate) {
-		this.modifiedDate = modifiedDate;
-	}
+    /**
+     * @param modifiedDate the modifiedDate to set
+     */
+    public void setModifiedDate(Date modifiedDate) {
+        this.modifiedDate = modifiedDate;
+    }
 
 
 
-	public int getStatus() {
+    public int getStatus() {
         return status;
     }
 
@@ -599,112 +599,112 @@ public class Apps extends JpaEntity implements Serializable {
     }
 
     public String getAdapterId() {
-		return adapterId;
-	}
+        return adapterId;
+    }
 
-	public void setAdapterId(String adapterId) {
-		this.adapterId = adapterId;
-	}
+    public void setAdapterId(String adapterId) {
+        this.adapterId = adapterId;
+    }
 
-	public String getAdapterName() {
-		return adapterName;
-	}
+    public String getAdapterName() {
+        return adapterName;
+    }
 
-	public void setAdapterName(String adapterName) {
-		this.adapterName = adapterName;
-	}
+    public void setAdapterName(String adapterName) {
+        this.adapterName = adapterName;
+    }
 
-	public String getInstId() {
-		return instId;
-	}
+    public String getInstId() {
+        return instId;
+    }
 
-	public void setInstId(String instId) {
-		this.instId = instId;
-	}
+    public void setInstId(String instId) {
+        this.instId = instId;
+    }
 
-	public String getInstName() {
-		return instName;
-	}
+    public String getInstName() {
+        return instName;
+    }
 
-	public void setInstName(String instName) {
-		this.instName = instName;
-	}
+    public void setInstName(String instName) {
+        this.instName = instName;
+    }
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Apps [id=");
-		builder.append(id);
-		builder.append(", appName=");
-		builder.append(appName);
-		builder.append(", loginUrl=");
-		builder.append(loginUrl);
-		builder.append(", category=");
-		builder.append(category);
-		builder.append(", protocol=");
-		builder.append(protocol);
-		builder.append(", secret=");
-		builder.append(secret);
-		builder.append(", iconId=");
-		builder.append(iconId);
-		builder.append(", visible=");
-		builder.append(visible);
-		builder.append(", inducer=");
-		builder.append(inducer);
-		builder.append(", vendor=");
-		builder.append(vendor);
-		builder.append(", vendorUrl=");
-		builder.append(vendorUrl);
-		builder.append(", credential=");
-		builder.append(credential);
-		builder.append(", sharedUsername=");
-		builder.append(sharedUsername);
-		builder.append(", sharedPassword=");
-		builder.append(sharedPassword);
-		builder.append(", systemUserAttr=");
-		builder.append(systemUserAttr);
-		builder.append(", principal=");
-		builder.append(principal);
-		builder.append(", credentials=");
-		builder.append(credentials);
-		builder.append(", logoutUrl=");
-		builder.append(logoutUrl);
-		builder.append(", logoutType=");
-		builder.append(logoutType);
-		builder.append(", isExtendAttr=");
-		builder.append(isExtendAttr);
-		builder.append(", extendAttr=");
-		builder.append(extendAttr);
-		builder.append(", userPropertys=");
-		builder.append(userPropertys);
-		builder.append(", isSignature=");
-		builder.append(isSignature);
-		builder.append(", isAdapter=");
-		builder.append(isAdapter);
-		builder.append(", adapterId=");
-		builder.append(adapterId);
-		builder.append(", adapterName=");
-		builder.append(adapterName);
-		builder.append(", adapter=");
-		builder.append(adapter);
-		builder.append(", sortIndex=");
-		builder.append(sortIndex);
-		builder.append(", status=");
-		builder.append(status);
-		builder.append(", createdBy=");
-		builder.append(createdBy);
-		builder.append(", createdDate=");
-		builder.append(createdDate);
-		builder.append(", modifiedBy=");
-		builder.append(modifiedBy);
-		builder.append(", modifiedDate=");
-		builder.append(modifiedDate);
-		builder.append(", description=");
-		builder.append(description);
-		builder.append(", loginDateTime=");
-		builder.append(loginDateTime);
-		builder.append("]");
-		return builder.toString();
-	}
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Apps [id=");
+        builder.append(id);
+        builder.append(", appName=");
+        builder.append(appName);
+        builder.append(", loginUrl=");
+        builder.append(loginUrl);
+        builder.append(", category=");
+        builder.append(category);
+        builder.append(", protocol=");
+        builder.append(protocol);
+        builder.append(", secret=");
+        builder.append(secret);
+        builder.append(", iconId=");
+        builder.append(iconId);
+        builder.append(", visible=");
+        builder.append(visible);
+        builder.append(", inducer=");
+        builder.append(inducer);
+        builder.append(", vendor=");
+        builder.append(vendor);
+        builder.append(", vendorUrl=");
+        builder.append(vendorUrl);
+        builder.append(", credential=");
+        builder.append(credential);
+        builder.append(", sharedUsername=");
+        builder.append(sharedUsername);
+        builder.append(", sharedPassword=");
+        builder.append(sharedPassword);
+        builder.append(", systemUserAttr=");
+        builder.append(systemUserAttr);
+        builder.append(", principal=");
+        builder.append(principal);
+        builder.append(", credentials=");
+        builder.append(credentials);
+        builder.append(", logoutUrl=");
+        builder.append(logoutUrl);
+        builder.append(", logoutType=");
+        builder.append(logoutType);
+        builder.append(", isExtendAttr=");
+        builder.append(isExtendAttr);
+        builder.append(", extendAttr=");
+        builder.append(extendAttr);
+        builder.append(", userPropertys=");
+        builder.append(userPropertys);
+        builder.append(", isSignature=");
+        builder.append(isSignature);
+        builder.append(", isAdapter=");
+        builder.append(isAdapter);
+        builder.append(", adapterId=");
+        builder.append(adapterId);
+        builder.append(", adapterName=");
+        builder.append(adapterName);
+        builder.append(", adapter=");
+        builder.append(adapter);
+        builder.append(", sortIndex=");
+        builder.append(sortIndex);
+        builder.append(", status=");
+        builder.append(status);
+        builder.append(", createdBy=");
+        builder.append(createdBy);
+        builder.append(", createdDate=");
+        builder.append(createdDate);
+        builder.append(", modifiedBy=");
+        builder.append(modifiedBy);
+        builder.append(", modifiedDate=");
+        builder.append(modifiedDate);
+        builder.append(", description=");
+        builder.append(description);
+        builder.append(", loginDateTime=");
+        builder.append(loginDateTime);
+        builder.append("]");
+        return builder.toString();
+    }
 
 }

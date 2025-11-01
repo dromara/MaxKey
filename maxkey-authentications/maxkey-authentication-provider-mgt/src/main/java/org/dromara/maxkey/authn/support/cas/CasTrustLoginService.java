@@ -33,25 +33,25 @@ public class CasTrustLoginService {
     Cas20ServiceTicketValidator cas20ServiceTicketValidator;
     
     public CasTrustLoginService(String casServerUrlPrefix,String service) {
-    	this.service = service;
+        this.service = service;
         this.cas20ServiceTicketValidator = new Cas20ServiceTicketValidator(casServerUrlPrefix);
     }
 
     public String buildLoginUser(String ticket) {
-    	_logger.debug("build Login User .");
+        _logger.debug("build Login User .");
         String user = null;
         Assertion assertion;
-		try {
-			assertion = cas20ServiceTicketValidator.validate(ticket, service);
-			 if(assertion != null) {
-		        	user = assertion.getPrincipal().getName();
-		     }
-		} catch (TicketValidationException e) {
-			_logger.error("cas TicketValidationException" , e);
-			e.printStackTrace();
-		}
+        try {
+            assertion = cas20ServiceTicketValidator.validate(ticket, service);
+             if(assertion != null) {
+                    user = assertion.getPrincipal().getName();
+             }
+        } catch (TicketValidationException e) {
+            _logger.error("cas TicketValidationException" , e);
+            e.printStackTrace();
+        }
        
-		_logger.debug("cas user : {}" , user);
+        _logger.debug("cas user : {}" , user);
         return user;
     }
     

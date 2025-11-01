@@ -18,8 +18,8 @@ import io.swagger.v3.oas.models.info.License;
 
 @AutoConfiguration
 public class SwaggerAutoConfiguration {
-	static final  Logger _logger = LoggerFactory.getLogger(SwaggerAutoConfiguration.class);
-	
+    static final  Logger _logger = LoggerFactory.getLogger(SwaggerAutoConfiguration.class);
+    
     @Value("${maxkey.swagger.title}")
     String title;
     
@@ -53,18 +53,18 @@ public class SwaggerAutoConfiguration {
     @Bean
     GroupedOpenApi userApi(){
         String[] paths = { 
-        		"/login",
-        		"/logout",
-        		"/login/**",
-        		"/logout/**",
-        		"/authz/**",
-        		"/authz/**/**",
-        		"/metadata/saml20/**" , 
-        		"/onlineticket/validate/**",
-        		"/api/connect/v10/userinfo",
-        		"/api/oauth/v20/me"
-        		
-        	};
+                "/login",
+                "/logout",
+                "/login/**",
+                "/logout/**",
+                "/authz/**",
+                "/authz/**/**",
+                "/metadata/saml20/**" , 
+                "/onlineticket/validate/**",
+                "/api/connect/v10/userinfo",
+                "/api/oauth/v20/me"
+                
+            };
         String[] packagedToMatch = { "org.dromara.maxkey.authz" };
         return GroupedOpenApi.builder().group(title)
                 .pathsToMatch(paths)
@@ -73,23 +73,23 @@ public class SwaggerAutoConfiguration {
 
     @Bean
     OpenAPI docOpenAPI() {
-		return new OpenAPI()
-				.info(
-					new Info()
-						.title(title)
-						.description(description)
-						.version(version)
-						.termsOfService("https://www.maxkey.top/")
-						.license(
-							new License()
-								.name("Apache License, Version 2.0")
-								.url("http://www.apache.org/licenses/LICENSE-2.0")
-						)
-				).
-				externalDocs(
-						new ExternalDocumentation()
-						.description("MaxKey.top contact support@maxsso.net")
-						.url("https://www.maxkey.top/")
-				);
-	}
+        return new OpenAPI()
+                .info(
+                    new Info()
+                        .title(title)
+                        .description(description)
+                        .version(version)
+                        .termsOfService("https://www.maxkey.top/")
+                        .license(
+                            new License()
+                                .name("Apache License, Version 2.0")
+                                .url("http://www.apache.org/licenses/LICENSE-2.0")
+                        )
+                ).
+                externalDocs(
+                        new ExternalDocumentation()
+                        .description("MaxKey.top contact support@maxsso.net")
+                        .url("https://www.maxkey.top/")
+                );
+    }
 }

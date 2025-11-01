@@ -37,22 +37,22 @@ import jakarta.servlet.http.HttpServletResponse;
  */
 public interface BindingAdapter {
 
-	public void sendSAMLMessage(SignableSAMLObject samlMessage, Endpoint endpoint, HttpServletRequest request, HttpServletResponse response) throws MessageEncodingException;
-	
-	public void setSecurityPolicyResolver(SecurityPolicyResolver securityPolicyResolver);
-	
-	public void setExtractBindingAdapter(ExtractBindingAdapter extractBindingAdapter);
-	
-	public void setAuthnRequestInfo(AuthnRequestInfo authnRequestInfo);
-	
-	public void setRelayState(String relayState);
-	
-	public AppsSAML20Details getSaml20Details();
-	
-	public AuthnRequestInfo getAuthnRequestInfo();
-	
-	public Credential getSigningCredential();
-	
-	public Credential getSpSigningCredential();
-	
+    public void sendSAMLMessage(SignableSAMLObject samlMessage, Endpoint endpoint, HttpServletRequest request, HttpServletResponse response) throws MessageEncodingException;
+    
+    public void setSecurityPolicyResolver(SecurityPolicyResolver securityPolicyResolver);
+    
+    public void setExtractBindingAdapter(ExtractBindingAdapter extractBindingAdapter);
+    
+    public void setAuthnRequestInfo(AuthnRequestInfo authnRequestInfo);
+    
+    public void setRelayState(String relayState);
+    
+    public AppsSAML20Details getSaml20Details();
+    
+    public AuthnRequestInfo getAuthnRequestInfo();
+    
+    public Credential getSigningCredential();
+    
+    public Credential getSpSigningCredential();
+    
 }

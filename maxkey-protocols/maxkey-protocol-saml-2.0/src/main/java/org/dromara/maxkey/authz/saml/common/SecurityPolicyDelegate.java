@@ -28,32 +28,32 @@ import org.opensaml.ws.security.provider.BasicSecurityPolicy;
 
 public class SecurityPolicyDelegate implements SecurityPolicy  {
 
-	private final BasicSecurityPolicy basicSecurityPolicy;
-	
-	
-	public SecurityPolicyDelegate() {
-		super();
-		basicSecurityPolicy = new BasicSecurityPolicy();
-	}
-	
-	public SecurityPolicyDelegate(List<SecurityPolicyRule> securityPolicyRules) {
-		super();
-		basicSecurityPolicy = new BasicSecurityPolicy();
-		basicSecurityPolicy.getPolicyRules().addAll(securityPolicyRules);
-	}
-	
-	public void addSecurityPolicy(SecurityPolicyRule securityPolicyRule){
-		basicSecurityPolicy.getPolicyRules().add(securityPolicyRule);
-	}
+    private final BasicSecurityPolicy basicSecurityPolicy;
+    
+    
+    public SecurityPolicyDelegate() {
+        super();
+        basicSecurityPolicy = new BasicSecurityPolicy();
+    }
+    
+    public SecurityPolicyDelegate(List<SecurityPolicyRule> securityPolicyRules) {
+        super();
+        basicSecurityPolicy = new BasicSecurityPolicy();
+        basicSecurityPolicy.getPolicyRules().addAll(securityPolicyRules);
+    }
+    
+    public void addSecurityPolicy(SecurityPolicyRule securityPolicyRule){
+        basicSecurityPolicy.getPolicyRules().add(securityPolicyRule);
+    }
 
-	@Override
-	public void evaluate(MessageContext messageContext) throws SecurityPolicyException {
-		basicSecurityPolicy.evaluate(messageContext);
-	}
+    @Override
+    public void evaluate(MessageContext messageContext) throws SecurityPolicyException {
+        basicSecurityPolicy.evaluate(messageContext);
+    }
 
-	@Override
-	public List<SecurityPolicyRule> getPolicyRules() {
-		return basicSecurityPolicy.getPolicyRules();
-	}
+    @Override
+    public List<SecurityPolicyRule> getPolicyRules() {
+        return basicSecurityPolicy.getPolicyRules();
+    }
 
 }

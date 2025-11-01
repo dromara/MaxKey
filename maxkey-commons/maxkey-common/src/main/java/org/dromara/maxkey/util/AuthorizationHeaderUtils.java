@@ -28,9 +28,9 @@ import jakarta.servlet.http.HttpServletRequest;
  */
 public class AuthorizationHeaderUtils {
 
-	/**
-	 * first UpperCase
-	 */
+    /**
+     * first UpperCase
+     */
     public static final String HEADER_Authorization = "Authorization";
     /**
      * first LowerCase
@@ -48,8 +48,8 @@ public class AuthorizationHeaderUtils {
     }
     
     public  static AuthorizationHeader resolve(HttpServletRequest request) {
-    	String authorization = resolveBearer(request);
-    	return resolve(authorization);
+        String authorization = resolveBearer(request);
+        return resolve(authorization);
     }
 
     public static AuthorizationHeader resolve(String authorization) {
@@ -63,13 +63,13 @@ public class AuthorizationHeaderUtils {
     }
 
     public  static String resolveBearer(HttpServletRequest request) {
-    	String authorization = 
-    			StringUtils.isNotBlank(request.getHeader(HEADER_Authorization)) ? 
-    					request.getHeader(HEADER_Authorization) : request.getHeader(HEADER_authorization);
-    	if(StringUtils.isNotBlank(authorization)) {
-    		return resolveBearer(authorization);
-    	}
-    	return null;
+        String authorization = 
+                StringUtils.isNotBlank(request.getHeader(HEADER_Authorization)) ? 
+                        request.getHeader(HEADER_Authorization) : request.getHeader(HEADER_authorization);
+        if(StringUtils.isNotBlank(authorization)) {
+            return resolveBearer(authorization);
+        }
+        return null;
     }
     
     public static boolean isBasic(String basic) {

@@ -21,7 +21,7 @@ import org.dromara.maxkey.entity.Synchronizers;
 
 public interface ISynchronizerService {
 
-	public void sync() throws Exception ;
-	
-	public void setSynchronizer(Synchronizers synchronizer);
+    public void sync() throws Exception ;
+    
+    public void setSynchronizer(Synchronizers synchronizer);
 }

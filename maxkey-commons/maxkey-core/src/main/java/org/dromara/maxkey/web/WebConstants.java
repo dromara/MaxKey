@@ -28,11 +28,11 @@ public class WebConstants {
     public static final  String CURRENT_USER_PASSWORD_SET_TYPE 
                                     = "current_user_password_set_type";
 
-    public static final  String CURRENT_MESSAGE 	= "current_message";
+    public static final  String CURRENT_MESSAGE     = "current_message";
     
-    public static final  String CURRENT_INST 		= "current_inst";
+    public static final  String CURRENT_INST         = "current_inst";
     
-    public static final   String INST_COOKIE_NAME 	= "mxk_inst";
+    public static final   String INST_COOKIE_NAME     = "mxk_inst";
 
     // SPRING_SECURITY_SAVED_REQUEST
     public static final  String FIRST_SAVED_REQUEST_PARAMETER 
@@ -74,15 +74,15 @@ public class WebConstants {
     
     public static final  String ONLINE_TICKET_NAME = "online_ticket";
     
-	public static final  String MXK_METADATA_PREFIX = "mxk_metadata_";
-	
+    public static final  String MXK_METADATA_PREFIX = "mxk_metadata_";
+    
     public static final class LOGIN_RESULT{
-    	public static final  String SUCCESS 		= "success";
-    	public static final  String FAIL 			= "fail";
-    	public static final  String PASSWORD_ERROE 	= "password error";
-    	public static final  String USER_NOT_EXIST 	= "user not exist";
-    	public static final  String USER_LOCKED 	= "locked";
-    	public static final  String USER_INACTIVE 	= "inactive";	
+        public static final  String SUCCESS         = "success";
+        public static final  String FAIL             = "fail";
+        public static final  String PASSWORD_ERROE     = "password error";
+        public static final  String USER_NOT_EXIST     = "user not exist";
+        public static final  String USER_LOCKED     = "locked";
+        public static final  String USER_INACTIVE     = "inactive";    
     }
     
     public static final String DELIMITER = "-----------------------------------------------------------";

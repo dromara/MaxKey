@@ -32,182 +32,182 @@ import jakarta.persistence.Table;
 @Table(name = "MXK_CONNECTORS")
 public class Connectors extends JpaEntity implements Serializable {
 
-	private static final long serialVersionUID = 4660258495864814777L;
-	@Id
-	@Column
-	@GeneratedValue
-	String id;
-	@Column
-	String connName;
-	@Column
-	String scheduler;
-	@Column
-	int justInTime;
-	@Column
-	String providerUrl;
-	@Column
-	String principal;
-	@Column
-	String credentials;
-	@Column
-	String filters;
-	@Column
-	String description;
-	@Column
-	String createdBy;
-	@Column
-	Date createdDate;
-	@Column
-	String modifiedBy;
-	@Column
-	Date modifiedDate;
-	@Column
-	String status;
+    private static final long serialVersionUID = 4660258495864814777L;
+    @Id
+    @Column
+    @GeneratedValue
+    String id;
+    @Column
+    String connName;
+    @Column
+    String scheduler;
+    @Column
+    int justInTime;
+    @Column
+    String providerUrl;
+    @Column
+    String principal;
+    @Column
+    String credentials;
+    @Column
+    String filters;
+    @Column
+    String description;
+    @Column
+    String createdBy;
+    @Column
+    Date createdDate;
+    @Column
+    String modifiedBy;
+    @Column
+    Date modifiedDate;
+    @Column
+    String status;
 
-	@Column
-	private String instId;
+    @Column
+    private String instId;
 
-	private String instName;
+    private String instName;
 
-	public Connectors() {
-	}
+    public Connectors() {
+    }
 
-	public String getId() {
-		return id;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public String getConnName() {
-		return connName;
-	}
+    public String getConnName() {
+        return connName;
+    }
 
-	public void setConnName(String connName) {
-		this.connName = connName;
-	}
+    public void setConnName(String connName) {
+        this.connName = connName;
+    }
 
-	public int getJustInTime() {
-		return justInTime;
-	}
+    public int getJustInTime() {
+        return justInTime;
+    }
 
-	public void setJustInTime(int justInTime) {
-		this.justInTime = justInTime;
-	}
+    public void setJustInTime(int justInTime) {
+        this.justInTime = justInTime;
+    }
 
-	public String getScheduler() {
-		return scheduler;
-	}
+    public String getScheduler() {
+        return scheduler;
+    }
 
-	public void setScheduler(String scheduler) {
-		this.scheduler = scheduler;
-	}
+    public void setScheduler(String scheduler) {
+        this.scheduler = scheduler;
+    }
 
-	public String getProviderUrl() {
-		return providerUrl;
-	}
+    public String getProviderUrl() {
+        return providerUrl;
+    }
 
-	public void setProviderUrl(String providerUrl) {
-		this.providerUrl = providerUrl;
-	}
+    public void setProviderUrl(String providerUrl) {
+        this.providerUrl = providerUrl;
+    }
 
-	public String getPrincipal() {
-		return principal;
-	}
+    public String getPrincipal() {
+        return principal;
+    }
 
-	public void setPrincipal(String principal) {
-		this.principal = principal;
-	}
+    public void setPrincipal(String principal) {
+        this.principal = principal;
+    }
 
-	public String getCredentials() {
-		return credentials;
-	}
+    public String getCredentials() {
+        return credentials;
+    }
 
-	public void setCredentials(String credentials) {
-		this.credentials = credentials;
-	}
+    public void setCredentials(String credentials) {
+        this.credentials = credentials;
+    }
 
-	public String getFilters() {
-		return filters;
-	}
+    public String getFilters() {
+        return filters;
+    }
 
-	public void setFilters(String filters) {
-		this.filters = filters;
-	}
+    public void setFilters(String filters) {
+        this.filters = filters;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public String getCreatedBy() {
-		return createdBy;
-	}
+    public String getCreatedBy() {
+        return createdBy;
+    }
 
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
-	}
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
 
 
-	public String getModifiedBy() {
-		return modifiedBy;
-	}
+    public String getModifiedBy() {
+        return modifiedBy;
+    }
 
-	public void setModifiedBy(String modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
+    public void setModifiedBy(String modifiedBy) {
+        this.modifiedBy = modifiedBy;
+    }
 
-	public Date getCreatedDate() {
-		return createdDate;
-	}
+    public Date getCreatedDate() {
+        return createdDate;
+    }
 
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
 
-	public Date getModifiedDate() {
-		return modifiedDate;
-	}
+    public Date getModifiedDate() {
+        return modifiedDate;
+    }
 
-	public void setModifiedDate(Date modifiedDate) {
-		this.modifiedDate = modifiedDate;
-	}
+    public void setModifiedDate(Date modifiedDate) {
+        this.modifiedDate = modifiedDate;
+    }
 
-	public String getStatus() {
-		return status;
-	}
+    public String getStatus() {
+        return status;
+    }
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
-	public String getInstId() {
-		return instId;
-	}
+    public String getInstId() {
+        return instId;
+    }
 
-	public void setInstId(String instId) {
-		this.instId = instId;
-	}
+    public void setInstId(String instId) {
+        this.instId = instId;
+    }
 
-	public String getInstName() {
-		return instName;
-	}
+    public String getInstName() {
+        return instName;
+    }
 
-	public void setInstName(String instName) {
-		this.instName = instName;
-	}
+    public void setInstName(String instName) {
+        this.instName = instName;
+    }
 
-	public Connectors(String id) {
-		this.id = id;
-	}
+    public Connectors(String id) {
+        this.id = id;
+    }
 
-	@Override
-	public String toString() {
-		return new JsonPretty().format(this);
-	}
+    @Override
+    public String toString() {
+        return new JsonPretty().format(this);
+    }
 
 }

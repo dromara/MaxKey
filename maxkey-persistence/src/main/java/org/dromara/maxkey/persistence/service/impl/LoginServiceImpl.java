@@ -88,38 +88,38 @@ public class LoginServiceImpl  implements LoginService{
     public UserInfo find(String username, String password) {
         List<UserInfo> listUserInfo = null ;
         if( LOGIN_ATTRIBUTE_TYPE == 1) {
-        	listUserInfo = findByUsername(username,password);
+            listUserInfo = findByUsername(username,password);
         }else if( LOGIN_ATTRIBUTE_TYPE == 2) {
-        	 listUserInfo = findByUsernameOrMobile(username,password);
+             listUserInfo = findByUsernameOrMobile(username,password);
         }else if( LOGIN_ATTRIBUTE_TYPE == 3) {
-        	 listUserInfo = findByUsernameOrMobileOrEmail(username,password);
+             listUserInfo = findByUsernameOrMobileOrEmail(username,password);
         }
         _logger.debug("load UserInfo : {}" , listUserInfo);
         return (CollectionUtils.isNotEmpty(listUserInfo) ? listUserInfo.get(0) : null);
     }
 
     public List<UserInfo> findByUsername(String username, String password) {
-    	return jdbcTemplate.query(
-    			DEFAULT_USERINFO_SELECT_STATEMENT,
-    			new UserInfoRowMapper(),
-    			username
-    		);
+        return jdbcTemplate.query(
+                DEFAULT_USERINFO_SELECT_STATEMENT,
+                new UserInfoRowMapper(),
+                username
+            );
     }
 
     public List<UserInfo> findByUsernameOrMobile(String username, String password) {
-    	return jdbcTemplate.query(
-			 	DEFAULT_USERINFO_SELECT_STATEMENT_USERNAME_MOBILE,
-    			new UserInfoRowMapper(),
-    			username,username
-    		);
+        return jdbcTemplate.query(
+                 DEFAULT_USERINFO_SELECT_STATEMENT_USERNAME_MOBILE,
+                new UserInfoRowMapper(),
+                username,username
+            );
     }
 
     public List<UserInfo> findByUsernameOrMobileOrEmail(String username, String password) {
-    	return jdbcTemplate.query(
-			 	DEFAULT_USERINFO_SELECT_STATEMENT_USERNAME_MOBILE_EMAIL,
-    			new UserInfoRowMapper(),
-    			username,username,username
-    		);
+        return jdbcTemplate.query(
+                 DEFAULT_USERINFO_SELECT_STATEMENT_USERNAME_MOBILE_EMAIL,
+                new UserInfoRowMapper(),
+                username,username,username
+            );
     }
 
 
@@ -131,8 +131,8 @@ public class LoginServiceImpl  implements LoginService{
      */
     public boolean passwordPolicyValid(UserInfo userInfo) {
         
- 	   CnfPasswordPolicy passwordPolicy = cnfPasswordPolicyService.getPasswordPolicy();
- 	   
+        CnfPasswordPolicy passwordPolicy = cnfPasswordPolicyService.getPasswordPolicy();
+        
         DateTime currentdateTime = new DateTime();
          /*
           * check login attempts fail times
@@ -181,8 +181,8 @@ public class LoginServiceImpl  implements LoginService{
      }
     
     public void applyPasswordPolicy(UserInfo userInfo) {
- 	   CnfPasswordPolicy passwordPolicy = cnfPasswordPolicyService.getPasswordPolicy();
- 	   
+        CnfPasswordPolicy passwordPolicy = cnfPasswordPolicyService.getPasswordPolicy();
+        
         DateTime currentdateTime = new DateTime();
         //initial password need change
         if(userInfo.getLoginCount()<=0) {
@@ -231,8 +231,8 @@ public class LoginServiceImpl  implements LoginService{
     public void lockUser(UserInfo userInfo) {
         try {
             if (userInfo != null 
-         		   && StringUtils.isNotEmpty(userInfo.getId()) 
-         		   && userInfo.getIsLocked() == ConstsStatus.ACTIVE) {
+                    && StringUtils.isNotEmpty(userInfo.getId()) 
+                    && userInfo.getIsLocked() == ConstsStatus.ACTIVE) {
                 userInfo.setIsLocked(ConstsStatus.LOCK);
                 userInfoService.locked(userInfo);
             }
@@ -282,10 +282,10 @@ public class LoginServiceImpl  implements LoginService{
      */
     private void setBadPasswordCount(String userId,int badPasswordCount) {
         try {
-     	   UserInfo user = new UserInfo();
-     	   user.setId(userId);
-     	   user.setBadPasswordCount(badPasswordCount);
-     	   userInfoService.badPasswordCount(user);
+            UserInfo user = new UserInfo();
+            user.setId(userId);
+            user.setBadPasswordCount(badPasswordCount);
+            userInfoService.badPasswordCount(user);
         } catch (Exception e) {
             _logger.error("setBadPasswordCount Exception",e);
         }
@@ -296,16 +296,16 @@ public class LoginServiceImpl  implements LoginService{
             setBadPasswordCount(userInfo.getId(),userInfo.getBadPasswordCount());
             CnfPasswordPolicy passwordPolicy = cnfPasswordPolicyService.getPasswordPolicy();
             if(userInfo.getBadPasswordCount() >= passwordPolicy.getAttempts()) {
-         	   _logger.debug("Bad Password Count {} , Max Attempts {}",
-         			   userInfo.getBadPasswordCount() + 1,passwordPolicy.getAttempts());
-         	   this.lockUser(userInfo);
+                _logger.debug("Bad Password Count {} , Max Attempts {}",
+                        userInfo.getBadPasswordCount() + 1,passwordPolicy.getAttempts());
+                this.lockUser(userInfo);
             }
         }
     }
     
     public void resetBadPasswordCount(UserInfo userInfo) {
         if (userInfo != null && StringUtils.isNotEmpty(userInfo.getId()) && userInfo.getBadPasswordCount()>0) {
-     	   setBadPasswordCount(userInfo.getId(),0);
+            setBadPasswordCount(userInfo.getId(),0);
         }
     }
 
@@ -356,8 +356,8 @@ public class LoginServiceImpl  implements LoginService{
         for (Groups group : listGroups) {
             grantedAuthority.add(new SimpleGrantedAuthority(group.getId()));
             if(group.getGroupCode().startsWith("ROLE_")
-            		&& !grantedAuthority.contains(new SimpleGrantedAuthority(group.getGroupCode()))) {
-            	grantedAuthority.add(new SimpleGrantedAuthority(group.getGroupCode()));
+                    && !grantedAuthority.contains(new SimpleGrantedAuthority(group.getGroupCode()))) {
+                grantedAuthority.add(new SimpleGrantedAuthority(group.getGroupCode()));
             }
         }
         _logger.debug("Authority : {}" , grantedAuthority);
@@ -369,10 +369,10 @@ public class LoginServiceImpl  implements LoginService{
     public void updateLastLogin(UserInfo userInfo) {
         jdbcTemplate.update(LOGIN_USERINFO_UPDATE_STATEMENT,
                 new Object[] {
-                				userInfo.getLastLoginTime(),
-                				userInfo.getLastLoginIp(),
-                				userInfo.getId()
-                			},
+                                userInfo.getLastLoginTime(),
+                                userInfo.getLastLoginIp(),
+                                userInfo.getId()
+                            },
                 new int[] { Types.TIMESTAMP, Types.VARCHAR, Types.VARCHAR });
     }
 
@@ -494,15 +494,15 @@ public class LoginServiceImpl  implements LoginService{
         }
     }
 
-	@Override
-	public UserInfo findById(String userId) {
-		List<UserInfo> listUserInfo = jdbcTemplate.query(
-				DEFAULT_USERINFO_SELECT_STATEMENT_BY_ID,
-    			new UserInfoRowMapper(),
-    			userId
-    		);
-		return (CollectionUtils.isNotEmpty(listUserInfo) ? listUserInfo.get(0) : null);
-	}
+    @Override
+    public UserInfo findById(String userId) {
+        List<UserInfo> listUserInfo = jdbcTemplate.query(
+                DEFAULT_USERINFO_SELECT_STATEMENT_BY_ID,
+                new UserInfoRowMapper(),
+                userId
+            );
+        return (CollectionUtils.isNotEmpty(listUserInfo) ? listUserInfo.get(0) : null);
+    }
 }
 
 

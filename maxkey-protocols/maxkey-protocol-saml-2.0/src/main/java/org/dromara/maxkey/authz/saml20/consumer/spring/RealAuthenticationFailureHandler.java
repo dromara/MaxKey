@@ -48,38 +48,38 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  */
 public class RealAuthenticationFailureHandler implements
-		AuthenticationFailureHandler {
+        AuthenticationFailureHandler {
 
-	private static final  Logger logger = LoggerFactory
-	.getLogger(RealAuthenticationFailureHandler.class);
+    private static final  Logger logger = LoggerFactory
+    .getLogger(RealAuthenticationFailureHandler.class);
 
-	private final RequestCache requestCache;
-	
-	
-	public RealAuthenticationFailureHandler(RequestCache requestCache) {
-		super();
-		this.requestCache = requestCache;
-	}
+    private final RequestCache requestCache;
+    
+    
+    public RealAuthenticationFailureHandler(RequestCache requestCache) {
+        super();
+        this.requestCache = requestCache;
+    }
 
-	@Override
-	public void onAuthenticationFailure(HttpServletRequest request,
-			HttpServletResponse response, AuthenticationException authenticationException)
-			throws IOException, ServletException {
-		
-		SavedRequest savedRequest = requestCache.getRequest(request, response);
-		
-		logger.debug("saved Request: {}", savedRequest);
-		
-		if( authenticationException instanceof IdentityProviderAuthenticationException && savedRequest != null) {
-			
-			logger.warn("Authn Failure reported by the IDP.", authenticationException);
-			logger.debug("Retry original request of {}", savedRequest.getRedirectUrl());
-			response.sendRedirect(savedRequest.getRedirectUrl());
-		}
+    @Override
+    public void onAuthenticationFailure(HttpServletRequest request,
+            HttpServletResponse response, AuthenticationException authenticationException)
+            throws IOException, ServletException {
+        
+        SavedRequest savedRequest = requestCache.getRequest(request, response);
+        
+        logger.debug("saved Request: {}", savedRequest);
+        
+        if( authenticationException instanceof IdentityProviderAuthenticationException && savedRequest != null) {
+            
+            logger.warn("Authn Failure reported by the IDP.", authenticationException);
+            logger.debug("Retry original request of {}", savedRequest.getRedirectUrl());
+            response.sendRedirect(savedRequest.getRedirectUrl());
+        }
 
-		else {
-			logger.warn("Unrecoverable authn failure. Sending to Forbidden", authenticationException);
-			response.sendError(HttpServletResponse.SC_FORBIDDEN);		
-		}
-	}
+        else {
+            logger.warn("Unrecoverable authn failure. Sending to Forbidden", authenticationException);
+            response.sendError(HttpServletResponse.SC_FORBIDDEN);        
+        }
+    }
 }

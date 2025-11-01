@@ -44,72 +44,72 @@ import com.nimbusds.jose.jwk.JWK;
 @Service
 public class SymmetricCacheService {
 
-	private static Logger logger = LoggerFactory.getLogger(SymmetricCacheService.class);
+    private static Logger logger = LoggerFactory.getLogger(SymmetricCacheService.class);
 
-	private LoadingCache<String, JwtSigningAndValidationService> validators;
-
-
-	public SymmetricCacheService() {
-		validators = CacheBuilder.newBuilder()
-				.expireAfterAccess(24, TimeUnit.HOURS)
-				.maximumSize(100)
-				.build(new SymmetricValidatorBuilder());
-	}
+    private LoadingCache<String, JwtSigningAndValidationService> validators;
 
 
-	/**
-	 * Create a symmetric signing and validation service for the given client
-	 * 
-	 * @param client
-	 * @return
-	 */
-	public JwtSigningAndValidationService getSymmetricValidtor(String clientSecret) {
+    public SymmetricCacheService() {
+        validators = CacheBuilder.newBuilder()
+                .expireAfterAccess(24, TimeUnit.HOURS)
+                .maximumSize(100)
+                .build(new SymmetricValidatorBuilder());
+    }
 
-		if (clientSecret == null) {
-			logger.error("Couldn't create symmetric validator for null client");
-			return null;
-		}
 
-		if (Strings.isNullOrEmpty(clientSecret)) {
-			logger.error("Couldn't create symmetric validator for client  without a client secret");
-			return null;
-		}
+    /**
+     * Create a symmetric signing and validation service for the given client
+     * 
+     * @param client
+     * @return
+     */
+    public JwtSigningAndValidationService getSymmetricValidtor(String clientSecret) {
 
-		try {
-			return validators.get(clientSecret);
-		} catch (UncheckedExecutionException ue) {
-			logger.error("Problem loading client validator", ue);
-			return null;
-		} catch (ExecutionException e) {
-			logger.error("Problem loading client validator", e);
-			return null;
-		}
+        if (clientSecret == null) {
+            logger.error("Couldn't create symmetric validator for null client");
+            return null;
+        }
 
-	}
+        if (Strings.isNullOrEmpty(clientSecret)) {
+            logger.error("Couldn't create symmetric validator for client  without a client secret");
+            return null;
+        }
 
-	public class SymmetricValidatorBuilder extends CacheLoader<String, JwtSigningAndValidationService> {
-		@Override
-		public JwtSigningAndValidationService load(String key) throws Exception {
-			try {
+        try {
+            return validators.get(clientSecret);
+        } catch (UncheckedExecutionException ue) {
+            logger.error("Problem loading client validator", ue);
+            return null;
+        } catch (ExecutionException e) {
+            logger.error("Problem loading client validator", e);
+            return null;
+        }
 
-				String id = "SYMMETRIC-KEY";
+    }
 
-				JWK jwk =null;
-				//JWK jwk = new OctetSequenceKey(Base64URL.encode(key), KeyUse.SIGNATURE, null, null, id, null, null, null);
-				Map<String, JWK> keys = ImmutableMap.of(id, jwk);
-				JwtSigningAndValidationService service = new DefaultJwtSigningAndValidationService(keys);
+    public class SymmetricValidatorBuilder extends CacheLoader<String, JwtSigningAndValidationService> {
+        @Override
+        public JwtSigningAndValidationService load(String key) throws Exception {
+            try {
 
-				return service;
+                String id = "SYMMETRIC-KEY";
 
-			} catch (NoSuchAlgorithmException e) {
-				logger.error("Couldn't create symmetric validator for client", e);
-			} catch (InvalidKeySpecException e) {
-				logger.error("Couldn't create symmetric validator for client", e);
-			}
+                JWK jwk =null;
+                //JWK jwk = new OctetSequenceKey(Base64URL.encode(key), KeyUse.SIGNATURE, null, null, id, null, null, null);
+                Map<String, JWK> keys = ImmutableMap.of(id, jwk);
+                JwtSigningAndValidationService service = new DefaultJwtSigningAndValidationService(keys);
 
-			throw new IllegalArgumentException("Couldn't create symmetric validator for client");
-		}
+                return service;
 
-	}
+            } catch (NoSuchAlgorithmException e) {
+                logger.error("Couldn't create symmetric validator for client", e);
+            } catch (InvalidKeySpecException e) {
+                logger.error("Couldn't create symmetric validator for client", e);
+            }
+
+            throw new IllegalArgumentException("Couldn't create symmetric validator for client");
+        }
+
+    }
 
 }

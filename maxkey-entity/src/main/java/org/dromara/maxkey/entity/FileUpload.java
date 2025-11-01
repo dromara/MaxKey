@@ -34,13 +34,13 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "MXK_FILE_UPLOAD")
 public class FileUpload extends JpaEntity {
-	
-	@Id
+    
+    @Id
     @Column
     @GeneratedValue
     String id;
-	
-	@Column
+    
+    @Column
     byte[] uploaded;
     
     @JsonIgnore
@@ -60,81 +60,81 @@ public class FileUpload extends JpaEntity {
     
     Date createdDate;
 
-	public String getId() {
-		return id;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public byte[] getUploaded() {
-		return uploaded;
-	}
+    public byte[] getUploaded() {
+        return uploaded;
+    }
 
-	public void setUploaded(byte[] uploaded) {
-		this.uploaded = uploaded;
-	}
+    public void setUploaded(byte[] uploaded) {
+        this.uploaded = uploaded;
+    }
 
-	public MultipartFile getUploadFile() {
-		return uploadFile;
-	}
+    public MultipartFile getUploadFile() {
+        return uploadFile;
+    }
 
-	public void setUploadFile(MultipartFile uploadFile) {
-		this.uploadFile = uploadFile;
-	}
+    public void setUploadFile(MultipartFile uploadFile) {
+        this.uploadFile = uploadFile;
+    }
 
-	public String getFileName() {
-		return fileName;
-	}
+    public String getFileName() {
+        return fileName;
+    }
 
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
 
-	public String getContentType() {
-		return contentType;
-	}
+    public String getContentType() {
+        return contentType;
+    }
 
-	public void setContentType(String contentType) {
-		this.contentType = contentType;
-	}
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
+    }
 
-	public long getContentSize() {
-		return contentSize;
-	}
+    public long getContentSize() {
+        return contentSize;
+    }
 
-	public void setContentSize(long contentSize) {
-		this.contentSize = contentSize;
-	}
+    public void setContentSize(long contentSize) {
+        this.contentSize = contentSize;
+    }
 
-	public String getCreatedBy() {
-		return createdBy;
-	}
+    public String getCreatedBy() {
+        return createdBy;
+    }
 
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
-	}
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
 
-	public Date getCreatedDate() {
-		return createdDate;
-	}
+    public Date getCreatedDate() {
+        return createdDate;
+    }
 
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("FileUpload [id=");
-		builder.append(id);
-		builder.append(", uploadFile=");
-		builder.append(uploadFile);
-		builder.append(", createdBy=");
-		builder.append(this.createdBy);
-		builder.append("]");
-		return builder.toString();
-	}
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("FileUpload [id=");
+        builder.append(id);
+        builder.append(", uploadFile=");
+        builder.append(uploadFile);
+        builder.append(", createdBy=");
+        builder.append(this.createdBy);
+        builder.append("]");
+        return builder.toString();
+    }
     
 }

@@ -35,11 +35,11 @@ import org.dromara.maxkey.password.onetimepwd.algorithm.TimeBasedOTP;
 public class TimeBasedOTPTest {
 
      public static void main(String[] args) {
-    	 
-    	 //byte[]byteseed=OPTSecret.generate();
-    	 
-    	
-    	 byte[]byteseed= Base32Utils.decode("DCGAGPE2BCDBD6D3FG4NX2QGACVIHXP4");//HexUtils.hex2Bytes( "a1270caecf007f2303cc9db12597a9694ff541aa");
+         
+         //byte[]byteseed=OPTSecret.generate();
+         
+        
+         byte[]byteseed= Base32Utils.decode("DCGAGPE2BCDBD6D3FG4NX2QGACVIHXP4");//HexUtils.hex2Bytes( "a1270caecf007f2303cc9db12597a9694ff541aa");
          String seed=Base32Utils.encode(byteseed);
          System.out.println(seed);
          String hexString=Hex.encodeHexString(byteseed);
@@ -53,10 +53,10 @@ public class TimeBasedOTPTest {
          String utcTime = df.format(new Date());
          Date curr=null;
          try {
-        	 curr=df.parse(utcTime);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+             curr=df.parse(utcTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
          long currentTimeSeconds = curr.getTime() / 1000;
          currentTimeSeconds =System.currentTimeMillis() / 1000;
          int INTERVAL = 30;
@@ -64,12 +64,12 @@ public class TimeBasedOTPTest {
          System.out.println(utcTime);
          
          //google time based
-    	 System.out.println(TimeBasedOTP.genOTP(hexString,Long.toHexString(currentTimeSeconds/INTERVAL).toUpperCase()+"","6"));
-    	 //google counter based
-    	 System.out.println(TimeBasedOTP.genOTP(hexString,3+"","6"));
-    	
+         System.out.println(TimeBasedOTP.genOTP(hexString,Long.toHexString(currentTimeSeconds/INTERVAL).toUpperCase()+"","6"));
+         //google counter based
+         System.out.println(TimeBasedOTP.genOTP(hexString,3+"","6"));
+        
  
      }
-	     
+         
 
 }

@@ -19,10 +19,10 @@ package org.dromara.maxkey.provision;
 
 public class ProvisionMessage {
 
-	String 	id;
-    String 	topic;
-    String 	actionType;
-    String 	sendTime;
+    String     id;
+    String     topic;
+    String     actionType;
+    String     sendTime;
     String  content;
     int     connected;
     int     instId;
@@ -54,14 +54,14 @@ public class ProvisionMessage {
     }
 
     public String getId() {
-		return id;
-	}
+        return id;
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public String getContent() {
+    public String getContent() {
         return content;
     }
 
@@ -70,41 +70,41 @@ public class ProvisionMessage {
     }
 
     public int getConnected() {
-		return connected;
-	}
-
-	public void setConnected(int connected) {
-		this.connected = connected;
-	}
-
-	public Object getSourceObject() {
-		return sourceObject;
-	}
-
-	public void setSourceObject(Object sourceObject) {
-		this.sourceObject = sourceObject;
-	}
-
-	public int getInstId() {
-		return instId;
-	}
-
-	public void setInstId(int instId) {
-		this.instId = instId;
-	}
-
-	public ProvisionMessage() {
+        return connected;
     }
 
-	public ProvisionMessage(String id,String topic, String actionType, String sendTime,  String content,Object sourceObject) {
-		super();
-		this.id = id;
-		this.topic = topic;
-		this.actionType = actionType;
-		this.sendTime = sendTime;
-		this.content = content;
-		this.sourceObject = sourceObject;
-	}
+    public void setConnected(int connected) {
+        this.connected = connected;
+    }
+
+    public Object getSourceObject() {
+        return sourceObject;
+    }
+
+    public void setSourceObject(Object sourceObject) {
+        this.sourceObject = sourceObject;
+    }
+
+    public int getInstId() {
+        return instId;
+    }
+
+    public void setInstId(int instId) {
+        this.instId = instId;
+    }
+
+    public ProvisionMessage() {
+    }
+
+    public ProvisionMessage(String id,String topic, String actionType, String sendTime,  String content,Object sourceObject) {
+        super();
+        this.id = id;
+        this.topic = topic;
+        this.actionType = actionType;
+        this.sendTime = sendTime;
+        this.content = content;
+        this.sourceObject = sourceObject;
+    }
     
     
 }

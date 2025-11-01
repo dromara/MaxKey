@@ -32,22 +32,22 @@ import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 public class LogoutEndpoint {
-	private static Logger logger = LoggerFactory.getLogger(LogoutEndpoint.class);
-	
-	@Autowired
+    private static Logger logger = LoggerFactory.getLogger(LogoutEndpoint.class);
+    
+    @Autowired
     SessionManager sessionManager;
-	
- 	@GetMapping(value={"/logout"})
- 	@ResponseBody
- 	public  Message<?> logout(HttpServletRequest request,@CurrentUser UserInfo currentUser){
- 		sessionManager.terminate(
- 				currentUser.getSessionId(), 
- 				currentUser.getId(),
- 				currentUser.getUsername());
- 		//invalidate http session
-		logger.debug("/logout invalidate http Session id {}",request.getSession().getId());
- 		request.getSession().invalidate();
- 		return new Message<String>();
- 	}
- 	
+    
+     @GetMapping(value={"/logout"})
+     @ResponseBody
+     public  Message<?> logout(HttpServletRequest request,@CurrentUser UserInfo currentUser){
+         sessionManager.terminate(
+                 currentUser.getSessionId(), 
+                 currentUser.getId(),
+                 currentUser.getUsername());
+         //invalidate http session
+        logger.debug("/logout invalidate http Session id {}",request.getSession().getId());
+         request.getSession().invalidate();
+         return new Message<String>();
+     }
+     
 }

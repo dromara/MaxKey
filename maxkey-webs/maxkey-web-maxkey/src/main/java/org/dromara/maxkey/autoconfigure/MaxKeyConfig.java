@@ -96,17 +96,17 @@ public class MaxKeyConfig  {
                 JdbcTemplate jdbcTemplate,
                 MailOtpAuthnService otpAuthnService,
                 CnfLdapContextService ldapContextService) {
-    	LdapAuthenticationRealmService ldapRealmService = new LdapAuthenticationRealmService(ldapContextService);
+        LdapAuthenticationRealmService ldapRealmService = new LdapAuthenticationRealmService(ldapContextService);
         return new JdbcAuthenticationRealm(
-        		passwordEncoder,
-        		passwordPolicyValidatorService,
-        		loginService,
-        		historyLoginService,
-        		userInfoService,
-        		ipLocationParser,
-        		jdbcTemplate,
-        		ldapRealmService
-        	);
+                passwordEncoder,
+                passwordPolicyValidatorService,
+                loginService,
+                historyLoginService,
+                userInfoService,
+                ipLocationParser,
+                jdbcTemplate,
+                ldapRealmService
+            );
     }
 
     @Bean
@@ -115,8 +115,8 @@ public class MaxKeyConfig  {
                 int digits,
                 @Value("${maxkey.otp.policy.period:30}")
                 int period) {
-	    TimeBasedOtpAuthn tfaOtpAuthn = new TimeBasedOtpAuthn(digits , period);
-	    logger.debug("TimeBasedOtpAuthn inited.");
+        TimeBasedOtpAuthn tfaOtpAuthn = new TimeBasedOtpAuthn(digits , period);
+        logger.debug("TimeBasedOtpAuthn inited.");
         return tfaOtpAuthn;
     }
 
@@ -206,17 +206,17 @@ public class MaxKeyConfig  {
             Scheduler scheduler,
             ApplicationConfig applicationConfig,
             SessionManager sessionManager) throws SchedulerException {
-    	if(applicationConfig.isPersistenceInmemory()) {
-	    	new ScheduleAdapterBuilder()
-	    		.setScheduler(scheduler)
-	    		.setCron("0 0/10 * * * ?")
-	    		.setJobClass(SessionListenerAdapter.class)
-	    		.setJobData("sessionManager",sessionManager)
-	    		.setJobData("category", SessionCategory.SIGN)
-	    		.build();
-	        logger.debug("Session ListenerAdapter inited .");
-    	}
-    	return "sessionListenerAdapter";
+        if(applicationConfig.isPersistenceInmemory()) {
+            new ScheduleAdapterBuilder()
+                .setScheduler(scheduler)
+                .setCron("0 0/10 * * * ?")
+                .setJobClass(SessionListenerAdapter.class)
+                .setJobData("sessionManager",sessionManager)
+                .setJobData("category", SessionCategory.SIGN)
+                .build();
+            logger.debug("Session ListenerAdapter inited .");
+        }
+        return "sessionListenerAdapter";
     }
     
 }

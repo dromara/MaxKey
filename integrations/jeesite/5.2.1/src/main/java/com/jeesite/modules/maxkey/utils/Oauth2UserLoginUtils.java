@@ -34,25 +34,25 @@ public class Oauth2UserLoginUtils{
     private static final String DEFAULT_USER_CODE="system";
     
     public static String getAuthUserToSysUserCode(String oauthUserId) {
-	//自行实现第三方用户到jeesite用户之间逻辑转换关系
-	if(DEMO_MODE) {
-	    return DEFAULT_USER_CODE;
-	}
-	return oauthUserId;
+    //自行实现第三方用户到jeesite用户之间逻辑转换关系
+    if(DEMO_MODE) {
+        return DEFAULT_USER_CODE;
+    }
+    return oauthUserId;
     }
 
     public static void loginByOauthUserId(String oauthUserId) {
-	
-	HttpServletRequest request = ServletUtils.getRequest();
-	HttpServletResponse response = ServletUtils.getResponse();
-	try {
-		// FormToken 构造方法的三个参数：登录名、是否内部登录无条件、请求对象
-		UserUtils.getSubject().login(new FormToken(getAuthUserToSysUserCode(oauthUserId), true, request));
-		System.out.println("登录成功，__sid=" + UserUtils.getSession().getId());
-		FormFilter.onLoginSuccess(request, response);
-	} catch (AuthenticationException e) {
-		FormFilter.onLoginFailure(e, request, response);
-	}
+    
+    HttpServletRequest request = ServletUtils.getRequest();
+    HttpServletResponse response = ServletUtils.getResponse();
+    try {
+        // FormToken 构造方法的三个参数：登录名、是否内部登录无条件、请求对象
+        UserUtils.getSubject().login(new FormToken(getAuthUserToSysUserCode(oauthUserId), true, request));
+        System.out.println("登录成功，__sid=" + UserUtils.getSession().getId());
+        FormFilter.onLoginSuccess(request, response);
+    } catch (AuthenticationException e) {
+        FormFilter.onLoginFailure(e, request, response);
+    }
 
     }
     
@@ -71,11 +71,11 @@ public class Oauth2UserLoginUtils{
             
             
 //            jeegit:
-//        	    clientId: 823874316692094976
-//        	    clientSecret: t74BMTcwMjIwMjMwODIzNTA4NDQFLu
-//        	    serverUrl: http://sso.maxkey.top
-//        	    redirectUri: http://localhost:8980/js/oauth2/callback/jeegit
-//        	    className: com.jeesite.modules.oauth2.request.AuthMaxKeyRequest                  
+//                clientId: 823874316692094976
+//                clientSecret: t74BMTcwMjIwMjMwODIzNTA4NDQFLu
+//                serverUrl: http://sso.maxkey.top
+//                redirectUri: http://localhost:8980/js/oauth2/callback/jeegit
+//                className: com.jeesite.modules.oauth2.request.AuthMaxKeyRequest                  
             authRequest = new AuthMaxKeyJeeGitRequest(AuthConfig.builder()
                     .clientId(Global.getProperty("oauth2." + source + ".clientId"))
                     .clientSecret(Global.getProperty("oauth2." + source + ".clientSecret"))

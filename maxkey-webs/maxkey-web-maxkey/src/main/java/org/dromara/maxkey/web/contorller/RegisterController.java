@@ -49,75 +49,75 @@ import jakarta.servlet.ServletException;
 @RestController
 @RequestMapping(value={"/signup"})
 public class RegisterController {
-	private static Logger logger = LoggerFactory.getLogger(RegisterController.class);
+    private static Logger logger = LoggerFactory.getLogger(RegisterController.class);
 
-	@Autowired
-	AuthTokenService authTokenService;
-	
-	@Autowired 
-  	ApplicationConfig applicationConfig;
-	
-	@Autowired
-	UserInfoService userInfoService;
-	
-	@Autowired
+    @Autowired
+    AuthTokenService authTokenService;
+    
+    @Autowired 
+      ApplicationConfig applicationConfig;
+    
+    @Autowired
+    UserInfoService userInfoService;
+    
+    @Autowired
     SmsOtpAuthnService smsOtpAuthnService;
-	
-	@Autowired
-	PasswordEncoder passwordEncoder;
- 	
-	@GetMapping(value = { "/produceOtp" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<?> produceOtp(@RequestParam String mobile) {
+    
+    @Autowired
+    PasswordEncoder passwordEncoder;
+     
+    @GetMapping(value = { "/produceOtp" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public Message<?> produceOtp(@RequestParam String mobile) {
         logger.debug("/signup/produceOtp Mobile {}: " ,mobile);
  
-    	logger.debug("Mobile Regex matches {}",ConstsRegex.MOBILE_PATTERN.matcher(mobile).matches());
-    	if(StringUtils.isNotBlank(mobile) && ConstsRegex.MOBILE_PATTERN.matcher(mobile).matches()) {
-    		UserInfo userInfo = new UserInfo();
-    		userInfo.setUsername(mobile);
-    		userInfo.setMobile(mobile);
-        	AbstractOtpAuthn smsOtpAuthn = smsOtpAuthnService.getByInstId(WebContext.getInst().getId());
-        	smsOtpAuthn.produce(userInfo);
-        	return new Message<UserInfo>(userInfo);
+        logger.debug("Mobile Regex matches {}",ConstsRegex.MOBILE_PATTERN.matcher(mobile).matches());
+        if(StringUtils.isNotBlank(mobile) && ConstsRegex.MOBILE_PATTERN.matcher(mobile).matches()) {
+            UserInfo userInfo = new UserInfo();
+            userInfo.setUsername(mobile);
+            userInfo.setMobile(mobile);
+            AbstractOtpAuthn smsOtpAuthn = smsOtpAuthnService.getByInstId(WebContext.getInst().getId());
+            smsOtpAuthn.produce(userInfo);
+            return new Message<UserInfo>(userInfo);
         }
             
         return new Message<UserInfo>(Message.FAIL);
     }
-	  
-	//直接注册
- 	@PostMapping(value={"/register"})
-	public Message<?> register(@ModelAttribute UserInfo userInfo , @RequestParam String captcha) throws ServletException, IOException {
- 		UserInfo validateUserInfo = new UserInfo();
- 		validateUserInfo.setUsername(userInfo.getMobile());
- 		validateUserInfo.setMobile(userInfo.getMobile());
- 		AbstractOtpAuthn smsOtpAuthn = smsOtpAuthnService.getByInstId(WebContext.getInst().getId());
- 		if (smsOtpAuthn !=null 
-        				&& smsOtpAuthn.validate(validateUserInfo, captcha)){
-	 		UserInfo temp = userInfoService.findByEmailMobile(userInfo.getEmail());
-	 		
-	 		if(temp != null) {
-	 			return new Message<UserInfo>(Message.FAIL);
-	 		}
-	 		
-	 		temp = userInfoService.findByUsername(userInfo.getUsername());
-	 		if(temp != null) {
-	 			return new Message<UserInfo>(Message.FAIL);
-	 		}
-	 		
-	 		//default InstId
-	 		if(StringUtils.isEmpty(userInfo.getInstId())) {
-				userInfo.setInstId("1");
-			}
-	 		String password = userInfo.getPassword();
-	 		userInfo.setDecipherable(PasswordReciprocal.getInstance().encode(password));
-	 		password = passwordEncoder.encode(password );
-			userInfo.setPassword(password);
-	 		userInfo.setStatus(ConstsStatus.INACTIVE);
-	 		
-	 		if(userInfoService.insert(userInfo)) {
-	 			return new Message<UserInfo>();
-	 		}
- 		}
- 		return new Message<UserInfo>(Message.FAIL);
- 	}
+      
+    //直接注册
+     @PostMapping(value={"/register"})
+    public Message<?> register(@ModelAttribute UserInfo userInfo , @RequestParam String captcha) throws ServletException, IOException {
+         UserInfo validateUserInfo = new UserInfo();
+         validateUserInfo.setUsername(userInfo.getMobile());
+         validateUserInfo.setMobile(userInfo.getMobile());
+         AbstractOtpAuthn smsOtpAuthn = smsOtpAuthnService.getByInstId(WebContext.getInst().getId());
+         if (smsOtpAuthn !=null 
+                        && smsOtpAuthn.validate(validateUserInfo, captcha)){
+             UserInfo temp = userInfoService.findByEmailMobile(userInfo.getEmail());
+             
+             if(temp != null) {
+                 return new Message<UserInfo>(Message.FAIL);
+             }
+             
+             temp = userInfoService.findByUsername(userInfo.getUsername());
+             if(temp != null) {
+                 return new Message<UserInfo>(Message.FAIL);
+             }
+             
+             //default InstId
+             if(StringUtils.isEmpty(userInfo.getInstId())) {
+                userInfo.setInstId("1");
+            }
+             String password = userInfo.getPassword();
+             userInfo.setDecipherable(PasswordReciprocal.getInstance().encode(password));
+             password = passwordEncoder.encode(password );
+            userInfo.setPassword(password);
+             userInfo.setStatus(ConstsStatus.INACTIVE);
+             
+             if(userInfoService.insert(userInfo)) {
+                 return new Message<UserInfo>();
+             }
+         }
+         return new Message<UserInfo>(Message.FAIL);
+     }
 
 }

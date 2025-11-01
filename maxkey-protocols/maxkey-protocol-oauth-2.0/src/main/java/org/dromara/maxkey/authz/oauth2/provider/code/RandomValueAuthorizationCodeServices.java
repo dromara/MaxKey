@@ -30,31 +30,31 @@ import org.dromara.maxkey.authz.oauth2.provider.OAuth2Authentication;
  */
 public abstract class RandomValueAuthorizationCodeServices implements AuthorizationCodeServices {
 
-	//default Random code Generator
-	//private RandomValueStringGenerator generator = new RandomValueStringGenerator();
+    //default Random code Generator
+    //private RandomValueStringGenerator generator = new RandomValueStringGenerator();
 
-	protected abstract void store(String code, OAuth2Authentication authentication);
+    protected abstract void store(String code, OAuth2Authentication authentication);
 
-	protected abstract OAuth2Authentication remove(String code);
+    protected abstract OAuth2Authentication remove(String code);
 
-	public String createAuthorizationCode(OAuth2Authentication authentication) {
-		//String code = generator.generate();
-		/*
-		 * replace with uuid random code
-		 * add by Crystal.Sea
-		 */
-		String code = UUID.randomUUID().toString();
-		store(code, authentication);
-		return code;
-	}
+    public String createAuthorizationCode(OAuth2Authentication authentication) {
+        //String code = generator.generate();
+        /*
+         * replace with uuid random code
+         * add by Crystal.Sea
+         */
+        String code = UUID.randomUUID().toString();
+        store(code, authentication);
+        return code;
+    }
 
-	public OAuth2Authentication consumeAuthorizationCode(String code)
-			throws InvalidGrantException {
-		OAuth2Authentication auth = this.remove(code);
-		if (auth == null) {
-			throw new InvalidGrantException("Invalid authorization code: " + code);
-		}
-		return auth;
-	}
+    public OAuth2Authentication consumeAuthorizationCode(String code)
+            throws InvalidGrantException {
+        OAuth2Authentication auth = this.remove(code);
+        if (auth == null) {
+            throw new InvalidGrantException("Invalid authorization code: " + code);
+        }
+        return auth;
+    }
 
 }

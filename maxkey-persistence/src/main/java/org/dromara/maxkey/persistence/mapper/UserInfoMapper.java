@@ -33,47 +33,47 @@ import org.dromara.mybatis.jpa.IJpaMapper;
  *
  */
 public interface UserInfoMapper  extends IJpaMapper<UserInfo>{
-	
-	//login query
-	public UserInfo findByAppIdAndUsername(UserInfo userInfo);
-	
-	@Select("select * from  mxk_userinfo where username = #{value} and status = " + ConstsStatus.ACTIVE)
-	public UserInfo findByUsername(String username);
-	
-	@Select("select * from  mxk_userinfo where ( email = #{value} or mobile= #{value} ) and status = " + ConstsStatus.ACTIVE)
-	public UserInfo findByEmailMobile(String emailMobile);
-	 
-	public List<Organizations> findDeptsByUserId(String userId);
-	
-	public void updateLocked(UserInfo userInfo);
+    
+    //login query
+    public UserInfo findByAppIdAndUsername(UserInfo userInfo);
+    
+    @Select("select * from  mxk_userinfo where username = #{value} and status = " + ConstsStatus.ACTIVE)
+    public UserInfo findByUsername(String username);
+    
+    @Select("select * from  mxk_userinfo where ( email = #{value} or mobile= #{value} ) and status = " + ConstsStatus.ACTIVE)
+    public UserInfo findByEmailMobile(String emailMobile);
+     
+    public List<Organizations> findDeptsByUserId(String userId);
+    
+    public void updateLocked(UserInfo userInfo);
 
-	public void updateLockout(UserInfo userInfo);
+    public void updateLockout(UserInfo userInfo);
 
-	public void badPasswordCount(UserInfo userInfo);
-	
-	public void badPasswordCountReset(UserInfo userInfo);
-	
-	public int 	changePassword(ChangePassword changePassword);
-	
-	public int 	updateAppLoginPassword(UserInfo userInfo);
-	
-	public int 	updateProtectedApps(UserInfo userInfo);
-	
-	public int 	updateSharedSecret(UserInfo userInfo);
-	
-	public int 	updatePasswordQuestion(UserInfo userInfo);
-	
-	public int	updateAuthnType(UserInfo userInfo);
-	
-	public int 	updateEmail(UserInfo userInfo);
-	
-	public int 	updateMobile(UserInfo userInfo);
-	
-	public int 	updateProfile(UserInfo userInfo);
-	
+    public void badPasswordCount(UserInfo userInfo);
+    
+    public void badPasswordCountReset(UserInfo userInfo);
+    
+    public int     changePassword(ChangePassword changePassword);
+    
+    public int     updateAppLoginPassword(UserInfo userInfo);
+    
+    public int     updateProtectedApps(UserInfo userInfo);
+    
+    public int     updateSharedSecret(UserInfo userInfo);
+    
+    public int     updatePasswordQuestion(UserInfo userInfo);
+    
+    public int    updateAuthnType(UserInfo userInfo);
+    
+    public int     updateEmail(UserInfo userInfo);
+    
+    public int     updateMobile(UserInfo userInfo);
+    
+    public int     updateProfile(UserInfo userInfo);
+    
     @Update("update mxk_userinfo set gridlist =  #{gridList} where id = #{id}")
-	public int 	updateGridList(UserInfo userInfo) ;
+    public int     updateGridList(UserInfo userInfo) ;
     
     @Update("update mxk_userinfo set status =  #{status} where id = #{id}")
-   	public int 	updateStatus(UserInfo userInfo) ;
+       public int     updateStatus(UserInfo userInfo) ;
 }

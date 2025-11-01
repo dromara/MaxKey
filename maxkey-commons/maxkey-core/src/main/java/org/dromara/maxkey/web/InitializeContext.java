@@ -131,7 +131,7 @@ public class InitializeContext extends HttpServlet {
         
         Iterator<PropertySource<?>> it =WebContext.properties.getPropertySources().iterator();
         while(it.hasNext()) {
-        	 logger.debug("propertySource {}" , it.next());
+             logger.debug("propertySource {}" , it.next());
         }
         
         logger.trace(WebConstants.DELIMITER);
@@ -148,8 +148,8 @@ public class InitializeContext extends HttpServlet {
                         WebContext.properties.getProperty("application.formatted-version"));
         logger.info("");
         logger.info("                 {}Copyright 2018 - {} https://www.maxkey.top/",
-        			    (char)0xA9 , new DateTime().getYear()
-        			);
+                        (char)0xA9 , new DateTime().getYear()
+                    );
         logger.info("+                 Licensed under the Apache License, Version 2.0 ");
         logger.info(WebConstants.DELIMITER);
     }

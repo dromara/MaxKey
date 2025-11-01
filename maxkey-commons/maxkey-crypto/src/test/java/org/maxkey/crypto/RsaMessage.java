@@ -16,153 +16,153 @@
  
 
 package org.maxkey.crypto;
-	import java.io.FileInputStream;
-	import java.io.ObjectInputStream;
-	import java.security.Key;
-	import java.security.PrivateKey;
-	import java.security.PublicKey;
-	import java.security.Signature;
-	import java.security.interfaces.RSAPrivateKey;
-	import java.security.interfaces.RSAPublicKey;
+    import java.io.FileInputStream;
+    import java.io.ObjectInputStream;
+    import java.security.Key;
+    import java.security.PrivateKey;
+    import java.security.PublicKey;
+    import java.security.Signature;
+    import java.security.interfaces.RSAPrivateKey;
+    import java.security.interfaces.RSAPublicKey;
 
-	import javax.crypto.Cipher;
-	
-	
-	/**
-	* RSA�ӽ���,RSAǩ��ǩ����֤��
-	*
-	* @author Administrator
-	*
-	*/
-	public class RsaMessage {
-
-
+    import javax.crypto.Cipher;
+    
+    
+    /**
+    * RSA�ӽ���,RSAǩ��ǩ����֤��
+    *
+    * @author Administrator
+    *
+    */
+    public class RsaMessage {
 
 
-	public static void main(String[] args) throws Exception {
-	String str = "hello,�����ĵ����";
-	System.out.println("ԭ�ģ�" + str);
 
-	RsaMessage rsa = new RsaMessage();
-	RSAPrivateKey privateKey = (RSAPrivateKey) rsa.readFromFile("sk.dat");
-	RSAPublicKey publickKey = (RSAPublicKey) rsa.readFromFile("pk.dat");
 
-	byte[] encbyte = rsa.encrypt(str, privateKey);
-	System.out.println("˽Կ���ܺ�");
-	String encStr = toHexString(encbyte);
-	System.out.println(encStr);
+    public static void main(String[] args) throws Exception {
+    String str = "hello,�����ĵ����";
+    System.out.println("ԭ�ģ�" + str);
 
-	byte[] signBytes = rsa.sign(str, privateKey);
-	System.out.println("ǩ��ֵ��");
-	String signStr = toHexString(signBytes);
-	System.out.println(signStr);
+    RsaMessage rsa = new RsaMessage();
+    RSAPrivateKey privateKey = (RSAPrivateKey) rsa.readFromFile("sk.dat");
+    RSAPublicKey publickKey = (RSAPublicKey) rsa.readFromFile("pk.dat");
 
-	byte[] decByte = rsa.decrypt(encStr, publickKey);
-	System.out.println("��Կ���ܺ�");
-	String decStr = new String(decByte);
-	System.out.println(decStr);
+    byte[] encbyte = rsa.encrypt(str, privateKey);
+    System.out.println("˽Կ���ܺ�");
+    String encStr = toHexString(encbyte);
+    System.out.println(encStr);
 
-	if (rsa.verifySign(str, signStr, publickKey)) {
-	System.out.println("rsa sign check success");
-	} else {
-	System.out.println("rsa sign check failure");
-	}
-	}
+    byte[] signBytes = rsa.sign(str, privateKey);
+    System.out.println("ǩ��ֵ��");
+    String signStr = toHexString(signBytes);
+    System.out.println(signStr);
 
-	/**
-	* ����,key�����ǹ�Կ��Ҳ������˽Կ
-	*
-	* @param message
-	* @return
-	* @throws Exception
-	*/
-	public byte[] encrypt(String message, Key key) throws Exception {
-	Cipher cipher = Cipher.getInstance("RSA");
-	cipher.init(Cipher.ENCRYPT_MODE, key);
-	return cipher.doFinal(message.getBytes());
-	}
+    byte[] decByte = rsa.decrypt(encStr, publickKey);
+    System.out.println("��Կ���ܺ�");
+    String decStr = new String(decByte);
+    System.out.println(decStr);
 
-	/**
-	* ���ܣ�key�����ǹ�Կ��Ҳ������˽Կ������ǹ�Կ���ܾ���˽Կ���ܣ���֮��Ȼ
-	*
-	* @param message
-	* @return
-	* @throws Exception
-	*/
-	public byte[] decrypt(String message, Key key) throws Exception {
-	Cipher cipher = Cipher.getInstance("RSA");
-	cipher.init(Cipher.DECRYPT_MODE, key);
-	return cipher.doFinal(toBytes(message));
-	}
+    if (rsa.verifySign(str, signStr, publickKey)) {
+    System.out.println("rsa sign check success");
+    } else {
+    System.out.println("rsa sign check failure");
+    }
+    }
 
-	/**
-	* ��˽Կǩ��
-	*
-	* @param message
-	* @param key
-	* @return
-	* @throws Exception
-	*/
-	public byte[] sign(String message, PrivateKey key) throws Exception {
-	Signature signetcheck = Signature.getInstance("MD5withRSA");
-	signetcheck.initSign(key);
-	signetcheck.update(message.getBytes("ISO-8859-1"));
-	return signetcheck.sign();
-	}
+    /**
+    * ����,key�����ǹ�Կ��Ҳ������˽Կ
+    *
+    * @param message
+    * @return
+    * @throws Exception
+    */
+    public byte[] encrypt(String message, Key key) throws Exception {
+    Cipher cipher = Cipher.getInstance("RSA");
+    cipher.init(Cipher.ENCRYPT_MODE, key);
+    return cipher.doFinal(message.getBytes());
+    }
 
-	/**
-	* �ù�Կ��֤ǩ�����ȷ��
-	*
-	* @param message
-	* @param signStr
-	* @return
-	* @throws Exception
-	*/
-	public boolean verifySign(String message, String signStr, PublicKey key)
-	throws Exception {
-	if (message == null || signStr == null || key == null) {
-	return false;
-	}
-	Signature signetcheck = Signature.getInstance("MD5withRSA");
-	signetcheck.initVerify(key);
-	signetcheck.update(message.getBytes("ISO-8859-1"));
-	return signetcheck.verify(toBytes(signStr));
-	}
+    /**
+    * ���ܣ�key�����ǹ�Կ��Ҳ������˽Կ������ǹ�Կ���ܾ���˽Կ���ܣ���֮��Ȼ
+    *
+    * @param message
+    * @return
+    * @throws Exception
+    */
+    public byte[] decrypt(String message, Key key) throws Exception {
+    Cipher cipher = Cipher.getInstance("RSA");
+    cipher.init(Cipher.DECRYPT_MODE, key);
+    return cipher.doFinal(toBytes(message));
+    }
 
-	/**
-	* ���ļ���ȡobject
-	*
-	* @param fileName
-	* @return
-	* @throws Exception
-	*/
-	private Object readFromFile(String fileName) throws Exception {
-	ObjectInputStream input = new ObjectInputStream(new FileInputStream(
-	fileName));
-	Object obj = input.readObject();
-	input.close();
-	return obj;
-	}
+    /**
+    * ��˽Կǩ��
+    *
+    * @param message
+    * @param key
+    * @return
+    * @throws Exception
+    */
+    public byte[] sign(String message, PrivateKey key) throws Exception {
+    Signature signetcheck = Signature.getInstance("MD5withRSA");
+    signetcheck.initSign(key);
+    signetcheck.update(message.getBytes("ISO-8859-1"));
+    return signetcheck.sign();
+    }
 
-	public static String toHexString(byte[] b) {
-	StringBuilder sb = new StringBuilder(b.length * 2);
-	for (int i = 0; i < b.length; i++) {
-	sb.append(HEXCHAR[(b[i] & 0xf0) >>> 4]);
-	sb.append(HEXCHAR[b[i] & 0x0f]);
-	}
-	return sb.toString();
-	}
+    /**
+    * �ù�Կ��֤ǩ�����ȷ��
+    *
+    * @param message
+    * @param signStr
+    * @return
+    * @throws Exception
+    */
+    public boolean verifySign(String message, String signStr, PublicKey key)
+    throws Exception {
+    if (message == null || signStr == null || key == null) {
+    return false;
+    }
+    Signature signetcheck = Signature.getInstance("MD5withRSA");
+    signetcheck.initVerify(key);
+    signetcheck.update(message.getBytes("ISO-8859-1"));
+    return signetcheck.verify(toBytes(signStr));
+    }
 
-	public static final byte[] toBytes(String s) {
-	byte[] bytes;
-	bytes = new byte[s.length() / 2];
-	for (int i = 0; i < bytes.length; i++) {
-	bytes[i] = (byte) Integer.parseInt(s.substring(2 * i, 2 * i + 2),
-	16);
-	}
-	return bytes;
-	}
+    /**
+    * ���ļ���ȡobject
+    *
+    * @param fileName
+    * @return
+    * @throws Exception
+    */
+    private Object readFromFile(String fileName) throws Exception {
+    ObjectInputStream input = new ObjectInputStream(new FileInputStream(
+    fileName));
+    Object obj = input.readObject();
+    input.close();
+    return obj;
+    }
 
-	private static char[] HEXCHAR = { '0', '1', '2', '3', '4', '5', '6', '7',
-	'8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
-	}
+    public static String toHexString(byte[] b) {
+    StringBuilder sb = new StringBuilder(b.length * 2);
+    for (int i = 0; i < b.length; i++) {
+    sb.append(HEXCHAR[(b[i] & 0xf0) >>> 4]);
+    sb.append(HEXCHAR[b[i] & 0x0f]);
+    }
+    return sb.toString();
+    }
+
+    public static final byte[] toBytes(String s) {
+    byte[] bytes;
+    bytes = new byte[s.length() / 2];
+    for (int i = 0; i < bytes.length; i++) {
+    bytes[i] = (byte) Integer.parseInt(s.substring(2 * i, 2 * i + 2),
+    16);
+    }
+    return bytes;
+    }
+
+    private static char[] HEXCHAR = { '0', '1', '2', '3', '4', '5', '6', '7',
+    '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+    }

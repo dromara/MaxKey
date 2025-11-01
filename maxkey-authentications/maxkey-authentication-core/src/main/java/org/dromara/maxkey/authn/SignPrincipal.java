@@ -37,7 +37,7 @@ public class SignPrincipal implements  UserDetails {
     
     String sessionId;
     
-    int   	twoFactor;
+    int       twoFactor;
     
     List<GrantedAuthority> grantedAuthority;
     
@@ -47,13 +47,13 @@ public class SignPrincipal implements  UserDetails {
     
     boolean roleAdministrators;
     
-	private  boolean accountNonExpired;
+    private  boolean accountNonExpired;
 
-	private  boolean accountNonLocked;
+    private  boolean accountNonLocked;
 
-	private  boolean credentialsNonExpired;
+    private  boolean credentialsNonExpired;
 
-	private  boolean enabled;
+    private  boolean enabled;
 
     /**
      * SigninPrincipal.
@@ -160,22 +160,22 @@ public class SignPrincipal implements  UserDetails {
 
     
     public String getSessionId() {
-		return sessionId;
-	}
+        return sessionId;
+    }
 
-	public void setSessionId(String sessionId) {
-		this.sessionId = sessionId;
-	}
-	
-	public String getInstId() {
-		return instId;
-	}
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
+    
+    public String getInstId() {
+        return instId;
+    }
 
-	public String getUserId() {
-		return userId;
-	}
+    public String getUserId() {
+        return userId;
+    }
 
-	@Override
+    @Override
     public boolean isEnabled() {
         return this.enabled;
     }
@@ -207,45 +207,45 @@ public class SignPrincipal implements  UserDetails {
     }
 
     public int getTwoFactor() {
-		return twoFactor;
-	}
+        return twoFactor;
+    }
 
-	public void setTwoFactor(int twoFactor) {
-		this.twoFactor = twoFactor;
-	}
-	
-	public void clearTwoFactor() {
-		this.twoFactor = 0;
-	}
+    public void setTwoFactor(int twoFactor) {
+        this.twoFactor = twoFactor;
+    }
+    
+    public void clearTwoFactor() {
+        this.twoFactor = 0;
+    }
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Principal [username=");
-		builder.append(getUsername());
-		builder.append(", userInfo=");
-		builder.append(userInfo);
-		builder.append(", userDetails=");
-		builder.append(userDetails);
-		builder.append(", grantedAuthority=");
-		builder.append(grantedAuthority);
-		builder.append(", grantedAuthorityApps=");
-		builder.append(grantedAuthorityApps);
-		builder.append(", authenticated=");
-		builder.append(authenticated);
-		builder.append(", roleAdministrators=");
-		builder.append(roleAdministrators);
-		builder.append(", accountNonExpired=");
-		builder.append(accountNonExpired);
-		builder.append(", accountNonLocked=");
-		builder.append(accountNonLocked);
-		builder.append(", credentialsNonExpired=");
-		builder.append(credentialsNonExpired);
-		builder.append(", enabled=");
-		builder.append(enabled);
-		builder.append("]");
-		return builder.toString();
-	}
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Principal [username=");
+        builder.append(getUsername());
+        builder.append(", userInfo=");
+        builder.append(userInfo);
+        builder.append(", userDetails=");
+        builder.append(userDetails);
+        builder.append(", grantedAuthority=");
+        builder.append(grantedAuthority);
+        builder.append(", grantedAuthorityApps=");
+        builder.append(grantedAuthorityApps);
+        builder.append(", authenticated=");
+        builder.append(authenticated);
+        builder.append(", roleAdministrators=");
+        builder.append(roleAdministrators);
+        builder.append(", accountNonExpired=");
+        builder.append(accountNonExpired);
+        builder.append(", accountNonLocked=");
+        builder.append(accountNonLocked);
+        builder.append(", credentialsNonExpired=");
+        builder.append(credentialsNonExpired);
+        builder.append(", enabled=");
+        builder.append(enabled);
+        builder.append("]");
+        return builder.toString();
+    }
 
 
 

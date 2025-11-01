@@ -22,5 +22,5 @@ import org.dromara.mybatis.jpa.service.IJpaService;
 
 public interface AppsSaml20DetailsService  extends IJpaService<AppsSAML20Details>{
 
-	public  AppsSAML20Details  getAppDetails(String id , boolean cached);
+    public  AppsSAML20Details  getAppDetails(String id , boolean cached);
 }

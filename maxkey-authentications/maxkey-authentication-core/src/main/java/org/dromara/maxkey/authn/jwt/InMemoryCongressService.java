@@ -28,38 +28,38 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 public class InMemoryCongressService implements CongressService{
     private static final Logger logger = LoggerFactory.getLogger(InMemoryCongressService.class);
 
-	protected  static  Cache<String, AuthJwt> congressStore = 
-        	        Caffeine.newBuilder()
-        	            .expireAfterWrite(3, TimeUnit.MINUTES)
-        	            .maximumSize(200000)
-        	            .build();
-	
-	public InMemoryCongressService() {
+    protected  static  Cache<String, AuthJwt> congressStore = 
+                    Caffeine.newBuilder()
+                        .expireAfterWrite(3, TimeUnit.MINUTES)
+                        .maximumSize(200000)
+                        .build();
+    
+    public InMemoryCongressService() {
         super();
     }
 
     @Override
-	public void store(String congress, AuthJwt authJwt) {
-    	congressStore.put(congress, authJwt);
-	}
+    public void store(String congress, AuthJwt authJwt) {
+        congressStore.put(congress, authJwt);
+    }
 
-	@Override
-	public AuthJwt remove(String congress) {
-		AuthJwt authJwt = congressStore.getIfPresent(congress);	
-		congressStore.invalidate(congress);
-		return authJwt;
-	}
+    @Override
+    public AuthJwt remove(String congress) {
+        AuthJwt authJwt = congressStore.getIfPresent(congress);    
+        congressStore.invalidate(congress);
+        return authJwt;
+    }
 
     @Override
     public AuthJwt get(String congress) {
-    	return congressStore.getIfPresent(congress); 
+        return congressStore.getIfPresent(congress); 
     }
 
-	@Override
-	public AuthJwt consume(String congress) {
-		AuthJwt authJwt = congressStore.getIfPresent(congress);	
-		congressStore.invalidate(congress);
-		return authJwt;
-	}
+    @Override
+    public AuthJwt consume(String congress) {
+        AuthJwt authJwt = congressStore.getIfPresent(congress);    
+        congressStore.invalidate(congress);
+        return authJwt;
+    }
 
 }

@@ -35,10 +35,10 @@ public class RemeberMe implements Serializable {
     Date expirationTime;
 
     public RemeberMe() {
-		super();
-	}
+        super();
+    }
 
-	public String getId() {
+    public String getId() {
         return id;
     }
 
@@ -47,14 +47,14 @@ public class RemeberMe implements Serializable {
     }
 
     public String getUserId() {
-		return userId;
-	}
+        return userId;
+    }
 
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
-	public String getUsername() {
+    public String getUsername() {
         return username;
     }
 
@@ -63,35 +63,35 @@ public class RemeberMe implements Serializable {
     }
 
     public Date getLastLoginTime() {
-		return lastLoginTime;
-	}
+        return lastLoginTime;
+    }
 
-	public void setLastLoginTime(Date lastLoginTime) {
-		this.lastLoginTime = lastLoginTime;
-	}
+    public void setLastLoginTime(Date lastLoginTime) {
+        this.lastLoginTime = lastLoginTime;
+    }
 
-	public Date getExpirationTime() {
-		return expirationTime;
-	}
+    public Date getExpirationTime() {
+        return expirationTime;
+    }
 
-	public void setExpirationTime(Date expirationTime) {
-		this.expirationTime = expirationTime;
-	}
+    public void setExpirationTime(Date expirationTime) {
+        this.expirationTime = expirationTime;
+    }
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("RemeberMe [id=");
-		builder.append(id);
-		builder.append(", userId=");
-		builder.append(userId);
-		builder.append(", username=");
-		builder.append(username);
-		builder.append(", lastLoginTime=");
-		builder.append(lastLoginTime);
-		builder.append(", expirationTime=");
-		builder.append(expirationTime);
-		builder.append("]");
-		return builder.toString();
-	}
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("RemeberMe [id=");
+        builder.append(id);
+        builder.append(", userId=");
+        builder.append(userId);
+        builder.append(", username=");
+        builder.append(username);
+        builder.append(", lastLoginTime=");
+        builder.append(lastLoginTime);
+        builder.append(", expirationTime=");
+        builder.append(expirationTime);
+        builder.append("]");
+        return builder.toString();
+    }
 }

@@ -27,14 +27,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ScimSearchResult <T>{
 
-	public static class Constants{
-		public static final String FILTER		=	"filter";
-		public static final String SORTBY		=	"sortBy";
-		public static final String COUNT		=	"count";
-		public static final String STARTINDEX	=	"startIndex";
-		
-		
-	}
+    public static class Constants{
+        public static final String FILTER        =    "filter";
+        public static final String SORTBY        =    "sortBy";
+        public static final String COUNT        =    "count";
+        public static final String STARTINDEX    =    "startIndex";
+        
+        
+    }
     public static final String SCHEMA = "urn:ietf:params:scim:api:messages:2.0:ListResponse";
     public static final int MAX_RESULTS = 100;
     private long totalResults;

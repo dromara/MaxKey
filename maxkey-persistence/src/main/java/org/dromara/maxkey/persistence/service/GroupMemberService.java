@@ -27,14 +27,14 @@ import org.dromara.mybatis.jpa.entity.JpaPageResults;
 
 public interface GroupMemberService  extends IJpaService<GroupMember>{
 
-	public int addDynamicMember(Groups dynamicGroup) ;
-	
-	public int deleteDynamicMember(Groups dynamicGroup) ;
-	
-	public int deleteByGroupId(String groupId);
-	
-	public List<UserInfo> queryMemberByGroupId(String groupId);
-	
-	public JpaPageResults<Groups> noMember(GroupMember entity) ;
-	
+    public int addDynamicMember(Groups dynamicGroup) ;
+    
+    public int deleteDynamicMember(Groups dynamicGroup) ;
+    
+    public int deleteByGroupId(String groupId);
+    
+    public List<UserInfo> queryMemberByGroupId(String groupId);
+    
+    public JpaPageResults<Groups> noMember(GroupMember entity) ;
+    
 }

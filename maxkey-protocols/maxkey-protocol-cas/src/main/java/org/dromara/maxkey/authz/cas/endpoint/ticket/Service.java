@@ -31,7 +31,7 @@ package org.dromara.maxkey.authz.cas.endpoint.ticket;
  * </p>
  */
 public interface Service {
-	 String getId();
+     String getId();
 
     boolean matches(Service service);
 }

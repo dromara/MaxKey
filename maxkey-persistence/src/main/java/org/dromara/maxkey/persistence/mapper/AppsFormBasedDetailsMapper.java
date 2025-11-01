@@ -28,6 +28,6 @@ import org.dromara.mybatis.jpa.IJpaMapper;
  *
  */
 public  interface AppsFormBasedDetailsMapper extends IJpaMapper<AppsFormBasedDetails> {
-	
-	public  AppsFormBasedDetails  getAppDetails(String id) ;
+    
+    public  AppsFormBasedDetails  getAppDetails(String id) ;
 }

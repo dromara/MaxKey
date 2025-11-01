@@ -22,9 +22,9 @@ import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.mybatis.jpa.service.IJpaService;
 
 public interface HistorySystemLogsService  extends IJpaService<HistorySystemLogs>{
-	
-	public void insert(String topic,Object entity,String action,String result,UserInfo operator) ;
-	
-	public void insert(String topic,String message,String action,String result,UserInfo operator,Object entity) ;
-	
+    
+    public void insert(String topic,Object entity,String action,String result,UserInfo operator) ;
+    
+    public void insert(String topic,String message,String action,String result,UserInfo operator,Object entity) ;
+    
 }

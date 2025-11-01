@@ -36,26 +36,26 @@ import org.lionsoul.ip2region.xdb.Searcher;
  *
  */
 public class Ip2regionV2 extends AbstractIpLocation implements IpLocation{
-	
-	Searcher searcher;;
-	
-	public Ip2regionV2(Searcher searcher) {
-		this.searcher = searcher;
-	}
+    
+    Searcher searcher;;
+    
+    public Ip2regionV2(Searcher searcher) {
+        this.searcher = searcher;
+    }
 
-	@Override
-	public Region region(String ipAddress) {
-		try {
-			String regionAddr = searcher.search(ipAddress);
-			if(regionAddr.indexOf("内网IP")>-1) {
-				return new Region("内网IP");
-			}
-			String[] regionAddrs =regionAddr.split("\\|");
-			return new Region(regionAddrs[0],regionAddrs[2],regionAddrs[3],regionAddrs[0]+regionAddrs[2]+regionAddrs[3]);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-	
+    @Override
+    public Region region(String ipAddress) {
+        try {
+            String regionAddr = searcher.search(ipAddress);
+            if(regionAddr.indexOf("内网IP")>-1) {
+                return new Region("内网IP");
+            }
+            String[] regionAddrs =regionAddr.split("\\|");
+            return new Region(regionAddrs[0],regionAddrs[2],regionAddrs[3],regionAddrs[0]+regionAddrs[2]+regionAddrs[3]);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
 }

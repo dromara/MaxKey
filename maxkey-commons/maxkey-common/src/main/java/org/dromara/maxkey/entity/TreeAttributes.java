@@ -26,43 +26,43 @@ import java.util.ArrayList;
  */
 public class TreeAttributes {
 
-	TreeNode rootNode;
+    TreeNode rootNode;
 
-	int nodeCount;
+    int nodeCount;
 
-	ArrayList<TreeNode> nodes = new ArrayList<TreeNode>();
+    ArrayList<TreeNode> nodes = new ArrayList<TreeNode>();
 
-	public ArrayList<TreeNode> getNodes() {
-		return nodes;
-	}
+    public ArrayList<TreeNode> getNodes() {
+        return nodes;
+    }
 
-	public void setNodes(ArrayList<TreeNode> nodes) {
-		this.nodes = nodes;
-	}
+    public void setNodes(ArrayList<TreeNode> nodes) {
+        this.nodes = nodes;
+    }
 
-	public TreeNode getRootNode() {
-		return rootNode;
-	}
+    public TreeNode getRootNode() {
+        return rootNode;
+    }
 
-	public void setRootNode(TreeNode rootNode) {
-		this.rootNode = rootNode;
-	}
+    public void setRootNode(TreeNode rootNode) {
+        this.rootNode = rootNode;
+    }
 
-	public int getNodeCount() {
-		return nodeCount;
-	}
+    public int getNodeCount() {
+        return nodeCount;
+    }
 
-	public void setNodeCount(int nodeCount) {
-		this.nodeCount = nodeCount;
-	}
+    public void setNodeCount(int nodeCount) {
+        this.nodeCount = nodeCount;
+    }
 
-	/**
-	 * 新增节点到列表
-	 * 
-	 * @param treeNode
-	 */
-	public void addNode(TreeNode treeNode) {
-		this.nodes.add(treeNode);
-	}
+    /**
+     * 新增节点到列表
+     * 
+     * @param treeNode
+     */
+    public void addNode(TreeNode treeNode) {
+        this.nodes.add(treeNode);
+    }
 
 }

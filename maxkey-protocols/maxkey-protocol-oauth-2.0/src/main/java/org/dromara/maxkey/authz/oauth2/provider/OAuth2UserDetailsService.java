@@ -32,32 +32,32 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
  * 
  */
 public class OAuth2UserDetailsService implements UserDetailsService {
-	 private static final Logger _logger = 
-	            LoggerFactory.getLogger(OAuth2UserDetailsService.class);
-	
+     private static final Logger _logger = 
+                LoggerFactory.getLogger(OAuth2UserDetailsService.class);
+    
     LoginService loginRepository;
-	
+    
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		UserInfo userInfo;
-		try {
-		    userInfo = loginRepository.find(username, "");
-		} catch (NoSuchClientException e) {
-			throw new UsernameNotFoundException(e.getMessage(), e);
-		}
-		
-		String onlineTickitId = WebConstants.ONLINE_TICKET_PREFIX + "-" + java.util.UUID.randomUUID().toString().toLowerCase();
-		
-		SignPrincipal principal = new SignPrincipal(userInfo);
-		Session onlineTicket = new Session(onlineTickitId);
-		//set OnlineTicket
-		principal.setSessionId(onlineTicket.getId());
+        UserInfo userInfo;
+        try {
+            userInfo = loginRepository.find(username, "");
+        } catch (NoSuchClientException e) {
+            throw new UsernameNotFoundException(e.getMessage(), e);
+        }
+        
+        String onlineTickitId = WebConstants.ONLINE_TICKET_PREFIX + "-" + java.util.UUID.randomUUID().toString().toLowerCase();
+        
+        SignPrincipal principal = new SignPrincipal(userInfo);
+        Session onlineTicket = new Session(onlineTickitId);
+        //set OnlineTicket
+        principal.setSessionId(onlineTicket.getId());
         
         List<GrantedAuthority> grantedAuthoritys = loginRepository.grantAuthority(userInfo);
         principal.setAuthenticated(true);
         
         for(GrantedAuthority administratorsAuthority : AbstractAuthenticationProvider.grantedAdministratorsAuthoritys) {
             if(grantedAuthoritys.contains(administratorsAuthority)) {
-            	principal.setRoleAdministrators(true);
+                principal.setRoleAdministrators(true);
                 _logger.trace("ROLE ADMINISTRATORS Authentication .");
             }
         }
@@ -65,12 +65,12 @@ public class OAuth2UserDetailsService implements UserDetailsService {
         
         principal.setGrantedAuthorityApps(grantedAuthoritys);
         
-		return principal;
-	}
+        return principal;
+    }
 
-	public void setLoginRepository(LoginService loginRepository) {
-		this.loginRepository = loginRepository;
-	}
+    public void setLoginRepository(LoginService loginRepository) {
+        this.loginRepository = loginRepository;
+    }
 
     
 }

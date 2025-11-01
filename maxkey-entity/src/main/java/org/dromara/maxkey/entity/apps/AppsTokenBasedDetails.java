@@ -35,39 +35,39 @@ import jakarta.persistence.Table;
 @Table(name = "MXK_APPS_TOKEN_BASED_DETAILS") 
 public class AppsTokenBasedDetails  extends Apps  implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -1717427271305620545L;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -1717427271305620545L;
 
-	@Id
-	@Column
-	@GeneratedValue
-	protected String id;
-	/**
-	 * 
-	 */
-	@Column
-	private String redirectUri;
-	//
-	@Column
-	private String tokenType;
-	@Column
-	private String cookieName;
-	@Column
-	private String algorithm;
-	@Column
-	private String algorithmKey;
-	@Column
-	private Integer expires;
-	@Column
-	private String instId;
+    @Id
+    @Column
+    @GeneratedValue
+    protected String id;
+    /**
+     * 
+     */
+    @Column
+    private String redirectUri;
+    //
+    @Column
+    private String tokenType;
+    @Column
+    private String cookieName;
+    @Column
+    private String algorithm;
+    @Column
+    private String algorithmKey;
+    @Column
+    private Integer expires;
+    @Column
+    private String instId;
 
-	private String instName;	
-	
-	public AppsTokenBasedDetails() {
-		super();
-	}
+    private String instName;    
+    
+    public AppsTokenBasedDetails() {
+        super();
+    }
 
 
     public String getId() {
@@ -141,26 +141,26 @@ public class AppsTokenBasedDetails  extends Apps  implements Serializable {
 
 
     public String getInstId() {
-		return instId;
-	}
+        return instId;
+    }
 
 
-	public void setInstId(String instId) {
-		this.instId = instId;
-	}
+    public void setInstId(String instId) {
+        this.instId = instId;
+    }
 
 
-	public String getInstName() {
-		return instName;
-	}
+    public String getInstName() {
+        return instName;
+    }
 
 
-	public void setInstName(String instName) {
-		this.instName = instName;
-	}
+    public void setInstName(String instName) {
+        this.instName = instName;
+    }
 
 
-	@Override
+    @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("AppsTokenBasedDetails [id=");

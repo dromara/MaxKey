@@ -24,14 +24,14 @@ import org.dromara.mybatis.jpa.service.IJpaService;
 
 public interface GroupsService  extends IJpaService<Groups>{
 
-	public List<Groups> queryDynamicGroups(Groups groups);
-	
-	public boolean deleteById(String groupId) ;
-	
-	public List<Groups> queryByUserId(String userId);
-	
-	public void refreshDynamicGroups(Groups dynamicGroup);
-	
-	public void refreshAllDynamicGroups();
+    public List<Groups> queryDynamicGroups(Groups groups);
+    
+    public boolean deleteById(String groupId) ;
+    
+    public List<Groups> queryByUserId(String userId);
+    
+    public void refreshDynamicGroups(Groups dynamicGroup);
+    
+    public void refreshAllDynamicGroups();
 
 }

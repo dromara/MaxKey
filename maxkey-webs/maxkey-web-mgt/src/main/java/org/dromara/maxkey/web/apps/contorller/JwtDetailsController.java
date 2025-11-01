@@ -41,66 +41,66 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value={"/apps/jwt"})
 public class JwtDetailsController  extends BaseAppContorller {
-	static final  Logger logger = LoggerFactory.getLogger(JwtDetailsController.class);
-	
-	@Autowired
-	AppsJwtDetailsService jwtDetailsService;
-	
-	@RequestMapping(value = { "/init" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<?> init() {
-		AppsJwtDetails jwtDetails =new AppsJwtDetails();
-		jwtDetails.setId(jwtDetails.generateId());
-		jwtDetails.setProtocol(ConstsProtocols.JWT);
-		jwtDetails.setSecret(StringGenerator.generateKey(""));
-		jwtDetails.setUserPropertys("userPropertys");
-		return new Message<AppsJwtDetails>(jwtDetails);
-	}
-	
-	@RequestMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<?> get(@PathVariable("id") String id) {
-		AppsJwtDetails jwtDetails=jwtDetailsService.getAppDetails(id , false);
-		decoderSecret(jwtDetails);
-		jwtDetails.transIconBase64();
-		return new Message<AppsJwtDetails>(jwtDetails);
-	}
-	
-	@ResponseBody
-	@RequestMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<?> insert(@RequestBody AppsJwtDetails jwtDetails,@CurrentUser UserInfo currentUser) {
-		logger.debug("-Add  : {}" , jwtDetails);
-		
-		transform(jwtDetails);
-		
-		jwtDetails.setInstId(currentUser.getInstId());
-		if (jwtDetailsService.insert(jwtDetails)&&appsService.insertApp(jwtDetails)) {
-			return new Message<AppsJwtDetails>(Message.SUCCESS);
-		} else {
-			return new Message<AppsJwtDetails>(Message.FAIL);
-		}
-	}
-	
-	@ResponseBody
-	@RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<?> update(@RequestBody AppsJwtDetails jwtDetails,@CurrentUser UserInfo currentUser) {
-		logger.debug("-update  : {}" , jwtDetails);
-		transform(jwtDetails);
-		jwtDetails.setInstId(currentUser.getInstId());
-		if (jwtDetailsService.update(jwtDetails)&&appsService.updateApp(jwtDetails)) {
-		    return new Message<AppsJwtDetails>(Message.SUCCESS);
-		} else {
-			return new Message<AppsJwtDetails>(Message.FAIL);
-		}
-	}
-	
-	@ResponseBody
-	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<?> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
-		logger.debug("-delete  ids : {} " , ids);
-		if (jwtDetailsService.deleteBatch(ids)&&appsService.deleteBatch(ids)) {
-			 return new Message<AppsJwtDetails>(Message.SUCCESS);
-		} else {
-			return new Message<AppsJwtDetails>(Message.FAIL);
-		}
-	}
-	
+    static final  Logger logger = LoggerFactory.getLogger(JwtDetailsController.class);
+    
+    @Autowired
+    AppsJwtDetailsService jwtDetailsService;
+    
+    @RequestMapping(value = { "/init" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public Message<?> init() {
+        AppsJwtDetails jwtDetails =new AppsJwtDetails();
+        jwtDetails.setId(jwtDetails.generateId());
+        jwtDetails.setProtocol(ConstsProtocols.JWT);
+        jwtDetails.setSecret(StringGenerator.generateKey(""));
+        jwtDetails.setUserPropertys("userPropertys");
+        return new Message<AppsJwtDetails>(jwtDetails);
+    }
+    
+    @RequestMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public Message<?> get(@PathVariable("id") String id) {
+        AppsJwtDetails jwtDetails=jwtDetailsService.getAppDetails(id , false);
+        decoderSecret(jwtDetails);
+        jwtDetails.transIconBase64();
+        return new Message<AppsJwtDetails>(jwtDetails);
+    }
+    
+    @ResponseBody
+    @RequestMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public Message<?> insert(@RequestBody AppsJwtDetails jwtDetails,@CurrentUser UserInfo currentUser) {
+        logger.debug("-Add  : {}" , jwtDetails);
+        
+        transform(jwtDetails);
+        
+        jwtDetails.setInstId(currentUser.getInstId());
+        if (jwtDetailsService.insert(jwtDetails)&&appsService.insertApp(jwtDetails)) {
+            return new Message<AppsJwtDetails>(Message.SUCCESS);
+        } else {
+            return new Message<AppsJwtDetails>(Message.FAIL);
+        }
+    }
+    
+    @ResponseBody
+    @RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public Message<?> update(@RequestBody AppsJwtDetails jwtDetails,@CurrentUser UserInfo currentUser) {
+        logger.debug("-update  : {}" , jwtDetails);
+        transform(jwtDetails);
+        jwtDetails.setInstId(currentUser.getInstId());
+        if (jwtDetailsService.update(jwtDetails)&&appsService.updateApp(jwtDetails)) {
+            return new Message<AppsJwtDetails>(Message.SUCCESS);
+        } else {
+            return new Message<AppsJwtDetails>(Message.FAIL);
+        }
+    }
+    
+    @ResponseBody
+    @RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public Message<?> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
+        logger.debug("-delete  ids : {} " , ids);
+        if (jwtDetailsService.deleteBatch(ids)&&appsService.deleteBatch(ids)) {
+             return new Message<AppsJwtDetails>(Message.SUCCESS);
+        } else {
+            return new Message<AppsJwtDetails>(Message.FAIL);
+        }
+    }
+    
 }

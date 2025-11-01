@@ -39,28 +39,28 @@ import jakarta.servlet.http.HttpServletRequest;
 @Controller
 public class AuthorizeProtectedEndpoint{
 
-	@GetMapping("/authz/protected/forward")
-	public ModelAndView forwardProtectedForward(
-			HttpServletRequest request ){
-		String redirectUri=request.getAttribute("redirect_uri").toString();
-		ModelAndView modelAndView=new ModelAndView("authorize/protected/forward");
-		modelAndView.addObject("redirect_uri", redirectUri);
-		return modelAndView;
-	}
-	
-	@GetMapping("/authz/protected")
-	public ModelAndView authorizeProtected(
-			@RequestParam("password") String password,
-			@RequestParam("redirect_uri") String redirectUri,
-			@CurrentUser UserInfo currentUser){
-		if( currentUser.getAppLoginPassword().equals(PasswordReciprocal.getInstance().encode(password))){
-			WebContext.setAttribute(WebConstants.CURRENT_SINGLESIGNON_URI, redirectUri);
-			return WebContext.redirect(redirectUri);
-		}
-		
-		ModelAndView modelAndView=new ModelAndView("authorize/protected/forward");
-		modelAndView.addObject("redirect_uri", redirectUri);
-		return modelAndView;
-	}
-			
+    @GetMapping("/authz/protected/forward")
+    public ModelAndView forwardProtectedForward(
+            HttpServletRequest request ){
+        String redirectUri=request.getAttribute("redirect_uri").toString();
+        ModelAndView modelAndView=new ModelAndView("authorize/protected/forward");
+        modelAndView.addObject("redirect_uri", redirectUri);
+        return modelAndView;
+    }
+    
+    @GetMapping("/authz/protected")
+    public ModelAndView authorizeProtected(
+            @RequestParam("password") String password,
+            @RequestParam("redirect_uri") String redirectUri,
+            @CurrentUser UserInfo currentUser){
+        if( currentUser.getAppLoginPassword().equals(PasswordReciprocal.getInstance().encode(password))){
+            WebContext.setAttribute(WebConstants.CURRENT_SINGLESIGNON_URI, redirectUri);
+            return WebContext.redirect(redirectUri);
+        }
+        
+        ModelAndView modelAndView=new ModelAndView("authorize/protected/forward");
+        modelAndView.addObject("redirect_uri", redirectUri);
+        return modelAndView;
+    }
+            
 }

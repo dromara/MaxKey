@@ -57,10 +57,10 @@ public abstract class AbstractRemeberMeManager {
     // end persist
 
     public String createRemeberMe(Authentication  authentication, 
-    					HttpServletRequest request, HttpServletResponse response) {
+                        HttpServletRequest request, HttpServletResponse response) {
         if (applicationConfig.getLoginConfig().isRemeberMe()) {
-        	SignPrincipal principal = ((SignPrincipal)authentication.getPrincipal());
-    		UserInfo userInfo = principal.getUserInfo();
+            SignPrincipal principal = ((SignPrincipal)authentication.getPrincipal());
+            UserInfo userInfo = principal.getUserInfo();
             _logger.debug("Remeber Me ...");
             RemeberMe remeberMe = new RemeberMe();
             remeberMe.setId(WebContext.genId());
@@ -91,37 +91,37 @@ public abstract class AbstractRemeberMeManager {
     }
     
     public RemeberMe resolve(String rememberMeJwt) throws ParseException {
-    	JWTClaimsSet claims = authTokenService.resolve(rememberMeJwt);
-    	RemeberMe remeberMe = new RemeberMe();
-		remeberMe.setId(claims.getJWTID());
-		remeberMe.setUsername(claims.getSubject());
-		return read(remeberMe);
+        JWTClaimsSet claims = authTokenService.resolve(rememberMeJwt);
+        RemeberMe remeberMe = new RemeberMe();
+        remeberMe.setId(claims.getJWTID());
+        remeberMe.setUsername(claims.getSubject());
+        return read(remeberMe);
     }
     
     public String genRemeberMe(RemeberMe remeberMe ) {
-		_logger.debug("expiration Time : {}" , remeberMe.getExpirationTime());
-		
-		 JWTClaimsSet remeberMeJwtClaims =new  JWTClaimsSet.Builder()
-				.issuer("")
-				.subject(remeberMe.getUsername())
-				.jwtID(remeberMe.getId())
-				.issueTime(remeberMe.getLastLoginTime())
-				.expirationTime(remeberMe.getExpirationTime())
-				.claim("kid", Hmac512Service.MXK_AUTH_JWK)
-				.build();
-		
-		return authTokenService.signedJWT(remeberMeJwtClaims);
-	}
+        _logger.debug("expiration Time : {}" , remeberMe.getExpirationTime());
+        
+         JWTClaimsSet remeberMeJwtClaims =new  JWTClaimsSet.Builder()
+                .issuer("")
+                .subject(remeberMe.getUsername())
+                .jwtID(remeberMe.getId())
+                .issueTime(remeberMe.getLastLoginTime())
+                .expirationTime(remeberMe.getExpirationTime())
+                .claim("kid", Hmac512Service.MXK_AUTH_JWK)
+                .build();
+        
+        return authTokenService.signedJWT(remeberMeJwtClaims);
+    }
 
-	public Integer getValidity() {
-		return validity;
-	}
+    public Integer getValidity() {
+        return validity;
+    }
 
-	public void setValidity(Integer validity) {
-		if(validity != 0 ) {
-			this.validity = validity;
-		}
-	}
+    public void setValidity(Integer validity) {
+        if(validity != 0 ) {
+            this.validity = validity;
+        }
+    }
     
 
 }

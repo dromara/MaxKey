@@ -46,90 +46,90 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value={"/permissions/permissionRole"})
 public class PermissionRoleController {
-	static final Logger _logger = LoggerFactory.getLogger(PermissionRoleController.class);
-	
-	@Autowired
-	PermissionRoleService permissionRoleService;
-	
-	@Autowired
-	HistorySystemLogsService systemLog;
-	
-	@PutMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public  Message<PermissionRole> update(
-			@RequestBody PermissionRole permissionRole,
-			@CurrentUser UserInfo currentUser) {
-		_logger.debug("-update  : {}" , permissionRole);
-		//have
-		PermissionRole queryPermissionRole = 
-				new PermissionRole(
-						permissionRole.getAppId(),
-						permissionRole.getRoleId(),
-						currentUser.getInstId());
-		List<PermissionRole> permissionRolesList = permissionRoleService.queryPermissionRoles(queryPermissionRole);
-		
-		HashMap<String,String >permissionRolesMap =new HashMap<>();
-		for(PermissionRole tempPermissionRole : permissionRolesList) {
-			permissionRolesMap.put(tempPermissionRole.getUniqueId(),tempPermissionRole.getId());
-		}
-		//Maybe insert
-		ArrayList<PermissionRole> newPermissionRolesList =new ArrayList<>();
-		List<String>resourceIds = StrUtils.string2List(permissionRole.getResourceId(), ",");
-		HashMap<String,String >newPermissionRolesMap =new HashMap<>();
-		for(String resourceId : resourceIds) {
-		    PermissionRole newPermissionRole =new PermissionRole(
-		    		WebContext.genId(),
-		    		permissionRole.getAppId(),
-		    		permissionRole.getRoleId(),
+    static final Logger _logger = LoggerFactory.getLogger(PermissionRoleController.class);
+    
+    @Autowired
+    PermissionRoleService permissionRoleService;
+    
+    @Autowired
+    HistorySystemLogsService systemLog;
+    
+    @PutMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public  Message<PermissionRole> update(
+            @RequestBody PermissionRole permissionRole,
+            @CurrentUser UserInfo currentUser) {
+        _logger.debug("-update  : {}" , permissionRole);
+        //have
+        PermissionRole queryPermissionRole = 
+                new PermissionRole(
+                        permissionRole.getAppId(),
+                        permissionRole.getRoleId(),
+                        currentUser.getInstId());
+        List<PermissionRole> permissionRolesList = permissionRoleService.queryPermissionRoles(queryPermissionRole);
+        
+        HashMap<String,String >permissionRolesMap =new HashMap<>();
+        for(PermissionRole tempPermissionRole : permissionRolesList) {
+            permissionRolesMap.put(tempPermissionRole.getUniqueId(),tempPermissionRole.getId());
+        }
+        //Maybe insert
+        ArrayList<PermissionRole> newPermissionRolesList =new ArrayList<>();
+        List<String>resourceIds = StrUtils.string2List(permissionRole.getResourceId(), ",");
+        HashMap<String,String >newPermissionRolesMap =new HashMap<>();
+        for(String resourceId : resourceIds) {
+            PermissionRole newPermissionRole =new PermissionRole(
+                    WebContext.genId(),
+                    permissionRole.getAppId(),
+                    permissionRole.getRoleId(),
                     resourceId,
                     currentUser.getId(),
                     currentUser.getInstId());
-		    newPermissionRole.setId(newPermissionRole.generateId());
-		    newPermissionRolesMap.put(newPermissionRole.getUniqueId(), permissionRole.getAppId());
-		    
-		    if(!permissionRole.getAppId().equalsIgnoreCase(resourceId) &&
-		            !permissionRolesMap.containsKey(newPermissionRole.getUniqueId())) {
-		    	newPermissionRolesList.add(newPermissionRole);
-		    }
-		}
-		
-		//delete 
-		ArrayList<PermissionRole> deletePermissionRolesList =new ArrayList<>();
-		for(PermissionRole tempPermissionRole : permissionRolesList) {
+            newPermissionRole.setId(newPermissionRole.generateId());
+            newPermissionRolesMap.put(newPermissionRole.getUniqueId(), permissionRole.getAppId());
+            
+            if(!permissionRole.getAppId().equalsIgnoreCase(resourceId) &&
+                    !permissionRolesMap.containsKey(newPermissionRole.getUniqueId())) {
+                newPermissionRolesList.add(newPermissionRole);
+            }
+        }
+        
+        //delete 
+        ArrayList<PermissionRole> deletePermissionRolesList =new ArrayList<>();
+        for(PermissionRole tempPermissionRole : permissionRolesList) {
            if(!newPermissionRolesMap.containsKey(tempPermissionRole.getUniqueId())) {
-        	   tempPermissionRole.setInstId(currentUser.getInstId());
-        	   deletePermissionRolesList.add(tempPermissionRole);
+               tempPermissionRole.setInstId(currentUser.getInstId());
+               deletePermissionRolesList.add(tempPermissionRole);
            }
         }
-		if (!deletePermissionRolesList.isEmpty()) {
-			_logger.debug("-remove  : {}" , deletePermissionRolesList);
-			permissionRoleService.deletePermissionRoles(deletePermissionRolesList);
-		}
-		
-		if (!newPermissionRolesList.isEmpty() && permissionRoleService.insertPermissionRoles(newPermissionRolesList)) {
-			_logger.debug("-insert  : {}" ,newPermissionRolesList);
-			return new Message<>(Message.SUCCESS);
-			
-		} else {
-			return new Message<>(Message.SUCCESS);
-		}
-		
-	}
-	
+        if (!deletePermissionRolesList.isEmpty()) {
+            _logger.debug("-remove  : {}" , deletePermissionRolesList);
+            permissionRoleService.deletePermissionRoles(deletePermissionRolesList);
+        }
+        
+        if (!newPermissionRolesList.isEmpty() && permissionRoleService.insertPermissionRoles(newPermissionRolesList)) {
+            _logger.debug("-insert  : {}" ,newPermissionRolesList);
+            return new Message<>(Message.SUCCESS);
+            
+        } else {
+            return new Message<>(Message.SUCCESS);
+        }
+        
+    }
+    
     @GetMapping(value={"/get"}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public  Message<List<PermissionRole>> get(
-    		@ModelAttribute PermissionRole permissionRole,
-    		@CurrentUser UserInfo currentUser) {
+            @ModelAttribute PermissionRole permissionRole,
+            @CurrentUser UserInfo currentUser) {
         _logger.debug("-get  : {}" , permissionRole);
         //have
         PermissionRole queryPermissionRole = 
-        		new PermissionRole(
-        				permissionRole.getAppId(),
-        				permissionRole.getRoleId(),
-        				currentUser.getInstId());
+                new PermissionRole(
+                        permissionRole.getAppId(),
+                        permissionRole.getRoleId(),
+                        currentUser.getInstId());
         List<PermissionRole>permissionRoleList = permissionRoleService.queryPermissionRoles(queryPermissionRole);
         
         return new Message<>(permissionRoleList);
-	}
+    }
 
-	
+    
 }

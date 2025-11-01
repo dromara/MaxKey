@@ -44,10 +44,10 @@ public class PathUtils {
      * PathUtils.
      */
     public PathUtils() {
-    	appPath =System.getProperty("user.dir");
-    	if(StringUtils.isBlank(appPath)) {
-    		appPath = Paths.get("").toAbsolutePath().toString();
-    	}
+        appPath =System.getProperty("user.dir");
+        if(StringUtils.isBlank(appPath)) {
+            appPath = Paths.get("").toAbsolutePath().toString();
+        }
         System.setProperty("APP_PATH", appPath);
         _logger.trace("PathUtils  App   Path  : {} " ,appPath);
     }

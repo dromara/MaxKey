@@ -27,10 +27,10 @@ public class ScimUserOrganization extends ScimMultiValuedAttribute implements Se
     private static final long serialVersionUID = 3201987266085144715L;
 
     public ScimUserOrganization() {
-		super();
-	}
+        super();
+    }
 
-	public ScimUserOrganization(String value, String display, boolean primary) {
+    public ScimUserOrganization(String value, String display, boolean primary) {
         super();
         this.value = value;
         this.display = display;

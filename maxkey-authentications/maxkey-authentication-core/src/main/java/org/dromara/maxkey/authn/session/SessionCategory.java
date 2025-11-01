@@ -18,13 +18,13 @@
 package org.dromara.maxkey.authn.session;
 
 public class SessionCategory {
-	/**
-	 * 认证端
-	 */
-	public static final  int    SIGN = 1;
-	
-	/**
-	 * 管理端
-	 */
-	public static final  int    MGMT = 5;
+    /**
+     * 认证端
+     */
+    public static final  int    SIGN = 1;
+    
+    /**
+     * 管理端
+     */
+    public static final  int    MGMT = 5;
 }

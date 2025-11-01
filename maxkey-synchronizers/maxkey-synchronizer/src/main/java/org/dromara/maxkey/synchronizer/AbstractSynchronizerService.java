@@ -59,7 +59,7 @@ public abstract class AbstractSynchronizerService {
     public HashMap<String,Organizations> loadOrgsByInstId(String instId,String rootOrgId) {
         List<Organizations> orgsList = organizationsService.find("instid = '" + instId + "'");
         if(rootOrgId== null || rootOrgId.equals("")) {
-        	rootOrgId="1";
+            rootOrgId="1";
         }
         
         for(Organizations org : orgsList) {
@@ -83,24 +83,24 @@ public abstract class AbstractSynchronizerService {
     }
     
     public void socialsAssociate(SynchroRelated synchroRelated,String provider) {
-    	SocialsAssociate socialsAssociate =
-    			socialsAssociatesService.findOne("instid = ? and userid = ? and socialuserid = ? and provider = ? ",
-    					new Object[] { 
-    							synchroRelated.getInstId(),
-    							synchroRelated.getObjectId(),
-    							synchroRelated.getOriginId(),
-    							provider 
-    					},
-    					new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,Types.VARCHAR});
-    	if(socialsAssociate == null) {
-    		socialsAssociate = new SocialsAssociate();
-    		socialsAssociate.setUserId(synchroRelated.getObjectId());
-    		socialsAssociate.setUsername(synchroRelated.getObjectName());
-    		socialsAssociate.setInstId(synchroRelated.getInstId());
-    		socialsAssociate.setProvider(provider);
-    		socialsAssociate.setSocialUserId(synchroRelated.getOriginId());
-    		socialsAssociatesService.insert(socialsAssociate);
-    	}
+        SocialsAssociate socialsAssociate =
+                socialsAssociatesService.findOne("instid = ? and userid = ? and socialuserid = ? and provider = ? ",
+                        new Object[] { 
+                                synchroRelated.getInstId(),
+                                synchroRelated.getObjectId(),
+                                synchroRelated.getOriginId(),
+                                provider 
+                        },
+                        new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,Types.VARCHAR});
+        if(socialsAssociate == null) {
+            socialsAssociate = new SocialsAssociate();
+            socialsAssociate.setUserId(synchroRelated.getObjectId());
+            socialsAssociate.setUsername(synchroRelated.getObjectName());
+            socialsAssociate.setInstId(synchroRelated.getInstId());
+            socialsAssociate.setProvider(provider);
+            socialsAssociate.setSocialUserId(synchroRelated.getOriginId());
+            socialsAssociatesService.insert(socialsAssociate);
+        }
     }
     public void push(HashMap<String,Organizations> orgsNamePathMap,
                      List<Organizations> orgsList,
@@ -169,13 +169,13 @@ public abstract class AbstractSynchronizerService {
         this.historySynchronizerService = historySynchronizerService;
     }
 
-	public SynchroRelatedService getSynchroRelatedService() {
-		return synchroRelatedService;
-	}
+    public SynchroRelatedService getSynchroRelatedService() {
+        return synchroRelatedService;
+    }
 
-	public void setSynchroRelatedService(SynchroRelatedService synchroRelatedService) {
-		this.synchroRelatedService = synchroRelatedService;
-	}
+    public void setSynchroRelatedService(SynchroRelatedService synchroRelatedService) {
+        this.synchroRelatedService = synchroRelatedService;
+    }
     
     
 }

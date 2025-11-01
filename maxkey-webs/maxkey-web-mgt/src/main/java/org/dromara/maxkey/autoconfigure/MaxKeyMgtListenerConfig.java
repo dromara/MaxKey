@@ -48,29 +48,29 @@ public class MaxKeyMgtListenerConfig  {
     String sessionListenerAdapter(
             Scheduler scheduler,
             SessionManager sessionManager) throws SchedulerException {
-    	new ScheduleAdapterBuilder()
-    		.setScheduler(scheduler)
-    		.setCron("0 0/10 * * * ?")
-    		.setJobClass(SessionListenerAdapter.class)
-    		.setJobData("sessionManager",sessionManager)
-    		.setJobData("category", SessionCategory.MGMT)
-    		.build();
+        new ScheduleAdapterBuilder()
+            .setScheduler(scheduler)
+            .setCron("0 0/10 * * * ?")
+            .setJobClass(SessionListenerAdapter.class)
+            .setJobData("sessionManager",sessionManager)
+            .setJobData("category", SessionCategory.MGMT)
+            .build();
         logger.debug("Session ListenerAdapter inited .");
-    	return "sessionListenerAdapter";
+        return "sessionListenerAdapter";
     }
 
     @Bean
     String reorgDeptListenerAdapter(
             Scheduler scheduler,
             OrganizationsService organizationsService) throws SchedulerException {
-    	new ScheduleAdapterBuilder()
-			.setScheduler(scheduler)
-			.setCron("0 0/30 * * * ?")
-			.setJobClass(ReorgDeptListenerAdapter.class)
-			.setJobData("organizationsService",organizationsService)
-			.build();
+        new ScheduleAdapterBuilder()
+            .setScheduler(scheduler)
+            .setCron("0 0/30 * * * ?")
+            .setJobClass(ReorgDeptListenerAdapter.class)
+            .setJobData("organizationsService",organizationsService)
+            .build();
         logger.debug("ReorgDept ListenerAdapter inited .");
-    	return "reorgDeptListenerAdapter";
+        return "reorgDeptListenerAdapter";
     }
 
     @Bean
@@ -79,12 +79,12 @@ public class MaxKeyMgtListenerConfig  {
             GroupsService groupsService,
             @Value("${maxkey.job.cron.schedule}") String cronSchedule
     ) throws SchedulerException {
-    	new ScheduleAdapterBuilder()
-			.setScheduler(scheduler)
-			.setCron(cronSchedule)
-			.setJobClass(DynamicGroupsListenerAdapter.class)
-			.setJobData("groupsService",groupsService)
-			.build();
+        new ScheduleAdapterBuilder()
+            .setScheduler(scheduler)
+            .setCron(cronSchedule)
+            .setJobClass(DynamicGroupsListenerAdapter.class)
+            .setJobData("groupsService",groupsService)
+            .build();
 
         logger.debug("DynamicGroups ListenerAdapter inited .");
         return "dynamicGroupsListenerAdapter";
@@ -96,12 +96,12 @@ public class MaxKeyMgtListenerConfig  {
             RolesService rolesService,
             @Value("${maxkey.job.cron.schedule}") String cronSchedule
     ) throws SchedulerException {
-    	new ScheduleAdapterBuilder()
-			.setScheduler(scheduler)
-			.setCron(cronSchedule)
-			.setJobClass(DynamicRolesListenerAdapter.class)
-			.setJobData("rolesService",rolesService)
-			.build();
+        new ScheduleAdapterBuilder()
+            .setScheduler(scheduler)
+            .setCron(cronSchedule)
+            .setJobClass(DynamicRolesListenerAdapter.class)
+            .setJobData("rolesService",rolesService)
+            .build();
 
         logger.debug("Dynamic Roles ListenerAdapter inited .");
         return "dynamicRolesListenerAdapter";
@@ -114,12 +114,12 @@ public class MaxKeyMgtListenerConfig  {
             ApplicationConfig applicationConfig
     ) {
         if(applicationConfig.isProvisionSupport()) {
-	    	ProvisioningRunner runner = new ProvisioningRunner(connectorsService,jdbcTemplate);
-	    	ProvisioningRunnerThread runnerThread = new ProvisioningRunnerThread(runner);
-	    	runnerThread.start();
-	        logger.debug("provisioning Runner Thread .");
+            ProvisioningRunner runner = new ProvisioningRunner(connectorsService,jdbcTemplate);
+            ProvisioningRunnerThread runnerThread = new ProvisioningRunnerThread(runner);
+            runnerThread.start();
+            logger.debug("provisioning Runner Thread .");
         }else {
-        	logger.debug("not need init provisioning Runner Thread .");
+            logger.debug("not need init provisioning Runner Thread .");
         }
         return "provisioningRunnerThread";
     }

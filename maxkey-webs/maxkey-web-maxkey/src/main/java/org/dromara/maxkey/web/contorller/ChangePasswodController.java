@@ -39,49 +39,49 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value={"/users"})
 public class ChangePasswodController {
-	static final Logger logger = LoggerFactory.getLogger(ChangePasswodController.class);
+    static final Logger logger = LoggerFactory.getLogger(ChangePasswodController.class);
 
-	@Autowired
-	UserInfoService userInfoService;
+    @Autowired
+    UserInfoService userInfoService;
 
-	@Autowired
-	HistorySystemLogsService systemLog;
+    @Autowired
+    HistorySystemLogsService systemLog;
 
-	@Autowired
-	CnfPasswordPolicyService passwordPolicyService;
+    @Autowired
+    CnfPasswordPolicyService passwordPolicyService;
 
-	@GetMapping(value={"/passwordpolicy"})
-	public Message<CnfPasswordPolicy> passwordpolicy(@CurrentUser UserInfo currentUser){
-		CnfPasswordPolicy passwordPolicy = passwordPolicyService.get(currentUser.getInstId());
-		//构建密码强度说明
-		passwordPolicyService.buildTipMessage(passwordPolicy);
-		return new Message<>(passwordPolicy);
-	}
+    @GetMapping(value={"/passwordpolicy"})
+    public Message<CnfPasswordPolicy> passwordpolicy(@CurrentUser UserInfo currentUser){
+        CnfPasswordPolicy passwordPolicy = passwordPolicyService.get(currentUser.getInstId());
+        //构建密码强度说明
+        passwordPolicyService.buildTipMessage(passwordPolicy);
+        return new Message<>(passwordPolicy);
+    }
 
-	@PutMapping(value = { "/changePassword" })
-	public Message<ChangePassword> changePasswod(
-			@RequestBody ChangePassword changePassword,
-			@CurrentUser UserInfo currentUser) {
-		if(!currentUser.getId().equals(changePassword.getId())){
-			return null;
-		}
-		changePassword.setUserId(currentUser.getId());
-		changePassword.setUsername(currentUser.getUsername());
-		changePassword.setInstId(currentUser.getInstId());
-		changePassword.setPasswordSetType(ConstsPasswordSetType.PASSWORD_NORMAL);
-		if(userInfoService.changePassword(changePassword)) {
-			systemLog.insert(
-					ConstsEntryType.USERINFO,
-					changePassword,
-					ConstsAct.CHANGE_PASSWORD,
-					ConstsActResult.SUCCESS,
-					currentUser);
-			return new Message<>();
-		}else {
-			String message = (String) WebContext.getAttribute(PasswordPolicyValidatorServiceImpl.PASSWORD_POLICY_VALIDATE_RESULT);
-			logger.info("-message: {}",message);
-			return new Message<>(Message.ERROR,message);
-		}
-	}
+    @PutMapping(value = { "/changePassword" })
+    public Message<ChangePassword> changePasswod(
+            @RequestBody ChangePassword changePassword,
+            @CurrentUser UserInfo currentUser) {
+        if(!currentUser.getId().equals(changePassword.getId())){
+            return null;
+        }
+        changePassword.setUserId(currentUser.getId());
+        changePassword.setUsername(currentUser.getUsername());
+        changePassword.setInstId(currentUser.getInstId());
+        changePassword.setPasswordSetType(ConstsPasswordSetType.PASSWORD_NORMAL);
+        if(userInfoService.changePassword(changePassword)) {
+            systemLog.insert(
+                    ConstsEntryType.USERINFO,
+                    changePassword,
+                    ConstsAct.CHANGE_PASSWORD,
+                    ConstsActResult.SUCCESS,
+                    currentUser);
+            return new Message<>();
+        }else {
+            String message = (String) WebContext.getAttribute(PasswordPolicyValidatorServiceImpl.PASSWORD_POLICY_VALIDATE_RESULT);
+            logger.info("-message: {}",message);
+            return new Message<>(Message.ERROR,message);
+        }
+    }
 
 }

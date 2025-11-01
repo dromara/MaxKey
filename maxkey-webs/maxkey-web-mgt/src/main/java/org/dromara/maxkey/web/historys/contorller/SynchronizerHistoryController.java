@@ -43,28 +43,28 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value={"/historys"})
 public class SynchronizerHistoryController {
-	static final Logger logger = LoggerFactory.getLogger(SynchronizerHistoryController.class);
+    static final Logger logger = LoggerFactory.getLogger(SynchronizerHistoryController.class);
 
-	@Autowired
-	HistorySynchronizerService historySynchronizerService;
-	
-	/**
+    @Autowired
+    HistorySynchronizerService historySynchronizerService;
+    
+    /**
      * @param historySynchronizer
      * @return
      */
     @GetMapping({"/synchronizerHistory/fetch"})
     @ResponseBody
     public Message<?> fetch(
-    			@ModelAttribute("historySynchronizer") HistorySynchronizer historySynchronizer,
-    			@CurrentUser UserInfo currentUser){
-    	logger.debug("historys/synchronizerHistory/fetch/ {}",historySynchronizer);
+                @ModelAttribute("historySynchronizer") HistorySynchronizer historySynchronizer,
+                @CurrentUser UserInfo currentUser){
+        logger.debug("historys/synchronizerHistory/fetch/ {}",historySynchronizer);
         historySynchronizer.setInstId(currentUser.getInstId());
         return new Message<JpaPageResults<HistorySynchronizer>>(
-        		historySynchronizerService.fetchPageResults(historySynchronizer)
-        	);
+                historySynchronizerService.fetchPageResults(historySynchronizer)
+            );
     }
 
-	@InitBinder
+    @InitBinder
     public void initBinder(WebDataBinder binder) {
         SimpleDateFormat dateFormat = new SimpleDateFormat(DateUtils.FORMAT_DATE_HH_MM_SS);
         dateFormat.setLenient(false);  

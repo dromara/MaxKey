@@ -61,80 +61,80 @@ import jakarta.servlet.http.HttpServletResponse;
 @Controller
 public class JwtAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 
-	static final  Logger _logger = LoggerFactory.getLogger(JwtAuthorizeEndpoint.class);
-	
-	@Autowired
-	AppsJwtDetailsService jwtDetailsService;
-	
-	@Operation(summary = "JWT应用ID认证接口", description = "应用ID")
-	@GetMapping("/authz/jwt/{id}")
-	public ModelAndView authorize(
-			HttpServletRequest request,
-			HttpServletResponse response,
-			@PathVariable("id") String id,
-			@CurrentUser UserInfo currentUser){
-		ModelAndView modelAndView=new ModelAndView();
-		Apps  application = getApp(id);
-		AppsJwtDetails jwtDetails = jwtDetailsService.getAppDetails(application.getId() , true);
-		_logger.debug("jwtDetails {}",jwtDetails);
-		jwtDetails.setAdapter(application.getAdapter());
-		jwtDetails.setIsAdapter(application.getIsAdapter());
-		
-		AbstractAuthorizeAdapter adapter;
-		if(ConstsBoolean.isTrue(jwtDetails.getIsAdapter())){
-			Object jwtAdapter = Instance.newInstance(jwtDetails.getAdapter());
-			try {
-				BeanUtils.setProperty(jwtAdapter, "jwtDetails", jwtDetails);
-			} catch (IllegalAccessException | InvocationTargetException e) {
-				_logger.error("setProperty error . ", e);
-			}
-			adapter = (AbstractAuthorizeAdapter)jwtAdapter;
-		}else{
-			adapter =new JwtAdapter(jwtDetails);
-		}
-		
-		adapter.setPrincipal(AuthorizationUtils.getPrincipal());
-		
-		adapter.generateInfo();
-		//sign
-		adapter.sign(null,jwtDetails.getSignatureKey(), jwtDetails.getSignature());
-		//encrypt
-		adapter.encrypt(null, jwtDetails.getAlgorithmKey(), jwtDetails.getAlgorithm());
-		
-		return adapter.authorize(modelAndView);
-	}
+    static final  Logger _logger = LoggerFactory.getLogger(JwtAuthorizeEndpoint.class);
+    
+    @Autowired
+    AppsJwtDetailsService jwtDetailsService;
+    
+    @Operation(summary = "JWT应用ID认证接口", description = "应用ID")
+    @GetMapping("/authz/jwt/{id}")
+    public ModelAndView authorize(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            @PathVariable("id") String id,
+            @CurrentUser UserInfo currentUser){
+        ModelAndView modelAndView=new ModelAndView();
+        Apps  application = getApp(id);
+        AppsJwtDetails jwtDetails = jwtDetailsService.getAppDetails(application.getId() , true);
+        _logger.debug("jwtDetails {}",jwtDetails);
+        jwtDetails.setAdapter(application.getAdapter());
+        jwtDetails.setIsAdapter(application.getIsAdapter());
+        
+        AbstractAuthorizeAdapter adapter;
+        if(ConstsBoolean.isTrue(jwtDetails.getIsAdapter())){
+            Object jwtAdapter = Instance.newInstance(jwtDetails.getAdapter());
+            try {
+                BeanUtils.setProperty(jwtAdapter, "jwtDetails", jwtDetails);
+            } catch (IllegalAccessException | InvocationTargetException e) {
+                _logger.error("setProperty error . ", e);
+            }
+            adapter = (AbstractAuthorizeAdapter)jwtAdapter;
+        }else{
+            adapter =new JwtAdapter(jwtDetails);
+        }
+        
+        adapter.setPrincipal(AuthorizationUtils.getPrincipal());
+        
+        adapter.generateInfo();
+        //sign
+        adapter.sign(null,jwtDetails.getSignatureKey(), jwtDetails.getSignature());
+        //encrypt
+        adapter.encrypt(null, jwtDetails.getAlgorithmKey(), jwtDetails.getAlgorithm());
+        
+        return adapter.authorize(modelAndView);
+    }
 
-	@Operation(summary = "JWT JWK元数据接口", description = "参数mxk_metadata_APPID")
-	@GetMapping(value = "/metadata/jwt/" + WebConstants.MXK_METADATA_PREFIX + "{appid}.{mediaType}")
-	@ResponseBody
-	public String  metadata(HttpServletRequest request,
-			HttpServletResponse response, 
-			@PathVariable("appid") String appId, 
-			@PathVariable("mediaType") String mediaType) {
-		AppsJwtDetails jwtDetails = jwtDetailsService.getAppDetails(appId , true);
-		if(jwtDetails != null) {
-			String jwkSetString = "";
-			if(!jwtDetails.getSignature().equalsIgnoreCase("none")) {
-				jwkSetString = jwtDetails.getSignatureKey();
-			}
-			if(!jwtDetails.getAlgorithm().equalsIgnoreCase("none")) {
-				if(StringUtils.isBlank(jwkSetString)) {
-					jwkSetString = jwtDetails.getAlgorithmKey();
-				}else {
-					jwkSetString = jwkSetString + "," +jwtDetails.getAlgorithmKey();
-				}
-			}
-			 
-			JWKSetKeyStore jwkSetKeyStore = new JWKSetKeyStore("{\"keys\": [" + jwkSetString + "]}");
-			if(StringUtils.isNotBlank(mediaType) 
-					&& mediaType.equalsIgnoreCase("xml")) {
-				response.setContentType(ContentType.APPLICATION_XML_UTF8);
-			}else {
-				response.setContentType(ContentType.APPLICATION_JSON_UTF8);
-			}
-			return jwkSetKeyStore.toString(mediaType);
-			
-		}
-		return appId + " not exist. \n" + WebContext.version();
-	}
+    @Operation(summary = "JWT JWK元数据接口", description = "参数mxk_metadata_APPID")
+    @GetMapping(value = "/metadata/jwt/" + WebConstants.MXK_METADATA_PREFIX + "{appid}.{mediaType}")
+    @ResponseBody
+    public String  metadata(HttpServletRequest request,
+            HttpServletResponse response, 
+            @PathVariable("appid") String appId, 
+            @PathVariable("mediaType") String mediaType) {
+        AppsJwtDetails jwtDetails = jwtDetailsService.getAppDetails(appId , true);
+        if(jwtDetails != null) {
+            String jwkSetString = "";
+            if(!jwtDetails.getSignature().equalsIgnoreCase("none")) {
+                jwkSetString = jwtDetails.getSignatureKey();
+            }
+            if(!jwtDetails.getAlgorithm().equalsIgnoreCase("none")) {
+                if(StringUtils.isBlank(jwkSetString)) {
+                    jwkSetString = jwtDetails.getAlgorithmKey();
+                }else {
+                    jwkSetString = jwkSetString + "," +jwtDetails.getAlgorithmKey();
+                }
+            }
+             
+            JWKSetKeyStore jwkSetKeyStore = new JWKSetKeyStore("{\"keys\": [" + jwkSetString + "]}");
+            if(StringUtils.isNotBlank(mediaType) 
+                    && mediaType.equalsIgnoreCase("xml")) {
+                response.setContentType(ContentType.APPLICATION_XML_UTF8);
+            }else {
+                response.setContentType(ContentType.APPLICATION_JSON_UTF8);
+            }
+            return jwkSetKeyStore.toString(mediaType);
+            
+        }
+        return appId + " not exist. \n" + WebContext.version();
+    }
 }

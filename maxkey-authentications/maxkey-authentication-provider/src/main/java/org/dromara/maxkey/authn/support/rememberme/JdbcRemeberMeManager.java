@@ -48,15 +48,15 @@ public class JdbcRemeberMeManager extends AbstractRemeberMeManager {
     private final JdbcTemplate jdbcTemplate;
 
     public JdbcRemeberMeManager(
-    			JdbcTemplate jdbcTemplate,
-    			ApplicationConfig applicationConfig,
-    			AuthTokenService authTokenService,
-    			int validity) {
+                JdbcTemplate jdbcTemplate,
+                ApplicationConfig applicationConfig,
+                AuthTokenService authTokenService,
+                int validity) {
         this.jdbcTemplate = jdbcTemplate;
         this.applicationConfig = applicationConfig;
         this.authTokenService = authTokenService;
         if(validity != 0) {
-        	this.validity = validity;
+            this.validity = validity;
         }
     }
 
@@ -64,18 +64,18 @@ public class JdbcRemeberMeManager extends AbstractRemeberMeManager {
     public void save(RemeberMe remeberMe) {
         jdbcTemplate.update(DEFAULT_DEFAULT_INSERT_STATEMENT,
                 new Object[] { 
-                			remeberMe.getId(), 
-                			remeberMe.getUserId(),
-                			remeberMe.getUsername(), 
-                			remeberMe.getLastLoginTime(),
-                			remeberMe.getExpirationTime()},
+                            remeberMe.getId(), 
+                            remeberMe.getUserId(),
+                            remeberMe.getUsername(), 
+                            remeberMe.getLastLoginTime(),
+                            remeberMe.getExpirationTime()},
                 new int[] { 
-                			Types.VARCHAR, 
-                			Types.VARCHAR, 
-                			Types.VARCHAR, 
-                			Types.TIMESTAMP,
-                			Types.TIMESTAMP 
-                		});
+                            Types.VARCHAR, 
+                            Types.VARCHAR, 
+                            Types.VARCHAR, 
+                            Types.TIMESTAMP,
+                            Types.TIMESTAMP 
+                        });
     }
 
     @Override
@@ -92,7 +92,7 @@ public class JdbcRemeberMeManager extends AbstractRemeberMeManager {
     public RemeberMe read(RemeberMe remeberMe) {
         List<RemeberMe> listRemeberMe = jdbcTemplate.query(DEFAULT_DEFAULT_SELECT_STATEMENT,
                 new RowMapper<RemeberMe>() {
-        			@Override
+                    @Override
                     public RemeberMe mapRow(ResultSet rs, int rowNum) throws SQLException {
                         RemeberMe remeberMe = new RemeberMe();
                         remeberMe.setId(rs.getString(1));

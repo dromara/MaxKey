@@ -38,7 +38,7 @@ import org.springframework.stereotype.Component;
 @Configuration
 public class ApplicationConfig {
     
-	@Value("${maxkey.server.basedomain}")
+    @Value("${maxkey.server.basedomain}")
     String baseDomainName;
 
     @Value("${maxkey.server.domain}")
@@ -75,8 +75,8 @@ public class ApplicationConfig {
     private boolean noticesVisible;
     
     static String  databaseProduct = ConstsDatabase.MYSQL;
-	    
-	@Autowired
+        
+    @Autowired
     EmailConfig emailConfig;
     
     @Autowired
@@ -139,14 +139,14 @@ public class ApplicationConfig {
     }
 
     public String getFrontendUri() {
-		return frontendUri;
-	}
+        return frontendUri;
+    }
 
-	public void setFrontendUri(String frontendUri) {
-		this.frontendUri = frontendUri;
-	}
+    public void setFrontendUri(String frontendUri) {
+        this.frontendUri = frontendUri;
+    }
 
-	/**
+    /**
      * @return the domainName
      */
     public String getDomainName() {
@@ -194,66 +194,66 @@ public class ApplicationConfig {
     }
 
     public boolean isProvision() {
-		return provision;
-	}
+        return provision;
+    }
 
-	public void setProvision(boolean provision) {
-		this.provision = provision;
-	}
+    public void setProvision(boolean provision) {
+        this.provision = provision;
+    }
 
-	public boolean isProvisionSupport() {
-    	return provision;
-	}
+    public boolean isProvisionSupport() {
+        return provision;
+    }
     
-	public int getPersistence() {
-		return persistence;
-	}
+    public int getPersistence() {
+        return persistence;
+    }
 
-	public void setPersistence(int persistence) {
-		this.persistence = persistence;
-	}
+    public void setPersistence(int persistence) {
+        this.persistence = persistence;
+    }
     
-	public boolean isPersistenceRedis() {
-		return persistence == ConstsPersistence.REDIS;
-	}
-	
-	public boolean isPersistenceInmemory() {
-		return persistence == ConstsPersistence.INMEMORY;
-	}
-	
-	public String getMgtUri() {
-		return mgtUri;
-	}
+    public boolean isPersistenceRedis() {
+        return persistence == ConstsPersistence.REDIS;
+    }
+    
+    public boolean isPersistenceInmemory() {
+        return persistence == ConstsPersistence.INMEMORY;
+    }
+    
+    public String getMgtUri() {
+        return mgtUri;
+    }
 
-	public void setMgtUri(String mgtUri) {
-		this.mgtUri = mgtUri;
-	}
+    public void setMgtUri(String mgtUri) {
+        this.mgtUri = mgtUri;
+    }
 
-	public String getAuthzUri() {
-		return authzUri;
-	}
+    public String getAuthzUri() {
+        return authzUri;
+    }
 
-	public void setAuthzUri(String authzUri) {
-		this.authzUri = authzUri;
-	}
+    public void setAuthzUri(String authzUri) {
+        this.authzUri = authzUri;
+    }
 
-	public boolean isNoticesVisible() {
-		return noticesVisible;
-	}
+    public boolean isNoticesVisible() {
+        return noticesVisible;
+    }
 
-	public void setNoticesVisible(boolean noticesVisible) {
-		this.noticesVisible = noticesVisible;
-	}
+    public void setNoticesVisible(boolean noticesVisible) {
+        this.noticesVisible = noticesVisible;
+    }
 
-	public static String getDatabaseProduct() {
-		return databaseProduct;
-	}
+    public static String getDatabaseProduct() {
+        return databaseProduct;
+    }
 
-	public static void setDatabaseProduct(String databaseProduct) {
-		ApplicationConfig.databaseProduct = databaseProduct;
-	}
+    public static void setDatabaseProduct(String databaseProduct) {
+        ApplicationConfig.databaseProduct = databaseProduct;
+    }
 
-	@Override
+    @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("ApplicationConfig [emailConfig=");

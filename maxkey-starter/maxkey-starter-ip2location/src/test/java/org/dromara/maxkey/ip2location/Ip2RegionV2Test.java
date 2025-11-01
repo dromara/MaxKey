@@ -24,10 +24,10 @@ import org.springframework.util.StreamUtils;
 
 public class Ip2RegionV2Test {
 
-	public static void main(String[] args) throws Exception {
-		// TODO Auto-generated method stub
-		String ip ="101.227.131.220";
-		ClassPathResource resource = new ClassPathResource("/ip2region/ip2region.xdb");
+    public static void main(String[] args) throws Exception {
+        // TODO Auto-generated method stub
+        String ip ="101.227.131.220";
+        ClassPathResource resource = new ClassPathResource("/ip2region/ip2region.xdb");
         byte[] dbBinStr = StreamUtils.copyToByteArray(resource.getInputStream());
         System.out.println(dbBinStr.length);
         //_logger.debug("ip2region length {}",dbBinStr.length);
@@ -36,5 +36,5 @@ public class Ip2RegionV2Test {
         String region = ipRegionV2OffLine.region(ip).toString();
         System.out.println(region);
 
-	}
+    }
 }

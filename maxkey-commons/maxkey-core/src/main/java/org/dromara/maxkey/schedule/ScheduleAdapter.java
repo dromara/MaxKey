@@ -21,27 +21,27 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ScheduleAdapter {
-	private static final  Logger _logger = LoggerFactory.getLogger(ScheduleAdapter.class);
-	
-	JobExecutionContext context;
-	
-	protected int jobStatus = JOBSTATUS.STOP;
-	
+    private static final  Logger _logger = LoggerFactory.getLogger(ScheduleAdapter.class);
+    
+    JobExecutionContext context;
+    
+    protected int jobStatus = JOBSTATUS.STOP;
+    
     public static final  class JOBSTATUS{
-        public static final int STOP 		= 0;
-        public static final int RUNNING 	= 1;
-        public static final int ERROR 		= 2;
-        public static final int FINISHED 	= 3;
+        public static final int STOP         = 0;
+        public static final int RUNNING     = 1;
+        public static final int ERROR         = 2;
+        public static final int FINISHED     = 3;
     }
     
     protected void init(JobExecutionContext context){
-    	this.context = context;
+        this.context = context;
     }
     
     @SuppressWarnings("unchecked")
-	public <T> T getParameter(String name, Class<T> requiredType) {
-    	_logger.trace("requiredType {}",requiredType);
-    	return (T) context.getMergedJobDataMap().get(name);
+    public <T> T getParameter(String name, Class<T> requiredType) {
+        _logger.trace("requiredType {}",requiredType);
+        return (T) context.getMergedJobDataMap().get(name);
     }
     
 }

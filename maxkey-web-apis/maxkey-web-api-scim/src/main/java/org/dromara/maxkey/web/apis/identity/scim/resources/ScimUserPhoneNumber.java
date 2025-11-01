@@ -37,10 +37,10 @@ public class ScimUserPhoneNumber extends ScimMultiValuedAttribute implements Ser
     }
     
     public ScimUserPhoneNumber() {
-		super();
-	}
+        super();
+    }
 
-	public ScimUserPhoneNumber(String value, String type, boolean primary) {
+    public ScimUserPhoneNumber(String value, String type, boolean primary) {
         super();
         this.value = value;
         this.type = type;

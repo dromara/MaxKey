@@ -31,27 +31,27 @@ public class TwoFactorTotpAuthenticationProvider extends AbstractAuthenticationP
     }
  
     public TwoFactorTotpAuthenticationProvider(AbstractAuthenticationRealm authenticationRealm,AbstractOtpAuthn tfaOtpAuthn) {
-    	this.authenticationRealm = authenticationRealm;
-		this.tfaOtpAuthn = tfaOtpAuthn;
-	}
+        this.authenticationRealm = authenticationRealm;
+        this.tfaOtpAuthn = tfaOtpAuthn;
+    }
 
     @Override
-	public Authentication doAuthenticate(LoginCredential credential) {
-    	return null;
+    public Authentication doAuthenticate(LoginCredential credential) {
+        return null;
     }
     
     @Override
-	public Authentication doTwoFactorAuthenticate(LoginCredential credential,UserInfo user) {
-		UsernamePasswordAuthenticationToken authenticationToken = null;
-		logger.debug("loginCredential {}" , credential);
+    public Authentication doTwoFactorAuthenticate(LoginCredential credential,UserInfo user) {
+        UsernamePasswordAuthenticationToken authenticationToken = null;
+        logger.debug("loginCredential {}" , credential);
         try {
-	        //验证码校验
-    		UserInfo userTotp = authenticationRealm.loadUserInfoById(user.getId());
-    		
-	        matches(credential.getOtpCaptcha(),userTotp.getSharedSecret());
-	        
-	        authenticationToken = new UsernamePasswordAuthenticationToken(credential.getUsername(),"TOTP");
-	        
+            //验证码校验
+            UserInfo userTotp = authenticationRealm.loadUserInfoById(user.getId());
+            
+            matches(credential.getOtpCaptcha(),userTotp.getSharedSecret());
+            
+            authenticationToken = new UsernamePasswordAuthenticationToken(credential.getUsername(),"TOTP");
+            
         } catch (AuthenticationException e) {
             logger.error("Failed to authenticate user {} via {}: {}",credential.getPrincipal(),
                                     getProviderName(),

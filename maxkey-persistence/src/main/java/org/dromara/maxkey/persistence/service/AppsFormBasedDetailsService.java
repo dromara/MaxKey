@@ -22,5 +22,5 @@ import org.dromara.mybatis.jpa.service.IJpaService;
 
 public interface AppsFormBasedDetailsService  extends IJpaService<AppsFormBasedDetails>{
 
-	public  AppsFormBasedDetails  getAppDetails(String id,boolean cached) ;
+    public  AppsFormBasedDetails  getAppDetails(String id,boolean cached) ;
 }

@@ -23,12 +23,12 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class LoginConfig {
     
-	@Value("${maxkey.login.captcha:true}")
+    @Value("${maxkey.login.captcha:true}")
     boolean captcha;
-	
-	@Value("${maxkey.login.captcha.type:TEXT}")
+    
+    @Value("${maxkey.login.captcha.type:TEXT}")
     String captchaType;
-	
+    
     @Value("${maxkey.login.mfa:false}")
     boolean mfa;
     
@@ -54,14 +54,14 @@ public class LoginConfig {
     }
 
     public boolean isCaptcha() {
-		return captcha;
-	}
+        return captcha;
+    }
 
-	public void setCaptcha(boolean captcha) {
-		this.captcha = captcha;
-	}
+    public void setCaptcha(boolean captcha) {
+        this.captcha = captcha;
+    }
 
-	public boolean isKerberos() {
+    public boolean isKerberos() {
         return kerberos;
     }
 
@@ -96,42 +96,42 @@ public class LoginConfig {
     }
     
     public String getCasServerUrlPrefix() {
-		return casServerUrlPrefix;
-	}
+        return casServerUrlPrefix;
+    }
 
-	public void setCasServerUrlPrefix(String casServerUrlPrefix) {
-		this.casServerUrlPrefix = casServerUrlPrefix;
-	}
+    public void setCasServerUrlPrefix(String casServerUrlPrefix) {
+        this.casServerUrlPrefix = casServerUrlPrefix;
+    }
 
-	public String getCasService() {
-		return casService;
-	}
+    public String getCasService() {
+        return casService;
+    }
 
-	public void setCasService(String casService) {
-		this.casService = casService;
-	}
+    public void setCasService(String casService) {
+        this.casService = casService;
+    }
 
-	public String getCaptchaType() {
-		return captchaType;
-	}
+    public String getCaptchaType() {
+        return captchaType;
+    }
 
-	public void setCaptchaType(String captchaType) {
-		this.captchaType = captchaType;
-	}
+    public void setCaptchaType(String captchaType) {
+        this.captchaType = captchaType;
+    }
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("LoginConfig [mfa=");
-		builder.append(mfa);
-		builder.append(", kerberos=");
-		builder.append(kerberos);
-		builder.append(", remeberMe=");
-		builder.append(remeberMe);
-		builder.append(", wsFederation=");
-		builder.append(wsFederation);
-		builder.append("]");
-		return builder.toString();
-	}
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("LoginConfig [mfa=");
+        builder.append(mfa);
+        builder.append(", kerberos=");
+        builder.append(kerberos);
+        builder.append(", remeberMe=");
+        builder.append(remeberMe);
+        builder.append(", wsFederation=");
+        builder.append(wsFederation);
+        builder.append("]");
+        return builder.toString();
+    }
 
 }

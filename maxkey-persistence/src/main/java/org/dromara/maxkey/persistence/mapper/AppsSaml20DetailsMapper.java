@@ -28,6 +28,6 @@ import org.dromara.mybatis.jpa.IJpaMapper;
  *
  */
 public  interface AppsSaml20DetailsMapper extends IJpaMapper<AppsSAML20Details> {
-	
-	public  AppsSAML20Details  getAppDetails(String id);
+    
+    public  AppsSAML20Details  getAppDetails(String id);
 }

@@ -27,19 +27,19 @@ import com.maxmind.geoip2.exception.GeoIp2Exception;
 import com.maxmind.geoip2.model.CityResponse;
 
 public class GeoIP2V4  extends AbstractIpLocation implements IpLocation{
-	
-	DatabaseReader databaseReader;
-	
-	public GeoIP2V4(DatabaseReader databaseReader) {
-		this.databaseReader = databaseReader;
-	}
+    
+    DatabaseReader databaseReader;
+    
+    public GeoIP2V4(DatabaseReader databaseReader) {
+        this.databaseReader = databaseReader;
+    }
 
-	@Override
-	public Region region(String ipAddress) {
+    @Override
+    public Region region(String ipAddress) {
         try {
-        	//解析IP地址
-			InetAddress inetAddress = InetAddress.getByName(ipAddress);
-			// 获取查询结果
+            //解析IP地址
+            InetAddress inetAddress = InetAddress.getByName(ipAddress);
+            // 获取查询结果
             CityResponse response = databaseReader.city(inetAddress);
             // 获取国家信息
             String country = response.getCountry().getNames().get("zh-CN");
@@ -48,10 +48,10 @@ public class GeoIP2V4  extends AbstractIpLocation implements IpLocation{
             // 获取城市
             String city = response.getCity().getNames().get("zh-CN");
             return new Region(country , state , city , country +" " + state + " " + city);
-		} catch (IOException | GeoIp2Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
+        } catch (IOException | GeoIp2Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 }

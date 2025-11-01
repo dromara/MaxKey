@@ -43,28 +43,28 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value={"/historys"})
 public class ConnectorHistoryController {
-	static final  Logger logger = LoggerFactory.getLogger(ConnectorHistoryController.class);
+    static final  Logger logger = LoggerFactory.getLogger(ConnectorHistoryController.class);
 
-	@Autowired
-	HistoryConnectorService historyConnectorService;
-	
-	/**
+    @Autowired
+    HistoryConnectorService historyConnectorService;
+    
+    /**
      * @param historySynchronizer
      * @return
      */
     @GetMapping({"/connectorHistory/fetch"})
     @ResponseBody
     public Message<?> fetch(
-    		@ModelAttribute("historyConnector") HistoryConnector historyConnector,
-			@CurrentUser UserInfo currentUser){
-    	logger.debug("historys/historyConnector/fetch/ {}",historyConnector);
+            @ModelAttribute("historyConnector") HistoryConnector historyConnector,
+            @CurrentUser UserInfo currentUser){
+        logger.debug("historys/historyConnector/fetch/ {}",historyConnector);
         historyConnector.setInstId(currentUser.getInstId());
         return new Message<JpaPageResults<HistoryConnector>>(
-        			historyConnectorService.fetchPageResults(historyConnector)
-        		);
+                    historyConnectorService.fetchPageResults(historyConnector)
+                );
     }
 
-	@InitBinder
+    @InitBinder
     public void initBinder(WebDataBinder binder) {
         SimpleDateFormat dateFormat = new SimpleDateFormat(DateUtils.FORMAT_DATE_HH_MM_SS);
         dateFormat.setLenient(false);  

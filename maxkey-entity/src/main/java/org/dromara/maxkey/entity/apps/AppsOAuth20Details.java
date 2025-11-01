@@ -56,29 +56,29 @@ public class AppsOAuth20Details extends Apps  implements Serializable {
 
     // for OpenID Connect
 
-	private String issuer;
-	
-	private String audience;
-	
-	private String algorithm;
-	
-	private String algorithmKey;
-	
-	private String encryptionMethod;
-	
-	private String signature;
-	
-	private String signatureKey;
-	
-	private String subject;
-	
-	private String userInfoResponse;
+    private String issuer;
+    
+    private String audience;
+    
+    private String algorithm;
+    
+    private String algorithmKey;
+    
+    private String encryptionMethod;
+    
+    private String signature;
+    
+    private String signatureKey;
+    
+    private String subject;
+    
+    private String userInfoResponse;
     
     private String pkce;
 
-	private String instId;
+    private String instId;
 
-	private String instName;
+    private String instName;
     /**
      * 
      */
@@ -182,22 +182,22 @@ public class AppsOAuth20Details extends Apps  implements Serializable {
     }
 
     public String getSubject() {
-		return subject;
-	}
+        return subject;
+    }
 
-	public void setSubject(String subject) {
-		this.subject = subject;
-	}
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
 
-	public String getUserInfoResponse() {
-		return userInfoResponse;
-	}
+    public String getUserInfoResponse() {
+        return userInfoResponse;
+    }
 
-	public void setUserInfoResponse(String userInfoResponse) {
-		this.userInfoResponse = userInfoResponse;
-	}
+    public void setUserInfoResponse(String userInfoResponse) {
+        this.userInfoResponse = userInfoResponse;
+    }
 
-	/**
+    /**
      * @param clientId the clientId to set
      */
     public void setClientId(String clientId) {
@@ -318,80 +318,80 @@ public class AppsOAuth20Details extends Apps  implements Serializable {
 
   
     public String getIssuer() {
-		return issuer;
-	}
+        return issuer;
+    }
 
-	public void setIssuer(String issuer) {
-		this.issuer = issuer;
-	}
+    public void setIssuer(String issuer) {
+        this.issuer = issuer;
+    }
 
-	public String getAudience() {
-		return audience;
-	}
+    public String getAudience() {
+        return audience;
+    }
 
-	public void setAudience(String audience) {
-		this.audience = audience;
-	}
+    public void setAudience(String audience) {
+        this.audience = audience;
+    }
 
-	public String getAlgorithm() {
-		return algorithm;
-	}
+    public String getAlgorithm() {
+        return algorithm;
+    }
 
-	public void setAlgorithm(String algorithm) {
-		this.algorithm = algorithm;
-	}
+    public void setAlgorithm(String algorithm) {
+        this.algorithm = algorithm;
+    }
 
-	public String getAlgorithmKey() {
-		return algorithmKey;
-	}
+    public String getAlgorithmKey() {
+        return algorithmKey;
+    }
 
-	public void setAlgorithmKey(String algorithmKey) {
-		this.algorithmKey = algorithmKey;
-	}
+    public void setAlgorithmKey(String algorithmKey) {
+        this.algorithmKey = algorithmKey;
+    }
 
-	public String getEncryptionMethod() {
-		return encryptionMethod;
-	}
+    public String getEncryptionMethod() {
+        return encryptionMethod;
+    }
 
-	public void setEncryptionMethod(String encryptionMethod) {
-		this.encryptionMethod = encryptionMethod;
-	}
+    public void setEncryptionMethod(String encryptionMethod) {
+        this.encryptionMethod = encryptionMethod;
+    }
 
-	public String getSignature() {
-		return signature;
-	}
+    public String getSignature() {
+        return signature;
+    }
 
-	public void setSignature(String signature) {
-		this.signature = signature;
-	}
+    public void setSignature(String signature) {
+        this.signature = signature;
+    }
 
-	public String getSignatureKey() {
-		return signatureKey;
-	}
+    public String getSignatureKey() {
+        return signatureKey;
+    }
 
-	public void setSignatureKey(String signatureKey) {
-		this.signatureKey = signatureKey;
-	}
+    public void setSignatureKey(String signatureKey) {
+        this.signatureKey = signatureKey;
+    }
 
 
 
     public String getInstId() {
-		return instId;
-	}
+        return instId;
+    }
 
-	public void setInstId(String instId) {
-		this.instId = instId;
-	}
+    public void setInstId(String instId) {
+        this.instId = instId;
+    }
 
-	public String getInstName() {
-		return instName;
-	}
+    public String getInstName() {
+        return instName;
+    }
 
-	public void setInstName(String instName) {
-		this.instName = instName;
-	}
+    public void setInstName(String instName) {
+        this.instName = instName;
+    }
 
-	public BaseClientDetails clientDetailsRowMapper() {
+    public BaseClientDetails clientDetailsRowMapper() {
         BaseClientDetails baseClientDetails = new BaseClientDetails(this.getId(), this.getId(), this.getScope(),
                 this.getAuthorizedGrantTypes(), "ROLE_CLIENT, ROLE_TRUSTED_CLIENT", this.getRegisteredRedirectUris());
         baseClientDetails.setAccessTokenValiditySeconds(this.getAccessTokenValiditySeconds());
@@ -420,50 +420,50 @@ public class AppsOAuth20Details extends Apps  implements Serializable {
     }
 
     @Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("AppsOAuth20Details [clientId=");
-		builder.append(clientId);
-		builder.append(", clientSecret=");
-		builder.append(clientSecret);
-		builder.append(", scope=");
-		builder.append(scope);
-		builder.append(", resourceIds=");
-		builder.append(resourceIds);
-		builder.append(", authorizedGrantTypes=");
-		builder.append(authorizedGrantTypes);
-		builder.append(", registeredRedirectUris=");
-		builder.append(registeredRedirectUris);
-		builder.append(", authorities=");
-		builder.append(authorities);
-		builder.append(", accessTokenValiditySeconds=");
-		builder.append(accessTokenValiditySeconds);
-		builder.append(", refreshTokenValiditySeconds=");
-		builder.append(refreshTokenValiditySeconds);
-		builder.append(", approvalPrompt=");
-		builder.append(approvalPrompt);
-		builder.append(", issuer=");
-		builder.append(issuer);
-		builder.append(", audience=");
-		builder.append(audience);
-		builder.append(", algorithm=");
-		builder.append(algorithm);
-		builder.append(", algorithmKey=");
-		builder.append(algorithmKey);
-		builder.append(", encryptionMethod=");
-		builder.append(encryptionMethod);
-		builder.append(", signature=");
-		builder.append(signature);
-		builder.append(", signatureKey=");
-		builder.append(signatureKey);
-		builder.append(", pkce=");
-		builder.append(pkce);
-		builder.append(", instId=");
-		builder.append(instId);
-		builder.append(", instName=");
-		builder.append(instName);
-		builder.append("]");
-		return builder.toString();
-	}
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("AppsOAuth20Details [clientId=");
+        builder.append(clientId);
+        builder.append(", clientSecret=");
+        builder.append(clientSecret);
+        builder.append(", scope=");
+        builder.append(scope);
+        builder.append(", resourceIds=");
+        builder.append(resourceIds);
+        builder.append(", authorizedGrantTypes=");
+        builder.append(authorizedGrantTypes);
+        builder.append(", registeredRedirectUris=");
+        builder.append(registeredRedirectUris);
+        builder.append(", authorities=");
+        builder.append(authorities);
+        builder.append(", accessTokenValiditySeconds=");
+        builder.append(accessTokenValiditySeconds);
+        builder.append(", refreshTokenValiditySeconds=");
+        builder.append(refreshTokenValiditySeconds);
+        builder.append(", approvalPrompt=");
+        builder.append(approvalPrompt);
+        builder.append(", issuer=");
+        builder.append(issuer);
+        builder.append(", audience=");
+        builder.append(audience);
+        builder.append(", algorithm=");
+        builder.append(algorithm);
+        builder.append(", algorithmKey=");
+        builder.append(algorithmKey);
+        builder.append(", encryptionMethod=");
+        builder.append(encryptionMethod);
+        builder.append(", signature=");
+        builder.append(signature);
+        builder.append(", signatureKey=");
+        builder.append(signatureKey);
+        builder.append(", pkce=");
+        builder.append(pkce);
+        builder.append(", instId=");
+        builder.append(instId);
+        builder.append(", instName=");
+        builder.append(instName);
+        builder.append("]");
+        return builder.toString();
+    }
 
 }

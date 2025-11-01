@@ -32,18 +32,18 @@ import org.dromara.maxkey.authz.oauth2.common.util.OAuth2Utils;
 @SuppressWarnings("serial")
 public class InvalidScopeException extends OAuth2Exception {
 
-	public InvalidScopeException(String msg, Set<String> validScope) {
-		this(msg);
-		addAdditionalInformation("scope", OAuth2Utils.formatParameterList(validScope));
-	}
+    public InvalidScopeException(String msg, Set<String> validScope) {
+        this(msg);
+        addAdditionalInformation("scope", OAuth2Utils.formatParameterList(validScope));
+    }
 
-	public InvalidScopeException(String msg) {
-		super(msg);
-	}
+    public InvalidScopeException(String msg) {
+        super(msg);
+    }
 
-	@Override
-	public String getOAuth2ErrorCode() {
-		return "invalid_scope";
-	}
+    @Override
+    public String getOAuth2ErrorCode() {
+        return "invalid_scope";
+    }
 
 }

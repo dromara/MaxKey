@@ -28,10 +28,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class RegisterServiceImpl  extends JpaServiceImpl<RegisterMapper,Register> implements RegisterService{
-	
-	public UserInfo findByEmail(String email){
-		List<UserInfo> listUserInfo=getMapper().findByEmail(email);
-		return listUserInfo.size()>0?listUserInfo.get(0):null;
-	}
-	
+    
+    public UserInfo findByEmail(String email){
+        List<UserInfo> listUserInfo=getMapper().findByEmail(email);
+        return listUserInfo.size()>0?listUserInfo.get(0):null;
+    }
+    
 }

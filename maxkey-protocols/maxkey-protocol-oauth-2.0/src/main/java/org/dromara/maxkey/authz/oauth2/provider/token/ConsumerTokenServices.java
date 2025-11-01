@@ -18,7 +18,7 @@ package org.dromara.maxkey.authz.oauth2.provider.token;
  *
  */
 public interface ConsumerTokenServices {
-	
-	boolean revokeToken(String tokenValue);
+    
+    boolean revokeToken(String tokenValue);
 
 }

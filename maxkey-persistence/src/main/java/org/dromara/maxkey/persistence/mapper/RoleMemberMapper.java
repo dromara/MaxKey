@@ -30,23 +30,23 @@ import org.dromara.mybatis.jpa.IJpaMapper;
  */
 
 public  interface RoleMemberMapper extends IJpaMapper<RoleMember> {
-	
-	public List<RoleMember> memberInRole(RoleMember entity);
-	
-	public List<RoleMember> memberNotInRole(RoleMember entity);
-	
-	public List<RoleMember> memberPostNotInRole(RoleMember entity);
-	
-	public List<Roles> rolesNoMember(RoleMember entity);
-	
-	public int addDynamicRoleMember(Roles dynamicRole);
-	
-	public int deleteDynamicRoleMember(Roles dynamicRole);
-	
-	public int deleteByRoleId(String roleId);
-	
-	public List<UserInfo> queryMemberByRoleId(String roleId);
-	
-	
-	
+    
+    public List<RoleMember> memberInRole(RoleMember entity);
+    
+    public List<RoleMember> memberNotInRole(RoleMember entity);
+    
+    public List<RoleMember> memberPostNotInRole(RoleMember entity);
+    
+    public List<Roles> rolesNoMember(RoleMember entity);
+    
+    public int addDynamicRoleMember(Roles dynamicRole);
+    
+    public int deleteDynamicRoleMember(Roles dynamicRole);
+    
+    public int deleteByRoleId(String roleId);
+    
+    public List<UserInfo> queryMemberByRoleId(String roleId);
+    
+    
+    
 }

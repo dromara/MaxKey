@@ -25,7 +25,7 @@ import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
 public class RedisConnectionFactory {
-	private static final  Logger _logger = LoggerFactory.getLogger(RedisConnectionFactory.class);
+    private static final  Logger _logger = LoggerFactory.getLogger(RedisConnectionFactory.class);
 
     JedisPoolConfig poolConfig;
 
@@ -42,7 +42,7 @@ public class RedisConnectionFactory {
 
     public void initConnectionFactory() {
         if (jedisPool == null) {
-        	_logger.debug("init Jedis Pool .");
+            _logger.debug("init Jedis Pool .");
             try {
                 if (this.hostName == null || hostName.equals("")) {
                     hostName = RedisDefaultConfig.DEFAULT_ADDRESS;
@@ -75,16 +75,16 @@ public class RedisConnectionFactory {
     }
 
     public Jedis open() {
-    	_logger.trace("get jedisPool Resource ...");
-    	Jedis jedis = jedisPool.getResource();
-    	_logger.trace("return jedisPool Resource .");
+        _logger.trace("get jedisPool Resource ...");
+        Jedis jedis = jedisPool.getResource();
+        _logger.trace("return jedisPool Resource .");
         return jedis;
 
     }
 
     public void close(Jedis conn) {
         // jedisPool.returnResource(conn);
-    	_logger.trace("close conn .");
+        _logger.trace("close conn .");
         conn.close();
         _logger.trace("closed conn .");
     }

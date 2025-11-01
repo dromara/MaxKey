@@ -24,10 +24,10 @@ import org.dromara.mybatis.jpa.service.IJpaService;
 
 public interface PermissionService  extends IJpaService<Permission>{
 
-	public boolean insertGroupPrivileges(List<Permission> rolePermissionsList) ;
+    public boolean insertGroupPrivileges(List<Permission> rolePermissionsList) ;
     
-	public boolean deleteGroupPrivileges(List<Permission> rolePermissionsList);
-	
+    public boolean deleteGroupPrivileges(List<Permission> rolePermissionsList);
+    
     public List<Permission> queryGroupPrivileges(Permission rolePermissions);
 
 }

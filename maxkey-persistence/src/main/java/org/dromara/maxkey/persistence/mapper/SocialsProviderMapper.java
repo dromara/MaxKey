@@ -27,5 +27,5 @@ import org.dromara.mybatis.jpa.IJpaMapper;
  */
 public interface SocialsProviderMapper  extends IJpaMapper<SocialsProvider>{
 
-	
+    
 }

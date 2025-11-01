@@ -64,52 +64,52 @@ public class OneTimePasswordController {
 
     @GetMapping(value = {"/view"})
     public Message<TimeBasedDto> view(@CurrentUser UserInfo currentUser) {
-    	UserInfo user = userInfoService.get(currentUser.getId());
-    	String sharedSecret = "";
-    	String qrCode = "";
-    	if(StringUtils.isNotBlank(user.getSharedSecret())) {
-	        sharedSecret = PasswordReciprocal.getInstance().decoder(user.getSharedSecret());
-	    	qrCode = genQRCode(sharedSecret,currentUser.getUsername());
-    	}
+        UserInfo user = userInfoService.get(currentUser.getId());
+        String sharedSecret = "";
+        String qrCode = "";
+        if(StringUtils.isNotBlank(user.getSharedSecret())) {
+            sharedSecret = PasswordReciprocal.getInstance().decoder(user.getSharedSecret());
+            qrCode = genQRCode(sharedSecret,currentUser.getUsername());
+        }
         return new Message<>(
-        		new TimeBasedDto(
-        				user.getDisplayName(),
-        				user.getUsername(),
-        				otpKeyUriFormat.getDigits(),
-        				otpKeyUriFormat.getPeriod(),
-        				sharedSecret,
-        				qrCode,
-        				""
-        		));
+                new TimeBasedDto(
+                        user.getDisplayName(),
+                        user.getUsername(),
+                        otpKeyUriFormat.getDigits(),
+                        otpKeyUriFormat.getPeriod(),
+                        sharedSecret,
+                        qrCode,
+                        ""
+                ));
     }
     
     @GetMapping(value = {"/generate"})
     public Message<TimeBasedDto> generate(@CurrentUser UserInfo currentUser) {
-    	//generate
+        //generate
         byte[] byteSharedSecret = OtpSecret.generate(otpKeyUriFormat.getCrypto());
         String sharedSecret = Base32Utils.encode(byteSharedSecret);
         String qrCode = genQRCode(sharedSecret,currentUser.getUsername());
-    	return new Message<>(
-        		new TimeBasedDto(
-        				currentUser.getDisplayName(),
-        				currentUser.getUsername(),
-        				otpKeyUriFormat.getDigits(),
-        				otpKeyUriFormat.getPeriod(),
-        				sharedSecret,
-        				qrCode,
-        				""
-        		));
+        return new Message<>(
+                new TimeBasedDto(
+                        currentUser.getDisplayName(),
+                        currentUser.getUsername(),
+                        otpKeyUriFormat.getDigits(),
+                        otpKeyUriFormat.getPeriod(),
+                        sharedSecret,
+                        qrCode,
+                        ""
+                ));
     }
     
     @PutMapping(value = {"/update"})
     public Message<String> update(@RequestBody TimeBasedDto timeBasedDto , @CurrentUser UserInfo currentUser) {
         // 从当前用户信息中获取共享密钥
-    	UserInfo user = new UserInfo();
-    	user.setId(currentUser.getId());
-    	user.setSharedSecret(PasswordReciprocal.getInstance().encode(timeBasedDto.sharedSecret()));
+        UserInfo user = new UserInfo();
+        user.setId(currentUser.getId());
+        user.setSharedSecret(PasswordReciprocal.getInstance().encode(timeBasedDto.sharedSecret()));
         // 计算当前时间对应的动态密码
         if (StringUtils.isNotBlank(timeBasedDto.otpCode()) && timeBasedOtpAuthn.validate(user, timeBasedDto.otpCode())) {
-        	userInfoService.updateSharedSecret(user);
+            userInfoService.updateSharedSecret(user);
             return new Message<>(Message.SUCCESS);
         } else {
             return new Message<>(Message.FAIL);
@@ -117,16 +117,16 @@ public class OneTimePasswordController {
     }
 
     public String genQRCode(String sharedSecret,String username) {
-    	otpKeyUriFormat.setSecret(sharedSecret);
+        otpKeyUriFormat.setSecret(sharedSecret);
         String otpauth = otpKeyUriFormat.format(username);
         BufferedImage bufferedImage  =  QRCodeUtils.write2BufferedImage(otpauth, "gif", 300, 300);
-    	return Base64Utils.encodeImage(bufferedImage);
+        return Base64Utils.encodeImage(bufferedImage);
     }
 
     @GetMapping("/verify")
     public Message<String> verify(@RequestParam("otpCode") String otpCode, @CurrentUser UserInfo currentUser) {
         // 从当前用户信息中获取共享密钥
-    	UserInfo user = userInfoService.get(currentUser.getId());
+        UserInfo user = userInfoService.get(currentUser.getId());
         // 计算当前时间对应的动态密码
         boolean validate = timeBasedOtpAuthn.validate(user, otpCode);
         if (validate) {

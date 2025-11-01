@@ -49,107 +49,107 @@ import com.nimbusds.jose.jwk.JWKSet;
 @Service
 public class JWKSetCacheService {
 
-	private static Logger logger = LoggerFactory.getLogger(JWKSetCacheService.class);
+    private static Logger logger = LoggerFactory.getLogger(JWKSetCacheService.class);
 
-	// map of jwk set uri -> signing/validation service built on the keys found in that jwk set
-	private LoadingCache<String, JwtSigningAndValidationService> validators;
+    // map of jwk set uri -> signing/validation service built on the keys found in that jwk set
+    private LoadingCache<String, JwtSigningAndValidationService> validators;
 
-	// map of jwk set uri -> encryption/decryption service built on the keys found in that jwk set
-	private LoadingCache<String, JwtEncryptionAndDecryptionService> encrypters;
+    // map of jwk set uri -> encryption/decryption service built on the keys found in that jwk set
+    private LoadingCache<String, JwtEncryptionAndDecryptionService> encrypters;
 
-	public JWKSetCacheService() {
-		this.validators = CacheBuilder.newBuilder()
-				.expireAfterWrite(1, TimeUnit.HOURS) // expires 1 hour after fetch
-				.maximumSize(100)
-				.build(new JWKSetVerifierFetcher());
-		this.encrypters = CacheBuilder.newBuilder()
-				.expireAfterWrite(1, TimeUnit.HOURS) // expires 1 hour after fetch
-				.maximumSize(100)
-				.build(new JWKSetEncryptorFetcher());
-	}
+    public JWKSetCacheService() {
+        this.validators = CacheBuilder.newBuilder()
+                .expireAfterWrite(1, TimeUnit.HOURS) // expires 1 hour after fetch
+                .maximumSize(100)
+                .build(new JWKSetVerifierFetcher());
+        this.encrypters = CacheBuilder.newBuilder()
+                .expireAfterWrite(1, TimeUnit.HOURS) // expires 1 hour after fetch
+                .maximumSize(100)
+                .build(new JWKSetEncryptorFetcher());
+    }
 
-	/**
-	 * @param jwksUri
-	 * @return
-	 * @throws ExecutionException
-	 * @see com.google.common.cache.Cache#get(java.lang.Object)
-	 */
-	public JwtSigningAndValidationService getValidator(String jwksUri) {
-		try {
-			return validators.get(jwksUri);
-		} catch (UncheckedExecutionException ue) {
-			logger.warn("Couldn't load JWK Set from " + jwksUri, ue);
-			return null;
-		} catch (ExecutionException e) {
-			logger.warn("Couldn't load JWK Set from " + jwksUri, e);
-			return null;
-		}
-	}
+    /**
+     * @param jwksUri
+     * @return
+     * @throws ExecutionException
+     * @see com.google.common.cache.Cache#get(java.lang.Object)
+     */
+    public JwtSigningAndValidationService getValidator(String jwksUri) {
+        try {
+            return validators.get(jwksUri);
+        } catch (UncheckedExecutionException ue) {
+            logger.warn("Couldn't load JWK Set from " + jwksUri, ue);
+            return null;
+        } catch (ExecutionException e) {
+            logger.warn("Couldn't load JWK Set from " + jwksUri, e);
+            return null;
+        }
+    }
 
-	public JwtEncryptionAndDecryptionService getEncrypter(String jwksUri) {
-		try {
-			return encrypters.get(jwksUri);
-		} catch (UncheckedExecutionException ue) {
-			logger.warn("Couldn't load JWK Set from " + jwksUri, ue);
-			return null;
-		} catch (ExecutionException e) {
-			logger.warn("Couldn't load JWK Set from " + jwksUri, e);
-			return null;
-		}
-	}
+    public JwtEncryptionAndDecryptionService getEncrypter(String jwksUri) {
+        try {
+            return encrypters.get(jwksUri);
+        } catch (UncheckedExecutionException ue) {
+            logger.warn("Couldn't load JWK Set from " + jwksUri, ue);
+            return null;
+        } catch (ExecutionException e) {
+            logger.warn("Couldn't load JWK Set from " + jwksUri, e);
+            return null;
+        }
+    }
 
-	/**
-	 * @author jricher
-	 *
-	 */
-	private class JWKSetVerifierFetcher extends CacheLoader<String, JwtSigningAndValidationService> {
-		//private HttpClient httpClient = HttpClientBuilder.create().useSystemProperties().build();
-		//private HttpComponentsClientHttpRequestFactory httpFactory = new HttpComponentsClientHttpRequestFactory(httpClient);
-		private HttpComponentsClientHttpRequestFactory httpFactory = new HttpComponentsClientHttpRequestFactory();
-		private RestTemplate restTemplate = new RestTemplate(httpFactory);
+    /**
+     * @author jricher
+     *
+     */
+    private class JWKSetVerifierFetcher extends CacheLoader<String, JwtSigningAndValidationService> {
+        //private HttpClient httpClient = HttpClientBuilder.create().useSystemProperties().build();
+        //private HttpComponentsClientHttpRequestFactory httpFactory = new HttpComponentsClientHttpRequestFactory(httpClient);
+        private HttpComponentsClientHttpRequestFactory httpFactory = new HttpComponentsClientHttpRequestFactory();
+        private RestTemplate restTemplate = new RestTemplate(httpFactory);
 
-		/**
-		 * Load the JWK Set and build the appropriate signing service.
-		 */
-		@Override
-		public JwtSigningAndValidationService load(String key) throws Exception {
+        /**
+         * Load the JWK Set and build the appropriate signing service.
+         */
+        @Override
+        public JwtSigningAndValidationService load(String key) throws Exception {
 
-			String jsonString = restTemplate.getForObject(key, String.class);
-			JWKSet jwkSet = JWKSet.parse(jsonString);
+            String jsonString = restTemplate.getForObject(key, String.class);
+            JWKSet jwkSet = JWKSet.parse(jsonString);
 
-			JWKSetKeyStore keyStore = new JWKSetKeyStore(jwkSet);
+            JWKSetKeyStore keyStore = new JWKSetKeyStore(jwkSet);
 
-			JwtSigningAndValidationService service = new DefaultJwtSigningAndValidationService(keyStore);
+            JwtSigningAndValidationService service = new DefaultJwtSigningAndValidationService(keyStore);
 
-			return service;
+            return service;
 
-		}
+        }
 
-	}
+    }
 
-	/**
-	 * @author jricher
-	 *
-	 */
-	private class JWKSetEncryptorFetcher extends CacheLoader<String, JwtEncryptionAndDecryptionService> {
-		//private HttpClient httpClient = HttpClientBuilder.create().useSystemProperties().build();
-		//private HttpComponentsClientHttpRequestFactory httpFactory = new HttpComponentsClientHttpRequestFactory(httpClient);
-		private HttpComponentsClientHttpRequestFactory httpFactory = new HttpComponentsClientHttpRequestFactory();
-		private RestTemplate restTemplate = new RestTemplate(httpFactory);
-		/* (non-Javadoc)
-		 * @see com.google.common.cache.CacheLoader#load(java.lang.Object)
-		 */
-		@Override
-		public JwtEncryptionAndDecryptionService load(String key) throws Exception {
-			String jsonString = restTemplate.getForObject(key, String.class);
-			JWKSet jwkSet = JWKSet.parse(jsonString);
+    /**
+     * @author jricher
+     *
+     */
+    private class JWKSetEncryptorFetcher extends CacheLoader<String, JwtEncryptionAndDecryptionService> {
+        //private HttpClient httpClient = HttpClientBuilder.create().useSystemProperties().build();
+        //private HttpComponentsClientHttpRequestFactory httpFactory = new HttpComponentsClientHttpRequestFactory(httpClient);
+        private HttpComponentsClientHttpRequestFactory httpFactory = new HttpComponentsClientHttpRequestFactory();
+        private RestTemplate restTemplate = new RestTemplate(httpFactory);
+        /* (non-Javadoc)
+         * @see com.google.common.cache.CacheLoader#load(java.lang.Object)
+         */
+        @Override
+        public JwtEncryptionAndDecryptionService load(String key) throws Exception {
+            String jsonString = restTemplate.getForObject(key, String.class);
+            JWKSet jwkSet = JWKSet.parse(jsonString);
 
-			JWKSetKeyStore keyStore = new JWKSetKeyStore(jwkSet);
+            JWKSetKeyStore keyStore = new JWKSetKeyStore(jwkSet);
 
-			JwtEncryptionAndDecryptionService service = new DefaultJwtEncryptionAndDecryptionService(keyStore);
+            JwtEncryptionAndDecryptionService service = new DefaultJwtEncryptionAndDecryptionService(keyStore);
 
-			return service;
-		}
-	}
+            return service;
+        }
+    }
 
 }

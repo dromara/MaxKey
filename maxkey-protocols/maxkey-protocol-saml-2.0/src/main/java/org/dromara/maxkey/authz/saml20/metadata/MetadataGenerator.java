@@ -95,95 +95,95 @@ import org.springframework.core.io.FileSystemResource;
 import java.security.KeyStore;
 
 public class MetadataGenerator {
-	private static final  Logger logger = LoggerFactory.getLogger(MetadataGenerator.class);
+    private static final  Logger logger = LoggerFactory.getLogger(MetadataGenerator.class);
 
-	/** Parser manager used to parse XML. */
-	protected static BasicParserPool parser;
+    /** Parser manager used to parse XML. */
+    protected static BasicParserPool parser;
 
-	/** XMLObject builder factory. */
-	protected static XMLObjectBuilderFactory builderFactory;
+    /** XMLObject builder factory. */
+    protected static XMLObjectBuilderFactory builderFactory;
 
-	/** XMLObject marshaller factory. */
-	protected static MarshallerFactory marshallerFactory;
+    /** XMLObject marshaller factory. */
+    protected static MarshallerFactory marshallerFactory;
 
-	/** XMLObject unmarshaller factory. */
-	protected static UnmarshallerFactory unmarshallerFactory;
+    /** XMLObject unmarshaller factory. */
+    protected static UnmarshallerFactory unmarshallerFactory;
 
-	/** Constructor. */
-	public MetadataGenerator() {
-		try {
-			parser = new BasicParserPool();
-			parser.setNamespaceAware(true);
-			DefaultBootstrap.bootstrap();
-			builderFactory = org.opensaml.xml.Configuration.getBuilderFactory();
-			marshallerFactory = org.opensaml.xml.Configuration.getMarshallerFactory();
-			unmarshallerFactory = org.opensaml.xml.Configuration.getUnmarshallerFactory();
-		} catch (ConfigurationException e) {
-			e.printStackTrace();
-		}
+    /** Constructor. */
+    public MetadataGenerator() {
+        try {
+            parser = new BasicParserPool();
+            parser.setNamespaceAware(true);
+            DefaultBootstrap.bootstrap();
+            builderFactory = org.opensaml.xml.Configuration.getBuilderFactory();
+            marshallerFactory = org.opensaml.xml.Configuration.getMarshallerFactory();
+            unmarshallerFactory = org.opensaml.xml.Configuration.getUnmarshallerFactory();
+        } catch (ConfigurationException e) {
+            e.printStackTrace();
+        }
 
-	}
-		
+    }
+        
    public static void main(String args[]) {
-	   MetadataGenerator metadataGenerator=new  MetadataGenerator();
-	   
-	   metadataGenerator.samlmtest();
+       MetadataGenerator metadataGenerator=new  MetadataGenerator();
+       
+       metadataGenerator.samlmtest();
    }
    
    
    @SuppressWarnings({ "unchecked", "rawtypes" })
 public  void samlmtest(){
-	    try {
-	         KeyStoreLoader keyStoreLoader=new  KeyStoreLoader();
-	         keyStoreLoader.setKeystorePassword("secret");
-	         keyStoreLoader.setKeystoreFile(new FileSystemResource("D:/JavaIDE/cert/idp-keystore.jks"));
-	         keyStoreLoader.afterPropertiesSet();
-	         KeyStore trustKeyStore =keyStoreLoader.getKeyStore();
-	         
-	         IssueInstantRule issueInstantRule=new IssueInstantRule(90,300);
-	         ReplayCache replayCache=new ReplayCache(new MapBasedStorageService(),14400000);
-	         MessageReplayRule messageReplayRule=new MessageReplayRule(replayCache);
-	         
-	         TrustResolver trustResolver = new TrustResolver(
-						trustKeyStore,
-						"idp",
-						keyStoreLoader.getKeystorePassword(), issueInstantRule,
-						messageReplayRule,
-						"POST"
-					);
-	         CredentialResolver credentialResolver=(CredentialResolver)trustResolver.getKeyStoreCredentialResolver();
-	         
-	         CriteriaSet criteriaSet = new CriteriaSet();
-	         
-	 		 criteriaSet.add(new EntityIDCriteria("idp"));
-	 		
-	 		 criteriaSet.add(new UsageCriteria(UsageType.SIGNING));
-	 		 Credential signingCredential=null;
-	 		
-	 		try {
-	 			 signingCredential = credentialResolver.resolveSingle(criteriaSet);
-			} catch (SecurityException e) {
-				System.out.println("Credential resolve error : "+ e);
-				throw new Exception(e);
-			}
-	 		
-	        IDPSSODescriptor descriptor = buildIDPSSODescriptor();
+        try {
+             KeyStoreLoader keyStoreLoader=new  KeyStoreLoader();
+             keyStoreLoader.setKeystorePassword("secret");
+             keyStoreLoader.setKeystoreFile(new FileSystemResource("D:/JavaIDE/cert/idp-keystore.jks"));
+             keyStoreLoader.afterPropertiesSet();
+             KeyStore trustKeyStore =keyStoreLoader.getKeyStore();
+             
+             IssueInstantRule issueInstantRule=new IssueInstantRule(90,300);
+             ReplayCache replayCache=new ReplayCache(new MapBasedStorageService(),14400000);
+             MessageReplayRule messageReplayRule=new MessageReplayRule(replayCache);
+             
+             TrustResolver trustResolver = new TrustResolver(
+                        trustKeyStore,
+                        "idp",
+                        keyStoreLoader.getKeystorePassword(), issueInstantRule,
+                        messageReplayRule,
+                        "POST"
+                    );
+             CredentialResolver credentialResolver=(CredentialResolver)trustResolver.getKeyStoreCredentialResolver();
+             
+             CriteriaSet criteriaSet = new CriteriaSet();
+             
+              criteriaSet.add(new EntityIDCriteria("idp"));
+             
+              criteriaSet.add(new UsageCriteria(UsageType.SIGNING));
+              Credential signingCredential=null;
+             
+             try {
+                  signingCredential = credentialResolver.resolveSingle(criteriaSet);
+            } catch (SecurityException e) {
+                System.out.println("Credential resolve error : "+ e);
+                throw new Exception(e);
+            }
+             
+            IDPSSODescriptor descriptor = buildIDPSSODescriptor();
 
-	        descriptor.getSingleSignOnServices().add(getSingleSignOnService("http://sso.maxkey.org/sso",null));
-	        
-	        descriptor.getSingleSignOnServices().add(getSingleSignOnService("http://sso.maxkey.org/sso",SAMLConstants.SAML2_POST_SIMPLE_SIGN_BINDING_URI));
-	        
-	        descriptor.getSingleLogoutServices().add(getSingleLogoutService("http://sso.maxkey.org/slo",null));
-	             
-	        descriptor.getKeyDescriptors().add(generateEncryptionKeyDescriptor(signingCredential));  
-	         
-	        descriptor.getKeyDescriptors().add(generateSignKeyDescriptor(signingCredential));  
-	         
-	        descriptor.getNameIDFormats().add(generateNameIDFormat(NameIDType.TRANSIENT)); 
-	        descriptor.getNameIDFormats().add(generateNameIDFormat(NameIDType.PERSISTENT)); 
-	        descriptor.getNameIDFormats().add(generateNameIDFormat(NameIDType.EMAIL)); 
-	        descriptor.getNameIDFormats().add(generateNameIDFormat(NameIDType.ENTITY));
-	         
+            descriptor.getSingleSignOnServices().add(getSingleSignOnService("http://sso.maxkey.org/sso",null));
+            
+            descriptor.getSingleSignOnServices().add(getSingleSignOnService("http://sso.maxkey.org/sso",SAMLConstants.SAML2_POST_SIMPLE_SIGN_BINDING_URI));
+            
+            descriptor.getSingleLogoutServices().add(getSingleLogoutService("http://sso.maxkey.org/slo",null));
+                 
+            descriptor.getKeyDescriptors().add(generateEncryptionKeyDescriptor(signingCredential));  
+             
+            descriptor.getKeyDescriptors().add(generateSignKeyDescriptor(signingCredential));  
+             
+            descriptor.getNameIDFormats().add(generateNameIDFormat(NameIDType.TRANSIENT)); 
+            descriptor.getNameIDFormats().add(generateNameIDFormat(NameIDType.PERSISTENT)); 
+            descriptor.getNameIDFormats().add(generateNameIDFormat(NameIDType.EMAIL)); 
+            descriptor.getNameIDFormats().add(generateNameIDFormat(NameIDType.ENTITY));
+             
             descriptor.getContactPersons().add(getContactPerson("maxkey","shi","ming","shimingxy@163.com","18724229876",null));
              
             descriptor.setOrganization(getOrganization("maxkey","maxkey","http://sso.maxkey.org"));
@@ -192,21 +192,21 @@ public  void samlmtest(){
             
             EntityDescriptor entityDescriptor=buildEntityDescriptor(entityId,descriptor);
             
-	        String descriptorelementxml=XMLHelper.prettyPrintXML(marshallerMetadata(entityDescriptor));
-	         
-	        System.out.println("descriptor elementxm:\\n");
-	        System.out.println(descriptorelementxml);
-	         
-	        logger.info(descriptorelementxml);
-	      }
-	      catch (Exception e) {
-	                e.printStackTrace();
-	        }
+            String descriptorelementxml=XMLHelper.prettyPrintXML(marshallerMetadata(entityDescriptor));
+             
+            System.out.println("descriptor elementxm:\\n");
+            System.out.println(descriptorelementxml);
+             
+            logger.info(descriptorelementxml);
+          }
+          catch (Exception e) {
+                    e.printStackTrace();
+            }
    }
    
    
    public IDPSSODescriptor buildIDPSSODescriptor(){
-	   IDPSSODescriptor idpSSODescriptor = (IDPSSODescriptor) buildXMLObject(IDPSSODescriptor.DEFAULT_ELEMENT_NAME);
+       IDPSSODescriptor idpSSODescriptor = (IDPSSODescriptor) buildXMLObject(IDPSSODescriptor.DEFAULT_ELEMENT_NAME);
        idpSSODescriptor.addSupportedProtocol(SAMLConstants.SAML20P_NS); 
        return idpSSODescriptor;
    }
@@ -219,35 +219,35 @@ public  void samlmtest(){
        return entityDescriptor;
    }
    
-	public Document marshallerMetadata(EntityDescriptor entityDescriptor) {
-		Document document = null;
-		try {
-			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+    public Document marshallerMetadata(EntityDescriptor entityDescriptor) {
+        Document document = null;
+        try {
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
-			DocumentBuilder documentBuilder = factory.newDocumentBuilder();
+            DocumentBuilder documentBuilder = factory.newDocumentBuilder();
 
-			document = documentBuilder.newDocument();
+            document = documentBuilder.newDocument();
 
-			Marshaller marshaller = marshallerFactory.getMarshaller(entityDescriptor);
-			marshaller.marshall(entityDescriptor, document);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+            Marshaller marshaller = marshallerFactory.getMarshaller(entityDescriptor);
+            marshaller.marshall(entityDescriptor, document);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-		return document;
+        return document;
 
-	}
+    }
    
    public ManageNameIDService getManageNameIDService(String url){
-	   ManageNameIDService manageNameIDService=new ManageNameIDServiceBuilder().buildObject();
-	   manageNameIDService.setLocation(url);
-	   manageNameIDService.setBinding(SAMLConstants.SAML2_POST_BINDING_URI);
-	   return manageNameIDService;
+       ManageNameIDService manageNameIDService=new ManageNameIDServiceBuilder().buildObject();
+       manageNameIDService.setLocation(url);
+       manageNameIDService.setBinding(SAMLConstants.SAML2_POST_BINDING_URI);
+       return manageNameIDService;
    }
    
    public Organization getOrganization(String name,String displayName,String url){
-	   Organization organization=new OrganizationBuilder().buildObject();
-	   
+       Organization organization=new OrganizationBuilder().buildObject();
+       
        OrganizationName organizationName=new OrganizationNameBuilder().buildObject();
        LocalizedString orglocalizedString=new LocalizedString();
        orglocalizedString.setLocalizedString(name);
@@ -255,9 +255,9 @@ public  void samlmtest(){
        organization.getOrganizationNames().add(organizationName);
        
        OrganizationDisplayName organizationDisplayName=new OrganizationDisplayNameBuilder().buildObject();
-	   LocalizedString localizedString=new LocalizedString();
-	   localizedString.setLocalizedString(displayName);
-	   organizationDisplayName.setName(localizedString);
+       LocalizedString localizedString=new LocalizedString();
+       localizedString.setLocalizedString(displayName);
+       organizationDisplayName.setName(localizedString);
        organization.getDisplayNames().add(organizationDisplayName);
        
        OrganizationURL organizationURL=new OrganizationURLBuilder().buildObject();
@@ -270,69 +270,69 @@ public  void samlmtest(){
    }
    
    public ContactPerson getContactPerson(String companyName,String givenName,String surName,String emailAddress,String telephoneNumber,ContactPersonTypeEnumeration contactPersonType){
-  	 ContactPerson contactPerson= (ContactPerson) buildXMLObject(ContactPerson.DEFAULT_ELEMENT_NAME);
-  	 
-  	 contactPerson.setType(contactPersonType);
-  	 
-  	 Company company =new CompanyBuilder ().buildObject();
-  	 company.setName(companyName);
-  	 contactPerson.setCompany(company);
-  	 
-  	 GivenName contactPersonGivenName=(new GivenNameBuilder()).buildObject();
-  	 contactPersonGivenName.setName(givenName);
-  	 contactPerson.setGivenName(contactPersonGivenName);//名
-  	 
-  	 SurName contactPersonSurName =new SurNameBuilder().buildObject();
-  	 contactPersonSurName.setName(surName);
-  	 contactPerson.setSurName(contactPersonSurName);//姓
+       ContactPerson contactPerson= (ContactPerson) buildXMLObject(ContactPerson.DEFAULT_ELEMENT_NAME);
+       
+       contactPerson.setType(contactPersonType);
+       
+       Company company =new CompanyBuilder ().buildObject();
+       company.setName(companyName);
+       contactPerson.setCompany(company);
+       
+       GivenName contactPersonGivenName=(new GivenNameBuilder()).buildObject();
+       contactPersonGivenName.setName(givenName);
+       contactPerson.setGivenName(contactPersonGivenName);//名
+       
+       SurName contactPersonSurName =new SurNameBuilder().buildObject();
+       contactPersonSurName.setName(surName);
+       contactPerson.setSurName(contactPersonSurName);//姓
 
-  	 EmailAddress contactPersonEmailAddress =(new EmailAddressBuilder()).buildObject();
-  	 contactPersonEmailAddress.setAddress(emailAddress);
-  	 contactPerson.getEmailAddresses().add(contactPersonEmailAddress);
-  	 
-  	 TelephoneNumber contactPersonTelephoneNumber=(new TelephoneNumberBuilder()).buildObject();
-  	 contactPersonTelephoneNumber.setNumber(telephoneNumber);
-  	 contactPerson.getTelephoneNumbers().add(contactPersonTelephoneNumber);
-  	 
-  	 return contactPerson;
+       EmailAddress contactPersonEmailAddress =(new EmailAddressBuilder()).buildObject();
+       contactPersonEmailAddress.setAddress(emailAddress);
+       contactPerson.getEmailAddresses().add(contactPersonEmailAddress);
+       
+       TelephoneNumber contactPersonTelephoneNumber=(new TelephoneNumberBuilder()).buildObject();
+       contactPersonTelephoneNumber.setNumber(telephoneNumber);
+       contactPerson.getTelephoneNumbers().add(contactPersonTelephoneNumber);
+       
+       return contactPerson;
    }
    public SingleSignOnService getSingleSignOnService(String location,String binding){
-	   SingleSignOnService singleSignOnService=(SingleSignOnService) buildXMLObject(SingleSignOnService.DEFAULT_ELEMENT_NAME);
-	   if(binding==null){
-		   binding=SAMLConstants.SAML2_POST_BINDING_URI;
-	   }
-	   singleSignOnService.setBinding(binding);
-	   singleSignOnService.setLocation(location);
-	  
-	   return singleSignOnService ;
+       SingleSignOnService singleSignOnService=(SingleSignOnService) buildXMLObject(SingleSignOnService.DEFAULT_ELEMENT_NAME);
+       if(binding==null){
+           binding=SAMLConstants.SAML2_POST_BINDING_URI;
+       }
+       singleSignOnService.setBinding(binding);
+       singleSignOnService.setLocation(location);
+      
+       return singleSignOnService ;
    }
    
    public SingleLogoutService getSingleLogoutService(String location,String binding){
-	   SingleLogoutService singleLogoutService=(SingleLogoutService) buildXMLObject(SingleLogoutService.DEFAULT_ELEMENT_NAME);
-	   if(binding==null){
-		   binding=SAMLConstants.SAML2_REDIRECT_BINDING_URI;
-	   }
-	   singleLogoutService.setBinding(binding);
-  	   singleLogoutService.setLocation(location);
-  	   return singleLogoutService;
+       SingleLogoutService singleLogoutService=(SingleLogoutService) buildXMLObject(SingleLogoutService.DEFAULT_ELEMENT_NAME);
+       if(binding==null){
+           binding=SAMLConstants.SAML2_REDIRECT_BINDING_URI;
+       }
+       singleLogoutService.setBinding(binding);
+         singleLogoutService.setLocation(location);
+         return singleLogoutService;
    }
    
    public NameIDFormat generateNameIDFormat(String nameIDType){
-	   NameIDFormat nameIDFormat =new NameIDFormatBuilder().buildObject();  
+       NameIDFormat nameIDFormat =new NameIDFormatBuilder().buildObject();  
        nameIDFormat.setFormat(nameIDType);  
        return nameIDFormat;
    }
    
    
    public KeyInfoGenerator getKeyInfoGenerator (){
-	   X509KeyInfoGeneratorFactory keyInfoGeneratorFactory = new X509KeyInfoGeneratorFactory();  
-	   keyInfoGeneratorFactory.setEmitEntityCertificate(true);  
-	   KeyInfoGenerator keyInfoGenerator = keyInfoGeneratorFactory.newInstance();  
-	   return keyInfoGenerator;
+       X509KeyInfoGeneratorFactory keyInfoGeneratorFactory = new X509KeyInfoGeneratorFactory();  
+       keyInfoGeneratorFactory.setEmitEntityCertificate(true);  
+       KeyInfoGenerator keyInfoGenerator = keyInfoGeneratorFactory.newInstance();  
+       return keyInfoGenerator;
    }
    
    public KeyDescriptor generateSignKeyDescriptor(Credential signingCredential){
-	   KeyDescriptor signKeyDescriptor = new KeyDescriptorBuilder().buildObject();
+       KeyDescriptor signKeyDescriptor = new KeyDescriptorBuilder().buildObject();
        
        signKeyDescriptor.setUse(UsageType.SIGNING);  //Set usage  
        
@@ -340,25 +340,25 @@ public  void samlmtest(){
        try {  
         signKeyDescriptor.setKeyInfo(getKeyInfoGenerator().generate(signingCredential));  
        } catch (SecurityException e) {  
-    	   logger.error(e.getMessage(), e);  
+           logger.error(e.getMessage(), e);  
        }  
        
        return signKeyDescriptor;
    }
    
    public KeyDescriptor generateEncryptionKeyDescriptor(Credential signingCredential){
-	   KeyDescriptor encryptionKeyDescriptor =  new KeyDescriptorBuilder().buildObject();
-	  
-	   encryptionKeyDescriptor.setUse(UsageType.ENCRYPTION); 
-	   
-	   // Generating key info. The element will contain the public key. The key is used to by the IDP to encrypt data  
-	   try {  
-		   encryptionKeyDescriptor.setKeyInfo(getKeyInfoGenerator().generate(signingCredential));  
-	   } catch (SecurityException e) {  
-		   logger.error(e.getMessage(), e);  
-	   }  
-	   
-	   return encryptionKeyDescriptor;
+       KeyDescriptor encryptionKeyDescriptor =  new KeyDescriptorBuilder().buildObject();
+      
+       encryptionKeyDescriptor.setUse(UsageType.ENCRYPTION); 
+       
+       // Generating key info. The element will contain the public key. The key is used to by the IDP to encrypt data  
+       try {  
+           encryptionKeyDescriptor.setKeyInfo(getKeyInfoGenerator().generate(signingCredential));  
+       } catch (SecurityException e) {  
+           logger.error(e.getMessage(), e);  
+       }  
+       
+       return encryptionKeyDescriptor;
    }
    
    @SuppressWarnings("rawtypes")
@@ -377,12 +377,12 @@ public static XMLObject buildXMLObject(QName objectQName){
 
            Unmarshaller unmarshaller = org.opensaml.xml.Configuration.getUnmarshallerFactory().getUnmarshaller(samlElement);
            if (unmarshaller == null) {
-        	   logger.error("Unable to retrieve unmarshaller by DOM Element");
+               logger.error("Unable to retrieve unmarshaller by DOM Element");
            }
 
            return unmarshaller.unmarshall(samlElement);
        }catch (UnmarshallingException e) {
-    	   logger.error("Unmarshalling failed when parsing doc : " , e);
+           logger.error("Unmarshalling failed when parsing doc : " , e);
        }
 
        return null;
@@ -399,11 +399,11 @@ public static XMLObject buildXMLObject(QName objectQName){
        try {
            generatedDOM = marshaller.marshall(xmlObject, parser.newDocument());
            if(logger.isDebugEnabled()) {
-        	   logger.debug("Marshalled DOM was " + XMLHelper.nodeToString(generatedDOM));
+               logger.debug("Marshalled DOM was " + XMLHelper.nodeToString(generatedDOM));
            }
           // assertXMLEqual(failMessage, expectedDOM, generatedDOM.getOwnerDocument());
        } catch (Exception e) {
-    	   logger.error("Marshalling failed with the following error:", e);
+           logger.error("Marshalling failed with the following error:", e);
        }
        return generatedDOM;
    }

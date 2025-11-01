@@ -37,12 +37,12 @@ public interface AccountsService  extends IJpaService<Accounts>{
    public List<UserInfo> queryUserNotInStrategy(AccountsStrategy strategy);
    
    public long deleteByStrategy(AccountsStrategy strategy) ;
-	
+    
    public List<Accounts> queryByAppIdAndDate(Accounts account) ;
    
    public List<Accounts> queryByAppIdAndAccount(String appId,String relatedUsername);
    
    public String generateAccount(UserInfo  userInfo,AccountsStrategy accountsStrategy) ;
   
-	
+    
 }

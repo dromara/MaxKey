@@ -58,45 +58,45 @@ public class HistorySynchronizer  extends JpaEntity  implements Serializable{
     Date syncTime;
     @Column
     String result;
-	@Column
-	private String instId;
+    @Column
+    private String instId;
 
-	private String instName;
+    private String instName;
     String startDate;
     String endDate;
     
     public HistorySynchronizer(String id, String syncId,  String syncName, String objectId,
-			String objectType, String objectName, String result,String instId) {
-		super();
-		this.id = id;
-		this.syncId = syncId;
-		this.syncName = syncName;
-		this.objectId = objectId;
-		this.objectType = objectType;
-		this.objectName = objectName;
-		this.syncTime = new Date();
-		this.result = result;
-		this.instId = instId;
-	}
+            String objectType, String objectName, String result,String instId) {
+        super();
+        this.id = id;
+        this.syncId = syncId;
+        this.syncName = syncName;
+        this.objectId = objectId;
+        this.objectType = objectType;
+        this.objectName = objectName;
+        this.syncTime = new Date();
+        this.result = result;
+        this.instId = instId;
+    }
     
     
-	public HistorySynchronizer(String id, String syncId, String sessionId, String syncName, String objectId,
-			String objectType, String objectName, String result, String instId) {
-		super();
-		this.id = id;
-		this.syncId = syncId;
-		this.sessionId = sessionId;
-		this.syncName = syncName;
-		this.objectId = objectId;
-		this.objectType = objectType;
-		this.objectName = objectName;
-		this.syncTime = new Date();
-		this.result = result;
-		this.instId = instId;
-	}
+    public HistorySynchronizer(String id, String syncId, String sessionId, String syncName, String objectId,
+            String objectType, String objectName, String result, String instId) {
+        super();
+        this.id = id;
+        this.syncId = syncId;
+        this.sessionId = sessionId;
+        this.syncName = syncName;
+        this.objectId = objectId;
+        this.objectType = objectType;
+        this.objectName = objectName;
+        this.syncTime = new Date();
+        this.result = result;
+        this.instId = instId;
+    }
 
 
-	public String getId() {
+    public String getId() {
         return id;
     }
     public void setId(String id) {
@@ -168,18 +168,18 @@ public class HistorySynchronizer  extends JpaEntity  implements Serializable{
     }
     
     public String getInstId() {
-		return instId;
-	}
-	public void setInstId(String instId) {
-		this.instId = instId;
-	}
-	public String getInstName() {
-		return instName;
-	}
-	public void setInstName(String instName) {
-		this.instName = instName;
-	}
-	@Override
+        return instId;
+    }
+    public void setInstId(String instId) {
+        this.instId = instId;
+    }
+    public String getInstName() {
+        return instName;
+    }
+    public void setInstName(String instName) {
+        this.instName = instName;
+    }
+    @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("HistorySynchronizer [id=");

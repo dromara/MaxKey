@@ -30,65 +30,65 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public class LdapAuthenticationRealm  extends AbstractAuthenticationRealm{
-	private static final  Logger _logger = LoggerFactory.getLogger(LdapAuthenticationRealm.class);
-	
-	@NotNull
+    private static final  Logger _logger = LoggerFactory.getLogger(LdapAuthenticationRealm.class);
+    
+    @NotNull
     @Size(min=1)
     private List<IAuthenticationServer> ldapServers;
-	
-	private boolean ldapSupport;
-	
-	/**
-	 * 
-	 */
-	public LdapAuthenticationRealm() {
-		
-	}
+    
+    private boolean ldapSupport;
+    
+    /**
+     * 
+     */
+    public LdapAuthenticationRealm() {
+        
+    }
 
-	public LdapAuthenticationRealm(boolean ldapSupport) {
-		this.ldapSupport = ldapSupport;
-	}
-	
-	/**
-	 * @param jdbcTemplate
-	 */
-	public LdapAuthenticationRealm(JdbcTemplate jdbcTemplate) {
-		super(jdbcTemplate);
-	}
-	
-	
-	@Override
-	public boolean passwordMatches(UserInfo userInfo, String password) {
-		 boolean isAuthenticated=false;
-		 for (final IAuthenticationServer ldapServer : this.ldapServers) {
-			 String username = userInfo.getUsername();
-			 if(ldapServer.isMapping()) {//if ldap Context accountMapping equals YES 
-				 username = userInfo.getWindowsAccount();
-			 }
+    public LdapAuthenticationRealm(boolean ldapSupport) {
+        this.ldapSupport = ldapSupport;
+    }
+    
+    /**
+     * @param jdbcTemplate
+     */
+    public LdapAuthenticationRealm(JdbcTemplate jdbcTemplate) {
+        super(jdbcTemplate);
+    }
+    
+    
+    @Override
+    public boolean passwordMatches(UserInfo userInfo, String password) {
+         boolean isAuthenticated=false;
+         for (final IAuthenticationServer ldapServer : this.ldapServers) {
+             String username = userInfo.getUsername();
+             if(ldapServer.isMapping()) {//if ldap Context accountMapping equals YES 
+                 username = userInfo.getWindowsAccount();
+             }
             _logger.debug("Attempting to authenticate {} at {}", username, ldapServer);
             try {
-            	isAuthenticated = ldapServer.authenticate(username, password);
+                isAuthenticated = ldapServer.authenticate(username, password);
             }catch(Exception e) {
-            	_logger.debug("Attempting Authenticated fail .");
+                _logger.debug("Attempting Authenticated fail .");
             }
             if (isAuthenticated ) {
-            	return true;
+                return true;
             }
-		 }
-		return false;
-	}
+         }
+        return false;
+    }
 
-	public void setLdapServers(List<IAuthenticationServer> ldapServers) {
-		this.ldapServers = ldapServers;
-	}
+    public void setLdapServers(List<IAuthenticationServer> ldapServers) {
+        this.ldapServers = ldapServers;
+    }
 
-	public boolean isLdapSupport() {
-		return ldapSupport;
-	}
+    public boolean isLdapSupport() {
+        return ldapSupport;
+    }
 
-	public void setLdapSupport(boolean ldapSupport) {
-		this.ldapSupport = ldapSupport;
-	}
+    public void setLdapSupport(boolean ldapSupport) {
+        this.ldapSupport = ldapSupport;
+    }
 
 
 }

@@ -299,11 +299,11 @@ public class MvcAutoConfiguration implements WebMvcConfigurer {
 
     @Bean
     FilterRegistrationBean<Filter> webInstRequestFilter(
-    		InstitutionsService institutionsService,
-    		ApplicationConfig applicationConfig) {
+            InstitutionsService institutionsService,
+            ApplicationConfig applicationConfig) {
         _logger.debug("WebInstRequestFilter init for /* ");
         FilterRegistrationBean<Filter> registrationBean = 
-        		new FilterRegistrationBean<>(new WebInstRequestFilter(institutionsService,applicationConfig));
+                new FilterRegistrationBean<>(new WebInstRequestFilter(institutionsService,applicationConfig));
         registrationBean.addUrlPatterns("/*");
         registrationBean.setName("webInstRequestFilter");
         registrationBean.setOrder(4);

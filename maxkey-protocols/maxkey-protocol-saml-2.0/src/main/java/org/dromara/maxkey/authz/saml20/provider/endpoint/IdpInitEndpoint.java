@@ -52,87 +52,87 @@ import jakarta.servlet.http.HttpServletResponse;
 @Tag(name = "2-2-SAML v2.0 API文档模块")
 @Controller
 public class IdpInitEndpoint {
-	private static final  Logger logger = LoggerFactory.getLogger(IdpInitEndpoint.class);
+    private static final  Logger logger = LoggerFactory.getLogger(IdpInitEndpoint.class);
 
-	private BindingAdapter bindingAdapter;
-	
-	@Autowired
-	@Qualifier("postSimpleSignBindingAdapter")
-	private BindingAdapter postSimpleSignBindingAdapter;
-	
-	@Autowired
-	@Qualifier("postBindingAdapter")
-	private BindingAdapter postBindingAdapter;
-	
-	@Autowired
-	@Qualifier("extractRedirectBindingAdapter")
-	private ExtractBindingAdapter extractRedirectBindingAdapter;
+    private BindingAdapter bindingAdapter;
+    
+    @Autowired
+    @Qualifier("postSimpleSignBindingAdapter")
+    private BindingAdapter postSimpleSignBindingAdapter;
+    
+    @Autowired
+    @Qualifier("postBindingAdapter")
+    private BindingAdapter postBindingAdapter;
+    
+    @Autowired
+    @Qualifier("extractRedirectBindingAdapter")
+    private ExtractBindingAdapter extractRedirectBindingAdapter;
 
-	@Autowired
-	@Qualifier("keyStoreLoader")
-	private KeyStoreLoader keyStoreLoader;
+    @Autowired
+    @Qualifier("keyStoreLoader")
+    private KeyStoreLoader keyStoreLoader;
 
-	@Autowired
-	private AppsSaml20DetailsService saml20DetailsService;
-	
-	/**
-	 * 
-	 * @param request
-	 * @param response
-	 * @param appId
-	 * @return
-	 * @throws Exception
-	 * 
-	 *
-	 */
-	@Operation(summary = "SAML 2.0 IDP Init接口", description = "传递参数应用ID",method="GET")
-	@RequestMapping(value = "/authz/saml20/idpinit/{appid}", method=RequestMethod.GET)
-	public ModelAndView authorizeIdpInit(
-				HttpServletRequest request,
-				HttpServletResponse response,
-				@PathVariable("appid") String appId)throws Exception {
-		logger.debug("SAML IDP init , app id is "+appId);
-		AppsSAML20Details saml20Details = saml20DetailsService.getAppDetails(appId , true);
-		WebContext.setAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP, saml20Details);
-		if (saml20Details == null) {
-			logger.error("samlId[" + appId + "] Error .");
-			throw new Exception();
-		}
+    @Autowired
+    private AppsSaml20DetailsService saml20DetailsService;
+    
+    /**
+     * 
+     * @param request
+     * @param response
+     * @param appId
+     * @return
+     * @throws Exception
+     * 
+     *
+     */
+    @Operation(summary = "SAML 2.0 IDP Init接口", description = "传递参数应用ID",method="GET")
+    @RequestMapping(value = "/authz/saml20/idpinit/{appid}", method=RequestMethod.GET)
+    public ModelAndView authorizeIdpInit(
+                HttpServletRequest request,
+                HttpServletResponse response,
+                @PathVariable("appid") String appId)throws Exception {
+        logger.debug("SAML IDP init , app id is "+appId);
+        AppsSAML20Details saml20Details = saml20DetailsService.getAppDetails(appId , true);
+        WebContext.setAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP, saml20Details);
+        if (saml20Details == null) {
+            logger.error("samlId[" + appId + "] Error .");
+            throw new Exception();
+        }
 
-		KeyStore trustKeyStore = KeyStoreUtil.bytes2KeyStore(saml20Details.getKeyStore(),
-				keyStoreLoader.getKeyStore().getType(),
-				keyStoreLoader.getKeystorePassword());
+        KeyStore trustKeyStore = KeyStoreUtil.bytes2KeyStore(saml20Details.getKeyStore(),
+                keyStoreLoader.getKeyStore().getType(),
+                keyStoreLoader.getKeystorePassword());
 
-		extractRedirectBindingAdapter.setSaml20Detail(saml20Details);
-		extractRedirectBindingAdapter.buildSecurityPolicyResolver(trustKeyStore);
-		
-		String binding=saml20Details.getBinding();
-		
-		if(binding.endsWith("PostSimpleSign")){
-			bindingAdapter=postSimpleSignBindingAdapter;
-		}else{
-			bindingAdapter=postBindingAdapter;
-		}
-		
-		//AuthnRequestInfo init authnRequestID to null
-		bindingAdapter.setAuthnRequestInfo(new AuthnRequestInfo());
+        extractRedirectBindingAdapter.setSaml20Detail(saml20Details);
+        extractRedirectBindingAdapter.buildSecurityPolicyResolver(trustKeyStore);
+        
+        String binding=saml20Details.getBinding();
+        
+        if(binding.endsWith("PostSimpleSign")){
+            bindingAdapter=postSimpleSignBindingAdapter;
+        }else{
+            bindingAdapter=postBindingAdapter;
+        }
+        
+        //AuthnRequestInfo init authnRequestID to null
+        bindingAdapter.setAuthnRequestInfo(new AuthnRequestInfo());
 
-		bindingAdapter.setExtractBindingAdapter(extractRedirectBindingAdapter);
-		
-		request.getSession().setAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP_SAMLV20_ADAPTER, bindingAdapter);
+        bindingAdapter.setExtractBindingAdapter(extractRedirectBindingAdapter);
+        
+        request.getSession().setAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP_SAMLV20_ADAPTER, bindingAdapter);
 
-		logger.debug("idp init forwarding to assertion :","/authz/saml20/assertion");
+        logger.debug("idp init forwarding to assertion :","/authz/saml20/assertion");
 
-		return WebContext.forward("/authz/saml20/assertion");
-	}
+        return WebContext.forward("/authz/saml20/assertion");
+    }
 
 
-	/**
-	 * @param keyStoreLoader
-	 *            the keyStoreLoader to set
-	 */
-	public void setKeyStoreLoader(KeyStoreLoader keyStoreLoader) {
-		this.keyStoreLoader = keyStoreLoader;
-	}
+    /**
+     * @param keyStoreLoader
+     *            the keyStoreLoader to set
+     */
+    public void setKeyStoreLoader(KeyStoreLoader keyStoreLoader) {
+        this.keyStoreLoader = keyStoreLoader;
+    }
 
 }

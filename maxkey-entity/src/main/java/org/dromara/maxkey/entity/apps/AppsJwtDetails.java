@@ -36,54 +36,54 @@ import jakarta.persistence.Table;
 @Table(name = "MXK_APPS_JWT_DETAILS") 
 public class AppsJwtDetails  extends Apps  implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -1717427271305620545L;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -1717427271305620545L;
 
-	@Id
-	@Column
-	@GeneratedValue
-	protected String id;
-	
-	@Column
-	private String subject;
-	
-	@Column
-	private String issuer;
-	
-	@Column
-	private String audience;
-	/**
-	 * 
-	 */
-	@Column
-	private String redirectUri;
-	//
-	@Column
-	private String tokenType;
-	@Column
-	private String jwtName;
-	@Column
-	private String algorithm;
-	@Column
-	private String algorithmKey;
-	@Column
-	private String encryptionMethod;
-	@Column
-	private String signature;
-	@Column
-	private String signatureKey;
-	@Column
-	private Integer expires;
-	@Column
-	private String instId;
+    @Id
+    @Column
+    @GeneratedValue
+    protected String id;
+    
+    @Column
+    private String subject;
+    
+    @Column
+    private String issuer;
+    
+    @Column
+    private String audience;
+    /**
+     * 
+     */
+    @Column
+    private String redirectUri;
+    //
+    @Column
+    private String tokenType;
+    @Column
+    private String jwtName;
+    @Column
+    private String algorithm;
+    @Column
+    private String algorithmKey;
+    @Column
+    private String encryptionMethod;
+    @Column
+    private String signature;
+    @Column
+    private String signatureKey;
+    @Column
+    private Integer expires;
+    @Column
+    private String instId;
 
-	private String instName;	
-	
-	public AppsJwtDetails() {
-		super();
-	}
+    private String instName;    
+    
+    public AppsJwtDetails() {
+        super();
+    }
 
 
     public String getId() {
@@ -97,36 +97,36 @@ public class AppsJwtDetails  extends Apps  implements Serializable {
 
 
     public String getSubject() {
-		return subject;
-	}
+        return subject;
+    }
 
 
-	public void setSubject(String subject) {
-		this.subject = subject;
-	}
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
 
 
-	public String getIssuer() {
-		return issuer;
-	}
+    public String getIssuer() {
+        return issuer;
+    }
 
 
-	public void setIssuer(String issuer) {
-		this.issuer = issuer;
-	}
+    public void setIssuer(String issuer) {
+        this.issuer = issuer;
+    }
 
 
-	public String getAudience() {
-		return audience;
-	}
+    public String getAudience() {
+        return audience;
+    }
 
 
-	public void setAudience(String audience) {
-		this.audience = audience;
-	}
+    public void setAudience(String audience) {
+        this.audience = audience;
+    }
 
 
-	public String getRedirectUri() {
+    public String getRedirectUri() {
         return redirectUri;
     }
 
@@ -149,16 +149,16 @@ public class AppsJwtDetails  extends Apps  implements Serializable {
 
 
     public String getJwtName() {
-		return jwtName;
-	}
+        return jwtName;
+    }
 
 
-	public void setJwtName(String jwtName) {
-		this.jwtName = jwtName;
-	}
+    public void setJwtName(String jwtName) {
+        this.jwtName = jwtName;
+    }
 
 
-	public String getAlgorithm() {
+    public String getAlgorithm() {
         return algorithm;
     }
 
@@ -179,36 +179,36 @@ public class AppsJwtDetails  extends Apps  implements Serializable {
 
 
     public String getEncryptionMethod() {
-		return encryptionMethod;
-	}
+        return encryptionMethod;
+    }
 
 
-	public void setEncryptionMethod(String encryptionMethod) {
-		this.encryptionMethod = encryptionMethod;
-	}
+    public void setEncryptionMethod(String encryptionMethod) {
+        this.encryptionMethod = encryptionMethod;
+    }
 
 
-	public String getSignature() {
-		return signature;
-	}
+    public String getSignature() {
+        return signature;
+    }
 
 
-	public void setSignature(String signature) {
-		this.signature = signature;
-	}
+    public void setSignature(String signature) {
+        this.signature = signature;
+    }
 
 
-	public String getSignatureKey() {
-		return signatureKey;
-	}
+    public String getSignatureKey() {
+        return signatureKey;
+    }
 
 
-	public void setSignatureKey(String signatureKey) {
-		this.signatureKey = signatureKey;
-	}
+    public void setSignatureKey(String signatureKey) {
+        this.signatureKey = signatureKey;
+    }
 
 
-	public Integer getExpires() {
+    public Integer getExpires() {
         return expires;
     }
 
@@ -219,48 +219,48 @@ public class AppsJwtDetails  extends Apps  implements Serializable {
 
 
     public String getInstId() {
-		return instId;
-	}
+        return instId;
+    }
 
 
-	public void setInstId(String instId) {
-		this.instId = instId;
-	}
+    public void setInstId(String instId) {
+        this.instId = instId;
+    }
 
 
-	public String getInstName() {
-		return instName;
-	}
+    public String getInstName() {
+        return instName;
+    }
 
 
-	public void setInstName(String instName) {
-		this.instName = instName;
-	}
+    public void setInstName(String instName) {
+        this.instName = instName;
+    }
 
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("AppsJwtDetails [id=");
-		builder.append(id);
-		builder.append(", redirectUri=");
-		builder.append(redirectUri);
-		builder.append(", tokenType=");
-		builder.append(tokenType);
-		builder.append(", jwtName=");
-		builder.append(jwtName);
-		builder.append(", algorithm=");
-		builder.append(algorithm);
-		builder.append(", algorithmKey=");
-		builder.append(algorithmKey);
-		builder.append(", expires=");
-		builder.append(expires);
-		builder.append(", instId=");
-		builder.append(instId);
-		builder.append(", instName=");
-		builder.append(instName);
-		builder.append("]");
-		return builder.toString();
-	}
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("AppsJwtDetails [id=");
+        builder.append(id);
+        builder.append(", redirectUri=");
+        builder.append(redirectUri);
+        builder.append(", tokenType=");
+        builder.append(tokenType);
+        builder.append(", jwtName=");
+        builder.append(jwtName);
+        builder.append(", algorithm=");
+        builder.append(algorithm);
+        builder.append(", algorithmKey=");
+        builder.append(algorithmKey);
+        builder.append(", expires=");
+        builder.append(expires);
+        builder.append(", instId=");
+        builder.append(instId);
+        builder.append(", instName=");
+        builder.append(instName);
+        builder.append("]");
+        return builder.toString();
+    }
 
 }

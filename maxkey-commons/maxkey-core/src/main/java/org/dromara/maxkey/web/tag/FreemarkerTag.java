@@ -28,5 +28,5 @@ import org.springframework.stereotype.Component;
 @Retention(RetentionPolicy.RUNTIME)
 @Component
 public @interface  FreemarkerTag {
-	String value() default "";
+    String value() default "";
 }

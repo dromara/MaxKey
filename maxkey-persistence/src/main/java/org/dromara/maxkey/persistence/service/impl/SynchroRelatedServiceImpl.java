@@ -33,34 +33,34 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class SynchroRelatedServiceImpl  extends JpaServiceImpl<SynchroRelatedMapper,SynchroRelated> implements SynchroRelatedService{
 
-	public int updateSyncTime(SynchroRelated synchroRelated) {
-		return getMapper().updateSyncTime(synchroRelated);
-	}
-	
-	public List<SynchroRelated> findOrgs(Synchronizers synchronizer) {
-		return find(
-				"instid = ? and syncid = ? and objecttype = ? ",
-		 		new Object[] { synchronizer.getInstId() ,synchronizer.getId(),Organizations.CLASS_TYPE},
+    public int updateSyncTime(SynchroRelated synchroRelated) {
+        return getMapper().updateSyncTime(synchroRelated);
+    }
+    
+    public List<SynchroRelated> findOrgs(Synchronizers synchronizer) {
+        return find(
+                "instid = ? and syncid = ? and objecttype = ? ",
+                 new Object[] { synchronizer.getInstId() ,synchronizer.getId(),Organizations.CLASS_TYPE},
                 new int[] { Types.VARCHAR,Types.VARCHAR,Types.VARCHAR}
-				);
-	}
-	
-	public SynchroRelated findByOriginId(Synchronizers synchronizer,String originId,String classType) {
-		return findOne("instid = ? and syncId = ? and originid = ? and objecttype = ? ",
-		 		new Object[] { synchronizer.getInstId(),synchronizer.getId(),originId,classType },
+                );
+    }
+    
+    public SynchroRelated findByOriginId(Synchronizers synchronizer,String originId,String classType) {
+        return findOne("instid = ? and syncId = ? and originid = ? and objecttype = ? ",
+                 new Object[] { synchronizer.getInstId(),synchronizer.getId(),originId,classType },
                 new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,Types.VARCHAR});
-	}
-	
-	public void updateSynchroRelated(Synchronizers synchronizer,SynchroRelated synchroRelated,String classType) {
-		SynchroRelated loadSynchroRelated = 
-				findByOriginId(
-						synchronizer,synchroRelated.getOriginId(),classType );
-		if(loadSynchroRelated == null) {
-			insert(synchroRelated);
-		}else {
-			synchroRelated.setId(loadSynchroRelated.getId());
-			synchroRelated.setSyncTime(DateUtils.formatDateTime(new Date()));
-			updateSyncTime(synchroRelated);
-		}
-	}
+    }
+    
+    public void updateSynchroRelated(Synchronizers synchronizer,SynchroRelated synchroRelated,String classType) {
+        SynchroRelated loadSynchroRelated = 
+                findByOriginId(
+                        synchronizer,synchroRelated.getOriginId(),classType );
+        if(loadSynchroRelated == null) {
+            insert(synchroRelated);
+        }else {
+            synchroRelated.setId(loadSynchroRelated.getId());
+            synchroRelated.setSyncTime(DateUtils.formatDateTime(new Date()));
+            updateSyncTime(synchroRelated);
+        }
+    }
 }

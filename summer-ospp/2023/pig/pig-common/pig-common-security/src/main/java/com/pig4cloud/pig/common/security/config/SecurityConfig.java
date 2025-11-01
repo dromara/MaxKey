@@ -32,125 +32,125 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Autowired
-	private CasProperties casProperties;
+    @Autowired
+    private CasProperties casProperties;
 
-	@Autowired
-	private AuthenticationUserDetailsService casUserDetailService;
+    @Autowired
+    private AuthenticationUserDetailsService casUserDetailService;
 
-	private final PermitAllUrlProperties permitAllUrl;
+    private final PermitAllUrlProperties permitAllUrl;
 
 
-	/**
-	 * 定义认证用户信息获取来源，密码校验规则等
-	 */
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		super.configure(auth);
-		auth.authenticationProvider(casAuthenticationProvider());
-	}
+    /**
+     * 定义认证用户信息获取来源，密码校验规则等
+     */
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        super.configure(auth);
+        auth.authenticationProvider(casAuthenticationProvider());
+    }
 
-	/**
-	 * 定义安全策略
-	 */
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
+    /**
+     * 定义安全策略
+     */
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
 
-		http.authorizeRequests()// 配置安全策略
-				.antMatchers(ArrayUtil.toArray(permitAllUrl.getUrls(), String.class)).permitAll()
-				.anyRequest().authenticated()// 其余的所有请求都需要验证
-				.and().logout().permitAll()// 定义logout不需要验证
-				.and().formLogin();// 使用form表单登录
+        http.authorizeRequests()// 配置安全策略
+                .antMatchers(ArrayUtil.toArray(permitAllUrl.getUrls(), String.class)).permitAll()
+                .anyRequest().authenticated()// 其余的所有请求都需要验证
+                .and().logout().permitAll()// 定义logout不需要验证
+                .and().formLogin();// 使用form表单登录
 
-		http.exceptionHandling()
-				.authenticationEntryPoint(casAuthenticationEntryPoint())
-				.and()
-				.addFilter(casAuthenticationFilter())
-				.addFilterBefore(casLogoutFilter(), LogoutFilter.class)
-				.addFilterBefore(singleSignOutFilter(), CasAuthenticationFilter.class);
-		// 取消跨站请求伪造防护
-		http.csrf().disable();
+        http.exceptionHandling()
+                .authenticationEntryPoint(casAuthenticationEntryPoint())
+                .and()
+                .addFilter(casAuthenticationFilter())
+                .addFilterBefore(casLogoutFilter(), LogoutFilter.class)
+                .addFilterBefore(singleSignOutFilter(), CasAuthenticationFilter.class);
+        // 取消跨站请求伪造防护
+        http.csrf().disable();
 //      // 防止iframe 造成跨域
-		http.headers().frameOptions().disable();
-		// http.csrf().disable(); //禁用CSRF
-	}
+        http.headers().frameOptions().disable();
+        // http.csrf().disable(); //禁用CSRF
+    }
 
-	/**
-	 * 认证的入口
-	 */
-	@Bean
-	public CasAuthenticationEntryPoint casAuthenticationEntryPoint() {
-		CasAuthenticationEntryPoint casAuthenticationEntryPoint = new CasAuthenticationEntryPoint();
-		casAuthenticationEntryPoint.setLoginUrl(casProperties.getCasServerLoginUrl());
-		casAuthenticationEntryPoint.setServiceProperties(serviceProperties());
-		return casAuthenticationEntryPoint;
-	}
+    /**
+     * 认证的入口
+     */
+    @Bean
+    public CasAuthenticationEntryPoint casAuthenticationEntryPoint() {
+        CasAuthenticationEntryPoint casAuthenticationEntryPoint = new CasAuthenticationEntryPoint();
+        casAuthenticationEntryPoint.setLoginUrl(casProperties.getCasServerLoginUrl());
+        casAuthenticationEntryPoint.setServiceProperties(serviceProperties());
+        return casAuthenticationEntryPoint;
+    }
 
-	/**
-	 * 指定service相关信息
-	 */
-	@Bean
-	public ServiceProperties serviceProperties() {
-		ServiceProperties serviceProperties = new ServiceProperties();
-		//设置cas客户端登录完整的url
-		serviceProperties.setService(casProperties.getCasServiceUrl() + casProperties.getCasServiceLoginUrl());
-		serviceProperties.setSendRenew(false);
-		serviceProperties.setAuthenticateAllArtifacts(true);
-		return serviceProperties;
-	}
+    /**
+     * 指定service相关信息
+     */
+    @Bean
+    public ServiceProperties serviceProperties() {
+        ServiceProperties serviceProperties = new ServiceProperties();
+        //设置cas客户端登录完整的url
+        serviceProperties.setService(casProperties.getCasServiceUrl() + casProperties.getCasServiceLoginUrl());
+        serviceProperties.setSendRenew(false);
+        serviceProperties.setAuthenticateAllArtifacts(true);
+        return serviceProperties;
+    }
 
-	/**
-	 * CAS认证过滤器
-	 */
-	@Bean
-	public CasAuthenticationFilter casAuthenticationFilter() throws Exception {
-		CasAuthenticationFilter casAuthenticationFilter = new CasAuthenticationFilter();
-		casAuthenticationFilter.setAuthenticationManager(authenticationManager());
-		casAuthenticationFilter.setFilterProcessesUrl(casProperties.getCasServiceUrl() + casProperties.getCasServiceLoginUrl());
-		casAuthenticationFilter.setServiceProperties(serviceProperties());
-		return casAuthenticationFilter;
-	}
+    /**
+     * CAS认证过滤器
+     */
+    @Bean
+    public CasAuthenticationFilter casAuthenticationFilter() throws Exception {
+        CasAuthenticationFilter casAuthenticationFilter = new CasAuthenticationFilter();
+        casAuthenticationFilter.setAuthenticationManager(authenticationManager());
+        casAuthenticationFilter.setFilterProcessesUrl(casProperties.getCasServiceUrl() + casProperties.getCasServiceLoginUrl());
+        casAuthenticationFilter.setServiceProperties(serviceProperties());
+        return casAuthenticationFilter;
+    }
 
-	/**
-	 * cas 认证 Provider
-	 */
-	@Bean
-	public CasAuthenticationProvider casAuthenticationProvider() {
-		CasAuthenticationProvider casAuthenticationProvider = new CasAuthenticationProvider();
-		casAuthenticationProvider.setAuthenticationUserDetailsService(casUserDetailService);
-		// //这里只是接口类型，实现的接口不一样，都可以的。
-		casAuthenticationProvider.setServiceProperties(serviceProperties());
-		casAuthenticationProvider.setTicketValidator(cas20ServiceTicketValidator());
-		casAuthenticationProvider.setKey("casAuthenticationProviderKey");
-		return casAuthenticationProvider;
-	}
-
-
+    /**
+     * cas 认证 Provider
+     */
+    @Bean
+    public CasAuthenticationProvider casAuthenticationProvider() {
+        CasAuthenticationProvider casAuthenticationProvider = new CasAuthenticationProvider();
+        casAuthenticationProvider.setAuthenticationUserDetailsService(casUserDetailService);
+        // //这里只是接口类型，实现的接口不一样，都可以的。
+        casAuthenticationProvider.setServiceProperties(serviceProperties());
+        casAuthenticationProvider.setTicketValidator(cas20ServiceTicketValidator());
+        casAuthenticationProvider.setKey("casAuthenticationProviderKey");
+        return casAuthenticationProvider;
+    }
 
 
-	@Bean
-	public Cas20ServiceTicketValidator cas20ServiceTicketValidator() {
-		return new Cas20ServiceTicketValidator(casProperties.getCasGrantingUrl());
-	}
 
-	/**
-	 * 单点登出过滤器
-	 */
-	@Bean
-	public SingleSignOutFilter singleSignOutFilter() {
-		SingleSignOutFilter singleSignOutFilter = new SingleSignOutFilter();
-		singleSignOutFilter.setLogoutCallbackPath(casProperties.getCasServerUrl());
-		singleSignOutFilter.setIgnoreInitConfiguration(true);
-		return singleSignOutFilter;
-	}
 
-	/**
-	 * 请求单点退出过滤器
-	 */
-	@Bean
-	public LogoutFilter casLogoutFilter() {
-		LogoutFilter logoutFilter = new LogoutFilter(casProperties.getCasServerLogoutUrl(), new SecurityContextLogoutHandler());
-		logoutFilter.setFilterProcessesUrl(casProperties.getCasServiceLogoutUrl());
-		return logoutFilter;
-	}
+    @Bean
+    public Cas20ServiceTicketValidator cas20ServiceTicketValidator() {
+        return new Cas20ServiceTicketValidator(casProperties.getCasGrantingUrl());
+    }
+
+    /**
+     * 单点登出过滤器
+     */
+    @Bean
+    public SingleSignOutFilter singleSignOutFilter() {
+        SingleSignOutFilter singleSignOutFilter = new SingleSignOutFilter();
+        singleSignOutFilter.setLogoutCallbackPath(casProperties.getCasServerUrl());
+        singleSignOutFilter.setIgnoreInitConfiguration(true);
+        return singleSignOutFilter;
+    }
+
+    /**
+     * 请求单点退出过滤器
+     */
+    @Bean
+    public LogoutFilter casLogoutFilter() {
+        LogoutFilter logoutFilter = new LogoutFilter(casProperties.getCasServerLogoutUrl(), new SecurityContextLogoutHandler());
+        logoutFilter.setFilterProcessesUrl(casProperties.getCasServiceLogoutUrl());
+        return logoutFilter;
+    }
 }

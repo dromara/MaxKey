@@ -51,65 +51,65 @@ public class NormalAuthenticationProvider extends AbstractAuthenticationProvider
     
 
     public NormalAuthenticationProvider() {
-		super();
-	}
+        super();
+    }
 
     public NormalAuthenticationProvider(
-    		AbstractAuthenticationRealm authenticationRealm,
-    		ApplicationConfig applicationConfig,
-    	    SessionManager sessionManager,
-    	    AuthTokenService authTokenService) {
-		this.authenticationRealm = authenticationRealm;
-		this.applicationConfig = applicationConfig;
-		this.sessionManager = sessionManager;
-		this.authTokenService = authTokenService;
-	}
+            AbstractAuthenticationRealm authenticationRealm,
+            ApplicationConfig applicationConfig,
+            SessionManager sessionManager,
+            AuthTokenService authTokenService) {
+        this.authenticationRealm = authenticationRealm;
+        this.applicationConfig = applicationConfig;
+        this.sessionManager = sessionManager;
+        this.authTokenService = authTokenService;
+    }
 
     @Override
-	public Authentication doAuthenticate(LoginCredential loginCredential) {
-		UsernamePasswordAuthenticationToken authenticationToken = null;
-		_logger.debug("Trying to authenticate user '{}' via {}", 
+    public Authentication doAuthenticate(LoginCredential loginCredential) {
+        UsernamePasswordAuthenticationToken authenticationToken = null;
+        _logger.debug("Trying to authenticate user '{}' via {}", 
                 loginCredential.getPrincipal(), getProviderName());
         try {
-        	
-	        _logger.debug("authentication {}" , loginCredential);
-	        
-	        if(this.applicationConfig.getLoginConfig().isCaptcha()) {
-	        	captchaValid(loginCredential.getState(),loginCredential.getCaptcha());
-	        }
-	
-	        emptyPasswordValid(loginCredential.getPassword());
-	
-	        emptyUsernameValid(loginCredential.getUsername());
-	
-	        UserInfo userInfo =  loadUserInfo(loginCredential.getUsername(),loginCredential.getPassword());
-	
-	        isUserExist(loginCredential , userInfo);
-	        
-	        //Validate PasswordPolicy
-	        authenticationRealm.getLoginService().passwordPolicyValid(userInfo);
-	        
-	        statusValid(loginCredential , userInfo);
-	        
-	        //Match password 
-	        authenticationRealm.passwordMatches(userInfo, loginCredential.getPassword());
+            
+            _logger.debug("authentication {}" , loginCredential);
+            
+            if(this.applicationConfig.getLoginConfig().isCaptcha()) {
+                captchaValid(loginCredential.getState(),loginCredential.getCaptcha());
+            }
+    
+            emptyPasswordValid(loginCredential.getPassword());
+    
+            emptyUsernameValid(loginCredential.getUsername());
+    
+            UserInfo userInfo =  loadUserInfo(loginCredential.getUsername(),loginCredential.getPassword());
+    
+            isUserExist(loginCredential , userInfo);
+            
+            //Validate PasswordPolicy
+            authenticationRealm.getLoginService().passwordPolicyValid(userInfo);
+            
+            statusValid(loginCredential , userInfo);
+            
+            //Match password 
+            authenticationRealm.passwordMatches(userInfo, loginCredential.getPassword());
 
-	        //apply PasswordSetType and resetBadPasswordCount
-	        authenticationRealm.getLoginService().applyPasswordPolicy(userInfo);
-	        
-	        authenticationToken = createOnlineTicket(loginCredential,userInfo);
-	        // user authenticated
-	        _logger.debug("'{}' authenticated successfully by {}.", 
-	        		loginCredential.getPrincipal(), getProviderName());
-	        
-	        authenticationRealm.insertLoginHistory(userInfo, 
-							        				ConstsLoginType.LOCAL, 
-									                "", 
-									                "xe00000004", 
-									                WebConstants.LOGIN_RESULT.SUCCESS);
+            //apply PasswordSetType and resetBadPasswordCount
+            authenticationRealm.getLoginService().applyPasswordPolicy(userInfo);
+            
+            authenticationToken = createOnlineTicket(loginCredential,userInfo);
+            // user authenticated
+            _logger.debug("'{}' authenticated successfully by {}.", 
+                    loginCredential.getPrincipal(), getProviderName());
+            
+            authenticationRealm.insertLoginHistory(userInfo, 
+                                                    ConstsLoginType.LOCAL, 
+                                                    "", 
+                                                    "xe00000004", 
+                                                    WebConstants.LOGIN_RESULT.SUCCESS);
         } catch (AuthenticationException e) {
             _logger.error("Failed to authenticate user {} via {}: {}",
-                    				loginCredential.getPrincipal(),
+                                    loginCredential.getPrincipal(),
                                     getProviderName(),
                                     e.getMessage() );
             WebContext.setAttribute(
@@ -131,8 +131,8 @@ public class NormalAuthenticationProvider extends AbstractAuthenticationProvider
      */
     protected void captchaValid(String state ,String captcha) {
         // for basic
-    	if(!authTokenService.validateCaptcha(state,captcha)) {
-    		throw new BadCredentialsException(WebContext.getI18nValue("login.error.captcha"));
-    	}        
+        if(!authTokenService.validateCaptcha(state,captcha)) {
+            throw new BadCredentialsException(WebContext.getI18nValue("login.error.captcha"));
+        }        
     }
 }

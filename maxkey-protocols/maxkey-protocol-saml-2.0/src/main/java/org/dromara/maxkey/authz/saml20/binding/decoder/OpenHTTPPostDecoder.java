@@ -110,15 +110,15 @@ public class OpenHTTPPostDecoder extends HTTPPostDecoder {
         if (!(inTransport instanceof HttpServletRequestAdapter)) {
             throw new MessageDecodingException("Message context InTransport instance was an unsupported type");
         }
-		HttpServletRequest httpRequest = 
-				((HttpServletRequestAdapter) inTransport).getWrappedRequest();
+        HttpServletRequest httpRequest = 
+                ((HttpServletRequestAdapter) inTransport).getWrappedRequest();
 
-		String requestUrl = UrlUtils.buildFullRequestUrl(httpRequest);
-		if(requestUrl.indexOf("?") > -1) {
-			return requestUrl.substring(0, requestUrl.indexOf("?"));
-		}else {
-			return requestUrl;
-		}
+        String requestUrl = UrlUtils.buildFullRequestUrl(httpRequest);
+        if(requestUrl.indexOf("?") > -1) {
+            return requestUrl.substring(0, requestUrl.indexOf("?"));
+        }else {
+            return requestUrl;
+        }
     }
 
     /**

@@ -32,10 +32,10 @@ public class OrganizationsCast extends JpaEntity implements Serializable {
 
     
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 5166920258761620856L;
-	@Id
+     * 
+     */
+    private static final long serialVersionUID = 5166920258761620856L;
+    @Id
     @Column
     @GeneratedValue
     private String id;
@@ -71,10 +71,10 @@ public class OrganizationsCast extends JpaEntity implements Serializable {
     
     @Column
     private String appName;
-	@Column
-	private String instId;
+    @Column
+    private String instId;
 
-	private String instName;
+    private String instName;
     //重组标志
     boolean reorgNamePath;
     
@@ -84,161 +84,161 @@ public class OrganizationsCast extends JpaEntity implements Serializable {
     }
 
     public String getId() {
-		return id;
-	}
+        return id;
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public String getCode() {
-		return code;
-	}
+    public String getCode() {
+        return code;
+    }
 
-	public void setCode(String code) {
-		this.code = code;
-	}
+    public void setCode(String code) {
+        this.code = code;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getFullName() {
-		return fullName;
-	}
+    public String getFullName() {
+        return fullName;
+    }
 
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
-	}
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
 
-	public String getParentId() {
-		return parentId;
-	}
+    public String getParentId() {
+        return parentId;
+    }
 
-	public void setParentId(String parentId) {
-		this.parentId = parentId;
-	}
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
+    }
 
-	public String getParentName() {
-		return parentName;
-	}
+    public String getParentName() {
+        return parentName;
+    }
 
-	public void setParentName(String parentName) {
-		this.parentName = parentName;
-	}
+    public void setParentName(String parentName) {
+        this.parentName = parentName;
+    }
 
-	public String getCodePath() {
-		return codePath;
-	}
+    public String getCodePath() {
+        return codePath;
+    }
 
-	public void setCodePath(String codePath) {
-		this.codePath = codePath;
-	}
+    public void setCodePath(String codePath) {
+        this.codePath = codePath;
+    }
 
-	public String getNamePath() {
-		return namePath;
-	}
+    public String getNamePath() {
+        return namePath;
+    }
 
-	public void setNamePath(String namePath) {
-		this.namePath = namePath;
-	}
+    public void setNamePath(String namePath) {
+        this.namePath = namePath;
+    }
 
-	public int getStatus() {
-		return status;
-	}
+    public int getStatus() {
+        return status;
+    }
 
-	public void setStatus(int status) {
-		this.status = status;
-	}
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
-	public String getOrgId() {
-		return orgId;
-	}
+    public String getOrgId() {
+        return orgId;
+    }
 
-	public void setOrgId(String orgId) {
-		this.orgId = orgId;
-	}
+    public void setOrgId(String orgId) {
+        this.orgId = orgId;
+    }
 
-	public String getOrgParentId() {
-		return orgParentId;
-	}
+    public String getOrgParentId() {
+        return orgParentId;
+    }
 
-	public void setOrgParentId(String orgParentId) {
-		this.orgParentId = orgParentId;
-	}
+    public void setOrgParentId(String orgParentId) {
+        this.orgParentId = orgParentId;
+    }
 
-	public long getSortIndex() {
-		return sortIndex;
-	}
+    public long getSortIndex() {
+        return sortIndex;
+    }
 
-	public void setSortIndex(long sortIndex) {
-		this.sortIndex = sortIndex;
-	}
+    public void setSortIndex(long sortIndex) {
+        this.sortIndex = sortIndex;
+    }
 
-	public String getProvider() {
-		return provider;
-	}
+    public String getProvider() {
+        return provider;
+    }
 
-	public void setProvider(String provider) {
-		this.provider = provider;
-	}
+    public void setProvider(String provider) {
+        this.provider = provider;
+    }
 
-	public boolean isReorgNamePath() {
-		return reorgNamePath;
-	}
+    public boolean isReorgNamePath() {
+        return reorgNamePath;
+    }
 
-	public void setReorgNamePath(boolean reorgNamePath) {
-		this.reorgNamePath = reorgNamePath;
-	}
+    public void setReorgNamePath(boolean reorgNamePath) {
+        this.reorgNamePath = reorgNamePath;
+    }
 
-	public String getInstId() {
-		return instId;
-	}
+    public String getInstId() {
+        return instId;
+    }
 
-	public void setInstId(String instId) {
-		this.instId = instId;
-	}
+    public void setInstId(String instId) {
+        this.instId = instId;
+    }
 
-	public String getInstName() {
-		return instName;
-	}
+    public String getInstName() {
+        return instName;
+    }
 
-	public void setInstName(String instName) {
-		this.instName = instName;
-	}
+    public void setInstName(String instName) {
+        this.instName = instName;
+    }
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("OrganizationsMapper [id=");
-		builder.append(id);
-		builder.append(", code=");
-		builder.append(code);
-		builder.append(", name=");
-		builder.append(name);
-		builder.append(", fullName=");
-		builder.append(fullName);
-		builder.append(", parentId=");
-		builder.append(parentId);
-		builder.append(", parentName=");
-		builder.append(parentName);
-		builder.append(", codePath=");
-		builder.append(codePath);
-		builder.append(", namePath=");
-		builder.append(namePath);
-		builder.append(", status=");
-		builder.append(status);
-		builder.append(", orgId=");
-		builder.append(orgId);
-		builder.append(", orgParentId=");
-		builder.append(orgParentId);
-		builder.append("]");
-		return builder.toString();
-	}
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("OrganizationsMapper [id=");
+        builder.append(id);
+        builder.append(", code=");
+        builder.append(code);
+        builder.append(", name=");
+        builder.append(name);
+        builder.append(", fullName=");
+        builder.append(fullName);
+        builder.append(", parentId=");
+        builder.append(parentId);
+        builder.append(", parentName=");
+        builder.append(parentName);
+        builder.append(", codePath=");
+        builder.append(codePath);
+        builder.append(", namePath=");
+        builder.append(namePath);
+        builder.append(", status=");
+        builder.append(status);
+        builder.append(", orgId=");
+        builder.append(orgId);
+        builder.append(", orgParentId=");
+        builder.append(orgParentId);
+        builder.append("]");
+        return builder.toString();
+    }
 
 
 

@@ -48,36 +48,36 @@ public class ProvisionService {
         //maxkey.server.message.queue , if not none
         if(applicationConfig.isProvisionSupport()) {
             ProvisionMessage message = 
-            		new ProvisionMessage(
-            				UUID.randomUUID().toString(),	//message id as uuid
-            				topic,	//TOPIC
-            				actionType,	//action of content
-            				DateUtils.getCurrentDateTimeAsString(),	//send time
-            				null, 	//content Object to json message content
-            				content
-            				);
+                    new ProvisionMessage(
+                            UUID.randomUUID().toString(),    //message id as uuid
+                            topic,    //TOPIC
+                            actionType,    //action of content
+                            DateUtils.getCurrentDateTimeAsString(),    //send time
+                            null,     //content Object to json message content
+                            content
+                            );
             //sand msg to provision topic
             Thread thread = null;
             if(applicationConfig.isProvisionSupport()) {
-            	_logger.trace("message...");
-            	thread = new  ProvisioningThread(jdbcTemplate,message);
-            	thread.start();
+                _logger.trace("message...");
+                thread = new  ProvisioningThread(jdbcTemplate,message);
+                thread.start();
             }else{
-            	_logger.trace("no send message...");
+                _logger.trace("no send message...");
             }
         }
     }
 
-	public void setApplicationConfig(ApplicationConfig applicationConfig) {
-		this.applicationConfig = applicationConfig;
-	}
+    public void setApplicationConfig(ApplicationConfig applicationConfig) {
+        this.applicationConfig = applicationConfig;
+    }
 
-	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-		this.jdbcTemplate = jdbcTemplate;
-	}
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
-	public ApplicationConfig getApplicationConfig() {
-		return applicationConfig;
-	}
-	
+    public ApplicationConfig getApplicationConfig() {
+        return applicationConfig;
+    }
+    
 }

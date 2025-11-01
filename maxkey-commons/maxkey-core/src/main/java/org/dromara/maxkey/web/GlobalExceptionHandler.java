@@ -52,7 +52,7 @@ import java.util.Objects;
  */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-	 private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+     private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     /**
      * 缺少请求体异常处理器
@@ -105,9 +105,9 @@ public class GlobalExceptionHandler {
         String requestURI = request.getRequestURI();
         logger.info("Request IpAddress : {} " , WebContext.getRequestIpAddress(request));
         if(e instanceof NoHandlerFoundException) {
-        	//NoHandlerFoundException
+            //NoHandlerFoundException
         }else {
-        	logger.error("请求地址'{}',发生系统异常.", requestURI, e);
+            logger.error("请求地址'{}',发生系统异常.", requestURI, e);
         }
         return new Message<>(Message.FAIL, HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase());
     }

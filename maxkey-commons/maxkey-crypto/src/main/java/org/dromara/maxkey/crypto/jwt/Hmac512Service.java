@@ -33,60 +33,60 @@ import com.nimbusds.jose.util.Base64URL;
 
 public class Hmac512Service {
 
-	public static final  String MXK_AUTH_JWK = "mxk_auth_jwk";
-	
-	JWSSigner signer;
-	
-	MACVerifier verifier;
-	
-	public Hmac512Service() {
-		super();
-	}
-	
-	public Hmac512Service(String secretString) throws JOSEException {
-		Base64URL secret=new Base64URL(secretString);
-		OctetSequenceKey octKey=  new OctetSequenceKey.Builder(secret)
-				.keyID(MXK_AUTH_JWK)
-				.keyUse(KeyUse.SIGNATURE)
-				.algorithm(JWSAlgorithm.HS512)
-				.build();
-		signer = new MACSigner(octKey);
-		verifier = new MACVerifier(octKey);
-	}
-	
-	public String sign(Payload payload) {
-		try {
-			// Prepare JWS object with payload
-			JWSObject jwsObject = new JWSObject(new JWSHeader(JWSAlgorithm.HS512), payload);
-			// Apply the HMAC
-			jwsObject.sign(signer);
-			String jwt = jwsObject.serialize();
-			return jwt;
-		} catch (JOSEException e) {
-			e.printStackTrace();
-		}
-		
-		return null;
-	}
+    public static final  String MXK_AUTH_JWK = "mxk_auth_jwk";
+    
+    JWSSigner signer;
+    
+    MACVerifier verifier;
+    
+    public Hmac512Service() {
+        super();
+    }
+    
+    public Hmac512Service(String secretString) throws JOSEException {
+        Base64URL secret=new Base64URL(secretString);
+        OctetSequenceKey octKey=  new OctetSequenceKey.Builder(secret)
+                .keyID(MXK_AUTH_JWK)
+                .keyUse(KeyUse.SIGNATURE)
+                .algorithm(JWSAlgorithm.HS512)
+                .build();
+        signer = new MACSigner(octKey);
+        verifier = new MACVerifier(octKey);
+    }
+    
+    public String sign(Payload payload) {
+        try {
+            // Prepare JWS object with payload
+            JWSObject jwsObject = new JWSObject(new JWSHeader(JWSAlgorithm.HS512), payload);
+            // Apply the HMAC
+            jwsObject.sign(signer);
+            String jwt = jwsObject.serialize();
+            return jwt;
+        } catch (JOSEException e) {
+            e.printStackTrace();
+        }
+        
+        return null;
+    }
 
-	public String sign(String  payload) {
-		return sign(new Payload(payload));
-	}
-	
-	
-	public boolean verify(String jwt) {
-		try {
-		JWSObject jwsObjected =JWSObject.parse(jwt);
-		boolean isVerifier = verifier.verify(
-								jwsObjected.getHeader(), 
-								jwsObjected.getSigningInput(), 
-								jwsObjected.getSignature());
-		return isVerifier;
-		}catch(JOSEException JOSEException) {
-			
-		}catch(ParseException ParseException) {
-			
-		}
-		return false;
-	}
+    public String sign(String  payload) {
+        return sign(new Payload(payload));
+    }
+    
+    
+    public boolean verify(String jwt) {
+        try {
+        JWSObject jwsObjected =JWSObject.parse(jwt);
+        boolean isVerifier = verifier.verify(
+                                jwsObjected.getHeader(), 
+                                jwsObjected.getSigningInput(), 
+                                jwsObjected.getSignature());
+        return isVerifier;
+        }catch(JOSEException JOSEException) {
+            
+        }catch(ParseException ParseException) {
+            
+        }
+        return false;
+    }
 }

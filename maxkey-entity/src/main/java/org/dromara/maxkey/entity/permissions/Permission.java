@@ -44,11 +44,11 @@ public class Permission  extends JpaEntity implements Serializable {
     String resourceId;
     
     int status = ConstsStatus.ACTIVE;
-	@Column
-	private String instId;
+    @Column
+    private String instId;
 
-	private String instName;
-	
+    private String instName;
+    
     public Permission() {
     }
 
@@ -89,14 +89,14 @@ public class Permission  extends JpaEntity implements Serializable {
     }
 
     public String getGroupId() {
-		return groupId;
-	}
+        return groupId;
+    }
 
-	public void setGroupId(String groupId) {
-		this.groupId = groupId;
-	}
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
+    }
 
-	public String getResourceId() {
+    public String getResourceId() {
         return resourceId;
     }
 
@@ -117,22 +117,22 @@ public class Permission  extends JpaEntity implements Serializable {
     }
 
     public String getInstId() {
-		return instId;
-	}
+        return instId;
+    }
 
-	public void setInstId(String instId) {
-		this.instId = instId;
-	}
+    public void setInstId(String instId) {
+        this.instId = instId;
+    }
 
-	public String getInstName() {
-		return instName;
-	}
+    public String getInstName() {
+        return instName;
+    }
 
-	public void setInstName(String instName) {
-		this.instName = instName;
-	}
+    public void setInstName(String instName) {
+        this.instName = instName;
+    }
 
-	@Override
+    @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("RolePrivileges [id=");

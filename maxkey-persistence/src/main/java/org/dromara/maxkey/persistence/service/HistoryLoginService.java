@@ -23,7 +23,7 @@ import org.dromara.mybatis.jpa.entity.JpaPageResults;
 
 public interface HistoryLoginService  extends IJpaService<HistoryLogin>{
 
-	public JpaPageResults<HistoryLogin> queryOnlineSession(HistoryLogin historyLogin);
-	
-	public void login(HistoryLogin historyLogin);
+    public JpaPageResults<HistoryLogin> queryOnlineSession(HistoryLogin historyLogin);
+    
+    public void login(HistoryLogin historyLogin);
 }

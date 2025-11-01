@@ -22,5 +22,5 @@ import org.dromara.mybatis.jpa.service.IJpaService;
 
 
 public interface CnfSmsProviderService  extends IJpaService<CnfSmsProvider>{ 
-	
+    
 }

@@ -283,11 +283,11 @@ public class UserInfo extends JpaEntity  implements Serializable {
     @Column
     String description;
 
-	@Column
-	private String instId;
+    @Column
+    private String instId;
 
-	private String instName;
-	
+    private String instName;
+    
     String syncId;
     
     String syncName;
@@ -295,85 +295,85 @@ public class UserInfo extends JpaEntity  implements Serializable {
     String originId;
 
     String originId2;
-	
+    
     List<Organizations> depts;
     
     public static class ONLINE {
         // 在线
-        public static final int ONLINE 				= 1;
+        public static final int ONLINE                 = 1;
         // 下线
-        public static final int OFFLINE 			= 0;
+        public static final int OFFLINE             = 0;
     }
 
     public static class MARRIED {
         // 未知
-        public static final int UNKNOWN 			= 0;
+        public static final int UNKNOWN             = 0;
         // 单身
-        public static final int SINGLE 				= 1;
+        public static final int SINGLE                 = 1;
         // 结婚
-        public static final int MARRIED 			= 2;
+        public static final int MARRIED             = 2;
         // 离异
-        public static final int DIVORCE 			= 3;
+        public static final int DIVORCE             = 3;
         // 丧偶
-        public static final int WIDOWED 			= 4;
+        public static final int WIDOWED             = 4;
 
     }
 
     public static class GENDER {
         // 未知
-        public static final int UNKNOWN 			= 0;
+        public static final int UNKNOWN             = 0;
         // 女性
-        public static final int FEMALE 				= 1;
+        public static final int FEMALE                 = 1;
         // 男性
-        public static final int MALE 				= 2;
+        public static final int MALE                 = 2;
     }
 
     public static class IDTYPE {
         // 未知
-        public static final int UNKNOWN 			= 0;
+        public static final int UNKNOWN             = 0;
         // 身份证
-        public static final int IDCARD 				= 1;
+        public static final int IDCARD                 = 1;
         // 护照
-        public static final int PASSPORT 			= 2;
+        public static final int PASSPORT             = 2;
         // 学生证
-        public static final int STUDENTCARD 		= 3;
+        public static final int STUDENTCARD         = 3;
         // 军人证
-        public static final int MILITARYCARD 		= 4;
+        public static final int MILITARYCARD         = 4;
     }
 
     public static class AUTHNTYPE {
         // 用户名密码
-        public static final int NORMAL 				= 1;
+        public static final int NORMAL                 = 1;
         // 手机
-        public static final int MOBILE 				= 2;
+        public static final int MOBILE                 = 2;
         // 短信
-        public static final int SMS 				= 3;
+        public static final int SMS                 = 3;
         // 邮箱
-        public static final int EMAIL 				= 4;
+        public static final int EMAIL                 = 4;
 
-        public static final int TIMEBASED_OPT 		= 5;
+        public static final int TIMEBASED_OPT         = 5;
 
-        public static final int COUNTERBASED_OPT 	= 6;
+        public static final int COUNTERBASED_OPT     = 6;
 
-        public static final int HOTP_OPT 			= 7;
+        public static final int HOTP_OPT             = 7;
 
-        public static final int RSA_OPT 			= 8;
+        public static final int RSA_OPT             = 8;
         // 证书
-        public static final int CERTIFICATE 		= 9;
+        public static final int CERTIFICATE         = 9;
         // usb证书
-        public static final int USBKEY 				= 10;
+        public static final int USBKEY                 = 10;
 
     }
 
     public static class EMPLOYMENTSTATUS {
         // 在册人员
-        public static final int ACTIVE 				= 1;
+        public static final int ACTIVE                 = 1;
         // 离职人员
-        public static final int WITHDRAWN 			= 2;
+        public static final int WITHDRAWN             = 2;
         // 停薪留职人员
-        public static final int INACTIVE 			= 3;
+        public static final int INACTIVE             = 3;
         // 退休人员
-        public static final int RETIREE 			= 4;
+        public static final int RETIREE             = 4;
 
     }
 
@@ -398,15 +398,15 @@ public class UserInfo extends JpaEntity  implements Serializable {
         this.id = id;
     }
 
-	public String getSessionId() {
-		return sessionId;
-	}
+    public String getSessionId() {
+        return sessionId;
+    }
 
-	public void setSessionId(String sessionId) {
-		this.sessionId = sessionId;
-	}
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
 
-	/**
+    /**
      * @param username
      */
     public UserInfo(String username) {
@@ -426,24 +426,24 @@ public class UserInfo extends JpaEntity  implements Serializable {
 
 
     public String getPictureBase64() {
-		return pictureBase64;
-	}
+        return pictureBase64;
+    }
 
-	public void setPictureBase64(String pictureBase64) {
-		this.pictureBase64 = pictureBase64;
-	}
+    public void setPictureBase64(String pictureBase64) {
+        this.pictureBase64 = pictureBase64;
+    }
 
-	public void transPictureBase64() {
-		if(picture != null) {
-			this.pictureBase64 = Base64Utils.encodeImage(picture);
-		}
-	}
-	
-	public byte[] getPicture() {
-		return picture;
-	}
+    public void transPictureBase64() {
+        if(picture != null) {
+            this.pictureBase64 = Base64Utils.encodeImage(picture);
+        }
+    }
+    
+    public byte[] getPicture() {
+        return picture;
+    }
 
-	/**
+    /**
      * @return the protectedAppsMap
      */
     public HashMap<String, String> getProtectedAppsMap() {
@@ -479,14 +479,14 @@ public class UserInfo extends JpaEntity  implements Serializable {
     }
 
     public String getWorkOfficeName() {
-		return workOfficeName;
-	}
+        return workOfficeName;
+    }
 
-	public void setWorkOfficeName(String workOfficeName) {
-		this.workOfficeName = workOfficeName;
-	}
+    public void setWorkOfficeName(String workOfficeName) {
+        this.workOfficeName = workOfficeName;
+    }
 
-	public String getDecipherable() {
+    public String getDecipherable() {
         return decipherable;
     }
 
@@ -543,30 +543,30 @@ public class UserInfo extends JpaEntity  implements Serializable {
     }
 
     public String getEducation() {
-		return education;
-	}
+        return education;
+    }
 
-	public void setEducation(String education) {
-		this.education = education;
-	}
+    public void setEducation(String education) {
+        this.education = education;
+    }
 
-	public String getGraduateFrom() {
-		return graduateFrom;
-	}
+    public String getGraduateFrom() {
+        return graduateFrom;
+    }
 
-	public void setGraduateFrom(String graduateFrom) {
-		this.graduateFrom = graduateFrom;
-	}
+    public void setGraduateFrom(String graduateFrom) {
+        this.graduateFrom = graduateFrom;
+    }
 
-	public String getGraduateDate() {
-		return graduateDate;
-	}
+    public String getGraduateDate() {
+        return graduateDate;
+    }
 
-	public void setGraduateDate(String graduateDate) {
-		this.graduateDate = graduateDate;
-	}
+    public void setGraduateDate(String graduateDate) {
+        this.graduateDate = graduateDate;
+    }
 
-	public String getNameZhSpell() {
+    public String getNameZhSpell() {
         return nameZhSpell;
     }
 
@@ -654,15 +654,15 @@ public class UserInfo extends JpaEntity  implements Serializable {
         this.birthDate = birthDate;
     }
 
-	public String getPictureId() {
-		return pictureId;
-	}
+    public String getPictureId() {
+        return pictureId;
+    }
 
-	public void setPictureId(String pictureId) {
-		this.pictureId = pictureId;
-	}
+    public void setPictureId(String pictureId) {
+        this.pictureId = pictureId;
+    }
 
-	public int getIdType() {
+    public int getIdType() {
         return idType;
     }
 
@@ -1237,104 +1237,104 @@ public class UserInfo extends JpaEntity  implements Serializable {
     }
 
     /**
-	 * @return the passwordLastSetTime
-	 */
-	public Date getPasswordLastSetTime() {
-		return passwordLastSetTime;
-	}
+     * @return the passwordLastSetTime
+     */
+    public Date getPasswordLastSetTime() {
+        return passwordLastSetTime;
+    }
 
-	/**
-	 * @param passwordLastSetTime the passwordLastSetTime to set
-	 */
-	public void setPasswordLastSetTime(Date passwordLastSetTime) {
-		this.passwordLastSetTime = passwordLastSetTime;
-	}
+    /**
+     * @param passwordLastSetTime the passwordLastSetTime to set
+     */
+    public void setPasswordLastSetTime(Date passwordLastSetTime) {
+        this.passwordLastSetTime = passwordLastSetTime;
+    }
 
-	/**
-	 * @return the badPasswordTime
-	 */
-	public Date getBadPasswordTime() {
-		return badPasswordTime;
-	}
+    /**
+     * @return the badPasswordTime
+     */
+    public Date getBadPasswordTime() {
+        return badPasswordTime;
+    }
 
-	/**
-	 * @param badPasswordTime the badPasswordTime to set
-	 */
-	public void setBadPasswordTime(Date badPasswordTime) {
-		this.badPasswordTime = badPasswordTime;
-	}
+    /**
+     * @param badPasswordTime the badPasswordTime to set
+     */
+    public void setBadPasswordTime(Date badPasswordTime) {
+        this.badPasswordTime = badPasswordTime;
+    }
 
-	/**
-	 * @return the unLockTime
-	 */
-	public Date getUnLockTime() {
-		return unLockTime;
-	}
+    /**
+     * @return the unLockTime
+     */
+    public Date getUnLockTime() {
+        return unLockTime;
+    }
 
-	/**
-	 * @param unLockTime the unLockTime to set
-	 */
-	public void setUnLockTime(Date unLockTime) {
-		this.unLockTime = unLockTime;
-	}
+    /**
+     * @param unLockTime the unLockTime to set
+     */
+    public void setUnLockTime(Date unLockTime) {
+        this.unLockTime = unLockTime;
+    }
 
-	/**
-	 * @return the lastLoginTime
-	 */
-	public Date getLastLoginTime() {
-		return lastLoginTime;
-	}
+    /**
+     * @return the lastLoginTime
+     */
+    public Date getLastLoginTime() {
+        return lastLoginTime;
+    }
 
-	/**
-	 * @param lastLoginTime the lastLoginTime to set
-	 */
-	public void setLastLoginTime(Date lastLoginTime) {
-		this.lastLoginTime = lastLoginTime;
-	}
+    /**
+     * @param lastLoginTime the lastLoginTime to set
+     */
+    public void setLastLoginTime(Date lastLoginTime) {
+        this.lastLoginTime = lastLoginTime;
+    }
 
-	/**
-	 * @return the lastLogoffTime
-	 */
-	public Date getLastLogoffTime() {
-		return lastLogoffTime;
-	}
+    /**
+     * @return the lastLogoffTime
+     */
+    public Date getLastLogoffTime() {
+        return lastLogoffTime;
+    }
 
-	/**
-	 * @param lastLogoffTime the lastLogoffTime to set
-	 */
-	public void setLastLogoffTime(Date lastLogoffTime) {
-		this.lastLogoffTime = lastLogoffTime;
-	}
+    /**
+     * @param lastLogoffTime the lastLogoffTime to set
+     */
+    public void setLastLogoffTime(Date lastLogoffTime) {
+        this.lastLogoffTime = lastLogoffTime;
+    }
 
-	/**
-	 * @return the createdDate
-	 */
-	public Date getCreatedDate() {
-		return createdDate;
-	}
+    /**
+     * @return the createdDate
+     */
+    public Date getCreatedDate() {
+        return createdDate;
+    }
 
-	/**
-	 * @param createdDate the createdDate to set
-	 */
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
+    /**
+     * @param createdDate the createdDate to set
+     */
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
 
-	/**
-	 * @return the modifiedDate
-	 */
-	public Date getModifiedDate() {
-		return modifiedDate;
-	}
+    /**
+     * @return the modifiedDate
+     */
+    public Date getModifiedDate() {
+        return modifiedDate;
+    }
 
-	/**
-	 * @param modifiedDate the modifiedDate to set
-	 */
-	public void setModifiedDate(Date modifiedDate) {
-		this.modifiedDate = modifiedDate;
-	}
+    /**
+     * @param modifiedDate the modifiedDate to set
+     */
+    public void setModifiedDate(Date modifiedDate) {
+        this.modifiedDate = modifiedDate;
+    }
 
-	public String getTheme() {
+    public String getTheme() {
         return theme;
     }
 
@@ -1344,12 +1344,12 @@ public class UserInfo extends JpaEntity  implements Serializable {
 
     
     public String getUserState() {
-		return userState;
-	}
+        return userState;
+    }
 
-	public void setUserState(String userState) {
-		this.userState = userState;
-	}
+    public void setUserState(String userState) {
+        this.userState = userState;
+    }
 
     public List<Organizations> getDepts() {
         return depts;
@@ -1360,279 +1360,279 @@ public class UserInfo extends JpaEntity  implements Serializable {
     }
 
     public String getInstId() {
-		return instId;
-	}
+        return instId;
+    }
 
-	public void setInstId(String instId) {
-		this.instId = instId;
-	}
+    public void setInstId(String instId) {
+        this.instId = instId;
+    }
 
-	public String getInstName() {
-		return instName;
-	}
+    public String getInstName() {
+        return instName;
+    }
 
-	public void setInstName(String instName) {
-		this.instName = instName;
-	}
+    public void setInstName(String instName) {
+        this.instName = instName;
+    }
 
-	public String getRegionHistory() {
-		return regionHistory;
-	}
+    public String getRegionHistory() {
+        return regionHistory;
+    }
 
-	public void setRegionHistory(String regionHistory) {
-		this.regionHistory = regionHistory;
-	}
+    public void setRegionHistory(String regionHistory) {
+        this.regionHistory = regionHistory;
+    }
 
-	public String getPasswordHistory() {
-		return passwordHistory;
-	}
+    public String getPasswordHistory() {
+        return passwordHistory;
+    }
 
-	public void setPasswordHistory(String passwordHistory) {
-		this.passwordHistory = passwordHistory;
-	}
+    public void setPasswordHistory(String passwordHistory) {
+        this.passwordHistory = passwordHistory;
+    }
 
-	public String getSyncId() {
-		return syncId;
-	}
+    public String getSyncId() {
+        return syncId;
+    }
 
-	public void setSyncId(String syncId) {
-		this.syncId = syncId;
-	}
+    public void setSyncId(String syncId) {
+        this.syncId = syncId;
+    }
 
-	public String getSyncName() {
-		return syncName;
-	}
+    public String getSyncName() {
+        return syncName;
+    }
 
-	public void setSyncName(String syncName) {
-		this.syncName = syncName;
-	}
+    public void setSyncName(String syncName) {
+        this.syncName = syncName;
+    }
 
-	public String getOriginId() {
-		return originId;
-	}
+    public String getOriginId() {
+        return originId;
+    }
 
-	public void setOriginId(String originId) {
-		this.originId = originId;
-	}
+    public void setOriginId(String originId) {
+        this.originId = originId;
+    }
 
-	public String getOriginId2() {
-		return originId2;
-	}
+    public String getOriginId2() {
+        return originId2;
+    }
 
-	public void setOriginId2(String originId2) {
-		this.originId2 = originId2;
-	}
-	
-	public void trans() {
-		this.setPassword("");
-		this.setDecipherable("");
-		this.transPictureBase64();
-	}
-	
-	public void clearPassword() {
-		this.setPassword(null);
-		this.setDecipherable(null);
-	}
+    public void setOriginId2(String originId2) {
+        this.originId2 = originId2;
+    }
+    
+    public void trans() {
+        this.setPassword("");
+        this.setDecipherable("");
+        this.transPictureBase64();
+    }
+    
+    public void clearPassword() {
+        this.setPassword(null);
+        this.setDecipherable(null);
+    }
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("UserInfo [id=");
-		builder.append(id);
-		builder.append(", username=");
-		builder.append(username);
-		builder.append(", sharedSecret=");
-		builder.append(sharedSecret);
-		builder.append(", sharedCounter=");
-		builder.append(sharedCounter);
-		builder.append(", userType=");
-		builder.append(userType);
-		builder.append(", userState=");
-		builder.append(userState);
-		builder.append(", windowsAccount=");
-		builder.append(windowsAccount);
-		builder.append(", displayName=");
-		builder.append(displayName);
-		builder.append(", nickName=");
-		builder.append(nickName);
-		builder.append(", nameZhSpell=");
-		builder.append(nameZhSpell);
-		builder.append(", nameZhShortSpell=");
-		builder.append(nameZhShortSpell);
-		builder.append(", givenName=");
-		builder.append(givenName);
-		builder.append(", middleName=");
-		builder.append(middleName);
-		builder.append(", familyName=");
-		builder.append(familyName);
-		builder.append(", honorificPrefix=");
-		builder.append(honorificPrefix);
-		builder.append(", honorificSuffix=");
-		builder.append(honorificSuffix);
-		builder.append(", formattedName=");
-		builder.append(formattedName);
-		builder.append(", married=");
-		builder.append(married);
-		builder.append(", gender=");
-		builder.append(gender);
-		builder.append(", birthDate=");
-		builder.append(birthDate);
-		builder.append(", idType=");
-		builder.append(idType);
-		builder.append(", idCardNo=");
-		builder.append(idCardNo);
-		builder.append(", webSite=");
-		builder.append(webSite);
-		builder.append(", startWorkDate=");
-		builder.append(startWorkDate);
-		builder.append(", authnType=");
-		builder.append(authnType);
-		builder.append(", email=");
-		builder.append(email);
-		builder.append(", emailVerified=");
-		builder.append(emailVerified);
-		builder.append(", mobile=");
-		builder.append(mobile);
-		builder.append(", mobileVerified=");
-		builder.append(mobileVerified);
-		builder.append(", passwordQuestion=");
-		builder.append(passwordQuestion);
-		builder.append(", passwordAnswer=");
-		builder.append(passwordAnswer);
-		builder.append(", appLoginAuthnType=");
-		builder.append(appLoginAuthnType);
-		builder.append(", appLoginPassword=");
-		builder.append(appLoginPassword);
-		builder.append(", protectedApps=");
-		builder.append(protectedApps);
-		builder.append(", protectedAppsMap=");
-		builder.append(protectedAppsMap);
-		builder.append(", passwordLastSetTime=");
-		builder.append(passwordLastSetTime);
-		builder.append(", badPasswordCount=");
-		builder.append(badPasswordCount);
-		builder.append(", badPasswordTime=");
-		builder.append(badPasswordTime);
-		builder.append(", unLockTime=");
-		builder.append(unLockTime);
-		builder.append(", isLocked=");
-		builder.append(isLocked);
-		builder.append(", lastLoginTime=");
-		builder.append(lastLoginTime);
-		builder.append(", lastLoginIp=");
-		builder.append(lastLoginIp);
-		builder.append(", lastLogoffTime=");
-		builder.append(lastLogoffTime);
-		builder.append(", passwordSetType=");
-		builder.append(passwordSetType);
-		builder.append(", loginCount=");
-		builder.append(loginCount);
-		builder.append(", locale=");
-		builder.append(locale);
-		builder.append(", timeZone=");
-		builder.append(timeZone);
-		builder.append(", preferredLanguage=");
-		builder.append(preferredLanguage);
-		builder.append(", workCountry=");
-		builder.append(workCountry);
-		builder.append(", workRegion=");
-		builder.append(workRegion);
-		builder.append(", workLocality=");
-		builder.append(workLocality);
-		builder.append(", workStreetAddress=");
-		builder.append(workStreetAddress);
-		builder.append(", workAddressFormatted=");
-		builder.append(workAddressFormatted);
-		builder.append(", workEmail=");
-		builder.append(workEmail);
-		builder.append(", workPhoneNumber=");
-		builder.append(workPhoneNumber);
-		builder.append(", workPostalCode=");
-		builder.append(workPostalCode);
-		builder.append(", workFax=");
-		builder.append(workFax);
-		builder.append(", workOfficeName=");
-		builder.append(workOfficeName);
-		builder.append(", homeCountry=");
-		builder.append(homeCountry);
-		builder.append(", homeRegion=");
-		builder.append(homeRegion);
-		builder.append(", homeLocality=");
-		builder.append(homeLocality);
-		builder.append(", homeStreetAddress=");
-		builder.append(homeStreetAddress);
-		builder.append(", homeAddressFormatted=");
-		builder.append(homeAddressFormatted);
-		builder.append(", homeEmail=");
-		builder.append(homeEmail);
-		builder.append(", homePhoneNumber=");
-		builder.append(homePhoneNumber);
-		builder.append(", homePostalCode=");
-		builder.append(homePostalCode);
-		builder.append(", homeFax=");
-		builder.append(homeFax);
-		builder.append(", employeeNumber=");
-		builder.append(employeeNumber);
-		builder.append(", costCenter=");
-		builder.append(costCenter);
-		builder.append(", organization=");
-		builder.append(organization);
-		builder.append(", division=");
-		builder.append(division);
-		builder.append(", departmentId=");
-		builder.append(departmentId);
-		builder.append(", department=");
-		builder.append(department);
-		builder.append(", jobTitle=");
-		builder.append(jobTitle);
-		builder.append(", jobLevel=");
-		builder.append(jobLevel);
-		builder.append(", managerId=");
-		builder.append(managerId);
-		builder.append(", manager=");
-		builder.append(manager);
-		builder.append(", assistantId=");
-		builder.append(assistantId);
-		builder.append(", assistant=");
-		builder.append(assistant);
-		builder.append(", entryDate=");
-		builder.append(entryDate);
-		builder.append(", quitDate=");
-		builder.append(quitDate);
-		builder.append(", defineIm=");
-		builder.append(defineIm);
-		builder.append(", weixinFollow=");
-		builder.append(weixinFollow);
-		builder.append(", theme=");
-		builder.append(theme);
-		builder.append(", extraAttribute=");
-		builder.append(extraAttribute);
-		builder.append(", extraAttributeName=");
-		builder.append(extraAttributeName);
-		builder.append(", extraAttributeValue=");
-		builder.append(extraAttributeValue);
-		builder.append(", extraAttributeMap=");
-		builder.append(extraAttributeMap);
-		builder.append(", online=");
-		builder.append(online);
-		builder.append(", ldapDn=");
-		builder.append(ldapDn);
-		builder.append(", gridList=");
-		builder.append(gridList);
-		builder.append(", createdBy=");
-		builder.append(createdBy);
-		builder.append(", createdDate=");
-		builder.append(createdDate);
-		builder.append(", modifiedBy=");
-		builder.append(modifiedBy);
-		builder.append(", modifiedDate=");
-		builder.append(modifiedDate);
-		builder.append(", status=");
-		builder.append(status);
-		builder.append(", description=");
-		builder.append(description);
-		builder.append("]");
-		return builder.toString();
-	}
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("UserInfo [id=");
+        builder.append(id);
+        builder.append(", username=");
+        builder.append(username);
+        builder.append(", sharedSecret=");
+        builder.append(sharedSecret);
+        builder.append(", sharedCounter=");
+        builder.append(sharedCounter);
+        builder.append(", userType=");
+        builder.append(userType);
+        builder.append(", userState=");
+        builder.append(userState);
+        builder.append(", windowsAccount=");
+        builder.append(windowsAccount);
+        builder.append(", displayName=");
+        builder.append(displayName);
+        builder.append(", nickName=");
+        builder.append(nickName);
+        builder.append(", nameZhSpell=");
+        builder.append(nameZhSpell);
+        builder.append(", nameZhShortSpell=");
+        builder.append(nameZhShortSpell);
+        builder.append(", givenName=");
+        builder.append(givenName);
+        builder.append(", middleName=");
+        builder.append(middleName);
+        builder.append(", familyName=");
+        builder.append(familyName);
+        builder.append(", honorificPrefix=");
+        builder.append(honorificPrefix);
+        builder.append(", honorificSuffix=");
+        builder.append(honorificSuffix);
+        builder.append(", formattedName=");
+        builder.append(formattedName);
+        builder.append(", married=");
+        builder.append(married);
+        builder.append(", gender=");
+        builder.append(gender);
+        builder.append(", birthDate=");
+        builder.append(birthDate);
+        builder.append(", idType=");
+        builder.append(idType);
+        builder.append(", idCardNo=");
+        builder.append(idCardNo);
+        builder.append(", webSite=");
+        builder.append(webSite);
+        builder.append(", startWorkDate=");
+        builder.append(startWorkDate);
+        builder.append(", authnType=");
+        builder.append(authnType);
+        builder.append(", email=");
+        builder.append(email);
+        builder.append(", emailVerified=");
+        builder.append(emailVerified);
+        builder.append(", mobile=");
+        builder.append(mobile);
+        builder.append(", mobileVerified=");
+        builder.append(mobileVerified);
+        builder.append(", passwordQuestion=");
+        builder.append(passwordQuestion);
+        builder.append(", passwordAnswer=");
+        builder.append(passwordAnswer);
+        builder.append(", appLoginAuthnType=");
+        builder.append(appLoginAuthnType);
+        builder.append(", appLoginPassword=");
+        builder.append(appLoginPassword);
+        builder.append(", protectedApps=");
+        builder.append(protectedApps);
+        builder.append(", protectedAppsMap=");
+        builder.append(protectedAppsMap);
+        builder.append(", passwordLastSetTime=");
+        builder.append(passwordLastSetTime);
+        builder.append(", badPasswordCount=");
+        builder.append(badPasswordCount);
+        builder.append(", badPasswordTime=");
+        builder.append(badPasswordTime);
+        builder.append(", unLockTime=");
+        builder.append(unLockTime);
+        builder.append(", isLocked=");
+        builder.append(isLocked);
+        builder.append(", lastLoginTime=");
+        builder.append(lastLoginTime);
+        builder.append(", lastLoginIp=");
+        builder.append(lastLoginIp);
+        builder.append(", lastLogoffTime=");
+        builder.append(lastLogoffTime);
+        builder.append(", passwordSetType=");
+        builder.append(passwordSetType);
+        builder.append(", loginCount=");
+        builder.append(loginCount);
+        builder.append(", locale=");
+        builder.append(locale);
+        builder.append(", timeZone=");
+        builder.append(timeZone);
+        builder.append(", preferredLanguage=");
+        builder.append(preferredLanguage);
+        builder.append(", workCountry=");
+        builder.append(workCountry);
+        builder.append(", workRegion=");
+        builder.append(workRegion);
+        builder.append(", workLocality=");
+        builder.append(workLocality);
+        builder.append(", workStreetAddress=");
+        builder.append(workStreetAddress);
+        builder.append(", workAddressFormatted=");
+        builder.append(workAddressFormatted);
+        builder.append(", workEmail=");
+        builder.append(workEmail);
+        builder.append(", workPhoneNumber=");
+        builder.append(workPhoneNumber);
+        builder.append(", workPostalCode=");
+        builder.append(workPostalCode);
+        builder.append(", workFax=");
+        builder.append(workFax);
+        builder.append(", workOfficeName=");
+        builder.append(workOfficeName);
+        builder.append(", homeCountry=");
+        builder.append(homeCountry);
+        builder.append(", homeRegion=");
+        builder.append(homeRegion);
+        builder.append(", homeLocality=");
+        builder.append(homeLocality);
+        builder.append(", homeStreetAddress=");
+        builder.append(homeStreetAddress);
+        builder.append(", homeAddressFormatted=");
+        builder.append(homeAddressFormatted);
+        builder.append(", homeEmail=");
+        builder.append(homeEmail);
+        builder.append(", homePhoneNumber=");
+        builder.append(homePhoneNumber);
+        builder.append(", homePostalCode=");
+        builder.append(homePostalCode);
+        builder.append(", homeFax=");
+        builder.append(homeFax);
+        builder.append(", employeeNumber=");
+        builder.append(employeeNumber);
+        builder.append(", costCenter=");
+        builder.append(costCenter);
+        builder.append(", organization=");
+        builder.append(organization);
+        builder.append(", division=");
+        builder.append(division);
+        builder.append(", departmentId=");
+        builder.append(departmentId);
+        builder.append(", department=");
+        builder.append(department);
+        builder.append(", jobTitle=");
+        builder.append(jobTitle);
+        builder.append(", jobLevel=");
+        builder.append(jobLevel);
+        builder.append(", managerId=");
+        builder.append(managerId);
+        builder.append(", manager=");
+        builder.append(manager);
+        builder.append(", assistantId=");
+        builder.append(assistantId);
+        builder.append(", assistant=");
+        builder.append(assistant);
+        builder.append(", entryDate=");
+        builder.append(entryDate);
+        builder.append(", quitDate=");
+        builder.append(quitDate);
+        builder.append(", defineIm=");
+        builder.append(defineIm);
+        builder.append(", weixinFollow=");
+        builder.append(weixinFollow);
+        builder.append(", theme=");
+        builder.append(theme);
+        builder.append(", extraAttribute=");
+        builder.append(extraAttribute);
+        builder.append(", extraAttributeName=");
+        builder.append(extraAttributeName);
+        builder.append(", extraAttributeValue=");
+        builder.append(extraAttributeValue);
+        builder.append(", extraAttributeMap=");
+        builder.append(extraAttributeMap);
+        builder.append(", online=");
+        builder.append(online);
+        builder.append(", ldapDn=");
+        builder.append(ldapDn);
+        builder.append(", gridList=");
+        builder.append(gridList);
+        builder.append(", createdBy=");
+        builder.append(createdBy);
+        builder.append(", createdDate=");
+        builder.append(createdDate);
+        builder.append(", modifiedBy=");
+        builder.append(modifiedBy);
+        builder.append(", modifiedDate=");
+        builder.append(modifiedDate);
+        builder.append(", status=");
+        builder.append(status);
+        builder.append(", description=");
+        builder.append(description);
+        builder.append("]");
+        return builder.toString();
+    }
 
 }

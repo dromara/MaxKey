@@ -38,88 +38,88 @@ import org.springframework.web.servlet.ModelAndView;
  *
  */
 public class ExtendApiCndnsApiMailAdapter extends AbstractAuthorizeAdapter {
-	static final  Logger _logger = LoggerFactory.getLogger(ExtendApiCndnsApiMailAdapter.class);
-	//sign no  parameter
-	//sign=md5(action=getDomainInfo&appid=***&time=1579736456 + md5(token))
-	//sign with parameter
-	//sign=md5(action=getUserInfo&appid=***&email=admin@maxkey.org&time=1579736456 + md5(token))
+    static final  Logger _logger = LoggerFactory.getLogger(ExtendApiCndnsApiMailAdapter.class);
+    //sign no  parameter
+    //sign=md5(action=getDomainInfo&appid=***&time=1579736456 + md5(token))
+    //sign with parameter
+    //sign=md5(action=getUserInfo&appid=***&email=admin@maxkey.org&time=1579736456 + md5(token))
 
-	Accounts account;
-	
-	static String SIGN_STRING 		="action=getDomainInfo&appid=%s%s";
-	
-	static String SIGN_EMAIL_STRING ="action=getUserInfo&appid=%s&email=%s&time=%s%s";
-	
-	static String ADMIN_AUTHKEY_URI	="https://www.cndnsapi.com/email/clientmanagement?action=getDomailUrl&appid=%s&sign=%s&time=%s";
-	
-	static String AUTHKEY_URI		="https://www.cndnsapi.com/email/clientmanagement?action=getWebMailUrl&appid=%s&sign=%s&time=%s";
-	
-	
-	@Override
-	public Object generateInfo() {
-		return null;
-	}
-
-	@Override
-	public Object encrypt(Object data, String algorithmKey, String algorithm) {
-		return null;
-	}
-
-	@SuppressWarnings("unchecked")
+    Accounts account;
+    
+    static String SIGN_STRING         ="action=getDomainInfo&appid=%s%s";
+    
+    static String SIGN_EMAIL_STRING ="action=getUserInfo&appid=%s&email=%s&time=%s%s";
+    
+    static String ADMIN_AUTHKEY_URI    ="https://www.cndnsapi.com/email/clientmanagement?action=getDomailUrl&appid=%s&sign=%s&time=%s";
+    
+    static String AUTHKEY_URI        ="https://www.cndnsapi.com/email/clientmanagement?action=getWebMailUrl&appid=%s&sign=%s&time=%s";
+    
+    
     @Override
-	public ModelAndView authorize(ModelAndView modelAndView) {
-		HttpsTrusts.beforeConnection();
-		
-		Apps details=(Apps)app;
-		//extraAttrs from Applications
-		ExtraAttrs extraAttrs=null;
-		String action = "getWebMailUrl";
-		String domain = null;
-		if(details.getIsExtendAttr()==1){
-			extraAttrs=new ExtraAttrs(details.getExtendAttr());
-			if(extraAttrs.get("action")==null || extraAttrs.get("action").equalsIgnoreCase("getWebMailUrl")) {
-				action = "getWebMailUrl";
-			}else if(extraAttrs.get("action").equalsIgnoreCase("getDomailUrl")){
-				action = "getDomailUrl";
-				domain = extraAttrs.get("domain");
-			}
-		}
-		
-		String timestamp  = ""+Instant.now().getEpochSecond();
-		
-		String tokenMd5 =DigestUtils.md5Hex(details.getCredentials());
-		HashMap<String,Object > requestParamenter =new HashMap<String,Object >();
-		String redirect_uri = "";
-		if(action.equalsIgnoreCase("getDomailUrl")) {
-			String sign =DigestUtils.md5Hex
-					(String.format(
-							SIGN_STRING,
-							details.getPrincipal(),timestamp,tokenMd5));
-			requestParamenter.put("domain", domain);
-			String responseBody = new HttpRequestAdapter().post(
-					String.format(ADMIN_AUTHKEY_URI,details.getPrincipal(),sign,timestamp),requestParamenter);
-			
-			HashMap<String, String> authKey=JsonUtils.gsonStringToObject(responseBody, HashMap.class);
-			redirect_uri = authKey.get("adminUrl");
-			
-		}else {
-			String sign =DigestUtils.md5Hex
-					(String.format(
-							SIGN_EMAIL_STRING,
-							details.getPrincipal(),userInfo.getEmail(),timestamp,tokenMd5));
-			requestParamenter.put("email", userInfo.getWorkEmail());
-			String responseBody = new HttpRequestAdapter().post(
-					String.format(AUTHKEY_URI,details.getPrincipal(),sign,timestamp),requestParamenter);
-			
-			HashMap<String, String> authKey=JsonUtils.gsonStringToObject(responseBody, HashMap.class);
-			redirect_uri=authKey.get("webmailUrl");
-		}
-		
-		_logger.debug("redirect_uri : "+redirect_uri);
-		
+    public Object generateInfo() {
+        return null;
+    }
+
+    @Override
+    public Object encrypt(Object data, String algorithmKey, String algorithm) {
+        return null;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public ModelAndView authorize(ModelAndView modelAndView) {
+        HttpsTrusts.beforeConnection();
+        
+        Apps details=(Apps)app;
+        //extraAttrs from Applications
+        ExtraAttrs extraAttrs=null;
+        String action = "getWebMailUrl";
+        String domain = null;
+        if(details.getIsExtendAttr()==1){
+            extraAttrs=new ExtraAttrs(details.getExtendAttr());
+            if(extraAttrs.get("action")==null || extraAttrs.get("action").equalsIgnoreCase("getWebMailUrl")) {
+                action = "getWebMailUrl";
+            }else if(extraAttrs.get("action").equalsIgnoreCase("getDomailUrl")){
+                action = "getDomailUrl";
+                domain = extraAttrs.get("domain");
+            }
+        }
+        
+        String timestamp  = ""+Instant.now().getEpochSecond();
+        
+        String tokenMd5 =DigestUtils.md5Hex(details.getCredentials());
+        HashMap<String,Object > requestParamenter =new HashMap<String,Object >();
+        String redirect_uri = "";
+        if(action.equalsIgnoreCase("getDomailUrl")) {
+            String sign =DigestUtils.md5Hex
+                    (String.format(
+                            SIGN_STRING,
+                            details.getPrincipal(),timestamp,tokenMd5));
+            requestParamenter.put("domain", domain);
+            String responseBody = new HttpRequestAdapter().post(
+                    String.format(ADMIN_AUTHKEY_URI,details.getPrincipal(),sign,timestamp),requestParamenter);
+            
+            HashMap<String, String> authKey=JsonUtils.gsonStringToObject(responseBody, HashMap.class);
+            redirect_uri = authKey.get("adminUrl");
+            
+        }else {
+            String sign =DigestUtils.md5Hex
+                    (String.format(
+                            SIGN_EMAIL_STRING,
+                            details.getPrincipal(),userInfo.getEmail(),timestamp,tokenMd5));
+            requestParamenter.put("email", userInfo.getWorkEmail());
+            String responseBody = new HttpRequestAdapter().post(
+                    String.format(AUTHKEY_URI,details.getPrincipal(),sign,timestamp),requestParamenter);
+            
+            HashMap<String, String> authKey=JsonUtils.gsonStringToObject(responseBody, HashMap.class);
+            redirect_uri=authKey.get("webmailUrl");
+        }
+        
+        _logger.debug("redirect_uri : "+redirect_uri);
+        
         modelAndView.addObject("redirect_uri", redirect_uri);
         
         return modelAndView;
-	}
+    }
 
 }

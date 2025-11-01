@@ -101,20 +101,20 @@ public class PasswordGen {
     }
     
     public String shuffle(final String charString) {
-    	StringBuffer password = new StringBuffer("");
-    	List<String> list = new ArrayList<String>();
-    	for (int i = 0; i < charString.length(); i++) {
-    		list.add(charString.charAt(i) + "");
-    	}
-    	
-    	for (int i = 0; i < length / 2; i++) {
-    		Collections.shuffle(list);
-    	}
-    	
-    	for(String chr : list) {
-    		password.append(chr);
-    	}
-    	return password.toString();
+        StringBuffer password = new StringBuffer("");
+        List<String> list = new ArrayList<String>();
+        for (int i = 0; i < charString.length(); i++) {
+            list.add(charString.charAt(i) + "");
+        }
+        
+        for (int i = 0; i < length / 2; i++) {
+            Collections.shuffle(list);
+        }
+        
+        for(String chr : list) {
+            password.append(chr);
+        }
+        return password.toString();
     }
     
 }

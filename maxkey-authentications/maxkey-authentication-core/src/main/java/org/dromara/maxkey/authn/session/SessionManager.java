@@ -24,7 +24,7 @@ import org.dromara.maxkey.entity.history.HistoryLogin;
 
 public interface SessionManager {
 
-	public  void create(String sessionId, Session session);
+    public  void create(String sessionId, Session session);
 
     public  Session remove(String sessionId);
 

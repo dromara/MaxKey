@@ -19,7 +19,7 @@ package org.dromara.maxkey.persistence.cache;
 
 public interface MomentaryService {
 
-	public  void put(String sessionId , String name, Object value);
+    public  void put(String sessionId , String name, Object value);
 
     public  Object get(String sessionId , String name);
     

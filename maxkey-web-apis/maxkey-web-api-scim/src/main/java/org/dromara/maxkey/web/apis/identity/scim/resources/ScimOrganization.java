@@ -60,10 +60,10 @@ public class ScimOrganization extends ScimResource{
     private String description;
     
     // T/IDAC 002—2021
-    private String 	displayName;	//name
-    private long   	order;			//sortOrder
-    private String 	parent; 		//parentId
-    private String 	parentCode;		//parent code
+    private String     displayName;    //name
+    private long       order;            //sortOrder
+    private String     parent;         //parentId
+    private String     parentCode;        //parent code
     
     
     public String getCode() {
@@ -188,38 +188,38 @@ public class ScimOrganization extends ScimResource{
 
     
     public String getDisplayName() {
-		return displayName;
-	}
+        return displayName;
+    }
 
-	public void setDisplayName(String displayName) {
-		this.displayName = displayName;
-	}
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
 
-	public long getOrder() {
-		return order;
-	}
+    public long getOrder() {
+        return order;
+    }
 
-	public void setOrder(long order) {
-		this.order = order;
-	}
+    public void setOrder(long order) {
+        this.order = order;
+    }
 
-	public String getParent() {
-		return parent;
-	}
+    public String getParent() {
+        return parent;
+    }
 
-	public void setParent(String parent) {
-		this.parent = parent;
-	}
+    public void setParent(String parent) {
+        this.parent = parent;
+    }
 
-	public String getParentCode() {
-		return parentCode;
-	}
+    public String getParentCode() {
+        return parentCode;
+    }
 
-	public void setParentCode(String parentCode) {
-		this.parentCode = parentCode;
-	}
+    public void setParentCode(String parentCode) {
+        this.parentCode = parentCode;
+    }
 
-	public ScimOrganization() {
+    public ScimOrganization() {
         schemas =new HashSet<String>();
         schemas.add(SCHEMA);
         

@@ -39,9 +39,9 @@ public class LdapUtils {
     private static  final Logger _logger = LoggerFactory.getLogger(LdapUtils.class);
 
     public class Product{
-    	public static final  String ActiveDirectory		= "ActiveDirectory";
-    	public static final  String OpenLDAP			= "OpenLDAP";
-    	public static final  String StandardLDAP		= "StandardLDAP";
+        public static final  String ActiveDirectory        = "ActiveDirectory";
+        public static final  String OpenLDAP            = "OpenLDAP";
+        public static final  String StandardLDAP        = "StandardLDAP";
     }
     
     
@@ -98,16 +98,16 @@ public class LdapUtils {
     }
 
     protected DirContext InitialDirContext(Properties properties) {
-    	if(ctx == null) {
-    		ctx =createDirContext(properties);
-    	}
+        if(ctx == null) {
+            ctx =createDirContext(properties);
+        }
         return ctx;
     }
     
     protected DirContext createDirContext(Properties properties) {
-    	DirContext ctx = null;
+        DirContext ctx = null;
         try {
-        	ctx = new InitialDirContext(properties);
+            ctx = new InitialDirContext(properties);
             _logger.info("connect to ldap {} seccessful.",providerUrl);
         } catch (NamingException e) {
             _logger.error("connect to ldap {}  fail.",providerUrl);
@@ -117,40 +117,40 @@ public class LdapUtils {
     }
     
     protected void initEnvironment() {
-    	// LDAP
+        // LDAP
         if(props == null) {
-        	 _logger.debug("PROVIDER_URL {}" , providerUrl);
+             _logger.debug("PROVIDER_URL {}" , providerUrl);
              _logger.debug("SECURITY_PRINCIPAL {}" , principal);
              //no log credentials 
              //_logger.trace("SECURITY_CREDENTIALS {}" , credentials);
-	        props = new Properties();
-	        props.setProperty(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
-	        props.setProperty(Context.URL_PKG_PREFIXES, "com.sun.jndi.url");
-	        props.setProperty(Context.REFERRAL, referral);
-	        props.setProperty(Context.SECURITY_AUTHENTICATION, "simple");
-	
-	        props.setProperty(Context.PROVIDER_URL, providerUrl);
-	        props.setProperty(Context.SECURITY_PRINCIPAL, principal);
-	        props.setProperty(Context.SECURITY_CREDENTIALS, credentials);
-	
-	        if (ssl && providerUrl.toLowerCase().startsWith("ldaps")) {
-	            System.setProperty("javax.net.ssl.trustStore", trustStore);
-	            System.setProperty("javax.net.ssl.trustStorePassword", trustStorePassword);
-	            props.put(Context.SECURITY_PROTOCOL, "ssl");
-	            props.put(Context.REFERRAL, "follow");
-	        }
+            props = new Properties();
+            props.setProperty(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
+            props.setProperty(Context.URL_PKG_PREFIXES, "com.sun.jndi.url");
+            props.setProperty(Context.REFERRAL, referral);
+            props.setProperty(Context.SECURITY_AUTHENTICATION, "simple");
+    
+            props.setProperty(Context.PROVIDER_URL, providerUrl);
+            props.setProperty(Context.SECURITY_PRINCIPAL, principal);
+            props.setProperty(Context.SECURITY_CREDENTIALS, credentials);
+    
+            if (ssl && providerUrl.toLowerCase().startsWith("ldaps")) {
+                System.setProperty("javax.net.ssl.trustStore", trustStore);
+                System.setProperty("javax.net.ssl.trustStorePassword", trustStorePassword);
+                props.put(Context.SECURITY_PROTOCOL, "ssl");
+                props.put(Context.REFERRAL, "follow");
+            }
         }
     }
 
     // connect to ldap server
     public DirContext openConnection() {
-    	initEnvironment();
+        initEnvironment();
         return InitialDirContext(props);
     }
     
  // connect to ldap server
     public DirContext createConnection() {
-    	initEnvironment();
+        initEnvironment();
         return createDirContext(props);
     }
 
@@ -298,15 +298,15 @@ public class LdapUtils {
     }
 
     public static String getAttrStringValue(Attributes attrs, String elem) {
-    	StringBuffer  values = new StringBuffer("");
+        StringBuffer  values = new StringBuffer("");
         try {
             if (attrs.get(elem) != null) {
                 for (int i = 0; i < attrs.get(elem).size(); i++) {
-                	if(i == 0) {
-                		values.append(attrs.get(elem).get(i).toString());
-                	}else {
-                		values.append(" , ").append(attrs.get(elem).get(i).toString());
-                	}
+                    if(i == 0) {
+                        values.append(attrs.get(elem).get(i).toString());
+                    }else {
+                        values.append(" , ").append(attrs.get(elem).get(i).toString());
+                    }
                 }
             }
         } catch (NamingException e) {
@@ -317,15 +317,15 @@ public class LdapUtils {
     }
     
     public static String getAttrStringValue(Attribute attr) {
-    	StringBuffer  values = new StringBuffer("");
+        StringBuffer  values = new StringBuffer("");
         try {
             if (attr != null) {
                 for (int i = 0; i < attr.size(); i++) {
-                	if(i == 0) {
-                		values.append(attr.get(i).toString());
-                	}else {
-                		values.append(" , ").append(attr.get(i).toString());
-                	}
+                    if(i == 0) {
+                        values.append(attr.get(i).toString());
+                    }else {
+                        values.append(" , ").append(attr.get(i).toString());
+                    }
                 }
             }
         } catch (NamingException e) {
@@ -336,11 +336,11 @@ public class LdapUtils {
     }
     
     public static String getAttributeStringValue(String attribute ,HashMap<String,Attribute> attributeMap) throws NamingException {
-		attribute= attribute.toLowerCase();
-		if(null != attributeMap.get(attribute)  && null != attributeMap.get(attribute).get()) {
-			return attributeMap.get(attribute).get().toString();
-		}else {
-			return "";
-		}
-	}
+        attribute= attribute.toLowerCase();
+        if(null != attributeMap.get(attribute)  && null != attributeMap.get(attribute).get()) {
+            return attributeMap.get(attribute).get().toString();
+        }else {
+            return "";
+        }
+    }
 }

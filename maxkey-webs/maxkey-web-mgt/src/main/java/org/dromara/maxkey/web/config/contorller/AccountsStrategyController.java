@@ -36,71 +36,71 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value={"/config/accountsstrategy"})
 public class AccountsStrategyController {
-	static final  Logger logger = LoggerFactory.getLogger(AccountsStrategyController.class);
-	
-	@Autowired
-	AccountsStrategyService accountsStrategyService;
-	
-	@Autowired
-	AccountsService accountsService;
-	
-	@GetMapping(value = { "/fetch" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<JpaPageResults<AccountsStrategy>> fetch(@ModelAttribute AccountsStrategy accountsStrategy,@CurrentUser UserInfo currentUser) {
-		accountsStrategy.setInstId(currentUser.getInstId());
-		JpaPageResults<AccountsStrategy> accountsStrategyList =accountsStrategyService.fetchPageResults(accountsStrategy);
-		for (AccountsStrategy strategy : accountsStrategyList.getRows()){
-			strategy.transIconBase64();
-		}
-		logger.debug("Accounts Strategy {}" , accountsStrategyList);
-		return new Message<>(accountsStrategyList);
-	}
+    static final  Logger logger = LoggerFactory.getLogger(AccountsStrategyController.class);
+    
+    @Autowired
+    AccountsStrategyService accountsStrategyService;
+    
+    @Autowired
+    AccountsService accountsService;
+    
+    @GetMapping(value = { "/fetch" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public Message<JpaPageResults<AccountsStrategy>> fetch(@ModelAttribute AccountsStrategy accountsStrategy,@CurrentUser UserInfo currentUser) {
+        accountsStrategy.setInstId(currentUser.getInstId());
+        JpaPageResults<AccountsStrategy> accountsStrategyList =accountsStrategyService.fetchPageResults(accountsStrategy);
+        for (AccountsStrategy strategy : accountsStrategyList.getRows()){
+            strategy.transIconBase64();
+        }
+        logger.debug("Accounts Strategy {}" , accountsStrategyList);
+        return new Message<>(accountsStrategyList);
+    }
 
-	@GetMapping(value={"/query"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<AccountsStrategy> query(@ModelAttribute AccountsStrategy accountsStrategy,@CurrentUser UserInfo currentUser) {
-		logger.debug("-query  : {}" , accountsStrategy);
-		if (CollectionUtils.isNotEmpty(accountsStrategyService.query(accountsStrategy))) {
-			 return new Message<>(Message.SUCCESS);
-		} else {
-			 return new Message<>(Message.FAIL);
-		}
-	}
-	
-	@GetMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<AccountsStrategy> get(@PathVariable("id") String id) {
-		AccountsStrategy accountsStrategy = accountsStrategyService.get(id);
-		return new Message<>(accountsStrategy);
-	}
-	
-	@PostMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<AccountsStrategy> insert(@RequestBody AccountsStrategy accountsStrategy,@CurrentUser UserInfo currentUser) {
-		logger.debug("-Add  : {}" , accountsStrategy);
-		
-		if (accountsStrategyService.insert(accountsStrategy)) {
-			accountsService.refreshByStrategy(accountsStrategy);
-			return new Message<>(Message.SUCCESS);
-		} else {
-			return new Message<>(Message.FAIL);
-		}
-	}
-	
-	@PutMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<AccountsStrategy> update(@RequestBody  AccountsStrategy accountsStrategy,@CurrentUser UserInfo currentUser) {
-		logger.debug("-update  : {}" , accountsStrategy);
-		if (accountsStrategyService.update(accountsStrategy)) {
-			accountsService.refreshByStrategy(accountsStrategy);
-		    return new Message<>(Message.SUCCESS);
-		} else {
-			return new Message<>(Message.FAIL);
-		}
-	}
-	
-	@DeleteMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<AccountsStrategy> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
-		logger.debug("-delete  ids : {} " , ids);
-		if (accountsStrategyService.deleteBatch(ids)) {
-			 return new Message<>(Message.SUCCESS);
-		} else {
-			return new Message<>(Message.FAIL);
-		}
-	}
+    @GetMapping(value={"/query"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public Message<AccountsStrategy> query(@ModelAttribute AccountsStrategy accountsStrategy,@CurrentUser UserInfo currentUser) {
+        logger.debug("-query  : {}" , accountsStrategy);
+        if (CollectionUtils.isNotEmpty(accountsStrategyService.query(accountsStrategy))) {
+             return new Message<>(Message.SUCCESS);
+        } else {
+             return new Message<>(Message.FAIL);
+        }
+    }
+    
+    @GetMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public Message<AccountsStrategy> get(@PathVariable("id") String id) {
+        AccountsStrategy accountsStrategy = accountsStrategyService.get(id);
+        return new Message<>(accountsStrategy);
+    }
+    
+    @PostMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public Message<AccountsStrategy> insert(@RequestBody AccountsStrategy accountsStrategy,@CurrentUser UserInfo currentUser) {
+        logger.debug("-Add  : {}" , accountsStrategy);
+        
+        if (accountsStrategyService.insert(accountsStrategy)) {
+            accountsService.refreshByStrategy(accountsStrategy);
+            return new Message<>(Message.SUCCESS);
+        } else {
+            return new Message<>(Message.FAIL);
+        }
+    }
+    
+    @PutMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public Message<AccountsStrategy> update(@RequestBody  AccountsStrategy accountsStrategy,@CurrentUser UserInfo currentUser) {
+        logger.debug("-update  : {}" , accountsStrategy);
+        if (accountsStrategyService.update(accountsStrategy)) {
+            accountsService.refreshByStrategy(accountsStrategy);
+            return new Message<>(Message.SUCCESS);
+        } else {
+            return new Message<>(Message.FAIL);
+        }
+    }
+    
+    @DeleteMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public Message<AccountsStrategy> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
+        logger.debug("-delete  ids : {} " , ids);
+        if (accountsStrategyService.deleteBatch(ids)) {
+             return new Message<>(Message.SUCCESS);
+        } else {
+            return new Message<>(Message.FAIL);
+        }
+    }
 }

@@ -46,10 +46,10 @@ public class ImageCaptchaEndpoint {
     Producer captchaProducer;
     
     @Autowired 
-	MomentaryService momentaryService;
+    MomentaryService momentaryService;
     
     @Autowired
-	AuthTokenService authTokenService;
+    AuthTokenService authTokenService;
 
     /**
      * captcha image Producer.
@@ -59,32 +59,32 @@ public class ImageCaptchaEndpoint {
      */
     @GetMapping(value={"/captcha"}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public  Message<ImageCaptcha> captchaHandleRequest( 
-    			@RequestParam(value="captcha",required=false,defaultValue="text") String captchaType,
-    			@RequestParam(value="state",required=false,defaultValue="state") String state) {
+                @RequestParam(value="captcha",required=false,defaultValue="text") String captchaType,
+                @RequestParam(value="state",required=false,defaultValue="state") String state) {
         try {
             String kaptchaText = captchaProducer.createText();
             String kaptchaValue = kaptchaText;
             if (captchaType.equalsIgnoreCase("Arithmetic")) {
-            	//去除0，增加计算复杂度
-            	kaptchaText = kaptchaText.replace("0", "");
+                //去除0，增加计算复杂度
+                kaptchaText = kaptchaText.replace("0", "");
                 Integer minuend = Integer.valueOf(kaptchaText.substring(0, 1));
                 Integer subtrahend = Integer.valueOf(kaptchaText.substring(1, 2));
                 if (minuend - subtrahend > 0) {
-                	kaptchaValue = (minuend - subtrahend ) + "";
+                    kaptchaValue = (minuend - subtrahend ) + "";
                     kaptchaText = minuend + "-" + subtrahend + "=?";
                 } else {
-                	kaptchaValue = (minuend + subtrahend) + "";
+                    kaptchaValue = (minuend + subtrahend) + "";
                     kaptchaText = minuend + "+" + subtrahend + "=?";
                 }
             }
             String kaptchaKey = "";
             if(StringUtils.isNotBlank(state) && !state.equalsIgnoreCase("state")) {
-            	//just validate state Token
-            	if(!authTokenService.validateJwtToken(state)) {
-            		return new Message<>(Message.FAIL,"JwtToken is not Validate  ");
-            	}
+                //just validate state Token
+                if(!authTokenService.validateJwtToken(state)) {
+                    return new Message<>(Message.FAIL,"JwtToken is not Validate  ");
+                }
             }else {
-            	state = authTokenService.genRandomJwt();
+                state = authTokenService.genRandomJwt();
             }
             kaptchaKey = authTokenService.resolveJWTID(state);
             _logger.trace("kaptchaKey {} , Captcha Text is {}" ,kaptchaKey, kaptchaValue);
@@ -92,7 +92,7 @@ public class ImageCaptchaEndpoint {
             momentaryService.put("", kaptchaKey, kaptchaValue);
             // create the image with the text
             BufferedImage bufferedImage = captchaProducer.createImage(kaptchaText);
-			String b64Image = Base64Utils.encodeImage(bufferedImage);
+            String b64Image = Base64Utils.encodeImage(bufferedImage);
            
             _logger.trace("b64Image {}" , b64Image);
             
@@ -103,7 +103,7 @@ public class ImageCaptchaEndpoint {
         return new Message<>(Message.FAIL);
     }
 
-	public void setCaptchaProducer(Producer captchaProducer) {
+    public void setCaptchaProducer(Producer captchaProducer) {
         this.captchaProducer = captchaProducer;
     }
 

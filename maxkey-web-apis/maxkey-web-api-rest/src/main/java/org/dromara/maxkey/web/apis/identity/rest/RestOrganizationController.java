@@ -43,15 +43,15 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RestController
 @RequestMapping(value={"/api/idm/Organization"})
 public class RestOrganizationController {
-	static final  Logger _logger = LoggerFactory.getLogger(RestOrganizationController.class);
-	
+    static final  Logger _logger = LoggerFactory.getLogger(RestOrganizationController.class);
+    
     @Autowired
     OrganizationsService organizationsService;
     
     @GetMapping(value = "/{id}")
     public Organizations getUser(@PathVariable String id,
                                        @RequestParam(required = false) String attributes) {
-    	_logger.debug("Organizations id {} , attributes {}", id , attributes);
+        _logger.debug("Organizations id {} , attributes {}", id , attributes);
         return organizationsService.get(id);
     }
 
@@ -59,7 +59,7 @@ public class RestOrganizationController {
     public Organizations create(@RequestBody  Organizations org,
                                                       @RequestParam(required = false) String attributes,
                                                       UriComponentsBuilder builder) {
-    	_logger.debug("Organizations content {} , attributes {}", org , attributes);
+        _logger.debug("Organizations content {} , attributes {}", org , attributes);
         Organizations loadOrg = organizationsService.get(org.getId());
         if(loadOrg == null) {
             organizationsService.insert(org);
@@ -73,7 +73,7 @@ public class RestOrganizationController {
     public Organizations replace(@PathVariable String id,
                                                        @RequestBody Organizations org,
                                                        @RequestParam(required = false) String attributes) {
-    	_logger.debug("Organizations id {} , content {} , attributes {}", id , org , attributes);
+        _logger.debug("Organizations id {} , content {} , attributes {}", id , org , attributes);
         Organizations loadOrg = organizationsService.get(id);
         if(loadOrg == null) {
             organizationsService.insert(org);
@@ -87,19 +87,19 @@ public class RestOrganizationController {
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable final String id) {
-    	_logger.debug("Organizations id {} ", id );
+        _logger.debug("Organizations id {} ", id );
         organizationsService.delete(id);
        
     }
     
     @GetMapping(value = { "/.search" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<JpaPageResults<Organizations>> search(@ModelAttribute Organizations org) {
-    	if(StringUtils.isBlank(org.getInstId())){
-    		org.setInstId("1");
-    	}
-		_logger.debug("Organizations {}" , org);
-		return new Message<>(organizationsService.fetchPageResults(org));
-	}
+    public Message<JpaPageResults<Organizations>> search(@ModelAttribute Organizations org) {
+        if(StringUtils.isBlank(org.getInstId())){
+            org.setInstId("1");
+        }
+        _logger.debug("Organizations {}" , org);
+        return new Message<>(organizationsService.fetchPageResults(org));
+    }
 
 
 }

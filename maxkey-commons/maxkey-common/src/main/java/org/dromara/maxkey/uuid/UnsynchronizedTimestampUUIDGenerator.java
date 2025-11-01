@@ -124,7 +124,7 @@ public class UnsynchronizedTimestampUUIDGenerator implements UUIDGenerator
  {
      long unique_time = (last_time + EPOCH_OFFSET) * CLOCK_RES + clock_adj;
      if(++clock_adj > CLOCK_RES) {
-    	 adjustmentOverflow();
+         adjustmentOverflow();
      }
 
      return new UUID((int) (unique_time & 0xFFFFFFFF),

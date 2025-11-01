@@ -41,16 +41,16 @@ import jakarta.servlet.http.HttpServletRequest;
 @FreemarkerTag("basePath")
 public class BasePathTagDirective implements TemplateDirectiveModel {
     
-	@Autowired
+    @Autowired
     private HttpServletRequest request;
-	
-	@Override
-	@SuppressWarnings("rawtypes")
-	public void execute(Environment env, Map params, TemplateModel[] loopVars, TemplateDirectiveBody body)
-			throws TemplateException, IOException {
-	    
-		env.getOut().append(WebContext.getContextPath(request,true));
-		
-	}
+    
+    @Override
+    @SuppressWarnings("rawtypes")
+    public void execute(Environment env, Map params, TemplateModel[] loopVars, TemplateDirectiveBody body)
+            throws TemplateException, IOException {
+        
+        env.getOut().append(WebContext.getContextPath(request,true));
+        
+    }
 
 }

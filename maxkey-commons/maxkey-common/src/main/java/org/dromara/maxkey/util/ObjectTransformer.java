@@ -35,27 +35,27 @@ import org.dromara.maxkey.crypto.HexUtils;
  */
 
 public class ObjectTransformer {
-	
-	/**
-	 * serialize Serializable Object 2 HEX String
-	 * @param Serializable Object
-	 * @return String
-	 */
-	public static final String serialize(Serializable s){ 
-	    return HexUtils.hex2String(SerializationUtils.serialize(s)); 
-	} 
-	
-	/**
-	 * deserialize 2 Object
-	 * @param HEX String
-	 * @return Object
-	 */
-	public static final <T> T deserialize(String hex) { 
-	    return SerializationUtils.deserialize(HexUtils.hex2Bytes(hex)); 
-	} 
-	
+    
+    /**
+     * serialize Serializable Object 2 HEX String
+     * @param Serializable Object
+     * @return String
+     */
+    public static final String serialize(Serializable s){ 
+        return HexUtils.hex2String(SerializationUtils.serialize(s)); 
+    } 
+    
+    /**
+     * deserialize 2 Object
+     * @param HEX String
+     * @return Object
+     */
+    public static final <T> T deserialize(String hex) { 
+        return SerializationUtils.deserialize(HexUtils.hex2Bytes(hex)); 
+    } 
+    
 
-	
-	
-	
+    
+    
+    
 }

@@ -29,5 +29,5 @@ import org.dromara.mybatis.jpa.IJpaMapper;
  */
 
 public  interface SynchronizersMapper extends IJpaMapper<Synchronizers> {
-	
+    
 }

@@ -68,14 +68,14 @@ public class LoginSessionController {
      */
     @GetMapping(value = { "/fetch" })
     public Message<JpaPageResults<HistoryLogin>> fetch(
-    			@ModelAttribute("historyLogin") HistoryLogin historyLogin,
-    			@CurrentUser UserInfo currentUser) {
+                @ModelAttribute("historyLogin") HistoryLogin historyLogin,
+                @CurrentUser UserInfo currentUser) {
         logger.debug("history/session/fetch {}" , historyLogin);
         historyLogin.setUserId(currentUser.getId());
         historyLogin.setInstId(currentUser.getInstId());
         return new Message<JpaPageResults<HistoryLogin>>(
-        			historyLoginService.queryOnlineSession(historyLogin)
-        		);
+                    historyLoginService.queryOnlineSession(historyLogin)
+                );
     }
 
     @DeleteMapping(value="/terminate")  
@@ -90,9 +90,9 @@ public class LoginSessionController {
                 }
                 
                 sessionManager.terminate(
-                		sessionId,
-                		currentUser.getId(),
-                		currentUser.getUsername());
+                        sessionId,
+                        currentUser.getId(),
+                        currentUser.getUsername());
             }
             isTerminated = true;
         }catch(Exception e) {
@@ -100,9 +100,9 @@ public class LoginSessionController {
         }
         
         if(isTerminated) {
-        	return new Message<>(Message.SUCCESS);
+            return new Message<>(Message.SUCCESS);
         } else {
-        	return new Message<>(Message.ERROR);
+            return new Message<>(Message.ERROR);
         }
     }
     

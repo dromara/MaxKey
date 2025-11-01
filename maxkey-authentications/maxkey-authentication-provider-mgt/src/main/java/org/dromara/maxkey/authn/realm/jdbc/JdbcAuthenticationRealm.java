@@ -57,40 +57,40 @@ public class JdbcAuthenticationRealm extends AbstractAuthenticationRealm {
     }
     
     public JdbcAuthenticationRealm(
-    		PasswordEncoder passwordEncoder,
-    		PasswordPolicyValidatorService passwordPolicyValidatorService,
-    		LoginService loginService,
-    		HistoryLoginService historyLoginService,
-    		UserInfoService userInfoService,
-    		IpLocationParser ipLocationParser,
-    	    JdbcTemplate jdbcTemplate) {
-    	
-    	this.passwordEncoder =passwordEncoder;
-    	this.passwordPolicyValidatorService=passwordPolicyValidatorService;
-    	this.loginService = loginService;
-    	this.historyLoginService = historyLoginService;
-    	this.userInfoService = userInfoService;
-    	this.ipLocationParser = ipLocationParser;
+            PasswordEncoder passwordEncoder,
+            PasswordPolicyValidatorService passwordPolicyValidatorService,
+            LoginService loginService,
+            HistoryLoginService historyLoginService,
+            UserInfoService userInfoService,
+            IpLocationParser ipLocationParser,
+            JdbcTemplate jdbcTemplate) {
+        
+        this.passwordEncoder =passwordEncoder;
+        this.passwordPolicyValidatorService=passwordPolicyValidatorService;
+        this.loginService = loginService;
+        this.historyLoginService = historyLoginService;
+        this.userInfoService = userInfoService;
+        this.ipLocationParser = ipLocationParser;
         this.jdbcTemplate = jdbcTemplate;
     }
   
     public JdbcAuthenticationRealm(
-    		PasswordEncoder passwordEncoder,
-    		PasswordPolicyValidatorService passwordPolicyValidatorService,
-    		LoginService loginService,
-    		HistoryLoginService historyLoginService,
-    		UserInfoService userInfoService,
-    		IpLocationParser ipLocationParser,
-    	    JdbcTemplate jdbcTemplate,
-    	    LdapAuthenticationRealmService ldapAuthenticationRealmService) {
-		this.passwordEncoder = passwordEncoder;
-		this.passwordPolicyValidatorService = passwordPolicyValidatorService;
-		this.loginService = loginService;
-		this.historyLoginService = historyLoginService;
-		this.userInfoService = userInfoService;
-		this.ipLocationParser = ipLocationParser;
-		this.jdbcTemplate = jdbcTemplate;
-		this.ldapAuthenticationRealmService = ldapAuthenticationRealmService;
+            PasswordEncoder passwordEncoder,
+            PasswordPolicyValidatorService passwordPolicyValidatorService,
+            LoginService loginService,
+            HistoryLoginService historyLoginService,
+            UserInfoService userInfoService,
+            IpLocationParser ipLocationParser,
+            JdbcTemplate jdbcTemplate,
+            LdapAuthenticationRealmService ldapAuthenticationRealmService) {
+        this.passwordEncoder = passwordEncoder;
+        this.passwordPolicyValidatorService = passwordPolicyValidatorService;
+        this.loginService = loginService;
+        this.historyLoginService = historyLoginService;
+        this.userInfoService = userInfoService;
+        this.ipLocationParser = ipLocationParser;
+        this.jdbcTemplate = jdbcTemplate;
+        this.ldapAuthenticationRealmService = ldapAuthenticationRealmService;
     }
     
     /**
@@ -105,28 +105,28 @@ public class JdbcAuthenticationRealm extends AbstractAuthenticationRealm {
         passwordMatches = passwordEncoder.matches(password,userInfo.getPassword());
         
         if(ldapAuthenticationRealmService != null) {
-        	//passwordMatches == false and ldapSupport ==true
-        	//validate password with LDAP
-	        try {
-	        	LdapAuthenticationRealm ldapRealm = ldapAuthenticationRealmService.getByInstId(userInfo.getInstId());
-	        	if(!passwordMatches && ldapRealm != null 
-		        		&& ldapRealm.isLdapSupport() 
-		        		&& userInfo.getIsLocked() == ConstsStatus.ACTIVE) {
-		            passwordMatches = ldapRealm.passwordMatches(userInfo, password);
-		            if(passwordMatches) {
-		                //write password to database Realm
-		            	ChangePassword changePassword = new ChangePassword(userInfo);
-		                changePassword.setPassword(password);
-		                userInfoService.changePassword(changePassword, false);
-		            }
-		        }
-	        }catch(Exception e) {
-	        	_logger.debug("passwordvalid Exception : {}" , e);
-	        }
+            //passwordMatches == false and ldapSupport ==true
+            //validate password with LDAP
+            try {
+                LdapAuthenticationRealm ldapRealm = ldapAuthenticationRealmService.getByInstId(userInfo.getInstId());
+                if(!passwordMatches && ldapRealm != null 
+                        && ldapRealm.isLdapSupport() 
+                        && userInfo.getIsLocked() == ConstsStatus.ACTIVE) {
+                    passwordMatches = ldapRealm.passwordMatches(userInfo, password);
+                    if(passwordMatches) {
+                        //write password to database Realm
+                        ChangePassword changePassword = new ChangePassword(userInfo);
+                        changePassword.setPassword(password);
+                        userInfoService.changePassword(changePassword, false);
+                    }
+                }
+            }catch(Exception e) {
+                _logger.debug("passwordvalid Exception : {}" , e);
+            }
         }
         _logger.debug("passwordvalid : {}" , passwordMatches);
         if (!passwordMatches) {
-        	loginService.plusBadPasswordCount(userInfo);
+            loginService.plusBadPasswordCount(userInfo);
             insertLoginHistory(userInfo, ConstsLoginType.LOCAL, "", "xe00000004", WebConstants.LOGIN_RESULT.PASSWORD_ERROE);
             CnfPasswordPolicy passwordPolicy = passwordPolicyValidatorService.getPasswordPolicy();
             if(userInfo.getBadPasswordCount()>=(passwordPolicy.getAttempts()/2)) {

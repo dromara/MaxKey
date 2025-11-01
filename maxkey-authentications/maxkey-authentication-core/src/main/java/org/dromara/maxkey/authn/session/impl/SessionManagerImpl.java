@@ -46,122 +46,122 @@ import org.springframework.jdbc.core.RowMapper;
  *
  */
 public class SessionManagerImpl implements SessionManager{
-	private static final  Logger _logger = LoggerFactory.getLogger(SessionManagerImpl.class);
-	
-	private static final String DEFAULT_DEFAULT_SELECT_STATEMENT = 
-			"select id,sessionid,userId,username,displayname,logintime from mxk_history_login where sessionstatus = 1";
-	
+    private static final  Logger _logger = LoggerFactory.getLogger(SessionManagerImpl.class);
+    
+    private static final String DEFAULT_DEFAULT_SELECT_STATEMENT = 
+            "select id,sessionid,userId,username,displayname,logintime from mxk_history_login where sessionstatus = 1";
+    
     private static final String LOGOUT_USERINFO_UPDATE_STATEMENT = 
-    		"update mxk_userinfo set lastlogofftime = ? , online = " + UserInfo.ONLINE.OFFLINE + "  where id = ?";
-	
+            "update mxk_userinfo set lastlogofftime = ? , online = " + UserInfo.ONLINE.OFFLINE + "  where id = ?";
+    
     private static final String HISTORY_LOGOUT_UPDATE_STATEMENT = 
-    		"update mxk_history_login set logouttime = ? ,sessionstatus = 7 where  sessionid = ?";
+            "update mxk_history_login set logouttime = ? ,sessionstatus = 7 where  sessionid = ?";
     
     private static final String NO_SESSION_UPDATE_STATEMENT = 
-    		"update mxk_history_login set sessionstatus = 7 where sessionstatus = 1 and (sessionid is null or sessionid = '')";
+            "update mxk_history_login set sessionstatus = 7 where sessionstatus = 1 and (sessionid is null or sessionid = '')";
 
     private JdbcTemplate jdbcTemplate;
     
-	private InMemorySessionManager 	inMemorySessionManager;
-	
-	private RedisSessionManager 	redisSessionManager;
-	
-	private boolean isRedis = false;	
-	
-	private int validitySeconds ;
-	
-	public SessionManagerImpl(int persistence,
-			 	JdbcTemplate jdbcTemplate,
-	            RedisConnectionFactory redisConnFactory,
-	            int validitySeconds) {
-		this.validitySeconds = validitySeconds;
-		 this.jdbcTemplate = jdbcTemplate;
-		 this.inMemorySessionManager = 
-				new InMemorySessionManager(validitySeconds);
-		 _logger.debug("InMemorySessionManager");
-		 if (persistence == ConstsPersistence.REDIS) {
-			isRedis = true;
-			this.redisSessionManager = 
-					new RedisSessionManager(redisConnFactory,validitySeconds);
-			_logger.debug("RedisSessionManager");
-		 }
-	}
+    private InMemorySessionManager     inMemorySessionManager;
+    
+    private RedisSessionManager     redisSessionManager;
+    
+    private boolean isRedis = false;    
+    
+    private int validitySeconds ;
+    
+    public SessionManagerImpl(int persistence,
+                 JdbcTemplate jdbcTemplate,
+                RedisConnectionFactory redisConnFactory,
+                int validitySeconds) {
+        this.validitySeconds = validitySeconds;
+         this.jdbcTemplate = jdbcTemplate;
+         this.inMemorySessionManager = 
+                new InMemorySessionManager(validitySeconds);
+         _logger.debug("InMemorySessionManager");
+         if (persistence == ConstsPersistence.REDIS) {
+            isRedis = true;
+            this.redisSessionManager = 
+                    new RedisSessionManager(redisConnFactory,validitySeconds);
+            _logger.debug("RedisSessionManager");
+         }
+    }
 
-	@Override
-	public void create(String sessionId, Session session) {
-		inMemorySessionManager.create(sessionId, session);
-		if(isRedis) {
-			redisSessionManager.create(sessionId, session);
-		}
-	}
+    @Override
+    public void create(String sessionId, Session session) {
+        inMemorySessionManager.create(sessionId, session);
+        if(isRedis) {
+            redisSessionManager.create(sessionId, session);
+        }
+    }
 
-	@Override
-	public Session remove(String sessionId) {
-		Session session = inMemorySessionManager.remove(sessionId);
-		if(isRedis) {
-			session = redisSessionManager.remove(sessionId);
-		}
-		return session;
-	}
+    @Override
+    public Session remove(String sessionId) {
+        Session session = inMemorySessionManager.remove(sessionId);
+        if(isRedis) {
+            session = redisSessionManager.remove(sessionId);
+        }
+        return session;
+    }
 
-	@Override
-	public Session get(String sessionId) {
-		Session session = inMemorySessionManager.get(sessionId);
-		if(session == null && isRedis) {
-			session = redisSessionManager.get(sessionId);
-		}
-		return session;
-	}
+    @Override
+    public Session get(String sessionId) {
+        Session session = inMemorySessionManager.get(sessionId);
+        if(session == null && isRedis) {
+            session = redisSessionManager.get(sessionId);
+        }
+        return session;
+    }
 
-	@Override
-	public Session refresh(String sessionId, LocalDateTime refreshTime) {
-		Session session = null;
-		if(isRedis) {
-			session = redisSessionManager.refresh(sessionId,refreshTime);
-			//renew one in Memory
-			inMemorySessionManager.create(sessionId, session);
-		}else {
-			session = inMemorySessionManager.refresh(sessionId,refreshTime);
-		}
-		return session;
-	}
+    @Override
+    public Session refresh(String sessionId, LocalDateTime refreshTime) {
+        Session session = null;
+        if(isRedis) {
+            session = redisSessionManager.refresh(sessionId,refreshTime);
+            //renew one in Memory
+            inMemorySessionManager.create(sessionId, session);
+        }else {
+            session = inMemorySessionManager.refresh(sessionId,refreshTime);
+        }
+        return session;
+    }
 
-	@Override
-	public Session refresh(String sessionId) {
-		Session session = null;
-		if(isRedis) {
-			session = redisSessionManager.refresh(sessionId);
-			//renew one
-			inMemorySessionManager.remove(sessionId);
-			inMemorySessionManager.create(sessionId, session);
-		}else {
-			session = inMemorySessionManager.refresh(sessionId);
-		}
-		
-		return session;
-	}
+    @Override
+    public Session refresh(String sessionId) {
+        Session session = null;
+        if(isRedis) {
+            session = redisSessionManager.refresh(sessionId);
+            //renew one
+            inMemorySessionManager.remove(sessionId);
+            inMemorySessionManager.create(sessionId, session);
+        }else {
+            session = inMemorySessionManager.refresh(sessionId);
+        }
+        
+        return session;
+    }
 
-	@Override
-	public List<HistoryLogin> querySessions(Integer category) {
-		//clear session id is null
-		jdbcTemplate.execute(NO_SESSION_UPDATE_STATEMENT);
-		String sessionSql =  DEFAULT_DEFAULT_SELECT_STATEMENT;
-		if(!isRedis) {
-			sessionSql = sessionSql + " and category = " + category;
-		}
-		 _logger.trace("sessionSql {} " ,sessionSql);
-		//query on line session
-		List<HistoryLogin> listSessions = jdbcTemplate.query(
-				sessionSql, 
-				new OnlineTicketRowMapper());
-		return listSessions;
-	}
+    @Override
+    public List<HistoryLogin> querySessions(Integer category) {
+        //clear session id is null
+        jdbcTemplate.execute(NO_SESSION_UPDATE_STATEMENT);
+        String sessionSql =  DEFAULT_DEFAULT_SELECT_STATEMENT;
+        if(!isRedis) {
+            sessionSql = sessionSql + " and category = " + category;
+        }
+         _logger.trace("sessionSql {} " ,sessionSql);
+        //query on line session
+        List<HistoryLogin> listSessions = jdbcTemplate.query(
+                sessionSql, 
+                new OnlineTicketRowMapper());
+        return listSessions;
+    }
 
     private void profileLastLogoffTime(String userId,String lastLogoffTime) {
         _logger.trace("userId {} , lastlogofftime {}" ,userId, lastLogoffTime);
-        jdbcTemplate.update(	LOGOUT_USERINFO_UPDATE_STATEMENT, 
-        		new Object[] { lastLogoffTime, userId },
-                new int[] { 	Types.TIMESTAMP, Types.VARCHAR });
+        jdbcTemplate.update(    LOGOUT_USERINFO_UPDATE_STATEMENT, 
+                new Object[] { lastLogoffTime, userId },
+                new int[] {     Types.TIMESTAMP, Types.VARCHAR });
     }
     
     private void sessionLogoff(String sessionId,String lastLogoffTime) {
@@ -172,70 +172,70 @@ public class SessionManagerImpl implements SessionManager{
     }
     
     @Override
-	public void terminate(String sessionId, String userId, String username) {
-		String lastLogoffTime = DateUtils.formatDateTime(new Date());
-	   	 _logger.trace("{} user {} terminate session {} ." ,lastLogoffTime,username, sessionId);
-	   	this.profileLastLogoffTime(userId, lastLogoffTime);
-	   	this.sessionLogoff(sessionId, lastLogoffTime);
-	   	this.remove(sessionId);
-	}
-	
+    public void terminate(String sessionId, String userId, String username) {
+        String lastLogoffTime = DateUtils.formatDateTime(new Date());
+            _logger.trace("{} user {} terminate session {} ." ,lastLogoffTime,username, sessionId);
+           this.profileLastLogoffTime(userId, lastLogoffTime);
+           this.sessionLogoff(sessionId, lastLogoffTime);
+           this.remove(sessionId);
+    }
+    
     @Override
-	public int getValiditySeconds() {
-		return validitySeconds;
-	}
-	
-	private final class OnlineTicketRowMapper  implements RowMapper<HistoryLogin> {
-		@Override
-		public HistoryLogin mapRow(ResultSet rs, int rowNum)
-				throws SQLException {
-			HistoryLogin history=new HistoryLogin();
-			history.setId(rs.getString(1));
-			history.setSessionId(rs.getString(2));
-			history.setUserId(rs.getString(3));
-			history.setUsername(rs.getString(4));
-			history.setDisplayName(rs.getString(5));
-			history.setLoginTime(rs.getTimestamp(6));
-			return history;
-		}
-	}
+    public int getValiditySeconds() {
+        return validitySeconds;
+    }
+    
+    private final class OnlineTicketRowMapper  implements RowMapper<HistoryLogin> {
+        @Override
+        public HistoryLogin mapRow(ResultSet rs, int rowNum)
+                throws SQLException {
+            HistoryLogin history=new HistoryLogin();
+            history.setId(rs.getString(1));
+            history.setSessionId(rs.getString(2));
+            history.setUserId(rs.getString(3));
+            history.setUsername(rs.getString(4));
+            history.setDisplayName(rs.getString(5));
+            history.setLoginTime(rs.getTimestamp(6));
+            return history;
+        }
+    }
 
-	@Override
-	public void visited(String sessionId, VisitedDto visited) {
+    @Override
+    public void visited(String sessionId, VisitedDto visited) {
         inMemorySessionManager.visited(sessionId,visited);
-		if(isRedis) {
-			redisSessionManager.visited(sessionId,visited);
-		}
-	}
-	
-	@Override
-	public void createTwoFactor(String sessionId, Session session) {
-		if(isRedis) {
-			redisSessionManager.createTwoFactor(sessionId, session);
-		}else {
-			inMemorySessionManager.createTwoFactor(sessionId, session);
-		}
-	}
+        if(isRedis) {
+            redisSessionManager.visited(sessionId,visited);
+        }
+    }
+    
+    @Override
+    public void createTwoFactor(String sessionId, Session session) {
+        if(isRedis) {
+            redisSessionManager.createTwoFactor(sessionId, session);
+        }else {
+            inMemorySessionManager.createTwoFactor(sessionId, session);
+        }
+    }
 
-	@Override
-	public Session removeTwoFactor(String sessionId) {
-		Session session = null;
-		if(isRedis) {
-			session = redisSessionManager.removeTwoFactor(sessionId);
-		}else {
-			session = inMemorySessionManager.removeTwoFactor(sessionId);
-		}
-		return session;
-	}
+    @Override
+    public Session removeTwoFactor(String sessionId) {
+        Session session = null;
+        if(isRedis) {
+            session = redisSessionManager.removeTwoFactor(sessionId);
+        }else {
+            session = inMemorySessionManager.removeTwoFactor(sessionId);
+        }
+        return session;
+    }
 
-	@Override
-	public Session getTwoFactor(String sessionId) {
-		Session session = null;
-		if(isRedis) {
-			session = redisSessionManager.getTwoFactor(sessionId);
-		}else {
-			session = inMemorySessionManager.getTwoFactor(sessionId);
-		}
-		return session;
-	}
+    @Override
+    public Session getTwoFactor(String sessionId) {
+        Session session = null;
+        if(isRedis) {
+            session = redisSessionManager.getTwoFactor(sessionId);
+        }else {
+            session = inMemorySessionManager.getTwoFactor(sessionId);
+        }
+        return session;
+    }
 }

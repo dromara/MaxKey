@@ -33,11 +33,11 @@ import jakarta.persistence.Table;
 public class CnfSmsProvider extends JpaEntity implements Serializable {
 
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -4595539647817265938L;
-	@Id
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -4595539647817265938L;
+    @Id
     @Column
     @GeneratedValue
     String id;
@@ -70,189 +70,189 @@ public class CnfSmsProvider extends JpaEntity implements Serializable {
     @Column
     int status;
     
-	@Column
-	private String instId;
+    @Column
+    private String instId;
 
-	private String instName;
+    private String instName;
 
     public CnfSmsProvider() {
     }
 
-	public String getId() {
-		return id;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public String getProvider() {
-		return provider;
-	}
+    public String getProvider() {
+        return provider;
+    }
 
-	public void setProvider(String provider) {
-		this.provider = provider;
-	}
+    public void setProvider(String provider) {
+        this.provider = provider;
+    }
 
-	public String getProviderName() {
-		return providerName;
-	}
+    public String getProviderName() {
+        return providerName;
+    }
 
-	public void setProviderName(String providerName) {
-		this.providerName = providerName;
-	}
+    public void setProviderName(String providerName) {
+        this.providerName = providerName;
+    }
 
-	public String getMessage() {
-		return message;
-	}
+    public String getMessage() {
+        return message;
+    }
 
-	public void setMessage(String message) {
-		this.message = message;
-	}
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
-	public String getAppKey() {
-		return appKey;
-	}
+    public String getAppKey() {
+        return appKey;
+    }
 
-	public void setAppKey(String appKey) {
-		this.appKey = appKey;
-	}
+    public void setAppKey(String appKey) {
+        this.appKey = appKey;
+    }
 
-	public String getAppSecret() {
-		return appSecret;
-	}
+    public String getAppSecret() {
+        return appSecret;
+    }
 
-	public void setAppSecret(String appSecret) {
-		this.appSecret = appSecret;
-	}
+    public void setAppSecret(String appSecret) {
+        this.appSecret = appSecret;
+    }
 
-	public String getTemplateId() {
-		return templateId;
-	}
+    public String getTemplateId() {
+        return templateId;
+    }
 
-	public void setTemplateId(String templateId) {
-		this.templateId = templateId;
-	}
+    public void setTemplateId(String templateId) {
+        this.templateId = templateId;
+    }
 
-	public String getSignName() {
-		return signName;
-	}
+    public String getSignName() {
+        return signName;
+    }
 
-	public void setSignName(String signName) {
-		this.signName = signName;
-	}
+    public void setSignName(String signName) {
+        this.signName = signName;
+    }
 
-	public String getSmsSdkAppId() {
-		return smsSdkAppId;
-	}
+    public String getSmsSdkAppId() {
+        return smsSdkAppId;
+    }
 
-	public void setSmsSdkAppId(String smsSdkAppId) {
-		this.smsSdkAppId = smsSdkAppId;
-	}
+    public void setSmsSdkAppId(String smsSdkAppId) {
+        this.smsSdkAppId = smsSdkAppId;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public String getCreatedBy() {
-		return createdBy;
-	}
+    public String getCreatedBy() {
+        return createdBy;
+    }
 
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
-	}
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
 
-	public String getModifiedBy() {
-		return modifiedBy;
-	}
+    public String getModifiedBy() {
+        return modifiedBy;
+    }
 
-	public void setModifiedBy(String modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
+    public void setModifiedBy(String modifiedBy) {
+        this.modifiedBy = modifiedBy;
+    }
 
-	public Date getCreatedDate() {
-		return createdDate;
-	}
+    public Date getCreatedDate() {
+        return createdDate;
+    }
 
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
 
-	public Date getModifiedDate() {
-		return modifiedDate;
-	}
+    public Date getModifiedDate() {
+        return modifiedDate;
+    }
 
-	public void setModifiedDate(Date modifiedDate) {
-		this.modifiedDate = modifiedDate;
-	}
+    public void setModifiedDate(Date modifiedDate) {
+        this.modifiedDate = modifiedDate;
+    }
 
-	public int getStatus() {
-		return status;
-	}
+    public int getStatus() {
+        return status;
+    }
 
-	public void setStatus(int status) {
-		this.status = status;
-	}
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
-	public String getInstId() {
-		return instId;
-	}
+    public String getInstId() {
+        return instId;
+    }
 
-	public void setInstId(String instId) {
-		this.instId = instId;
-	}
+    public void setInstId(String instId) {
+        this.instId = instId;
+    }
 
-	public String getInstName() {
-		return instName;
-	}
+    public String getInstName() {
+        return instName;
+    }
 
-	public void setInstName(String instName) {
-		this.instName = instName;
-	}
+    public void setInstName(String instName) {
+        this.instName = instName;
+    }
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("SmsProvider [id=");
-		builder.append(id);
-		builder.append(", provider=");
-		builder.append(provider);
-		builder.append(", providerName=");
-		builder.append(providerName);
-		builder.append(", message=");
-		builder.append(message);
-		builder.append(", appKey=");
-		builder.append(appKey);
-		builder.append(", appSecret=");
-		builder.append(appSecret);
-		builder.append(", templateId=");
-		builder.append(templateId);
-		builder.append(", signName=");
-		builder.append(signName);
-		builder.append(", smsSdkAppId=");
-		builder.append(smsSdkAppId);
-		builder.append(", description=");
-		builder.append(description);
-		builder.append(", createdBy=");
-		builder.append(createdBy);
-		builder.append(", createdDate=");
-		builder.append(createdDate);
-		builder.append(", modifiedBy=");
-		builder.append(modifiedBy);
-		builder.append(", modifiedDate=");
-		builder.append(modifiedDate);
-		builder.append(", status=");
-		builder.append(status);
-		builder.append(", instId=");
-		builder.append(instId);
-		builder.append(", instName=");
-		builder.append(instName);
-		builder.append("]");
-		return builder.toString();
-	}
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("SmsProvider [id=");
+        builder.append(id);
+        builder.append(", provider=");
+        builder.append(provider);
+        builder.append(", providerName=");
+        builder.append(providerName);
+        builder.append(", message=");
+        builder.append(message);
+        builder.append(", appKey=");
+        builder.append(appKey);
+        builder.append(", appSecret=");
+        builder.append(appSecret);
+        builder.append(", templateId=");
+        builder.append(templateId);
+        builder.append(", signName=");
+        builder.append(signName);
+        builder.append(", smsSdkAppId=");
+        builder.append(smsSdkAppId);
+        builder.append(", description=");
+        builder.append(description);
+        builder.append(", createdBy=");
+        builder.append(createdBy);
+        builder.append(", createdDate=");
+        builder.append(createdDate);
+        builder.append(", modifiedBy=");
+        builder.append(modifiedBy);
+        builder.append(", modifiedDate=");
+        builder.append(modifiedDate);
+        builder.append(", status=");
+        builder.append(status);
+        builder.append(", instId=");
+        builder.append(instId);
+        builder.append(", instName=");
+        builder.append(instName);
+        builder.append("]");
+        return builder.toString();
+    }
 
 }

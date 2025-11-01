@@ -51,13 +51,13 @@ public class CasAutoConfiguration implements InitializingBean {
     TicketServices casTicketServices(
             @Value("${maxkey.server.persistence}") int persistence,
             RedisConnectionFactory redisConnFactory) {
-    	_logger.debug("init casTicketServices.");
-    	TicketServices casTicketServices = null;
+        _logger.debug("init casTicketServices.");
+        TicketServices casTicketServices = null;
         if (persistence == ConstsPersistence.REDIS) {
             casTicketServices = new RedisTicketServices(redisConnFactory);
             _logger.debug("RedisTicketServices");
         }else {
-        	casTicketServices = new InMemoryTicketServices();
+            casTicketServices = new InMemoryTicketServices();
             _logger.debug("InMemoryTicketServices");
         }
         return casTicketServices;
@@ -73,13 +73,13 @@ public class CasAutoConfiguration implements InitializingBean {
     TicketServices casTicketGrantingTicketServices(
             @Value("${maxkey.server.persistence}") int persistence,
             RedisConnectionFactory redisConnFactory) {
-    	_logger.debug("init casTicketGrantingTicketServices.");
-    	TicketServices casTicketServices = null;
+        _logger.debug("init casTicketGrantingTicketServices.");
+        TicketServices casTicketServices = null;
         if (persistence == ConstsPersistence.REDIS) {
             casTicketServices = new RedisTicketGrantingTicketServices(redisConnFactory);
             _logger.debug("RedisTicketGrantingTicketServices");
         }else {
-        	casTicketServices = new InMemoryTicketGrantingTicketServices();
+            casTicketServices = new InMemoryTicketGrantingTicketServices();
             _logger.debug("InMemoryTicketGrantingTicketServices");
         }
         return casTicketServices;
@@ -89,13 +89,13 @@ public class CasAutoConfiguration implements InitializingBean {
     TicketServices casProxyGrantingTicketServices(
             @Value("${maxkey.server.persistence}") int persistence,
             RedisConnectionFactory redisConnFactory) {
-    	_logger.debug("init casTicketGrantingTicketServices.");
-    	TicketServices casTicketServices = null;
+        _logger.debug("init casTicketGrantingTicketServices.");
+        TicketServices casTicketServices = null;
         if (persistence == ConstsPersistence.REDIS) {
             casTicketServices = new RedisProxyGrantingTicketServices(redisConnFactory);
             _logger.debug("RedisProxyGrantingTicketServices");
         }else {
-        	casTicketServices = new InMemoryProxyGrantingTicketServices();
+            casTicketServices = new InMemoryProxyGrantingTicketServices();
             _logger.debug("InMemoryProxyGrantingTicketServices");
         }
         return casTicketServices;

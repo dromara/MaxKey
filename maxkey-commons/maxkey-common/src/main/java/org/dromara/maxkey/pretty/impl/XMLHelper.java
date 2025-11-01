@@ -84,17 +84,17 @@ public class XMLHelper {
         return writer.toString();
     }
     
-	public static String prettyPrintXML(String xmlString){
-		try{
-			DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-		    DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-		    Document document = documentBuilder.parse(new InputSource(new StringReader(xmlString)));
-			return prettyPrintXML(document);
-		}catch(Exception e){
-			e.printStackTrace();
-			return null;
-		}
-	}
+    public static String prettyPrintXML(String xmlString){
+        try{
+            DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+            Document document = documentBuilder.parse(new InputSource(new StringReader(xmlString)));
+            return prettyPrintXML(document);
+        }catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
     
     /**
      * Create the parameters set used in pretty print formatting of an LSSerializer.
@@ -193,12 +193,12 @@ public class XMLHelper {
         
         serializer.setFilter(new LSSerializerFilter() {
 
-        	@Override
+            @Override
             public short acceptNode(Node arg0) {
                 return FILTER_ACCEPT;
             }
 
-        	@Override
+            @Override
             public int getWhatToShow() {
                 return SHOW_ALL;
             }

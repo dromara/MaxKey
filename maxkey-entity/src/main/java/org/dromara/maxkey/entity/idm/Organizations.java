@@ -111,11 +111,11 @@ public class Organizations extends JpaEntity implements Serializable {
     @Column
     Date modifiedDate;
     
-	@Column
-	private String instId;
+    @Column
+    private String instId;
 
-	private String instName;
-	
+    private String instName;
+    
     String syncId;
     
     String syncName;
@@ -141,22 +141,22 @@ public class Organizations extends JpaEntity implements Serializable {
     }
 
     public String getOrgCode() {
-		return orgCode;
-	}
+        return orgCode;
+    }
 
-	public void setOrgCode(String orgCode) {
-		this.orgCode = orgCode;
-	}
+    public void setOrgCode(String orgCode) {
+        this.orgCode = orgCode;
+    }
 
-	public String getOrgName() {
-		return orgName;
-	}
+    public String getOrgName() {
+        return orgName;
+    }
 
-	public void setOrgName(String orgName) {
-		this.orgName = orgName;
-	}
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
+    }
 
-	public String getFullName() {
+    public String getFullName() {
         return fullName;
     }
 
@@ -175,14 +175,14 @@ public class Organizations extends JpaEntity implements Serializable {
     }
 
     public String getParentCode() {
-		return parentCode;
-	}
+        return parentCode;
+    }
 
-	public void setParentCode(String parentCode) {
-		this.parentCode = parentCode;
-	}
+    public void setParentCode(String parentCode) {
+        this.parentCode = parentCode;
+    }
 
-	public String getParentName() {
+    public String getParentName() {
         return parentName;
     }
 
@@ -337,14 +337,14 @@ public class Organizations extends JpaEntity implements Serializable {
     
 
     public String getLdapDn() {
-		return ldapDn;
-	}
+        return ldapDn;
+    }
 
-	public void setLdapDn(String ldapDn) {
-		this.ldapDn = ldapDn;
-	}
+    public void setLdapDn(String ldapDn) {
+        this.ldapDn = ldapDn;
+    }
 
-	public int getStatus() {
+    public int getStatus() {
         return status;
     }
 
@@ -352,7 +352,7 @@ public class Organizations extends JpaEntity implements Serializable {
         this.status = status;
     }
     
-	public int getIsPrimary() {
+    public int getIsPrimary() {
         return isPrimary;
     }
 
@@ -369,87 +369,87 @@ public class Organizations extends JpaEntity implements Serializable {
     }
 
     public String getCreatedBy() {
-		return createdBy;
-	}
+        return createdBy;
+    }
 
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
-	}
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
 
-	public String getModifiedBy() {
-		return modifiedBy;
-	}
+    public String getModifiedBy() {
+        return modifiedBy;
+    }
 
-	public void setModifiedBy(String modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
+    public void setModifiedBy(String modifiedBy) {
+        this.modifiedBy = modifiedBy;
+    }
 
-	public Date getCreatedDate() {
-		return createdDate;
-	}
+    public Date getCreatedDate() {
+        return createdDate;
+    }
 
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
 
-	public Date getModifiedDate() {
-		return modifiedDate;
-	}
+    public Date getModifiedDate() {
+        return modifiedDate;
+    }
 
-	public void setModifiedDate(Date modifiedDate) {
-		this.modifiedDate = modifiedDate;
-	}
+    public void setModifiedDate(Date modifiedDate) {
+        this.modifiedDate = modifiedDate;
+    }
 
-	public String getInstId() {
-		return instId;
-	}
+    public String getInstId() {
+        return instId;
+    }
 
-	public void setInstId(String instId) {
-		this.instId = instId;
-	}
+    public void setInstId(String instId) {
+        this.instId = instId;
+    }
 
-	public String getInstName() {
-		return instName;
-	}
+    public String getInstName() {
+        return instName;
+    }
 
-	public void setInstName(String instName) {
-		this.instName = instName;
-	}
+    public void setInstName(String instName) {
+        this.instName = instName;
+    }
 
-	
-	public String getSyncId() {
-		return syncId;
-	}
+    
+    public String getSyncId() {
+        return syncId;
+    }
 
-	public void setSyncId(String syncId) {
-		this.syncId = syncId;
-	}
+    public void setSyncId(String syncId) {
+        this.syncId = syncId;
+    }
 
-	public String getSyncName() {
-		return syncName;
-	}
+    public String getSyncName() {
+        return syncName;
+    }
 
-	public void setSyncName(String syncName) {
-		this.syncName = syncName;
-	}
+    public void setSyncName(String syncName) {
+        this.syncName = syncName;
+    }
 
-	public String getOriginId() {
-		return originId;
-	}
+    public String getOriginId() {
+        return originId;
+    }
 
-	public void setOriginId(String originId) {
-		this.originId = originId;
-	}
+    public void setOriginId(String originId) {
+        this.originId = originId;
+    }
 
-	public String getOriginId2() {
-		return originId2;
-	}
+    public String getOriginId2() {
+        return originId2;
+    }
 
-	public void setOriginId2(String originId2) {
-		this.originId2 = originId2;
-	}
+    public void setOriginId2(String originId2) {
+        this.originId2 = originId2;
+    }
 
-	@Override
+    @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("Organizations [id=");

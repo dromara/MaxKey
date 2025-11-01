@@ -26,7 +26,7 @@ import org.dromara.maxkey.web.WebContext;
 import org.springframework.security.core.Authentication;
 
 public class Session implements Serializable{
-	private static final long   serialVersionUID = 9008067569150338296L;
+    private static final long   serialVersionUID = 9008067569150338296L;
     
     public static final  int    MAX_EXPIRY_DURATION = 60 * 5; //default 5 minutes.
 
@@ -65,8 +65,8 @@ public class Session implements Serializable{
     }
     
     public String getId() {
-		return id;
-	}
+        return id;
+    }
 
     public void setId(String sessionId) {
         this.id = sessionId;
@@ -74,30 +74,30 @@ public class Session implements Serializable{
     
 
     public LocalDateTime getStartTimestamp() {
-		return startTimestamp;
-	}
+        return startTimestamp;
+    }
 
-	public void setStartTimestamp(LocalDateTime startTimestamp) {
-		this.startTimestamp = startTimestamp;
-	}
+    public void setStartTimestamp(LocalDateTime startTimestamp) {
+        this.startTimestamp = startTimestamp;
+    }
 
-	public LocalDateTime getLastAccessTime() {
-		return lastAccessTime;
-	}
+    public LocalDateTime getLastAccessTime() {
+        return lastAccessTime;
+    }
 
-	public void setLastAccessTime(LocalDateTime lastAccessTime) {
-		this.lastAccessTime = lastAccessTime;
-	}
+    public void setLastAccessTime(LocalDateTime lastAccessTime) {
+        this.lastAccessTime = lastAccessTime;
+    }
 
-	public LocalDateTime getExpiredTime() {
-		return expiredTime;
-	}
+    public LocalDateTime getExpiredTime() {
+        return expiredTime;
+    }
 
-	public void setExpiredTime(LocalDateTime expiredTime) {
-		this.expiredTime = expiredTime;
-	}
+    public void setExpiredTime(LocalDateTime expiredTime) {
+        this.expiredTime = expiredTime;
+    }
 
-	public Authentication getAuthentication() {
+    public Authentication getAuthentication() {
         return authentication;
     }
 
@@ -110,25 +110,25 @@ public class Session implements Serializable{
     }
 
     public Map<String, VisitedDto> getVisited() {
-		return visited;
-	}
+        return visited;
+    }
 
-	public void setVisited(Map<String, VisitedDto> visited) {
-		this.visited = visited;
-	}
+    public void setVisited(Map<String, VisitedDto> visited) {
+        this.visited = visited;
+    }
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Session [id=");
-		builder.append(id);
-		builder.append(", startTimestamp=");
-		builder.append(startTimestamp);
-		builder.append(", lastAccessTime=");
-		builder.append(lastAccessTime);
-		builder.append("]");
-		return builder.toString();
-	}
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Session [id=");
+        builder.append(id);
+        builder.append(", startTimestamp=");
+        builder.append(startTimestamp);
+        builder.append(", lastAccessTime=");
+        builder.append(lastAccessTime);
+        builder.append("]");
+        return builder.toString();
+    }
     
     
 }

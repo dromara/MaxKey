@@ -28,7 +28,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class SynchronizerJob  implements Job {
-	static final Logger logger = LoggerFactory.getLogger(SynchronizerJob.class);
+    static final Logger logger = LoggerFactory.getLogger(SynchronizerJob.class);
 
     public static class JOBSTATUS{
         public static final int STOP = 0;
@@ -36,17 +36,17 @@ public class SynchronizerJob  implements Job {
         public static final int FINISHED = 2;
     }
     
-	SynchronizersService synchronizersService;
-	
+    SynchronizersService synchronizersService;
+    
     private static HashMap<String,Integer> jobStatus = new HashMap<>();
 
     @Override
     public void execute(JobExecutionContext context){
-    	Synchronizers synchronizer = readSynchronizer(context);
-    	if(jobStatus.get(synchronizer.getId()) ==null ) {
-    		//init
-    		jobStatus.put(synchronizer.getId(),  JOBSTATUS.STOP) ;
-    	}else if(jobStatus.get(synchronizer.getId())== JOBSTATUS.RUNNING) {
+        Synchronizers synchronizer = readSynchronizer(context);
+        if(jobStatus.get(synchronizer.getId()) ==null ) {
+            //init
+            jobStatus.put(synchronizer.getId(),  JOBSTATUS.STOP) ;
+        }else if(jobStatus.get(synchronizer.getId())== JOBSTATUS.RUNNING) {
             logger.info("SynchronizerJob is in running . " );
             return;
         }
@@ -54,14 +54,14 @@ public class SynchronizerJob  implements Job {
         logger.debug("SynchronizerJob is running ... " );
         jobStatus.put(synchronizer.getId(),  JOBSTATUS.RUNNING) ;
         try {
-        	
-        	logger.debug("synchronizer : {}" , synchronizer.getName()+"("+synchronizer.getId()+"_"+synchronizer.getSourceType()+")");
-    		logger.debug("synchronizer service : {}" , synchronizer.getService());
-    		logger.debug("synchronizer Scheduler : {}" , synchronizer.getScheduler());
-        	ISynchronizerService service = (ISynchronizerService)WebContext.getBean(synchronizer.getService());
-        	service.setSynchronizer(synchronizer);
-        	service.sync();
-        	jobStatus.put(synchronizer.getId(),   JOBSTATUS.FINISHED);
+            
+            logger.debug("synchronizer : {}" , synchronizer.getName()+"("+synchronizer.getId()+"_"+synchronizer.getSourceType()+")");
+            logger.debug("synchronizer service : {}" , synchronizer.getService());
+            logger.debug("synchronizer Scheduler : {}" , synchronizer.getScheduler());
+            ISynchronizerService service = (ISynchronizerService)WebContext.getBean(synchronizer.getService());
+            service.setSynchronizer(synchronizer);
+            service.sync();
+            jobStatus.put(synchronizer.getId(),   JOBSTATUS.FINISHED);
             logger.debug("SynchronizerJob is success  " );
         }catch(Exception e) {
             logger.error("Exception " ,e);
@@ -72,14 +72,14 @@ public class SynchronizerJob  implements Job {
     
     
     public Synchronizers readSynchronizer(JobExecutionContext context) {
-    	Synchronizers jobSynchronizer = (Synchronizers)context.getMergedJobDataMap().get("synchronizer");
-    	if(synchronizersService == null) {
-    		synchronizersService = (SynchronizersService)WebContext.getBean("synchronizersService");
-    	}
-    	//read synchronizer by id from database
-    	Synchronizers synchronizer = synchronizersService.get(jobSynchronizer.getId());
-    	logger.trace("synchronizer {}" , synchronizer);
-    	return synchronizer;
+        Synchronizers jobSynchronizer = (Synchronizers)context.getMergedJobDataMap().get("synchronizer");
+        if(synchronizersService == null) {
+            synchronizersService = (SynchronizersService)WebContext.getBean("synchronizersService");
+        }
+        //read synchronizer by id from database
+        Synchronizers synchronizer = synchronizersService.get(jobSynchronizer.getId());
+        logger.trace("synchronizer {}" , synchronizer);
+        return synchronizer;
     }
     
 

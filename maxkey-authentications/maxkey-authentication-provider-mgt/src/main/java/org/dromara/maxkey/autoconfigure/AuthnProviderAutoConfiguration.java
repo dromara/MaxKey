@@ -41,67 +41,67 @@ public class AuthnProviderAutoConfiguration {
 
     @Bean
      AbstractAuthenticationProvider authenticationProvider(
-    		NormalAuthenticationProvider normalAuthenticationProvider,
-    		MobileAuthenticationProvider mobileAuthenticationProvider,
-    		TrustedAuthenticationProvider trustedAuthenticationProvider
-    		) {
-    	AuthenticationProviderFactory authenticationProvider = new AuthenticationProviderFactory();
-    	authenticationProvider.addAuthenticationProvider(normalAuthenticationProvider);
-    	authenticationProvider.addAuthenticationProvider(mobileAuthenticationProvider);
-    	authenticationProvider.addAuthenticationProvider(trustedAuthenticationProvider);
-    	return authenticationProvider;
+            NormalAuthenticationProvider normalAuthenticationProvider,
+            MobileAuthenticationProvider mobileAuthenticationProvider,
+            TrustedAuthenticationProvider trustedAuthenticationProvider
+            ) {
+        AuthenticationProviderFactory authenticationProvider = new AuthenticationProviderFactory();
+        authenticationProvider.addAuthenticationProvider(normalAuthenticationProvider);
+        authenticationProvider.addAuthenticationProvider(mobileAuthenticationProvider);
+        authenticationProvider.addAuthenticationProvider(trustedAuthenticationProvider);
+        return authenticationProvider;
     }
 
     @Bean
     NormalAuthenticationProvider normalAuthenticationProvider(
-    		AbstractAuthenticationRealm authenticationRealm,
-    		ApplicationConfig applicationConfig,
-    	    SessionManager sessionManager,
-    	    AuthTokenService authTokenService
-    		) {
-    	_logger.debug("init authentication Provider .");
-    	return new NormalAuthenticationProvider(
-        		authenticationRealm,
-        		applicationConfig,
-        		sessionManager,
-        		authTokenService
-        	);
+            AbstractAuthenticationRealm authenticationRealm,
+            ApplicationConfig applicationConfig,
+            SessionManager sessionManager,
+            AuthTokenService authTokenService
+            ) {
+        _logger.debug("init authentication Provider .");
+        return new NormalAuthenticationProvider(
+                authenticationRealm,
+                applicationConfig,
+                sessionManager,
+                authTokenService
+            );
     }
 
     @Bean
     MobileAuthenticationProvider mobileAuthenticationProvider(
-    		AbstractAuthenticationRealm authenticationRealm,
-    		ApplicationConfig applicationConfig,
-    	    SmsOtpAuthnService smsAuthnService,
-    	    SessionManager sessionManager
-    		) {
-    	_logger.debug("init Mobile authentication Provider .");
-    	return new MobileAuthenticationProvider(
-        		authenticationRealm,
-        		applicationConfig,
-        		smsAuthnService,
-        		sessionManager
-        	);
+            AbstractAuthenticationRealm authenticationRealm,
+            ApplicationConfig applicationConfig,
+            SmsOtpAuthnService smsAuthnService,
+            SessionManager sessionManager
+            ) {
+        _logger.debug("init Mobile authentication Provider .");
+        return new MobileAuthenticationProvider(
+                authenticationRealm,
+                applicationConfig,
+                smsAuthnService,
+                sessionManager
+            );
     }
     
     @Bean
     TrustedAuthenticationProvider trustedAuthenticationProvider(
-    		AbstractAuthenticationRealm authenticationRealm,
-    		ApplicationConfig applicationConfig,
-    	    SessionManager sessionManager
-    		) {
-    	_logger.debug("init Mobile authentication Provider .");
-    	return new TrustedAuthenticationProvider(
-        		authenticationRealm,
-        		applicationConfig,
-        		sessionManager
-        	);
+            AbstractAuthenticationRealm authenticationRealm,
+            ApplicationConfig applicationConfig,
+            SessionManager sessionManager
+            ) {
+        _logger.debug("init Mobile authentication Provider .");
+        return new TrustedAuthenticationProvider(
+                authenticationRealm,
+                applicationConfig,
+                sessionManager
+            );
     }
 
     @Bean
     PasswordPolicyValidatorService passwordPolicyValidatorService(
-    		CnfPasswordPolicyService cnfPasswordPolicyService,
-    		MessageSource messageSource) {
+            CnfPasswordPolicyService cnfPasswordPolicyService,
+            MessageSource messageSource) {
         return new PasswordPolicyValidatorServiceImpl(cnfPasswordPolicyService,messageSource);
     }
 

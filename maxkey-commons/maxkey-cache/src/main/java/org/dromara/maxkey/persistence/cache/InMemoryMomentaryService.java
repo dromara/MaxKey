@@ -28,41 +28,41 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 public class InMemoryMomentaryService implements MomentaryService{
     private static final Logger _logger = LoggerFactory.getLogger(InMemoryMomentaryService.class);
 
-	protected  static  Cache<String, Object> momentaryStore = 
-        	        Caffeine.newBuilder()
-        	            .expireAfterWrite(5, TimeUnit.MINUTES)
-        	            .maximumSize(200000)
-        	            .build();
-	
-	public InMemoryMomentaryService() {
+    protected  static  Cache<String, Object> momentaryStore = 
+                    Caffeine.newBuilder()
+                        .expireAfterWrite(5, TimeUnit.MINUTES)
+                        .maximumSize(200000)
+                        .build();
+    
+    public InMemoryMomentaryService() {
         super();
     }
 
     @Override
     public  void put(String sessionId , String name, Object value){
-    	String sessionKey = getSessionKey(sessionId , name);
-    	 _logger.trace("key {}, value {}",sessionKey,value);
-    	momentaryStore.put(sessionKey, value);
-	}
+        String sessionKey = getSessionKey(sessionId , name);
+         _logger.trace("key {}, value {}",sessionKey,value);
+        momentaryStore.put(sessionKey, value);
+    }
 
-	@Override
-	public Object remove(String sessionId , String name) {
-		String sessionKey = getSessionKey(sessionId , name);
-		Object value = momentaryStore.getIfPresent(sessionKey);	
-		momentaryStore.invalidate(sessionKey);
-		 _logger.trace("key {}, value {}",sessionKey,value);
-		return value;
-	}
+    @Override
+    public Object remove(String sessionId , String name) {
+        String sessionKey = getSessionKey(sessionId , name);
+        Object value = momentaryStore.getIfPresent(sessionKey);    
+        momentaryStore.invalidate(sessionKey);
+         _logger.trace("key {}, value {}",sessionKey,value);
+        return value;
+    }
 
     @Override
     public Object get(String sessionId , String name) {
-    	String sessionKey = getSessionKey(sessionId , name);
-    	 _logger.trace("key {}",sessionKey);
-    	return momentaryStore.getIfPresent(sessionKey);
+        String sessionKey = getSessionKey(sessionId , name);
+         _logger.trace("key {}",sessionKey);
+        return momentaryStore.getIfPresent(sessionKey);
     }
 
 
     private String getSessionKey(String sessionId , String name) {
-    	return sessionId + "_" + name;
+        return sessionId + "_" + name;
     }
 }

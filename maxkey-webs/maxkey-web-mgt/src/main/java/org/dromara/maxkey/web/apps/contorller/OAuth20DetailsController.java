@@ -44,97 +44,97 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value={"/apps/oauth20"})
 public class OAuth20DetailsController  extends BaseAppContorller {
-	static final  Logger logger = LoggerFactory.getLogger(OAuth20DetailsController.class);
-	
-	@Autowired
-	JdbcClientDetailsService oauth20JdbcClientDetailsService;
+    static final  Logger logger = LoggerFactory.getLogger(OAuth20DetailsController.class);
+    
+    @Autowired
+    JdbcClientDetailsService oauth20JdbcClientDetailsService;
 
-	@RequestMapping(value = { "/init" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<?> init() {
-		AppsOAuth20Details oauth20Details=new AppsOAuth20Details();
-		oauth20Details.setId(oauth20Details.generateId());
-		oauth20Details.setSecret(StringGenerator.generateKey(""));
-		oauth20Details.setClientId(oauth20Details.getId());
-		oauth20Details.setClientSecret(oauth20Details.getSecret());
-		oauth20Details.setProtocol(ConstsProtocols.OAUTH20);
-		return new Message<AppsOAuth20Details>(oauth20Details);
-	}
-	
-	@RequestMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<?> get(@PathVariable("id") String id) {
-		BaseClientDetails baseClientDetails=(BaseClientDetails)oauth20JdbcClientDetailsService.loadClientByClientId(id,false);
-		Apps application=appsService.get(id);//
-		decoderSecret(application);
-		AppsOAuth20Details oauth20Details=new AppsOAuth20Details(application,baseClientDetails);
-		oauth20Details.setSecret(application.getSecret());
-		oauth20Details.setClientSecret(application.getSecret());
-		logger.debug("forwardUpdate {}" , oauth20Details);
-		oauth20Details.transIconBase64();
-		return new Message<AppsOAuth20Details>(oauth20Details);
-	}
-	
-	@ResponseBody
-	@RequestMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<?> add(
-			@RequestBody  AppsOAuth20Details oauth20Details,
-			@CurrentUser UserInfo currentUser) {
-		logger.debug("-Add  : {}", oauth20Details);
-		
-		if(oauth20Details.getProtocol().equalsIgnoreCase(ConstsProtocols.OAUTH21)) {
-		    oauth20Details.setPkce(OAuth2Constants.PKCE_TYPE.PKCE_TYPE_YES);
-		}
-		transform(oauth20Details);
-
-		oauth20Details.setClientSecret(oauth20Details.getSecret());
-		oauth20Details.setInstId(currentUser.getInstId());
-		
-		oauth20JdbcClientDetailsService.addClientDetails(oauth20Details.clientDetailsRowMapper());
-		if (appsService.insertApp(oauth20Details)) {
-			return new Message<AppsOAuth20Details>(Message.SUCCESS);
-		} else {
-			return new Message<AppsOAuth20Details>(Message.FAIL);
-		}
-	}
-	
-	@ResponseBody
-	@RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<?> update(
-			@RequestBody  AppsOAuth20Details oauth20Details,
-			@CurrentUser UserInfo currentUser) {
-		logger.debug("-update  : {}" , oauth20Details);
-		logger.debug("-update  application {}" , oauth20Details);
-		logger.debug("-update  oauth20Details use oauth20JdbcClientDetails" );
-		if(oauth20Details.getProtocol().equalsIgnoreCase(ConstsProtocols.OAUTH21)) {
+    @RequestMapping(value = { "/init" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public Message<?> init() {
+        AppsOAuth20Details oauth20Details=new AppsOAuth20Details();
+        oauth20Details.setId(oauth20Details.generateId());
+        oauth20Details.setSecret(StringGenerator.generateKey(""));
+        oauth20Details.setClientId(oauth20Details.getId());
+        oauth20Details.setClientSecret(oauth20Details.getSecret());
+        oauth20Details.setProtocol(ConstsProtocols.OAUTH20);
+        return new Message<AppsOAuth20Details>(oauth20Details);
+    }
+    
+    @RequestMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public Message<?> get(@PathVariable("id") String id) {
+        BaseClientDetails baseClientDetails=(BaseClientDetails)oauth20JdbcClientDetailsService.loadClientByClientId(id,false);
+        Apps application=appsService.get(id);//
+        decoderSecret(application);
+        AppsOAuth20Details oauth20Details=new AppsOAuth20Details(application,baseClientDetails);
+        oauth20Details.setSecret(application.getSecret());
+        oauth20Details.setClientSecret(application.getSecret());
+        logger.debug("forwardUpdate {}" , oauth20Details);
+        oauth20Details.transIconBase64();
+        return new Message<AppsOAuth20Details>(oauth20Details);
+    }
+    
+    @ResponseBody
+    @RequestMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public Message<?> add(
+            @RequestBody  AppsOAuth20Details oauth20Details,
+            @CurrentUser UserInfo currentUser) {
+        logger.debug("-Add  : {}", oauth20Details);
+        
+        if(oauth20Details.getProtocol().equalsIgnoreCase(ConstsProtocols.OAUTH21)) {
             oauth20Details.setPkce(OAuth2Constants.PKCE_TYPE.PKCE_TYPE_YES);
         }
-		
-		transform(oauth20Details);
-		oauth20Details.setClientSecret(oauth20Details.getSecret());
-		oauth20Details.setInstId(currentUser.getInstId());
+        transform(oauth20Details);
+
+        oauth20Details.setClientSecret(oauth20Details.getSecret());
+        oauth20Details.setInstId(currentUser.getInstId());
+        
+        oauth20JdbcClientDetailsService.addClientDetails(oauth20Details.clientDetailsRowMapper());
+        if (appsService.insertApp(oauth20Details)) {
+            return new Message<AppsOAuth20Details>(Message.SUCCESS);
+        } else {
+            return new Message<AppsOAuth20Details>(Message.FAIL);
+        }
+    }
+    
+    @ResponseBody
+    @RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public Message<?> update(
+            @RequestBody  AppsOAuth20Details oauth20Details,
+            @CurrentUser UserInfo currentUser) {
+        logger.debug("-update  : {}" , oauth20Details);
+        logger.debug("-update  application {}" , oauth20Details);
+        logger.debug("-update  oauth20Details use oauth20JdbcClientDetails" );
+        if(oauth20Details.getProtocol().equalsIgnoreCase(ConstsProtocols.OAUTH21)) {
+            oauth20Details.setPkce(OAuth2Constants.PKCE_TYPE.PKCE_TYPE_YES);
+        }
+        
+        transform(oauth20Details);
+        oauth20Details.setClientSecret(oauth20Details.getSecret());
+        oauth20Details.setInstId(currentUser.getInstId());
         oauth20JdbcClientDetailsService.updateClientDetails(oauth20Details.clientDetailsRowMapper());
         oauth20JdbcClientDetailsService.updateClientSecret(oauth20Details.getClientId(), oauth20Details.getClientSecret());
         
-		if (appsService.updateApp(oauth20Details)) {
-		    return new Message<AppsOAuth20Details>(Message.SUCCESS);
-		} else {
-			return new Message<AppsOAuth20Details>(Message.FAIL);
-		}
-	}
-	
-	@ResponseBody
-	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<?> delete(
-			@RequestParam("ids") List<String> ids,
-			@CurrentUser UserInfo currentUser) {
-		logger.debug("-delete  ids : {} " , ids);
-		for (String id : ids){
-			oauth20JdbcClientDetailsService.removeClientDetails(id);
-		}
-		if (appsService.deleteBatch(ids)) {
-			 return new Message<AppsOAuth20Details>(Message.SUCCESS);
-		} else {
-			return new Message<AppsOAuth20Details>(Message.FAIL);
-		}
-	}
-	
+        if (appsService.updateApp(oauth20Details)) {
+            return new Message<AppsOAuth20Details>(Message.SUCCESS);
+        } else {
+            return new Message<AppsOAuth20Details>(Message.FAIL);
+        }
+    }
+    
+    @ResponseBody
+    @RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public Message<?> delete(
+            @RequestParam("ids") List<String> ids,
+            @CurrentUser UserInfo currentUser) {
+        logger.debug("-delete  ids : {} " , ids);
+        for (String id : ids){
+            oauth20JdbcClientDetailsService.removeClientDetails(id);
+        }
+        if (appsService.deleteBatch(ids)) {
+             return new Message<AppsOAuth20Details>(Message.SUCCESS);
+        } else {
+            return new Message<AppsOAuth20Details>(Message.FAIL);
+        }
+    }
+    
 }

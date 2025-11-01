@@ -29,10 +29,10 @@ package org.dromara.maxkey.crypto;
  *      Standard Names</a>
  */
 public enum KeyPairType {
-	/** RSA key pair type. */
-	RSA,
-	/** DSA key pair type. */
-	DSA,
-	/** ECDSA key pair type. */
-	ECDSA;
+    /** RSA key pair type. */
+    RSA,
+    /** DSA key pair type. */
+    DSA,
+    /** ECDSA key pair type. */
+    ECDSA;
 }

@@ -27,5 +27,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class CnfEmailSendersServiceImpl  extends JpaServiceImpl<CnfEmailSendersMapper,CnfEmailSenders> implements CnfEmailSendersService{
-	 
+     
 }

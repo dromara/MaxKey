@@ -25,11 +25,11 @@ import org.dromara.mybatis.jpa.service.IJpaService;
 
 public interface SynchroRelatedService  extends IJpaService<SynchroRelated>{
 
-	public int updateSyncTime(SynchroRelated synchroRelated);
-	
-	public List<SynchroRelated> findOrgs(Synchronizers synchronizer) ;
-	
-	public SynchroRelated findByOriginId(Synchronizers synchronizer,String originId,String classType) ;
-	
-	public void updateSynchroRelated(Synchronizers synchronizer,SynchroRelated synchroRelated,String classType) ;
+    public int updateSyncTime(SynchroRelated synchroRelated);
+    
+    public List<SynchroRelated> findOrgs(Synchronizers synchronizer) ;
+    
+    public SynchroRelated findByOriginId(Synchronizers synchronizer,String originId,String classType) ;
+    
+    public void updateSynchroRelated(Synchronizers synchronizer,SynchroRelated synchroRelated,String classType) ;
 }

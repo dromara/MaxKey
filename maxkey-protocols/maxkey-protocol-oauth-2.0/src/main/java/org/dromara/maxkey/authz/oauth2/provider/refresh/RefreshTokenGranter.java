@@ -30,16 +30,16 @@ import org.dromara.maxkey.entity.apps.oauth2.provider.ClientDetails;
  */
 public class RefreshTokenGranter extends AbstractTokenGranter {
 
-	private static final String GRANT_TYPE = "refresh_token";
+    private static final String GRANT_TYPE = "refresh_token";
 
-	public RefreshTokenGranter(AuthorizationServerTokenServices tokenServices, ClientDetailsService clientDetailsService, OAuth2RequestFactory requestFactory) {
-		super(tokenServices, clientDetailsService, requestFactory, GRANT_TYPE);
-	}
-	
-	@Override
-	protected OAuth2AccessToken getAccessToken(ClientDetails client, TokenRequest tokenRequest) {
-		String refreshToken = tokenRequest.getRequestParameters().get("refresh_token");
-		return getTokenServices().refreshAccessToken(refreshToken, tokenRequest);
-	}
+    public RefreshTokenGranter(AuthorizationServerTokenServices tokenServices, ClientDetailsService clientDetailsService, OAuth2RequestFactory requestFactory) {
+        super(tokenServices, clientDetailsService, requestFactory, GRANT_TYPE);
+    }
+    
+    @Override
+    protected OAuth2AccessToken getAccessToken(ClientDetails client, TokenRequest tokenRequest) {
+        String refreshToken = tokenRequest.getRequestParameters().get("refresh_token");
+        return getTokenServices().refreshAccessToken(refreshToken, tokenRequest);
+    }
 
 }

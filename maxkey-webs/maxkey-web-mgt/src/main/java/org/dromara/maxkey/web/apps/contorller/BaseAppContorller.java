@@ -35,70 +35,70 @@ import org.springframework.beans.factory.annotation.Autowired;
  *
  */
 public class BaseAppContorller {
-	static final Logger logger = LoggerFactory.getLogger(BaseAppContorller.class);
-	
-	@Autowired
-	protected AppsService appsService;
+    static final Logger logger = LoggerFactory.getLogger(BaseAppContorller.class);
+    
+    @Autowired
+    protected AppsService appsService;
 
-	@Autowired
-	protected PasswordReciprocal passwordReciprocal;
-	
-	@Autowired
-	protected FileUploadService fileUploadService;
-	
-	@Autowired
-	HistorySystemLogsService systemLog;
-	
-	public void setAppsService(AppsService appsService) {
-		this.appsService = appsService;
-	}
+    @Autowired
+    protected PasswordReciprocal passwordReciprocal;
+    
+    @Autowired
+    protected FileUploadService fileUploadService;
+    
+    @Autowired
+    HistorySystemLogsService systemLog;
+    
+    public void setAppsService(AppsService appsService) {
+        this.appsService = appsService;
+    }
 
-	protected void transform(Apps application) {
-		encodeSharedPassword(application);
-		encodeSecret(application);
-		/*
-		 * string field encoding
-		 */
-		encoding(application);
-		/*
-		 * upload icon Bytes
-		 */
-		if(StringUtils.isNotBlank(application.getIconId())){
-			application.setIcon(fileUploadService.get(application.getIconId()).getUploaded());
-			fileUploadService.delete(application.getIconId());
-		}
-		
-	}
-	
-	protected void encodeSharedPassword(Apps application){
-		if(StringUtils.isNotBlank(application.getSharedPassword())){
-			application.setSharedPassword(
-					PasswordReciprocal.getInstance().encode(application.getSharedPassword()));
-		}
-	}
-	
-	protected void decoderSharedPassword(Apps application){
-		if(StringUtils.isNotBlank(application.getSharedPassword())){
-			application.setSharedPassword(
-					PasswordReciprocal.getInstance().decoder(application.getSharedPassword()));
-		}
-	}
-	
-	protected void encoding(Apps application){
-		
-	}
-	
-	protected void encodeSecret(Apps application){
-		if(StringUtils.isNotBlank(application.getSecret())){
-			String encodeSecret=passwordReciprocal.encode(application.getSecret());
-			application.setSecret(encodeSecret);
-		}
-	}
-	
-	protected void decoderSecret(Apps application){
-		if(StringUtils.isNotBlank(application.getSecret())){
-			String decodeSecret=passwordReciprocal.decoder(application.getSecret());
-			application.setSecret(decodeSecret);
-		}
-	}
+    protected void transform(Apps application) {
+        encodeSharedPassword(application);
+        encodeSecret(application);
+        /*
+         * string field encoding
+         */
+        encoding(application);
+        /*
+         * upload icon Bytes
+         */
+        if(StringUtils.isNotBlank(application.getIconId())){
+            application.setIcon(fileUploadService.get(application.getIconId()).getUploaded());
+            fileUploadService.delete(application.getIconId());
+        }
+        
+    }
+    
+    protected void encodeSharedPassword(Apps application){
+        if(StringUtils.isNotBlank(application.getSharedPassword())){
+            application.setSharedPassword(
+                    PasswordReciprocal.getInstance().encode(application.getSharedPassword()));
+        }
+    }
+    
+    protected void decoderSharedPassword(Apps application){
+        if(StringUtils.isNotBlank(application.getSharedPassword())){
+            application.setSharedPassword(
+                    PasswordReciprocal.getInstance().decoder(application.getSharedPassword()));
+        }
+    }
+    
+    protected void encoding(Apps application){
+        
+    }
+    
+    protected void encodeSecret(Apps application){
+        if(StringUtils.isNotBlank(application.getSecret())){
+            String encodeSecret=passwordReciprocal.encode(application.getSecret());
+            application.setSecret(encodeSecret);
+        }
+    }
+    
+    protected void decoderSecret(Apps application){
+        if(StringUtils.isNotBlank(application.getSecret())){
+            String decodeSecret=passwordReciprocal.decoder(application.getSecret());
+            application.setSecret(decodeSecret);
+        }
+    }
 }

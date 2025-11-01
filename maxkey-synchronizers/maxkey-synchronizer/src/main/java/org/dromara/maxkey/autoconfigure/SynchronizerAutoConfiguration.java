@@ -45,8 +45,8 @@ import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 
 @AutoConfiguration
 public class SynchronizerAutoConfiguration   implements InitializingBean {
-	private static final  Logger _logger = LoggerFactory.getLogger(SynchronizerAutoConfiguration.class);
-	public static final String SYNCHRONIZERS_SELECT_STATEMENT = "select * from mxk_synchronizers where status ='1'";
+    private static final  Logger _logger = LoggerFactory.getLogger(SynchronizerAutoConfiguration.class);
+    public static final String SYNCHRONIZERS_SELECT_STATEMENT = "select * from mxk_synchronizers where status ='1'";
 
     @Bean(name = "schedulerSynchronizerJobs")
     String schedulerSynchronizerJobs(
@@ -54,80 +54,80 @@ public class SynchronizerAutoConfiguration   implements InitializingBean {
                 SchedulerFactoryBean schedulerFactoryBean,
                 @Value("${maxkey.job.cron.enable}") boolean jobCronEnable
     ) throws SchedulerException {
-		
-		 Scheduler scheduler = schedulerFactoryBean.getScheduler();
-		 if(jobCronEnable) {
-			 List<Synchronizers> synchronizerList = querySynchronizers(jdbcTemplate);
-		     for(Synchronizers synchronizer : synchronizerList) {
-		    	 if(synchronizer.getScheduler()!=null 
-		    	         && !synchronizer.getScheduler().equals("")
-		    	         && CronExpression.isValidExpression(synchronizer.getScheduler())) {
-		    		 _logger.debug("synchronizer details : {}" , synchronizer);
-		    		 buildJob(scheduler,synchronizer);
-		    	 }
-		     }
-		 }
-		 return "schedulerSynchronizerJobs";
-	}
-	    
-		
-	private void buildJob(Scheduler scheduler ,
-	                      Synchronizers synchronizer) throws SchedulerException {
-		JobDetail jobDetail = 
-		        JobBuilder.newJob(SynchronizerJob.class) 
-		        .withIdentity(synchronizer.getService()+"_Job", "SynchronizerGroups")
-		        .build();
-		
-		JobDataMap jobDataMap = new JobDataMap();
-		jobDataMap.put("synchronizer", synchronizer);
-		_logger.debug("synchronizer : {}" , synchronizer.getName()+"("+synchronizer.getId()+"_"+synchronizer.getSourceType()+")");
-		_logger.debug("synchronizer service : {}", synchronizer.getService());
-		_logger.debug("synchronizer Scheduler : {} " ,synchronizer.getScheduler());
-		CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(synchronizer.getScheduler());
-		CronTrigger cronTrigger = 
-		        TriggerBuilder.newTrigger()
-		        .withIdentity("trigger_"+synchronizer.getService(), "SynchronizerGroups")
-		        .usingJobData(jobDataMap)
-		        .withSchedule(scheduleBuilder)
-		        .build();
-		scheduler.scheduleJob(jobDetail,cronTrigger);    
-	}
+        
+         Scheduler scheduler = schedulerFactoryBean.getScheduler();
+         if(jobCronEnable) {
+             List<Synchronizers> synchronizerList = querySynchronizers(jdbcTemplate);
+             for(Synchronizers synchronizer : synchronizerList) {
+                 if(synchronizer.getScheduler()!=null 
+                         && !synchronizer.getScheduler().equals("")
+                         && CronExpression.isValidExpression(synchronizer.getScheduler())) {
+                     _logger.debug("synchronizer details : {}" , synchronizer);
+                     buildJob(scheduler,synchronizer);
+                 }
+             }
+         }
+         return "schedulerSynchronizerJobs";
+    }
+        
+        
+    private void buildJob(Scheduler scheduler ,
+                          Synchronizers synchronizer) throws SchedulerException {
+        JobDetail jobDetail = 
+                JobBuilder.newJob(SynchronizerJob.class) 
+                .withIdentity(synchronizer.getService()+"_Job", "SynchronizerGroups")
+                .build();
+        
+        JobDataMap jobDataMap = new JobDataMap();
+        jobDataMap.put("synchronizer", synchronizer);
+        _logger.debug("synchronizer : {}" , synchronizer.getName()+"("+synchronizer.getId()+"_"+synchronizer.getSourceType()+")");
+        _logger.debug("synchronizer service : {}", synchronizer.getService());
+        _logger.debug("synchronizer Scheduler : {} " ,synchronizer.getScheduler());
+        CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(synchronizer.getScheduler());
+        CronTrigger cronTrigger = 
+                TriggerBuilder.newTrigger()
+                .withIdentity("trigger_"+synchronizer.getService(), "SynchronizerGroups")
+                .usingJobData(jobDataMap)
+                .withSchedule(scheduleBuilder)
+                .build();
+        scheduler.scheduleJob(jobDetail,cronTrigger);    
+    }
 
-	public List<Synchronizers> querySynchronizers(JdbcTemplate  jdbcTemplate) {
-		return  jdbcTemplate.query(SYNCHRONIZERS_SELECT_STATEMENT, new RowMapper<Synchronizers>() {
-			@Override
-			public Synchronizers mapRow(ResultSet rs, int rowNum) throws SQLException {
-	        	 Synchronizers synchronizer = new Synchronizers();
-	        	 synchronizer.setId(         rs.getString("id"));
-	        	 synchronizer.setName(       rs.getString("name"));
-	        	 synchronizer.setScheduler(  rs.getString("scheduler"));
-	        	 synchronizer.setSourceType( rs.getString("sourcetype"));
-	        	 synchronizer.setProviderUrl(rs.getString("providerurl"));
-	        	 synchronizer.setDriverClass(rs.getString("driverclass"));
-	        	 synchronizer.setPrincipal(  rs.getString("principal"));
-	        	 synchronizer.setCredentials(
-	        			 PasswordReciprocal.getInstance().decoder(rs.getString("credentials")));
-	        	 synchronizer.setResumeTime( rs.getString("resumetime"));
-	        	 synchronizer.setSuspendTime(rs.getString("suspendtime"));
-	        	 synchronizer.setUserFilters(	 rs.getString("userfilters"));
-	        	 synchronizer.setUserBasedn(     rs.getString("userbasedn"));
-	        	 synchronizer.setOrgFilters(	 rs.getString("orgfilters"));
-	        	 synchronizer.setOrgBasedn(     rs.getString("orgbasedn"));
-	        	 synchronizer.setMsadDomain( rs.getString("msaddomain"));
-	        	 synchronizer.setSslSwitch(  rs.getString("sslswitch"));
-	        	 synchronizer.setTrustStore( rs.getString("truststore"));
-	        	 synchronizer.setStatus(   rs.getString("status"));
-	        	 synchronizer.setDescription(rs.getString("description"));
-	        	 synchronizer.setSyncStartTime(rs.getInt("syncstarttime"));
-	        	 synchronizer.setService(rs.getString("service"));
+    public List<Synchronizers> querySynchronizers(JdbcTemplate  jdbcTemplate) {
+        return  jdbcTemplate.query(SYNCHRONIZERS_SELECT_STATEMENT, new RowMapper<Synchronizers>() {
+            @Override
+            public Synchronizers mapRow(ResultSet rs, int rowNum) throws SQLException {
+                 Synchronizers synchronizer = new Synchronizers();
+                 synchronizer.setId(         rs.getString("id"));
+                 synchronizer.setName(       rs.getString("name"));
+                 synchronizer.setScheduler(  rs.getString("scheduler"));
+                 synchronizer.setSourceType( rs.getString("sourcetype"));
+                 synchronizer.setProviderUrl(rs.getString("providerurl"));
+                 synchronizer.setDriverClass(rs.getString("driverclass"));
+                 synchronizer.setPrincipal(  rs.getString("principal"));
+                 synchronizer.setCredentials(
+                         PasswordReciprocal.getInstance().decoder(rs.getString("credentials")));
+                 synchronizer.setResumeTime( rs.getString("resumetime"));
+                 synchronizer.setSuspendTime(rs.getString("suspendtime"));
+                 synchronizer.setUserFilters(     rs.getString("userfilters"));
+                 synchronizer.setUserBasedn(     rs.getString("userbasedn"));
+                 synchronizer.setOrgFilters(     rs.getString("orgfilters"));
+                 synchronizer.setOrgBasedn(     rs.getString("orgbasedn"));
+                 synchronizer.setMsadDomain( rs.getString("msaddomain"));
+                 synchronizer.setSslSwitch(  rs.getString("sslswitch"));
+                 synchronizer.setTrustStore( rs.getString("truststore"));
+                 synchronizer.setStatus(   rs.getString("status"));
+                 synchronizer.setDescription(rs.getString("description"));
+                 synchronizer.setSyncStartTime(rs.getInt("syncstarttime"));
+                 synchronizer.setService(rs.getString("service"));
 
-	             return synchronizer;
-        	}
-		});
-	}
-	
-	@Override
-	public void afterPropertiesSet() throws Exception {
-		
-	}
+                 return synchronizer;
+            }
+        });
+    }
+    
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        
+    }
 }

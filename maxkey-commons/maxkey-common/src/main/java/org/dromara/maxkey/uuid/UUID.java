@@ -53,9 +53,9 @@ import java.util.Arrays;
 public final class UUID implements Serializable
 {
  /**
-	 * 
-	 */
-	private static final long serialVersionUID = 687078561200656066L;
+     * 
+     */
+    private static final long serialVersionUID = 687078561200656066L;
 // Format variants.
  public static final int VARIANT_NCS = 0x00;
  public static final int VARIANT_NCS_MASK = 0x80;
@@ -112,10 +112,10 @@ public final class UUID implements Serializable
      throws NullPointerException, IllegalArgumentException
  {
      if(node == null) {
-    	 throw new NullPointerException();
+         throw new NullPointerException();
      }
      if(node.length != 6) {
-    	 throw new IllegalArgumentException();
+         throw new IllegalArgumentException();
      }
 
      this.time_low = time_low;
@@ -140,27 +140,27 @@ public final class UUID implements Serializable
             NumberFormatException
  {
      if(s == null) {
-    	 throw new NullPointerException();
+         throw new NullPointerException();
      }
      if(s.length() != 36) {
-    	 throw new IllegalArgumentException();
+         throw new IllegalArgumentException();
      }
      time_low = parseHex(s.substring(0, 8));
      if(s.charAt(8) != '-') {
-    	 throw new IllegalArgumentException();
+         throw new IllegalArgumentException();
      }
      time_mid = (short) parseHex(s.substring(9, 13));
      if(s.charAt(13) != '-') {
-    	 throw new IllegalArgumentException();
+         throw new IllegalArgumentException();
      }
      time_hi_and_version = (short) parseHex(s.substring(14, 18));
      if(s.charAt(18) != '-') {
-    	 throw new IllegalArgumentException();
+         throw new IllegalArgumentException();
      }
      clock_seq_hi_and_reserved = (byte) parseHex(s.substring(19, 21));
      clock_seq_low = (byte) parseHex(s.substring(21, 23));
      if(s.charAt(23) != '-') {
-    	 throw new IllegalArgumentException();
+         throw new IllegalArgumentException();
      }
      node = new byte[6];
      for(int i = 0; i < 6; i++) {
@@ -178,7 +178,7 @@ public final class UUID implements Serializable
  public UUID(DataInput in) throws IOException
  {
      if(in == null) {
-    	 throw new NullPointerException();
+         throw new NullPointerException();
      }
      readData(in);
  }
@@ -192,10 +192,10 @@ public final class UUID implements Serializable
  public UUID(byte[] data)
  {
      if(data == null) {
-    	 throw new NullPointerException();
+         throw new NullPointerException();
      }
      if(data.length != 16) {
-    	 throw new IllegalArgumentException();
+         throw new IllegalArgumentException();
      }
      try {
          readData(new DataInputStream(new ByteArrayInputStream(data)));
@@ -252,7 +252,7 @@ public final class UUID implements Serializable
      UUID other = (UUID) obj;
 
      if(this == other) {
-    	 return true;
+         return true;
      }
 
      if(hash_code != 0 &&

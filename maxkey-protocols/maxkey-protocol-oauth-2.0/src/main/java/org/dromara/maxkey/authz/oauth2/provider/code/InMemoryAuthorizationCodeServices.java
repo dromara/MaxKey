@@ -31,20 +31,20 @@ import com.github.benmanes.caffeine.cache.Caffeine;
  * @author Dave Syer
  */
 public class InMemoryAuthorizationCodeServices extends RandomValueAuthorizationCodeServices {
-			protected static final   Cache<String, OAuth2Authentication> authorizationCodeStore = 
-			        Caffeine.newBuilder()
+            protected static final   Cache<String, OAuth2Authentication> authorizationCodeStore = 
+                    Caffeine.newBuilder()
                         .expireAfterWrite(3, TimeUnit.MINUTES)
                         .build();
-	@Override
-	protected void store(String code, OAuth2Authentication authentication) {
-		authorizationCodeStore.put(code, authentication);
-	}
+    @Override
+    protected void store(String code, OAuth2Authentication authentication) {
+        authorizationCodeStore.put(code, authentication);
+    }
 
-	@Override
-	public OAuth2Authentication remove(String code) {
-		OAuth2Authentication auth = authorizationCodeStore.getIfPresent(code);
-		authorizationCodeStore.invalidate(code);
-		return auth;
-	}
+    @Override
+    public OAuth2Authentication remove(String code) {
+        OAuth2Authentication auth = authorizationCodeStore.getIfPresent(code);
+        authorizationCodeStore.invalidate(code);
+        return auth;
+    }
 
 }

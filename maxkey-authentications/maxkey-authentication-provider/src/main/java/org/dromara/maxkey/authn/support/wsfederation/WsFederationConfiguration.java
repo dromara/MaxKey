@@ -31,7 +31,7 @@ import java.util.List;
  * 
  */
 public final class WsFederationConfiguration {
-	
+    
     @NotNull
     private String identifier;
 
@@ -57,44 +57,44 @@ public final class WsFederationConfiguration {
     private String logoutUrl;
  
     public String getIdentifier() {
-		return identifier;
-	}
+        return identifier;
+    }
 
-	public void setIdentifier(String identifier) {
-		this.identifier = identifier;
-	}
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
+    }
 
-	public String getUrl() {
-		return url;
-	}
+    public String getUrl() {
+        return url;
+    }
 
-	public void setUrl(String url) {
-		this.url = url;
-	}
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
-	public String getPrincipal() {
-		return principal;
-	}
+    public String getPrincipal() {
+        return principal;
+    }
 
-	public void setPrincipal(String principal) {
-		this.principal = principal;
-	}
+    public void setPrincipal(String principal) {
+        this.principal = principal;
+    }
 
-	public String getRelyingParty() {
-		return relyingParty;
-	}
+    public String getRelyingParty() {
+        return relyingParty;
+    }
 
-	public void setRelyingParty(String relyingParty) {
-		this.relyingParty = relyingParty;
-	}
+    public void setRelyingParty(String relyingParty) {
+        this.relyingParty = relyingParty;
+    }
 
-	public List<BasicX509Credential> getSigningWallet() {
-		return signingWallet;
-	}
+    public List<BasicX509Credential> getSigningWallet() {
+        return signingWallet;
+    }
 
-	public void setSigningWallet(List<BasicX509Credential> signingWallet) {
-		this.signingWallet = signingWallet;
-	}
+    public void setSigningWallet(List<BasicX509Credential> signingWallet) {
+        this.signingWallet = signingWallet;
+    }
 
     /**
      * gets the signing certificates.
@@ -105,7 +105,7 @@ public final class WsFederationConfiguration {
         return this.signingWallet;
     }
     
-	/**
+    /**
      * sets the signing certs.
      *
      * @param signingCertificateFiles a list of certificate files to read in.
@@ -158,20 +158,20 @@ public final class WsFederationConfiguration {
         this.attributeMutator = attributeMutator;
     }
 
-	public String getUpnSuffix() {
-		return upnSuffix;
-	}
+    public String getUpnSuffix() {
+        return upnSuffix;
+    }
 
-	public void setUpnSuffix(String upnSuffix) {
-		this.upnSuffix = upnSuffix;
-	}
+    public void setUpnSuffix(String upnSuffix) {
+        this.upnSuffix = upnSuffix;
+    }
 
-	public String getLogoutUrl() {
-		return logoutUrl;
-	}
+    public String getLogoutUrl() {
+        return logoutUrl;
+    }
 
-	public void setLogoutUrl(String logoutUrl) {
-		this.logoutUrl = logoutUrl;
-	}
+    public void setLogoutUrl(String logoutUrl) {
+        this.logoutUrl = logoutUrl;
+    }
 
 }

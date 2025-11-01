@@ -319,10 +319,10 @@ public final class UUIDGenerator {
     @Override
     public boolean equals(Object o) {
         if (this == o) {
-        	return true;
+            return true;
         }
         if (o == null || getClass() != o.getClass()) {
-        	return false;
+            return false;
         }
 
         UUIDGenerator that = (UUIDGenerator) o;
@@ -346,7 +346,7 @@ public final class UUIDGenerator {
 
     private static byte[] macAddress() {
         try {
-        	//old
+            //old
             //byte[] mac = NetworkInterface.getNetworkInterfaces().nextElement().getHardwareAddress();
             byte[] mac = EthernetAddress.fromInterface().toByteArray();
             // if the machine is not connected to a network it has no active MAC address
@@ -378,7 +378,7 @@ public final class UUIDGenerator {
     
 
     public static void version(org.dromara.maxkey.util.UUIDGenerator generated){
-    	System.out.println("UUID            : " + generated.toString());
+        System.out.println("UUID            : " + generated.toString());
         System.out.println("raw bytes       : " + Arrays.toString(generated.getBytes()));
         System.out.println("process id      : " + generated.getProcessId());
         System.out.println("MAC fragment    : " + Arrays.toString(generated.getMacFragment()));

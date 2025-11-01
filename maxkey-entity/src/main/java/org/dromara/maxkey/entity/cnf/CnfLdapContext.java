@@ -33,11 +33,11 @@ import jakarta.persistence.Table;
 public class CnfLdapContext extends JpaEntity implements Serializable {
 
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -4595539647817265938L;
-	@Id
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -4595539647817265938L;
+    @Id
     @Column
     @GeneratedValue
     String id;
@@ -76,218 +76,218 @@ public class CnfLdapContext extends JpaEntity implements Serializable {
     @Column
     int status;
     
-	@Column
-	private String instId;
+    @Column
+    private String instId;
 
-	private String instName;
+    private String instName;
 
     public CnfLdapContext() {
     }
 
-	public String getId() {
-		return id;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public String getProduct() {
-		return product;
-	}
+    public String getProduct() {
+        return product;
+    }
 
-	public void setProduct(String product) {
-		this.product = product;
-	}
+    public void setProduct(String product) {
+        this.product = product;
+    }
 
-	public String getProviderUrl() {
-		return providerUrl;
-	}
+    public String getProviderUrl() {
+        return providerUrl;
+    }
 
-	public void setProviderUrl(String providerUrl) {
-		this.providerUrl = providerUrl;
-	}
+    public void setProviderUrl(String providerUrl) {
+        this.providerUrl = providerUrl;
+    }
 
-	public String getPrincipal() {
-		return principal;
-	}
+    public String getPrincipal() {
+        return principal;
+    }
 
-	public void setPrincipal(String principal) {
-		this.principal = principal;
-	}
+    public void setPrincipal(String principal) {
+        this.principal = principal;
+    }
 
-	public String getCredentials() {
-		return credentials;
-	}
+    public String getCredentials() {
+        return credentials;
+    }
 
-	public void setCredentials(String credentials) {
-		this.credentials = credentials;
-	}
+    public void setCredentials(String credentials) {
+        this.credentials = credentials;
+    }
 
-	public String getFilters() {
-		return filters;
-	}
+    public String getFilters() {
+        return filters;
+    }
 
-	public void setFilters(String filters) {
-		this.filters = filters;
-	}
+    public void setFilters(String filters) {
+        this.filters = filters;
+    }
 
-	public String getBasedn() {
-		return basedn;
-	}
+    public String getBasedn() {
+        return basedn;
+    }
 
-	public void setBasedn(String basedn) {
-		this.basedn = basedn;
-	}
+    public void setBasedn(String basedn) {
+        this.basedn = basedn;
+    }
 
-	public String getMsadDomain() {
-		return msadDomain;
-	}
+    public String getMsadDomain() {
+        return msadDomain;
+    }
 
-	public void setMsadDomain(String msadDomain) {
-		this.msadDomain = msadDomain;
-	}
+    public void setMsadDomain(String msadDomain) {
+        this.msadDomain = msadDomain;
+    }
 
-	public String getSslSwitch() {
-		return sslSwitch;
-	}
+    public String getSslSwitch() {
+        return sslSwitch;
+    }
 
-	public void setSslSwitch(String sslSwitch) {
-		this.sslSwitch = sslSwitch;
-	}
+    public void setSslSwitch(String sslSwitch) {
+        this.sslSwitch = sslSwitch;
+    }
 
-	public String getAccountMapping() {
-		return accountMapping;
-	}
+    public String getAccountMapping() {
+        return accountMapping;
+    }
 
-	public void setAccountMapping(String accountMapping) {
-		this.accountMapping = accountMapping;
-	}
+    public void setAccountMapping(String accountMapping) {
+        this.accountMapping = accountMapping;
+    }
 
-	public String getTrustStore() {
-		return trustStore;
-	}
+    public String getTrustStore() {
+        return trustStore;
+    }
 
-	public void setTrustStore(String trustStore) {
-		this.trustStore = trustStore;
-	}
+    public void setTrustStore(String trustStore) {
+        this.trustStore = trustStore;
+    }
 
-	public String getTrustStorePassword() {
-		return trustStorePassword;
-	}
+    public String getTrustStorePassword() {
+        return trustStorePassword;
+    }
 
-	public void setTrustStorePassword(String trustStorePassword) {
-		this.trustStorePassword = trustStorePassword;
-	}
+    public void setTrustStorePassword(String trustStorePassword) {
+        this.trustStorePassword = trustStorePassword;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public String getCreatedBy() {
-		return createdBy;
-	}
+    public String getCreatedBy() {
+        return createdBy;
+    }
 
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
-	}
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
 
 
-	public String getModifiedBy() {
-		return modifiedBy;
-	}
+    public String getModifiedBy() {
+        return modifiedBy;
+    }
 
-	public void setModifiedBy(String modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
+    public void setModifiedBy(String modifiedBy) {
+        this.modifiedBy = modifiedBy;
+    }
 
-	public Date getCreatedDate() {
-		return createdDate;
-	}
+    public Date getCreatedDate() {
+        return createdDate;
+    }
 
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
 
-	public Date getModifiedDate() {
-		return modifiedDate;
-	}
+    public Date getModifiedDate() {
+        return modifiedDate;
+    }
 
-	public void setModifiedDate(Date modifiedDate) {
-		this.modifiedDate = modifiedDate;
-	}
+    public void setModifiedDate(Date modifiedDate) {
+        this.modifiedDate = modifiedDate;
+    }
 
-	public int getStatus() {
-		return status;
-	}
+    public int getStatus() {
+        return status;
+    }
 
-	public void setStatus(int status) {
-		this.status = status;
-	}
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
-	public String getInstId() {
-		return instId;
-	}
+    public String getInstId() {
+        return instId;
+    }
 
-	public void setInstId(String instId) {
-		this.instId = instId;
-	}
+    public void setInstId(String instId) {
+        this.instId = instId;
+    }
 
-	public String getInstName() {
-		return instName;
-	}
+    public String getInstName() {
+        return instName;
+    }
 
-	public void setInstName(String instName) {
-		this.instName = instName;
-	}
+    public void setInstName(String instName) {
+        this.instName = instName;
+    }
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("LdapContext [id=");
-		builder.append(id);
-		builder.append(", product=");
-		builder.append(product);
-		builder.append(", providerUrl=");
-		builder.append(providerUrl);
-		builder.append(", principal=");
-		builder.append(principal);
-		builder.append(", credentials=");
-		builder.append(credentials);
-		builder.append(", filters=");
-		builder.append(filters);
-		builder.append(", basedn=");
-		builder.append(basedn);
-		builder.append(", msadDomain=");
-		builder.append(msadDomain);
-		builder.append(", sslSwitch=");
-		builder.append(sslSwitch);
-		builder.append(", trustStore=");
-		builder.append(trustStore);
-		builder.append(", trustStorePassword=");
-		builder.append(trustStorePassword);
-		builder.append(", description=");
-		builder.append(description);
-		builder.append(", createdBy=");
-		builder.append(createdBy);
-		builder.append(", createdDate=");
-		builder.append(createdDate);
-		builder.append(", modifiedBy=");
-		builder.append(modifiedBy);
-		builder.append(", modifiedDate=");
-		builder.append(modifiedDate);
-		builder.append(", status=");
-		builder.append(status);
-		builder.append(", instId=");
-		builder.append(instId);
-		builder.append(", instName=");
-		builder.append(instName);
-		builder.append("]");
-		return builder.toString();
-	}
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("LdapContext [id=");
+        builder.append(id);
+        builder.append(", product=");
+        builder.append(product);
+        builder.append(", providerUrl=");
+        builder.append(providerUrl);
+        builder.append(", principal=");
+        builder.append(principal);
+        builder.append(", credentials=");
+        builder.append(credentials);
+        builder.append(", filters=");
+        builder.append(filters);
+        builder.append(", basedn=");
+        builder.append(basedn);
+        builder.append(", msadDomain=");
+        builder.append(msadDomain);
+        builder.append(", sslSwitch=");
+        builder.append(sslSwitch);
+        builder.append(", trustStore=");
+        builder.append(trustStore);
+        builder.append(", trustStorePassword=");
+        builder.append(trustStorePassword);
+        builder.append(", description=");
+        builder.append(description);
+        builder.append(", createdBy=");
+        builder.append(createdBy);
+        builder.append(", createdDate=");
+        builder.append(createdDate);
+        builder.append(", modifiedBy=");
+        builder.append(modifiedBy);
+        builder.append(", modifiedDate=");
+        builder.append(modifiedDate);
+        builder.append(", status=");
+        builder.append(status);
+        builder.append(", instId=");
+        builder.append(instId);
+        builder.append(", instName=");
+        builder.append(instName);
+        builder.append("]");
+        return builder.toString();
+    }
 
 }

@@ -39,47 +39,47 @@ import jakarta.servlet.http.HttpServletResponse;
 @Controller
 @RequestMapping(value={"/safe"})
 public class SafeController {
-	static final Logger logger = LoggerFactory.getLogger(SafeController.class);
-	
-	@Autowired
-	UserInfoService userInfoService;
-	
-	@RequestMapping(value="/forward/setting") 
-	public ModelAndView fowardSetting(@CurrentUser UserInfo currentUser) {
-			ModelAndView modelAndView=new ModelAndView("safe/setting");
-			modelAndView.addObject("model", currentUser);
-			return modelAndView;
-	}
-	
-	@ResponseBody
-	@RequestMapping(value="/setting") 
-	public Message<?> setting(
-	        HttpServletRequest request,
+    static final Logger logger = LoggerFactory.getLogger(SafeController.class);
+    
+    @Autowired
+    UserInfoService userInfoService;
+    
+    @RequestMapping(value="/forward/setting") 
+    public ModelAndView fowardSetting(@CurrentUser UserInfo currentUser) {
+            ModelAndView modelAndView=new ModelAndView("safe/setting");
+            modelAndView.addObject("model", currentUser);
+            return modelAndView;
+    }
+    
+    @ResponseBody
+    @RequestMapping(value="/setting") 
+    public Message<?> setting(
+            HttpServletRequest request,
             HttpServletResponse response,
-			@RequestParam("authnType") String authnType,
-			@RequestParam("mobile") String mobile,
-			@RequestParam("mobileVerify") String mobileVerify,
-			@RequestParam("email") String email,
-			@RequestParam("emailVerify") String emailVerify,
-			@RequestParam("theme") String theme,
-			@CurrentUser UserInfo currentUser) {
-		currentUser.setAuthnType(Integer.parseInt(authnType));
-		userInfoService.updateAuthnType(currentUser);
-		
-		currentUser.setMobile(mobile);
-		userInfoService.updateMobile(currentUser);
-		
-		currentUser.setEmail(email);
+            @RequestParam("authnType") String authnType,
+            @RequestParam("mobile") String mobile,
+            @RequestParam("mobileVerify") String mobileVerify,
+            @RequestParam("email") String email,
+            @RequestParam("emailVerify") String emailVerify,
+            @RequestParam("theme") String theme,
+            @CurrentUser UserInfo currentUser) {
+        currentUser.setAuthnType(Integer.parseInt(authnType));
+        userInfoService.updateAuthnType(currentUser);
+        
+        currentUser.setMobile(mobile);
+        userInfoService.updateMobile(currentUser);
+        
+        currentUser.setEmail(email);
 
-		currentUser.setTheme(theme);
+        currentUser.setTheme(theme);
         WebContext.setCookie(response,null, WebConstants.THEME_COOKIE_NAME, theme, ConstsTimeInterval.ONE_WEEK);
         
-		userInfoService.updateEmail(currentUser);
-		
-		
-		return new Message<UserInfo>(Message.SUCCESS);
-		
-	}
-	
-	
+        userInfoService.updateEmail(currentUser);
+        
+        
+        return new Message<UserInfo>(Message.SUCCESS);
+        
+    }
+    
+    
 }

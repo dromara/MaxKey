@@ -34,55 +34,55 @@ import jakarta.servlet.http.HttpServletResponse;
 
 
 public class HttpWsFederationEntryPoint implements AsyncHandlerInterceptor {
-	private static final Logger _logger = LoggerFactory.getLogger(HttpWsFederationEntryPoint.class);
-	
+    private static final Logger _logger = LoggerFactory.getLogger(HttpWsFederationEntryPoint.class);
+    
     boolean enable;
     
-  	ApplicationConfig applicationConfig;
+      ApplicationConfig applicationConfig;
     
     AbstractAuthenticationProvider authenticationProvider ;
     
-	WsFederationService wsFederationService;
-	
-	 @Override
-	 public boolean preHandle(HttpServletRequest request,HttpServletResponse response, Object handler) throws Exception {
-		 boolean isAuthenticated= AuthorizationUtils.isAuthenticated();
-		 String wsFederationWA = request.getParameter(WsFederationConstants.WA);
-		 String wsFederationWResult = request.getParameter(WsFederationConstants.WRESULT);
-		 
-		 if(!enable 
-				 || isAuthenticated 
-				 || !applicationConfig.getLoginConfig().isWsFederation()
-				 || wsFederationWA == null){
-			 return true;
-		 }
-		 
-		 _logger.trace("WsFederation Login Start ...");
-		 _logger.trace("Request url : "+ request.getRequestURL());
-		 _logger.trace("Request URI : "+ request.getRequestURI());
-		 _logger.trace("Request ContextPath : "+ request.getContextPath());
-		 _logger.trace("Request ServletPath : "+ request.getServletPath());
-		 _logger.trace("RequestSessionId : "+ request.getRequestedSessionId());
-		 _logger.trace("isRequestedSessionIdValid : "+ request.isRequestedSessionIdValid());
-		 _logger.trace("getSession : "+ request.getSession(false));
-		 
-		// session not exists，session timeout，recreate new session
-		 if(request.getSession(false) == null) {
-		    _logger.trace("recreate new session .");
-			request.getSession(true);
-		 }
-		 
-		 _logger.trace("getSession.getId : "+ request.getSession().getId());
+    WsFederationService wsFederationService;
+    
+     @Override
+     public boolean preHandle(HttpServletRequest request,HttpServletResponse response, Object handler) throws Exception {
+         boolean isAuthenticated= AuthorizationUtils.isAuthenticated();
+         String wsFederationWA = request.getParameter(WsFederationConstants.WA);
+         String wsFederationWResult = request.getParameter(WsFederationConstants.WRESULT);
+         
+         if(!enable 
+                 || isAuthenticated 
+                 || !applicationConfig.getLoginConfig().isWsFederation()
+                 || wsFederationWA == null){
+             return true;
+         }
+         
+         _logger.trace("WsFederation Login Start ...");
+         _logger.trace("Request url : "+ request.getRequestURL());
+         _logger.trace("Request URI : "+ request.getRequestURI());
+         _logger.trace("Request ContextPath : "+ request.getContextPath());
+         _logger.trace("Request ServletPath : "+ request.getServletPath());
+         _logger.trace("RequestSessionId : "+ request.getRequestedSessionId());
+         _logger.trace("isRequestedSessionIdValid : "+ request.isRequestedSessionIdValid());
+         _logger.trace("getSession : "+ request.getSession(false));
+         
+        // session not exists，session timeout，recreate new session
+         if(request.getSession(false) == null) {
+            _logger.trace("recreate new session .");
+            request.getSession(true);
+         }
+         
+         _logger.trace("getSession.getId : "+ request.getSession().getId());
 
-		//for WsFederation Login
-		 _logger.debug("WsFederation : " + wsFederationWA +" , wsFederationWResult : " + wsFederationWResult);
-		 if(applicationConfig.getLoginConfig().isWsFederation()
-				 && StringUtils.isNotEmpty(wsFederationWA) 
-				 && wsFederationWA.equalsIgnoreCase(WsFederationConstants.WSIGNIN)){
-			 _logger.debug("wresult : {}"+wsFederationWResult);
+        //for WsFederation Login
+         _logger.debug("WsFederation : " + wsFederationWA +" , wsFederationWResult : " + wsFederationWResult);
+         if(applicationConfig.getLoginConfig().isWsFederation()
+                 && StringUtils.isNotEmpty(wsFederationWA) 
+                 && wsFederationWA.equalsIgnoreCase(WsFederationConstants.WSIGNIN)){
+             _logger.debug("wresult : {}"+wsFederationWResult);
 
-			 final String wctx = request.getParameter(WsFederationConstants.WCTX);
-			 _logger.debug("wctx : {}"+ wctx);
+             final String wctx = request.getParameter(WsFederationConstants.WCTX);
+             _logger.debug("wctx : {}"+ wctx);
 
             // create credentials
             final AssertionImpl assertion = WsFederationUtils.parseTokenFromString(wsFederationWResult);
@@ -91,14 +91,14 @@ public class HttpWsFederationEntryPoint implements AsyncHandlerInterceptor {
                 final WsFederationCredential wsFederationCredential = WsFederationUtils.createCredentialFromToken(assertion);
 
                 if (wsFederationCredential != null && wsFederationCredential.isValid(wsFederationService.getWsFederationConfiguration().getRelyingParty(),
-                		wsFederationService.getWsFederationConfiguration().getIdentifier(),
-                		wsFederationService.getWsFederationConfiguration().getTolerance())) {
+                        wsFederationService.getWsFederationConfiguration().getIdentifier(),
+                        wsFederationService.getWsFederationConfiguration().getTolerance())) {
 
                     //Give the library user a chance to change the attributes as necessary
                     if (wsFederationService.getWsFederationConfiguration().getAttributeMutator() != null) {
-                    	wsFederationService.getWsFederationConfiguration().getAttributeMutator().modifyAttributes(
-                    			wsFederationCredential.getAttributes(),
-                    			wsFederationService.getWsFederationConfiguration().getUpnSuffix());
+                        wsFederationService.getWsFederationConfiguration().getAttributeMutator().modifyAttributes(
+                                wsFederationCredential.getAttributes(),
+                                wsFederationService.getWsFederationConfiguration().getUpnSuffix());
                     }
                     LoginCredential loginCredential =new LoginCredential(
                             wsFederationCredential.getAttributes().get("").toString(),"",ConstsLoginType.WSFEDERATION);
@@ -110,14 +110,14 @@ public class HttpWsFederationEntryPoint implements AsyncHandlerInterceptor {
             } else {
                 _logger.error("WS Requested Security Token is blank or the signature is not valid.");
             }
-		 }
-		
-		 return true;
-	 }
+         }
+        
+         return true;
+     }
 
-	 public HttpWsFederationEntryPoint() {
-	        super();
-	 }
+     public HttpWsFederationEntryPoint() {
+            super();
+     }
 
     public HttpWsFederationEntryPoint (boolean enable) {
         super();
@@ -125,15 +125,15 @@ public class HttpWsFederationEntryPoint implements AsyncHandlerInterceptor {
     }
 
     public HttpWsFederationEntryPoint(AbstractAuthenticationProvider authenticationProvider, WsFederationService wsFederationService,
-			ApplicationConfig applicationConfig, boolean enable) {
-		super();
-		this.authenticationProvider = authenticationProvider;
-		this.wsFederationService = wsFederationService;
-		this.applicationConfig = applicationConfig;
-		this.enable = enable;
-	}
+            ApplicationConfig applicationConfig, boolean enable) {
+        super();
+        this.authenticationProvider = authenticationProvider;
+        this.wsFederationService = wsFederationService;
+        this.applicationConfig = applicationConfig;
+        this.enable = enable;
+    }
 
-	public boolean isEnable() {
+    public boolean isEnable() {
         return enable;
     }
 
@@ -141,18 +141,18 @@ public class HttpWsFederationEntryPoint implements AsyncHandlerInterceptor {
         this.enable = enable;
     }
 
-	public void setApplicationConfig(ApplicationConfig applicationConfig) {
-		this.applicationConfig = applicationConfig;
-	}
+    public void setApplicationConfig(ApplicationConfig applicationConfig) {
+        this.applicationConfig = applicationConfig;
+    }
 
-	public void setAuthenticationProvider(AbstractAuthenticationProvider authenticationProvider) {
-		this.authenticationProvider = authenticationProvider;
-	}
+    public void setAuthenticationProvider(AbstractAuthenticationProvider authenticationProvider) {
+        this.authenticationProvider = authenticationProvider;
+    }
 
-	public void setWsFederationService(WsFederationService wsFederationService) {
-		this.wsFederationService = wsFederationService;
-	}
+    public void setWsFederationService(WsFederationService wsFederationService) {
+        this.wsFederationService = wsFederationService;
+    }
 
 
-	
+    
 }

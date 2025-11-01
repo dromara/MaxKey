@@ -29,16 +29,16 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class PermissionServiceImpl  extends JpaServiceImpl<PermissionMapper,Permission> implements PermissionService{
-	static final  Logger _logger = LoggerFactory.getLogger(PermissionServiceImpl.class);
+    static final  Logger _logger = LoggerFactory.getLogger(PermissionServiceImpl.class);
 
-	public boolean insertGroupPrivileges(List<Permission> rolePermissionsList) {
-	    return getMapper().insertGroupPrivileges(rolePermissionsList)>0;
-	};
+    public boolean insertGroupPrivileges(List<Permission> rolePermissionsList) {
+        return getMapper().insertGroupPrivileges(rolePermissionsList)>0;
+    };
     
-	public boolean deleteGroupPrivileges(List<Permission> rolePermissionsList) {
-	     return getMapper().deleteGroupPrivileges(rolePermissionsList)>=0;
-	 }
-	
+    public boolean deleteGroupPrivileges(List<Permission> rolePermissionsList) {
+         return getMapper().deleteGroupPrivileges(rolePermissionsList)>=0;
+     }
+    
     public List<Permission> queryGroupPrivileges(Permission rolePermissions){
         return getMapper().queryGroupPrivileges(rolePermissions);
     }    

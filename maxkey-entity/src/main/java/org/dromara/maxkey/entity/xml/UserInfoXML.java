@@ -29,17 +29,17 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class UserInfoXML extends JpaEntity {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 6942731467730249291L;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 6942731467730249291L;
 
-	/**
-	 * 
-	 */
-	public UserInfoXML() {
-		super();
-	}
+    /**
+     * 
+     */
+    public UserInfoXML() {
+        super();
+    }
 
 
 

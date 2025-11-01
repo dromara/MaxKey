@@ -41,7 +41,7 @@ public class OneTimePasswordAutoConfiguration {
             CnfEmailSendersService emailSendersService,
             RedisConnectionFactory redisConnFactory) {
         MailOtpAuthnService otpAuthnService = 
-        							new MailOtpAuthnService(emailSendersService);
+                                    new MailOtpAuthnService(emailSendersService);
         
         if (persistence == ConstsPersistence.REDIS) {
             RedisOtpTokenStore redisOptTokenStore = new RedisOtpTokenStore(redisConnFactory);
@@ -49,7 +49,7 @@ public class OneTimePasswordAutoConfiguration {
         }
         
         _logger.debug("MailOtpAuthnService {} inited." , 
-        				persistence == ConstsPersistence.REDIS ? "Redis" : "InMemory");
+                        persistence == ConstsPersistence.REDIS ? "Redis" : "InMemory");
         return otpAuthnService;
     }
    

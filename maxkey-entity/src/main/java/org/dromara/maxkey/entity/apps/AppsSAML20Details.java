@@ -100,11 +100,11 @@ public class AppsSAML20Details extends Apps  implements Serializable {
     
     @Column
     private String nameIdSuffix;
-	@Column
-	private String instId;
+    @Column
+    private String instId;
 
-	private String instName;
-	
+    private String instName;
+    
     public static final class BindingType {
         public static final  String Redirect_Post = "Redirect-Post";
         public static final  String Post_Post = "Post-Post";
@@ -295,14 +295,14 @@ public class AppsSAML20Details extends Apps  implements Serializable {
     }
 
     public String getMetaFileId() {
-		return metaFileId;
-	}
+        return metaFileId;
+    }
 
-	public void setMetaFileId(String metaFileId) {
-		this.metaFileId = metaFileId;
-	}
+    public void setMetaFileId(String metaFileId) {
+        this.metaFileId = metaFileId;
+    }
 
-	public String getBinding() {
+    public String getBinding() {
         return binding;
     }
 
@@ -359,22 +359,22 @@ public class AppsSAML20Details extends Apps  implements Serializable {
     }
 
     public String getInstId() {
-		return instId;
-	}
+        return instId;
+    }
 
-	public void setInstId(String instId) {
-		this.instId = instId;
-	}
+    public void setInstId(String instId) {
+        this.instId = instId;
+    }
 
-	public String getInstName() {
-		return instName;
-	}
+    public String getInstName() {
+        return instName;
+    }
 
-	public void setInstName(String instName) {
-		this.instName = instName;
-	}
+    public void setInstName(String instName) {
+        this.instName = instName;
+    }
 
-	@Override
+    @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("AppsSAML20Details [id=");

@@ -28,9 +28,9 @@ import jakarta.servlet.http.HttpServletResponse;
 @Controller
 public class MetadataEndpoint {
 
-	@GetMapping(value = "/metadata/version",produces = ContentType.TEXT_PLAIN_UTF8)
-	@ResponseBody
-	public String  metadata(HttpServletRequest request,HttpServletResponse response) {
-		return WebContext.version();
-	}
+    @GetMapping(value = "/metadata/version",produces = ContentType.TEXT_PLAIN_UTF8)
+    @ResponseBody
+    public String  metadata(HttpServletRequest request,HttpServletResponse response) {
+        return WebContext.version();
+    }
 }

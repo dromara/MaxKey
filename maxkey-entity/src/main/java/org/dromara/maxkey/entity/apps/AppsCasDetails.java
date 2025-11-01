@@ -44,12 +44,12 @@ public class AppsCasDetails extends Apps  implements Serializable {
     private Integer expires;
     @Column
     private String callbackUrl;
-	@Column
-	private String instId;
-	@Column
-	private String casUser;
+    @Column
+    private String instId;
+    @Column
+    private String casUser;
 
-	private String instName;
+    private String instName;
 
     /**
      * @return the service
@@ -75,55 +75,55 @@ public class AppsCasDetails extends Apps  implements Serializable {
 
 
 
-	public Integer getExpires() {
-		return expires;
-	}
+    public Integer getExpires() {
+        return expires;
+    }
 
-	public void setExpires(Integer expires) {
-		this.expires = expires;
-	}
+    public void setExpires(Integer expires) {
+        this.expires = expires;
+    }
 
-	public String getCasUser() {
-		return casUser;
-	}
+    public String getCasUser() {
+        return casUser;
+    }
 
-	public void setCasUser(String casUser) {
-		this.casUser = casUser;
-	}
+    public void setCasUser(String casUser) {
+        this.casUser = casUser;
+    }
 
-	public String getInstId() {
-		return instId;
-	}
+    public String getInstId() {
+        return instId;
+    }
 
-	public void setInstId(String instId) {
-		this.instId = instId;
-	}
+    public void setInstId(String instId) {
+        this.instId = instId;
+    }
 
-	public String getInstName() {
-		return instName;
-	}
+    public String getInstName() {
+        return instName;
+    }
 
-	public void setInstName(String instName) {
-		this.instName = instName;
-	}
+    public void setInstName(String instName) {
+        this.instName = instName;
+    }
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("AppsCasDetails [id=");
-		builder.append(id);
-		builder.append(", service=");
-		builder.append(service);
-		builder.append(", expires=");
-		builder.append(expires);
-		builder.append(", callbackUrl=");
-		builder.append(callbackUrl);
-		builder.append(", instId=");
-		builder.append(instId);
-		builder.append(", instName=");
-		builder.append(instName);
-		builder.append("]");
-		return builder.toString();
-	}
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("AppsCasDetails [id=");
+        builder.append(id);
+        builder.append(", service=");
+        builder.append(service);
+        builder.append(", expires=");
+        builder.append(expires);
+        builder.append(", callbackUrl=");
+        builder.append(callbackUrl);
+        builder.append(", instId=");
+        builder.append(instId);
+        builder.append(", instName=");
+        builder.append(instName);
+        builder.append("]");
+        return builder.toString();
+    }
 
 }

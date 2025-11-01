@@ -62,22 +62,22 @@ public final class Base64Utils {
     }
 
     public static String encodeImage(BufferedImage bufferedImage) {
-    	try {
-    		ByteArrayOutputStream stream = new ByteArrayOutputStream();
-			ImageIO.write(bufferedImage, "png", stream);
-			String b64Image = "data:image/png;base64," + 
-					java.util.Base64.getEncoder().encodeToString(stream.toByteArray());
-			stream.close();
-	        return b64Image;
-    	}catch (Exception e) {
-    		e.printStackTrace();
-    	}
-    	return "";
+        try {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            ImageIO.write(bufferedImage, "png", stream);
+            String b64Image = "data:image/png;base64," + 
+                    java.util.Base64.getEncoder().encodeToString(stream.toByteArray());
+            stream.close();
+            return b64Image;
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
     }
     
     public static String encodeImage(byte[] byteImage) {
-    	return "data:image/png;base64," + 
-    			java.util.Base64.getEncoder().encodeToString(byteImage);
+        return "data:image/png;base64," + 
+                java.util.Base64.getEncoder().encodeToString(byteImage);
     }
     
     /**

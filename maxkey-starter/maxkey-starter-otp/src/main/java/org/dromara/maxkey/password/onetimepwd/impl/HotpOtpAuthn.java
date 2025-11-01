@@ -95,10 +95,10 @@ public class HotpOtpAuthn extends AbstractOtpAuthn {
         this.truncation = truncation;
     }
 
-	@Override
-	public boolean validate(String sharedSecret, String token) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    @Override
+    public boolean validate(String sharedSecret, String token) {
+        // TODO Auto-generated method stub
+        return false;
+    }
 
 }

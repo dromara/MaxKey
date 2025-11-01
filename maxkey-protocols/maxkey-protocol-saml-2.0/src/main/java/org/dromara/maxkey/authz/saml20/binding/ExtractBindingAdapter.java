@@ -38,20 +38,20 @@ import jakarta.servlet.http.HttpServletRequest;
  */
 public interface ExtractBindingAdapter {
 
-	@SuppressWarnings("rawtypes")
-	public SAMLMessageContext extractSAMLMessageContext(HttpServletRequest request) throws MessageDecodingException, SecurityException;
+    @SuppressWarnings("rawtypes")
+    public SAMLMessageContext extractSAMLMessageContext(HttpServletRequest request) throws MessageDecodingException, SecurityException;
 
-	public String extractSAMLMessage(HttpServletRequest request);
-	
-	public void setSecurityPolicyResolver(SecurityPolicyResolver securityPolicyResolver);
-	
-	public void buildSecurityPolicyResolver(KeyStore trustKeyStore);
-	
-	public void setSaml20Detail(AppsSAML20Details  saml20Detail);
-	
-	public AppsSAML20Details getSaml20Detail();
-	
-	public KeyStoreLoader getKeyStoreLoader();
-	
-	public CredentialResolver getCredentialResolver();
+    public String extractSAMLMessage(HttpServletRequest request);
+    
+    public void setSecurityPolicyResolver(SecurityPolicyResolver securityPolicyResolver);
+    
+    public void buildSecurityPolicyResolver(KeyStore trustKeyStore);
+    
+    public void setSaml20Detail(AppsSAML20Details  saml20Detail);
+    
+    public AppsSAML20Details getSaml20Detail();
+    
+    public KeyStoreLoader getKeyStoreLoader();
+    
+    public CredentialResolver getCredentialResolver();
 }

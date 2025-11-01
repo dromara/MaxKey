@@ -84,209 +84,209 @@ import java.util.stream.Collectors;
 @RequestMapping("/token")
 public class PigTokenEndpoint {
 
-	private final HttpMessageConverter<OAuth2AccessTokenResponse> accessTokenHttpResponseConverter = new OAuth2AccessTokenResponseHttpMessageConverter();
+    private final HttpMessageConverter<OAuth2AccessTokenResponse> accessTokenHttpResponseConverter = new OAuth2AccessTokenResponseHttpMessageConverter();
 
-	private final AuthenticationFailureHandler authenticationFailureHandler = new PigAuthenticationFailureEventHandler();
+    private final AuthenticationFailureHandler authenticationFailureHandler = new PigAuthenticationFailureEventHandler();
 
-	private final OAuth2AuthorizationService authorizationService;
+    private final OAuth2AuthorizationService authorizationService;
 
-	private final RemoteClientDetailsService clientDetailsService;
+    private final RemoteClientDetailsService clientDetailsService;
 
-	private final RedisTemplate<String, Object> redisTemplate;
+    private final RedisTemplate<String, Object> redisTemplate;
 
-	private final CacheManager cacheManager;
+    private final CacheManager cacheManager;
 
-	@Resource
-	private RedisUtils redisUtils;
-
-
-	@Resource
-	private TokenManager tokenManager;
-
-	private final static String SPRING_SESSION_PREFIX = "spring:session:sessions:%s";
-	private final static String PIG_TOKEN_PREFIX = "pig:token:%s:%s";
-	private final static String ASSCEE_TOKEN = "access_token";
-	private final static String REFRESH_TOKEN = "refresh_token";
-
-	private long tokenExpiration = 24 * 60 * 60 * 1000;
+    @Resource
+    private RedisUtils redisUtils;
 
 
-	/**
-	 * 认证页面
-	 *
-	 * @param modelAndView
-	 * @param error        表单登录失败处理回调的错误信息
-	 * @return ModelAndView
-	 */
-	@GetMapping("/login")
-	public ModelAndView require(ModelAndView modelAndView, @RequestParam(required = false) String error) {
-		modelAndView.setViewName("ftl/login");
-		modelAndView.addObject("error", error);
-		return modelAndView;
-	}
+    @Resource
+    private TokenManager tokenManager;
 
-	@GetMapping("/confirm_access")
-	public ModelAndView confirm(Principal principal, ModelAndView modelAndView,
-								@RequestParam(OAuth2ParameterNames.CLIENT_ID) String clientId,
-								@RequestParam(OAuth2ParameterNames.SCOPE) String scope,
-								@RequestParam(OAuth2ParameterNames.STATE) String state) {
-		SysOauthClientDetails clientDetails = RetOps.of(clientDetailsService.getClientDetailsById(clientId))
-				.getData()
-				.orElseThrow(() -> new OAuthClientException("clientId 不合法"));
+    private final static String SPRING_SESSION_PREFIX = "spring:session:sessions:%s";
+    private final static String PIG_TOKEN_PREFIX = "pig:token:%s:%s";
+    private final static String ASSCEE_TOKEN = "access_token";
+    private final static String REFRESH_TOKEN = "refresh_token";
 
-		Set<String> authorizedScopes = StringUtils.commaDelimitedListToSet(clientDetails.getScope());
-		modelAndView.addObject("clientId", clientId);
-		modelAndView.addObject("state", state);
-		modelAndView.addObject("scopeList", authorizedScopes);
-		modelAndView.addObject("principalName", principal.getName());
-		modelAndView.setViewName("ftl/confirm");
-		return modelAndView;
-	}
-
-	/**
-	 * 退出并删除token
-	 *
-	 * @param authHeader Authorization
-	 */
-	@DeleteMapping("/logout")
-	public R<Boolean> logout(HttpServletRequest request, @RequestHeader(value = HttpHeaders.AUTHORIZATION, required = false) String authHeader) {
-		if (StrUtil.isBlank(authHeader)) {
-			return R.ok();
-		}
-		String sessonId = request.getSession().getId();
-		if (StrUtil.isBlank(sessonId)) {
-			return R.ok();
-		}
-		boolean isSuccess = redisUtils.deleteKey(generateSessionId(sessonId));
-		if (isSuccess) {
-			return R.ok();
-		} else {
-			return R.failed();
-		}
-
-	}
-
-	/**
-	 * 校验token
-	 *
-	 * @param token 令牌
-	 */
-	@SneakyThrows
-	@GetMapping("/check_token")
-	public void checkToken(String token, HttpServletResponse response, HttpServletRequest request) {
-
-		ServletServerHttpResponse httpResponse = new ServletServerHttpResponse(response);
-
-		if (StrUtil.isBlank(token)) {
-			httpResponse.setStatusCode(HttpStatus.UNAUTHORIZED);
-			this.authenticationFailureHandler.onAuthenticationFailure(request, response,
-					new InvalidBearerTokenException(OAuth2ErrorCodesExpand.TOKEN_MISSING));
-			return;
-		}
-		OAuth2Authorization authorization = authorizationService.findByToken(token, OAuth2TokenType.ACCESS_TOKEN);
-
-		// 如果令牌不存在 返回401
-		if (authorization == null || authorization.getAccessToken() == null) {
-			this.authenticationFailureHandler.onAuthenticationFailure(request, response,
-					new InvalidBearerTokenException(OAuth2ErrorCodesExpand.INVALID_BEARER_TOKEN));
-			return;
-		}
-
-		Map<String, Object> claims = authorization.getAccessToken().getClaims();
-		OAuth2AccessTokenResponse sendAccessTokenResponse = OAuth2EndpointUtils.sendAccessTokenResponse(authorization,
-				claims);
-		this.accessTokenHttpResponseConverter.write(sendAccessTokenResponse, MediaType.APPLICATION_JSON, httpResponse);
-	}
-
-	/**
-	 * 令牌管理调用
-	 *
-	 * @param token token
-	 */
-	@Inner
-	@DeleteMapping("/{token}")
-	public R<Boolean> removeToken(@PathVariable("token") String token) {
-		OAuth2Authorization authorization = authorizationService.findByToken(token, OAuth2TokenType.ACCESS_TOKEN);
-		if (authorization == null) {
-			return R.ok();
-		}
-
-		OAuth2Authorization.Token<OAuth2AccessToken> accessToken = authorization.getAccessToken();
-		if (accessToken == null || StrUtil.isBlank(accessToken.getToken().getTokenValue())) {
-			return R.ok();
-		}
-		// 清空用户信息
-		cacheManager.getCache(CacheConstants.USER_DETAILS).evict(authorization.getPrincipalName());
-		// 清空access token
-		authorizationService.remove(authorization);
-		// 处理自定义退出事件，保存相关日志
-		SpringContextHolder.publishEvent(new LogoutSuccessEvent(new PreAuthenticatedAuthenticationToken(
-				authorization.getPrincipalName(), authorization.getRegisteredClientId())));
-		return R.ok();
-	}
-
-	/**
-	 * 查询token
-	 *
-	 * @param params 分页参数
-	 * @return
-	 */
-	@Inner
-	@PostMapping("/page")
-	public R<Page> tokenList(@RequestBody Map<String, Object> params) {
-		// 根据分页参数获取对应数据
-		String key = String.format("%s::*", CacheConstants.PROJECT_OAUTH_ACCESS);
-		int current = MapUtil.getInt(params, CommonConstants.CURRENT);
-		int size = MapUtil.getInt(params, CommonConstants.SIZE);
-		Set<String> keys = redisTemplate.keys(key);
-		List<String> pages = keys.stream().skip((current - 1) * size).limit(size).collect(Collectors.toList());
-		Page result = new Page(current, size);
-
-		List<TokenVo> tokenVoList = redisTemplate.opsForValue().multiGet(pages).stream().map(obj -> {
-			OAuth2Authorization authorization = (OAuth2Authorization) obj;
-			TokenVo tokenVo = new TokenVo();
-			tokenVo.setClientId(authorization.getRegisteredClientId());
-			tokenVo.setId(authorization.getId());
-			tokenVo.setUsername(authorization.getPrincipalName());
-			OAuth2Authorization.Token<OAuth2AccessToken> accessToken = authorization.getAccessToken();
-			tokenVo.setAccessToken(accessToken.getToken().getTokenValue());
-
-			String expiresAt = TemporalAccessorUtil.format(accessToken.getToken().getExpiresAt(),
-					DatePattern.NORM_DATETIME_PATTERN);
-			tokenVo.setExpiresAt(expiresAt);
-
-			String issuedAt = TemporalAccessorUtil.format(accessToken.getToken().getIssuedAt(),
-					DatePattern.NORM_DATETIME_PATTERN);
-			tokenVo.setIssuedAt(issuedAt);
-			return tokenVo;
-		}).collect(Collectors.toList());
-		result.setRecords(tokenVoList);
-		result.setTotal(keys.size());
-		return R.ok(result);
-	}
-
-	@GetMapping("sso_login_get_token")
-	public R<Map<String, String>> getToken(String ticket, String service) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		PigUser pigUser = (PigUser) authentication.getPrincipal();
-		Map<String, String> ans = new HashMap<>();
-		String access_token = tokenManager.createToken(ASSCEE_TOKEN, pigUser.getName(), pigUser.getId().toString());
-		String refresh_token = tokenManager.createToken(REFRESH_TOKEN, pigUser.getName(), pigUser.getId().toString());
-		redisUtils.setValue(generateTokenKey(ASSCEE_TOKEN, pigUser.getId().toString()), access_token, tokenExpiration);
-		redisUtils.setValue(generateTokenKey(REFRESH_TOKEN, pigUser.getId().toString()), refresh_token, tokenExpiration);
-		ans.put("access_token", access_token);
-		ans.put("refresh_token", refresh_token);
-		return R.ok(ans);
-	}
+    private long tokenExpiration = 24 * 60 * 60 * 1000;
 
 
-	private String generateSessionId(String sessionId) {
-		return String.format(SPRING_SESSION_PREFIX, sessionId);
-	}
+    /**
+     * 认证页面
+     *
+     * @param modelAndView
+     * @param error        表单登录失败处理回调的错误信息
+     * @return ModelAndView
+     */
+    @GetMapping("/login")
+    public ModelAndView require(ModelAndView modelAndView, @RequestParam(required = false) String error) {
+        modelAndView.setViewName("ftl/login");
+        modelAndView.addObject("error", error);
+        return modelAndView;
+    }
 
-	private String generateTokenKey(String type, String userId) {
-		return String.format(PIG_TOKEN_PREFIX, type, userId);
-	}
+    @GetMapping("/confirm_access")
+    public ModelAndView confirm(Principal principal, ModelAndView modelAndView,
+                                @RequestParam(OAuth2ParameterNames.CLIENT_ID) String clientId,
+                                @RequestParam(OAuth2ParameterNames.SCOPE) String scope,
+                                @RequestParam(OAuth2ParameterNames.STATE) String state) {
+        SysOauthClientDetails clientDetails = RetOps.of(clientDetailsService.getClientDetailsById(clientId))
+                .getData()
+                .orElseThrow(() -> new OAuthClientException("clientId 不合法"));
+
+        Set<String> authorizedScopes = StringUtils.commaDelimitedListToSet(clientDetails.getScope());
+        modelAndView.addObject("clientId", clientId);
+        modelAndView.addObject("state", state);
+        modelAndView.addObject("scopeList", authorizedScopes);
+        modelAndView.addObject("principalName", principal.getName());
+        modelAndView.setViewName("ftl/confirm");
+        return modelAndView;
+    }
+
+    /**
+     * 退出并删除token
+     *
+     * @param authHeader Authorization
+     */
+    @DeleteMapping("/logout")
+    public R<Boolean> logout(HttpServletRequest request, @RequestHeader(value = HttpHeaders.AUTHORIZATION, required = false) String authHeader) {
+        if (StrUtil.isBlank(authHeader)) {
+            return R.ok();
+        }
+        String sessonId = request.getSession().getId();
+        if (StrUtil.isBlank(sessonId)) {
+            return R.ok();
+        }
+        boolean isSuccess = redisUtils.deleteKey(generateSessionId(sessonId));
+        if (isSuccess) {
+            return R.ok();
+        } else {
+            return R.failed();
+        }
+
+    }
+
+    /**
+     * 校验token
+     *
+     * @param token 令牌
+     */
+    @SneakyThrows
+    @GetMapping("/check_token")
+    public void checkToken(String token, HttpServletResponse response, HttpServletRequest request) {
+
+        ServletServerHttpResponse httpResponse = new ServletServerHttpResponse(response);
+
+        if (StrUtil.isBlank(token)) {
+            httpResponse.setStatusCode(HttpStatus.UNAUTHORIZED);
+            this.authenticationFailureHandler.onAuthenticationFailure(request, response,
+                    new InvalidBearerTokenException(OAuth2ErrorCodesExpand.TOKEN_MISSING));
+            return;
+        }
+        OAuth2Authorization authorization = authorizationService.findByToken(token, OAuth2TokenType.ACCESS_TOKEN);
+
+        // 如果令牌不存在 返回401
+        if (authorization == null || authorization.getAccessToken() == null) {
+            this.authenticationFailureHandler.onAuthenticationFailure(request, response,
+                    new InvalidBearerTokenException(OAuth2ErrorCodesExpand.INVALID_BEARER_TOKEN));
+            return;
+        }
+
+        Map<String, Object> claims = authorization.getAccessToken().getClaims();
+        OAuth2AccessTokenResponse sendAccessTokenResponse = OAuth2EndpointUtils.sendAccessTokenResponse(authorization,
+                claims);
+        this.accessTokenHttpResponseConverter.write(sendAccessTokenResponse, MediaType.APPLICATION_JSON, httpResponse);
+    }
+
+    /**
+     * 令牌管理调用
+     *
+     * @param token token
+     */
+    @Inner
+    @DeleteMapping("/{token}")
+    public R<Boolean> removeToken(@PathVariable("token") String token) {
+        OAuth2Authorization authorization = authorizationService.findByToken(token, OAuth2TokenType.ACCESS_TOKEN);
+        if (authorization == null) {
+            return R.ok();
+        }
+
+        OAuth2Authorization.Token<OAuth2AccessToken> accessToken = authorization.getAccessToken();
+        if (accessToken == null || StrUtil.isBlank(accessToken.getToken().getTokenValue())) {
+            return R.ok();
+        }
+        // 清空用户信息
+        cacheManager.getCache(CacheConstants.USER_DETAILS).evict(authorization.getPrincipalName());
+        // 清空access token
+        authorizationService.remove(authorization);
+        // 处理自定义退出事件，保存相关日志
+        SpringContextHolder.publishEvent(new LogoutSuccessEvent(new PreAuthenticatedAuthenticationToken(
+                authorization.getPrincipalName(), authorization.getRegisteredClientId())));
+        return R.ok();
+    }
+
+    /**
+     * 查询token
+     *
+     * @param params 分页参数
+     * @return
+     */
+    @Inner
+    @PostMapping("/page")
+    public R<Page> tokenList(@RequestBody Map<String, Object> params) {
+        // 根据分页参数获取对应数据
+        String key = String.format("%s::*", CacheConstants.PROJECT_OAUTH_ACCESS);
+        int current = MapUtil.getInt(params, CommonConstants.CURRENT);
+        int size = MapUtil.getInt(params, CommonConstants.SIZE);
+        Set<String> keys = redisTemplate.keys(key);
+        List<String> pages = keys.stream().skip((current - 1) * size).limit(size).collect(Collectors.toList());
+        Page result = new Page(current, size);
+
+        List<TokenVo> tokenVoList = redisTemplate.opsForValue().multiGet(pages).stream().map(obj -> {
+            OAuth2Authorization authorization = (OAuth2Authorization) obj;
+            TokenVo tokenVo = new TokenVo();
+            tokenVo.setClientId(authorization.getRegisteredClientId());
+            tokenVo.setId(authorization.getId());
+            tokenVo.setUsername(authorization.getPrincipalName());
+            OAuth2Authorization.Token<OAuth2AccessToken> accessToken = authorization.getAccessToken();
+            tokenVo.setAccessToken(accessToken.getToken().getTokenValue());
+
+            String expiresAt = TemporalAccessorUtil.format(accessToken.getToken().getExpiresAt(),
+                    DatePattern.NORM_DATETIME_PATTERN);
+            tokenVo.setExpiresAt(expiresAt);
+
+            String issuedAt = TemporalAccessorUtil.format(accessToken.getToken().getIssuedAt(),
+                    DatePattern.NORM_DATETIME_PATTERN);
+            tokenVo.setIssuedAt(issuedAt);
+            return tokenVo;
+        }).collect(Collectors.toList());
+        result.setRecords(tokenVoList);
+        result.setTotal(keys.size());
+        return R.ok(result);
+    }
+
+    @GetMapping("sso_login_get_token")
+    public R<Map<String, String>> getToken(String ticket, String service) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        PigUser pigUser = (PigUser) authentication.getPrincipal();
+        Map<String, String> ans = new HashMap<>();
+        String access_token = tokenManager.createToken(ASSCEE_TOKEN, pigUser.getName(), pigUser.getId().toString());
+        String refresh_token = tokenManager.createToken(REFRESH_TOKEN, pigUser.getName(), pigUser.getId().toString());
+        redisUtils.setValue(generateTokenKey(ASSCEE_TOKEN, pigUser.getId().toString()), access_token, tokenExpiration);
+        redisUtils.setValue(generateTokenKey(REFRESH_TOKEN, pigUser.getId().toString()), refresh_token, tokenExpiration);
+        ans.put("access_token", access_token);
+        ans.put("refresh_token", refresh_token);
+        return R.ok(ans);
+    }
+
+
+    private String generateSessionId(String sessionId) {
+        return String.format(SPRING_SESSION_PREFIX, sessionId);
+    }
+
+    private String generateTokenKey(String type, String userId) {
+        return String.format(PIG_TOKEN_PREFIX, type, userId);
+    }
 
 
 }

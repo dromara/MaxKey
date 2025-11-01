@@ -27,8 +27,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class ResourcesServiceImpl  extends JpaServiceImpl<ResourcesMapper,Resources> implements ResourcesService{
-	
-	public List<Resources> queryResourcesTree(Resources resource){
-	   return  getMapper().fetchPageResults(resource);
-	}
+    
+    public List<Resources> queryResourcesTree(Resources resource){
+       return  getMapper().fetchPageResults(resource);
+    }
 }

@@ -21,9 +21,9 @@ import org.dromara.maxkey.util.EthernetAddress;
 
 public class EthernetAddressTest {
 
-	public static void main(String[] args) {
-		System.out.println(EthernetAddress.fromInterface());
+    public static void main(String[] args) {
+        System.out.println(EthernetAddress.fromInterface());
 
-	}
+    }
 
 }

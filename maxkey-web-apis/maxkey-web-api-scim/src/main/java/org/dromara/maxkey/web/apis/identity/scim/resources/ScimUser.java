@@ -208,25 +208,25 @@ public class ScimUser extends ScimResource{
     
     
     public ScimEnterprise getEnterprise() {
-		return enterprise;
-	}
-	public void setEnterprise(ScimEnterprise enterprise) {
-		this.enterprise = enterprise;
-	}
+        return enterprise;
+    }
+    public void setEnterprise(ScimEnterprise enterprise) {
+        this.enterprise = enterprise;
+    }
 
-	public List<String> getOrganization() {
-		return organization;
-	}
-	public void setOrganization(List<String> organization) {
-		this.organization = organization;
-	}
-	public List<String> getGroup() {
-		return group;
-	}
-	public void setGroup(List<String> group) {
-		this.group = group;
-	}
-	public ScimUser() {
+    public List<String> getOrganization() {
+        return organization;
+    }
+    public void setOrganization(List<String> organization) {
+        this.organization = organization;
+    }
+    public List<String> getGroup() {
+        return group;
+    }
+    public void setGroup(List<String> group) {
+        this.group = group;
+    }
+    public ScimUser() {
         schemas =new HashSet<String>();
         schemas.add(SCHEMA);
     }

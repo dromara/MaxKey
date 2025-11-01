@@ -22,8 +22,8 @@ import org.dromara.mybatis.jpa.service.IJpaService;
 
 public interface InstitutionsService  extends IJpaService<Institutions>{
 
-	 public Institutions findByDomain(String domain) ;
-	 
-	 
-	 public Institutions get(String instIdOrDomain) ;
+     public Institutions findByDomain(String domain) ;
+     
+     
+     public Institutions get(String instIdOrDomain) ;
 }

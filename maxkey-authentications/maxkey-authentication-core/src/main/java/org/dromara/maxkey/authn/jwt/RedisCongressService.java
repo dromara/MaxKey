@@ -25,47 +25,47 @@ import org.slf4j.LoggerFactory;
 
 public class RedisCongressService implements CongressService {
     private static final Logger logger = LoggerFactory.getLogger(RedisCongressService.class);
-	
-	protected int validitySeconds = 60 * 3; //default 3 minutes.
-	
-	RedisConnectionFactory connectionFactory;
-	
-	public static final String PREFIX = "REDIS:CONGRESS:";
-	/**
-	 * @param connectionFactory
-	 */
-	public RedisCongressService(
-			RedisConnectionFactory connectionFactory) {
-		super();
-		this.connectionFactory = connectionFactory;
-	}
-	
-	/**
-	 * 
-	 */
-	public RedisCongressService() {
-		
-	}
+    
+    protected int validitySeconds = 60 * 3; //default 3 minutes.
+    
+    RedisConnectionFactory connectionFactory;
+    
+    public static final String PREFIX = "REDIS:CONGRESS:";
+    /**
+     * @param connectionFactory
+     */
+    public RedisCongressService(
+            RedisConnectionFactory connectionFactory) {
+        super();
+        this.connectionFactory = connectionFactory;
+    }
+    
+    /**
+     * 
+     */
+    public RedisCongressService() {
+        
+    }
 
-	public void setConnectionFactory(RedisConnectionFactory connectionFactory) {
-		this.connectionFactory = connectionFactory;
-	}
+    public void setConnectionFactory(RedisConnectionFactory connectionFactory) {
+        this.connectionFactory = connectionFactory;
+    }
 
-	@Override
-	public void store(String congress, AuthJwt authJwt) {
-		RedisConnection conn = connectionFactory.getConnection();
-		conn.setexObject(PREFIX + congress, validitySeconds, authJwt);
-		conn.close();
-	}
+    @Override
+    public void store(String congress, AuthJwt authJwt) {
+        RedisConnection conn = connectionFactory.getConnection();
+        conn.setexObject(PREFIX + congress, validitySeconds, authJwt);
+        conn.close();
+    }
 
-	@Override
-	public AuthJwt remove(String congress) {
-		RedisConnection conn=connectionFactory.getConnection();
-		AuthJwt authJwt = conn.getObject(PREFIX + congress);
-		conn.delete(PREFIX+congress);
-		conn.close();
-		return authJwt;
-	}
+    @Override
+    public AuthJwt remove(String congress) {
+        RedisConnection conn=connectionFactory.getConnection();
+        AuthJwt authJwt = conn.getObject(PREFIX + congress);
+        conn.delete(PREFIX+congress);
+        conn.close();
+        return authJwt;
+    }
 
     @Override
     public AuthJwt get(String congress) {
@@ -75,14 +75,14 @@ public class RedisCongressService implements CongressService {
         return authJwt;
     }
 
-	@Override
-	public AuthJwt consume(String congress) {
-		RedisConnection conn=connectionFactory.getConnection();
-		AuthJwt authJwt = conn.getObject(PREFIX + congress);
-		conn.delete(PREFIX+congress);
-		conn.close();
-		return authJwt;
-	}
+    @Override
+    public AuthJwt consume(String congress) {
+        RedisConnection conn=connectionFactory.getConnection();
+        AuthJwt authJwt = conn.getObject(PREFIX + congress);
+        conn.delete(PREFIX+congress);
+        conn.close();
+        return authJwt;
+    }
 
-	
+    
 }

@@ -50,7 +50,7 @@ public class ProxyGrantingTicketImpl extends ServiceTicketImpl implements Ticket
     }
     
     public ProxyGrantingTicketImpl(Authentication authentication,  AppsCasDetails casDetails) {
-    	this.authentication=authentication;
-    	this.casDetails=casDetails;
+        this.authentication=authentication;
+        this.casDetails=casDetails;
     }
 }

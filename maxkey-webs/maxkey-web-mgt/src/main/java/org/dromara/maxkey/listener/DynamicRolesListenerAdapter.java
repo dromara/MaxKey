@@ -27,12 +27,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class DynamicRolesListenerAdapter extends ScheduleAdapter  implements Job , Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 7000735366821127880L;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 7000735366821127880L;
 
-	static final  Logger logger = LoggerFactory.getLogger(DynamicRolesListenerAdapter.class);
+    static final  Logger logger = LoggerFactory.getLogger(DynamicRolesListenerAdapter.class);
     
     transient RolesService rolesService;
 
@@ -46,8 +46,8 @@ public class DynamicRolesListenerAdapter extends ScheduleAdapter  implements Job
         jobStatus = JOBSTATUS.RUNNING;
         try {
             if(rolesService != null) {
-            	rolesService.refreshAllDynamicRoles();
-            	Thread.sleep(10 * 1000);//10 minutes
+                rolesService.refreshAllDynamicRoles();
+                Thread.sleep(10 * 1000);//10 minutes
             }
             logger.debug("finished  " );
             jobStatus = JOBSTATUS.FINISHED;
@@ -58,10 +58,10 @@ public class DynamicRolesListenerAdapter extends ScheduleAdapter  implements Job
     }
 
     @Override
-	protected void init(JobExecutionContext context){
-    	super.init(context);
-    	if(rolesService == null) {
-    		rolesService = getParameter("rolesService",RolesService.class);
+    protected void init(JobExecutionContext context){
+        super.init(context);
+        if(rolesService == null) {
+            rolesService = getParameter("rolesService",RolesService.class);
         }
     }
 

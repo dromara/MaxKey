@@ -57,46 +57,46 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RestController
 public class CheckTokenEndpoint {
 
-	private ResourceServerTokenServices resourceServerTokenServices;
+    private ResourceServerTokenServices resourceServerTokenServices;
 
-	private AccessTokenConverter accessTokenConverter = new DefaultAccessTokenConverter();
+    private AccessTokenConverter accessTokenConverter = new DefaultAccessTokenConverter();
 
-	protected final Log logger = LogFactory.getLog(getClass());
-
-
-	public CheckTokenEndpoint(ResourceServerTokenServices resourceServerTokenServices) {
-		this.resourceServerTokenServices = resourceServerTokenServices;
-	}
-	
+    protected final Log logger = LogFactory.getLog(getClass());
 
 
-	/**
-	 * @param accessTokenConverter the accessTokenConverter to set
-	 */
-	public void setAccessTokenConverter(AccessTokenConverter accessTokenConverter) {
-		this.accessTokenConverter = accessTokenConverter;
-	}
+    public CheckTokenEndpoint(ResourceServerTokenServices resourceServerTokenServices) {
+        this.resourceServerTokenServices = resourceServerTokenServices;
+    }
+    
 
-	@Operation(summary = "OAuth 2.0 token检查接口", description = "传递参数token",method="POST")
-	@PostMapping(OAuth2Constants.ENDPOINT.ENDPOINT_CHECK_TOKEN)
-	public Map<String, ?> checkToken(@RequestParam(OAuth2Constants.PARAMETER.TOKEN) String value) {
 
-		OAuth2AccessToken token = resourceServerTokenServices.readAccessToken(value);
-		if (token == null) {
-			throw new InvalidTokenException("Token was not recognised");
-		}
+    /**
+     * @param accessTokenConverter the accessTokenConverter to set
+     */
+    public void setAccessTokenConverter(AccessTokenConverter accessTokenConverter) {
+        this.accessTokenConverter = accessTokenConverter;
+    }
 
-		if (token.isExpired()) {
-			throw new InvalidTokenException("Token has expired");
-		}
+    @Operation(summary = "OAuth 2.0 token检查接口", description = "传递参数token",method="POST")
+    @PostMapping(OAuth2Constants.ENDPOINT.ENDPOINT_CHECK_TOKEN)
+    public Map<String, ?> checkToken(@RequestParam(OAuth2Constants.PARAMETER.TOKEN) String value) {
 
-		OAuth2Authentication authentication = resourceServerTokenServices.loadAuthentication(token.getValue());
+        OAuth2AccessToken token = resourceServerTokenServices.readAccessToken(value);
+        if (token == null) {
+            throw new InvalidTokenException("Token was not recognised");
+        }
 
-		Map<String, ?> response = accessTokenConverter.convertAccessToken(token, authentication);
+        if (token.isExpired()) {
+            throw new InvalidTokenException("Token has expired");
+        }
 
-		return response;
-	}
+        OAuth2Authentication authentication = resourceServerTokenServices.loadAuthentication(token.getValue());
 
-	
+        Map<String, ?> response = accessTokenConverter.convertAccessToken(token, authentication);
+
+        return response;
+    }
+
+    
 
 }

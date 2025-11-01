@@ -32,67 +32,67 @@ import org.springframework.stereotype.Repository;
 public class AccountsStrategyServiceImpl  extends JpaServiceImpl<AccountsStrategyMapper,AccountsStrategy> implements AccountsStrategyService{
     static final  Logger _logger = LoggerFactory.getLogger(AccountsStrategyServiceImpl.class);
 
-	public List<Roles> queryDynamicGroups(Roles groups){
-	    return this.getMapper().queryDynamicGroups(groups);
-	}
-	
-	public boolean deleteById(String groupId) {
-	    this.delete(groupId);
-	    //groupMemberService.deleteByGroupId(groupId);
-	    return true;
-	}
-	/*
-	public void refreshDynamicGroups(Groups dynamicGroup){
-	    if(dynamicGroup.getDynamic().equals("1")) {
-	        boolean isDynamicTimeSupport = false;
-	        boolean isBetweenEffectiveTime = false;
-	        if(dynamicGroup.getResumeTime()!=null&&dynamicGroup.getResumeTime().equals("")
-	                &&dynamicGroup.getSuspendTime()!=null&&dynamicGroup.getSuspendTime().equals("")) {
-	            LocalTime currentTime = LocalDateTime.now().toLocalTime();
-	            LocalTime resumeTime = LocalTime.parse(dynamicGroup.getResumeTime());
-	            LocalTime suspendTime = LocalTime.parse(dynamicGroup.getSuspendTime());
-	            
-	            _logger.info("currentTime: " + currentTime 
+    public List<Roles> queryDynamicGroups(Roles groups){
+        return this.getMapper().queryDynamicGroups(groups);
+    }
+    
+    public boolean deleteById(String groupId) {
+        this.delete(groupId);
+        //groupMemberService.deleteByGroupId(groupId);
+        return true;
+    }
+    /*
+    public void refreshDynamicGroups(Groups dynamicGroup){
+        if(dynamicGroup.getDynamic().equals("1")) {
+            boolean isDynamicTimeSupport = false;
+            boolean isBetweenEffectiveTime = false;
+            if(dynamicGroup.getResumeTime()!=null&&dynamicGroup.getResumeTime().equals("")
+                    &&dynamicGroup.getSuspendTime()!=null&&dynamicGroup.getSuspendTime().equals("")) {
+                LocalTime currentTime = LocalDateTime.now().toLocalTime();
+                LocalTime resumeTime = LocalTime.parse(dynamicGroup.getResumeTime());
+                LocalTime suspendTime = LocalTime.parse(dynamicGroup.getSuspendTime());
+                
+                _logger.info("currentTime: " + currentTime 
                         + " , resumeTime : " + resumeTime 
                         + " , suspendTime: " + suspendTime);
-	            isDynamicTimeSupport = true;
-	            
-	            if(resumeTime.isBefore(currentTime) && currentTime.isBefore(suspendTime)) {
-	                isBetweenEffectiveTime = true;
-	            }
-	            
-	        }
-	        
-    	    if(dynamicGroup.getOrgIdsList()!=null && !dynamicGroup.getOrgIdsList().equals("")) {
-    	        dynamicGroup.setOrgIdsList("'"+dynamicGroup.getOrgIdsList().replace(",", "','")+"'");
-    	    }
-    	    String filters = dynamicGroup.getFilters();
-    	    if(StringUtils.filtersSQLInjection(filters.toLowerCase())) {  
-    	        _logger.info("filters include SQL Injection Attack Risk.");
-    	        return;
-    	    }
-    	    
-    	    filters = filters.replace("&", " AND ");
-    	    filters = filters.replace("|", " OR ");
-    	    
-    	    dynamicGroup.setFilters(filters);
-    	    
-    	    if(isDynamicTimeSupport) {
-    	        if(isBetweenEffectiveTime) {
-    	            groupMemberService.deleteDynamicGroupMember(dynamicGroup);
+                isDynamicTimeSupport = true;
+                
+                if(resumeTime.isBefore(currentTime) && currentTime.isBefore(suspendTime)) {
+                    isBetweenEffectiveTime = true;
+                }
+                
+            }
+            
+            if(dynamicGroup.getOrgIdsList()!=null && !dynamicGroup.getOrgIdsList().equals("")) {
+                dynamicGroup.setOrgIdsList("'"+dynamicGroup.getOrgIdsList().replace(",", "','")+"'");
+            }
+            String filters = dynamicGroup.getFilters();
+            if(StringUtils.filtersSQLInjection(filters.toLowerCase())) {  
+                _logger.info("filters include SQL Injection Attack Risk.");
+                return;
+            }
+            
+            filters = filters.replace("&", " AND ");
+            filters = filters.replace("|", " OR ");
+            
+            dynamicGroup.setFilters(filters);
+            
+            if(isDynamicTimeSupport) {
+                if(isBetweenEffectiveTime) {
+                    groupMemberService.deleteDynamicGroupMember(dynamicGroup);
                     groupMemberService.addDynamicGroupMember(dynamicGroup);
-    	        }else {
-    	            groupMemberService.deleteDynamicGroupMember(dynamicGroup);
-    	        }
-    	    }else{
+                }else {
+                    groupMemberService.deleteDynamicGroupMember(dynamicGroup);
+                }
+            }else{
                 groupMemberService.deleteDynamicGroupMember(dynamicGroup);
                 groupMemberService.addDynamicGroupMember(dynamicGroup);
             }
-	    }
+        }
     }*/
 
   
-	
+    
 
-	
+    
 }

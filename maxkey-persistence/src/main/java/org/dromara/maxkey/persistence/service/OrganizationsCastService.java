@@ -22,6 +22,6 @@ import org.dromara.mybatis.jpa.service.IJpaService;
 
 public interface OrganizationsCastService  extends IJpaService<OrganizationsCast>{
 
-	public boolean updateCast(OrganizationsCast organizationsCast) ;
+    public boolean updateCast(OrganizationsCast organizationsCast) ;
 
 }

@@ -26,33 +26,33 @@ public class AuthenticationProviderFactory extends AbstractAuthenticationProvide
     
     @Override
     public Authentication authenticate(LoginCredential authentication){
-    	if(authentication.getAuthType().equalsIgnoreCase("trusted")) {
-    		//risk remove
-    		return null;
-    	}
-    	AbstractAuthenticationProvider provider = providers.get(authentication.getAuthType() + PROVIDER_SUFFIX);
-    	
-    	return provider == null ? null : provider.doAuthenticate(authentication);
+        if(authentication.getAuthType().equalsIgnoreCase("trusted")) {
+            //risk remove
+            return null;
+        }
+        AbstractAuthenticationProvider provider = providers.get(authentication.getAuthType() + PROVIDER_SUFFIX);
+        
+        return provider == null ? null : provider.doAuthenticate(authentication);
     }
     
     @Override
     public Authentication authenticate(LoginCredential authentication,boolean trusted){
-    	AbstractAuthenticationProvider provider = providers.get(AuthType.TRUSTED + PROVIDER_SUFFIX);
-    	return provider.doAuthenticate(authentication);
+        AbstractAuthenticationProvider provider = providers.get(AuthType.TRUSTED + PROVIDER_SUFFIX);
+        return provider.doAuthenticate(authentication);
     }
     
     public void addAuthenticationProvider(AbstractAuthenticationProvider provider) {
-    	providers.put(provider.getProviderName(), provider);
+        providers.put(provider.getProviderName(), provider);
     }
 
-	@Override
-	public String getProviderName() {
-		return "AuthenticationProviderFactory";
-	}
+    @Override
+    public String getProviderName() {
+        return "AuthenticationProviderFactory";
+    }
 
-	@Override
-	public Authentication doAuthenticate(LoginCredential authentication) {
-		//AuthenticationProvider Factory do nothing 
-		return null;
-	}
+    @Override
+    public Authentication doAuthenticate(LoginCredential authentication) {
+        //AuthenticationProvider Factory do nothing 
+        return null;
+    }
 }

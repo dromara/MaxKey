@@ -35,28 +35,28 @@ import jakarta.annotation.PostConstruct;
 
 @Component
 public class ConfigurerFreeMarker  implements ApplicationContextAware {
-	private static final Logger _logger = LoggerFactory.getLogger(ConfigurerFreeMarker.class);
-	
-	ApplicationContext applicationContext ;
-	
-	@Autowired 
-	Configuration configuration; 
+    private static final Logger _logger = LoggerFactory.getLogger(ConfigurerFreeMarker.class);
+    
+    ApplicationContext applicationContext ;
+    
+    @Autowired 
+    Configuration configuration; 
  
-	@PostConstruct // 在项目启动时执行方法
-	public void setSharedVariable() throws TemplateException {
-		// 根据注解FreemarkerTag获取bean ,key is bean name ,value is bean object
-		Map<String, Object> map = this.applicationContext.getBeansWithAnnotation(FreemarkerTag.class);
-		for (Map.Entry<String, Object> entry : map.entrySet()) {
-			configuration.setSharedVariable(entry.getKey(), entry.getValue());
-			_logger.trace("FreeMarker Template {}" , entry.getKey());
-		}
+    @PostConstruct // 在项目启动时执行方法
+    public void setSharedVariable() throws TemplateException {
+        // 根据注解FreemarkerTag获取bean ,key is bean name ,value is bean object
+        Map<String, Object> map = this.applicationContext.getBeansWithAnnotation(FreemarkerTag.class);
+        for (Map.Entry<String, Object> entry : map.entrySet()) {
+            configuration.setSharedVariable(entry.getKey(), entry.getValue());
+            _logger.trace("FreeMarker Template {}" , entry.getKey());
+        }
 
-	}
+    }
 
-	@Override
-	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-		this.applicationContext = applicationContext;
-		
-	}
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
+        
+    }
 
 }

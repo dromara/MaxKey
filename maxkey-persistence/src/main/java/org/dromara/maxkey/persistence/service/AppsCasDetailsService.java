@@ -22,5 +22,5 @@ import org.dromara.mybatis.jpa.service.IJpaService;
 
 public interface AppsCasDetailsService  extends IJpaService<AppsCasDetails>{
 
-	public  AppsCasDetails  getAppDetails(String id , boolean cached) ;
+    public  AppsCasDetails  getAppDetails(String id , boolean cached) ;
 }

@@ -168,7 +168,7 @@ public class JdbcOrganizationService extends AbstractSynchronizerService impleme
         historySynchronizer.setInstId(synchronizer.getInstId());
         historySynchronizer.setResult("success");
         historySynchronizerService.insert(historySynchronizer);
-		
+        
         return org;
 
     }

@@ -47,9 +47,9 @@ import static org.dromara.maxkey.synchronizer.utils.FieldUtil.setFieldValue;
 
 @Service
 public class JdbcUsersService extends AbstractSynchronizerService implements ISynchronizerService {
-	static final  Logger _logger = LoggerFactory.getLogger(JdbcUsersService.class);
+    static final  Logger _logger = LoggerFactory.getLogger(JdbcUsersService.class);
     
-	@Autowired
+    @Autowired
     public SyncJobConfigFieldService syncJobConfigFieldService;
 
     private static final Integer USER_TYPE = 1;

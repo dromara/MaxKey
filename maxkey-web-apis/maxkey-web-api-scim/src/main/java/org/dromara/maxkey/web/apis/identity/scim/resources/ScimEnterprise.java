@@ -56,12 +56,12 @@ public class ScimEnterprise implements Serializable {
     }
     
     public String getDepartmentId() {
-		return departmentId;
-	}
-	public void setDepartmentId(String departmentId) {
-		this.departmentId = departmentId;
-	}
-	public String getDepartment() {
+        return departmentId;
+    }
+    public void setDepartmentId(String departmentId) {
+        this.departmentId = departmentId;
+    }
+    public String getDepartment() {
         return department;
     }
     public void setDepartment(String department) {

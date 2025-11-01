@@ -41,30 +41,30 @@ public class TokenAutoConfiguration{
     
     @Bean
     AuthTokenService authTokenService(
-    		AuthJwkConfig authJwkConfig,
-    		RedisConnectionFactory redisConnFactory,
-    		MomentaryService  momentaryService,
-    		AuthRefreshTokenService refreshTokenService,
-    		@Value("${maxkey.server.persistence}") int persistence) throws JOSEException {
-    	CongressService congressService;
-    	_logger.debug("cache persistence {}" , persistence);
-    	if (persistence == ConstsPersistence.REDIS) {
-    		congressService = new RedisCongressService(redisConnFactory);
-    	}else {
-    		congressService = new InMemoryCongressService();
-    	}
-    	
-    	return new AuthTokenService(
-				authJwkConfig,
-				congressService,
-				momentaryService,
-				refreshTokenService
-			);
+            AuthJwkConfig authJwkConfig,
+            RedisConnectionFactory redisConnFactory,
+            MomentaryService  momentaryService,
+            AuthRefreshTokenService refreshTokenService,
+            @Value("${maxkey.server.persistence}") int persistence) throws JOSEException {
+        CongressService congressService;
+        _logger.debug("cache persistence {}" , persistence);
+        if (persistence == ConstsPersistence.REDIS) {
+            congressService = new RedisCongressService(redisConnFactory);
+        }else {
+            congressService = new InMemoryCongressService();
+        }
+        
+        return new AuthTokenService(
+                authJwkConfig,
+                congressService,
+                momentaryService,
+                refreshTokenService
+            );
     }
     
     @Bean
     AuthRefreshTokenService refreshTokenService(AuthJwkConfig authJwkConfig) throws JOSEException {
-    	return new AuthRefreshTokenService(authJwkConfig);
+        return new AuthRefreshTokenService(authJwkConfig);
     }
     
 }

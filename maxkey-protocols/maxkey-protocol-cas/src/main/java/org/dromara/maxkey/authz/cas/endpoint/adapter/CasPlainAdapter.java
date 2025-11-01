@@ -26,48 +26,48 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
 
 public class CasPlainAdapter extends AbstractAuthorizeAdapter {
-	static final  Logger _logger = LoggerFactory.getLogger(CasPlainAdapter.class);
+    static final  Logger _logger = LoggerFactory.getLogger(CasPlainAdapter.class);
 
-	ServiceResponseBuilder serviceResponseBuilder;
-	
-	@Override
-	public ModelAndView authorize(ModelAndView modelAndView) {
+    ServiceResponseBuilder serviceResponseBuilder;
+    
+    @Override
+    public ModelAndView authorize(ModelAndView modelAndView) {
 
-		return modelAndView;
-	}
+        return modelAndView;
+    }
 
-	@Override
-	public Object generateInfo() {
-		//user for return 
-		String user = getValueByUserAttr(userInfo,((AppsCasDetails)this.app).getCasUser());
-		_logger.debug("cas user {}",user);
-		serviceResponseBuilder.success().setUser(user);
-		
-		//for user
-		serviceResponseBuilder.setAttribute("uid", userInfo.getId());
-		serviceResponseBuilder.setAttribute("username", userInfo.getUsername());
-		serviceResponseBuilder.setAttribute("displayName", userInfo.getDisplayName());
-		serviceResponseBuilder.setAttribute("firstName", userInfo.getGivenName());
-		serviceResponseBuilder.setAttribute("lastname", userInfo.getFamilyName());
-		serviceResponseBuilder.setAttribute("mobile", userInfo.getMobile());
-		serviceResponseBuilder.setAttribute("birthday", userInfo.getBirthDate());
-		serviceResponseBuilder.setAttribute("gender", userInfo.getGender()+"");
-		
-		//for work
-		serviceResponseBuilder.setAttribute("employeeNumber", userInfo.getEmployeeNumber());
-		serviceResponseBuilder.setAttribute("title", userInfo.getJobTitle());
-		serviceResponseBuilder.setAttribute("email", userInfo.getWorkEmail());
-		serviceResponseBuilder.setAttribute("department", userInfo.getDepartment());
-		serviceResponseBuilder.setAttribute("departmentId", userInfo.getDepartmentId());
-		serviceResponseBuilder.setAttribute("workRegion",userInfo.getWorkRegion());
-		serviceResponseBuilder.setAttribute("institution", userInfo.getInstId());
-		serviceResponseBuilder.setAttribute(WebConstants.ONLINE_TICKET_NAME,principal.getSessionId());
-	
-		return serviceResponseBuilder;
-	}
+    @Override
+    public Object generateInfo() {
+        //user for return 
+        String user = getValueByUserAttr(userInfo,((AppsCasDetails)this.app).getCasUser());
+        _logger.debug("cas user {}",user);
+        serviceResponseBuilder.success().setUser(user);
+        
+        //for user
+        serviceResponseBuilder.setAttribute("uid", userInfo.getId());
+        serviceResponseBuilder.setAttribute("username", userInfo.getUsername());
+        serviceResponseBuilder.setAttribute("displayName", userInfo.getDisplayName());
+        serviceResponseBuilder.setAttribute("firstName", userInfo.getGivenName());
+        serviceResponseBuilder.setAttribute("lastname", userInfo.getFamilyName());
+        serviceResponseBuilder.setAttribute("mobile", userInfo.getMobile());
+        serviceResponseBuilder.setAttribute("birthday", userInfo.getBirthDate());
+        serviceResponseBuilder.setAttribute("gender", userInfo.getGender()+"");
+        
+        //for work
+        serviceResponseBuilder.setAttribute("employeeNumber", userInfo.getEmployeeNumber());
+        serviceResponseBuilder.setAttribute("title", userInfo.getJobTitle());
+        serviceResponseBuilder.setAttribute("email", userInfo.getWorkEmail());
+        serviceResponseBuilder.setAttribute("department", userInfo.getDepartment());
+        serviceResponseBuilder.setAttribute("departmentId", userInfo.getDepartmentId());
+        serviceResponseBuilder.setAttribute("workRegion",userInfo.getWorkRegion());
+        serviceResponseBuilder.setAttribute("institution", userInfo.getInstId());
+        serviceResponseBuilder.setAttribute(WebConstants.ONLINE_TICKET_NAME,principal.getSessionId());
+    
+        return serviceResponseBuilder;
+    }
 
-	public void setServiceResponseBuilder(ServiceResponseBuilder serviceResponseBuilder) {
-		this.serviceResponseBuilder = serviceResponseBuilder;
-	}
+    public void setServiceResponseBuilder(ServiceResponseBuilder serviceResponseBuilder) {
+        this.serviceResponseBuilder = serviceResponseBuilder;
+    }
 
 }

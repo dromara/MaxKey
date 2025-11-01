@@ -45,53 +45,53 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "/login")
 public class LoginEntryPoint {
-	private static Logger logger = LoggerFactory.getLogger(LoginEntryPoint.class);
-	
-	@Autowired
-	AuthTokenService authTokenService;
-	
-	@Autowired
-  	ApplicationConfig applicationConfig;
- 	
-	@Autowired
-	AbstractAuthenticationProvider authenticationProvider ;
-	
-	/**
-	 * init login
-	 * @return
-	 */
- 	@GetMapping("/get")
-	public Message<?> get() {
-		logger.debug("/login.");
-		
-		HashMap<String , Object> model = new HashMap<String , Object>();
-		Institutions inst = (Institutions)WebContext.getAttribute(WebConstants.CURRENT_INST);
-		model.put("inst", inst);
-		if(applicationConfig.getLoginConfig().isCaptcha()) {
-			model.put("captcha", applicationConfig.getLoginConfig().getCaptchaType());
-		}else {
-			model.put("captcha", "NONE");
-		}
-		model.put("state", authTokenService.genRandomJwt());
-		return new Message<HashMap<String , Object>>(model);
-	}
- 	
- 	@PostMapping("/signin")
-	public Message<?> signin( @RequestBody LoginCredential loginCredential) {
- 		Message<AuthJwt> authJwtMessage = new Message<AuthJwt>(Message.FAIL);
- 		if(authTokenService.validateJwtToken(loginCredential.getState())){
-	 		Authentication  authentication  = authenticationProvider.authenticate(loginCredential);
-	 		if(authentication != null) {
-	 			AuthJwt authJwt = authTokenService.genAuthJwt(authentication);
-	 			authJwtMessage = new Message<AuthJwt>(authJwt);
-	 		}else {//fail
- 				String errorMsg = WebContext.getAttribute(WebConstants.LOGIN_ERROR_SESSION_MESSAGE) == null ? 
-						  "" : WebContext.getAttribute(WebConstants.LOGIN_ERROR_SESSION_MESSAGE).toString();
-				authJwtMessage.setMessage(Message.FAIL,errorMsg);
-				logger.debug("login fail , message {}",errorMsg);
-	 		}
- 		}
- 		return authJwtMessage;
- 	}
- 	
+    private static Logger logger = LoggerFactory.getLogger(LoginEntryPoint.class);
+    
+    @Autowired
+    AuthTokenService authTokenService;
+    
+    @Autowired
+      ApplicationConfig applicationConfig;
+     
+    @Autowired
+    AbstractAuthenticationProvider authenticationProvider ;
+    
+    /**
+     * init login
+     * @return
+     */
+     @GetMapping("/get")
+    public Message<?> get() {
+        logger.debug("/login.");
+        
+        HashMap<String , Object> model = new HashMap<String , Object>();
+        Institutions inst = (Institutions)WebContext.getAttribute(WebConstants.CURRENT_INST);
+        model.put("inst", inst);
+        if(applicationConfig.getLoginConfig().isCaptcha()) {
+            model.put("captcha", applicationConfig.getLoginConfig().getCaptchaType());
+        }else {
+            model.put("captcha", "NONE");
+        }
+        model.put("state", authTokenService.genRandomJwt());
+        return new Message<HashMap<String , Object>>(model);
+    }
+     
+     @PostMapping("/signin")
+    public Message<?> signin( @RequestBody LoginCredential loginCredential) {
+         Message<AuthJwt> authJwtMessage = new Message<AuthJwt>(Message.FAIL);
+         if(authTokenService.validateJwtToken(loginCredential.getState())){
+             Authentication  authentication  = authenticationProvider.authenticate(loginCredential);
+             if(authentication != null) {
+                 AuthJwt authJwt = authTokenService.genAuthJwt(authentication);
+                 authJwtMessage = new Message<AuthJwt>(authJwt);
+             }else {//fail
+                 String errorMsg = WebContext.getAttribute(WebConstants.LOGIN_ERROR_SESSION_MESSAGE) == null ? 
+                          "" : WebContext.getAttribute(WebConstants.LOGIN_ERROR_SESSION_MESSAGE).toString();
+                authJwtMessage.setMessage(Message.FAIL,errorMsg);
+                logger.debug("login fail , message {}",errorMsg);
+             }
+         }
+         return authJwtMessage;
+     }
+     
 }

@@ -28,16 +28,16 @@ import java.util.List;
  *
  */
 public class GroupOfNames {
-	public static final List<String> OBJECTCLASS = new ArrayList<>(Arrays.asList("top", "groupOfNames"));
-	
-	public static final String objectClass				 	 = "groupOfNames";
-	public static final String DISTINGUISHEDNAME 			 = "distinguishedname";
-	public static final String CN                            = "cn";
-	public static final String MEMBER                  		 = "member";
-	public static final String BUSINESSCATEGORY              = "businessCategory";
-	public static final String SEEALSO                       = "seeAlso";
-	public static final String OWNER                         = "owner";
-	public static final String OU                            = "ou";
-	public static final String O                           	 = "o";
-	public static final String DESCRIPTION                   = "description";
+    public static final List<String> OBJECTCLASS = new ArrayList<>(Arrays.asList("top", "groupOfNames"));
+    
+    public static final String objectClass                      = "groupOfNames";
+    public static final String DISTINGUISHEDNAME              = "distinguishedname";
+    public static final String CN                            = "cn";
+    public static final String MEMBER                           = "member";
+    public static final String BUSINESSCATEGORY              = "businessCategory";
+    public static final String SEEALSO                       = "seeAlso";
+    public static final String OWNER                         = "owner";
+    public static final String OU                            = "ou";
+    public static final String O                                = "o";
+    public static final String DESCRIPTION                   = "description";
 }

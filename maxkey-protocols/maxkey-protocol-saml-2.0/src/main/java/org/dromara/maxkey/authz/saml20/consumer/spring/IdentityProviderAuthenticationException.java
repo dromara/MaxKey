@@ -33,19 +33,19 @@ import org.springframework.security.core.AuthenticationException;
  */
 public class IdentityProviderAuthenticationException extends AuthenticationException {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -1106622672393663684L;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -1106622672393663684L;
 
 
-	public IdentityProviderAuthenticationException(String msg, Object extraInformation) {
-		super(msg, (Throwable) extraInformation);
-	}
+    public IdentityProviderAuthenticationException(String msg, Object extraInformation) {
+        super(msg, (Throwable) extraInformation);
+    }
 
 
-	public IdentityProviderAuthenticationException(String msg) {
-		super(msg);
-	}
+    public IdentityProviderAuthenticationException(String msg) {
+        super(msg);
+    }
 
 }

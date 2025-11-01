@@ -26,30 +26,30 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class HistoryLoginAppsServiceImpl  extends JpaServiceImpl<HistoryLoginAppsMapper,HistoryLoginApps> implements HistoryLoginAppsService{
 
-	@Override
-	public boolean  insert(HistoryLoginApps loginAppsHistory){
-		//new Thread insert login app history
-		new Thread(new HistoryLoginAppsRunnable(getMapper(),loginAppsHistory)).start();
-		return true;
-	}
-	
-	public class HistoryLoginAppsRunnable implements Runnable{
+    @Override
+    public boolean  insert(HistoryLoginApps loginAppsHistory){
+        //new Thread insert login app history
+        new Thread(new HistoryLoginAppsRunnable(getMapper(),loginAppsHistory)).start();
+        return true;
+    }
+    
+    public class HistoryLoginAppsRunnable implements Runnable{
 
-		HistoryLoginAppsMapper historyLoginAppsMapper;
-		
-		HistoryLoginApps loginAppsHistory;
-		
-		public HistoryLoginAppsRunnable(HistoryLoginAppsMapper historyLoginAppsMapper,
-				HistoryLoginApps loginAppsHistory) {
-			super();
-			this.historyLoginAppsMapper = historyLoginAppsMapper;
-			this.loginAppsHistory = loginAppsHistory;
-		}
+        HistoryLoginAppsMapper historyLoginAppsMapper;
+        
+        HistoryLoginApps loginAppsHistory;
+        
+        public HistoryLoginAppsRunnable(HistoryLoginAppsMapper historyLoginAppsMapper,
+                HistoryLoginApps loginAppsHistory) {
+            super();
+            this.historyLoginAppsMapper = historyLoginAppsMapper;
+            this.loginAppsHistory = loginAppsHistory;
+        }
 
-		@Override
-		public void run() {
-			historyLoginAppsMapper.insert(loginAppsHistory);
-		}
-		
-	}
+        @Override
+        public void run() {
+            historyLoginAppsMapper.insert(loginAppsHistory);
+        }
+        
+    }
 }

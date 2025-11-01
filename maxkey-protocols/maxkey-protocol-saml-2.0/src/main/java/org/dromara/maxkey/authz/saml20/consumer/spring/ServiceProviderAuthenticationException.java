@@ -34,17 +34,17 @@ import org.springframework.security.core.AuthenticationException;
  */
 public class ServiceProviderAuthenticationException extends AuthenticationException {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 8817095932085915398L;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 8817095932085915398L;
 
-	public ServiceProviderAuthenticationException(String msg, Throwable t) {
-		super(msg, t);
-	}
+    public ServiceProviderAuthenticationException(String msg, Throwable t) {
+        super(msg, t);
+    }
 
-	public ServiceProviderAuthenticationException(String msg) {
-		super(msg);
-	}
+    public ServiceProviderAuthenticationException(String msg) {
+        super(msg);
+    }
 
 }

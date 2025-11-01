@@ -39,62 +39,62 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class AuthzResourceServiceImpl   extends JpaServiceImpl<AuthzResourceMapper,UserInfo> implements AuthzResourceService{
-	private static final Logger logger = LoggerFactory.getLogger(AuthzResourceServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(AuthzResourceServiceImpl.class);
 
-	/**
-	 * 根据主体获取用户对应得应用资源清单
-	 * @param user
-	 * @param app 
-	 * @return 资源清单列表
-	 */
+    /**
+     * 根据主体获取用户对应得应用资源清单
+     * @param user
+     * @param app 
+     * @return 资源清单列表
+     */
     public Set<Resources> getResourcesBySubject(UserInfo user,Apps  app){
-    	logger.debug("user {} , app {}",user,app);
-    	Set<Resources> resourcesList = new HashSet<>();
-    	
-    	QueryAppResourceDto dto = new QueryAppResourceDto(user.getId(),app.getId());
-    	
-    	//查询用户的所属用户组
-    	QueryGroupMembersDto queryGroupMembersDto = new QueryGroupMembersDto();
-    	queryGroupMembersDto.add(user.getId());
-    	List<Groups> listGroup = getMapper().queryGroupsByMembers(queryGroupMembersDto);
-    	for(Groups group : listGroup) {
-    		dto.getGroupIds().add(group.getId());
-    	}
-    	
-    	//根据用户组获取应用资源
-    	List<Resources> groupResourcesList = queryResourcesByGroupId(dto);
-    	resourcesList.addAll(groupResourcesList);
-    	
-    	//查询用户的所属应用角色组
-    	QueryRoleMembersDto queryRoleMembersDto = new QueryRoleMembersDto();
-    	queryRoleMembersDto.setAppId(app.getId());
-    	queryRoleMembersDto.add(user.getId());
-    	List<Roles> listRoles = getMapper().queryRolesByMembers(queryRoleMembersDto);
-    	for(Roles role : listRoles) {
-    		dto.getRoleIds().add(role.getId());
-    	}
-    	//根据角色获取应用资源
-    	List<Resources> roleResourcesList = queryResourcesByRoleId(dto);
-    	resourcesList.addAll(roleResourcesList);
+        logger.debug("user {} , app {}",user,app);
+        Set<Resources> resourcesList = new HashSet<>();
+        
+        QueryAppResourceDto dto = new QueryAppResourceDto(user.getId(),app.getId());
+        
+        //查询用户的所属用户组
+        QueryGroupMembersDto queryGroupMembersDto = new QueryGroupMembersDto();
+        queryGroupMembersDto.add(user.getId());
+        List<Groups> listGroup = getMapper().queryGroupsByMembers(queryGroupMembersDto);
+        for(Groups group : listGroup) {
+            dto.getGroupIds().add(group.getId());
+        }
+        
+        //根据用户组获取应用资源
+        List<Resources> groupResourcesList = queryResourcesByGroupId(dto);
+        resourcesList.addAll(groupResourcesList);
+        
+        //查询用户的所属应用角色组
+        QueryRoleMembersDto queryRoleMembersDto = new QueryRoleMembersDto();
+        queryRoleMembersDto.setAppId(app.getId());
+        queryRoleMembersDto.add(user.getId());
+        List<Roles> listRoles = getMapper().queryRolesByMembers(queryRoleMembersDto);
+        for(Roles role : listRoles) {
+            dto.getRoleIds().add(role.getId());
+        }
+        //根据角色获取应用资源
+        List<Resources> roleResourcesList = queryResourcesByRoleId(dto);
+        resourcesList.addAll(roleResourcesList);
 
-    	return resourcesList;
+        return resourcesList;
     }
  
-	/**
-	 * 根据组列表获取资源清单
-	 * @param dto
-	 * @return
-	 */
-	public List<Resources> queryResourcesByGroupId(QueryAppResourceDto dto) {
-		return getMapper().queryResourcesByGroupId(dto);
-	}
+    /**
+     * 根据组列表获取资源清单
+     * @param dto
+     * @return
+     */
+    public List<Resources> queryResourcesByGroupId(QueryAppResourceDto dto) {
+        return getMapper().queryResourcesByGroupId(dto);
+    }
 
-	/**
-	 * 根据角色列表获取资源清单
-	 * @param dto
-	 * @return
-	 */
-	public List<Resources> queryResourcesByRoleId(QueryAppResourceDto dto) {
-		return getMapper().queryResourcesByRoleId(dto);
-	}
+    /**
+     * 根据角色列表获取资源清单
+     * @param dto
+     * @return
+     */
+    public List<Resources> queryResourcesByRoleId(QueryAppResourceDto dto) {
+        return getMapper().queryResourcesByRoleId(dto);
+    }
 }

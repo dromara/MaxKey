@@ -18,9 +18,9 @@
 package org.dromara.maxkey.pretty;
 
 public interface Pretty {
-	public static final  String LINE_BREAK 	= "\n";
-	
-	public String format(String source);
+    public static final  String LINE_BREAK     = "\n";
+    
+    public String format(String source);
 
-	public  String formatln(String source);
+    public  String formatln(String source);
 }

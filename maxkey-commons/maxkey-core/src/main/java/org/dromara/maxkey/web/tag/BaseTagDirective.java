@@ -37,20 +37,20 @@ import jakarta.servlet.http.HttpServletRequest;
 
 @FreemarkerTag("base")
 public class BaseTagDirective implements TemplateDirectiveModel {
-	@Autowired
+    @Autowired
     private HttpServletRequest request;
 
-	@Override
-	@SuppressWarnings("rawtypes")
-	public void execute(Environment env, Map params, TemplateModel[] loopVars, TemplateDirectiveBody body)
-			throws TemplateException, IOException {
-		//String url = params.get(URL).toString();
+    @Override
+    @SuppressWarnings("rawtypes")
+    public void execute(Environment env, Map params, TemplateModel[] loopVars, TemplateDirectiveBody body)
+            throws TemplateException, IOException {
+        //String url = params.get(URL).toString();
 
-		String  base=request.getContextPath();
-		
-		env.getOut().append(base);
-		
+        String  base=request.getContextPath();
+        
+        env.getOut().append(base);
+        
 
-	}
+    }
 
 }

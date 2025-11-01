@@ -36,76 +36,76 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value={"/config/ldapcontext"})
 public class CnfLdapContextController {
-	static final  Logger logger = LoggerFactory.getLogger(CnfLdapContextController.class);
-	
-	@Autowired
-	CnfLdapContextService ldapContextService;
+    static final  Logger logger = LoggerFactory.getLogger(CnfLdapContextController.class);
+    
+    @Autowired
+    CnfLdapContextService ldapContextService;
 
-	@GetMapping(value={"/get"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<CnfLdapContext> get(@CurrentUser UserInfo currentUser){
-		CnfLdapContext ldapContext = ldapContextService.get(currentUser.getInstId());
-		if(ldapContext != null && StringUtils.isNoneBlank(ldapContext.getCredentials())) {
-			ldapContext.setCredentials(PasswordReciprocal.getInstance().decoder(ldapContext.getCredentials()));
-		}
-		return new Message<>(ldapContext);
-	}
+    @GetMapping(value={"/get"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public Message<CnfLdapContext> get(@CurrentUser UserInfo currentUser){
+        CnfLdapContext ldapContext = ldapContextService.get(currentUser.getInstId());
+        if(ldapContext != null && StringUtils.isNoneBlank(ldapContext.getCredentials())) {
+            ldapContext.setCredentials(PasswordReciprocal.getInstance().decoder(ldapContext.getCredentials()));
+        }
+        return new Message<>(ldapContext);
+    }
 
-	@PutMapping({"/update"})
-	public Message<CnfLdapContext> update( @RequestBody CnfLdapContext ldapContext,@CurrentUser UserInfo currentUser,BindingResult result) {
-		logger.debug("update ldapContext : {}" ,ldapContext);
-		ldapContext.setCredentials(PasswordReciprocal.getInstance().encode(ldapContext.getCredentials()));
-		ldapContext.setInstId(currentUser.getInstId());
-		boolean updateResult = false;
-		if(StringUtils.isBlank(ldapContext.getId())) {
-			ldapContext.setId(ldapContext.getInstId());
-			updateResult = ldapContextService.insert(ldapContext);
-		}else {
-			updateResult = ldapContextService.update(ldapContext);
-		}
-		if(updateResult) {
-			return new Message<>(Message.SUCCESS);
-		} else {
-			return new Message<>(Message.FAIL);
-		}
-	}
-	
-	
-	@GetMapping(value={"/test"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<CnfLdapContext> test(@CurrentUser UserInfo currentUser){
-		CnfLdapContext ldapContext = ldapContextService.get(currentUser.getInstId());
-		if(ldapContext != null && StringUtils.isNoneBlank(ldapContext.getCredentials())) {
-			ldapContext.setCredentials(PasswordReciprocal.getInstance().decoder(ldapContext.getCredentials()));
-		}
-		
-		LdapUtils ldapUtils = null;
-		if(ldapContext != null) {
-			if(ldapContext.getProduct().equalsIgnoreCase(LdapUtils.Product.ActiveDirectory)) {
-				ldapUtils = new ActiveDirectoryUtils(
-						ldapContext.getProviderUrl(),
-						ldapContext.getPrincipal(),
-						ldapContext.getCredentials(),
-						ldapContext.getBasedn(),
-						ldapContext.getMsadDomain());
-			}else if(ldapContext.getProduct().equalsIgnoreCase(LdapUtils.Product.OpenLDAP)) {
-				ldapUtils = new LdapUtils(
-						ldapContext.getProviderUrl(),
-						ldapContext.getPrincipal(),
-				        ldapContext.getCredentials(),
-				        ldapContext.getBasedn());
-			}else if(ldapContext.getProduct().equalsIgnoreCase(LdapUtils.Product.StandardLDAP)) {
-				ldapUtils = new LdapUtils(
-						ldapContext.getProviderUrl(),
-						ldapContext.getPrincipal(),
-				        ldapContext.getCredentials(),
-				        ldapContext.getBasedn());
-			}
-			
-			if(ldapUtils != null && ldapUtils.openConnection() != null) {
-				ldapUtils.close();
-				return new Message<>(Message.SUCCESS);
-			}
-		}
-				
-		return new Message<>(Message.FAIL);
-	}
+    @PutMapping({"/update"})
+    public Message<CnfLdapContext> update( @RequestBody CnfLdapContext ldapContext,@CurrentUser UserInfo currentUser,BindingResult result) {
+        logger.debug("update ldapContext : {}" ,ldapContext);
+        ldapContext.setCredentials(PasswordReciprocal.getInstance().encode(ldapContext.getCredentials()));
+        ldapContext.setInstId(currentUser.getInstId());
+        boolean updateResult = false;
+        if(StringUtils.isBlank(ldapContext.getId())) {
+            ldapContext.setId(ldapContext.getInstId());
+            updateResult = ldapContextService.insert(ldapContext);
+        }else {
+            updateResult = ldapContextService.update(ldapContext);
+        }
+        if(updateResult) {
+            return new Message<>(Message.SUCCESS);
+        } else {
+            return new Message<>(Message.FAIL);
+        }
+    }
+    
+    
+    @GetMapping(value={"/test"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public Message<CnfLdapContext> test(@CurrentUser UserInfo currentUser){
+        CnfLdapContext ldapContext = ldapContextService.get(currentUser.getInstId());
+        if(ldapContext != null && StringUtils.isNoneBlank(ldapContext.getCredentials())) {
+            ldapContext.setCredentials(PasswordReciprocal.getInstance().decoder(ldapContext.getCredentials()));
+        }
+        
+        LdapUtils ldapUtils = null;
+        if(ldapContext != null) {
+            if(ldapContext.getProduct().equalsIgnoreCase(LdapUtils.Product.ActiveDirectory)) {
+                ldapUtils = new ActiveDirectoryUtils(
+                        ldapContext.getProviderUrl(),
+                        ldapContext.getPrincipal(),
+                        ldapContext.getCredentials(),
+                        ldapContext.getBasedn(),
+                        ldapContext.getMsadDomain());
+            }else if(ldapContext.getProduct().equalsIgnoreCase(LdapUtils.Product.OpenLDAP)) {
+                ldapUtils = new LdapUtils(
+                        ldapContext.getProviderUrl(),
+                        ldapContext.getPrincipal(),
+                        ldapContext.getCredentials(),
+                        ldapContext.getBasedn());
+            }else if(ldapContext.getProduct().equalsIgnoreCase(LdapUtils.Product.StandardLDAP)) {
+                ldapUtils = new LdapUtils(
+                        ldapContext.getProviderUrl(),
+                        ldapContext.getPrincipal(),
+                        ldapContext.getCredentials(),
+                        ldapContext.getBasedn());
+            }
+            
+            if(ldapUtils != null && ldapUtils.openConnection() != null) {
+                ldapUtils.close();
+                return new Message<>(Message.SUCCESS);
+            }
+        }
+                
+        return new Message<>(Message.FAIL);
+    }
 }

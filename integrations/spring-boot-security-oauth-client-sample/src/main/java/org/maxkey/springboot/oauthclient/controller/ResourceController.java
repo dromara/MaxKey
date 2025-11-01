@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ResourceController {
-	Logger log = LoggerFactory.getLogger(ResourceController.class);
-			
+    Logger log = LoggerFactory.getLogger(ResourceController.class);
+            
     @GetMapping("/")
     public String index() {
-    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return authentication.getPrincipal().toString();
     }
 }

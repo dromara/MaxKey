@@ -35,7 +35,7 @@ import org.dromara.mybatis.jpa.IJpaMapper;
  *
  */
 public  interface AccountsMapper extends IJpaMapper<Accounts> {
-	
+    
 
     public List<UserInfo> queryUserNotInStrategy(AccountsStrategy strategy);
     
@@ -43,7 +43,7 @@ public  interface AccountsMapper extends IJpaMapper<Accounts> {
     
     public List<Accounts> queryByAppIdAndDate(Accounts account);
     
-    @Select("select * from mxk_accounts where appid=#{appId} and	relatedusername=#{relatedUsername}")
+    @Select("select * from mxk_accounts where appid=#{appId} and    relatedusername=#{relatedUsername}")
     public List<Accounts> queryByAppIdAndAccount(@Param ("appId") String appId,@Param ("relatedUsername") String relatedUsername);
     
     @Update("update mxk_accounts set status = #{status}  where id= #{id}")

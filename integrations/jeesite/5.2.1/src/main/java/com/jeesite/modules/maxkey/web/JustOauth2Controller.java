@@ -36,47 +36,47 @@ public class JustOauth2Controller extends BaseController implements IBaseJustOau
     @Override
     @RequestMapping({"/login/{source}"})
     public String login(String source, HttpServletRequest request) {
-	// TODO Auto-generated method stub
-	logger.debug(source);
-	return "redirect:" + Oauth2UserLoginUtils.getAuthRequest(source).authorize((request.getParameter("state") == null ? AuthStateUtils.createState() : request.getParameter("state")));
+    // TODO Auto-generated method stub
+    logger.debug(source);
+    return "redirect:" + Oauth2UserLoginUtils.getAuthRequest(source).authorize((request.getParameter("state") == null ? AuthStateUtils.createState() : request.getParameter("state")));
     }
 
     @Override
     @RequestMapping({"/callback/{source}"})
     public String callback(String source, AuthCallback callback, RedirectAttributes redirectAttributes, Model model, HttpServletRequest request, HttpServletResponse response) {
-	// TODO Auto-generated method stub
-	logger.debug(source);
+    // TODO Auto-generated method stub
+    logger.debug(source);
 
-	AuthRequest authRequest = Oauth2UserLoginUtils.getAuthRequest(source);
-	AuthResponse<?> rauthResponse = authRequest.login(callback);
-	if(rauthResponse.getData() instanceof AuthUser) {
-	    AuthUser authUser = (AuthUser) rauthResponse.getData();
-	    //处理相关的绑定业务，该处仅做简单集成与演示专用。
-	    logger.debug("authUser:"+JsonMapper.toJson(authUser));
-	    Oauth2UserLoginUtils.loginByOauthUserId(authUser.getUsername());
-	    return renderResult(Global.TRUE, text("回调信息获取成功！"));
-	} else {
-	    return null;
-	}
-	
+    AuthRequest authRequest = Oauth2UserLoginUtils.getAuthRequest(source);
+    AuthResponse<?> rauthResponse = authRequest.login(callback);
+    if(rauthResponse.getData() instanceof AuthUser) {
+        AuthUser authUser = (AuthUser) rauthResponse.getData();
+        //处理相关的绑定业务，该处仅做简单集成与演示专用。
+        logger.debug("authUser:"+JsonMapper.toJson(authUser));
+        Oauth2UserLoginUtils.loginByOauthUserId(authUser.getUsername());
+        return renderResult(Global.TRUE, text("回调信息获取成功！"));
+    } else {
+        return null;
+    }
+    
     }
 
     @Override
     @PostMapping({"/binder"})
     @ResponseBody
     public String binder(String id, String username, String password, String validCode, HttpServletRequest request, HttpServletResponse response) {
-	// TODO Auto-generated method stub
-	logger.debug(id, username);
-	return null;
+    // TODO Auto-generated method stub
+    logger.debug(id, username);
+    return null;
     }
 
     @Override
     @RequestMapping({"/unbind"})
     @ResponseBody
     public String unbind(String id, HttpServletRequest request, HttpServletResponse response) {
-	// TODO Auto-generated method stub
-	logger.debug(id);
-	return null;
+    // TODO Auto-generated method stub
+    logger.debug(id);
+    return null;
     }
 
 }

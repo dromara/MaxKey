@@ -31,15 +31,15 @@ import org.dromara.maxkey.entity.permissions.Roles;
 import org.dromara.mybatis.jpa.IJpaMapper;
 
 public  interface AuthzResourceMapper extends IJpaMapper<UserInfo> {
-	
-	public List<Resources> queryResourcesByGroupId(QueryAppResourceDto dto) ;
-	
-	public List<Resources> queryResourcesByRoleId(QueryAppResourceDto dto) ;
-	
-	
-	public List<Groups> queryGroupsByMembers(QueryGroupMembersDto dto) ;
-	
-	public List<Roles> queryRolesByMembers(QueryRoleMembersDto dto) ;
-	
-	
+    
+    public List<Resources> queryResourcesByGroupId(QueryAppResourceDto dto) ;
+    
+    public List<Resources> queryResourcesByRoleId(QueryAppResourceDto dto) ;
+    
+    
+    public List<Groups> queryGroupsByMembers(QueryGroupMembersDto dto) ;
+    
+    public List<Roles> queryRolesByMembers(QueryRoleMembersDto dto) ;
+    
+    
 }

@@ -60,31 +60,31 @@ public class AccountsServiceImpl  extends JpaServiceImpl<AccountsMapper,Accounts
     @Autowired
     OrganizationsCastService organizationsCastService;
     
-	@Override
-	 public boolean insert(Accounts account) {
-	     if (super.insert(account)) {
-	            if(provisionService.getApplicationConfig().isProvisionSupport()) {
-	                UserInfo loadUserInfo = userInfoService.findUserRelated(account.getUserId());
-	                account.setUserInfo(loadUserInfo);
-	                OrganizationsCast cast = new OrganizationsCast();
+    @Override
+     public boolean insert(Accounts account) {
+         if (super.insert(account)) {
+                if(provisionService.getApplicationConfig().isProvisionSupport()) {
+                    UserInfo loadUserInfo = userInfoService.findUserRelated(account.getUserId());
+                    account.setUserInfo(loadUserInfo);
+                    OrganizationsCast cast = new OrganizationsCast();
                     cast.setProvider(account.getAppId());
                     cast.setOrgId(loadUserInfo.getDepartmentId());
                     account.setOrgCast(organizationsCastService.query(cast));
                     provisionService.send(
-	                        ProvisionTopic.ACCOUNT_TOPIC, 
-	                        account,
-	                        ProvisionAct.CREATE);
-	            }
-	            
-	            return true;
-	        }
-	     return false;
-	 }
-	 
-	@Override
-	public boolean update(Accounts account) {
+                            ProvisionTopic.ACCOUNT_TOPIC, 
+                            account,
+                            ProvisionAct.CREATE);
+                }
+                
+                return true;
+            }
+         return false;
+     }
+     
+    @Override
+    public boolean update(Accounts account) {
          if (super.update(account)) {
-        	 if(provisionService.getApplicationConfig().isProvisionSupport()) {
+             if(provisionService.getApplicationConfig().isProvisionSupport()) {
                     UserInfo loadUserInfo = userInfoService.findUserRelated(account.getUserId());
                     account.setUserInfo(loadUserInfo);
                     OrganizationsCast cast = new OrganizationsCast();
@@ -103,7 +103,7 @@ public class AccountsServiceImpl  extends JpaServiceImpl<AccountsMapper,Accounts
      }
    
    public boolean updateStatus(Accounts accounts) {
-	   return this.getMapper().updateStatus(accounts) > 0;
+       return this.getMapper().updateStatus(accounts) > 0;
    }
    
    public boolean remove(String id) {
@@ -150,8 +150,8 @@ public class AccountsServiceImpl  extends JpaServiceImpl<AccountsMapper,Accounts
        deleteByStrategy(strategy);
    }
    public void refreshAllByStrategy() {
-	   AccountsStrategy queryStrategy = new AccountsStrategy();
-	   queryStrategy.setCreateType("automatic");
+       AccountsStrategy queryStrategy = new AccountsStrategy();
+       queryStrategy.setCreateType("automatic");
        for( AccountsStrategy strategy : accountsStrategyService.query(queryStrategy)) {
            refreshByStrategy(strategy);
        }
@@ -165,92 +165,92 @@ public class AccountsServiceImpl  extends JpaServiceImpl<AccountsMapper,Accounts
    public long deleteByStrategy(AccountsStrategy strategy) {
        return getMapper().deleteByStrategy(strategy);
    }
-	
-	
+    
+    
    public List<Accounts> queryByAppIdAndDate(Accounts account) {
        return getMapper().queryByAppIdAndDate(account);
    }
    
    public List<Accounts> queryByAppIdAndAccount(String appId,String relatedUsername){
-	   return getMapper().queryByAppIdAndAccount(appId,relatedUsername);
+       return getMapper().queryByAppIdAndAccount(appId,relatedUsername);
    }
    
    
    public String generateAccount(UserInfo  userInfo,AccountsStrategy accountsStrategy) {
-   	String shortAccount = generateAccount(userInfo,accountsStrategy,true);
-   	String account = generateAccount(userInfo,accountsStrategy,false);
-   	String accountResult = shortAccount;
-   	List<Accounts> accountsList =getMapper().queryByAppIdAndAccount(accountsStrategy.getAppId(),shortAccount +accountsStrategy.getSuffixes());
-   	if(!accountsList.isEmpty()) {
-   		if(accountsStrategy.getMapping().equalsIgnoreCase("email")) {
-   			accountResult = account;
-   			accountsList =getMapper().queryByAppIdAndAccount(accountsStrategy.getAppId(),account + accountsStrategy.getSuffixes());
-   		}
-   		if(!accountsList.isEmpty()) {
-	    		for(int i =1 ;i < 100 ;i++) {
-	    			accountResult = account + i;
-	    			accountsList =getMapper().queryByAppIdAndAccount(accountsStrategy.getAppId(),accountResult + accountsStrategy.getSuffixes());
-	    			if(accountsList.isEmpty()) {
-	    				break;
-	    			}
-	    		}
-   		}
-   	}
-   	if(StringUtils.isNotBlank(accountsStrategy.getSuffixes())){
-   		accountResult = accountResult + accountsStrategy.getSuffixes();
-   	}
+       String shortAccount = generateAccount(userInfo,accountsStrategy,true);
+       String account = generateAccount(userInfo,accountsStrategy,false);
+       String accountResult = shortAccount;
+       List<Accounts> accountsList =getMapper().queryByAppIdAndAccount(accountsStrategy.getAppId(),shortAccount +accountsStrategy.getSuffixes());
+       if(!accountsList.isEmpty()) {
+           if(accountsStrategy.getMapping().equalsIgnoreCase("email")) {
+               accountResult = account;
+               accountsList =getMapper().queryByAppIdAndAccount(accountsStrategy.getAppId(),account + accountsStrategy.getSuffixes());
+           }
+           if(!accountsList.isEmpty()) {
+                for(int i =1 ;i < 100 ;i++) {
+                    accountResult = account + i;
+                    accountsList =getMapper().queryByAppIdAndAccount(accountsStrategy.getAppId(),accountResult + accountsStrategy.getSuffixes());
+                    if(accountsList.isEmpty()) {
+                        break;
+                    }
+                }
+           }
+       }
+       if(StringUtils.isNotBlank(accountsStrategy.getSuffixes())){
+           accountResult = accountResult + accountsStrategy.getSuffixes();
+       }
        return accountResult;
    }
    
    
-	private String generateAccount(UserInfo  userInfo,AccountsStrategy strategy,boolean isShort) {
-		String account = "";
-    	if(strategy.getMapping().equalsIgnoreCase("username")) {
-    		account = userInfo.getUsername();
-    	}else if(strategy.getMapping().equalsIgnoreCase("mobile")) {
-    		account = userInfo.getMobile();
-    	}else if(strategy.getMapping().equalsIgnoreCase("email")) {
-    		try {
-	    		if(isShort) {
-	    			account = getPinYinShortName(userInfo.getDisplayName());
-	    		}else {
-	    			account = getPinYinName(userInfo.getDisplayName());
-	    		}
-    		}catch(Exception e) {
-    			e.printStackTrace();
-    		}
-    	}else if(strategy.getMapping().equalsIgnoreCase("employeeNumber")) {
-    		account = userInfo.getEmployeeNumber();
-    	}else if(strategy.getMapping().equalsIgnoreCase("windowsAccount")) {
-    		account = userInfo.getWindowsAccount();
-    	}else if(strategy.getMapping().equalsIgnoreCase("idCardNo")) {
-    		account = userInfo.getIdCardNo();
-    	}else {
-    		account = userInfo.getUsername();
-    	}
-    	
+    private String generateAccount(UserInfo  userInfo,AccountsStrategy strategy,boolean isShort) {
+        String account = "";
+        if(strategy.getMapping().equalsIgnoreCase("username")) {
+            account = userInfo.getUsername();
+        }else if(strategy.getMapping().equalsIgnoreCase("mobile")) {
+            account = userInfo.getMobile();
+        }else if(strategy.getMapping().equalsIgnoreCase("email")) {
+            try {
+                if(isShort) {
+                    account = getPinYinShortName(userInfo.getDisplayName());
+                }else {
+                    account = getPinYinName(userInfo.getDisplayName());
+                }
+            }catch(Exception e) {
+                e.printStackTrace();
+            }
+        }else if(strategy.getMapping().equalsIgnoreCase("employeeNumber")) {
+            account = userInfo.getEmployeeNumber();
+        }else if(strategy.getMapping().equalsIgnoreCase("windowsAccount")) {
+            account = userInfo.getWindowsAccount();
+        }else if(strategy.getMapping().equalsIgnoreCase("idCardNo")) {
+            account = userInfo.getIdCardNo();
+        }else {
+            account = userInfo.getUsername();
+        }
+        
         return account;
-	}
-	
-	public static String getPinYinName(String name) throws BadHanyuPinyinOutputFormatCombination {
+    }
+    
+    public static String getPinYinName(String name) throws BadHanyuPinyinOutputFormatCombination {
         HanyuPinyinOutputFormat pinyinFormat = new        HanyuPinyinOutputFormat();
         pinyinFormat.setCaseType(HanyuPinyinCaseType.LOWERCASE);
         pinyinFormat.setToneType(HanyuPinyinToneType.WITHOUT_TONE);
         pinyinFormat.setVCharType(HanyuPinyinVCharType.WITH_V);
         return PinyinHelper.toHanYuPinyinString(name, pinyinFormat, "",false);
     }
-	
-	public static String getPinYinShortName(String name) throws BadHanyuPinyinOutputFormatCombination {
-		char[] strs = name.toCharArray();
-		String pinyinName = "";
-		for(int i=0;i<strs.length;i++) {
-			if(i == 0) {
-				pinyinName += getPinYinName(strs[i]+"");
-			}else {
-				pinyinName += getPinYinName(strs[i]+"").charAt(0);
-			}
-		}
-		return pinyinName;
+    
+    public static String getPinYinShortName(String name) throws BadHanyuPinyinOutputFormatCombination {
+        char[] strs = name.toCharArray();
+        String pinyinName = "";
+        for(int i=0;i<strs.length;i++) {
+            if(i == 0) {
+                pinyinName += getPinYinName(strs[i]+"");
+            }else {
+                pinyinName += getPinYinName(strs[i]+"").charAt(0);
+            }
+        }
+        return pinyinName;
     }
-	
+    
 }

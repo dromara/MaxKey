@@ -35,9 +35,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Controller
 @RequestMapping(value={"/api/idm/Users"})
 public class RestUserPasswordController {
-	
-	static final Logger _logger = LoggerFactory.getLogger(RestUserPasswordController.class);
-	
+    
+    static final Logger _logger = LoggerFactory.getLogger(RestUserPasswordController.class);
+    
     @Autowired
     UserInfoService userInfoService;
     
@@ -47,14 +47,14 @@ public class RestUserPasswordController {
     public String changePassword(@RequestParam(required = true) String username,
                                  @RequestParam(required = true) String password,
                                  UriComponentsBuilder builder) throws IOException {
-    	
-    	_logger.debug("UserInfo username {} , password {}", username , password);
-    	
-    	UserInfo loadUserInfo = userInfoService.findByUsername(username);
+        
+        _logger.debug("UserInfo username {} , password {}", username , password);
+        
+        UserInfo loadUserInfo = userInfoService.findByUsername(username);
         if(loadUserInfo != null) {
-        	ChangePassword changePassword  = new ChangePassword(loadUserInfo);
-        	changePassword.setPassword(password);
-        	changePassword.setDecipherable(loadUserInfo.getDecipherable());
+            ChangePassword changePassword  = new ChangePassword(loadUserInfo);
+            changePassword.setPassword(password);
+            changePassword.setDecipherable(loadUserInfo.getDecipherable());
             userInfoService.changePassword(changePassword,true);
         }
         return "true";

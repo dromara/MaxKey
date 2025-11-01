@@ -31,85 +31,85 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ScheduleAdapterBuilder {
-	private static final  Logger _logger = LoggerFactory.getLogger(ScheduleAdapterBuilder.class);
-	
-	Scheduler scheduler ;
-	
-	String cron;
-	
-	Class <? extends Job> jobClass;
-	
-	JobDataMap jobDataMap;
-	
-	String identity ;
-	
+    private static final  Logger _logger = LoggerFactory.getLogger(ScheduleAdapterBuilder.class);
+    
+    Scheduler scheduler ;
+    
+    String cron;
+    
+    Class <? extends Job> jobClass;
+    
+    JobDataMap jobDataMap;
+    
+    String identity ;
+    
     public  void addListener(
-    		Scheduler scheduler ,
-    		Class <? extends Job> jobClass,
-    		String cronSchedule,
-			JobDataMap jobDataMap
-		) throws SchedulerException {
-    	this.cron = cronSchedule;
-    	this.scheduler = scheduler;
-    	this.jobClass = jobClass;
-    	this.jobDataMap = jobDataMap;
-    	this.build();
-	}
+            Scheduler scheduler ,
+            Class <? extends Job> jobClass,
+            String cronSchedule,
+            JobDataMap jobDataMap
+        ) throws SchedulerException {
+        this.cron = cronSchedule;
+        this.scheduler = scheduler;
+        this.jobClass = jobClass;
+        this.jobDataMap = jobDataMap;
+        this.build();
+    }
     
     public ScheduleAdapterBuilder setIdentity(String identity) {
-    	this.identity = identity;
-    	return this;
+        this.identity = identity;
+        return this;
     }
     
     public ScheduleAdapterBuilder setScheduler(Scheduler scheduler) {
-    	this.scheduler = scheduler;
-    	return this;
+        this.scheduler = scheduler;
+        return this;
     }
     
     public ScheduleAdapterBuilder setJobDataMap(JobDataMap jobDataMap) {
-    	this.jobDataMap = jobDataMap;
-    	return this;
+        this.jobDataMap = jobDataMap;
+        return this;
     }
     
     public ScheduleAdapterBuilder setJobData(String key,Object data) {
-    	if(this.jobDataMap == null) {
-    		jobDataMap = new JobDataMap();
-    	}
-    	this.jobDataMap.put(key, data);
-    	return this;
+        if(this.jobDataMap == null) {
+            jobDataMap = new JobDataMap();
+        }
+        this.jobDataMap.put(key, data);
+        return this;
     }
     
     public ScheduleAdapterBuilder setCron(String cron) {
-    	this.cron = cron;
-    	return this;
+        this.cron = cron;
+        return this;
     }
     
     public ScheduleAdapterBuilder setJobClass(Class <? extends Job> jobClass) {
-    	this.jobClass = jobClass;
-    	return this;
+        this.jobClass = jobClass;
+        return this;
     }
     
     public void build() throws SchedulerException {
-    	if(StringUtils.isBlank(identity)) {
-    		identity = jobClass.getSimpleName();
-    	}
-		_logger.debug("Job schedule {} ,Cron {}  ",  identity ,cron);
-		
-		JobDetail jobDetail = 
-				JobBuilder.newJob(jobClass) 
-				.withIdentity(identity, identity + "Group")
-				.build();
-		
-		CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(cron);
-		
-		CronTrigger cronTrigger = 
-			TriggerBuilder.newTrigger()
-				.withIdentity("trigger" + identity, identity + "TriggerGroup")
-				.usingJobData(jobDataMap)
-				.withSchedule(scheduleBuilder)
-				.build();
-		
-		scheduler.scheduleJob(jobDetail,cronTrigger);    
+        if(StringUtils.isBlank(identity)) {
+            identity = jobClass.getSimpleName();
+        }
+        _logger.debug("Job schedule {} ,Cron {}  ",  identity ,cron);
+        
+        JobDetail jobDetail = 
+                JobBuilder.newJob(jobClass) 
+                .withIdentity(identity, identity + "Group")
+                .build();
+        
+        CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(cron);
+        
+        CronTrigger cronTrigger = 
+            TriggerBuilder.newTrigger()
+                .withIdentity("trigger" + identity, identity + "TriggerGroup")
+                .usingJobData(jobDataMap)
+                .withSchedule(scheduleBuilder)
+                .build();
+        
+        scheduler.scheduleJob(jobDetail,cronTrigger);    
     }
     
 }

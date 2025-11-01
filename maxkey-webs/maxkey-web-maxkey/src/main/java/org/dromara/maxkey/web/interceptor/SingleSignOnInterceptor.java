@@ -49,10 +49,10 @@ public class SingleSignOnInterceptor  implements AsyncHandlerInterceptor {
     ApplicationConfig applicationConfig;
     
     @Autowired
-	SessionManager sessionManager;
+    SessionManager sessionManager;
     
     @Autowired
-	AuthTokenService authTokenService ;
+    AuthTokenService authTokenService ;
     
     @Autowired
     AppsService appsService;
@@ -64,63 +64,63 @@ public class SingleSignOnInterceptor  implements AsyncHandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, 
             HttpServletResponse response, Object handler)
             throws Exception {
-    	logger.trace("Single Sign On Interceptor");
+        logger.trace("Single Sign On Interceptor");
        
-    	AuthorizationUtils.authenticateWithCookie(request,authTokenService,sessionManager);
+        AuthorizationUtils.authenticateWithCookie(request,authTokenService,sessionManager);
 
         if(AuthorizationUtils.isNotAuthenticated()) {
-        	String loginUrl = applicationConfig.getFrontendUri() + "/#/passport/login?redirect_uri=%s";
-        	String redirect_uri = UrlUtils.buildFullRequestUrl(request);
-        	String base64RequestUrl = Base64Utils.base64UrlEncode(redirect_uri.getBytes());
-        	logger.debug("No Authentication ... Redirect to /passport/login , redirect_uri {} , base64 {}",
-        					redirect_uri ,base64RequestUrl);
-        	response.sendRedirect(String.format(loginUrl,base64RequestUrl));
-        	return false;
+            String loginUrl = applicationConfig.getFrontendUri() + "/#/passport/login?redirect_uri=%s";
+            String redirect_uri = UrlUtils.buildFullRequestUrl(request);
+            String base64RequestUrl = Base64Utils.base64UrlEncode(redirect_uri.getBytes());
+            logger.debug("No Authentication ... Redirect to /passport/login , redirect_uri {} , base64 {}",
+                            redirect_uri ,base64RequestUrl);
+            response.sendRedirect(String.format(loginUrl,base64RequestUrl));
+            return false;
         }
         
         //判断应用访问权限
         if(AuthorizationUtils.isAuthenticated()){
-	        logger.debug("preHandle {}",request.getRequestURI());
-	        Apps app = (Apps)WebContext.getAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP);
-	        if(app == null) {
-	        	
-	        	String requestURI = request.getRequestURI();
-	        	if(requestURI.contains("/authz/cas/login")) {//for CAS service
-	        		app = casDetailsService.getAppDetails(
-	        				request.getParameter(CasConstants.PARAMETER.SERVICE), true);
-	        	}else if(requestURI.contains("/authz/jwt/")
-	        			||requestURI.contains("/authz/api/")
-	        			||requestURI.contains("/authz/formbased/")
-	        			||requestURI.contains("/authz/tokenbased/")
-	        			||requestURI.contains("/authz/saml20/consumer/")
-	        			||requestURI.contains("/authz/saml20/idpinit/")
-	        			||requestURI.contains("/authz/cas/")
-	        	) {//for id end of URL
-	        		String [] requestURIs = requestURI.split("/");
-	        		String appId = requestURIs[requestURIs.length -1];
-	        		logger.debug("appId {}",appId);
-		        	app = appsService.get(appId,true);
-	        	}else if(requestURI.contains("/authz/oauth/v20/authorize")) {//oauth
-		        	app = appsService.get(request.getParameter(OAuth2Constants.PARAMETER.CLIENT_ID),true);
-	        	}
-	        }
-	        
-	        if(app == null) {
-	        	logger.debug("preHandle app is not exist . ");
-	        	return true;
-	        }
-	        
-	        SignPrincipal principal = AuthorizationUtils.getPrincipal();
-	        if(principal != null && app !=null) {
-	            if(principal.getGrantedAuthorityApps().contains(new SimpleGrantedAuthority(app.getId()))) {
-	                logger.trace("preHandle have authority access {}" , app);
-	                return true;
-	            }
-	        }
-	        logger.debug("preHandle not have authority access {}" , app);
-	        response.sendRedirect(request.getContextPath()+"/authz/refused");
-	        return false;
-    	}
+            logger.debug("preHandle {}",request.getRequestURI());
+            Apps app = (Apps)WebContext.getAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP);
+            if(app == null) {
+                
+                String requestURI = request.getRequestURI();
+                if(requestURI.contains("/authz/cas/login")) {//for CAS service
+                    app = casDetailsService.getAppDetails(
+                            request.getParameter(CasConstants.PARAMETER.SERVICE), true);
+                }else if(requestURI.contains("/authz/jwt/")
+                        ||requestURI.contains("/authz/api/")
+                        ||requestURI.contains("/authz/formbased/")
+                        ||requestURI.contains("/authz/tokenbased/")
+                        ||requestURI.contains("/authz/saml20/consumer/")
+                        ||requestURI.contains("/authz/saml20/idpinit/")
+                        ||requestURI.contains("/authz/cas/")
+                ) {//for id end of URL
+                    String [] requestURIs = requestURI.split("/");
+                    String appId = requestURIs[requestURIs.length -1];
+                    logger.debug("appId {}",appId);
+                    app = appsService.get(appId,true);
+                }else if(requestURI.contains("/authz/oauth/v20/authorize")) {//oauth
+                    app = appsService.get(request.getParameter(OAuth2Constants.PARAMETER.CLIENT_ID),true);
+                }
+            }
+            
+            if(app == null) {
+                logger.debug("preHandle app is not exist . ");
+                return true;
+            }
+            
+            SignPrincipal principal = AuthorizationUtils.getPrincipal();
+            if(principal != null && app !=null) {
+                if(principal.getGrantedAuthorityApps().contains(new SimpleGrantedAuthority(app.getId()))) {
+                    logger.trace("preHandle have authority access {}" , app);
+                    return true;
+                }
+            }
+            logger.debug("preHandle not have authority access {}" , app);
+            response.sendRedirect(request.getContextPath()+"/authz/refused");
+            return false;
+        }
         return true;
     }
 

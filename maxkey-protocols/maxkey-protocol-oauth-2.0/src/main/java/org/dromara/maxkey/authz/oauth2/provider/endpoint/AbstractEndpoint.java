@@ -49,103 +49,103 @@ import org.springframework.util.Assert;
  */
 public class AbstractEndpoint implements InitializingBean {
 
-	protected final Log logger = LogFactory.getLog(getClass());
+    protected final Log logger = LogFactory.getLog(getClass());
 
-	private TokenGranter tokenGranter;
-	
-	@Autowired
-  	@Qualifier("oauth20AuthorizationCodeServices")
-	protected AuthorizationCodeServices authorizationCodeServices = new InMemoryAuthorizationCodeServices();
-	
-	@Autowired
-  	@Qualifier("oauth20TokenServices")
-	protected AuthorizationServerTokenServices tokenServices ;
-	
-	@Autowired
-  	@Qualifier("oauth20JdbcClientDetailsService")
-	protected ClientDetailsService clientDetailsService;
-	
-	@Autowired
-  	@Qualifier("oAuth2RequestFactory")
-	protected OAuth2RequestFactory oAuth2RequestFactory;
-	
-	@Autowired
-  	@Qualifier("oAuth2RequestFactory")
-	protected OAuth2RequestFactory defaultOAuth2RequestFactory;
+    private TokenGranter tokenGranter;
+    
+    @Autowired
+      @Qualifier("oauth20AuthorizationCodeServices")
+    protected AuthorizationCodeServices authorizationCodeServices = new InMemoryAuthorizationCodeServices();
+    
+    @Autowired
+      @Qualifier("oauth20TokenServices")
+    protected AuthorizationServerTokenServices tokenServices ;
+    
+    @Autowired
+      @Qualifier("oauth20JdbcClientDetailsService")
+    protected ClientDetailsService clientDetailsService;
+    
+    @Autowired
+      @Qualifier("oAuth2RequestFactory")
+    protected OAuth2RequestFactory oAuth2RequestFactory;
+    
+    @Autowired
+      @Qualifier("oAuth2RequestFactory")
+    protected OAuth2RequestFactory defaultOAuth2RequestFactory;
 
-	@Autowired
+    @Autowired
     @Qualifier("oauth20UserAuthenticationManager")
-	AuthenticationManager authenticationManager;
-	
-	@Autowired
+    AuthenticationManager authenticationManager;
+    
+    @Autowired
     protected AppsService appsService;
-	
-	@Autowired 
+    
+    @Autowired 
     @Qualifier("applicationConfig")
     protected ApplicationConfig applicationConfig;
-	
-	@Autowired 
-	protected MomentaryService momentaryService;
-	
-	
-	public void afterPropertiesSet() throws Exception {
-		if (tokenGranter == null) {
-			//ClientDetailsService clientDetails = clientDetailsService();
-			//AuthorizationServerTokenServices tokenServices = tokenServices();
-			//AuthorizationCodeServices authorizationCodeServices = authorizationCodeServices();
-			//OAuth2RequestFactory requestFactory = requestFactory();
+    
+    @Autowired 
+    protected MomentaryService momentaryService;
+    
+    
+    public void afterPropertiesSet() throws Exception {
+        if (tokenGranter == null) {
+            //ClientDetailsService clientDetails = clientDetailsService();
+            //AuthorizationServerTokenServices tokenServices = tokenServices();
+            //AuthorizationCodeServices authorizationCodeServices = authorizationCodeServices();
+            //OAuth2RequestFactory requestFactory = requestFactory();
 
-			List<TokenGranter> tokenGranters = new ArrayList<TokenGranter>();
-			tokenGranters.add(new AuthorizationCodeTokenGranter(tokenServices, authorizationCodeServices,
-					clientDetailsService, oAuth2RequestFactory));
-			tokenGranters.add(new RefreshTokenGranter(tokenServices, clientDetailsService, oAuth2RequestFactory));
-			ImplicitTokenGranter implicit = new ImplicitTokenGranter(tokenServices, clientDetailsService, oAuth2RequestFactory);
-			tokenGranters.add(implicit);
-			tokenGranters.add(new ClientCredentialsTokenGranter(tokenServices, clientDetailsService, oAuth2RequestFactory));
-			if (authenticationManager != null) {
-				tokenGranters.add(new ResourceOwnerPasswordTokenGranter(authenticationManager, tokenServices,
-				        clientDetailsService, oAuth2RequestFactory));
-			}
-			tokenGranter = new CompositeTokenGranter(tokenGranters);
-		}
-		Assert.state(tokenGranter != null, "TokenGranter must be provided");
-		Assert.state(clientDetailsService != null, "ClientDetailsService must be provided");
-		defaultOAuth2RequestFactory = new DefaultOAuth2RequestFactory(getClientDetailsService());
-		if (oAuth2RequestFactory == null) {
-			oAuth2RequestFactory = defaultOAuth2RequestFactory;
-		}
-	}
-
-
-
-	public void setTokenGranter(TokenGranter tokenGranter) {
-		this.tokenGranter = tokenGranter;
-	}
-
-	protected TokenGranter getTokenGranter() {
-		return tokenGranter;
-	}
+            List<TokenGranter> tokenGranters = new ArrayList<TokenGranter>();
+            tokenGranters.add(new AuthorizationCodeTokenGranter(tokenServices, authorizationCodeServices,
+                    clientDetailsService, oAuth2RequestFactory));
+            tokenGranters.add(new RefreshTokenGranter(tokenServices, clientDetailsService, oAuth2RequestFactory));
+            ImplicitTokenGranter implicit = new ImplicitTokenGranter(tokenServices, clientDetailsService, oAuth2RequestFactory);
+            tokenGranters.add(implicit);
+            tokenGranters.add(new ClientCredentialsTokenGranter(tokenServices, clientDetailsService, oAuth2RequestFactory));
+            if (authenticationManager != null) {
+                tokenGranters.add(new ResourceOwnerPasswordTokenGranter(authenticationManager, tokenServices,
+                        clientDetailsService, oAuth2RequestFactory));
+            }
+            tokenGranter = new CompositeTokenGranter(tokenGranters);
+        }
+        Assert.state(tokenGranter != null, "TokenGranter must be provided");
+        Assert.state(clientDetailsService != null, "ClientDetailsService must be provided");
+        defaultOAuth2RequestFactory = new DefaultOAuth2RequestFactory(getClientDetailsService());
+        if (oAuth2RequestFactory == null) {
+            oAuth2RequestFactory = defaultOAuth2RequestFactory;
+        }
+    }
 
 
 
-	protected OAuth2RequestFactory getOAuth2RequestFactory() {
-		return oAuth2RequestFactory;
-	}
+    public void setTokenGranter(TokenGranter tokenGranter) {
+        this.tokenGranter = tokenGranter;
+    }
 
-	protected OAuth2RequestFactory getDefaultOAuth2RequestFactory() {
-		return defaultOAuth2RequestFactory;
-	}
+    protected TokenGranter getTokenGranter() {
+        return tokenGranter;
+    }
 
-	public void setOAuth2RequestFactory(OAuth2RequestFactory oAuth2RequestFactory) {
-		this.oAuth2RequestFactory = oAuth2RequestFactory;
-	}
 
-	protected ClientDetailsService getClientDetailsService() {
-		return clientDetailsService;
-	}
 
-	public void setClientDetailsService(ClientDetailsService clientDetailsService) {
-		this.clientDetailsService = clientDetailsService;
-	}
+    protected OAuth2RequestFactory getOAuth2RequestFactory() {
+        return oAuth2RequestFactory;
+    }
+
+    protected OAuth2RequestFactory getDefaultOAuth2RequestFactory() {
+        return defaultOAuth2RequestFactory;
+    }
+
+    public void setOAuth2RequestFactory(OAuth2RequestFactory oAuth2RequestFactory) {
+        this.oAuth2RequestFactory = oAuth2RequestFactory;
+    }
+
+    protected ClientDetailsService getClientDetailsService() {
+        return clientDetailsService;
+    }
+
+    public void setClientDetailsService(ClientDetailsService clientDetailsService) {
+        this.clientDetailsService = clientDetailsService;
+    }
 
 }

@@ -35,7 +35,7 @@ public class MaxKeyOpenApiMvcConfig implements WebMvcConfigurer {
     private static final  Logger logger = LoggerFactory.getLogger(MaxKeyOpenApiMvcConfig.class);
     
     @Autowired
-  	ApplicationConfig applicationConfig;
+      ApplicationConfig applicationConfig;
     
     @Autowired
     AbstractAuthenticationProvider authenticationProvider ;
@@ -96,7 +96,7 @@ public class MaxKeyOpenApiMvcConfig implements WebMvcConfigurer {
                 .addPathPatterns("/api/idm/**")
                 .addPathPatterns("/api/idm/scim/**")
                 ;
-		
+        
         logger.debug("add Rest Api Permission Adapter");
         
     }

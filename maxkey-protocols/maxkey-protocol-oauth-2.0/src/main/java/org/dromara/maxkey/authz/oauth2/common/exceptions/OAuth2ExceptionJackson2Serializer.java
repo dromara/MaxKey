@@ -35,20 +35,20 @@ public class OAuth2ExceptionJackson2Serializer extends StdSerializer<OAuth2Excep
         super(OAuth2Exception.class);
     }
 
-	@Override
-	public void serialize(OAuth2Exception value, JsonGenerator jgen, SerializerProvider provider) throws IOException,
-			JsonProcessingException {
+    @Override
+    public void serialize(OAuth2Exception value, JsonGenerator jgen, SerializerProvider provider) throws IOException,
+            JsonProcessingException {
         jgen.writeStartObject();
-		jgen.writeStringField("error", value.getOAuth2ErrorCode());
-		jgen.writeStringField("error_description", value.getMessage());
-		if (value.getAdditionalInformation()!=null) {
-			for (Entry<String, String> entry : value.getAdditionalInformation().entrySet()) {
-				String key = entry.getKey();
-				String add = entry.getValue();
-				jgen.writeStringField(key, add);				
-			}
-		}
+        jgen.writeStringField("error", value.getOAuth2ErrorCode());
+        jgen.writeStringField("error_description", value.getMessage());
+        if (value.getAdditionalInformation()!=null) {
+            for (Entry<String, String> entry : value.getAdditionalInformation().entrySet()) {
+                String key = entry.getKey();
+                String add = entry.getValue();
+                jgen.writeStringField(key, add);                
+            }
+        }
         jgen.writeEndObject();
-	}
+    }
 
 }

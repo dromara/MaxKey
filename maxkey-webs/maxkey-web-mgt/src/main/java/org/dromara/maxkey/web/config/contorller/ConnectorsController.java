@@ -36,61 +36,61 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value={"/config/connectors"})
 public class ConnectorsController {
-	static final  Logger logger = LoggerFactory.getLogger(ConnectorsController.class);
-	
-	@Autowired
-	ConnectorsService connectorsService;
-	
-	@GetMapping(value = { "/fetch" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<JpaPageResults<Connectors>> fetch(Connectors connector,@CurrentUser UserInfo currentUser) {
-		logger.debug("fetch {}" , connector);
-		connector.setInstId(currentUser.getInstId());
-		return new Message<>(connectorsService.fetchPageResults(connector));
-	}
-	
-	@GetMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<Connectors> get(@PathVariable("id") String id) {
-		Connectors connector = connectorsService.get(id);
-		if(StringUtils.isNotBlank(connector.getCredentials())) {
-			connector.setCredentials(PasswordReciprocal.getInstance().decoder(connector.getCredentials()));
-		}
-		return new Message<>(connector);
-	}
-	
-	@PostMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<Connectors> insert(@RequestBody  Connectors connector,@CurrentUser UserInfo currentUser) {
-		logger.debug("-Add  : {}" , connector);
-		connector.setInstId(currentUser.getInstId());
-		if(StringUtils.isNotBlank(connector.getCredentials())) {
-			connector.setCredentials(PasswordReciprocal.getInstance().encode(connector.getCredentials()));
-		}
-		if (connectorsService.insert(connector)) {
-			return new Message<>(Message.SUCCESS);
-		} else {
-			return new Message<>(Message.FAIL);
-		}
-	}
-	
-	@PutMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<Connectors> update(@RequestBody  Connectors connector,@CurrentUser UserInfo currentUser) {
-		logger.debug("-update  : {}" , connector);
-		connector.setInstId(currentUser.getInstId());
-		connector.setCredentials(PasswordReciprocal.getInstance().encode(connector.getCredentials()));
-		if (connectorsService.update(connector)) {
-		    return new Message<>(Message.SUCCESS);
-		} else {
-			return new Message<>(Message.FAIL);
-		}
-	}
-	
-	@DeleteMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<Connectors> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
-		logger.debug("-delete  ids : {} " , ids);
-		if (connectorsService.deleteBatch(ids)) {
-			 return new Message<>(Message.SUCCESS);
-		} else {
-			return new Message<>(Message.FAIL);
-		}
-	}
+    static final  Logger logger = LoggerFactory.getLogger(ConnectorsController.class);
+    
+    @Autowired
+    ConnectorsService connectorsService;
+    
+    @GetMapping(value = { "/fetch" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public Message<JpaPageResults<Connectors>> fetch(Connectors connector,@CurrentUser UserInfo currentUser) {
+        logger.debug("fetch {}" , connector);
+        connector.setInstId(currentUser.getInstId());
+        return new Message<>(connectorsService.fetchPageResults(connector));
+    }
+    
+    @GetMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public Message<Connectors> get(@PathVariable("id") String id) {
+        Connectors connector = connectorsService.get(id);
+        if(StringUtils.isNotBlank(connector.getCredentials())) {
+            connector.setCredentials(PasswordReciprocal.getInstance().decoder(connector.getCredentials()));
+        }
+        return new Message<>(connector);
+    }
+    
+    @PostMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public Message<Connectors> insert(@RequestBody  Connectors connector,@CurrentUser UserInfo currentUser) {
+        logger.debug("-Add  : {}" , connector);
+        connector.setInstId(currentUser.getInstId());
+        if(StringUtils.isNotBlank(connector.getCredentials())) {
+            connector.setCredentials(PasswordReciprocal.getInstance().encode(connector.getCredentials()));
+        }
+        if (connectorsService.insert(connector)) {
+            return new Message<>(Message.SUCCESS);
+        } else {
+            return new Message<>(Message.FAIL);
+        }
+    }
+    
+    @PutMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public Message<Connectors> update(@RequestBody  Connectors connector,@CurrentUser UserInfo currentUser) {
+        logger.debug("-update  : {}" , connector);
+        connector.setInstId(currentUser.getInstId());
+        connector.setCredentials(PasswordReciprocal.getInstance().encode(connector.getCredentials()));
+        if (connectorsService.update(connector)) {
+            return new Message<>(Message.SUCCESS);
+        } else {
+            return new Message<>(Message.FAIL);
+        }
+    }
+    
+    @DeleteMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public Message<Connectors> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
+        logger.debug("-delete  ids : {} " , ids);
+        if (connectorsService.deleteBatch(ids)) {
+             return new Message<>(Message.SUCCESS);
+        } else {
+            return new Message<>(Message.FAIL);
+        }
+    }
 
 }

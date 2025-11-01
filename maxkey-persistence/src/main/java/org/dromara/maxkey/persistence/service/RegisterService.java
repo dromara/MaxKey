@@ -23,6 +23,6 @@ import org.dromara.mybatis.jpa.service.IJpaService;
 
 public interface RegisterService  extends IJpaService<Register>{
 
-	public UserInfo findByEmail(String email);
-	
+    public UserInfo findByEmail(String email);
+    
 }

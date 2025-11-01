@@ -24,8 +24,8 @@ import org.dromara.mybatis.jpa.IJpaMapper;
 
 public interface OrganizationsMapper extends IJpaMapper<Organizations> {
 
-	public List<Organizations> queryOrgs(Organizations organization);
-	
-	@Update("update mxk_organizations set codepath = #{codePath} , namepath = #{namePath} where id = #{id}")
-	boolean updateNamePath(Organizations organization);
+    public List<Organizations> queryOrgs(Organizations organization);
+    
+    @Update("update mxk_organizations set codepath = #{codePath} , namepath = #{namePath} where id = #{id}")
+    boolean updateNamePath(Organizations organization);
 }

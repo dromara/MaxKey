@@ -37,41 +37,41 @@ import com.nimbusds.jose.jwk.JWK;
  * Builder Symmetric Signing Service
  */
 public class SymmetricSigningAndValidationServiceBuilder {
-	static final  Logger _logger = LoggerFactory.getLogger(SymmetricSigningAndValidationServiceBuilder.class);
-	public static final String SYMMETRIC_KEY = "SYMMETRIC-KEY";
-	/**
-	 * 
-	 */
-	public SymmetricSigningAndValidationServiceBuilder() {
-		
-	}
-	
-	public JwtSigningAndValidationService serviceBuilder(String sharedSecret){
-		_logger.debug("shared Secret : {}" , sharedSecret);
-		_logger.debug("Symmetric Id : {}" , SYMMETRIC_KEY);
-		if (sharedSecret == null) {
-			_logger.error("Couldn't create symmetric SigningAndValidation");
-			return null;
-		}
+    static final  Logger _logger = LoggerFactory.getLogger(SymmetricSigningAndValidationServiceBuilder.class);
+    public static final String SYMMETRIC_KEY = "SYMMETRIC-KEY";
+    /**
+     * 
+     */
+    public SymmetricSigningAndValidationServiceBuilder() {
+        
+    }
+    
+    public JwtSigningAndValidationService serviceBuilder(String sharedSecret){
+        _logger.debug("shared Secret : {}" , sharedSecret);
+        _logger.debug("Symmetric Id : {}" , SYMMETRIC_KEY);
+        if (sharedSecret == null) {
+            _logger.error("Couldn't create symmetric SigningAndValidation");
+            return null;
+        }
 
-		/**
-		 * Builder Symmetric Signing And Validation Service
-		 */
-		JWK jwk = null;
-		//JWK jwk = new OctetSequenceKey(Base64URL.encode(sharedSecret), KeyUse.SIGNATURE, null, null, SYMMETRIC_KEY, null, null, null);
-		Map<String, JWK> keys = ImmutableMap.of(SYMMETRIC_KEY, jwk);
-		try {
-			JwtSigningAndValidationService  symmetricSigningAndValidationService = new DefaultJwtSigningAndValidationService(keys);
-			return symmetricSigningAndValidationService;
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		} catch (InvalidKeySpecException e) {
-			e.printStackTrace();
-		} catch (JOSEException e) {
-			e.printStackTrace();
-		}
-		
-		return null;
-	}
+        /**
+         * Builder Symmetric Signing And Validation Service
+         */
+        JWK jwk = null;
+        //JWK jwk = new OctetSequenceKey(Base64URL.encode(sharedSecret), KeyUse.SIGNATURE, null, null, SYMMETRIC_KEY, null, null, null);
+        Map<String, JWK> keys = ImmutableMap.of(SYMMETRIC_KEY, jwk);
+        try {
+            JwtSigningAndValidationService  symmetricSigningAndValidationService = new DefaultJwtSigningAndValidationService(keys);
+            return symmetricSigningAndValidationService;
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (InvalidKeySpecException e) {
+            e.printStackTrace();
+        } catch (JOSEException e) {
+            e.printStackTrace();
+        }
+        
+        return null;
+    }
 
 }

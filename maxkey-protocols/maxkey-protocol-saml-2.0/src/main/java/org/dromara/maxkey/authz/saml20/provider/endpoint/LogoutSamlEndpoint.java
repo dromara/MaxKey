@@ -74,7 +74,7 @@ public class LogoutSamlEndpoint {
                  logger.debug("LogoutRequest NameID "+logoutRequest.getNameID().getValue());
                  //add Destination
                  if(StringUtils.isNotBlank(logoutRequest.getDestination())) {
-                	 logoutUrl.append("?").append("redirect_uri=").append(logoutRequest.getDestination());
+                     logoutUrl.append("?").append("redirect_uri=").append(logoutRequest.getDestination());
                  }
              } catch (MessageDecodingException e1) {
                  logger.error("Exception decoding SAML MessageDecodingException", e1);

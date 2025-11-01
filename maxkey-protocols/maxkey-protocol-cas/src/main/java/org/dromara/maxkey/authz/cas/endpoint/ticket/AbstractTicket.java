@@ -148,16 +148,16 @@ public abstract class AbstractTicket implements Ticket {
         return this.getId();
     }
 
-	@Override
-	public AppsCasDetails getCasDetails() {
-		return this.casDetails;
-	}
-	
-	@Override
-	public Authentication getAuthentication() {
-		return this.authentication;
-	}
-	
+    @Override
+    public AppsCasDetails getCasDetails() {
+        return this.casDetails;
+    }
+    
+    @Override
+    public Authentication getAuthentication() {
+        return this.authentication;
+    }
+    
     @Override
     public int compareTo(final Ticket o) {
         return getId().compareTo(o.getId());

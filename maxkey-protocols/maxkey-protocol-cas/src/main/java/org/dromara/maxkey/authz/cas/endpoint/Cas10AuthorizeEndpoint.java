@@ -45,16 +45,16 @@ import jakarta.servlet.http.HttpServletResponse;
 @RestController
 public class Cas10AuthorizeEndpoint   extends CasBaseAuthorizeEndpoint{
 
-	static final  Logger _logger = LoggerFactory.getLogger(Cas10AuthorizeEndpoint.class);
-	
-	/**
-	 * @param request
-	 * @param response
-	 * @param ticket
-	 * @param service
-	 * @param renew
-	 * @return 
-	 *    
+    static final  Logger _logger = LoggerFactory.getLogger(Cas10AuthorizeEndpoint.class);
+    
+    /**
+     * @param request
+     * @param response
+     * @param ticket
+     * @param service
+     * @param renew
+     * @return 
+     *    
 2.4. /validate [CAS 1.0]
 /validate checks the validity of a service ticket. /validate is part of the CAS 1.0 protocol and thus does not handle proxy authentication. CAS MUST respond with a ticket validation failure response when a proxy ticket is passed to /validate.
 
@@ -73,41 +73,41 @@ renew [OPTIONAL] - if this parameter is set, ticket validation will only succeed
 
 2.4.2. response
 /validate will return one of the following two responses:
-			On ticket validation success:
-			yes<LF>
-			username<LF>
-			
-			On ticket validation failure:
-			no<LF>
-			<LF>
-	 */
-	@Operation(summary = "CAS 1.0 ticket验证接口", description = "通过ticket获取当前登录用户信息",method="POST")
-	@RequestMapping(value=CasConstants.ENDPOINT.ENDPOINT_VALIDATE,method={RequestMethod.GET,RequestMethod.POST})
-	public String validate(
-			HttpServletRequest request,
-			HttpServletResponse response,
-			@RequestParam(value = CasConstants.PARAMETER.TICKET) String ticket,
-			@RequestParam(value = CasConstants.PARAMETER.SERVICE) String service,
-			@RequestParam(value = CasConstants.PARAMETER.RENEW,required=false) String renew){
-	    _logger.debug("serviceValidate ticket {} , service {} , renew {}" , ticket,service,renew);
-	    
-		Ticket storedTicket = null;
-		try {
-			storedTicket = ticketServices.consumeTicket(ticket);
-		} catch (Exception e) {
-			_logger.error("consume Ticket error " , e);
-		}
-		
-		if(storedTicket != null){
-			String principal=((SignPrincipal)storedTicket.getAuthentication().getPrincipal()).getUsername();
-			_logger.debug("principal {}",principal);
-			return new Service10ResponseBuilder().success()
-					.setUser(principal)
-					.serviceResponseBuilder();
-		}else{
-		    _logger.debug("Ticket not found .");
-			return new Service10ResponseBuilder().failure()
-					.serviceResponseBuilder();
-		}
-	}
+            On ticket validation success:
+            yes<LF>
+            username<LF>
+            
+            On ticket validation failure:
+            no<LF>
+            <LF>
+     */
+    @Operation(summary = "CAS 1.0 ticket验证接口", description = "通过ticket获取当前登录用户信息",method="POST")
+    @RequestMapping(value=CasConstants.ENDPOINT.ENDPOINT_VALIDATE,method={RequestMethod.GET,RequestMethod.POST})
+    public String validate(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            @RequestParam(value = CasConstants.PARAMETER.TICKET) String ticket,
+            @RequestParam(value = CasConstants.PARAMETER.SERVICE) String service,
+            @RequestParam(value = CasConstants.PARAMETER.RENEW,required=false) String renew){
+        _logger.debug("serviceValidate ticket {} , service {} , renew {}" , ticket,service,renew);
+        
+        Ticket storedTicket = null;
+        try {
+            storedTicket = ticketServices.consumeTicket(ticket);
+        } catch (Exception e) {
+            _logger.error("consume Ticket error " , e);
+        }
+        
+        if(storedTicket != null){
+            String principal=((SignPrincipal)storedTicket.getAuthentication().getPrincipal()).getUsername();
+            _logger.debug("principal {}",principal);
+            return new Service10ResponseBuilder().success()
+                    .setUser(principal)
+                    .serviceResponseBuilder();
+        }else{
+            _logger.debug("Ticket not found .");
+            return new Service10ResponseBuilder().failure()
+                    .serviceResponseBuilder();
+        }
+    }
 }

@@ -60,10 +60,10 @@ public class JWKSetKeyStore {
     
     public JWKSetKeyStore(String  jwkSetJsonString) {
         try {
-			this.jwkSet = JWKSet.parse(jwkSetJsonString);
-		} catch (ParseException e) {
-			_logger.error("ParseException", e);
-		}
+            this.jwkSet = JWKSet.parse(jwkSetJsonString);
+        } catch (ParseException e) {
+            _logger.error("ParseException", e);
+        }
         initializeJwkSet();
     }
     
@@ -143,64 +143,64 @@ public class JWKSetKeyStore {
     }
     
     public String toString(String mediaType){
-    	StringBuffer metaDataString = new StringBuffer("");
-    	//RSA Only
-		if(jwkSet.getKeys().get(0).getKeyType().getValue().equalsIgnoreCase("RSA")) {
-			
-			if(StringUtils.isNotBlank(mediaType) && mediaType.equalsIgnoreCase("XML")) {
-			
-				metaDataString.append("<RSAKeyValue>").append("\n");
-				for(JWK jwk : jwkSet.getKeys()) {
-					RSAKey  rsaKey  = jwk.toRSAKey();
-					PublicKey publicKey;
-					try {
-						publicKey = rsaKey.toPublicKey();
-						metaDataString.append("<Modulus>").append("\n");
-						metaDataString.append(RSAUtils.getPublicKeyPEM(publicKey.getEncoded()));
-						metaDataString.append("</Modulus>").append("\n");
-						//keyID
-						metaDataString.append("<Algorithm>");
-						metaDataString.append(rsaKey.getAlgorithm());
-						metaDataString.append("</Algorithm>").append("\n");
-						
-						metaDataString.append("<KeyID>");
-						metaDataString.append(rsaKey.getKeyID());
-						metaDataString.append("</KeyID>").append("\n");
-						
-						metaDataString.append("<KeyType>");
-						metaDataString.append(rsaKey.getKeyType());
-						metaDataString.append("</KeyType>").append("\n");
-						
-						metaDataString.append("<Format>");
-						metaDataString.append(publicKey.getFormat());
-						metaDataString.append("</Format>");
-						
-						metaDataString.append("<PublicExponent>");
-						metaDataString.append(rsaKey.getPublicExponent());
-						metaDataString.append("</PublicExponent>").append("\n");
-					} catch (JOSEException e) {
-						_logger.error("JOSEException ", mediaType);
-					}
-				}
-				metaDataString.append("</RSAKeyValue>");
-			
-			}else {
-				//RSA Only
-				metaDataString.append(format(jwkSet.toPublicJWKSet().toString()));
-			}
-		}else {
-			metaDataString.append("RSA Only");
-		}
-		return metaDataString.toString();
-	}
+        StringBuffer metaDataString = new StringBuffer("");
+        //RSA Only
+        if(jwkSet.getKeys().get(0).getKeyType().getValue().equalsIgnoreCase("RSA")) {
+            
+            if(StringUtils.isNotBlank(mediaType) && mediaType.equalsIgnoreCase("XML")) {
+            
+                metaDataString.append("<RSAKeyValue>").append("\n");
+                for(JWK jwk : jwkSet.getKeys()) {
+                    RSAKey  rsaKey  = jwk.toRSAKey();
+                    PublicKey publicKey;
+                    try {
+                        publicKey = rsaKey.toPublicKey();
+                        metaDataString.append("<Modulus>").append("\n");
+                        metaDataString.append(RSAUtils.getPublicKeyPEM(publicKey.getEncoded()));
+                        metaDataString.append("</Modulus>").append("\n");
+                        //keyID
+                        metaDataString.append("<Algorithm>");
+                        metaDataString.append(rsaKey.getAlgorithm());
+                        metaDataString.append("</Algorithm>").append("\n");
+                        
+                        metaDataString.append("<KeyID>");
+                        metaDataString.append(rsaKey.getKeyID());
+                        metaDataString.append("</KeyID>").append("\n");
+                        
+                        metaDataString.append("<KeyType>");
+                        metaDataString.append(rsaKey.getKeyType());
+                        metaDataString.append("</KeyType>").append("\n");
+                        
+                        metaDataString.append("<Format>");
+                        metaDataString.append(publicKey.getFormat());
+                        metaDataString.append("</Format>");
+                        
+                        metaDataString.append("<PublicExponent>");
+                        metaDataString.append(rsaKey.getPublicExponent());
+                        metaDataString.append("</PublicExponent>").append("\n");
+                    } catch (JOSEException e) {
+                        _logger.error("JOSEException ", mediaType);
+                    }
+                }
+                metaDataString.append("</RSAKeyValue>");
+            
+            }else {
+                //RSA Only
+                metaDataString.append(format(jwkSet.toPublicJWKSet().toString()));
+            }
+        }else {
+            metaDataString.append("RSA Only");
+        }
+        return metaDataString.toString();
+    }
     
-	/**
-	 * 
-	 * @param jsonString
-	 * @return formated json string
-	 */
-	public  String format(String  jsonString){
-		Gson gson = new GsonBuilder().setPrettyPrinting().create();
-		return gson.toJson(JsonParser.parseString(jsonString));
-	}
+    /**
+     * 
+     * @param jsonString
+     * @return formated json string
+     */
+    public  String format(String  jsonString){
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        return gson.toJson(JsonParser.parseString(jsonString));
+    }
 }

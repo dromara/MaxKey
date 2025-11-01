@@ -25,8 +25,8 @@ import org.dromara.mybatis.jpa.service.IJpaService;
 
 public interface AccountsStrategyService  extends IJpaService<AccountsStrategy> {
 
-	public List<Roles> queryDynamicGroups(Roles groups);
-	
-	public boolean deleteById(String groupId) ;
-	
+    public List<Roles> queryDynamicGroups(Roles groups);
+    
+    public boolean deleteById(String groupId) ;
+    
 }

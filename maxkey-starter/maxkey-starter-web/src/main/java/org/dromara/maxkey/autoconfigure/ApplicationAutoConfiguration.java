@@ -72,7 +72,7 @@ public class ApplicationAutoConfiguration {
     @Bean
     PasswordEncoder passwordEncoder(
             @Value("${maxkey.crypto.password.encoder:bcrypt}") String idForEncode) {
-    	Map<String ,PasswordEncoder > encoders = new HashMap<>();
+        Map<String ,PasswordEncoder > encoders = new HashMap<>();
         encoders.put("bcrypt", new BCryptPasswordEncoder());
         encoders.put("plain", NoOpPasswordEncoder.getInstance());
         encoders.put("pbkdf2", Pbkdf2PasswordEncoder.defaultsForSpringSecurity_v5_8());
@@ -95,10 +95,10 @@ public class ApplicationAutoConfiguration {
             new DelegatingPasswordEncoder(idForEncode, encoders);
        
         if(_logger.isTraceEnabled()) {
-        	 _logger.trace("Password Encoders :");
-	        for (Map.Entry<String,PasswordEncoder> entry : encoders.entrySet()) {
-	            _logger.trace("{}= {}" ,String.format("%-10s", entry.getKey()), entry.getValue().getClass().getName());
-	        }
+             _logger.trace("Password Encoders :");
+            for (Map.Entry<String,PasswordEncoder> entry : encoders.entrySet()) {
+                _logger.trace("{}= {}" ,String.format("%-10s", entry.getKey()), entry.getValue().getClass().getName());
+            }
         }
         _logger.debug("{} is default encoder" , idForEncode);
         return passwordEncoder;
@@ -156,10 +156,10 @@ public class ApplicationAutoConfiguration {
             @Value("${maxkey.id.strategy:SnowFlake}") String strategy,
             @Value("${maxkey.id.datacenterId:0}") int datacenterId,
             @Value("${maxkey.id.machineId:0}") int machineId) {
-    	IdGenerator idGenerator = new IdGenerator(strategy);
-    	SnowFlakeId snowFlakeId = new SnowFlakeId(datacenterId,machineId);
-    	idGenerator.setSnowFlakeId(snowFlakeId);
-    	WebContext.setIdGenerator(idGenerator); 
+        IdGenerator idGenerator = new IdGenerator(strategy);
+        SnowFlakeId snowFlakeId = new SnowFlakeId(datacenterId,machineId);
+        idGenerator.setSnowFlakeId(snowFlakeId);
+        WebContext.setIdGenerator(idGenerator); 
         return idGenerator;
     }
 
@@ -168,13 +168,13 @@ public class ApplicationAutoConfiguration {
     MomentaryService momentaryService(
             RedisConnectionFactory redisConnFactory,
             @Value("${maxkey.server.persistence}") int persistence) {
-    	MomentaryService momentaryService;
-    	if (persistence == ConstsPersistence.REDIS) {
-    		momentaryService = new RedisMomentaryService(redisConnFactory);
-    	}else {
-    		momentaryService = new InMemoryMomentaryService();
-    	}
-    	return momentaryService;
+        MomentaryService momentaryService;
+        if (persistence == ConstsPersistence.REDIS) {
+            momentaryService = new RedisMomentaryService(redisConnFactory);
+        }else {
+            momentaryService = new InMemoryMomentaryService();
+        }
+        return momentaryService;
     }
     
 }

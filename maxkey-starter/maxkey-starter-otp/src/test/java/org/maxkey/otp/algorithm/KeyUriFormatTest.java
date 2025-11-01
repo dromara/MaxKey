@@ -27,12 +27,12 @@ import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.common.BitMatrix;
 
 public class KeyUriFormatTest {
-	public static void main(String[] args) { 
+    public static void main(String[] args) { 
         try {  
-        	OtpKeyUriFormat kuf=new OtpKeyUriFormat(OtpKeyUriFormat.Types.TOTP,
-        			"GIWVWOL7EI5WLVZPDMROEPSTFBEVO77Q",
-        			"connsec.com");
-        	kuf.setPeriod(60);
+            OtpKeyUriFormat kuf=new OtpKeyUriFormat(OtpKeyUriFormat.Types.TOTP,
+                    "GIWVWOL7EI5WLVZPDMROEPSTFBEVO77Q",
+                    "connsec.com");
+            kuf.setPeriod(60);
             String path = "D:\\totp.png";  
             BitMatrix byteMatrix;  
             byteMatrix = new MultiFormatWriter().encode(new String(kuf.format("shiming").getBytes("GBK"),"iso-8859-1"),  

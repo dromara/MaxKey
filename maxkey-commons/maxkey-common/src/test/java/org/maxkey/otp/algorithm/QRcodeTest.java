@@ -31,79 +31,79 @@ import com.google.zxing.common.BitMatrix;
  * 
  * 
  * BEGIN:VCARD
-		VERSION:3.0
-		N:Gump;Forrest;;Mr.
-		FN:Forrest Gump
-		ORG:Bubba Gump Shrimp Co.
-		TITLE:Shrimp Man
-		PHOTO;VALUE=URL;TYPE=GIF:http://www.example.com/dir_photos/my_photo.gif
-		TEL;TYPE=WORK,VOICE:(111) 555-12121
-		TEL;TYPE=HOME,VOICE:(404) 555-1212
-		ADR;TYPE=WORK:;;100 Waters Edge;Baytown;LA;30314;United States of America
-		LABEL;TYPE=WORK:100 Waters Edge\nBaytown, LA 30314\nUnited States of America
-		ADR;TYPE=HOME:;;42 Plantation St.;Baytown;LA;30314;United States of America
-		LABEL;TYPE=HOME:42 Plantation St.\nBaytown, LA 30314\nUnited States of America
-		EMAIL;TYPE=PREF,INTERNET:forrestgump@example.com
-		REV:2008-04-24T19:52:43Z
-	END:VCARD
+        VERSION:3.0
+        N:Gump;Forrest;;Mr.
+        FN:Forrest Gump
+        ORG:Bubba Gump Shrimp Co.
+        TITLE:Shrimp Man
+        PHOTO;VALUE=URL;TYPE=GIF:http://www.example.com/dir_photos/my_photo.gif
+        TEL;TYPE=WORK,VOICE:(111) 555-12121
+        TEL;TYPE=HOME,VOICE:(404) 555-1212
+        ADR;TYPE=WORK:;;100 Waters Edge;Baytown;LA;30314;United States of America
+        LABEL;TYPE=WORK:100 Waters Edge\nBaytown, LA 30314\nUnited States of America
+        ADR;TYPE=HOME:;;42 Plantation St.;Baytown;LA;30314;United States of America
+        LABEL;TYPE=HOME:42 Plantation St.\nBaytown, LA 30314\nUnited States of America
+        EMAIL;TYPE=PREF,INTERNET:forrestgump@example.com
+        REV:2008-04-24T19:52:43Z
+    END:VCARD
 
 
 
-	BEGIN:VCARD
-		VERSION:4.0
-		N:Gump;Forrest;;;
-		FN:Forrest Gump
-		ORG:Bubba Gump Shrimp Co.
-		TITLE:Shrimp Man
-		PHOTO;MEDIATYPE=image/gif:http://www.example.com/dir_photos/my_photo.gif
-		TEL;TYPE=work,voice;VALUE=uri:tel:+1-111-555-1212
-		TEL;TYPE=home,voice;VALUE=uri:tel:+1-404-555-1212
-		ADR;TYPE=work;LABEL="100 Waters Edge\nBaytown, LA 30314\nUnited States of America"
-		:;;100 Waters Edge;Baytown;LA;30314;United States of America
-		ADR;TYPE=home;LABEL="42 Plantation St.\nBaytown, LA 30314\nUnited States of America"
-		:;;42 Plantation St.;Baytown;LA;30314;United States of America
-		EMAIL:forrestgump@example.com
-		REV:20080424T195243Z
-	END:VCARD
+    BEGIN:VCARD
+        VERSION:4.0
+        N:Gump;Forrest;;;
+        FN:Forrest Gump
+        ORG:Bubba Gump Shrimp Co.
+        TITLE:Shrimp Man
+        PHOTO;MEDIATYPE=image/gif:http://www.example.com/dir_photos/my_photo.gif
+        TEL;TYPE=work,voice;VALUE=uri:tel:+1-111-555-1212
+        TEL;TYPE=home,voice;VALUE=uri:tel:+1-404-555-1212
+        ADR;TYPE=work;LABEL="100 Waters Edge\nBaytown, LA 30314\nUnited States of America"
+        :;;100 Waters Edge;Baytown;LA;30314;United States of America
+        ADR;TYPE=home;LABEL="42 Plantation St.\nBaytown, LA 30314\nUnited States of America"
+        :;;42 Plantation St.;Baytown;LA;30314;United States of America
+        EMAIL:forrestgump@example.com
+        REV:20080424T195243Z
+    END:VCARD
  */
 public class QRcodeTest {
 
-	  // 编码  
-	public static void main(String[] args) { 
+      // 编码  
+    public static void main(String[] args) { 
         try {  
-        	
-        	 String str = """
-	        	 		BEGIN:VCARD
-	        			    VERSION:3.0
-	        			    N:石鸣
-	        			    EMAIL:shimh@qq.com
-	        			    TEL:15618726256
-	        			    TEL;CELL:12345678912
-	        			    ADR:上海
-	        			    ORG:
-	        			    Connsec
-	        			    TITLE:技术总监
-	        			    URL:http://blog.csdn.net/lidew521
-	        			    NOTE:呼呼测试下吧。。。
-	        			 END:VCARD
-        	 		""";
-        	 
-        	 String str1 = """
-        	 			BEGIN:VCARD
-				        	 VERSION:3.0
-				        	 N:Gump;Forrest;;Mr.
-				        	 ORG:Bubba Gump Shrimp Co.
-				        	 TITLE:Shrimp Man
-				        	 TEL;TYPE=WORK,VOICE:(111) 555-12121
-				        	 ADR;TYPE=WORK:;;100 Waters Edge;Baytown;LA;30314;United States of America
-				        	 EMAIL;TYPE=PREF,INTERNET:forrestgump@example.com
-				        	 URL:http://www.johndoe.com
-				        	 GENDER:F
-				        	 REV:2008-04-24T19:52:43Z
-				        END:VCARD
-        	 		""";
-        	 
-        	 System.out.println(str);
+            
+             String str = """
+                         BEGIN:VCARD
+                            VERSION:3.0
+                            N:石鸣
+                            EMAIL:shimh@qq.com
+                            TEL:15618726256
+                            TEL;CELL:12345678912
+                            ADR:上海
+                            ORG:
+                            Connsec
+                            TITLE:技术总监
+                            URL:http://blog.csdn.net/lidew521
+                            NOTE:呼呼测试下吧。。。
+                         END:VCARD
+                     """;
+             
+             String str1 = """
+                         BEGIN:VCARD
+                             VERSION:3.0
+                             N:Gump;Forrest;;Mr.
+                             ORG:Bubba Gump Shrimp Co.
+                             TITLE:Shrimp Man
+                             TEL;TYPE=WORK,VOICE:(111) 555-12121
+                             ADR;TYPE=WORK:;;100 Waters Edge;Baytown;LA;30314;United States of America
+                             EMAIL;TYPE=PREF,INTERNET:forrestgump@example.com
+                             URL:http://www.johndoe.com
+                             GENDER:F
+                             REV:2008-04-24T19:52:43Z
+                        END:VCARD
+                     """;
+             
+             System.out.println(str);
             //String str = "CN:男;COP:公司;ZW:职务";// 二维码内容  
             String path = "D:\\hwy.png";  
             BitMatrix byteMatrix;  

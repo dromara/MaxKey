@@ -28,56 +28,56 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class OAuthDefaultUserInfoAdapter extends AbstractAuthorizeAdapter {
-	static final  Logger _logger = LoggerFactory.getLogger(OAuthDefaultUserInfoAdapter.class);
-	ClientDetails clientDetails;
-	
-	public OAuthDefaultUserInfoAdapter() {}
+    static final  Logger _logger = LoggerFactory.getLogger(OAuthDefaultUserInfoAdapter.class);
+    ClientDetails clientDetails;
+    
+    public OAuthDefaultUserInfoAdapter() {}
 
-	public OAuthDefaultUserInfoAdapter(ClientDetails clientDetails) {
-		this.clientDetails = clientDetails;
-	}
+    public OAuthDefaultUserInfoAdapter(ClientDetails clientDetails) {
+        this.clientDetails = clientDetails;
+    }
 
-	@Override
-	public Object generateInfo() {
-		 String subject = AbstractAuthorizeAdapter.getValueByUserAttr(userInfo, clientDetails.getSubject());
-		 _logger.debug("userId : {} , username : {} , displayName : {} , subject : {}" , 
-				 userInfo.getId(),
-				 userInfo.getUsername(),
-				 userInfo.getDisplayName(),
-				 subject);
-		 
-		HashMap<String, Object> beanMap = new HashMap<String, Object>();
-		beanMap.put("randomId",(new StringGenerator()).uuidGenerate());
-		beanMap.put("userId", userInfo.getId());
-		//for spring security oauth2
-		beanMap.put("user", subject);
-		beanMap.put("username", subject);
-		
-		beanMap.put("displayName", userInfo.getDisplayName());
-		beanMap.put("employeeNumber", userInfo.getEmployeeNumber());
-		beanMap.put("email", userInfo.getEmail());
-		beanMap.put("mobile", userInfo.getMobile());
-		beanMap.put("realname", userInfo.getDisplayName());
-		beanMap.put("birthday", userInfo.getBirthDate());
-		beanMap.put("departmentId", userInfo.getDepartmentId());
-		beanMap.put("department", userInfo.getDepartment());
-		beanMap.put("createdate", userInfo.getCreatedDate());
-		beanMap.put("title", userInfo.getJobTitle());
-		beanMap.put("state", userInfo.getWorkRegion());
-		beanMap.put("gender", userInfo.getGender());
-		beanMap.put("institution", userInfo.getInstId());
-		beanMap.put(WebConstants.ONLINE_TICKET_NAME, principal.getSessionId());
-		
-		String info= JsonUtils.toString(beanMap);
-		
-		return info;
-	}
+    @Override
+    public Object generateInfo() {
+         String subject = AbstractAuthorizeAdapter.getValueByUserAttr(userInfo, clientDetails.getSubject());
+         _logger.debug("userId : {} , username : {} , displayName : {} , subject : {}" , 
+                 userInfo.getId(),
+                 userInfo.getUsername(),
+                 userInfo.getDisplayName(),
+                 subject);
+         
+        HashMap<String, Object> beanMap = new HashMap<String, Object>();
+        beanMap.put("randomId",(new StringGenerator()).uuidGenerate());
+        beanMap.put("userId", userInfo.getId());
+        //for spring security oauth2
+        beanMap.put("user", subject);
+        beanMap.put("username", subject);
+        
+        beanMap.put("displayName", userInfo.getDisplayName());
+        beanMap.put("employeeNumber", userInfo.getEmployeeNumber());
+        beanMap.put("email", userInfo.getEmail());
+        beanMap.put("mobile", userInfo.getMobile());
+        beanMap.put("realname", userInfo.getDisplayName());
+        beanMap.put("birthday", userInfo.getBirthDate());
+        beanMap.put("departmentId", userInfo.getDepartmentId());
+        beanMap.put("department", userInfo.getDepartment());
+        beanMap.put("createdate", userInfo.getCreatedDate());
+        beanMap.put("title", userInfo.getJobTitle());
+        beanMap.put("state", userInfo.getWorkRegion());
+        beanMap.put("gender", userInfo.getGender());
+        beanMap.put("institution", userInfo.getInstId());
+        beanMap.put(WebConstants.ONLINE_TICKET_NAME, principal.getSessionId());
+        
+        String info= JsonUtils.toString(beanMap);
+        
+        return info;
+    }
 
-	public ClientDetails getClientDetails() {
-		return clientDetails;
-	}
+    public ClientDetails getClientDetails() {
+        return clientDetails;
+    }
 
-	public void setClientDetails(ClientDetails clientDetails) {
-		this.clientDetails = clientDetails;
-	}
+    public void setClientDetails(ClientDetails clientDetails) {
+        this.clientDetails = clientDetails;
+    }
 }

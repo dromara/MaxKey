@@ -28,11 +28,11 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class OrganizationsCastServiceImpl  extends JpaServiceImpl<OrganizationsCastMapper,OrganizationsCast> implements OrganizationsCastService{
-	static final  Logger _logger = LoggerFactory.getLogger(OrganizationsCastServiceImpl.class);
+    static final  Logger _logger = LoggerFactory.getLogger(OrganizationsCastServiceImpl.class);
 
 
-	public boolean updateCast(OrganizationsCast organizationsCast) {
-		return getMapper().updateCast(organizationsCast) > 0;
-	}
+    public boolean updateCast(OrganizationsCast organizationsCast) {
+        return getMapper().updateCast(organizationsCast) > 0;
+    }
 
 }

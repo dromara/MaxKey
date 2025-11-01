@@ -21,8 +21,8 @@ import org.dromara.maxkey.util.MacAddress;
 
 public class MacAddressTest {
 
-	public static void main(String[] args) {
-		System.out.println(MacAddress.getAllHostMacAddress());
-	}
+    public static void main(String[] args) {
+        System.out.println(MacAddress.getAllHostMacAddress());
+    }
 
 }

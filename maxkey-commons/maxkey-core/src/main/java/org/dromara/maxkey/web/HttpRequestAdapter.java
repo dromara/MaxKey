@@ -52,8 +52,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class HttpRequestAdapter {
-	private static final Logger _logger = LoggerFactory.getLogger(HttpRequestAdapter.class);
-	 
+    private static final Logger _logger = LoggerFactory.getLogger(HttpRequestAdapter.class);
+     
     private String mediaType = ContentType.APPLICATION_FORM;
     
     HashMap<String,String> headers = new HashMap<String,String>();
@@ -64,31 +64,31 @@ public class HttpRequestAdapter {
         this.mediaType = mediaType;
     }
     
-	public String post(String url,Map<String, Object> parameterMap) {
-		setContentType(ContentType.APPLICATION_FORM);
-		return post(url , parameterMap , headers);
-	}
-	
-	public HttpRequestAdapter addHeaderAuthorizationBearer(String token ) {
-		headers.put("Authorization", AuthorizationHeaderUtils.createBearer(token));
-		return this;
-	}
-	
-	public HttpRequestAdapter addHeaderAuthorizationBasic(String username, String password) {
-		headers.put("Authorization", AuthorizationHeaderUtils.createBasic(username,password));
-		return this;
-	}
-	
-	public HttpRequestAdapter setContentType(String contentType) {
-		headers.put("Content-Type", contentType);
-		return this;
-	}
-	
-	public HttpRequestAdapter addHeader(String name , String value ) {
-		headers.put(name, value);
-		return this;
-	}
-	
+    public String post(String url,Map<String, Object> parameterMap) {
+        setContentType(ContentType.APPLICATION_FORM);
+        return post(url , parameterMap , headers);
+    }
+    
+    public HttpRequestAdapter addHeaderAuthorizationBearer(String token ) {
+        headers.put("Authorization", AuthorizationHeaderUtils.createBearer(token));
+        return this;
+    }
+    
+    public HttpRequestAdapter addHeaderAuthorizationBasic(String username, String password) {
+        headers.put("Authorization", AuthorizationHeaderUtils.createBasic(username,password));
+        return this;
+    }
+    
+    public HttpRequestAdapter setContentType(String contentType) {
+        headers.put("Content-Type", contentType);
+        return this;
+    }
+    
+    public HttpRequestAdapter addHeader(String name , String value ) {
+        headers.put(name, value);
+        return this;
+    }
+    
     public String post(String url,Map<String, Object> parameterMap,HashMap<String,String> headers) {
         // 创建httpClient实例
         CloseableHttpClient httpClient = HttpClients.createDefault();
@@ -105,7 +105,7 @@ public class HttpRequestAdapter {
             if(mediaType.equals(ContentType.APPLICATION_FORM)) {
                 // 为httpPost设置封装好的请求参数
                 try {
-                	httpMethod.setEntity(buildFormEntity(parameterMap));
+                    httpMethod.setEntity(buildFormEntity(parameterMap));
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
@@ -126,7 +126,7 @@ public class HttpRequestAdapter {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-        	close(httpClient,httpResponse);// 关闭资源
+            close(httpClient,httpResponse);// 关闭资源
         }
         return null;
     }
@@ -158,7 +158,7 @@ public class HttpRequestAdapter {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-        	close(httpClient,httpResponse);// 关闭资源
+            close(httpClient,httpResponse);// 关闭资源
         }
         return null;
     }
@@ -189,17 +189,17 @@ public class HttpRequestAdapter {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-        	close(httpClient,httpResponse);// 关闭资源
+            close(httpClient,httpResponse);// 关闭资源
         }
         return null;
     }
     
     
-	public String get(String url) {
-		headers.put("Content-Type", ContentType.APPLICATION_FORM);
-		return get(url ,  headers);
-	}
-	
+    public String get(String url) {
+        headers.put("Content-Type", ContentType.APPLICATION_FORM);
+        return get(url ,  headers);
+    }
+    
     public String get(String url,HashMap<String,String> headers) {
         // 创建httpClient实例
         CloseableHttpClient httpClient = HttpClients.createDefault();
@@ -219,13 +219,13 @@ public class HttpRequestAdapter {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-        	close(httpClient,httpResponse);// 关闭资源
+            close(httpClient,httpResponse);// 关闭资源
         }
         return null;
     }
     
     public String delete(String url) {
-    	 // 创建httpClient实例
+         // 创建httpClient实例
         CloseableHttpClient httpClient = HttpClients.createDefault();
         CloseableHttpResponse httpResponse = null;
         // 创建HttpDelete远程连接实例
@@ -243,13 +243,13 @@ public class HttpRequestAdapter {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-        	close(httpClient,httpResponse);// 关闭资源
+            close(httpClient,httpResponse);// 关闭资源
         }
         return null;
-	}
+    }
     
     String resolveHttpResponse(CloseableHttpResponse httpResponse) throws ParseException, IOException {
-    	 HttpEntity entity = httpResponse.getEntity();
+         HttpEntity entity = httpResponse.getEntity();
          String content = EntityUtils.toString(entity);
          HttpStatus  httpStatus  = HttpStatus.valueOf(httpResponse.getStatusLine().getStatusCode());
          _logger.debug("Http Response HttpStatus {} " , httpStatus);
@@ -262,9 +262,9 @@ public class HttpRequestAdapter {
      * @param headers
      */
     void buildHeader(HttpRequestBase  httpRequest,HashMap<String,String> headers) {
-    	// 设置请求头
+        // 设置请求头
         if (null != headers && headers.size() > 0) {
-        	  Set<Entry<String, String>> entrySet = headers.entrySet();
+              Set<Entry<String, String>> entrySet = headers.entrySet();
               // 循环遍历，获取迭代器
               Iterator<Entry<String, String>> iterator = entrySet.iterator();
               while (iterator.hasNext()) {
@@ -276,8 +276,8 @@ public class HttpRequestAdapter {
     }
     
     UrlEncodedFormEntity buildFormEntity(Map<String, Object> parameterMap) 
-    		throws UnsupportedEncodingException {
-    	 List<NameValuePair> nvps = new ArrayList<NameValuePair>();
+            throws UnsupportedEncodingException {
+         List<NameValuePair> nvps = new ArrayList<NameValuePair>();
          // 通过map集成entrySet方法获取entity
          Set<Entry<String, Object>> entrySet = parameterMap.entrySet();
          // 循环遍历，获取迭代器
@@ -293,7 +293,7 @@ public class HttpRequestAdapter {
     }
     
     void setRequestConfig(HttpRequestBase  httpMethod){
-    	RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(35000)// 设置连接主机服务超时时间
+        RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(35000)// 设置连接主机服务超时时间
                 .setConnectionRequestTimeout(35000)// 设置连接请求超时时间
                 .setSocketTimeout(60000)// 设置读取数据连接超时时间
                 .build();

@@ -59,34 +59,34 @@ import jakarta.servlet.http.HttpServletResponse;
 @Tag(name = "2-4-CAS REST API文档模块")
 @Controller
 public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
-	static final Logger _logger = LoggerFactory.getLogger(CasRestV1Endpoint.class);
-	
+    static final Logger _logger = LoggerFactory.getLogger(CasRestV1Endpoint.class);
+    
     @Autowired
     @Qualifier("authenticationProvider")
     AbstractAuthenticationProvider authenticationProvider ;
     
     @Operation(summary = "CAS REST认证接口", description = "通过用户名密码获取TGT",method="POST")
     @PostMapping(value=CasConstants.ENDPOINT.ENDPOINT_REST_TICKET_V1, 
-    			 consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+                 consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public ResponseEntity<String> casLoginRestTickets(
             HttpServletRequest request,
             HttpServletResponse response,
             @RequestParam(value=CasConstants.PARAMETER.SERVICE,required=false) String casService,
             @RequestParam(value=CasConstants.PARAMETER.REST_USERNAME,required=true) String username,
             @RequestParam(value=CasConstants.PARAMETER.REST_PASSWORD,required=true) String password){
-	    try {
-    	    if (StringUtils.isBlank(password)) {
+        try {
+            if (StringUtils.isBlank(password)) {
                 throw new BadCredentialsException("No credentials are provided or extracted to authenticate the REST request");
             }
-    	    
-    	    LoginCredential loginCredential =new LoginCredential(username,password,"normal");
-    	    
-    	    Authentication  authentication  = authenticationProvider.authenticate(loginCredential);
-    	    if(authentication == null) {
-	    	    _logger.debug("Bad Credentials Exception");
-	            return new ResponseEntity<>("Bad Credentials", HttpStatus.BAD_REQUEST);
-    	    }
-    	    
+            
+            LoginCredential loginCredential =new LoginCredential(username,password,"normal");
+            
+            Authentication  authentication  = authenticationProvider.authenticate(loginCredential);
+            if(authentication == null) {
+                _logger.debug("Bad Credentials Exception");
+                return new ResponseEntity<>("Bad Credentials", HttpStatus.BAD_REQUEST);
+            }
+            
             TicketGrantingTicketImpl ticketGrantingTicket=new TicketGrantingTicketImpl("Random",AuthorizationUtils.getAuthentication(),null);
             
             String ticket=casTicketGrantingTicketServices.createTicket(ticketGrantingTicket);
@@ -97,27 +97,27 @@ public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
             _logger.trace("location {}" , location);
             return new ResponseEntity<>("Location: " + location, headers ,HttpStatus.CREATED);
  
-	    } catch (final AuthenticationException e) {
-	        _logger.error("BadCredentialsException ", e);
+        } catch (final AuthenticationException e) {
+            _logger.error("BadCredentialsException ", e);
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (final Exception e) {
             _logger.error("Exception ", e);
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-	}
-	
+    }
+    
     @Operation(summary = "CAS REST认证接口", description = "通过TGT获取ST",method="POST")
     @PostMapping(value=CasConstants.ENDPOINT.ENDPOINT_REST_TICKET_V1+"/{ticketGrantingTicket}", 
-	            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+                consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public ResponseEntity<String> requestServiceTicket(
-	            HttpServletRequest request,
-	            HttpServletResponse response,
-	            @PathVariable("ticketGrantingTicket") String ticketGrantingTicket,
-	            @RequestParam(value=CasConstants.PARAMETER.SERVICE) String casService,
-	            @RequestParam(value=CasConstants.PARAMETER.RENEW,required=false) String renew,
-	            @RequestParam(value=CasConstants.PARAMETER.REST_USERNAME,required=false) String username,
-	            @RequestParam(value=CasConstants.PARAMETER.REST_PASSWORD,required=false) String password){
-	       try {
+                HttpServletRequest request,
+                HttpServletResponse response,
+                @PathVariable("ticketGrantingTicket") String ticketGrantingTicket,
+                @RequestParam(value=CasConstants.PARAMETER.SERVICE) String casService,
+                @RequestParam(value=CasConstants.PARAMETER.RENEW,required=false) String renew,
+                @RequestParam(value=CasConstants.PARAMETER.REST_USERNAME,required=false) String username,
+                @RequestParam(value=CasConstants.PARAMETER.REST_PASSWORD,required=false) String password){
+           try {
             TicketGrantingTicketImpl ticketGrantingTicketImpl = 
                     (TicketGrantingTicketImpl) casTicketGrantingTicketServices.get(ticketGrantingTicket);
             
@@ -130,15 +130,15 @@ public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
         } catch (Exception e) {
             e.printStackTrace();
         }
-	       return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
-	   }
+           return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
+       }
     @Operation(summary = "CAS REST认证接口", description = "检查TGT状态",method="GET")
     @GetMapping(value=CasConstants.ENDPOINT.ENDPOINT_REST_TICKET_V1 + "/{ticketGrantingTicket}")
     public ResponseEntity<String> verifyTicketGrantingTicketStatus(
-	            @PathVariable("ticketGrantingTicket") String ticketGrantingTicket,
-	            HttpServletRequest request,
-	            HttpServletResponse response){
-	       try {
+                @PathVariable("ticketGrantingTicket") String ticketGrantingTicket,
+                HttpServletRequest request,
+                HttpServletResponse response){
+           try {
             TicketGrantingTicketImpl ticketGrantingTicketImpl = 
                        (TicketGrantingTicketImpl) casTicketGrantingTicketServices.get(ticketGrantingTicket);
                 if(ticketGrantingTicketImpl != null) {
@@ -147,8 +147,8 @@ public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
             } catch (Exception e) {
                 e.printStackTrace();
             }
-	       return new ResponseEntity<>("", HttpStatus.NOT_FOUND);
-	}
+           return new ResponseEntity<>("", HttpStatus.NOT_FOUND);
+    }
     
     @Operation(summary = "CAS REST认证接口", description = "注销TGT状态",method="DELETE")
     @DeleteMapping(value=CasConstants.ENDPOINT.ENDPOINT_REST_TICKET_V1+"/{ticketGrantingTicket}")
@@ -167,5 +167,5 @@ public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
         }
        return new ResponseEntity<>("", HttpStatus.NOT_FOUND);
     }
-	
+    
 }

@@ -43,12 +43,12 @@ public class ProfileController {
     UserInfoService userInfoService;
     
     @Autowired
-	FileUploadService fileUploadService;
+    FileUploadService fileUploadService;
 
     @GetMapping(value = { "/get" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<UserInfo> get(@CurrentUser UserInfo currentUser) {
+    public Message<UserInfo> get(@CurrentUser UserInfo currentUser) {
         UserInfo userInfo = userInfoService.findByUsername(currentUser.getUsername());
-		userInfo.trans();
+        userInfo.trans();
         return new Message<>(userInfo);
     }
 
@@ -59,51 +59,51 @@ public class ProfileController {
      * @param result
      * @return
      */
-	@PutMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<?> update(
-				@RequestBody  UserInfo userInfo,
-				@CurrentUser UserInfo currentUser,
+    @PutMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public Message<?> update(
+                @RequestBody  UserInfo userInfo,
+                @CurrentUser UserInfo currentUser,
                 BindingResult result) {
         logger.debug(userInfo.toString());
         if(!currentUser.getId().equals(userInfo.getId())){
             return null;
         }
-//		if(userInfo.getExtraAttributeValue()!=null){
-//			String []extraAttributeLabel=userInfo.getExtraAttributeName().split(",");
-//			String []extraAttributeValue=userInfo.getExtraAttributeValue().split(",");
-//			Map<String,String> extraAttributeMap=new HashMap<String,String> ();
-//			for(int i=0;i<extraAttributeLabel.length;i++){
-//				extraAttributeMap.put(extraAttributeLabel[i], extraAttributeValue[i]);
-//			}
-//			String extraAttribute=JsonUtils.object2Json(extraAttributeMap);
-//			userInfo.setExtraAttribute(extraAttribute);
-//		}
+//        if(userInfo.getExtraAttributeValue()!=null){
+//            String []extraAttributeLabel=userInfo.getExtraAttributeName().split(",");
+//            String []extraAttributeValue=userInfo.getExtraAttributeValue().split(",");
+//            Map<String,String> extraAttributeMap=new HashMap<String,String> ();
+//            for(int i=0;i<extraAttributeLabel.length;i++){
+//                extraAttributeMap.put(extraAttributeLabel[i], extraAttributeValue[i]);
+//            }
+//            String extraAttribute=JsonUtils.object2Json(extraAttributeMap);
+//            userInfo.setExtraAttribute(extraAttribute);
+//        }
         if(StringUtils.isNotBlank(userInfo.getPictureId())) {
-			userInfo.setPicture(fileUploadService.get(userInfo.getPictureId()).getUploaded());
-			fileUploadService.delete(userInfo.getPictureId());
-		}
+            userInfo.setPicture(fileUploadService.get(userInfo.getPictureId()).getUploaded());
+            fileUploadService.delete(userInfo.getPictureId());
+        }
         
         if (userInfoService.updateProfile(userInfo) > 0) {
-        	return new Message<UserInfo>(Message.SUCCESS);
+            return new Message<UserInfo>(Message.SUCCESS);
         } 
         
         return new Message<UserInfo>(Message.FAIL);
         
     }
-	
-	/**
+    
+    /**
      * AuthnType.
      * 
      * @param userInfo
      * @param result
      * @return
      */
-	@PutMapping("/updateAuthnType")
-	public Message<UserInfo> updateAuthnType(@RequestBody UserInfo userInfo,@CurrentUser UserInfo currentUser) {
-		userInfo.setId(currentUser.getId());
+    @PutMapping("/updateAuthnType")
+    public Message<UserInfo> updateAuthnType(@RequestBody UserInfo userInfo,@CurrentUser UserInfo currentUser) {
+        userInfo.setId(currentUser.getId());
         logger.debug("updateAuthnType {}",userInfo);
         if (userInfoService.updateAuthnType(userInfo)) {
-        	return new Message<>(Message.SUCCESS);
+            return new Message<>(Message.SUCCESS);
         } 
         return new Message<>(Message.FAIL);
     }

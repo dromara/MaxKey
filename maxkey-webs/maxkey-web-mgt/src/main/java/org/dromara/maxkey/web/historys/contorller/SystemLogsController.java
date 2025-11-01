@@ -43,28 +43,28 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value={"/historys"})
 public class SystemLogsController {
-	static final Logger logger = LoggerFactory.getLogger(SystemLogsController.class);
+    static final Logger logger = LoggerFactory.getLogger(SystemLogsController.class);
 
-	@Autowired
-	HistorySystemLogsService historySystemLogsService;
-	
-	/**
-	 * 查询操作日志
-	 * @param logs
-	 * @return
-	 */
-	@GetMapping({"/systemLogs/fetch"})
-	@ResponseBody
-	public Message<?> fetch(@ModelAttribute("historyLog") HistorySystemLogs historyLog,
-			@CurrentUser UserInfo currentUser){
-		logger.debug("historys/historyLog/fetch {} ",historyLog);
-		historyLog.setInstId(currentUser.getInstId());
-		return new Message<JpaPageResults<HistorySystemLogs>>(
-				 	historySystemLogsService.fetchPageResults(historyLog)
-				);
-	}
-	
-	@InitBinder
+    @Autowired
+    HistorySystemLogsService historySystemLogsService;
+    
+    /**
+     * 查询操作日志
+     * @param logs
+     * @return
+     */
+    @GetMapping({"/systemLogs/fetch"})
+    @ResponseBody
+    public Message<?> fetch(@ModelAttribute("historyLog") HistorySystemLogs historyLog,
+            @CurrentUser UserInfo currentUser){
+        logger.debug("historys/historyLog/fetch {} ",historyLog);
+        historyLog.setInstId(currentUser.getInstId());
+        return new Message<JpaPageResults<HistorySystemLogs>>(
+                     historySystemLogsService.fetchPageResults(historyLog)
+                );
+    }
+    
+    @InitBinder
     public void initBinder(WebDataBinder binder) {
         SimpleDateFormat dateFormat = new SimpleDateFormat(DateUtils.FORMAT_DATE_HH_MM_SS);
         dateFormat.setLenient(false);  

@@ -40,54 +40,54 @@ public class LdapAuthenticationRealmService {
     
     
     public LdapAuthenticationRealmService(CnfLdapContextService ldapContextService) {
-		this.ldapContextService = ldapContextService;
-	}
+        this.ldapContextService = ldapContextService;
+    }
 
-	public LdapAuthenticationRealm getByInstId(String instId) {
-		LdapAuthenticationRealm authenticationRealm = ldapRealmStore.getIfPresent(instId);
-		if(authenticationRealm == null) {
-			List<CnfLdapContext> ldapContexts = 
-					ldapContextService.find("where instid = ? and status = 1 ", new Object[]{instId}, new int[]{Types.VARCHAR});
-			authenticationRealm = new LdapAuthenticationRealm(false);
-			if(ldapContexts != null && ldapContexts.size()>0) {
-				authenticationRealm.setLdapSupport(true);
-				List<IAuthenticationServer> ldapAuthenticationServers = new ArrayList<IAuthenticationServer>();
-				for(CnfLdapContext ldapContext : ldapContexts) { 
-					if(ldapContext.getProduct().equalsIgnoreCase("ActiveDirectory")) {
-						ActiveDirectoryServer ldapServer = new ActiveDirectoryServer();
-			            ActiveDirectoryUtils  ldapUtils  = new ActiveDirectoryUtils(
-			            								ldapContext.getProviderUrl(),
-			            								ldapContext.getPrincipal(),
-			            								PasswordReciprocal.getInstance().decoder(
-			            										ldapContext.getCredentials()),
-			            								ldapContext.getMsadDomain());
-			            ldapServer.setActiveDirectoryUtils(ldapUtils);
-			            if(ldapContext.getAccountMapping().equalsIgnoreCase("YES")) {
-			            	ldapServer.setMapping(true);
-			            }
-			            ldapAuthenticationServers.add(ldapServer);
-						
-					}else {
-						StandardLdapServer standardLdapServer=new StandardLdapServer();
-						LdapUtils ldapUtils = new LdapUtils(
-													ldapContext.getProviderUrl(),
-													ldapContext.getPrincipal(),
-													PasswordReciprocal.getInstance().decoder(
-		            										ldapContext.getCredentials()),
-													ldapContext.getBasedn());
-						standardLdapServer.setLdapUtils(ldapUtils);
-						standardLdapServer.setFilterAttribute(ldapContext.getFilters());
-						if(ldapContext.getAccountMapping().equalsIgnoreCase("YES")) {
-							standardLdapServer.setMapping(true);
-			            }
-						ldapAuthenticationServers.add(standardLdapServer);
-					}
-				}
-				authenticationRealm.setLdapServers(ldapAuthenticationServers);
-			}
-			ldapRealmStore.put(instId, authenticationRealm);
-		}
-    	return authenticationRealm;
-    	
+    public LdapAuthenticationRealm getByInstId(String instId) {
+        LdapAuthenticationRealm authenticationRealm = ldapRealmStore.getIfPresent(instId);
+        if(authenticationRealm == null) {
+            List<CnfLdapContext> ldapContexts = 
+                    ldapContextService.find("where instid = ? and status = 1 ", new Object[]{instId}, new int[]{Types.VARCHAR});
+            authenticationRealm = new LdapAuthenticationRealm(false);
+            if(ldapContexts != null && ldapContexts.size()>0) {
+                authenticationRealm.setLdapSupport(true);
+                List<IAuthenticationServer> ldapAuthenticationServers = new ArrayList<IAuthenticationServer>();
+                for(CnfLdapContext ldapContext : ldapContexts) { 
+                    if(ldapContext.getProduct().equalsIgnoreCase("ActiveDirectory")) {
+                        ActiveDirectoryServer ldapServer = new ActiveDirectoryServer();
+                        ActiveDirectoryUtils  ldapUtils  = new ActiveDirectoryUtils(
+                                                        ldapContext.getProviderUrl(),
+                                                        ldapContext.getPrincipal(),
+                                                        PasswordReciprocal.getInstance().decoder(
+                                                                ldapContext.getCredentials()),
+                                                        ldapContext.getMsadDomain());
+                        ldapServer.setActiveDirectoryUtils(ldapUtils);
+                        if(ldapContext.getAccountMapping().equalsIgnoreCase("YES")) {
+                            ldapServer.setMapping(true);
+                        }
+                        ldapAuthenticationServers.add(ldapServer);
+                        
+                    }else {
+                        StandardLdapServer standardLdapServer=new StandardLdapServer();
+                        LdapUtils ldapUtils = new LdapUtils(
+                                                    ldapContext.getProviderUrl(),
+                                                    ldapContext.getPrincipal(),
+                                                    PasswordReciprocal.getInstance().decoder(
+                                                            ldapContext.getCredentials()),
+                                                    ldapContext.getBasedn());
+                        standardLdapServer.setLdapUtils(ldapUtils);
+                        standardLdapServer.setFilterAttribute(ldapContext.getFilters());
+                        if(ldapContext.getAccountMapping().equalsIgnoreCase("YES")) {
+                            standardLdapServer.setMapping(true);
+                        }
+                        ldapAuthenticationServers.add(standardLdapServer);
+                    }
+                }
+                authenticationRealm.setLdapServers(ldapAuthenticationServers);
+            }
+            ldapRealmStore.put(instId, authenticationRealm);
+        }
+        return authenticationRealm;
+        
     }
 }

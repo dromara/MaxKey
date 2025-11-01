@@ -23,18 +23,18 @@ import org.dromara.maxkey.entity.apps.UserApps;
 import org.dromara.mybatis.jpa.service.IJpaService;
 
 public interface AppsService extends IJpaService<Apps>{
-	
-	public boolean insertApp(Apps app) ;
-	
-	public boolean updateApp(Apps app) ;
-	
-	public boolean updateExtendAttr(Apps app) ;
-	
+    
+    public boolean insertApp(Apps app) ;
+    
+    public boolean updateApp(Apps app) ;
+    
+    public boolean updateExtendAttr(Apps app) ;
+    
     public List<UserApps> queryMyApps(UserApps userApplications);
 
     //cache for running
     public void put(String appId, Apps appDetails) ;
-	
+    
     public Apps get(String appId, boolean cached);
     
 }

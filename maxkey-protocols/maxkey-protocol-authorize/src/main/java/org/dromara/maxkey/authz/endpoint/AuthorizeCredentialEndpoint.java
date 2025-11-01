@@ -38,50 +38,50 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = { "/authz/credential" })
 public class AuthorizeCredentialEndpoint extends AuthorizeBaseEndpoint{
 
-	@GetMapping("/get/{appId}")
-	public Message<Accounts>  get(
-			@PathVariable("appId") String appId,
-			@CurrentUser UserInfo currentUser){
-		Apps app = getApp(appId);
-		Accounts account = getAccounts(app,currentUser);
-		if(account == null) {
-			account =new Accounts ();
-			account.setId(account.generateId());
-			
-			account.setUserId(currentUser.getId());
-			account.setUsername(currentUser.getUsername());
-			account.setDisplayName(currentUser.getDisplayName());
-			
-			account.setAppId(appId);
-			account.setAppName(app.getAppName());
-			account.setInstId(currentUser.getInstId());
-			account.setCreateType("manual");
-			account.setStatus(ConstsStatus.ACTIVE);
-		}
-		return new Message<>(account);
-	}
-	
-	@PutMapping("/update")
-	public Message<Accounts>  update(
-			@RequestBody  Accounts account,
-			@CurrentUser UserInfo currentUser){
-		if(StringUtils.isNotEmpty(account.getRelatedUsername())
-				&&StringUtils.isNotEmpty(account.getRelatedPassword())){
-			account.setInstId(currentUser.getInstId());
-			account.setRelatedPassword(
-					PasswordReciprocal.getInstance().encode(account.getRelatedPassword()));
-			if(accountsService.get(account.getId()) == null) {
-				if(accountsService.insert(account)){
-					return new Message<>();
-				}
-			}else {
-				if(accountsService.update(account)){
-					return new Message<>();
-				}
-			}
-		}
-		
-		return new Message<>(Message.FAIL);
-	}
-			
+    @GetMapping("/get/{appId}")
+    public Message<Accounts>  get(
+            @PathVariable("appId") String appId,
+            @CurrentUser UserInfo currentUser){
+        Apps app = getApp(appId);
+        Accounts account = getAccounts(app,currentUser);
+        if(account == null) {
+            account =new Accounts ();
+            account.setId(account.generateId());
+            
+            account.setUserId(currentUser.getId());
+            account.setUsername(currentUser.getUsername());
+            account.setDisplayName(currentUser.getDisplayName());
+            
+            account.setAppId(appId);
+            account.setAppName(app.getAppName());
+            account.setInstId(currentUser.getInstId());
+            account.setCreateType("manual");
+            account.setStatus(ConstsStatus.ACTIVE);
+        }
+        return new Message<>(account);
+    }
+    
+    @PutMapping("/update")
+    public Message<Accounts>  update(
+            @RequestBody  Accounts account,
+            @CurrentUser UserInfo currentUser){
+        if(StringUtils.isNotEmpty(account.getRelatedUsername())
+                &&StringUtils.isNotEmpty(account.getRelatedPassword())){
+            account.setInstId(currentUser.getInstId());
+            account.setRelatedPassword(
+                    PasswordReciprocal.getInstance().encode(account.getRelatedPassword()));
+            if(accountsService.get(account.getId()) == null) {
+                if(accountsService.insert(account)){
+                    return new Message<>();
+                }
+            }else {
+                if(accountsService.update(account)){
+                    return new Message<>();
+                }
+            }
+        }
+        
+        return new Message<>(Message.FAIL);
+    }
+            
 }

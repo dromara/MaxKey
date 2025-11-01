@@ -66,7 +66,7 @@ public class AppListController {
      * @return
      */
     @GetMapping(value = { "/appList" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<List<UserApps>> appList(
+    public Message<List<UserApps>> appList(
             @RequestParam(value = "gridList", required = false) String gridList,
             @CurrentUser UserInfo currentUser) {
         userInfoService.updateGridList(gridList,currentUser);
@@ -75,39 +75,39 @@ public class AppListController {
         userApps.setInstId(currentUser.getInstId());
         List<UserApps> appList = appsService.queryMyApps(userApps);
         for (UserApps app : appList) {
-        	app.transIconBase64();
+            app.transIconBase64();
         }
         return new Message<>(appList);
     }
  
     
     @GetMapping(value = { "/account/get" })
-	public Message<Accounts> getAccount(
-    		@RequestParam("credential") String credential,
-    		@RequestParam("appId") String appId,
-    		@CurrentUser UserInfo currentUser) {
+    public Message<Accounts> getAccount(
+            @RequestParam("credential") String credential,
+            @RequestParam("appId") String appId,
+            @CurrentUser UserInfo currentUser) {
         Accounts account = null ;
         
         if (credential.equalsIgnoreCase(Apps.CREDENTIALS.USER_DEFINED)) {
-        	account = accountsService.get(Query.builder().eq("appId", appId).eq("userid", currentUser.getId()));
-        	account.setRelatedPassword(
-        			PasswordReciprocal.getInstance().decoder(
-        					account.getRelatedPassword()));
+            account = accountsService.get(Query.builder().eq("appId", appId).eq("userid", currentUser.getId()));
+            account.setRelatedPassword(
+                    PasswordReciprocal.getInstance().decoder(
+                            account.getRelatedPassword()));
         }else {
-        	account = new Accounts();
-        	account.setAppId(appId);
-        	account.setUserId(currentUser.getId());
-        	account.setUsername(currentUser.getUsername());
-        	account.setDisplayName(currentUser.getDisplayName());
+            account = new Accounts();
+            account.setAppId(appId);
+            account.setUserId(currentUser.getId());
+            account.setUsername(currentUser.getUsername());
+            account.setDisplayName(currentUser.getDisplayName());
         }
         return new Message<>(account);
 
     }
 
     @PutMapping(value = { "/account/update" })
-	public Message<Accounts> updateAccount(
-    		@RequestParam("credential") String credential,
-    		@ModelAttribute Accounts account,
+    public Message<Accounts> updateAccount(
+            @RequestParam("credential") String credential,
+            @ModelAttribute Accounts account,
             @CurrentUser UserInfo currentUser) {
         Accounts appUsers = new Accounts();
         if (credential.equalsIgnoreCase(Apps.CREDENTIALS.USER_DEFINED)) {
@@ -120,14 +120,14 @@ public class AppListController {
                 appUsers.setDisplayName(currentUser.getDisplayName());
 
                 appUsers.setRelatedPassword(
-                		PasswordReciprocal.getInstance().encode(account.getRelatedPassword()));
+                        PasswordReciprocal.getInstance().encode(account.getRelatedPassword()));
                 appUsers.setInstId(currentUser.getInstId());
                 appUsers.setStatus(ConstsStatus.ACTIVE);
                 accountsService.insert(appUsers);
             } else {
                 appUsers.setRelatedUsername(account.getRelatedUsername());
                 appUsers.setRelatedPassword(
-                		PasswordReciprocal.getInstance().encode(account.getRelatedPassword()));
+                        PasswordReciprocal.getInstance().encode(account.getRelatedPassword()));
                 accountsService.update(appUsers);
             }
         }

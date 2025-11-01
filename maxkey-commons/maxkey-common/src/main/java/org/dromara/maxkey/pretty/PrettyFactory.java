@@ -21,7 +21,7 @@ import org.dromara.maxkey.pretty.impl.JsonPretty;
 import org.dromara.maxkey.pretty.impl.XmlPretty;
 
 public class PrettyFactory {
-	
+    
     public static Pretty getJsonPretty() {
         return JsonPretty.getInstance();
     }

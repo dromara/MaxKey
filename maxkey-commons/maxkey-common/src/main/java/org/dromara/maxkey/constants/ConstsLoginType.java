@@ -19,43 +19,43 @@ package org.dromara.maxkey.constants;
 
 public class ConstsLoginType {
 
-    public static final String LOCAL 			= "Local Login";
+    public static final String LOCAL             = "Local Login";
     
-    public static final String BASIC 			= "Basic";
+    public static final String BASIC             = "Basic";
     
-    public static final String SOCIALSIGNON 	= "Social Sign On";
+    public static final String SOCIALSIGNON     = "Social Sign On";
     
-    public static final String REMEBER_ME 		= "RemeberMe";
+    public static final String REMEBER_ME         = "RemeberMe";
     
-    public static final String DESKTOP 			= "Desktop";
+    public static final String DESKTOP             = "Desktop";
     
-    public static final String KERBEROS 		= "Kerberos";
+    public static final String KERBEROS         = "Kerberos";
     
-    public static final String SAMLTRUST 		= "SAML v2.0 Trust";
+    public static final String SAMLTRUST         = "SAML v2.0 Trust";
     
-    public static final String MSADTRUST 		= "MS AD Trust";
+    public static final String MSADTRUST         = "MS AD Trust";
     
-    public static final String CAS 				= "CAS";
+    public static final String CAS                 = "CAS";
     
-    public static final String WSFEDERATION 	= "WsFederation";
+    public static final String WSFEDERATION     = "WsFederation";
 
-    public static final String JWT 				= "Jwt";
+    public static final String JWT                 = "Jwt";
 
-    public static final String HTTPHEADER 		= "HttpHeader";
+    public static final String HTTPHEADER         = "HttpHeader";
 
     
     public static final class TwoFactor{
-    	/**
-    	 * 1=TOTP(动态验证码)  
-    	 */
-    	public static final String TWO_FACTOR_TOTP 		= "TwoFactorTotp";
-    	/**
-    	 * 2=邮箱验证码
-    	 */
-    	public static final String TWO_FACTOR_EMAIL 	= "TwoFactorEmail";
-    	/**
-    	 * 3=手机短信
-    	 */
-    	public static final String TWO_FACTOR_MOBILE 	= "TwoFactorMobile";
+        /**
+         * 1=TOTP(动态验证码)  
+         */
+        public static final String TWO_FACTOR_TOTP         = "TwoFactorTotp";
+        /**
+         * 2=邮箱验证码
+         */
+        public static final String TWO_FACTOR_EMAIL     = "TwoFactorEmail";
+        /**
+         * 3=手机短信
+         */
+        public static final String TWO_FACTOR_MOBILE     = "TwoFactorMobile";
     }
 }

@@ -42,20 +42,20 @@ public class MailOtpAuthn extends AbstractOtpAuthn {
     }
     
     public MailOtpAuthn(EmailConfig emailConfig) {
-    	otpType = OtpTypes.EMAIL;
-		this.emailConfig = emailConfig;
-	}
+        otpType = OtpTypes.EMAIL;
+        this.emailConfig = emailConfig;
+    }
 
-	public MailOtpAuthn(EmailConfig emailConfig, String subject, String messageTemplate) {
-		otpType = OtpTypes.EMAIL;
-		this.emailConfig = emailConfig;
-		this.subject = subject;
-		this.messageTemplate = messageTemplate;
-	}
+    public MailOtpAuthn(EmailConfig emailConfig, String subject, String messageTemplate) {
+        otpType = OtpTypes.EMAIL;
+        this.emailConfig = emailConfig;
+        this.subject = subject;
+        this.messageTemplate = messageTemplate;
+    }
 
 
 
-	@Override
+    @Override
     public boolean produce(UserInfo userInfo) {
         try {
             String token = this.genToken(userInfo);
@@ -78,7 +78,7 @@ public class MailOtpAuthn extends AbstractOtpAuthn {
             mailMessage.setTo(userInfo.getEmail());
             mailMessage.setSubject(subject);
             mailMessage.setText(
-            		MessageFormat.format(
+                    MessageFormat.format(
                     messageTemplate,userInfo.getUsername(),token,(interval / 60)));
             
             javaMailSender.send(mailMessage);
@@ -124,11 +124,11 @@ public class MailOtpAuthn extends AbstractOtpAuthn {
         this.messageTemplate = messageTemplate;
     }
 
-	@Override
-	public boolean validate(String sharedSecret, String token) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    @Override
+    public boolean validate(String sharedSecret, String token) {
+        // TODO Auto-generated method stub
+        return false;
+    }
     
 
 }

@@ -19,13 +19,13 @@ package org.dromara.maxkey.exception;
 
 public class OperaterSqlException extends Exception {
 
-	private static final long serialVersionUID = -5596610890188994830L;
-	
-	public OperaterSqlException() {
-		super();
-	}
+    private static final long serialVersionUID = -5596610890188994830L;
+    
+    public OperaterSqlException() {
+        super();
+    }
 
-	public OperaterSqlException(String message) {
-		super(message);
-	}
+    public OperaterSqlException(String message) {
+        super(message);
+    }
 }

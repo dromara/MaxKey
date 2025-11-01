@@ -18,9 +18,9 @@ import org.dromara.maxkey.authz.oauth2.jwt.crypto.sign.SignatureVerifier;
  * @author Luke Taylor
  */
 public interface Jwt extends BinaryFormat {
-	String getClaims();
+    String getClaims();
 
-	String getEncoded();
+    String getEncoded();
 
-	void verifySignature(SignatureVerifier verifier);
+    void verifySignature(SignatureVerifier verifier);
 }

@@ -31,16 +31,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ProductEnvironment {
-	private static final Logger logger = LoggerFactory.getLogger(ProductEnvironment.class);
+    private static final Logger logger = LoggerFactory.getLogger(ProductEnvironment.class);
 
-	ProductEnvironment(){}
-	
+    ProductEnvironment(){}
+    
     /**
      * List Environment Variables.
      */
     public static void listEnvVars() {
-    	logger.info(WebConstants.DELIMITER);
-    	logger.info("List Environment Variables ");
+        logger.info(WebConstants.DELIMITER);
+        logger.info("List Environment Variables ");
         Map<String, String> map = System.getenv();
         SortedSet<String> keyValueSet = new TreeSet<>();
         for (Iterator<String> itr = map.keySet().iterator(); itr.hasNext();) {
@@ -56,7 +56,7 @@ public class ProductEnvironment {
 
         Processor processor = ArchUtils.getProcessor();
         if (Objects.isNull(processor)){
-        	processor = new Processor(Processor.Arch.UNKNOWN, Processor.Type.UNKNOWN);
+            processor = new Processor(Processor.Arch.UNKNOWN, Processor.Type.UNKNOWN);
         }
         logger.info("OS      : {}({} {}), version {}",
                     SystemUtils.OS_NAME,

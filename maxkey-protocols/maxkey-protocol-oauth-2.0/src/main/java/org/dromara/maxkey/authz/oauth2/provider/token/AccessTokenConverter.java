@@ -42,48 +42,48 @@ import org.dromara.maxkey.authz.oauth2.provider.OAuth2Authentication;
  */
 public interface AccessTokenConverter {
 
-	final String AUD = "aud";
+    final String AUD = "aud";
 
-	final String CLIENT_ID = "client_id";
+    final String CLIENT_ID = "client_id";
 
-	final String EXP = "exp";
+    final String EXP = "exp";
 
-	final String JTI = "jti";
-	
-	final String GRANT_TYPE = "grant_type";
+    final String JTI = "jti";
+    
+    final String GRANT_TYPE = "grant_type";
 
-	final String ATI = "ati";
+    final String ATI = "ati";
 
-	final String SCOPE = OAuth2AccessToken.SCOPE;
+    final String SCOPE = OAuth2AccessToken.SCOPE;
 
-	final String AUTHORITIES = "authorities";
+    final String AUTHORITIES = "authorities";
 
-	/**
-	 * @param token an access token
-	 * @param authentication the current OAuth authentication
-	 * 
-	 * @return a map representation of the token suitable for a JSON response
-	 * 
-	 */
-	Map<String, ?> convertAccessToken(OAuth2AccessToken token, OAuth2Authentication authentication);
+    /**
+     * @param token an access token
+     * @param authentication the current OAuth authentication
+     * 
+     * @return a map representation of the token suitable for a JSON response
+     * 
+     */
+    Map<String, ?> convertAccessToken(OAuth2AccessToken token, OAuth2Authentication authentication);
 
-	/**
-	 * Recover an access token from the converted value. Half the inverse of
-	 * {@link #convertAccessToken(OAuth2AccessToken, OAuth2Authentication)}.
-	 * 
-	 * @param value the token value
-	 * @param map information decoded from an access token
-	 * @return an access token
-	 */
-	OAuth2AccessToken extractAccessToken(String value, Map<String, ?> map);
+    /**
+     * Recover an access token from the converted value. Half the inverse of
+     * {@link #convertAccessToken(OAuth2AccessToken, OAuth2Authentication)}.
+     * 
+     * @param value the token value
+     * @param map information decoded from an access token
+     * @return an access token
+     */
+    OAuth2AccessToken extractAccessToken(String value, Map<String, ?> map);
 
-	/**
-	 * Recover an {@link OAuth2Authentication} from the converted access token. Half the inverse of
-	 * {@link #convertAccessToken(OAuth2AccessToken, OAuth2Authentication)}.
-	 * 
-	 * @param map information decoded from an access token
-	 * @return an authentication representing the client and user (if there is one)
-	 */
-	OAuth2Authentication extractAuthentication(Map<String, ?> map);
+    /**
+     * Recover an {@link OAuth2Authentication} from the converted access token. Half the inverse of
+     * {@link #convertAccessToken(OAuth2AccessToken, OAuth2Authentication)}.
+     * 
+     * @param map information decoded from an access token
+     * @return an authentication representing the client and user (if there is one)
+     */
+    OAuth2Authentication extractAuthentication(Map<String, ?> map);
 
 }

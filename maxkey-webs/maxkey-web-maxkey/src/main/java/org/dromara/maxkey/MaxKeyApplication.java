@@ -41,7 +41,7 @@ public class MaxKeyApplication extends SpringBootServletInitializer {
      * @param args start parameter 
      */
     public static void main(String[] args) {
-    	_logger.info("Start MaxKey Application ...");
+        _logger.info("Start MaxKey Application ...");
         ProductEnvironment.listEnvVars();
         
         ConfigurableApplicationContext applicationContext = SpringApplication.run(MaxKeyApplication.class, args);

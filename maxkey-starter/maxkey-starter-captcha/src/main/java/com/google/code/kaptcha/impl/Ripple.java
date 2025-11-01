@@ -31,37 +31,37 @@ import com.jhlabs.image.TransformFilter;
  */
 public class Ripple extends Configurable implements GimpyEngine
 {
-	/**
-	 * Applies distortion by adding water ripple effect.
-	 *
-	 * @param baseImage the base image
-	 * @return the distorted image
-	 */
-	@Override
-	public BufferedImage getDistortedImage(BufferedImage baseImage)
-	{
-		NoiseProducer noiseProducer = getConfig().getNoiseImpl();
-		BufferedImage distortedImage = new BufferedImage(baseImage.getWidth(),
-				baseImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
+    /**
+     * Applies distortion by adding water ripple effect.
+     *
+     * @param baseImage the base image
+     * @return the distorted image
+     */
+    @Override
+    public BufferedImage getDistortedImage(BufferedImage baseImage)
+    {
+        NoiseProducer noiseProducer = getConfig().getNoiseImpl();
+        BufferedImage distortedImage = new BufferedImage(baseImage.getWidth(),
+                baseImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
 
-		Graphics2D graphics = (Graphics2D) distortedImage.getGraphics();
+        Graphics2D graphics = (Graphics2D) distortedImage.getGraphics();
 
-		RippleFilter rippleFilter = new RippleFilter();
-		rippleFilter.setWaveType(RippleFilter.SINE);
-		rippleFilter.setXAmplitude(2.6f);
-		rippleFilter.setYAmplitude(1.7f);
-		rippleFilter.setXWavelength(15);
-		rippleFilter.setYWavelength(5);
-		rippleFilter.setEdgeAction(TransformFilter.NEAREST_NEIGHBOUR);
+        RippleFilter rippleFilter = new RippleFilter();
+        rippleFilter.setWaveType(RippleFilter.SINE);
+        rippleFilter.setXAmplitude(2.6f);
+        rippleFilter.setYAmplitude(1.7f);
+        rippleFilter.setXWavelength(15);
+        rippleFilter.setYWavelength(5);
+        rippleFilter.setEdgeAction(TransformFilter.NEAREST_NEIGHBOUR);
 
-		BufferedImage effectImage = rippleFilter.filter(baseImage, null);
-		
-		graphics.drawImage(effectImage, 0, 0, null, null);
+        BufferedImage effectImage = rippleFilter.filter(baseImage, null);
+        
+        graphics.drawImage(effectImage, 0, 0, null, null);
 
-		graphics.dispose();
+        graphics.dispose();
 
-		noiseProducer.makeNoise(distortedImage, .1f, .1f, .25f, .25f);
-		noiseProducer.makeNoise(distortedImage, .1f, .25f, .5f, .9f);
-		return distortedImage;
-	}
+        noiseProducer.makeNoise(distortedImage, .1f, .1f, .25f, .25f);
+        noiseProducer.makeNoise(distortedImage, .1f, .25f, .5f, .9f);
+        return distortedImage;
+    }
 }

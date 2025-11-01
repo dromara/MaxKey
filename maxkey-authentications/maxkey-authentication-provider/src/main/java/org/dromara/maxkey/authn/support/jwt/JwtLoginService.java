@@ -87,11 +87,11 @@ public class JwtLoginService {
             signedJWT = SignedJWT.parse(jwt);
             
             if (signedJWT.verify(rsaSSAVerifier)) {
-            	 jwtClaimsSet = signedJWT.getJWTClaimsSet();
-            	 boolean isIssuerMatches = jwtClaimsSet.getIssuer().equals(getIssuer());
-            	 boolean isExpiration = (new DateTime()).isBefore(
-            	             jwtClaimsSet.getExpirationTime().getTime());
-            	 
+                 jwtClaimsSet = signedJWT.getJWTClaimsSet();
+                 boolean isIssuerMatches = jwtClaimsSet.getIssuer().equals(getIssuer());
+                 boolean isExpiration = (new DateTime()).isBefore(
+                             jwtClaimsSet.getExpirationTime().getTime());
+                 
                  _logger.debug("Signed JWT {}" , signedJWT.getPayload());
                  _logger.debug("Subject is {}" , jwtClaimsSet.getSubject());
                  _logger.debug("ExpirationTime  Validation {}" ,isExpiration);
@@ -118,9 +118,9 @@ public class JwtLoginService {
         this.jwtSignerValidationService = jwtSignerValidationService;
     }
 
-	public DefaultJwtSigningAndValidationService getJwtSignerValidationService() {
-		return jwtSignerValidationService;
-	}
+    public DefaultJwtSigningAndValidationService getJwtSignerValidationService() {
+        return jwtSignerValidationService;
+    }
 
     public String getIssuer() {
         return issuer;

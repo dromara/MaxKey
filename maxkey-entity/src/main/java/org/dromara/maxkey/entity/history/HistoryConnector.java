@@ -32,209 +32,209 @@ import jakarta.persistence.Table;
 @Table(name = "MXK_HISTORY_CONNECTOR")
 public class HistoryConnector extends JpaEntity implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 3465459057253994386L;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 3465459057253994386L;
 
-	@Id
-	@Column
-	@GeneratedValue
-	String id;
+    @Id
+    @Column
+    @GeneratedValue
+    String id;
 
-	@Column
-	String conName;
+    @Column
+    String conName;
 
-	@Column
-	String topic;
+    @Column
+    String topic;
 
-	@Column
-	String actionType;
+    @Column
+    String actionType;
 
-	@Column
-	String sourceId;
+    @Column
+    String sourceId;
 
-	@Column
-	String sourceName;
+    @Column
+    String sourceName;
 
-	@Column
-	String objectId;
+    @Column
+    String objectId;
 
-	@Column
-	String objectName;
+    @Column
+    String objectName;
 
-	@Column
-	String description;
+    @Column
+    String description;
 
-	Date syncTime;
+    Date syncTime;
 
-	@Column
-	String result;
+    @Column
+    String result;
 
-	String startDate;
+    String startDate;
 
-	String endDate;
+    String endDate;
 
-	@Column
-	private String instId;
+    @Column
+    private String instId;
 
-	private String instName;
+    private String instName;
 
-	public String getId() {
-		return id;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public String getConName() {
-		return conName;
-	}
+    public String getConName() {
+        return conName;
+    }
 
-	public void setConName(String conName) {
-		this.conName = conName;
-	}
+    public void setConName(String conName) {
+        this.conName = conName;
+    }
 
-	public String getSourceId() {
-		return sourceId;
-	}
+    public String getSourceId() {
+        return sourceId;
+    }
 
-	public void setSourceId(String sourceId) {
-		this.sourceId = sourceId;
-	}
+    public void setSourceId(String sourceId) {
+        this.sourceId = sourceId;
+    }
 
-	public String getSourceName() {
-		return sourceName;
-	}
+    public String getSourceName() {
+        return sourceName;
+    }
 
-	public void setSourceName(String sourceName) {
-		this.sourceName = sourceName;
-	}
+    public void setSourceName(String sourceName) {
+        this.sourceName = sourceName;
+    }
 
-	public String getObjectId() {
-		return objectId;
-	}
+    public String getObjectId() {
+        return objectId;
+    }
 
-	public void setObjectId(String objectId) {
-		this.objectId = objectId;
-	}
+    public void setObjectId(String objectId) {
+        this.objectId = objectId;
+    }
 
-	public String getObjectName() {
-		return objectName;
-	}
+    public String getObjectName() {
+        return objectName;
+    }
 
-	public void setObjectName(String objectName) {
-		this.objectName = objectName;
-	}
+    public void setObjectName(String objectName) {
+        this.objectName = objectName;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public Date getSyncTime() {
-		return syncTime;
-	}
+    public Date getSyncTime() {
+        return syncTime;
+    }
 
-	public void setSyncTime(Date syncTime) {
-		this.syncTime = syncTime;
-	}
+    public void setSyncTime(Date syncTime) {
+        this.syncTime = syncTime;
+    }
 
-	public String getResult() {
-		return result;
-	}
+    public String getResult() {
+        return result;
+    }
 
-	public String getTopic() {
-		return topic;
-	}
+    public String getTopic() {
+        return topic;
+    }
 
-	public void setTopic(String topic) {
-		this.topic = topic;
-	}
+    public void setTopic(String topic) {
+        this.topic = topic;
+    }
 
-	public String getActionType() {
-		return actionType;
-	}
+    public String getActionType() {
+        return actionType;
+    }
 
-	public void setActionType(String actionType) {
-		this.actionType = actionType;
-	}
+    public void setActionType(String actionType) {
+        this.actionType = actionType;
+    }
 
-	public void setResult(String result) {
-		this.result = result;
-	}
+    public void setResult(String result) {
+        this.result = result;
+    }
 
-	public String getStartDate() {
-		return startDate;
-	}
+    public String getStartDate() {
+        return startDate;
+    }
 
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
-	}
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
 
-	public String getEndDate() {
-		return endDate;
-	}
+    public String getEndDate() {
+        return endDate;
+    }
 
-	public void setEndDate(String endDate) {
-		this.endDate = endDate;
-	}
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
 
-	public String getInstId() {
-		return instId;
-	}
+    public String getInstId() {
+        return instId;
+    }
 
-	public void setInstId(String instId) {
-		this.instId = instId;
-	}
+    public void setInstId(String instId) {
+        this.instId = instId;
+    }
 
-	public String getInstName() {
-		return instName;
-	}
+    public String getInstName() {
+        return instName;
+    }
 
-	public void setInstName(String instName) {
-		this.instName = instName;
-	}
+    public void setInstName(String instName) {
+        this.instName = instName;
+    }
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("HistoryConnector [id=");
-		builder.append(id);
-		builder.append(", conName=");
-		builder.append(conName);
-		builder.append(", topic=");
-		builder.append(topic);
-		builder.append(", actionType=");
-		builder.append(actionType);
-		builder.append(", sourceId=");
-		builder.append(sourceId);
-		builder.append(", sourceName=");
-		builder.append(sourceName);
-		builder.append(", objectId=");
-		builder.append(objectId);
-		builder.append(", objectName=");
-		builder.append(objectName);
-		builder.append(", description=");
-		builder.append(description);
-		builder.append(", syncTime=");
-		builder.append(syncTime);
-		builder.append(", result=");
-		builder.append(result);
-		builder.append(", startDate=");
-		builder.append(startDate);
-		builder.append(", endDate=");
-		builder.append(endDate);
-		builder.append(", instId=");
-		builder.append(instId);
-		builder.append(", instName=");
-		builder.append(instName);
-		builder.append("]");
-		return builder.toString();
-	}
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("HistoryConnector [id=");
+        builder.append(id);
+        builder.append(", conName=");
+        builder.append(conName);
+        builder.append(", topic=");
+        builder.append(topic);
+        builder.append(", actionType=");
+        builder.append(actionType);
+        builder.append(", sourceId=");
+        builder.append(sourceId);
+        builder.append(", sourceName=");
+        builder.append(sourceName);
+        builder.append(", objectId=");
+        builder.append(objectId);
+        builder.append(", objectName=");
+        builder.append(objectName);
+        builder.append(", description=");
+        builder.append(description);
+        builder.append(", syncTime=");
+        builder.append(syncTime);
+        builder.append(", result=");
+        builder.append(result);
+        builder.append(", startDate=");
+        builder.append(startDate);
+        builder.append(", endDate=");
+        builder.append(endDate);
+        builder.append(", instId=");
+        builder.append(instId);
+        builder.append(", instName=");
+        builder.append(instName);
+        builder.append("]");
+        return builder.toString();
+    }
 
 }

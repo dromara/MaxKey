@@ -50,62 +50,62 @@ public class MfaAuthenticationProvider extends AbstractAuthenticationProvider {
     
 
     public MfaAuthenticationProvider() {
-		super();
-	}
+        super();
+    }
 
     public MfaAuthenticationProvider(
-    		AbstractAuthenticationRealm authenticationRealm,
-    		ApplicationConfig applicationConfig,
-    	    SessionManager sessionManager,
-    	    AuthTokenService authTokenService) {
-		this.authenticationRealm = authenticationRealm;
-		this.applicationConfig = applicationConfig;
-		this.sessionManager = sessionManager;
-		this.authTokenService = authTokenService;
-	}
+            AbstractAuthenticationRealm authenticationRealm,
+            ApplicationConfig applicationConfig,
+            SessionManager sessionManager,
+            AuthTokenService authTokenService) {
+        this.authenticationRealm = authenticationRealm;
+        this.applicationConfig = applicationConfig;
+        this.sessionManager = sessionManager;
+        this.authTokenService = authTokenService;
+    }
 
     @Override
-	public Authentication doAuthenticate(LoginCredential loginCredential) {
-		UsernamePasswordAuthenticationToken authenticationToken = null;
-		_logger.debug("Trying to authenticate user '{}' via {}", 
+    public Authentication doAuthenticate(LoginCredential loginCredential) {
+        UsernamePasswordAuthenticationToken authenticationToken = null;
+        _logger.debug("Trying to authenticate user '{}' via {}", 
                 loginCredential.getPrincipal(), getProviderName());
         try {
-        	
-	        _logger.debug("authentication {}" , loginCredential);
-	       
-	        emptyPasswordValid(loginCredential.getPassword());
-	
-	        UserInfo userInfo = null;
-	
-	        emptyUsernameValid(loginCredential.getUsername());
-	
-	        userInfo =  loadUserInfo(loginCredential.getUsername(),loginCredential.getPassword());
-	
-	        isUserExist(loginCredential , userInfo);
-	        
-	        statusValid(loginCredential , userInfo);
-	        //mfa 
-	        mfacaptchaValid(loginCredential.getOtpCaptcha(),userInfo);
-	        
-	        //Validate PasswordPolicy
-	        authenticationRealm.getLoginService().passwordPolicyValid(userInfo);
-	             
-	        //Match password 
-	        authenticationRealm.passwordMatches(userInfo, loginCredential.getPassword());
+            
+            _logger.debug("authentication {}" , loginCredential);
+           
+            emptyPasswordValid(loginCredential.getPassword());
+    
+            UserInfo userInfo = null;
+    
+            emptyUsernameValid(loginCredential.getUsername());
+    
+            userInfo =  loadUserInfo(loginCredential.getUsername(),loginCredential.getPassword());
+    
+            isUserExist(loginCredential , userInfo);
+            
+            statusValid(loginCredential , userInfo);
+            //mfa 
+            mfacaptchaValid(loginCredential.getOtpCaptcha(),userInfo);
+            
+            //Validate PasswordPolicy
+            authenticationRealm.getLoginService().passwordPolicyValid(userInfo);
+                 
+            //Match password 
+            authenticationRealm.passwordMatches(userInfo, loginCredential.getPassword());
 
-	        //apply PasswordSetType and resetBadPasswordCount
-	        authenticationRealm.getLoginService().applyPasswordPolicy(userInfo);
-	        
-	        authenticationToken = createOnlineTicket(loginCredential,userInfo);
-	        // user authenticated
-	        _logger.debug("'{}' authenticated successfully by {}.", 
-	        		loginCredential.getPrincipal(), getProviderName());
-	        
-	        authenticationRealm.insertLoginHistory(userInfo, 
-							        				ConstsLoginType.LOCAL, 
-									                "", 
-									                "xe00000004", 
-									                WebConstants.LOGIN_RESULT.SUCCESS);
+            //apply PasswordSetType and resetBadPasswordCount
+            authenticationRealm.getLoginService().applyPasswordPolicy(userInfo);
+            
+            authenticationToken = createOnlineTicket(loginCredential,userInfo);
+            // user authenticated
+            _logger.debug("'{}' authenticated successfully by {}.", 
+                    loginCredential.getPrincipal(), getProviderName());
+            
+            authenticationRealm.insertLoginHistory(userInfo, 
+                                                    ConstsLoginType.LOCAL, 
+                                                    "", 
+                                                    "xe00000004", 
+                                                    WebConstants.LOGIN_RESULT.SUCCESS);
         } catch (AuthenticationException e) {
             _logger.error("Failed to authenticate user {} via {}: {}",
                     new Object[] {  loginCredential.getPrincipal(),

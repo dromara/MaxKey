@@ -42,46 +42,46 @@ import me.zhyd.oauth.request.AuthRequest;
  *
  */
 public class AbstractSocialSignOnEndpoint {
-	static final  Logger _logger = LoggerFactory.getLogger(AbstractSocialSignOnEndpoint.class);
-	
-	protected AuthRequest authRequest;
-	
-	protected String accountJsonString;
-	
-	@Autowired
-	protected SocialSignOnProviderService socialSignOnProviderService;
-	
-	@Autowired
-	protected SocialsAssociateService socialsAssociateService;
-	
-	@Autowired
+    static final  Logger _logger = LoggerFactory.getLogger(AbstractSocialSignOnEndpoint.class);
+    
+    protected AuthRequest authRequest;
+    
+    protected String accountJsonString;
+    
+    @Autowired
+    protected SocialSignOnProviderService socialSignOnProviderService;
+    
+    @Autowired
+    protected SocialsAssociateService socialsAssociateService;
+    
+    @Autowired
     @Qualifier("authenticationProvider")
-	AbstractAuthenticationProvider authenticationProvider ;
-	
-	@Autowired
-	AuthTokenService authTokenService;
-	
-	@Autowired
-	ApplicationConfig applicationConfig;
- 	
-  	protected AuthRequest buildAuthRequest(String instId,String provider,String baseUrl){
-  		try {
-			SocialsProvider socialSignOnProvider = socialSignOnProviderService.get(instId,provider);
-			_logger.debug("socialSignOn Provider : "+socialSignOnProvider);
-			
-			if(socialSignOnProvider != null){
-				authRequest = socialSignOnProviderService.getAuthRequest(instId,provider,baseUrl);
-				return authRequest;
-			}
-  		}catch(Exception e) {
-  			_logger.debug("buildAuthRequest Exception ",e);
-  		}
-		return null;
-	}
-    	
-	protected SocialsAssociate  authCallback(String instId,String provider,String baseUrl)  throws Exception {
-		SocialsAssociate socialsAssociate = null;
-	    AuthCallback authCallback=new AuthCallback();
+    AbstractAuthenticationProvider authenticationProvider ;
+    
+    @Autowired
+    AuthTokenService authTokenService;
+    
+    @Autowired
+    ApplicationConfig applicationConfig;
+     
+      protected AuthRequest buildAuthRequest(String instId,String provider,String baseUrl){
+          try {
+            SocialsProvider socialSignOnProvider = socialSignOnProviderService.get(instId,provider);
+            _logger.debug("socialSignOn Provider : "+socialSignOnProvider);
+            
+            if(socialSignOnProvider != null){
+                authRequest = socialSignOnProviderService.getAuthRequest(instId,provider,baseUrl);
+                return authRequest;
+            }
+          }catch(Exception e) {
+              _logger.debug("buildAuthRequest Exception ",e);
+          }
+        return null;
+    }
+        
+    protected SocialsAssociate  authCallback(String instId,String provider,String baseUrl)  throws Exception {
+        SocialsAssociate socialsAssociate = null;
+        AuthCallback authCallback=new AuthCallback();
         authCallback.setCode(WebContext.getRequest().getParameter("code"));
         authCallback.setAuth_code(WebContext.getRequest().getParameter("auth_code"));
         authCallback.setOauth_token(WebContext.getRequest().getParameter("oauthToken"));
@@ -96,25 +96,25 @@ public class AbstractSocialSignOnEndpoint {
                 authCallback.getOauth_verifier(),
                 authCallback.getState());
         
-  		if(authRequest == null) {//if authRequest is null renew one
-  		    authRequest=socialSignOnProviderService.getAuthRequest(instId,provider,baseUrl);  		    
-  		    _logger.debug("session authRequest is null , renew one");
-  		}
-  		
-  		//State time out, re set
-  		if(authCallback.getState() != null) {
+          if(authRequest == null) {//if authRequest is null renew one
+              authRequest=socialSignOnProviderService.getAuthRequest(instId,provider,baseUrl);              
+              _logger.debug("session authRequest is null , renew one");
+          }
+          
+          //State time out, re set
+          if(authCallback.getState() != null) {
             authRequest.authorize(WebContext.getRequest().getSession().getId());
         }
-  		
-  		AuthResponse<?> authResponse=authRequest.login(authCallback);
-  		_logger.debug("Response  : {}" , authResponse.getData());
-  		String socialUserId = socialSignOnProviderService.getAccountId(provider, authResponse);
-  		socialsAssociate =new SocialsAssociate();
-		socialsAssociate.setProvider(provider);
-		socialsAssociate.setSocialUserId(socialUserId);
-		socialsAssociate.setInstId(instId);
-		
- 		return socialsAssociate;
- 	}
-  	
+          
+          AuthResponse<?> authResponse=authRequest.login(authCallback);
+          _logger.debug("Response  : {}" , authResponse.getData());
+          String socialUserId = socialSignOnProviderService.getAccountId(provider, authResponse);
+          socialsAssociate =new SocialsAssociate();
+        socialsAssociate.setProvider(provider);
+        socialsAssociate.setSocialUserId(socialUserId);
+        socialsAssociate.setInstId(instId);
+        
+         return socialsAssociate;
+     }
+      
 }

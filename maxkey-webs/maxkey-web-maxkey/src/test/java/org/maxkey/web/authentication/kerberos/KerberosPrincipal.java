@@ -35,40 +35,40 @@ import org.joda.time.chrono.ISOChronology;
  */
 public class KerberosPrincipal {
 
-	/**
-	 * 
-	 */
-	public KerberosPrincipal() {
-	}
+    /**
+     * 
+     */
+    public KerberosPrincipal() {
+    }
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		String kerberosPrincipal="Administrator@CONNSEC.COM";
-		kerberosPrincipal=kerberosPrincipal.substring(0, kerberosPrincipal.indexOf("@"));
-		System.out.println(kerberosPrincipal);
+    /**
+     * @param args
+     */
+    public static void main(String[] args) {
+        String kerberosPrincipal="Administrator@CONNSEC.COM";
+        kerberosPrincipal=kerberosPrincipal.substring(0, kerberosPrincipal.indexOf("@"));
+        System.out.println(kerberosPrincipal);
 
-		if (Pattern.matches("[0-9]+", "TWO_WEEK")){
-			System.out.println("true");
-		}else{
-			System.out.println("false");
-		}
-		
-		DateTime datetime=new DateTime(new Date(), ISOChronology.getInstanceUTC());
-		System.out.println(DateUtils.toUtc(datetime));
-		
-		datetime=datetime.plus(10*1000);
-		
-		System.out.println(DateUtils.toUtc(datetime));
-		String json="{\"fullPrincipal\":\"Administrator@CONNSEC.COM\",\"principal\":\"Administrator\",\"userDomain\":\"CONNSEC\",\"notOnOrAfter\":\"2014-01-18T07:10:16.624Z\"}";
-		KerberosToken kerberosToken=new KerberosToken();
-		kerberosToken=(KerberosToken)JsonUtils.stringToObject(json, kerberosToken);
-		
-		System.out.println(kerberosToken);
-		
-		System.out.println(DateUtils.toUtcDate(kerberosToken.getNotOnOrAfter()));
-		
-	}
+        if (Pattern.matches("[0-9]+", "TWO_WEEK")){
+            System.out.println("true");
+        }else{
+            System.out.println("false");
+        }
+        
+        DateTime datetime=new DateTime(new Date(), ISOChronology.getInstanceUTC());
+        System.out.println(DateUtils.toUtc(datetime));
+        
+        datetime=datetime.plus(10*1000);
+        
+        System.out.println(DateUtils.toUtc(datetime));
+        String json="{\"fullPrincipal\":\"Administrator@CONNSEC.COM\",\"principal\":\"Administrator\",\"userDomain\":\"CONNSEC\",\"notOnOrAfter\":\"2014-01-18T07:10:16.624Z\"}";
+        KerberosToken kerberosToken=new KerberosToken();
+        kerberosToken=(KerberosToken)JsonUtils.stringToObject(json, kerberosToken);
+        
+        System.out.println(kerberosToken);
+        
+        System.out.println(DateUtils.toUtcDate(kerberosToken.getNotOnOrAfter()));
+        
+    }
 
 }

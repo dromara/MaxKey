@@ -30,17 +30,17 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class PermissionRoleServiceImpl  extends JpaServiceImpl<PermissionRoleMapper,PermissionRole> implements PermissionRoleService{
-	static final Logger _logger = LoggerFactory.getLogger(PermissionRoleServiceImpl.class);
+    static final Logger _logger = LoggerFactory.getLogger(PermissionRoleServiceImpl.class);
  
-	
-	public boolean insertPermissionRoles(List<PermissionRole> permissionRolesList) {
-	    return getMapper().insertPermissionRoles(permissionRolesList)>0;
-	}
     
-	public boolean deletePermissionRoles(List<PermissionRole> permissionRolesList) {
-	     return getMapper().deletePermissionRoles(permissionRolesList)>=0;
-	 }
-	
+    public boolean insertPermissionRoles(List<PermissionRole> permissionRolesList) {
+        return getMapper().insertPermissionRoles(permissionRolesList)>0;
+    }
+    
+    public boolean deletePermissionRoles(List<PermissionRole> permissionRolesList) {
+         return getMapper().deletePermissionRoles(permissionRolesList)>=0;
+     }
+    
     public List<PermissionRole> queryPermissionRoles(PermissionRole permissionRole){
         return getMapper().queryPermissionRoles(permissionRole);
     }    

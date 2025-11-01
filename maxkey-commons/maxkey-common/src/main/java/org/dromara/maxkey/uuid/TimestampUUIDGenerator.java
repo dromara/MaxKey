@@ -52,9 +52,9 @@ public class TimestampUUIDGenerator
   *  range or node.length != 6
   */
  public TimestampUUIDGenerator(int clock_sequence,
-				  byte[] node)
+                  byte[] node)
  {
-	super(clock_sequence, node);
+    super(clock_sequence, node);
  }
 
  /**
@@ -65,10 +65,10 @@ public class TimestampUUIDGenerator
  @Override
  public UUID nextUUID()
  {
-	synchronized(this) {
-	    checkSystemTime();
-	    return super.nextUUID();
-	}
+    synchronized(this) {
+        checkSystemTime();
+        return super.nextUUID();
+    }
  }
 
 }

@@ -1,7 +1,7 @@
 package org.dromara.maxkey.persistence.redis;
 
 public class RedisDefaultConfig {
-	 /**
+     /**
      * Redis默认服务器IP
      */
     public static final String DEFAULT_ADDRESS = "127.0.0.1";

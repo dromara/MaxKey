@@ -27,38 +27,38 @@ import org.dromara.maxkey.web.WebContext;
  */
 public class NameException extends Exception {
 
-		public NameException(String field, String key, String value) {
-			super();
-			this.field = field;
-			this.key = key;
-			this.value = value;
-		}
+        public NameException(String field, String key, String value) {
+            super();
+            this.field = field;
+            this.key = key;
+            this.value = value;
+        }
 
-		private static final long serialVersionUID = -5425015701816705662L;
-		private String field;
-		private String key;
-		private String value;
+        private static final long serialVersionUID = -5425015701816705662L;
+        private String field;
+        private String key;
+        private String value;
 
-		/**
-		 * @return 返回异常属性
-		 */
-		public String getField() {
-			return field;
-		}
+        /**
+         * @return 返回异常属性
+         */
+        public String getField() {
+            return field;
+        }
 
-		/**
-		 * @return 返回属性文件的key对应值
-		 */
-		public String getKey() {
-			return WebContext
-					.getI18nValue("ui.enterprises.enterprises.message."
-							+ key);
-		}
+        /**
+         * @return 返回属性文件的key对应值
+         */
+        public String getKey() {
+            return WebContext
+                    .getI18nValue("ui.enterprises.enterprises.message."
+                            + key);
+        }
 
-		/**
-		 * @return 错误数据
-		 */
-		public String getValue() {
-			return value;
-		}
-	}
+        /**
+         * @return 错误数据
+         */
+        public String getValue() {
+            return value;
+        }
+    }

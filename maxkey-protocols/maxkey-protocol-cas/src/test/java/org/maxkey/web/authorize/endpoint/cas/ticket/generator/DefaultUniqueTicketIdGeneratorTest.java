@@ -20,9 +20,9 @@ import org.dromara.maxkey.authz.cas.endpoint.ticket.generator.DefaultUniqueTicke
 
 public class DefaultUniqueTicketIdGeneratorTest {
 
-	public static void main(String[] args) {
-		DefaultUniqueTicketIdGenerator t=new DefaultUniqueTicketIdGenerator();
-		System.out.println(t.getNewTicketId("ST"));
-	}
+    public static void main(String[] args) {
+        DefaultUniqueTicketIdGenerator t=new DefaultUniqueTicketIdGenerator();
+        System.out.println(t.getNewTicketId("ST"));
+    }
 
 }

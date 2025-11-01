@@ -36,38 +36,38 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class DashboardController {
-	private static Logger logger = LoggerFactory.getLogger(DashboardController.class);
-	
-	@Autowired
-	ReportService reportService;
+    private static Logger logger = LoggerFactory.getLogger(DashboardController.class);
+    
+    @Autowired
+    ReportService reportService;
 
-	@GetMapping(value={"/dashboard"})
-	public Message<?> dashboard(@CurrentUser UserInfo currentUser) {
-		logger.debug("dashboard . ");
-		HashMap<String,Object> reportParameter = new HashMap<>();
-		reportParameter.put("instId", currentUser.getInstId());
-		
-		reportParameter.put("dayCount", reportService.analysisDay(reportParameter));
-		reportParameter.put("newUsers", reportService.analysisNewUsers(reportParameter));
-		
-		reportParameter.put("onlineUsers", reportService.analysisOnlineUsers(reportParameter));
-		reportParameter.put("activeUsers", reportService.analysisActiveUsers(reportParameter));
-		
-		reportParameter.put("totalUsers", reportService.totalUsers(reportParameter));
-		reportParameter.put("totalDepts", reportService.totalDepts(reportParameter));
-		reportParameter.put("totalApps", reportService.totalApps(reportParameter));
-		
-		reportParameter.put("reportMonth", reportService.analysisMonth(reportParameter));
-		reportParameter.put("reportDayHour", reportService.analysisDayHour(reportParameter));
-		
-		reportParameter.put("reportProvince", reportService.analysisProvince(reportParameter));
-		
-		reportParameter.put("reportCountry", reportService.analysisCountry(reportParameter));
-		
-		reportParameter.put("reportBrowser", reportService.analysisBrowser(reportParameter));
-		
-		reportParameter.put("reportApp", reportService.analysisApp(reportParameter));
-		return new Message<>(reportParameter);
-	}
+    @GetMapping(value={"/dashboard"})
+    public Message<?> dashboard(@CurrentUser UserInfo currentUser) {
+        logger.debug("dashboard . ");
+        HashMap<String,Object> reportParameter = new HashMap<>();
+        reportParameter.put("instId", currentUser.getInstId());
+        
+        reportParameter.put("dayCount", reportService.analysisDay(reportParameter));
+        reportParameter.put("newUsers", reportService.analysisNewUsers(reportParameter));
+        
+        reportParameter.put("onlineUsers", reportService.analysisOnlineUsers(reportParameter));
+        reportParameter.put("activeUsers", reportService.analysisActiveUsers(reportParameter));
+        
+        reportParameter.put("totalUsers", reportService.totalUsers(reportParameter));
+        reportParameter.put("totalDepts", reportService.totalDepts(reportParameter));
+        reportParameter.put("totalApps", reportService.totalApps(reportParameter));
+        
+        reportParameter.put("reportMonth", reportService.analysisMonth(reportParameter));
+        reportParameter.put("reportDayHour", reportService.analysisDayHour(reportParameter));
+        
+        reportParameter.put("reportProvince", reportService.analysisProvince(reportParameter));
+        
+        reportParameter.put("reportCountry", reportService.analysisCountry(reportParameter));
+        
+        reportParameter.put("reportBrowser", reportService.analysisBrowser(reportParameter));
+        
+        reportParameter.put("reportApp", reportService.analysisApp(reportParameter));
+        return new Message<>(reportParameter);
+    }
 
 }

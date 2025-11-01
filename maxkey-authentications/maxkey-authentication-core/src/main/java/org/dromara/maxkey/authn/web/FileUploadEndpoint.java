@@ -37,37 +37,37 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 public class FileUploadEndpoint {
-	
-	private static Logger _logger = LoggerFactory.getLogger(FileUploadEndpoint.class);
-	
-	@Autowired
-	FileUploadService fileUploadService;
-	
- 	@PostMapping({"/file/upload/"})
- 	@ResponseBody
- 	public Message<Object> upload( HttpServletRequest request, 
- 	                            HttpServletResponse response,
- 	                           @ModelAttribute FileUpload fileUpload,
- 	                           @CurrentUser UserInfo currentUser){
- 		_logger.debug("FileUpload");
- 		fileUpload.setId(fileUpload.generateId());
- 		fileUpload.setContentType(fileUpload.getUploadFile().getContentType());
- 		fileUpload.setFileName(fileUpload.getUploadFile().getOriginalFilename());
- 		fileUpload.setContentSize(fileUpload.getUploadFile().getSize());
- 		fileUpload.setCreatedBy(currentUser.getUsername());
- 		/*
-		 * upload UploadFile MultipartFile  to Uploaded Bytes
-		 */
-		if(null!=fileUpload.getUploadFile()&&!fileUpload.getUploadFile().isEmpty()){
-			try {
-				fileUpload.setUploaded(fileUpload.getUploadFile().getBytes());
-				fileUploadService.insert(fileUpload);
-				_logger.trace("FileUpload SUCCESS");
-			} catch (IOException e) {
-				_logger.error("FileUpload IOException",e);
-			}
-		}
- 		return new Message<Object>(Message.SUCCESS,(Object)fileUpload.getId());
- 	}
- 	
+    
+    private static Logger _logger = LoggerFactory.getLogger(FileUploadEndpoint.class);
+    
+    @Autowired
+    FileUploadService fileUploadService;
+    
+     @PostMapping({"/file/upload/"})
+     @ResponseBody
+     public Message<Object> upload( HttpServletRequest request, 
+                                 HttpServletResponse response,
+                                @ModelAttribute FileUpload fileUpload,
+                                @CurrentUser UserInfo currentUser){
+         _logger.debug("FileUpload");
+         fileUpload.setId(fileUpload.generateId());
+         fileUpload.setContentType(fileUpload.getUploadFile().getContentType());
+         fileUpload.setFileName(fileUpload.getUploadFile().getOriginalFilename());
+         fileUpload.setContentSize(fileUpload.getUploadFile().getSize());
+         fileUpload.setCreatedBy(currentUser.getUsername());
+         /*
+         * upload UploadFile MultipartFile  to Uploaded Bytes
+         */
+        if(null!=fileUpload.getUploadFile()&&!fileUpload.getUploadFile().isEmpty()){
+            try {
+                fileUpload.setUploaded(fileUpload.getUploadFile().getBytes());
+                fileUploadService.insert(fileUpload);
+                _logger.trace("FileUpload SUCCESS");
+            } catch (IOException e) {
+                _logger.error("FileUpload IOException",e);
+            }
+        }
+         return new Message<Object>(Message.SUCCESS,(Object)fileUpload.getId());
+     }
+     
 }

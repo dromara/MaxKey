@@ -43,43 +43,43 @@ public class MailOtpAuthnService {
     RedisOtpTokenStore redisOptTokenStore;
     
     public MailOtpAuthnService(CnfEmailSendersService emailSendersService) {
-		this.emailSendersService = emailSendersService;
-	}
+        this.emailSendersService = emailSendersService;
+    }
 
-	public MailOtpAuthnService(RedisOtpTokenStore redisOptTokenStore) {
-		this.redisOptTokenStore = redisOptTokenStore;
-	}
+    public MailOtpAuthnService(RedisOtpTokenStore redisOptTokenStore) {
+        this.redisOptTokenStore = redisOptTokenStore;
+    }
 
 
-	public AbstractOtpAuthn getMailOtpAuthn(String instId) {
-		AbstractOtpAuthn otpAuthn = otpAuthnStore.getIfPresent(instId);
-    	if(otpAuthn == null) {
-			CnfEmailSenders emailSender = 
-					emailSendersService.findOne("where instid = ? ", new Object[]{instId}, new int[]{Types.VARCHAR});
-			
-			String credentials = PasswordReciprocal.getInstance().decoder(emailSender.getCredentials());
-			EmailConfig emailConfig = 
-							new EmailConfig(
-									emailSender.getAccount(),
-									credentials,
-									emailSender.getSmtpHost(),
-									emailSender.getPort(),
-									ConstsBoolean.isTrue(emailSender.getSslSwitch()),
-									emailSender.getSender());
-			MailOtpAuthn mailOtpAuthn = new MailOtpAuthn(emailConfig);
-			mailOtpAuthn.setInterval(60 * 5);//5 minute
-			if(redisOptTokenStore != null) {
-				mailOtpAuthn.setOptTokenStore(redisOptTokenStore);
-			}
-			otpAuthn = mailOtpAuthn;
-    	}
-		otpAuthnStore.put(instId, otpAuthn);	
-		return otpAuthn;
-	}
+    public AbstractOtpAuthn getMailOtpAuthn(String instId) {
+        AbstractOtpAuthn otpAuthn = otpAuthnStore.getIfPresent(instId);
+        if(otpAuthn == null) {
+            CnfEmailSenders emailSender = 
+                    emailSendersService.findOne("where instid = ? ", new Object[]{instId}, new int[]{Types.VARCHAR});
+            
+            String credentials = PasswordReciprocal.getInstance().decoder(emailSender.getCredentials());
+            EmailConfig emailConfig = 
+                            new EmailConfig(
+                                    emailSender.getAccount(),
+                                    credentials,
+                                    emailSender.getSmtpHost(),
+                                    emailSender.getPort(),
+                                    ConstsBoolean.isTrue(emailSender.getSslSwitch()),
+                                    emailSender.getSender());
+            MailOtpAuthn mailOtpAuthn = new MailOtpAuthn(emailConfig);
+            mailOtpAuthn.setInterval(60 * 5);//5 minute
+            if(redisOptTokenStore != null) {
+                mailOtpAuthn.setOptTokenStore(redisOptTokenStore);
+            }
+            otpAuthn = mailOtpAuthn;
+        }
+        otpAuthnStore.put(instId, otpAuthn);    
+        return otpAuthn;
+    }
 
-	public void setRedisOptTokenStore(RedisOtpTokenStore redisOptTokenStore) {
-		this.redisOptTokenStore = redisOptTokenStore;
-	}
-	
-	
+    public void setRedisOptTokenStore(RedisOtpTokenStore redisOptTokenStore) {
+        this.redisOptTokenStore = redisOptTokenStore;
+    }
+    
+    
 }

@@ -49,13 +49,13 @@ public class SmsOtpAuthnYunxin extends SmsOtpAuthn {
     }
 
     public SmsOtpAuthnYunxin(String appKey, String appSecret, String templateId) {
-    	otpType = OtpTypes.SMS;
-		this.appKey = appKey;
-		this.appSecret = appSecret;
-		this.templateId = templateId;
-	}
+        otpType = OtpTypes.SMS;
+        this.appKey = appKey;
+        this.appSecret = appSecret;
+        this.templateId = templateId;
+    }
 
-	//发送验证码的请求路径URL
+    //发送验证码的请求路径URL
     private static final String
             SERVER_URL = "https://api.netease.im/sms/sendcode.action";
     //网易云信分配的账号，请替换你在管理后台应用下申请的Appkey

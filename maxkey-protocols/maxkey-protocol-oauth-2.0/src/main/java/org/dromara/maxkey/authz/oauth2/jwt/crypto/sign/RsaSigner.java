@@ -26,60 +26,60 @@ import java.security.spec.RSAPrivateKeySpec;
  * @author Luke Taylor
  */
 public class RsaSigner implements Signer {
-	static final String DEFAULT_ALGORITHM = "SHA256withRSA";
+    static final String DEFAULT_ALGORITHM = "SHA256withRSA";
 
-	private final RSAPrivateKey key;
-	private final String algorithm;
+    private final RSAPrivateKey key;
+    private final String algorithm;
 
-	public RsaSigner(BigInteger n, BigInteger d) {
-		this(createPrivateKey(n,d));
-	}
+    public RsaSigner(BigInteger n, BigInteger d) {
+        this(createPrivateKey(n,d));
+    }
 
-	public RsaSigner(RSAPrivateKey key) {
-		this(key, DEFAULT_ALGORITHM);
-	}
+    public RsaSigner(RSAPrivateKey key) {
+        this(key, DEFAULT_ALGORITHM);
+    }
 
-	public RsaSigner(RSAPrivateKey key, String algorithm) {
-		this.key = key;
-		this.algorithm = algorithm;
-	}
+    public RsaSigner(RSAPrivateKey key, String algorithm) {
+        this.key = key;
+        this.algorithm = algorithm;
+    }
 
-	public RsaSigner(String sshKey) {
-		this(loadPrivateKey(sshKey));
-	}
+    public RsaSigner(String sshKey) {
+        this(loadPrivateKey(sshKey));
+    }
 
-	public byte[] sign(byte[] bytes) {
-		try {
-			Signature signature = Signature.getInstance(algorithm);
-			signature.initSign(key);
-			signature.update(bytes);
-			return signature.sign();
-		}
-		catch (GeneralSecurityException e) {
-			throw new RuntimeException(e);
-		}
-	}
+    public byte[] sign(byte[] bytes) {
+        try {
+            Signature signature = Signature.getInstance(algorithm);
+            signature.initSign(key);
+            signature.update(bytes);
+            return signature.sign();
+        }
+        catch (GeneralSecurityException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-	public String algorithm() {
-		return algorithm;
-	}
+    public String algorithm() {
+        return algorithm;
+    }
 
-	private static RSAPrivateKey createPrivateKey(BigInteger n, BigInteger d) {
-		try {
-			return (RSAPrivateKey) KeyFactory.getInstance("RSA").generatePrivate(new RSAPrivateKeySpec(n, d));
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
+    private static RSAPrivateKey createPrivateKey(BigInteger n, BigInteger d) {
+        try {
+            return (RSAPrivateKey) KeyFactory.getInstance("RSA").generatePrivate(new RSAPrivateKeySpec(n, d));
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-	private static RSAPrivateKey loadPrivateKey(String key) {
-		KeyPair kp = RsaKeyHelper.parseKeyPair(key);
+    private static RSAPrivateKey loadPrivateKey(String key) {
+        KeyPair kp = RsaKeyHelper.parseKeyPair(key);
 
-		if (kp.getPrivate() == null) {
-			throw new IllegalArgumentException("Not a private key");
-		}
+        if (kp.getPrivate() == null) {
+            throw new IllegalArgumentException("Not a private key");
+        }
 
-		return (RSAPrivateKey) kp.getPrivate();
-	}
+        return (RSAPrivateKey) kp.getPrivate();
+    }
 }

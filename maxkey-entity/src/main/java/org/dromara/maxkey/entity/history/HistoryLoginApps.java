@@ -35,207 +35,207 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "MXK_HISTORY_LOGIN_APPS")  
 public class HistoryLoginApps extends JpaEntity  implements Serializable {
-	
-	private static final long serialVersionUID = 5085201575292304749L;
-	@Id
-	@Column
-	@GeneratedValue
-	String id;
-	@Column
-	private String sessionId;
-	@Column
-	private String appId;
-	@Column
-	private String appName;
-	@Column
-	private String userId;
-	@Column
-	private String username;
-	@Column
-	private String displayName;
-	@Column
-	private Date loginTime;
-	@Column
-	private String instId;
+    
+    private static final long serialVersionUID = 5085201575292304749L;
+    @Id
+    @Column
+    @GeneratedValue
+    String id;
+    @Column
+    private String sessionId;
+    @Column
+    private String appId;
+    @Column
+    private String appName;
+    @Column
+    private String userId;
+    @Column
+    private String username;
+    @Column
+    private String displayName;
+    @Column
+    private Date loginTime;
+    @Column
+    private String instId;
 
-	private String instName;
-	String startDate;
-	String endDate;
-	
-	/**
-	 * 
-	 */
-	public HistoryLoginApps() {
-		super();
-	}
-	
-	
-	/**
-	 * @return the id
-	 */
-	public String getId() {
-		return id;
-	}
-
-
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(String id) {
-		this.id = id;
-	}
+    private String instName;
+    String startDate;
+    String endDate;
+    
+    /**
+     * 
+     */
+    public HistoryLoginApps() {
+        super();
+    }
+    
+    
+    /**
+     * @return the id
+     */
+    public String getId() {
+        return id;
+    }
 
 
-	/**
-	 * @param sessionId
-	 * @param appId
-	 */
-	public HistoryLoginApps(String sessionId, String appId) {
-		super();
-		this.sessionId = sessionId;
-		this.appId = appId;
-	}
+    /**
+     * @param id the id to set
+     */
+    public void setId(String id) {
+        this.id = id;
+    }
 
 
-	/**
-	 * @return the sessionId
-	 */
-	public String getSessionId() {
-		return sessionId;
-	}
-	/**
-	 * @param sessionId the sessionId to set
-	 */
-	public void setSessionId(String sessionId) {
-		this.sessionId = sessionId;
-	}
-	/**
-	 * @return the appId
-	 */
-	public String getAppId() {
-		return appId;
-	}
-	/**
-	 * @param appId the appId to set
-	 */
-	public void setAppId(String appId) {
-		this.appId = appId;
-	}
-	/**
-	 * @return the appName
-	 */
-	public String getAppName() {
-		return appName;
-	}
-	/**
-	 * @param appName the appName to set
-	 */
-	public void setAppName(String appName) {
-		this.appName = appName;
-	}
-	/**
-	 * @return the loginTime
-	 */
-	public Date getLoginTime() {
-		return loginTime;
-	}
-	/**
-	 * @param loginTime the loginTime to set
-	 */
-	public void setLoginTime(Date loginTime) {
-		this.loginTime = loginTime;
-	}
+    /**
+     * @param sessionId
+     * @param appId
+     */
+    public HistoryLoginApps(String sessionId, String appId) {
+        super();
+        this.sessionId = sessionId;
+        this.appId = appId;
+    }
 
 
-	/**
-	 * @return the userId
-	 */
-	public String getUserId() {
-		return userId;
-	}
+    /**
+     * @return the sessionId
+     */
+    public String getSessionId() {
+        return sessionId;
+    }
+    /**
+     * @param sessionId the sessionId to set
+     */
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
+    /**
+     * @return the appId
+     */
+    public String getAppId() {
+        return appId;
+    }
+    /**
+     * @param appId the appId to set
+     */
+    public void setAppId(String appId) {
+        this.appId = appId;
+    }
+    /**
+     * @return the appName
+     */
+    public String getAppName() {
+        return appName;
+    }
+    /**
+     * @param appName the appName to set
+     */
+    public void setAppName(String appName) {
+        this.appName = appName;
+    }
+    /**
+     * @return the loginTime
+     */
+    public Date getLoginTime() {
+        return loginTime;
+    }
+    /**
+     * @param loginTime the loginTime to set
+     */
+    public void setLoginTime(Date loginTime) {
+        this.loginTime = loginTime;
+    }
 
 
-	/**
-	 * @param uid the uid to set
-	 */
-	public void setUserId(String uid) {
-		this.userId = uid;
-	}
+    /**
+     * @return the userId
+     */
+    public String getUserId() {
+        return userId;
+    }
 
 
-	/**
-	 * @return the username
-	 */
-	public String getUsername() {
-		return username;
-	}
+    /**
+     * @param uid the uid to set
+     */
+    public void setUserId(String uid) {
+        this.userId = uid;
+    }
 
 
-	/**
-	 * @param username the username to set
-	 */
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    /**
+     * @return the username
+     */
+    public String getUsername() {
+        return username;
+    }
 
 
-	/**
-	 * @return the displayName
-	 */
-	public String getDisplayName() {
-		return displayName;
-	}
+    /**
+     * @param username the username to set
+     */
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
 
-	/**
-	 * @param displayName the displayName to set
-	 */
-	public void setDisplayName(String displayName) {
-		this.displayName = displayName;
-	}
+    /**
+     * @return the displayName
+     */
+    public String getDisplayName() {
+        return displayName;
+    }
 
 
-	public String getStartDate() {
-		return startDate;
-	}
+    /**
+     * @param displayName the displayName to set
+     */
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
 
 
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
-	}
+    public String getStartDate() {
+        return startDate;
+    }
 
 
-	public String getEndDate() {
-		return endDate;
-	}
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
 
 
-	public void setEndDate(String endDate) {
-		this.endDate = endDate;
-	}
+    public String getEndDate() {
+        return endDate;
+    }
 
 
-	public String getInstId() {
-		return instId;
-	}
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
 
 
-	public void setInstId(String instId) {
-		this.instId = instId;
-	}
+    public String getInstId() {
+        return instId;
+    }
 
 
-	public String getInstName() {
-		return instName;
-	}
+    public void setInstId(String instId) {
+        this.instId = instId;
+    }
 
 
-	public void setInstName(String instName) {
-		this.instName = instName;
-	}
+    public String getInstName() {
+        return instName;
+    }
 
 
-	@Override
+    public void setInstName(String instName) {
+        this.instName = instName;
+    }
+
+
+    @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("HistoryLoginApps [id=");

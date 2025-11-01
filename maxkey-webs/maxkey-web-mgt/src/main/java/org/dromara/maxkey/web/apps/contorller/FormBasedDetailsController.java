@@ -41,74 +41,74 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value={"/apps/formbased"})
 public class FormBasedDetailsController  extends BaseAppContorller {
-	static final  Logger logger = LoggerFactory.getLogger(FormBasedDetailsController.class);
-	
-	@Autowired
-	AppsFormBasedDetailsService formBasedDetailsService;
-	
-	@RequestMapping(value = { "/init" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<?> init() {
-		AppsFormBasedDetails formBasedDetails=new AppsFormBasedDetails();
-		formBasedDetails.setId(formBasedDetails.generateId());
-		formBasedDetails.setProtocol(ConstsProtocols.FORMBASED);
-		formBasedDetails.setSecret(StringGenerator.generateKey(""));
-		return new Message<AppsFormBasedDetails>(formBasedDetails);
-	}
-	
-	@RequestMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<?> get(@PathVariable("id") String id) {
-		AppsFormBasedDetails formBasedDetails=formBasedDetailsService.getAppDetails(id , false);
-		decoderSecret(formBasedDetails);
-		decoderSharedPassword(formBasedDetails);
-		formBasedDetails.transIconBase64();
-		return new Message<AppsFormBasedDetails>(formBasedDetails);
-	}
-	
-	@ResponseBody
-	@RequestMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<?> add(
-			@RequestBody AppsFormBasedDetails formBasedDetails,
-			@CurrentUser UserInfo currentUser) {
-		logger.debug("-Add  : {}" , formBasedDetails);
-		
-		transform(formBasedDetails);
-		formBasedDetails.setInstId(currentUser.getInstId());
-		if (formBasedDetailsService.insert(formBasedDetails)
-				&&appsService.insertApp(formBasedDetails)) {
-			return new Message<AppsFormBasedDetails>(Message.SUCCESS);
-		} else {
-			return new Message<AppsFormBasedDetails>(Message.FAIL);
-		}
-	}
-	
-	@ResponseBody
-	@RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<?> update(
-			@RequestBody AppsFormBasedDetails formBasedDetails,
-			@CurrentUser UserInfo currentUser) {
-		logger.debug("-update  : {}" , formBasedDetails);
-		transform(formBasedDetails);
-		formBasedDetails.setInstId(currentUser.getInstId());
-		if (formBasedDetailsService.update(formBasedDetails)
-				&&appsService.updateApp(formBasedDetails)) {
-		    return new Message<AppsFormBasedDetails>(Message.SUCCESS);
-		} else {
-			return new Message<AppsFormBasedDetails>(Message.FAIL);
-		}
-	}
-	
-	@ResponseBody
-	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<?> delete(
-			@RequestParam("ids") List<String> ids,
-			@CurrentUser UserInfo currentUser) {
-		logger.debug("-delete  ids : {} " , ids);
-		if (formBasedDetailsService.deleteBatch(ids)
-				&& appsService.deleteBatch(ids)) {
-			 return new Message<AppsFormBasedDetails>(Message.SUCCESS);
-		} else {
-			return new Message<AppsFormBasedDetails>(Message.FAIL);
-		}
-	}
-	
+    static final  Logger logger = LoggerFactory.getLogger(FormBasedDetailsController.class);
+    
+    @Autowired
+    AppsFormBasedDetailsService formBasedDetailsService;
+    
+    @RequestMapping(value = { "/init" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public Message<?> init() {
+        AppsFormBasedDetails formBasedDetails=new AppsFormBasedDetails();
+        formBasedDetails.setId(formBasedDetails.generateId());
+        formBasedDetails.setProtocol(ConstsProtocols.FORMBASED);
+        formBasedDetails.setSecret(StringGenerator.generateKey(""));
+        return new Message<AppsFormBasedDetails>(formBasedDetails);
+    }
+    
+    @RequestMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public Message<?> get(@PathVariable("id") String id) {
+        AppsFormBasedDetails formBasedDetails=formBasedDetailsService.getAppDetails(id , false);
+        decoderSecret(formBasedDetails);
+        decoderSharedPassword(formBasedDetails);
+        formBasedDetails.transIconBase64();
+        return new Message<AppsFormBasedDetails>(formBasedDetails);
+    }
+    
+    @ResponseBody
+    @RequestMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public Message<?> add(
+            @RequestBody AppsFormBasedDetails formBasedDetails,
+            @CurrentUser UserInfo currentUser) {
+        logger.debug("-Add  : {}" , formBasedDetails);
+        
+        transform(formBasedDetails);
+        formBasedDetails.setInstId(currentUser.getInstId());
+        if (formBasedDetailsService.insert(formBasedDetails)
+                &&appsService.insertApp(formBasedDetails)) {
+            return new Message<AppsFormBasedDetails>(Message.SUCCESS);
+        } else {
+            return new Message<AppsFormBasedDetails>(Message.FAIL);
+        }
+    }
+    
+    @ResponseBody
+    @RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public Message<?> update(
+            @RequestBody AppsFormBasedDetails formBasedDetails,
+            @CurrentUser UserInfo currentUser) {
+        logger.debug("-update  : {}" , formBasedDetails);
+        transform(formBasedDetails);
+        formBasedDetails.setInstId(currentUser.getInstId());
+        if (formBasedDetailsService.update(formBasedDetails)
+                &&appsService.updateApp(formBasedDetails)) {
+            return new Message<AppsFormBasedDetails>(Message.SUCCESS);
+        } else {
+            return new Message<AppsFormBasedDetails>(Message.FAIL);
+        }
+    }
+    
+    @ResponseBody
+    @RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public Message<?> delete(
+            @RequestParam("ids") List<String> ids,
+            @CurrentUser UserInfo currentUser) {
+        logger.debug("-delete  ids : {} " , ids);
+        if (formBasedDetailsService.deleteBatch(ids)
+                && appsService.deleteBatch(ids)) {
+             return new Message<AppsFormBasedDetails>(Message.SUCCESS);
+        } else {
+            return new Message<AppsFormBasedDetails>(Message.FAIL);
+        }
+    }
+    
 }

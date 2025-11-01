@@ -28,28 +28,28 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 
 public class InMemoryTicketServices extends RandomServiceTicketServices {
 
-	protected static final   Cache<String, Ticket> casTicketStore = 
-	        Caffeine.newBuilder()
+    protected static final   Cache<String, Ticket> casTicketStore = 
+            Caffeine.newBuilder()
                 .expireAfterWrite(60, TimeUnit.MINUTES)
                 .build();
 
-	
-	@Override
-	public void store(String ticketId, Ticket ticket) {
-		store(ticketId, ticket, 60 * 3);
-	}
+    
+    @Override
+    public void store(String ticketId, Ticket ticket) {
+        store(ticketId, ticket, 60 * 3);
+    }
 
-	@Override
-	public void store(String ticketId, Ticket ticket, int validitySeconds) {
-		casTicketStore.put(ticketId, ticket);
-	}
+    @Override
+    public void store(String ticketId, Ticket ticket, int validitySeconds) {
+        casTicketStore.put(ticketId, ticket);
+    }
 
-	@Override
-	public Ticket remove(String ticketId) {
-		Ticket ticket=casTicketStore.getIfPresent(ticketId);	
-		casTicketStore.invalidate(ticketId);
-		return ticket;
-	}
+    @Override
+    public Ticket remove(String ticketId) {
+        Ticket ticket=casTicketStore.getIfPresent(ticketId);    
+        casTicketStore.invalidate(ticketId);
+        return ticket;
+    }
 
     @Override
     public Ticket get(String ticket) {

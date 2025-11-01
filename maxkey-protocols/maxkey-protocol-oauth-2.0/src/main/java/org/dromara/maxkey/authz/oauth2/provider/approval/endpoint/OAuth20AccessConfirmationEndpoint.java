@@ -56,8 +56,8 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 public class OAuth20AccessConfirmationEndpoint {
-	static final Logger _logger = LoggerFactory.getLogger(OAuth20AccessConfirmationEndpoint.class);
-	 
+    static final Logger _logger = LoggerFactory.getLogger(OAuth20AccessConfirmationEndpoint.class);
+     
     @Autowired
     protected AppsService appsService;
     
@@ -74,13 +74,13 @@ public class OAuth20AccessConfirmationEndpoint {
     OAuth20UserApprovalHandler oauth20UserApprovalHandler;
 
     @Autowired 
-	protected MomentaryService momentaryService;
+    protected MomentaryService momentaryService;
     
     @Autowired 
     protected ApplicationConfig applicationConfig;
     
     @Autowired
-	AuthTokenService authTokenService;
+    AuthTokenService authTokenService;
     
     /**
      * getAccessConfirmation.
@@ -91,36 +91,36 @@ public class OAuth20AccessConfirmationEndpoint {
     @RequestMapping(OAuth2Constants.ENDPOINT.ENDPOINT_APPROVAL_CONFIRM)
     public ModelAndView getAccessConfirmation(
             @RequestParam Map<String, Object> model,@CurrentUser UserInfo currentUser) {
-    	try {
-	        // Map<String, Object> model
-	        AuthorizationRequest clientAuth = 
-	        		(AuthorizationRequest) momentaryService.get(currentUser.getSessionId(), "authorizationRequest");
-	        ClientDetails client = clientDetailsService.loadClientByClientId(clientAuth.getClientId(),true);
-	        model.put("oauth_approval", authTokenService.genRandomJwt());
-	        model.put("auth_request", clientAuth);
-	        model.put("client", client);
-	        model.put("oauth_version", "oauth 2.0");
-	        Map<String, String> scopes = new LinkedHashMap<>();
-	        for (String scope : clientAuth.getScope()) {
-	            scopes.put(OAuth2Constants.PARAMETER.SCOPE_PREFIX + scope, "false");
-	        }
-	        String principal = AuthorizationUtils.getPrincipal().getUsername();
-	        for (Approval approval : approvalStore.getApprovals(principal, client.getClientId())) {
-	            if (clientAuth.getScope().contains(approval.getScope())) {
-	                scopes.put(OAuth2Constants.PARAMETER.SCOPE_PREFIX + approval.getScope(),
-	                        approval.getStatus() == ApprovalStatus.APPROVED ? "true" : "false");
-	            }
-	        }
-	        
-	        model.put("scopes", scopes);
-	
-	        if(!model.containsKey(OAuth2Constants.PARAMETER.APPROVAL_PROMPT)) {
-	        	model.put(OAuth2Constants.PARAMETER.APPROVAL_PROMPT, client.getApprovalPrompt());
-	        }
-    	}catch(Exception e) {
-    		 _logger.debug("OAuth Access Confirmation process error." ,e);
-    	}
-	        
+        try {
+            // Map<String, Object> model
+            AuthorizationRequest clientAuth = 
+                    (AuthorizationRequest) momentaryService.get(currentUser.getSessionId(), "authorizationRequest");
+            ClientDetails client = clientDetailsService.loadClientByClientId(clientAuth.getClientId(),true);
+            model.put("oauth_approval", authTokenService.genRandomJwt());
+            model.put("auth_request", clientAuth);
+            model.put("client", client);
+            model.put("oauth_version", "oauth 2.0");
+            Map<String, String> scopes = new LinkedHashMap<>();
+            for (String scope : clientAuth.getScope()) {
+                scopes.put(OAuth2Constants.PARAMETER.SCOPE_PREFIX + scope, "false");
+            }
+            String principal = AuthorizationUtils.getPrincipal().getUsername();
+            for (Approval approval : approvalStore.getApprovals(principal, client.getClientId())) {
+                if (clientAuth.getScope().contains(approval.getScope())) {
+                    scopes.put(OAuth2Constants.PARAMETER.SCOPE_PREFIX + approval.getScope(),
+                            approval.getStatus() == ApprovalStatus.APPROVED ? "true" : "false");
+                }
+            }
+            
+            model.put("scopes", scopes);
+    
+            if(!model.containsKey(OAuth2Constants.PARAMETER.APPROVAL_PROMPT)) {
+                model.put(OAuth2Constants.PARAMETER.APPROVAL_PROMPT, client.getApprovalPrompt());
+            }
+        }catch(Exception e) {
+             _logger.debug("OAuth Access Confirmation process error." ,e);
+        }
+            
         ModelAndView modelAndView = new ModelAndView("authorize/oauth_access_confirmation");
         _logger.trace("Confirmation details ");
         for (Object key : model.keySet()) {
@@ -136,50 +136,50 @@ public class OAuth20AccessConfirmationEndpoint {
     @RequestMapping(OAuth2Constants.ENDPOINT.ENDPOINT_APPROVAL_CONFIRM+"/get/{oauth_approval}")
     @ResponseBody
     public Message<Map<String, Object>> getAccess(
-    			@PathVariable("oauth_approval") String oauthApproval,
-    			@CurrentUser UserInfo currentUser) {
-    	Map<String, Object> model = new HashMap<>();
-    	if(authTokenService.validateJwtToken(oauthApproval)) {
-	    	try {
-		        AuthorizationRequest clientAuth = 
-		        		(AuthorizationRequest) momentaryService.get(currentUser.getSessionId(), "authorizationRequest");
-		        ClientDetails client = clientDetailsService.loadClientByClientId(clientAuth.getClientId(),true);
+                @PathVariable("oauth_approval") String oauthApproval,
+                @CurrentUser UserInfo currentUser) {
+        Map<String, Object> model = new HashMap<>();
+        if(authTokenService.validateJwtToken(oauthApproval)) {
+            try {
+                AuthorizationRequest clientAuth = 
+                        (AuthorizationRequest) momentaryService.get(currentUser.getSessionId(), "authorizationRequest");
+                ClientDetails client = clientDetailsService.loadClientByClientId(clientAuth.getClientId(),true);
 
-		        Apps  app = appsService.get(client.getClientId(),true);
-		        app.transIconBase64();
-		        
-		        model.put("auth_request", clientAuth);
-		        model.put("client", client);
-		        model.put("clientId", clientAuth.getClientId());
-		        model.put("appName", app.getAppName());
-		        model.put("iconBase64", app.getIconBase64());
-		        model.put("oauth_version", "oauth 2.0");
-		        Map<String, String> scopes = new LinkedHashMap<>();
-		        for (String scope : clientAuth.getScope()) {
-		            scopes.put(OAuth2Constants.PARAMETER.SCOPE_PREFIX + scope, "false");
-		        }
-		        String principal = AuthorizationUtils.getPrincipal().getUsername();
-		        for (Approval approval : approvalStore.getApprovals(principal, client.getClientId())) {
-		            if (clientAuth.getScope().contains(approval.getScope())) {
-		                scopes.put(OAuth2Constants.PARAMETER.SCOPE_PREFIX + approval.getScope(),
-		                        approval.getStatus() == ApprovalStatus.APPROVED ? "true" : "false");
-		            }
-		        }
-		        
-		        model.put("scopes", scopes);
-		
-		        if(!model.containsKey(OAuth2Constants.PARAMETER.APPROVAL_PROMPT)) {
-		        	model.put(OAuth2Constants.PARAMETER.APPROVAL_PROMPT, client.getApprovalPrompt());
-		        }
-	    	}catch(Exception e) {
-	    		 _logger.debug("OAuth Access Confirmation process error." ,e);
-	    	}
-	    	
-	        _logger.trace("Confirmation details ");
-	        for (Object key : model.keySet()) {
-	            _logger.trace("key {} = {}" ,key,model.get(key));
-	        }
-    	}
+                Apps  app = appsService.get(client.getClientId(),true);
+                app.transIconBase64();
+                
+                model.put("auth_request", clientAuth);
+                model.put("client", client);
+                model.put("clientId", clientAuth.getClientId());
+                model.put("appName", app.getAppName());
+                model.put("iconBase64", app.getIconBase64());
+                model.put("oauth_version", "oauth 2.0");
+                Map<String, String> scopes = new LinkedHashMap<>();
+                for (String scope : clientAuth.getScope()) {
+                    scopes.put(OAuth2Constants.PARAMETER.SCOPE_PREFIX + scope, "false");
+                }
+                String principal = AuthorizationUtils.getPrincipal().getUsername();
+                for (Approval approval : approvalStore.getApprovals(principal, client.getClientId())) {
+                    if (clientAuth.getScope().contains(approval.getScope())) {
+                        scopes.put(OAuth2Constants.PARAMETER.SCOPE_PREFIX + approval.getScope(),
+                                approval.getStatus() == ApprovalStatus.APPROVED ? "true" : "false");
+                    }
+                }
+                
+                model.put("scopes", scopes);
+        
+                if(!model.containsKey(OAuth2Constants.PARAMETER.APPROVAL_PROMPT)) {
+                    model.put(OAuth2Constants.PARAMETER.APPROVAL_PROMPT, client.getApprovalPrompt());
+                }
+            }catch(Exception e) {
+                 _logger.debug("OAuth Access Confirmation process error." ,e);
+            }
+            
+            _logger.trace("Confirmation details ");
+            for (Object key : model.keySet()) {
+                _logger.trace("key {} = {}" ,key,model.get(key));
+            }
+        }
         return new Message<>(model);
     }
 

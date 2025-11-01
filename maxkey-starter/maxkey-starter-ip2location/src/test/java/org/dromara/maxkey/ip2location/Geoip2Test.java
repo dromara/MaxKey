@@ -26,11 +26,11 @@ import com.maxmind.geoip2.model.CityResponse;
 
 public class Geoip2Test {
 
-	public static void main(String[] args) throws IOException {
-		// TODO Auto-generated method stub
-		ClassPathResource resource = new ClassPathResource("/geoip2/GeoLite2-City.mmdb");
-		String ip = "117.155.70.59";
-	
+    public static void main(String[] args) throws IOException {
+        // TODO Auto-generated method stub
+        ClassPathResource resource = new ClassPathResource("/geoip2/GeoLite2-City.mmdb");
+        String ip = "117.155.70.59";
+    
         if (!resource.getFile().exists()) {
             System.out.println("Error: Invalid GeoLite2-City.mmdb file, filePath：" + resource.getFile().getPath());
             
@@ -49,18 +49,18 @@ public class Geoip2Test {
             String state = response.getMostSpecificSubdivision().getNames().get("zh-CN");
             //查询不到时保持与ip2region方式的返回结果一致
             if (state == null){
-            	state = "0";
+                state = "0";
             }
             // 获取城市
             String city = response.getCity().getNames().get("zh-CN");
             if (city == null){
-            	city = "0";
+                city = "0";
             }
             String[] resu = {state,city};
             System.out.println(" " +country+" " +state +" " +city);
         } catch (IOException | GeoIp2Exception e) {
             e.printStackTrace();
         }
-	}
+    }
 
 }

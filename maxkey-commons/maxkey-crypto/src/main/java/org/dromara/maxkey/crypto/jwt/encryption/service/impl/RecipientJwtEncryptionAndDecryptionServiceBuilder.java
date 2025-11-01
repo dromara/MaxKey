@@ -37,45 +37,45 @@ import com.nimbusds.jose.jwk.JWKSet;
  *
  */
 public class RecipientJwtEncryptionAndDecryptionServiceBuilder {
-	static final  Logger _logger = LoggerFactory.getLogger(RecipientJwtEncryptionAndDecryptionServiceBuilder.class);
-	
-	//private HttpClient httpClient = HttpClientBuilder.create().useSystemProperties().build();
-	//private HttpComponentsClientHttpRequestFactory httpFactory = new HttpComponentsClientHttpRequestFactory(httpClient);
-	//private RestTemplate restTemplate = new RestTemplate(httpFactory);
-	
-	/**
-	 * 
-	 */
-	public RecipientJwtEncryptionAndDecryptionServiceBuilder() {
-		
-	}
-	
-	public JwtEncryptionAndDecryptionService serviceBuilder(String jwksUri){
-		
-		_logger.debug("jwksUri : {}" , jwksUri);
-		
-		String jsonString ="";//= restTemplate.getForObject(jwksUri, String.class);
-		
-		_logger.debug("jwks json String : {}" , jsonString);
-		JwtEncryptionAndDecryptionService recipientJwtEncryptionAndDecryptionService;
-		try {
-			JWKSet jwkSet = JWKSet.parse(jsonString);
+    static final  Logger _logger = LoggerFactory.getLogger(RecipientJwtEncryptionAndDecryptionServiceBuilder.class);
+    
+    //private HttpClient httpClient = HttpClientBuilder.create().useSystemProperties().build();
+    //private HttpComponentsClientHttpRequestFactory httpFactory = new HttpComponentsClientHttpRequestFactory(httpClient);
+    //private RestTemplate restTemplate = new RestTemplate(httpFactory);
+    
+    /**
+     * 
+     */
+    public RecipientJwtEncryptionAndDecryptionServiceBuilder() {
+        
+    }
+    
+    public JwtEncryptionAndDecryptionService serviceBuilder(String jwksUri){
+        
+        _logger.debug("jwksUri : {}" , jwksUri);
+        
+        String jsonString ="";//= restTemplate.getForObject(jwksUri, String.class);
+        
+        _logger.debug("jwks json String : {}" , jsonString);
+        JwtEncryptionAndDecryptionService recipientJwtEncryptionAndDecryptionService;
+        try {
+            JWKSet jwkSet = JWKSet.parse(jsonString);
 
-			JWKSetKeyStore keyStore = new JWKSetKeyStore(jwkSet);
-			recipientJwtEncryptionAndDecryptionService = new DefaultJwtEncryptionAndDecryptionService(keyStore);
-			
-			return recipientJwtEncryptionAndDecryptionService;
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		} catch (InvalidKeySpecException e) {
-			e.printStackTrace();
-		} catch (JOSEException e) {
-			e.printStackTrace();
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		
-		return null;
-	}
+            JWKSetKeyStore keyStore = new JWKSetKeyStore(jwkSet);
+            recipientJwtEncryptionAndDecryptionService = new DefaultJwtEncryptionAndDecryptionService(keyStore);
+            
+            return recipientJwtEncryptionAndDecryptionService;
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (InvalidKeySpecException e) {
+            e.printStackTrace();
+        } catch (JOSEException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        
+        return null;
+    }
 
 }

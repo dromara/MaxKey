@@ -83,7 +83,7 @@ public class DefaultOAuth2AccessToken implements Serializable, OAuth2AccessToken
     }
 
     public DefaultOAuth2AccessToken(OAuth2Exception oauth2Exception) {
-    	this.oauth2Exception = oauth2Exception;
+        this.oauth2Exception = oauth2Exception;
     }
     
     public void setValue(String value) {
@@ -274,10 +274,10 @@ public class DefaultOAuth2AccessToken implements Serializable, OAuth2AccessToken
         this.additionalInformation = new LinkedHashMap<String, Object>(additionalInformation);
     }
 
-	@Override
-	public OAuth2Exception getOAuth2Exception() {
-		
-		return this.oauth2Exception;
-	}
+    @Override
+    public OAuth2Exception getOAuth2Exception() {
+        
+        return this.oauth2Exception;
+    }
 
 }

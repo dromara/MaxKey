@@ -41,92 +41,92 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value={"/permissions/permission"})
 public class PermissionController {
-	static final Logger logger = LoggerFactory.getLogger(PermissionController.class);
-	
-	@Autowired
-	PermissionService permissionService;
-	
-	@Autowired
-	HistorySystemLogsService systemLog;
-	
-	@ResponseBody
-	@RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public  Message<?> update(
-			@RequestBody Permission groupPrivileges,
-			@CurrentUser UserInfo currentUser) {
-		logger.debug("-update  : {}" , groupPrivileges);
-		//have
-		Permission queryGroupPrivileges = 
-				new Permission(
-						groupPrivileges.getAppId(),
-						groupPrivileges.getGroupId(),
-						currentUser.getInstId());
-		List<Permission> groupPrivilegesList = permissionService.queryGroupPrivileges(queryGroupPrivileges);
-		
-		HashMap<String,String >privilegeMap =new HashMap<String,String >();
-		for(Permission rolePrivilege : groupPrivilegesList) {
-			privilegeMap.put(rolePrivilege.getUniqueId(),rolePrivilege.getId());
-		}
-		//Maybe insert
-		ArrayList<Permission> newGroupPrivilegesList =new ArrayList<Permission>();
-		List<String>resourceIds = StrUtils.string2List(groupPrivileges.getResourceId(), ",");
-		HashMap<String,String >newPrivilegesMap =new HashMap<String,String >();
-		for(String resourceId : resourceIds) {
-		    Permission newGroupPrivilege=new Permission(
-		    		WebContext.genId(),
-		    		groupPrivileges.getAppId(),
-		    		groupPrivileges.getGroupId(),
+    static final Logger logger = LoggerFactory.getLogger(PermissionController.class);
+    
+    @Autowired
+    PermissionService permissionService;
+    
+    @Autowired
+    HistorySystemLogsService systemLog;
+    
+    @ResponseBody
+    @RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public  Message<?> update(
+            @RequestBody Permission groupPrivileges,
+            @CurrentUser UserInfo currentUser) {
+        logger.debug("-update  : {}" , groupPrivileges);
+        //have
+        Permission queryGroupPrivileges = 
+                new Permission(
+                        groupPrivileges.getAppId(),
+                        groupPrivileges.getGroupId(),
+                        currentUser.getInstId());
+        List<Permission> groupPrivilegesList = permissionService.queryGroupPrivileges(queryGroupPrivileges);
+        
+        HashMap<String,String >privilegeMap =new HashMap<String,String >();
+        for(Permission rolePrivilege : groupPrivilegesList) {
+            privilegeMap.put(rolePrivilege.getUniqueId(),rolePrivilege.getId());
+        }
+        //Maybe insert
+        ArrayList<Permission> newGroupPrivilegesList =new ArrayList<Permission>();
+        List<String>resourceIds = StrUtils.string2List(groupPrivileges.getResourceId(), ",");
+        HashMap<String,String >newPrivilegesMap =new HashMap<String,String >();
+        for(String resourceId : resourceIds) {
+            Permission newGroupPrivilege=new Permission(
+                    WebContext.genId(),
+                    groupPrivileges.getAppId(),
+                    groupPrivileges.getGroupId(),
                     resourceId,
                     currentUser.getInstId());
-		    newGroupPrivilege.setId(newGroupPrivilege.generateId());
-		    newPrivilegesMap.put(newGroupPrivilege.getUniqueId(), groupPrivileges.getAppId());
-		    
-		    if(!groupPrivileges.getAppId().equalsIgnoreCase(resourceId) &&
-		            !privilegeMap.containsKey(newGroupPrivilege.getUniqueId())) {
-		    	newGroupPrivilegesList.add(newGroupPrivilege);
-		    }
-		}
-		
-		//delete 
-		ArrayList<Permission> deleteGroupPrivilegesList =new ArrayList<Permission>();
-		for(Permission rolePrivilege : groupPrivilegesList) {
+            newGroupPrivilege.setId(newGroupPrivilege.generateId());
+            newPrivilegesMap.put(newGroupPrivilege.getUniqueId(), groupPrivileges.getAppId());
+            
+            if(!groupPrivileges.getAppId().equalsIgnoreCase(resourceId) &&
+                    !privilegeMap.containsKey(newGroupPrivilege.getUniqueId())) {
+                newGroupPrivilegesList.add(newGroupPrivilege);
+            }
+        }
+        
+        //delete 
+        ArrayList<Permission> deleteGroupPrivilegesList =new ArrayList<Permission>();
+        for(Permission rolePrivilege : groupPrivilegesList) {
            if(!newPrivilegesMap.containsKey(rolePrivilege.getUniqueId())) {
-        	   rolePrivilege.setInstId(currentUser.getInstId());
-        	   deleteGroupPrivilegesList.add(rolePrivilege);
+               rolePrivilege.setInstId(currentUser.getInstId());
+               deleteGroupPrivilegesList.add(rolePrivilege);
            }
         }
-		if (!deleteGroupPrivilegesList.isEmpty()) {
-			logger.debug("-remove  : {}" , deleteGroupPrivilegesList);
-			permissionService.deleteGroupPrivileges(deleteGroupPrivilegesList);
-		}
-		
-		if (!newGroupPrivilegesList.isEmpty() && permissionService.insertGroupPrivileges(newGroupPrivilegesList)) {
-			logger.debug("-insert  : {}" , newGroupPrivilegesList);
-			return new Message<Permission>(Message.SUCCESS);
-			
-		} else {
-			return new Message<Permission>(Message.SUCCESS);
-		}
-		
-	}
-	
-	@ResponseBody
+        if (!deleteGroupPrivilegesList.isEmpty()) {
+            logger.debug("-remove  : {}" , deleteGroupPrivilegesList);
+            permissionService.deleteGroupPrivileges(deleteGroupPrivilegesList);
+        }
+        
+        if (!newGroupPrivilegesList.isEmpty() && permissionService.insertGroupPrivileges(newGroupPrivilegesList)) {
+            logger.debug("-insert  : {}" , newGroupPrivilegesList);
+            return new Message<Permission>(Message.SUCCESS);
+            
+        } else {
+            return new Message<Permission>(Message.SUCCESS);
+        }
+        
+    }
+    
+    @ResponseBody
     @RequestMapping(value={"/get"}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public  Message<?> get(
-    		@ModelAttribute Permission groupPrivileges,
-    		@CurrentUser UserInfo currentUser) {
+            @ModelAttribute Permission groupPrivileges,
+            @CurrentUser UserInfo currentUser) {
         logger.debug("-get  : {}"  , groupPrivileges);
         //have
         Permission queryGroupPrivilege = 
-        		new Permission(
-        				groupPrivileges.getAppId(),
-        				groupPrivileges.getGroupId(),
-        				currentUser.getInstId());
+                new Permission(
+                        groupPrivileges.getAppId(),
+                        groupPrivileges.getGroupId(),
+                        currentUser.getInstId());
         List<Permission> rolePrivilegeList = permissionService.queryGroupPrivileges(queryGroupPrivilege);
         
         return new Message<List<Permission>>(
-        		rolePrivilegeList);
-	}
+                rolePrivilegeList);
+    }
 
-	
+    
 }

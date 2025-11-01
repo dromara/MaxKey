@@ -8,14 +8,14 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Configuration
 @EnableOAuth2Sso
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-	   @Override
-	    protected void configure(HttpSecurity http) throws Exception {
-	        http
-	            .authorizeRequests()
-	            .antMatchers("/", "/error**").permitAll()
+       @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http
+                .authorizeRequests()
+                .antMatchers("/", "/error**").permitAll()
                 .anyRequest().authenticated()
                 .and().logout().logoutUrl("/logout")
-				.logoutSuccessUrl("http://sso.maxkey.top/sign/force/logout");
+                .logoutSuccessUrl("http://sso.maxkey.top/sign/force/logout");
 
-	    }
+        }
 }

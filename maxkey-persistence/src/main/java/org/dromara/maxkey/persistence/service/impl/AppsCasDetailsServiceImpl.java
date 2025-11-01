@@ -31,25 +31,25 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 @Repository
 public class AppsCasDetailsServiceImpl  extends JpaServiceImpl<AppsCasDetailsMapper,AppsCasDetails> implements AppsCasDetailsService{
 
-	protected static final   Cache<String, AppsCasDetails> detailsCache = 
+    protected static final   Cache<String, AppsCasDetails> detailsCache = 
             Caffeine.newBuilder()
                 .expireAfterWrite(30, TimeUnit.MINUTES)
                 .maximumSize(200000)
                 .build();
-	
-	public  AppsCasDetails  getAppDetails(String id , boolean cached) {
-		AppsCasDetails details = null;
-		if(cached) {
-			details = detailsCache.getIfPresent(id);
-			if(details == null) {
-				details = getMapper().getAppDetails(id);
-				if(details != null) {
-					detailsCache.put(id, details);
-				}
-			}
-		}else {
-			details = getMapper().getAppDetails(id);
-		}
-		return details;
-	}
+    
+    public  AppsCasDetails  getAppDetails(String id , boolean cached) {
+        AppsCasDetails details = null;
+        if(cached) {
+            details = detailsCache.getIfPresent(id);
+            if(details == null) {
+                details = getMapper().getAppDetails(id);
+                if(details != null) {
+                    detailsCache.put(id, details);
+                }
+            }
+        }else {
+            details = getMapper().getAppDetails(id);
+        }
+        return details;
+    }
 }

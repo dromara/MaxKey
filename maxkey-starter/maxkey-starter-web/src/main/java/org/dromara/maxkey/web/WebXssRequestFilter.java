@@ -35,92 +35,92 @@ import jakarta.servlet.http.HttpServletRequest;
 
 public class WebXssRequestFilter  extends GenericFilterBean {
 
-	static final  Logger _logger = LoggerFactory.getLogger(WebXssRequestFilter.class);	
-	
-	static final  ConcurrentHashMap <String,String> skipUrlMap = new  ConcurrentHashMap <>();
-	static final  ConcurrentHashMap <String,String> skipParameterName = new  ConcurrentHashMap <>();
-	
-	/**
-	 * 特殊字符 ' -- #
-	 */
-	public final static Pattern specialCharacterRegex = Pattern.compile(".*((\\%27)|(')|(\\')|(--)|(\\-\\-)|(\\%23)|(#)).*", Pattern.CASE_INSENSITIVE);
-	
-	static {
-		//add or update
-		skipUrlMap.put("/notices/add", "/notices/add");
-		skipUrlMap.put("/notices/update", "/notices/update");
-		skipUrlMap.put("/institutions/update","/institutions/update");
-		skipUrlMap.put("/localization/update","/localization/update");
-		skipUrlMap.put("/apps/updateExtendAttr","/apps/updateExtendAttr");
-		
-		//authz
-		skipUrlMap.put("/authz/cas", "/authz/cas");
-		skipUrlMap.put("/authz/cas/", "/authz/cas/");
-		skipUrlMap.put("/authz/cas/login", "/authz/cas/login");
-		skipUrlMap.put("/authz/oauth/v20/authorize", "/authz/oauth/v20/authorize");
-		//TENCENT_IOA
-		skipUrlMap.put("/oauth2/authorize", "/oauth2/authorize");
-		
-		skipParameterName.put("relatedPassword", "relatedPassword");
-		skipParameterName.put("oldPassword", "oldPassword");
-		skipParameterName.put("password", "password");
-		skipParameterName.put("confirmpassword", "confirmpassword");
-		skipParameterName.put("credentials", "credentials");
-		skipParameterName.put("clientSecret", "clientSecret");
-		skipParameterName.put("appSecret", "appSecret");
-		skipParameterName.put("sharedSecret", "sharedSecret");
-		skipParameterName.put("secret", "secret");
-	}
-	
-	@Override
-	public void doFilter(ServletRequest servletRequest, ServletResponse response, FilterChain chain)
-			throws IOException, ServletException {
-		_logger.trace("WebXssRequestFilter");
-		boolean isWebXss = false;
-		HttpServletRequest request= ((HttpServletRequest)servletRequest);
-		if(_logger.isTraceEnabled()) {WebContext.printRequest(request);}
-		String  requestURL =request.getRequestURI().substring(request.getContextPath().length());
-		if(skipUrlMap.containsKey(requestURL)) {
-			_logger.trace("skip URL {}",requestURL);
-		}else {
-	        Enumeration<String> parameterNames = request.getParameterNames();
-	        while (parameterNames.hasMoreElements()) {
-	          String key = parameterNames.nextElement();
-	          if(!skipParameterName.containsKey(key)) {
-		          String value = request.getParameter(key);
-		          _logger.trace("parameter name {} , value {}" , key, value);
-		          String tempValue = value;
-		          String  lowerCaseTempValue = tempValue.toLowerCase();
-		          /**
-		           * StringEscapeUtils.escapeHtml4
-		           * " 转义为 &quot;
-		           * & 转义为 &amp;
-		           * < 转义为 &lt;
-		           * > 转义为 &gt;
-		           * 
-		           * 以下符号过滤
-		           * ' 
-		           * --
-		           * #
-		           * 
-		           * script
-		           * eval
-		           * 
-		           */
-		          if(!StringEscapeUtils.escapeHtml4(tempValue).equals(value)
-		        		  ||specialCharacterRegex.matcher(value).matches()
-		        		  ||lowerCaseTempValue.indexOf("script")>-1
-		        		  ||lowerCaseTempValue.replace(" ", "").indexOf("eval(")>-1) {
-		        	  isWebXss = true;
-		        	  _logger.error("dangerous ! parameter {} , value {}",key,value);
-		        	  break;
-		          }
-	          }
-	        }
-		}
+    static final  Logger _logger = LoggerFactory.getLogger(WebXssRequestFilter.class);    
+    
+    static final  ConcurrentHashMap <String,String> skipUrlMap = new  ConcurrentHashMap <>();
+    static final  ConcurrentHashMap <String,String> skipParameterName = new  ConcurrentHashMap <>();
+    
+    /**
+     * 特殊字符 ' -- #
+     */
+    public final static Pattern specialCharacterRegex = Pattern.compile(".*((\\%27)|(')|(\\')|(--)|(\\-\\-)|(\\%23)|(#)).*", Pattern.CASE_INSENSITIVE);
+    
+    static {
+        //add or update
+        skipUrlMap.put("/notices/add", "/notices/add");
+        skipUrlMap.put("/notices/update", "/notices/update");
+        skipUrlMap.put("/institutions/update","/institutions/update");
+        skipUrlMap.put("/localization/update","/localization/update");
+        skipUrlMap.put("/apps/updateExtendAttr","/apps/updateExtendAttr");
+        
+        //authz
+        skipUrlMap.put("/authz/cas", "/authz/cas");
+        skipUrlMap.put("/authz/cas/", "/authz/cas/");
+        skipUrlMap.put("/authz/cas/login", "/authz/cas/login");
+        skipUrlMap.put("/authz/oauth/v20/authorize", "/authz/oauth/v20/authorize");
+        //TENCENT_IOA
+        skipUrlMap.put("/oauth2/authorize", "/oauth2/authorize");
+        
+        skipParameterName.put("relatedPassword", "relatedPassword");
+        skipParameterName.put("oldPassword", "oldPassword");
+        skipParameterName.put("password", "password");
+        skipParameterName.put("confirmpassword", "confirmpassword");
+        skipParameterName.put("credentials", "credentials");
+        skipParameterName.put("clientSecret", "clientSecret");
+        skipParameterName.put("appSecret", "appSecret");
+        skipParameterName.put("sharedSecret", "sharedSecret");
+        skipParameterName.put("secret", "secret");
+    }
+    
+    @Override
+    public void doFilter(ServletRequest servletRequest, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
+        _logger.trace("WebXssRequestFilter");
+        boolean isWebXss = false;
+        HttpServletRequest request= ((HttpServletRequest)servletRequest);
+        if(_logger.isTraceEnabled()) {WebContext.printRequest(request);}
+        String  requestURL =request.getRequestURI().substring(request.getContextPath().length());
+        if(skipUrlMap.containsKey(requestURL)) {
+            _logger.trace("skip URL {}",requestURL);
+        }else {
+            Enumeration<String> parameterNames = request.getParameterNames();
+            while (parameterNames.hasMoreElements()) {
+              String key = parameterNames.nextElement();
+              if(!skipParameterName.containsKey(key)) {
+                  String value = request.getParameter(key);
+                  _logger.trace("parameter name {} , value {}" , key, value);
+                  String tempValue = value;
+                  String  lowerCaseTempValue = tempValue.toLowerCase();
+                  /**
+                   * StringEscapeUtils.escapeHtml4
+                   * " 转义为 &quot;
+                   * & 转义为 &amp;
+                   * < 转义为 &lt;
+                   * > 转义为 &gt;
+                   * 
+                   * 以下符号过滤
+                   * ' 
+                   * --
+                   * #
+                   * 
+                   * script
+                   * eval
+                   * 
+                   */
+                  if(!StringEscapeUtils.escapeHtml4(tempValue).equals(value)
+                          ||specialCharacterRegex.matcher(value).matches()
+                          ||lowerCaseTempValue.indexOf("script")>-1
+                          ||lowerCaseTempValue.replace(" ", "").indexOf("eval(")>-1) {
+                      isWebXss = true;
+                      _logger.error("dangerous ! parameter {} , value {}",key,value);
+                      break;
+                  }
+              }
+            }
+        }
         if(!isWebXss) {
-        	chain.doFilter(request, response);
+            chain.doFilter(request, response);
         }  
-	}
+    }
 
 }

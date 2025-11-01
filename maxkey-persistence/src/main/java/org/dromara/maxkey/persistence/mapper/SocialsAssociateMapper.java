@@ -24,5 +24,5 @@ import org.dromara.mybatis.jpa.IJpaMapper;
 
 public interface SocialsAssociateMapper extends IJpaMapper<SocialsAssociate> {
 
-	public List<SocialsAssociate> queryByUser(UserInfo user);
+    public List<SocialsAssociate> queryByUser(UserInfo user);
 }

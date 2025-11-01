@@ -33,38 +33,38 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class RoleMemberServiceImpl  extends JpaServiceImpl<RoleMemberMapper,RoleMember> implements RoleMemberService{
-	static final  Logger _logger = LoggerFactory.getLogger(RoleMemberServiceImpl.class);
+    static final  Logger _logger = LoggerFactory.getLogger(RoleMemberServiceImpl.class);
 
-	public int addDynamicRoleMember(Roles dynamicGroup) {
-	    return getMapper().addDynamicRoleMember(dynamicGroup);
-	}
-	
-	public int deleteDynamicRoleMember(Roles dynamicGroup) {
-	    return getMapper().deleteDynamicRoleMember(dynamicGroup);
-	}
-	
-	public int deleteByRoleId(String groupId) {
+    public int addDynamicRoleMember(Roles dynamicGroup) {
+        return getMapper().addDynamicRoleMember(dynamicGroup);
+    }
+    
+    public int deleteDynamicRoleMember(Roles dynamicGroup) {
+        return getMapper().deleteDynamicRoleMember(dynamicGroup);
+    }
+    
+    public int deleteByRoleId(String groupId) {
         return getMapper().deleteByRoleId(groupId);
     }
-	
-	public List<UserInfo> queryMemberByRoleId(String groupId){
-		return getMapper().queryMemberByRoleId(groupId);
-	}
-	
-	
-	public JpaPageResults<Roles> rolesNoMember(RoleMember entity) {
-		entity.build();
-		List<Roles> resultslist = null;
-		try {
-			resultslist = getMapper().rolesNoMember(entity);
-		} catch (Exception e) {
-			_logger.error("fetchPageResults Exception " , e);
-		}
-		//当前页记录数
-		Integer records = JpaPageResults.parseRecords(resultslist);
-		//总页数
-		Integer totalCount =fetchCount(entity, resultslist);
-		return new JpaPageResults<Roles>(entity.getPageNumber(),entity.getPageSize(),records,totalCount,resultslist);
-	}
-	
+    
+    public List<UserInfo> queryMemberByRoleId(String groupId){
+        return getMapper().queryMemberByRoleId(groupId);
+    }
+    
+    
+    public JpaPageResults<Roles> rolesNoMember(RoleMember entity) {
+        entity.build();
+        List<Roles> resultslist = null;
+        try {
+            resultslist = getMapper().rolesNoMember(entity);
+        } catch (Exception e) {
+            _logger.error("fetchPageResults Exception " , e);
+        }
+        //当前页记录数
+        Integer records = JpaPageResults.parseRecords(resultslist);
+        //总页数
+        Integer totalCount =fetchCount(entity, resultslist);
+        return new JpaPageResults<Roles>(entity.getPageNumber(),entity.getPageSize(),records,totalCount,resultslist);
+    }
+    
 }

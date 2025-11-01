@@ -20,10 +20,10 @@ package org.maxkey.util;
 import org.junit.Test;
 
 public class PathUtilsTest {
-	@Test
-	public void test()  {
-		//System.out.println(PathUtils.getInstance().getAppPath());
-		//System.out.println(PathUtils.getInstance().getWebInf());
-		//System.out.println(PathUtils.getInstance().getClassPath());
-	}
+    @Test
+    public void test()  {
+        //System.out.println(PathUtils.getInstance().getAppPath());
+        //System.out.println(PathUtils.getInstance().getWebInf());
+        //System.out.println(PathUtils.getInstance().getClassPath());
+    }
 }

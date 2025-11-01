@@ -50,7 +50,7 @@ public class ProxyGrantingTicketIOUImpl extends ServiceTicketImpl implements Tic
     }
     
     public ProxyGrantingTicketIOUImpl(Authentication authentication,  AppsCasDetails casDetails) {
-    	this.authentication=authentication;
-    	this.casDetails=casDetails;
+        this.authentication=authentication;
+        this.casDetails=casDetails;
     }
 }

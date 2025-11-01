@@ -8,16 +8,16 @@ import javax.annotation.Resource;
 @Component
 public class RedisUtils {
 
-	@Resource
-	private RedisTemplate<String, Object> redisTemplate;
+    @Resource
+    private RedisTemplate<String, Object> redisTemplate;
 
 
-	public boolean deleteKey(String key) {
-		return redisTemplate.delete(key);
-	}
+    public boolean deleteKey(String key) {
+        return redisTemplate.delete(key);
+    }
 
-	public void setValue(String key, Object object, Long expire) {
-		redisTemplate.opsForValue().set(key, object, expire);
-	}
+    public void setValue(String key, Object object, Long expire) {
+        redisTemplate.opsForValue().set(key, object, expire);
+    }
 
 }

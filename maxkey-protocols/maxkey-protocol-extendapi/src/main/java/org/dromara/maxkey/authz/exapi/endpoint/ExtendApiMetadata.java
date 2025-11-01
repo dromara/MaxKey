@@ -35,16 +35,16 @@ import jakarta.servlet.http.HttpServletResponse;
 @Tag(name = "2-8-ExtendApi接口文档模块-元数据")
 @Controller
 public class ExtendApiMetadata {
-	static final  Logger _logger = LoggerFactory.getLogger(ExtendApiMetadata.class);
-	
-	@Operation(summary = "netease qiye mail RSA Key", description = "网易企业邮箱RSA Key生成器",method="GET")
-	@RequestMapping(
-			value = "/metadata/netease/qiye/mail/rsa/gen",
-			method = {RequestMethod.POST, RequestMethod.GET})
-	@ResponseBody
-	public String  metadata(HttpServletRequest request,HttpServletResponse response) {
-		NeteaseRSATool neteaseRSATool =new NeteaseRSATool();
-		neteaseRSATool.genRSAKeyPair();
-		return JsonPretty.getInstance().formatln(neteaseRSATool);
-	}
+    static final  Logger _logger = LoggerFactory.getLogger(ExtendApiMetadata.class);
+    
+    @Operation(summary = "netease qiye mail RSA Key", description = "网易企业邮箱RSA Key生成器",method="GET")
+    @RequestMapping(
+            value = "/metadata/netease/qiye/mail/rsa/gen",
+            method = {RequestMethod.POST, RequestMethod.GET})
+    @ResponseBody
+    public String  metadata(HttpServletRequest request,HttpServletResponse response) {
+        NeteaseRSATool neteaseRSATool =new NeteaseRSATool();
+        neteaseRSATool.genRSAKeyPair();
+        return JsonPretty.getInstance().formatln(neteaseRSATool);
+    }
 }

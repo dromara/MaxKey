@@ -24,12 +24,12 @@ package org.dromara.maxkey.authz.oauth2.provider;
 @SuppressWarnings("serial")
 public class ClientAlreadyExistsException extends ClientRegistrationException {
 
-	public ClientAlreadyExistsException(String msg) {
-		super(msg);
-	}
+    public ClientAlreadyExistsException(String msg) {
+        super(msg);
+    }
 
-	public ClientAlreadyExistsException(String msg, Throwable cause) {
-		super(msg, cause);
-	}
+    public ClientAlreadyExistsException(String msg, Throwable cause) {
+        super(msg, cause);
+    }
 
 }

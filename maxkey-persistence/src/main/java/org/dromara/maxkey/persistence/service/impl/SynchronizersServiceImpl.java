@@ -28,5 +28,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class SynchronizersServiceImpl  extends JpaServiceImpl<SynchronizersMapper,Synchronizers> implements SynchronizersService{
     static final  Logger _logger = LoggerFactory.getLogger(SynchronizersServiceImpl.class);
-	
+    
 }

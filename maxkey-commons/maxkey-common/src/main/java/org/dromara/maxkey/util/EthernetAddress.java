@@ -29,7 +29,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class EthernetAddress   
-	implements Serializable, Cloneable, Comparable<EthernetAddress>
+    implements Serializable, Cloneable, Comparable<EthernetAddress>
 {
     private static final  Logger _logger = LoggerFactory.getLogger(EthernetAddress.class);
     
@@ -420,13 +420,13 @@ public class EthernetAddress
     public boolean equals(Object o)
     {
         if (o == this) {
-        	return true;
+            return true;
         }
         if (o == null) {
-        	return false;
+            return false;
         }
         if (o.getClass() != getClass()) {
-        	return false;
+            return false;
         }
         return ((EthernetAddress) o)._address == _address;
     }
@@ -445,7 +445,7 @@ public class EthernetAddress
     {
         long l = _address - other._address;
         if (l < 0L) {
-        	return -1;
+            return -1;
         }
         return (l == 0L) ? 0 : 1;
     }

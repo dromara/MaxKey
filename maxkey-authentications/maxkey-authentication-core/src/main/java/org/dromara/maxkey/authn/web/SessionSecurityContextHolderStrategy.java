@@ -59,7 +59,7 @@ public class SessionSecurityContextHolderStrategy implements SecurityContextHold
 
     @Override
     public void setContext(SecurityContext context) {
-    	AuthorizationUtils.setAuthentication(context.getAuthentication());
+        AuthorizationUtils.setAuthentication(context.getAuthentication());
     }
 
     @Override

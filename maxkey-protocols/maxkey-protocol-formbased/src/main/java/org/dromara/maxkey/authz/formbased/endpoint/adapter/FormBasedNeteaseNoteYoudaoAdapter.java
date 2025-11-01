@@ -26,20 +26,20 @@ import org.springframework.web.servlet.ModelAndView;
 
 public class FormBasedNeteaseNoteYoudaoAdapter extends AbstractAuthorizeAdapter {
 
-	@Override
-	public Object generateInfo() {
-		return null;
-	}
+    @Override
+    public Object generateInfo() {
+        return null;
+    }
 
 
-	@Override
-	public ModelAndView authorize(ModelAndView modelAndView) {
-		modelAndView.setViewName("authorize/formbased_wy_youdao_sso_submint");
-		AppsFormBasedDetails details=(AppsFormBasedDetails)app;
-		modelAndView.addObject("username", account.getRelatedUsername());
-		modelAndView.addObject("password",  DigestUtils.md5Hex(account.getRelatedPassword()));
-		modelAndView.addObject("currentTime",  (new Date()).getTime());
-		return modelAndView;
-	}
+    @Override
+    public ModelAndView authorize(ModelAndView modelAndView) {
+        modelAndView.setViewName("authorize/formbased_wy_youdao_sso_submint");
+        AppsFormBasedDetails details=(AppsFormBasedDetails)app;
+        modelAndView.addObject("username", account.getRelatedUsername());
+        modelAndView.addObject("password",  DigestUtils.md5Hex(account.getRelatedPassword()));
+        modelAndView.addObject("currentTime",  (new Date()).getTime());
+        return modelAndView;
+    }
 
 }

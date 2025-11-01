@@ -27,16 +27,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  */
 public class DesedeEncoder implements PasswordEncoder {
 
-	private static final String DEFAULT_SALT 	= "bWu3x8E5yS2h6l0J_qT7NvIzP9oRaG4kFc1QmD"; //
-	private static final String CRYPT 			= "{crypt}";
-	private static final String PLAIN 			= "{plain}";
+    private static final String DEFAULT_SALT     = "bWu3x8E5yS2h6l0J_qT7NvIzP9oRaG4kFc1QmD"; //
+    private static final String CRYPT             = "{crypt}";
+    private static final String PLAIN             = "{plain}";
 
-	public static final int PREFFIX_LENGTH 		= 7;
+    public static final int PREFFIX_LENGTH         = 7;
 
     private static DesedeEncoder desedePasswordEncoder;
 
     public DesedeEncoder() {
-    	//
+        //
     }
 
     /**
@@ -46,49 +46,49 @@ public class DesedeEncoder implements PasswordEncoder {
     public static DesedeEncoder getInstance() {
 
         if (desedePasswordEncoder == null) {
-        	desedePasswordEncoder = new DesedeEncoder();
+            desedePasswordEncoder = new DesedeEncoder();
         }
 
         return desedePasswordEncoder;
     }
 
     public String decoder(CharSequence encodedPassword) {
-    	if(encodedPassword == null) {
-    		return null;
-    	}
-    	String encodedPasswordString  = encodedPassword.toString();
-    	if(encodedPasswordString.startsWith(CRYPT)) {
-    		return ReciprocalUtils.decoderHex(encodedPasswordString.substring(PREFFIX_LENGTH), DEFAULT_SALT);
-    	}else if(encodedPasswordString.startsWith(PLAIN)) {
-    		return encodedPasswordString.substring(PREFFIX_LENGTH);
-    	}else {
-    		return encodedPasswordString;
-    	}
+        if(encodedPassword == null) {
+            return null;
+        }
+        String encodedPasswordString  = encodedPassword.toString();
+        if(encodedPasswordString.startsWith(CRYPT)) {
+            return ReciprocalUtils.decoderHex(encodedPasswordString.substring(PREFFIX_LENGTH), DEFAULT_SALT);
+        }else if(encodedPasswordString.startsWith(PLAIN)) {
+            return encodedPasswordString.substring(PREFFIX_LENGTH);
+        }else {
+            return encodedPasswordString;
+        }
     }
 
     @Override
     public boolean matches(CharSequence rawPassword, String encodedPassword) {
-    	if(encodedPassword.startsWith(PLAIN)) {
-    		encodedPassword = encode(encodedPassword.substring(PREFFIX_LENGTH));
-    	}
-    	String finalPassword = encode(rawPassword);
+        if(encodedPassword.startsWith(PLAIN)) {
+            encodedPassword = encode(encodedPassword.substring(PREFFIX_LENGTH));
+        }
+        String finalPassword = encode(rawPassword);
         return finalPassword.equals(encodedPassword);
     }
 
-	@Override
-	public String encode(CharSequence plain) {
-		return (plain == null) ? null : (CRYPT + ReciprocalUtils.encode2Hex(plain + "", DEFAULT_SALT));
-	}
+    @Override
+    public String encode(CharSequence plain) {
+        return (plain == null) ? null : (CRYPT + ReciprocalUtils.encode2Hex(plain + "", DEFAULT_SALT));
+    }
 
-	public String encode(CharSequence plain,boolean isEncode) {
-		if(plain == null) {
-			return null;
-		}
-		if(isEncode) {
-			return CRYPT + ReciprocalUtils.encode2Hex(plain + "", DEFAULT_SALT);
-		}else {
-			return PLAIN + plain;
-		}
-	}
+    public String encode(CharSequence plain,boolean isEncode) {
+        if(plain == null) {
+            return null;
+        }
+        if(isEncode) {
+            return CRYPT + ReciprocalUtils.encode2Hex(plain + "", DEFAULT_SALT);
+        }else {
+            return PLAIN + plain;
+        }
+    }
 
 }

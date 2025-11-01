@@ -41,8 +41,8 @@ public class SmsAutoConfiguration  {
             CnfSmsProviderService smsProviderService,
             CnfEmailSendersService emailSendersService,
             RedisConnectionFactory redisConnFactory) {
-    	SmsOtpAuthnService smsOtpAuthnService = 
-        							new SmsOtpAuthnService(smsProviderService,emailSendersService);
+        SmsOtpAuthnService smsOtpAuthnService = 
+                                    new SmsOtpAuthnService(smsProviderService,emailSendersService);
         
         if (persistence == ConstsPersistence.REDIS) {
             RedisOtpTokenStore redisOptTokenStore = new RedisOtpTokenStore(redisConnFactory);

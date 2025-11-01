@@ -19,15 +19,15 @@ package org.dromara.maxkey.constants;
 
 public class ConstsDatabase {
 
-    public static final String  MYSQL         	= "MySQL";
+    public static final String  MYSQL             = "MySQL";
     
-    public static final  String  POSTGRESQL    	= "PostgreSQL";
+    public static final  String  POSTGRESQL        = "PostgreSQL";
     
-    public static final  String  ORACLE        	= "Oracle";
+    public static final  String  ORACLE            = "Oracle";
     
-    public static final  String  MSSQLSERVER   	= "SQL Server";
+    public static final  String  MSSQLSERVER       = "SQL Server";
     
-    public static final  String  DB2           	= "db2";
+    public static final  String  DB2               = "db2";
   
 
 }

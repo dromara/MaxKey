@@ -61,147 +61,147 @@ import com.nimbusds.jwt.SignedJWT;
  *
  */
 public class OIDCIdTokenEnhancer implements TokenEnhancer {
-	private static final  Logger _logger = LoggerFactory.getLogger(OIDCIdTokenEnhancer.class);
-	
-	public  static final  String ID_TOKEN_SCOPE="openid";
+    private static final  Logger _logger = LoggerFactory.getLogger(OIDCIdTokenEnhancer.class);
+    
+    public  static final  String ID_TOKEN_SCOPE="openid";
 
-	private OIDCProviderMetadata providerMetadata;
-	
-	private ClientDetailsService clientDetailsService;
+    private OIDCProviderMetadata providerMetadata;
+    
+    private ClientDetailsService clientDetailsService;
 
-	public void setProviderMetadata(OIDCProviderMetadata providerMetadata) {
-		this.providerMetadata = providerMetadata;
-	}
+    public void setProviderMetadata(OIDCProviderMetadata providerMetadata) {
+        this.providerMetadata = providerMetadata;
+    }
 
-	public void setClientDetailsService(ClientDetailsService clientDetailsService) {
-		this.clientDetailsService = clientDetailsService;
-	}
+    public void setClientDetailsService(ClientDetailsService clientDetailsService) {
+        this.clientDetailsService = clientDetailsService;
+    }
 
-	@Override
-	public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
-		OAuth2Request  request=authentication.getOAuth2Request();
-		if (request.getScope().contains(ID_TOKEN_SCOPE)) {//Enhance for OpenID Connect
-			ClientDetails clientDetails = 
-					clientDetailsService.loadClientByClientId(authentication.getOAuth2Request().getClientId(),true);
-			
-			DefaultJwtSigningAndValidationService jwtSignerService = null;
-			JWSAlgorithm signingAlg = null;
-			String signerKeyId = clientDetails.getClientId() + "_sig";
-			try {//jwtSignerService
-				if (StringUtils.isNotBlank(clientDetails.getSignature()) && !clientDetails.getSignature().equalsIgnoreCase("none")) {
-					jwtSignerService = new DefaultJwtSigningAndValidationService(
-							clientDetails.getSignatureKey(),
-							signerKeyId,
-							clientDetails.getSignature()
-						);
+    @Override
+    public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
+        OAuth2Request  request=authentication.getOAuth2Request();
+        if (request.getScope().contains(ID_TOKEN_SCOPE)) {//Enhance for OpenID Connect
+            ClientDetails clientDetails = 
+                    clientDetailsService.loadClientByClientId(authentication.getOAuth2Request().getClientId(),true);
+            
+            DefaultJwtSigningAndValidationService jwtSignerService = null;
+            JWSAlgorithm signingAlg = null;
+            String signerKeyId = clientDetails.getClientId() + "_sig";
+            try {//jwtSignerService
+                if (StringUtils.isNotBlank(clientDetails.getSignature()) && !clientDetails.getSignature().equalsIgnoreCase("none")) {
+                    jwtSignerService = new DefaultJwtSigningAndValidationService(
+                            clientDetails.getSignatureKey(),
+                            signerKeyId,
+                            clientDetails.getSignature()
+                        );
 
-					signingAlg = jwtSignerService.getDefaultSigningAlgorithm();
-				}
-			}catch(Exception e) {
-				_logger.error("Couldn't create Jwt Signing Service",e);
-			}
-			
-			JWTClaimsSet.Builder builder=new JWTClaimsSet.Builder();
-			builder.subject(authentication.getName())
-		      .expirationTime(accessToken.getExpiration())
-		      .issuer(clientDetails.getIssuer())
-		      .issueTime(new Date())
-		      .audience(Arrays.asList(authentication.getOAuth2Request().getClientId()))
-		      .jwtID(UUID.randomUUID().toString());
-			
-			/**
-			 * https://self-issued.me
-			 * @see http://openid.net/specs/openid-connect-core-1_0.html#SelfIssuedDiscovery
-			 *     7.  Self-Issued OpenID Provider
-			 */
-			if(clientDetails.getIssuer()!=null 
-					&& jwtSignerService != null
-					&& clientDetails.getIssuer().equalsIgnoreCase("https://self-issued.me") 
-					){
-				builder.claim("sub_jwk", jwtSignerService.getAllPublicKeys().get(signerKeyId));
-			}
-			
-			// if the auth time claim was explicitly requested OR if the client always wants the auth time, put it in
-			if (request.getExtensions().containsKey("max_age")
-					|| (request.getExtensions().containsKey("idtoken")) // parse the ID Token claims (#473) -- for now assume it could be in there
-					) {
-				DateTime loginDate =new  DateTime(AuthorizationUtils.getUserInfo().getLastLoginTime());
-				builder.claim("auth_time",  loginDate.getMillis()/1000);
-			}
-			
-			String nonce = request.getRequestParameters().get("nonce");
-			_logger.debug("getRequestParameters nonce {}",nonce);
-			if (!Strings.isNullOrEmpty(nonce)) {
-				builder.claim("nonce", nonce);
-			}
-			//add at_hash
-			if(jwtSignerService != null) {
-				SignedJWT signed = new SignedJWT(new JWSHeader(signingAlg), builder.build());
-				Set<String> responseTypes = request.getResponseTypes();
-	
-				if (responseTypes.contains("token")) {
-					// calculate the token hash
-					Base64URL at_hash = IdTokenHashUtils.getAccessTokenHash(signingAlg, signed);
-					builder.claim("at_hash", at_hash);
-				}
-				_logger.debug("idClaims {}",builder.build());
-			}
-			String idTokenString = "";
-			if (StringUtils.isNotBlank(clientDetails.getSignature()) 
-					&& !clientDetails.getSignature().equalsIgnoreCase("none")) {
-				try {
-					builder.claim("kid", signerKeyId);
-					// signed ID token
-					JWSHeader jwsHeader =   new JWSHeader.Builder(signingAlg).keyID(signerKeyId).build();
-					JWT idToken = new SignedJWT(jwsHeader, builder.build());
-					// sign it with the server's key
-					jwtSignerService.signJwt((SignedJWT) idToken);
-					idTokenString = idToken.serialize();
-					_logger.debug("idToken {}",idTokenString);
-				}catch(Exception e) {
-					_logger.error("Couldn't create Jwt Signing Exception",e);
-				}
-			}else if (StringUtils.isNotBlank(clientDetails.getAlgorithm()) 
-					&& !clientDetails.getAlgorithm().equalsIgnoreCase("none")) {
-				try {
-					String encryptionKeyId = clientDetails.getClientId()  + "_enc";
-					DefaultJwtEncryptionAndDecryptionService jwtEncryptionService = 
-								new DefaultJwtEncryptionAndDecryptionService(
-										clientDetails.getAlgorithmKey(),
-										encryptionKeyId,
-										clientDetails.getAlgorithm()
-									);
-					Payload payload = builder.build().toPayload();
-					// Example Request JWT encrypted with RSA-OAEP-256 and 128-bit AES/GCM
-					//JWEHeader jweHeader = new JWEHeader(JWEAlgorithm.RSA1_5, EncryptionMethod.A128GCM);
-					JWEHeader jweHeader = new JWEHeader(
-							jwtEncryptionService.getDefaultAlgorithm(clientDetails.getAlgorithm()), 
-							jwtEncryptionService.parseEncryptionMethod(clientDetails.getEncryptionMethod())
-						);
-					JWEObject jweObject = new JWEObject(
-						    new JWEHeader.Builder(jweHeader)
-						        .contentType("JWT") // required to indicate nested JWT
-						        .keyID(encryptionKeyId)
-						        .build(),
-						        payload);
-					
-					jwtEncryptionService.encryptJwt(jweObject);
-					idTokenString = jweObject.serialize();
-				} catch (NoSuchAlgorithmException | InvalidKeySpecException | JOSEException e) {
-					_logger.error("Couldn't create Jwt Encryption Exception", e);
-				}
-			}else {
-				//not need a PlainJWT idToken
-				//JWT idToken = new PlainJWT(builder.build());
-				//idTokenString = idToken.serialize();
-			}
-			
-			accessToken = new DefaultOAuth2AccessToken(accessToken);
-			if(StringUtils.isNotBlank(idTokenString)){
-				accessToken.getAdditionalInformation().put("id_token", idTokenString);
-			}
-		}
-		return accessToken;
-	}
+                    signingAlg = jwtSignerService.getDefaultSigningAlgorithm();
+                }
+            }catch(Exception e) {
+                _logger.error("Couldn't create Jwt Signing Service",e);
+            }
+            
+            JWTClaimsSet.Builder builder=new JWTClaimsSet.Builder();
+            builder.subject(authentication.getName())
+              .expirationTime(accessToken.getExpiration())
+              .issuer(clientDetails.getIssuer())
+              .issueTime(new Date())
+              .audience(Arrays.asList(authentication.getOAuth2Request().getClientId()))
+              .jwtID(UUID.randomUUID().toString());
+            
+            /**
+             * https://self-issued.me
+             * @see http://openid.net/specs/openid-connect-core-1_0.html#SelfIssuedDiscovery
+             *     7.  Self-Issued OpenID Provider
+             */
+            if(clientDetails.getIssuer()!=null 
+                    && jwtSignerService != null
+                    && clientDetails.getIssuer().equalsIgnoreCase("https://self-issued.me") 
+                    ){
+                builder.claim("sub_jwk", jwtSignerService.getAllPublicKeys().get(signerKeyId));
+            }
+            
+            // if the auth time claim was explicitly requested OR if the client always wants the auth time, put it in
+            if (request.getExtensions().containsKey("max_age")
+                    || (request.getExtensions().containsKey("idtoken")) // parse the ID Token claims (#473) -- for now assume it could be in there
+                    ) {
+                DateTime loginDate =new  DateTime(AuthorizationUtils.getUserInfo().getLastLoginTime());
+                builder.claim("auth_time",  loginDate.getMillis()/1000);
+            }
+            
+            String nonce = request.getRequestParameters().get("nonce");
+            _logger.debug("getRequestParameters nonce {}",nonce);
+            if (!Strings.isNullOrEmpty(nonce)) {
+                builder.claim("nonce", nonce);
+            }
+            //add at_hash
+            if(jwtSignerService != null) {
+                SignedJWT signed = new SignedJWT(new JWSHeader(signingAlg), builder.build());
+                Set<String> responseTypes = request.getResponseTypes();
+    
+                if (responseTypes.contains("token")) {
+                    // calculate the token hash
+                    Base64URL at_hash = IdTokenHashUtils.getAccessTokenHash(signingAlg, signed);
+                    builder.claim("at_hash", at_hash);
+                }
+                _logger.debug("idClaims {}",builder.build());
+            }
+            String idTokenString = "";
+            if (StringUtils.isNotBlank(clientDetails.getSignature()) 
+                    && !clientDetails.getSignature().equalsIgnoreCase("none")) {
+                try {
+                    builder.claim("kid", signerKeyId);
+                    // signed ID token
+                    JWSHeader jwsHeader =   new JWSHeader.Builder(signingAlg).keyID(signerKeyId).build();
+                    JWT idToken = new SignedJWT(jwsHeader, builder.build());
+                    // sign it with the server's key
+                    jwtSignerService.signJwt((SignedJWT) idToken);
+                    idTokenString = idToken.serialize();
+                    _logger.debug("idToken {}",idTokenString);
+                }catch(Exception e) {
+                    _logger.error("Couldn't create Jwt Signing Exception",e);
+                }
+            }else if (StringUtils.isNotBlank(clientDetails.getAlgorithm()) 
+                    && !clientDetails.getAlgorithm().equalsIgnoreCase("none")) {
+                try {
+                    String encryptionKeyId = clientDetails.getClientId()  + "_enc";
+                    DefaultJwtEncryptionAndDecryptionService jwtEncryptionService = 
+                                new DefaultJwtEncryptionAndDecryptionService(
+                                        clientDetails.getAlgorithmKey(),
+                                        encryptionKeyId,
+                                        clientDetails.getAlgorithm()
+                                    );
+                    Payload payload = builder.build().toPayload();
+                    // Example Request JWT encrypted with RSA-OAEP-256 and 128-bit AES/GCM
+                    //JWEHeader jweHeader = new JWEHeader(JWEAlgorithm.RSA1_5, EncryptionMethod.A128GCM);
+                    JWEHeader jweHeader = new JWEHeader(
+                            jwtEncryptionService.getDefaultAlgorithm(clientDetails.getAlgorithm()), 
+                            jwtEncryptionService.parseEncryptionMethod(clientDetails.getEncryptionMethod())
+                        );
+                    JWEObject jweObject = new JWEObject(
+                            new JWEHeader.Builder(jweHeader)
+                                .contentType("JWT") // required to indicate nested JWT
+                                .keyID(encryptionKeyId)
+                                .build(),
+                                payload);
+                    
+                    jwtEncryptionService.encryptJwt(jweObject);
+                    idTokenString = jweObject.serialize();
+                } catch (NoSuchAlgorithmException | InvalidKeySpecException | JOSEException e) {
+                    _logger.error("Couldn't create Jwt Encryption Exception", e);
+                }
+            }else {
+                //not need a PlainJWT idToken
+                //JWT idToken = new PlainJWT(builder.build());
+                //idTokenString = idToken.serialize();
+            }
+            
+            accessToken = new DefaultOAuth2AccessToken(accessToken);
+            if(StringUtils.isNotBlank(idTokenString)){
+                accessToken.getAdditionalInformation().put("id_token", idTokenString);
+            }
+        }
+        return accessToken;
+    }
 
 }

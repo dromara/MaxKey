@@ -29,26 +29,26 @@ import org.dromara.maxkey.entity.permissions.Resources;
 import org.dromara.mybatis.jpa.service.IJpaService;
 
 public interface AuthzResourceService   extends IJpaService<UserInfo>{
-	
-	/**
-	 * 根据主体获取用户对应得应用资源清单
-	 * @param user
-	 * @param app 
-	 * @return 资源清单列表
-	 */
+    
+    /**
+     * 根据主体获取用户对应得应用资源清单
+     * @param user
+     * @param app 
+     * @return 资源清单列表
+     */
     public Set<Resources> getResourcesBySubject(UserInfo user,Apps  app);
    
-	/**
-	 * 根据组列表获取资源清单
-	 * @param dto
-	 * @return
-	 */
-	public List<Resources> queryResourcesByGroupId(QueryAppResourceDto dto) ;
+    /**
+     * 根据组列表获取资源清单
+     * @param dto
+     * @return
+     */
+    public List<Resources> queryResourcesByGroupId(QueryAppResourceDto dto) ;
 
-	/**
-	 * 根据角色列表获取资源清单
-	 * @param dto
-	 * @return
-	 */
-	public List<Resources> queryResourcesByRoleId(QueryAppResourceDto dto) ;
+    /**
+     * 根据角色列表获取资源清单
+     * @param dto
+     * @return
+     */
+    public List<Resources> queryResourcesByRoleId(QueryAppResourceDto dto) ;
 }

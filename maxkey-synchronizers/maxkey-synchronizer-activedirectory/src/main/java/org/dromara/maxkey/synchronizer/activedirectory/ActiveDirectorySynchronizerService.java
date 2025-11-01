@@ -27,63 +27,63 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ActiveDirectorySynchronizerService   implements ISynchronizerService{
-	static final  Logger _logger = LoggerFactory.getLogger(ActiveDirectorySynchronizerService.class);
-	
-	Synchronizers synchronizer;
-	
-	@Autowired
-	ActiveDirectoryUsersService activeDirectoryUsersService;
-	
-	@Autowired
-	ActiveDirectoryOrganizationService activeDirectoryOrganizationService;
-	
-	public ActiveDirectorySynchronizerService() {
-		super();
-	}
+    static final  Logger _logger = LoggerFactory.getLogger(ActiveDirectorySynchronizerService.class);
+    
+    Synchronizers synchronizer;
+    
+    @Autowired
+    ActiveDirectoryUsersService activeDirectoryUsersService;
+    
+    @Autowired
+    ActiveDirectoryOrganizationService activeDirectoryOrganizationService;
+    
+    public ActiveDirectorySynchronizerService() {
+        super();
+    }
 
-	public void sync() {
-		_logger.info("Sync ...");
-		ActiveDirectoryUtils ldapUtils = new ActiveDirectoryUtils(
-		        synchronizer.getProviderUrl(),
-		        synchronizer.getPrincipal(),
-		        synchronizer.getCredentials(),
-		        synchronizer.getUserBasedn(),
-		        synchronizer.getMsadDomain());
-		ldapUtils.openConnection();
-		
-		activeDirectoryOrganizationService.setSynchronizer(synchronizer);
-		activeDirectoryOrganizationService.setLdapUtils(ldapUtils);
-		activeDirectoryOrganizationService.sync();
-		
-		activeDirectoryUsersService.setSynchronizer(synchronizer);
-		activeDirectoryUsersService.setLdapUtils(ldapUtils);
-		activeDirectoryUsersService.sync();
-		
-		ldapUtils.close();
-	}
+    public void sync() {
+        _logger.info("Sync ...");
+        ActiveDirectoryUtils ldapUtils = new ActiveDirectoryUtils(
+                synchronizer.getProviderUrl(),
+                synchronizer.getPrincipal(),
+                synchronizer.getCredentials(),
+                synchronizer.getUserBasedn(),
+                synchronizer.getMsadDomain());
+        ldapUtils.openConnection();
+        
+        activeDirectoryOrganizationService.setSynchronizer(synchronizer);
+        activeDirectoryOrganizationService.setLdapUtils(ldapUtils);
+        activeDirectoryOrganizationService.sync();
+        
+        activeDirectoryUsersService.setSynchronizer(synchronizer);
+        activeDirectoryUsersService.setLdapUtils(ldapUtils);
+        activeDirectoryUsersService.sync();
+        
+        ldapUtils.close();
+    }
 
-	public ActiveDirectoryUsersService getActiveDirectoryUsersService() {
-		return activeDirectoryUsersService;
-	}
+    public ActiveDirectoryUsersService getActiveDirectoryUsersService() {
+        return activeDirectoryUsersService;
+    }
 
-	public void setActiveDirectoryUsersService(ActiveDirectoryUsersService activeDirectoryUsersService) {
-		this.activeDirectoryUsersService = activeDirectoryUsersService;
-	}
+    public void setActiveDirectoryUsersService(ActiveDirectoryUsersService activeDirectoryUsersService) {
+        this.activeDirectoryUsersService = activeDirectoryUsersService;
+    }
 
-	public ActiveDirectoryOrganizationService getActiveDirectoryOrganizationService() {
-		return activeDirectoryOrganizationService;
-	}
+    public ActiveDirectoryOrganizationService getActiveDirectoryOrganizationService() {
+        return activeDirectoryOrganizationService;
+    }
 
-	public void setActiveDirectoryOrganizationService(
-			ActiveDirectoryOrganizationService activeDirectoryOrganizationService) {
-		this.activeDirectoryOrganizationService = activeDirectoryOrganizationService;
-	}
+    public void setActiveDirectoryOrganizationService(
+            ActiveDirectoryOrganizationService activeDirectoryOrganizationService) {
+        this.activeDirectoryOrganizationService = activeDirectoryOrganizationService;
+    }
 
-	@Override
-	public void setSynchronizer(Synchronizers synchronizer) {
-		this.synchronizer = synchronizer;
-	}
+    @Override
+    public void setSynchronizer(Synchronizers synchronizer) {
+        this.synchronizer = synchronizer;
+    }
 
 
-	
+    
 }

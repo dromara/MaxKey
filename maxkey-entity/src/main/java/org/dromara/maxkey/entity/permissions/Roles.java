@@ -36,11 +36,11 @@ public class Roles extends JpaEntity implements Serializable {
     private static final long serialVersionUID = 4660258495864814777L;
     
     public class Category{
-    	public static final String DYNAMIC = "dynamic";
-    	
-    	public static final String STATIC  = "static";
-    	
-    	public static final String APP     = "app";
+        public static final String DYNAMIC = "dynamic";
+        
+        public static final String STATIC  = "static";
+        
+        public static final String APP     = "app";
     }
     
     @Id
@@ -83,10 +83,10 @@ public class Roles extends JpaEntity implements Serializable {
     @Column
     String appId;
     
-	@Column
-	private String instId;
+    @Column
+    private String instId;
 
-	private String instName;
+    private String instName;
 
     public Roles() {
     }
@@ -110,7 +110,7 @@ public class Roles extends JpaEntity implements Serializable {
         this.appId = appId;
     }
 
-	public String getId() {
+    public String getId() {
         return id;
     }
 
@@ -119,21 +119,21 @@ public class Roles extends JpaEntity implements Serializable {
     }
 
     public String getRoleCode() {
-		return roleCode;
-	}
+        return roleCode;
+    }
 
-	public void setRoleCode(String roleCode) {
-		this.roleCode = roleCode;
-	}
+    public void setRoleCode(String roleCode) {
+        this.roleCode = roleCode;
+    }
 
-	public String getRoleName() {
-		return roleName;
-	}
+    public String getRoleName() {
+        return roleName;
+    }
 
-	public void setRoleName(String roleName) {
-		this.roleName = roleName;
-	}
-	
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
+    
     public int getIsdefault() {
         return isdefault;
     }
@@ -167,22 +167,22 @@ public class Roles extends JpaEntity implements Serializable {
     }
 
     public Date getCreatedDate() {
-		return createdDate;
-	}
+        return createdDate;
+    }
 
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
 
-	public Date getModifiedDate() {
-		return modifiedDate;
-	}
+    public Date getModifiedDate() {
+        return modifiedDate;
+    }
 
-	public void setModifiedDate(Date modifiedDate) {
-		this.modifiedDate = modifiedDate;
-	}
+    public void setModifiedDate(Date modifiedDate) {
+        this.modifiedDate = modifiedDate;
+    }
 
-	public int getStatus() {
+    public int getStatus() {
         return status;
     }
 
@@ -192,25 +192,25 @@ public class Roles extends JpaEntity implements Serializable {
 
     /**
      * ROLE_ALL_USER must be 
-     * 		1, dynamic 
-     * 		2, all orgIdsList 
-	 *		3, not filters
+     *         1, dynamic 
+     *         2, all orgIdsList 
+     *        3, not filters
      */
     public void setDefaultAllUser() {
-    	this.category = Category.DYNAMIC;
-    	this.orgIdsList ="";
-		this.filters ="";
+        this.category = Category.DYNAMIC;
+        this.orgIdsList ="";
+        this.filters ="";
     }
 
     public String getCategory() {
-		return category;
-	}
+        return category;
+    }
 
-	public void setCategory(String category) {
-		this.category = category;
-	}
+    public void setCategory(String category) {
+        this.category = category;
+    }
 
-	public String getFilters() {
+    public String getFilters() {
         return filters;
     }
 
@@ -227,64 +227,64 @@ public class Roles extends JpaEntity implements Serializable {
     }
 
     public String getAppId() {
-		return appId;
-	}
+        return appId;
+    }
 
-	public void setAppId(String appId) {
-		this.appId = appId;
-	}
+    public void setAppId(String appId) {
+        this.appId = appId;
+    }
 
-	public String getInstId() {
-		return instId;
-	}
+    public String getInstId() {
+        return instId;
+    }
 
-	public void setInstId(String instId) {
-		this.instId = instId;
-	}
+    public void setInstId(String instId) {
+        this.instId = instId;
+    }
 
-	public String getInstName() {
-		return instName;
-	}
+    public String getInstName() {
+        return instName;
+    }
 
-	public void setInstName(String instName) {
-		this.instName = instName;
-	}
+    public void setInstName(String instName) {
+        this.instName = instName;
+    }
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Roles [id=");
-		builder.append(id);
-		builder.append(", roleCode=");
-		builder.append(roleCode);
-		builder.append(", roleName=");
-		builder.append(roleName);
-		builder.append(", category=");
-		builder.append(category);
-		builder.append(", filters=");
-		builder.append(filters);
-		builder.append(", orgIdsList=");
-		builder.append(orgIdsList);
-		builder.append(", isdefault=");
-		builder.append(isdefault);
-		builder.append(", description=");
-		builder.append(description);
-		builder.append(", createdBy=");
-		builder.append(createdBy);
-		builder.append(", createdDate=");
-		builder.append(createdDate);
-		builder.append(", modifiedBy=");
-		builder.append(modifiedBy);
-		builder.append(", modifiedDate=");
-		builder.append(modifiedDate);
-		builder.append(", status=");
-		builder.append(status);
-		builder.append(", instId=");
-		builder.append(instId);
-		builder.append(", instName=");
-		builder.append(instName);
-		builder.append("]");
-		return builder.toString();
-	}
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Roles [id=");
+        builder.append(id);
+        builder.append(", roleCode=");
+        builder.append(roleCode);
+        builder.append(", roleName=");
+        builder.append(roleName);
+        builder.append(", category=");
+        builder.append(category);
+        builder.append(", filters=");
+        builder.append(filters);
+        builder.append(", orgIdsList=");
+        builder.append(orgIdsList);
+        builder.append(", isdefault=");
+        builder.append(isdefault);
+        builder.append(", description=");
+        builder.append(description);
+        builder.append(", createdBy=");
+        builder.append(createdBy);
+        builder.append(", createdDate=");
+        builder.append(createdDate);
+        builder.append(", modifiedBy=");
+        builder.append(modifiedBy);
+        builder.append(", modifiedDate=");
+        builder.append(modifiedDate);
+        builder.append(", status=");
+        builder.append(status);
+        builder.append(", instId=");
+        builder.append(instId);
+        builder.append(", instName=");
+        builder.append(instName);
+        builder.append("]");
+        return builder.toString();
+    }
 
 }

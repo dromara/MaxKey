@@ -22,10 +22,10 @@ import org.dromara.maxkey.authz.oauth2.provider.OAuth2Authentication;
  */
 public interface AuthenticationKeyGenerator {
 
-	/**
-	 * @param authentication an OAuth2Authentication
-	 * @return a unique key identifying the authentication
-	 */
-	String extractKey(OAuth2Authentication authentication);
+    /**
+     * @param authentication an OAuth2Authentication
+     * @return a unique key identifying the authentication
+     */
+    String extractKey(OAuth2Authentication authentication);
 
 }

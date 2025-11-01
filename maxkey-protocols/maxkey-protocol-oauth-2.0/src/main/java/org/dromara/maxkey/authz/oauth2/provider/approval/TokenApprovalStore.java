@@ -40,79 +40,79 @@ import org.slf4j.LoggerFactory;
  */
 public class TokenApprovalStore implements ApprovalStore {
 
-	static final Logger _logger = LoggerFactory.getLogger(TokenApprovalStore.class);
-			
-	private TokenStore store;
+    static final Logger _logger = LoggerFactory.getLogger(TokenApprovalStore.class);
+            
+    private TokenStore store;
 
-	/**
-	 * @param store the token store to set
-	 */
-	public void setTokenStore(TokenStore store) {
-		this.store = store;
-	}
+    /**
+     * @param store the token store to set
+     */
+    public void setTokenStore(TokenStore store) {
+        this.store = store;
+    }
 
-	/**
-	 * This implementation is a no-op. We assume that the {@link TokenStore} is populated elsewhere, by (for example) a
-	 * token services instance that knows more about granted tokens than we could possibly infer from the approvals.
-	 * 
-	 * @see org.dromara.maxkey.authz.oauth2.provider.approval.ApprovalStore#addApprovals(java.util.Collection)
-	 */
-	@Override
-	public boolean addApprovals(Collection<Approval> approvals) {
-		_logger.debug("add Approvals...");
-		return true;
-	}
+    /**
+     * This implementation is a no-op. We assume that the {@link TokenStore} is populated elsewhere, by (for example) a
+     * token services instance that knows more about granted tokens than we could possibly infer from the approvals.
+     * 
+     * @see org.dromara.maxkey.authz.oauth2.provider.approval.ApprovalStore#addApprovals(java.util.Collection)
+     */
+    @Override
+    public boolean addApprovals(Collection<Approval> approvals) {
+        _logger.debug("add Approvals...");
+        return true;
+    }
 
-	/**
-	 * Revoke all tokens that match the client and user in the approvals supplied.
-	 * 
-	 * @see org.dromara.maxkey.authz.oauth2.provider.approval.ApprovalStore#revokeApprovals(java.util.Collection)
-	 */
-	@Override
-	public boolean revokeApprovals(Collection<Approval> approvals) {
-		_logger.debug("revoke Approvals " + approvals);
-		boolean success = true;
-		for (Approval approval : approvals) {
-			Collection<OAuth2AccessToken> tokens = store.findTokensByClientIdAndUserName(approval.getClientId(), approval.getUserId());
-			for (OAuth2AccessToken token : tokens) {
-				OAuth2Authentication authentication = store.readAuthentication(token);
-				if (authentication != null
-						&& approval.getClientId().equals(authentication.getOAuth2Request().getClientId())) {
-					store.removeAccessToken(token);
-				}
-			}
-		}
-		return success;
-	}
+    /**
+     * Revoke all tokens that match the client and user in the approvals supplied.
+     * 
+     * @see org.dromara.maxkey.authz.oauth2.provider.approval.ApprovalStore#revokeApprovals(java.util.Collection)
+     */
+    @Override
+    public boolean revokeApprovals(Collection<Approval> approvals) {
+        _logger.debug("revoke Approvals " + approvals);
+        boolean success = true;
+        for (Approval approval : approvals) {
+            Collection<OAuth2AccessToken> tokens = store.findTokensByClientIdAndUserName(approval.getClientId(), approval.getUserId());
+            for (OAuth2AccessToken token : tokens) {
+                OAuth2Authentication authentication = store.readAuthentication(token);
+                if (authentication != null
+                        && approval.getClientId().equals(authentication.getOAuth2Request().getClientId())) {
+                    store.removeAccessToken(token);
+                }
+            }
+        }
+        return success;
+    }
 
-	/**
-	 * Extract the implied approvals from any tokens associated with the user and client id supplied.
-	 * 
-	 * @see org.dromara.maxkey.authz.oauth2.provider.approval.ApprovalStore#getApprovals(java.lang.String,
-	 * java.lang.String)
-	 */
-	@Override
-	public Collection<Approval> getApprovals(String userId, String clientId) {
-		_logger.trace("userId " + userId+" , clientId " + clientId);
-		Collection<Approval> result = new HashSet<Approval>();
-		Collection<OAuth2AccessToken> tokens = store.findTokensByClientIdAndUserName(clientId, userId);
-		_logger.trace("tokens Collection " + tokens);
-		for (OAuth2AccessToken token : tokens) {
-			_logger.trace("token " + token);
-			if(token != null) {
-				OAuth2Authentication authentication = store.readAuthentication(token);
-				_logger.trace("authentication " + authentication);
-				if (authentication != null) {
-					Date expiresAt = token.getExpiration();
-					for (String scope : token.getScope()) {
-						Approval approval = new Approval(userId, clientId, scope, expiresAt, ApprovalStatus.APPROVED);
-						result.add(approval);
-						_logger.trace("add approval " + approval);
-					}
-				}
-			}
-		}
-		return result;
-	}
+    /**
+     * Extract the implied approvals from any tokens associated with the user and client id supplied.
+     * 
+     * @see org.dromara.maxkey.authz.oauth2.provider.approval.ApprovalStore#getApprovals(java.lang.String,
+     * java.lang.String)
+     */
+    @Override
+    public Collection<Approval> getApprovals(String userId, String clientId) {
+        _logger.trace("userId " + userId+" , clientId " + clientId);
+        Collection<Approval> result = new HashSet<Approval>();
+        Collection<OAuth2AccessToken> tokens = store.findTokensByClientIdAndUserName(clientId, userId);
+        _logger.trace("tokens Collection " + tokens);
+        for (OAuth2AccessToken token : tokens) {
+            _logger.trace("token " + token);
+            if(token != null) {
+                OAuth2Authentication authentication = store.readAuthentication(token);
+                _logger.trace("authentication " + authentication);
+                if (authentication != null) {
+                    Date expiresAt = token.getExpiration();
+                    for (String scope : token.getScope()) {
+                        Approval approval = new Approval(userId, clientId, scope, expiresAt, ApprovalStatus.APPROVED);
+                        result.add(approval);
+                        _logger.trace("add approval " + approval);
+                    }
+                }
+            }
+        }
+        return result;
+    }
 
 }

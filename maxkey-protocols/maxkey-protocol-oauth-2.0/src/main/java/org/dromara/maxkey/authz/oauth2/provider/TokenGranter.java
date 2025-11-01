@@ -27,6 +27,6 @@ import org.dromara.maxkey.authz.oauth2.common.OAuth2AccessToken;
  */
 public interface TokenGranter {
 
-	OAuth2AccessToken grant(String grantType, TokenRequest tokenRequest);
+    OAuth2AccessToken grant(String grantType, TokenRequest tokenRequest);
 
 }

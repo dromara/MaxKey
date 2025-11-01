@@ -26,43 +26,43 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class JdbcSynchronizerService   implements ISynchronizerService{
-	static final  Logger _logger = LoggerFactory.getLogger(JdbcSynchronizerService.class);
-	
-	Synchronizers synchronizer;
-	
-	@Autowired
-	JdbcUsersService jdbcUsersService;
-	
-	@Autowired
-	JdbcOrganizationService jdbcOrganizationService;
-	
-	public JdbcSynchronizerService() {
-		super();
-	}
+    static final  Logger _logger = LoggerFactory.getLogger(JdbcSynchronizerService.class);
+    
+    Synchronizers synchronizer;
+    
+    @Autowired
+    JdbcUsersService jdbcUsersService;
+    
+    @Autowired
+    JdbcOrganizationService jdbcOrganizationService;
+    
+    public JdbcSynchronizerService() {
+        super();
+    }
 
-	public void sync() {
-		_logger.info("Sync ...");
-		jdbcOrganizationService.setSynchronizer(synchronizer);
-		jdbcOrganizationService.sync();
-		
-		jdbcUsersService.setSynchronizer(synchronizer);
-		jdbcUsersService.sync();
-		
-	}
+    public void sync() {
+        _logger.info("Sync ...");
+        jdbcOrganizationService.setSynchronizer(synchronizer);
+        jdbcOrganizationService.sync();
+        
+        jdbcUsersService.setSynchronizer(synchronizer);
+        jdbcUsersService.sync();
+        
+    }
 
-	public void setJdbcUsersService(JdbcUsersService jdbcUsersService) {
-		this.jdbcUsersService = jdbcUsersService;
-	}
+    public void setJdbcUsersService(JdbcUsersService jdbcUsersService) {
+        this.jdbcUsersService = jdbcUsersService;
+    }
 
-	public void setJdbcOrganizationService(JdbcOrganizationService jdbcOrganizationService) {
-		this.jdbcOrganizationService = jdbcOrganizationService;
-	}
+    public void setJdbcOrganizationService(JdbcOrganizationService jdbcOrganizationService) {
+        this.jdbcOrganizationService = jdbcOrganizationService;
+    }
 
-	@Override
-	public void setSynchronizer(Synchronizers synchronizer) {
-		this.synchronizer = synchronizer;
-	}
+    @Override
+    public void setSynchronizer(Synchronizers synchronizer) {
+        this.synchronizer = synchronizer;
+    }
 
 
-	
+    
 }

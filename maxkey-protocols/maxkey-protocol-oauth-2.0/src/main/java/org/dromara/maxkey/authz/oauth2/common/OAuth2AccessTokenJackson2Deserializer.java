@@ -45,62 +45,62 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 @SuppressWarnings("serial")
 public final class OAuth2AccessTokenJackson2Deserializer extends StdDeserializer<OAuth2AccessToken> {
 
-	public OAuth2AccessTokenJackson2Deserializer() {
-		super(OAuth2AccessToken.class);
-	}
+    public OAuth2AccessTokenJackson2Deserializer() {
+        super(OAuth2AccessToken.class);
+    }
 
-	@Override
-	public OAuth2AccessToken deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException,
-			JsonProcessingException {
+    @Override
+    public OAuth2AccessToken deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException,
+            JsonProcessingException {
 
-		String tokenValue = null;
-		String tokenType = null;
-		String refreshToken = null;
-		Long expiresIn = null;
-		Set<String> scope = null;
-		Map<String, Object> additionalInformation = new LinkedHashMap<String, Object>();
+        String tokenValue = null;
+        String tokenType = null;
+        String refreshToken = null;
+        Long expiresIn = null;
+        Set<String> scope = null;
+        Map<String, Object> additionalInformation = new LinkedHashMap<String, Object>();
 
-		// What should occur if a parameter exists twice
-		while (jp.nextToken() != JsonToken.END_OBJECT) {
-			String name = jp.currentName();
-			jp.nextToken();
-			if (OAuth2AccessToken.ACCESS_TOKEN.equals(name)) {
-				tokenValue = jp.getText();
-			}
-			else if (OAuth2AccessToken.TOKEN_TYPE.equals(name)) {
-				tokenType = jp.getText();
-			}
-			else if (OAuth2AccessToken.REFRESH_TOKEN.equals(name)) {
-				refreshToken = jp.getText();
-			}
-			else if (OAuth2AccessToken.EXPIRES_IN.equals(name)) {
-				try {
-					expiresIn = jp.getLongValue();
-				} catch (JsonParseException e) {
-					expiresIn = Long.valueOf(jp.getText());
-				}
-			}
-			else if (OAuth2AccessToken.SCOPE.equals(name)) {
-				String text = jp.getText();
-				scope = OAuth2Utils.parseParameterList(text);
-			} else {
-				additionalInformation.put(name, jp.readValueAs(Object.class));
-			}
-		}
+        // What should occur if a parameter exists twice
+        while (jp.nextToken() != JsonToken.END_OBJECT) {
+            String name = jp.currentName();
+            jp.nextToken();
+            if (OAuth2AccessToken.ACCESS_TOKEN.equals(name)) {
+                tokenValue = jp.getText();
+            }
+            else if (OAuth2AccessToken.TOKEN_TYPE.equals(name)) {
+                tokenType = jp.getText();
+            }
+            else if (OAuth2AccessToken.REFRESH_TOKEN.equals(name)) {
+                refreshToken = jp.getText();
+            }
+            else if (OAuth2AccessToken.EXPIRES_IN.equals(name)) {
+                try {
+                    expiresIn = jp.getLongValue();
+                } catch (JsonParseException e) {
+                    expiresIn = Long.valueOf(jp.getText());
+                }
+            }
+            else if (OAuth2AccessToken.SCOPE.equals(name)) {
+                String text = jp.getText();
+                scope = OAuth2Utils.parseParameterList(text);
+            } else {
+                additionalInformation.put(name, jp.readValueAs(Object.class));
+            }
+        }
 
-		// What should occur if a required parameter (tokenValue or tokenType) is missing?
+        // What should occur if a required parameter (tokenValue or tokenType) is missing?
 
-		DefaultOAuth2AccessToken accessToken = new DefaultOAuth2AccessToken(tokenValue);
-		accessToken.setTokenType(tokenType);
-		if (expiresIn != null) {
-			accessToken.setExpiration(new Date(System.currentTimeMillis() + (expiresIn * 1000)));
-		}
-		if (refreshToken != null) {
-			accessToken.setRefreshToken(new DefaultOAuth2RefreshToken(refreshToken));
-		}
-		accessToken.setScope(scope);
-		accessToken.setAdditionalInformation(additionalInformation);
+        DefaultOAuth2AccessToken accessToken = new DefaultOAuth2AccessToken(tokenValue);
+        accessToken.setTokenType(tokenType);
+        if (expiresIn != null) {
+            accessToken.setExpiration(new Date(System.currentTimeMillis() + (expiresIn * 1000)));
+        }
+        if (refreshToken != null) {
+            accessToken.setRefreshToken(new DefaultOAuth2RefreshToken(refreshToken));
+        }
+        accessToken.setScope(scope);
+        accessToken.setAdditionalInformation(additionalInformation);
 
-		return accessToken;
-	}
+        return accessToken;
+    }
 }

@@ -26,35 +26,35 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ReorgDeptListenerAdapter extends ScheduleAdapter   implements Job , Serializable {
-	static final  Logger _logger = LoggerFactory.getLogger(ReorgDeptListenerAdapter.class);
-	
-	private static final long serialVersionUID = 4782358765969474833L;
-	
-	transient OrganizationsService organizationsService;
+    static final  Logger _logger = LoggerFactory.getLogger(ReorgDeptListenerAdapter.class);
+    
+    private static final long serialVersionUID = 4782358765969474833L;
+    
+    transient OrganizationsService organizationsService;
 
-	@Override
-	public void execute(JobExecutionContext context) throws JobExecutionException {
-		 if(jobStatus == JOBSTATUS.RUNNING) {return;}
-		 init(context);
-		 	
-		 _logger.debug("running ... " );
+    @Override
+    public void execute(JobExecutionContext context) throws JobExecutionException {
+         if(jobStatus == JOBSTATUS.RUNNING) {return;}
+         init(context);
+             
+         _logger.debug("running ... " );
         jobStatus = JOBSTATUS.RUNNING;
         try {
-        	organizationsService.reorgNamePath(null);
+            organizationsService.reorgNamePath(null);
             _logger.debug("finished  " );
             jobStatus = JOBSTATUS.FINISHED;
         }catch(Exception e) {
             jobStatus = JOBSTATUS.ERROR;
             _logger.error("Exception " ,e);
         }
-		
-	}
+        
+    }
 
-	 @Override
-	protected void init(JobExecutionContext context){
-		 super.init(context);
-    	if(organizationsService == null) {
-    		organizationsService = getParameter("organizationsService",OrganizationsService.class);
+     @Override
+    protected void init(JobExecutionContext context){
+         super.init(context);
+        if(organizationsService == null) {
+            organizationsService = getParameter("organizationsService",OrganizationsService.class);
         }
     }
 }

@@ -35,58 +35,58 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 
 public class WebInstRequestFilter  extends GenericFilterBean {
-	static final  Logger _logger = LoggerFactory.getLogger(WebInstRequestFilter.class);	
-	
-	public static final  String  HEADER_HOST 		= "host";
-	
-	public static final  String  HEADER_HOSTNAME 	= "hostname";
-	
-	public static final  String  HEADER_ORIGIN		= "Origin";	
-	
-	InstitutionsService institutionsService;
-	
-	ApplicationConfig applicationConfig;
-	
-	@Override
-	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain)
-			throws IOException, ServletException {
-		_logger.trace("WebInstRequestFilter");
-		HttpServletRequest request= ((HttpServletRequest)servletRequest);
-		
-		if(request.getSession().getAttribute(WebConstants.CURRENT_INST) == null) {
-			if(_logger.isTraceEnabled()) {WebContext.printRequest(request);}
-			String host = request.getHeader(HEADER_HOSTNAME);
-			_logger.trace("hostname {}",host);
-			if(StringUtils.isEmpty(host)) {
-				host = request.getHeader(HEADER_HOST);
-				_logger.trace("host {}",host);
-			}
-			if(StringUtils.isEmpty(host)) {
-				host = applicationConfig.getDomainName();
-				_logger.trace("config domain {}",host);
-			}
-			if(host.indexOf(":")> -1 ) {
-				host = host.split(":")[0];
-				_logger.trace("domain split {}",host);
-			}
-			_logger.trace("host {}",host);
-			Institutions institution = institutionsService.get(host);
-			_logger.trace("{}" ,institution);
-			request.getSession().setAttribute(WebConstants.CURRENT_INST, institution);
-			
-			String origin = request.getHeader(HEADER_ORIGIN);
-			if(StringUtils.isEmpty(origin)) {
-				origin = applicationConfig.getFrontendUri();
-			}
-			_logger.trace("origin {}" ,origin);
-		}
+    static final  Logger _logger = LoggerFactory.getLogger(WebInstRequestFilter.class);    
+    
+    public static final  String  HEADER_HOST         = "host";
+    
+    public static final  String  HEADER_HOSTNAME     = "hostname";
+    
+    public static final  String  HEADER_ORIGIN        = "Origin";    
+    
+    InstitutionsService institutionsService;
+    
+    ApplicationConfig applicationConfig;
+    
+    @Override
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain)
+            throws IOException, ServletException {
+        _logger.trace("WebInstRequestFilter");
+        HttpServletRequest request= ((HttpServletRequest)servletRequest);
+        
+        if(request.getSession().getAttribute(WebConstants.CURRENT_INST) == null) {
+            if(_logger.isTraceEnabled()) {WebContext.printRequest(request);}
+            String host = request.getHeader(HEADER_HOSTNAME);
+            _logger.trace("hostname {}",host);
+            if(StringUtils.isEmpty(host)) {
+                host = request.getHeader(HEADER_HOST);
+                _logger.trace("host {}",host);
+            }
+            if(StringUtils.isEmpty(host)) {
+                host = applicationConfig.getDomainName();
+                _logger.trace("config domain {}",host);
+            }
+            if(host.indexOf(":")> -1 ) {
+                host = host.split(":")[0];
+                _logger.trace("domain split {}",host);
+            }
+            _logger.trace("host {}",host);
+            Institutions institution = institutionsService.get(host);
+            _logger.trace("{}" ,institution);
+            request.getSession().setAttribute(WebConstants.CURRENT_INST, institution);
+            
+            String origin = request.getHeader(HEADER_ORIGIN);
+            if(StringUtils.isEmpty(origin)) {
+                origin = applicationConfig.getFrontendUri();
+            }
+            _logger.trace("origin {}" ,origin);
+        }
         chain.doFilter(servletRequest, servletResponse);
-	}
+    }
 
-	public WebInstRequestFilter(InstitutionsService institutionsService,ApplicationConfig applicationConfig) {
-		super();
-		this.institutionsService = institutionsService;
-		this.applicationConfig = applicationConfig;
-	}
+    public WebInstRequestFilter(InstitutionsService institutionsService,ApplicationConfig applicationConfig) {
+        super();
+        this.institutionsService = institutionsService;
+        this.applicationConfig = applicationConfig;
+    }
 
 }

@@ -212,30 +212,30 @@ public class Accounts extends JpaEntity implements Serializable {
     }
 
     public String getStrategyName() {
-		return strategyName;
-	}
+        return strategyName;
+    }
 
-	public void setStrategyName(String strategyName) {
-		this.strategyName = strategyName;
-	}
+    public void setStrategyName(String strategyName) {
+        this.strategyName = strategyName;
+    }
 
-	public String getInstId() {
-		return instId;
-	}
+    public String getInstId() {
+        return instId;
+    }
 
-	public void setInstId(String instId) {
-		this.instId = instId;
-	}
+    public void setInstId(String instId) {
+        this.instId = instId;
+    }
 
-	public String getInstName() {
-		return instName;
-	}
+    public String getInstName() {
+        return instName;
+    }
 
-	public void setInstName(String instName) {
-		this.instName = instName;
-	}
+    public void setInstName(String instName) {
+        this.instName = instName;
+    }
 
-	@Override
+    @Override
     public String toString() {
         return "AppAccounts [uid=" + userId + ", username=" + username + ", displayName=" + displayName + ", appId="
                 + appId + ", appName=" + appName + ", relatedUsername=" + relatedUsername + ", relatedPassword="

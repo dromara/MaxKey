@@ -47,21 +47,21 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
  *
  */
 public class JsonDateDeserializer extends JsonDeserializer<Date> {
-	 
+     
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
 
-	@Override
-	public Date deserialize(com.fasterxml.jackson.core.JsonParser parser, DeserializationContext ctxt)
-			throws IOException, JsonProcessingException {
-		try {
-			synchronized (dateFormat) {				
-				return dateFormat.parse(parser.toString());
-			}
-		}
-		catch (ParseException e) {
-			throw new JsonParseException( parser,"Could not parse date ",e);
-		}
-	}
+    @Override
+    public Date deserialize(com.fasterxml.jackson.core.JsonParser parser, DeserializationContext ctxt)
+            throws IOException, JsonProcessingException {
+        try {
+            synchronized (dateFormat) {                
+                return dateFormat.parse(parser.toString());
+            }
+        }
+        catch (ParseException e) {
+            throw new JsonParseException( parser,"Could not parse date ",e);
+        }
+    }
  
 }

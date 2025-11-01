@@ -44,82 +44,82 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value={"/access/access"})
 public class AccessController {
-	static final Logger logger = LoggerFactory.getLogger(AccessController.class);
-	
-	@Autowired
-	AccessService accessService;
+    static final Logger logger = LoggerFactory.getLogger(AccessController.class);
+    
+    @Autowired
+    AccessService accessService;
 
-	@Autowired
-	HistorySystemLogsService systemLog;
-	
-	@GetMapping(value = { "/appsInGroup" })
-	public Message<JpaPageResults<Access>> appsInRole(
-			@ModelAttribute Access groupPermission,
-			@CurrentUser UserInfo currentUser) {
-		JpaPageResults<Access> groupPermissions;
-		groupPermission.setInstId(currentUser.getInstId());
-		groupPermissions= accessService.fetchPageResults("appsInGroup",groupPermission);
+    @Autowired
+    HistorySystemLogsService systemLog;
+    
+    @GetMapping(value = { "/appsInGroup" })
+    public Message<JpaPageResults<Access>> appsInRole(
+            @ModelAttribute Access groupPermission,
+            @CurrentUser UserInfo currentUser) {
+        JpaPageResults<Access> groupPermissions;
+        groupPermission.setInstId(currentUser.getInstId());
+        groupPermissions= accessService.fetchPageResults("appsInGroup",groupPermission);
 
-		if(groupPermissions!=null&&groupPermissions.getRows()!=null){
-			for (Apps app : groupPermissions.getRows()){
-				app.transIconBase64();
-			}
-		}
-		return new Message<>(Message.FAIL,groupPermissions);
-	}
-	
-	@GetMapping(value = { "/appsNotInGroup" })
-	public Message<JpaPageResults<Access>> appsNotInRole(
-				@ModelAttribute Access groupPermission,
-				@CurrentUser UserInfo currentUser) {
-		JpaPageResults<Access> groupPermissions;
-		groupPermission.setInstId(currentUser.getInstId());
-		groupPermissions= accessService.fetchPageResults("appsNotInGroup",groupPermission);
+        if(groupPermissions!=null&&groupPermissions.getRows()!=null){
+            for (Apps app : groupPermissions.getRows()){
+                app.transIconBase64();
+            }
+        }
+        return new Message<>(Message.FAIL,groupPermissions);
+    }
+    
+    @GetMapping(value = { "/appsNotInGroup" })
+    public Message<JpaPageResults<Access>> appsNotInRole(
+                @ModelAttribute Access groupPermission,
+                @CurrentUser UserInfo currentUser) {
+        JpaPageResults<Access> groupPermissions;
+        groupPermission.setInstId(currentUser.getInstId());
+        groupPermissions= accessService.fetchPageResults("appsNotInGroup",groupPermission);
 
-		if(groupPermissions!=null&&groupPermissions.getRows()!=null){
-			for (Apps app : groupPermissions.getRows()){
-				app.transIconBase64();
-			}
-		}
-		return new Message<>(Message.FAIL,groupPermissions);
-	}
+        if(groupPermissions!=null&&groupPermissions.getRows()!=null){
+            for (Apps app : groupPermissions.getRows()){
+                app.transIconBase64();
+            }
+        }
+        return new Message<>(Message.FAIL,groupPermissions);
+    }
 
-	@PostMapping(value = {"/add"})
-	public Message<Access> insertPermission(
-				@RequestBody Access groupPermission,
-				@CurrentUser UserInfo currentUser) {
-		if (groupPermission == null || groupPermission.getGroupId() == null) {
-			return new Message<>(Message.FAIL);
-		}
-		String roleId = groupPermission.getGroupId();
-		
-		boolean result = true;
-		String appIds = groupPermission.getAppId();
-		if (appIds != null) {
-			String[] arrAppIds = appIds.split(",");
-			for (int i = 0; i < arrAppIds.length; i++) {
-				if(StringUtils.isNotBlank(arrAppIds[i])) {
-					Access newgroupPermissions = 
-							new Access(roleId, arrAppIds[i],currentUser.getInstId());
-					newgroupPermissions.setId(WebContext.genId());
-					result = accessService.insert(newgroupPermissions);
-				}
-			}
-			if(result) {
-				return new Message<>(Message.SUCCESS);
-			}
-		}
-		return new Message<>(Message.FAIL);
-	}
-	
-	@DeleteMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<Access> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
-		logger.debug("-delete ids : {}" , ids);
-		if (accessService.deleteBatch(ids)) {
-			 return new Message<>(Message.SUCCESS);
-		} else {
-			return new Message<>(Message.FAIL);
-		}
-	}
+    @PostMapping(value = {"/add"})
+    public Message<Access> insertPermission(
+                @RequestBody Access groupPermission,
+                @CurrentUser UserInfo currentUser) {
+        if (groupPermission == null || groupPermission.getGroupId() == null) {
+            return new Message<>(Message.FAIL);
+        }
+        String roleId = groupPermission.getGroupId();
+        
+        boolean result = true;
+        String appIds = groupPermission.getAppId();
+        if (appIds != null) {
+            String[] arrAppIds = appIds.split(",");
+            for (int i = 0; i < arrAppIds.length; i++) {
+                if(StringUtils.isNotBlank(arrAppIds[i])) {
+                    Access newgroupPermissions = 
+                            new Access(roleId, arrAppIds[i],currentUser.getInstId());
+                    newgroupPermissions.setId(WebContext.genId());
+                    result = accessService.insert(newgroupPermissions);
+                }
+            }
+            if(result) {
+                return new Message<>(Message.SUCCESS);
+            }
+        }
+        return new Message<>(Message.FAIL);
+    }
+    
+    @DeleteMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public Message<Access> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
+        logger.debug("-delete ids : {}" , ids);
+        if (accessService.deleteBatch(ids)) {
+             return new Message<>(Message.SUCCESS);
+        } else {
+            return new Message<>(Message.FAIL);
+        }
+    }
 
 }

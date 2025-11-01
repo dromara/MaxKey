@@ -30,14 +30,14 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 
 public class CurrentUserMethodArgumentResolver implements HandlerMethodArgumentResolver {
-	
+    
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
-    	Authentication  authentication  = 
-    			(Authentication ) webRequest.getAttribute(
-    					WebConstants.AUTHENTICATION, RequestAttributes.SCOPE_SESSION);
-    	UserInfo userInfo  = AuthorizationUtils.getUserInfo(authentication);
-    	if (userInfo != null) {
+        Authentication  authentication  = 
+                (Authentication ) webRequest.getAttribute(
+                        WebConstants.AUTHENTICATION, RequestAttributes.SCOPE_SESSION);
+        UserInfo userInfo  = AuthorizationUtils.getUserInfo(authentication);
+        if (userInfo != null) {
             return userInfo;
         }
         throw new MissingServletRequestPartException("currentUser");

@@ -55,135 +55,135 @@ import jakarta.servlet.http.HttpServletResponse;
 @Controller
 public class Cas30AuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 
-	static final  Logger _logger = LoggerFactory.getLogger(Cas30AuthorizeEndpoint.class);
+    static final  Logger _logger = LoggerFactory.getLogger(Cas30AuthorizeEndpoint.class);
 
-	@Operation(summary = "CAS 3.0 ticket验证接口", description = "通过ticket获取当前登录用户信息")
-	@RequestMapping(value=CasConstants.ENDPOINT.ENDPOINT_SERVICE_VALIDATE_V3,method={RequestMethod.GET,RequestMethod.POST})
-	public void serviceValidate(
-			HttpServletRequest request,
-			HttpServletResponse response,
-			@RequestParam(value = CasConstants.PARAMETER.TICKET) String ticket,
-			@RequestParam(value = CasConstants.PARAMETER.SERVICE) String service,
-			@RequestParam(value = CasConstants.PARAMETER.PROXY_CALLBACK_URL,required=false) String pgtUrl,
-			@RequestParam(value = CasConstants.PARAMETER.RENEW,required=false) String renew,
-			@RequestParam(value = CasConstants.PARAMETER.FORMAT,required=false,defaultValue=HttpResponseConstants.FORMAT_TYPE.XML) String format){
-	    _logger.debug("serviceValidate  ticket {} , service {} , pgtUrl {} , renew {} , format {}", ticket,service,pgtUrl,renew,format);
-	    
-		Ticket storedTicket=null;
-		if(ticket.startsWith(CasConstants.PREFIX.SERVICE_TICKET_PREFIX)) {
-			try {
-				storedTicket = ticketServices.consumeTicket(ticket);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		ServiceResponseBuilder serviceResponseBuilder=new ServiceResponseBuilder(format);
-		
-		if(storedTicket!=null){
-		    SignPrincipal authentication = ((SignPrincipal)storedTicket.getAuthentication().getPrincipal());
-			if(StringUtils.isNotBlank(pgtUrl)) {
-				ProxyGrantingTicketIOUImpl proxyGrantingTicketIOUImpl =new ProxyGrantingTicketIOUImpl();
-				String proxyGrantingTicketIOU=casProxyGrantingTicketServices.createTicket(proxyGrantingTicketIOUImpl);
-				
-				ProxyGrantingTicketImpl proxyGrantingTicketImpl=new ProxyGrantingTicketImpl(storedTicket.getAuthentication(),storedTicket.getCasDetails());
-				String proxyGrantingTicket=casProxyGrantingTicketServices.createTicket(proxyGrantingTicketImpl);
-				
-				serviceResponseBuilder.success().setTicket(proxyGrantingTicketIOU);
-				serviceResponseBuilder.success().setProxy(pgtUrl);
-			
-				httpRequestAdapter.post(pgtUrl+"?pgtId="+proxyGrantingTicket+"&pgtIou="+proxyGrantingTicketIOU,null);		
-			}
-			
-			if(ConstsBoolean.isTrue(storedTicket.getCasDetails().getIsAdapter())){
-				Object casAdapter = Instance.newInstance(storedTicket.getCasDetails().getAdapter());
-				try {
-					BeanUtils.setProperty(casAdapter, "serviceResponseBuilder", serviceResponseBuilder);
-				} catch (IllegalAccessException | InvocationTargetException e) {
-					_logger.error("setProperty error . ", e);
-				}
-				
-				AbstractAuthorizeAdapter adapter =(AbstractAuthorizeAdapter)casAdapter;
-				adapter.setPrincipal(authentication);
-				adapter.setApp(storedTicket.getCasDetails());
-				adapter.generateInfo();
-			}else {
-				_logger.error("Cas Adapter is not Set . ");
-			}
-		}else{
-			serviceResponseBuilder.failure()
-				.setCode(CasConstants.ERROR_CODE.INVALID_TICKET)
-				.setDescription("Ticket "+ticket+" not recognized");
-		}
-	
-		httpResponseAdapter.write(response,serviceResponseBuilder.serviceResponseBuilder(),format);
-	}
-	
-	@Operation(summary = "CAS 3.0 ProxyTicket代理验证接口", description = "通过ProxyGrantingTicket获取ProxyTicket",method="POST")
-	@RequestMapping(value=CasConstants.ENDPOINT.ENDPOINT_PROXY_V3,method={RequestMethod.GET,RequestMethod.POST})
-	public void proxy(
-			HttpServletRequest request,
-			HttpServletResponse response,
-			@RequestParam(value = CasConstants.PARAMETER.PROXY_GRANTING_TICKET) String pgt,
-			@RequestParam(value = CasConstants.PARAMETER.TARGET_SERVICE) String targetService,
-			@RequestParam(value = CasConstants.PARAMETER.FORMAT,required=false,defaultValue=HttpResponseConstants.FORMAT_TYPE.XML) String format){
-	    _logger.debug("proxy pgt {} , targetService {} , format {}" , pgt,targetService,format);
-	    ProxyServiceResponseBuilder proxyServiceResponseBuilder=new ProxyServiceResponseBuilder(format);
-	    ProxyGrantingTicketImpl proxyGrantingTicketImpl = (ProxyGrantingTicketImpl)casProxyGrantingTicketServices.get(pgt);
-	    if(proxyGrantingTicketImpl != null) {
-	    	ProxyTicketImpl proxyTicketImpl = new ProxyTicketImpl(proxyGrantingTicketImpl.getAuthentication(),proxyGrantingTicketImpl.getCasDetails());
-	    	String proxyTicket =ticketServices.createTicket(proxyTicketImpl);
-	 		proxyServiceResponseBuilder.success().setTicket(proxyTicket).setFormat(format);
-	    }else {
-	    	proxyServiceResponseBuilder.success().setTicket("").setFormat(format);
-	    }
-	    
-	    httpResponseAdapter.write(response,proxyServiceResponseBuilder.serviceResponseBuilder(),format);
-	}
-	
-	@Operation(summary = "CAS 3.0 ticket代理验证接口", description = "通过ProxyTicket获取当前登录用户信息",method="POST")
-	@RequestMapping(value=CasConstants.ENDPOINT.ENDPOINT_PROXY_VALIDATE_V3,method={RequestMethod.GET,RequestMethod.POST})
-	public void proxy(
-			HttpServletRequest request,
-			HttpServletResponse response,
-			@RequestParam(value = CasConstants.PARAMETER.TICKET) String ticket,
-			@RequestParam(value = CasConstants.PARAMETER.SERVICE) String service,
-			@RequestParam(value = CasConstants.PARAMETER.PROXY_CALLBACK_URL,required=false) String pgtUrl,
-			@RequestParam(value = CasConstants.PARAMETER.RENEW,required=false) String renew,
-			@RequestParam(value = CasConstants.PARAMETER.FORMAT,required=false,defaultValue=HttpResponseConstants.FORMAT_TYPE.XML) String format){
-	    _logger.debug("proxyValidate ticket {} , service {} , pgtUrl {} , renew {} , format {}" , ticket,service,pgtUrl,renew,format);
-		
-		Ticket storedTicket=null;
-		if(ticket.startsWith(CasConstants.PREFIX.PROXY_TICKET_PREFIX)) {
-			try {
-					storedTicket = ticketServices.consumeTicket(ticket);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		ServiceResponseBuilder serviceResponseBuilder=new ServiceResponseBuilder(format);
-		
-		if(storedTicket!=null){
-		    SignPrincipal authentication = ((SignPrincipal)storedTicket.getAuthentication().getPrincipal());
-			if(ConstsBoolean.isTrue(storedTicket.getCasDetails().getIsAdapter())){
-				Object casAdapter = Instance.newInstance(storedTicket.getCasDetails().getAdapter());
-				try {
-					BeanUtils.setProperty(casAdapter, "serviceResponseBuilder", serviceResponseBuilder);
-				} catch (IllegalAccessException | InvocationTargetException e) {
-					_logger.error("setProperty error . ", e);
-				}
-				
-				AbstractAuthorizeAdapter adapter =(AbstractAuthorizeAdapter)casAdapter;
-				adapter.setPrincipal(authentication);
-				adapter.setApp(storedTicket.getCasDetails());
-				adapter.generateInfo();
-			}else {
-				_logger.error("Cas Adapter is not Set . ");
-			}
-		}else{
-			serviceResponseBuilder.failure()
-				.setCode(CasConstants.ERROR_CODE.INVALID_TICKET)
-				.setDescription("Ticket "+ticket+" not recognized");
-		}
-		httpResponseAdapter.write(response,serviceResponseBuilder.serviceResponseBuilder(),format);
-	}
+    @Operation(summary = "CAS 3.0 ticket验证接口", description = "通过ticket获取当前登录用户信息")
+    @RequestMapping(value=CasConstants.ENDPOINT.ENDPOINT_SERVICE_VALIDATE_V3,method={RequestMethod.GET,RequestMethod.POST})
+    public void serviceValidate(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            @RequestParam(value = CasConstants.PARAMETER.TICKET) String ticket,
+            @RequestParam(value = CasConstants.PARAMETER.SERVICE) String service,
+            @RequestParam(value = CasConstants.PARAMETER.PROXY_CALLBACK_URL,required=false) String pgtUrl,
+            @RequestParam(value = CasConstants.PARAMETER.RENEW,required=false) String renew,
+            @RequestParam(value = CasConstants.PARAMETER.FORMAT,required=false,defaultValue=HttpResponseConstants.FORMAT_TYPE.XML) String format){
+        _logger.debug("serviceValidate  ticket {} , service {} , pgtUrl {} , renew {} , format {}", ticket,service,pgtUrl,renew,format);
+        
+        Ticket storedTicket=null;
+        if(ticket.startsWith(CasConstants.PREFIX.SERVICE_TICKET_PREFIX)) {
+            try {
+                storedTicket = ticketServices.consumeTicket(ticket);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        ServiceResponseBuilder serviceResponseBuilder=new ServiceResponseBuilder(format);
+        
+        if(storedTicket!=null){
+            SignPrincipal authentication = ((SignPrincipal)storedTicket.getAuthentication().getPrincipal());
+            if(StringUtils.isNotBlank(pgtUrl)) {
+                ProxyGrantingTicketIOUImpl proxyGrantingTicketIOUImpl =new ProxyGrantingTicketIOUImpl();
+                String proxyGrantingTicketIOU=casProxyGrantingTicketServices.createTicket(proxyGrantingTicketIOUImpl);
+                
+                ProxyGrantingTicketImpl proxyGrantingTicketImpl=new ProxyGrantingTicketImpl(storedTicket.getAuthentication(),storedTicket.getCasDetails());
+                String proxyGrantingTicket=casProxyGrantingTicketServices.createTicket(proxyGrantingTicketImpl);
+                
+                serviceResponseBuilder.success().setTicket(proxyGrantingTicketIOU);
+                serviceResponseBuilder.success().setProxy(pgtUrl);
+            
+                httpRequestAdapter.post(pgtUrl+"?pgtId="+proxyGrantingTicket+"&pgtIou="+proxyGrantingTicketIOU,null);        
+            }
+            
+            if(ConstsBoolean.isTrue(storedTicket.getCasDetails().getIsAdapter())){
+                Object casAdapter = Instance.newInstance(storedTicket.getCasDetails().getAdapter());
+                try {
+                    BeanUtils.setProperty(casAdapter, "serviceResponseBuilder", serviceResponseBuilder);
+                } catch (IllegalAccessException | InvocationTargetException e) {
+                    _logger.error("setProperty error . ", e);
+                }
+                
+                AbstractAuthorizeAdapter adapter =(AbstractAuthorizeAdapter)casAdapter;
+                adapter.setPrincipal(authentication);
+                adapter.setApp(storedTicket.getCasDetails());
+                adapter.generateInfo();
+            }else {
+                _logger.error("Cas Adapter is not Set . ");
+            }
+        }else{
+            serviceResponseBuilder.failure()
+                .setCode(CasConstants.ERROR_CODE.INVALID_TICKET)
+                .setDescription("Ticket "+ticket+" not recognized");
+        }
+    
+        httpResponseAdapter.write(response,serviceResponseBuilder.serviceResponseBuilder(),format);
+    }
+    
+    @Operation(summary = "CAS 3.0 ProxyTicket代理验证接口", description = "通过ProxyGrantingTicket获取ProxyTicket",method="POST")
+    @RequestMapping(value=CasConstants.ENDPOINT.ENDPOINT_PROXY_V3,method={RequestMethod.GET,RequestMethod.POST})
+    public void proxy(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            @RequestParam(value = CasConstants.PARAMETER.PROXY_GRANTING_TICKET) String pgt,
+            @RequestParam(value = CasConstants.PARAMETER.TARGET_SERVICE) String targetService,
+            @RequestParam(value = CasConstants.PARAMETER.FORMAT,required=false,defaultValue=HttpResponseConstants.FORMAT_TYPE.XML) String format){
+        _logger.debug("proxy pgt {} , targetService {} , format {}" , pgt,targetService,format);
+        ProxyServiceResponseBuilder proxyServiceResponseBuilder=new ProxyServiceResponseBuilder(format);
+        ProxyGrantingTicketImpl proxyGrantingTicketImpl = (ProxyGrantingTicketImpl)casProxyGrantingTicketServices.get(pgt);
+        if(proxyGrantingTicketImpl != null) {
+            ProxyTicketImpl proxyTicketImpl = new ProxyTicketImpl(proxyGrantingTicketImpl.getAuthentication(),proxyGrantingTicketImpl.getCasDetails());
+            String proxyTicket =ticketServices.createTicket(proxyTicketImpl);
+             proxyServiceResponseBuilder.success().setTicket(proxyTicket).setFormat(format);
+        }else {
+            proxyServiceResponseBuilder.success().setTicket("").setFormat(format);
+        }
+        
+        httpResponseAdapter.write(response,proxyServiceResponseBuilder.serviceResponseBuilder(),format);
+    }
+    
+    @Operation(summary = "CAS 3.0 ticket代理验证接口", description = "通过ProxyTicket获取当前登录用户信息",method="POST")
+    @RequestMapping(value=CasConstants.ENDPOINT.ENDPOINT_PROXY_VALIDATE_V3,method={RequestMethod.GET,RequestMethod.POST})
+    public void proxy(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            @RequestParam(value = CasConstants.PARAMETER.TICKET) String ticket,
+            @RequestParam(value = CasConstants.PARAMETER.SERVICE) String service,
+            @RequestParam(value = CasConstants.PARAMETER.PROXY_CALLBACK_URL,required=false) String pgtUrl,
+            @RequestParam(value = CasConstants.PARAMETER.RENEW,required=false) String renew,
+            @RequestParam(value = CasConstants.PARAMETER.FORMAT,required=false,defaultValue=HttpResponseConstants.FORMAT_TYPE.XML) String format){
+        _logger.debug("proxyValidate ticket {} , service {} , pgtUrl {} , renew {} , format {}" , ticket,service,pgtUrl,renew,format);
+        
+        Ticket storedTicket=null;
+        if(ticket.startsWith(CasConstants.PREFIX.PROXY_TICKET_PREFIX)) {
+            try {
+                    storedTicket = ticketServices.consumeTicket(ticket);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        ServiceResponseBuilder serviceResponseBuilder=new ServiceResponseBuilder(format);
+        
+        if(storedTicket!=null){
+            SignPrincipal authentication = ((SignPrincipal)storedTicket.getAuthentication().getPrincipal());
+            if(ConstsBoolean.isTrue(storedTicket.getCasDetails().getIsAdapter())){
+                Object casAdapter = Instance.newInstance(storedTicket.getCasDetails().getAdapter());
+                try {
+                    BeanUtils.setProperty(casAdapter, "serviceResponseBuilder", serviceResponseBuilder);
+                } catch (IllegalAccessException | InvocationTargetException e) {
+                    _logger.error("setProperty error . ", e);
+                }
+                
+                AbstractAuthorizeAdapter adapter =(AbstractAuthorizeAdapter)casAdapter;
+                adapter.setPrincipal(authentication);
+                adapter.setApp(storedTicket.getCasDetails());
+                adapter.generateInfo();
+            }else {
+                _logger.error("Cas Adapter is not Set . ");
+            }
+        }else{
+            serviceResponseBuilder.failure()
+                .setCode(CasConstants.ERROR_CODE.INVALID_TICKET)
+                .setDescription("Ticket "+ticket+" not recognized");
+        }
+        httpResponseAdapter.write(response,serviceResponseBuilder.serviceResponseBuilder(),format);
+    }
 }

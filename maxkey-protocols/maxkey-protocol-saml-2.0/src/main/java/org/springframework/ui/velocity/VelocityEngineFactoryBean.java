@@ -66,30 +66,30 @@ import org.springframework.context.ResourceLoaderAware;
  * @deprecated as of Spring 4.3, in favor of FreeMarker
  */
 public class VelocityEngineFactoryBean extends VelocityEngineFactory
-		implements FactoryBean<VelocityEngine>, InitializingBean, ResourceLoaderAware {
+        implements FactoryBean<VelocityEngine>, InitializingBean, ResourceLoaderAware {
 
-	private VelocityEngine velocityEngine;
-
-
-	@Override
-	public void afterPropertiesSet() throws IOException, VelocityException {
-		this.velocityEngine = createVelocityEngine();
-	}
+    private VelocityEngine velocityEngine;
 
 
-	@Override
-	public VelocityEngine getObject() {
-		return this.velocityEngine;
-	}
+    @Override
+    public void afterPropertiesSet() throws IOException, VelocityException {
+        this.velocityEngine = createVelocityEngine();
+    }
 
-	@Override
-	public Class<? extends VelocityEngine> getObjectType() {
-		return VelocityEngine.class;
-	}
 
-	@Override
-	public boolean isSingleton() {
-		return true;
-	}
+    @Override
+    public VelocityEngine getObject() {
+        return this.velocityEngine;
+    }
+
+    @Override
+    public Class<? extends VelocityEngine> getObjectType() {
+        return VelocityEngine.class;
+    }
+
+    @Override
+    public boolean isSingleton() {
+        return true;
+    }
 
 }

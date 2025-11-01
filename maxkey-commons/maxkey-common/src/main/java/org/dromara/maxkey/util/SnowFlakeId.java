@@ -72,15 +72,15 @@ public class SnowFlakeId {
     }
 
     public SnowFlakeId(long datacenterId, long machineId, long sequence, long lastStmp) {
-		super();
-		this.datacenterId = datacenterId;
-		this.machineId = machineId;
-		this.sequence = sequence;
-		this.lastStmp = lastStmp;
-		dateTime =DateUtils.toUtc( fromatTime(lastStmp));
-	}
+        super();
+        this.datacenterId = datacenterId;
+        this.machineId = machineId;
+        this.sequence = sequence;
+        this.lastStmp = lastStmp;
+        dateTime =DateUtils.toUtc( fromatTime(lastStmp));
+    }
 
-	/**
+    /**
      * 产生下一个ID
      *
      * @return
@@ -165,42 +165,42 @@ public class SnowFlakeId {
     
 
     public long getDatacenterId() {
-		return datacenterId;
-	}
+        return datacenterId;
+    }
 
-	public void setDatacenterId(long datacenterId) {
-		this.datacenterId = datacenterId;
-	}
+    public void setDatacenterId(long datacenterId) {
+        this.datacenterId = datacenterId;
+    }
 
-	public long getMachineId() {
-		return machineId;
-	}
+    public long getMachineId() {
+        return machineId;
+    }
 
-	public void setMachineId(long machineId) {
-		this.machineId = machineId;
-	}
+    public void setMachineId(long machineId) {
+        this.machineId = machineId;
+    }
 
-	public long getSequence() {
-		return sequence;
-	}
+    public long getSequence() {
+        return sequence;
+    }
 
-	public void setSequence(long sequence) {
-		this.sequence = sequence;
-	}
+    public void setSequence(long sequence) {
+        this.sequence = sequence;
+    }
 
-	public long getLastStmp() {
-		return lastStmp;
-	}
+    public long getLastStmp() {
+        return lastStmp;
+    }
 
-	public void setLastStmp(long lastStmp) {
-		this.lastStmp = lastStmp;
-	}
+    public void setLastStmp(long lastStmp) {
+        this.lastStmp = lastStmp;
+    }
 
-	public String getDateTime() {
-		return dateTime;
-	}
+    public String getDateTime() {
+        return dateTime;
+    }
 
-	public void setDateTime(String dateTime) {
-		this.dateTime = dateTime;
-	}
+    public void setDateTime(String dateTime) {
+        this.dateTime = dateTime;
+    }
 }

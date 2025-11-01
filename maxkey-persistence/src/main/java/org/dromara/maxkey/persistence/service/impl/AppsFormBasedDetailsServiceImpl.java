@@ -31,23 +31,23 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 @Repository
 public class AppsFormBasedDetailsServiceImpl  extends JpaServiceImpl<AppsFormBasedDetailsMapper,AppsFormBasedDetails> implements AppsFormBasedDetailsService{
 
-	protected static final   Cache<String, AppsFormBasedDetails> detailsCache = 
+    protected static final   Cache<String, AppsFormBasedDetails> detailsCache = 
             Caffeine.newBuilder()
                 .expireAfterWrite(30, TimeUnit.MINUTES)
                 .maximumSize(200000)
                 .build();
 
-	public  AppsFormBasedDetails  getAppDetails(String id,boolean cached) {
-		AppsFormBasedDetails details = null;
-		if(cached) {
-			details = detailsCache.getIfPresent(id);
-			if(details == null) {
-				details = getMapper().getAppDetails(id);
-				detailsCache.put(id, details);
-			}
-		}else {
-			details = getMapper().getAppDetails(id);
-		}
-		return details;
-	}
+    public  AppsFormBasedDetails  getAppDetails(String id,boolean cached) {
+        AppsFormBasedDetails details = null;
+        if(cached) {
+            details = detailsCache.getIfPresent(id);
+            if(details == null) {
+                details = getMapper().getAppDetails(id);
+                detailsCache.put(id, details);
+            }
+        }else {
+            details = getMapper().getAppDetails(id);
+        }
+        return details;
+    }
 }

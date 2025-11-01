@@ -60,7 +60,7 @@ import jakarta.servlet.http.HttpSession;
  *
  */
 public final class WebContext {
-	static final  Logger _logger = LoggerFactory.getLogger(WebContext.class);
+    static final  Logger _logger = LoggerFactory.getLogger(WebContext.class);
     
     public static StandardEnvironment properties;
     
@@ -100,11 +100,11 @@ public final class WebContext {
     }
 
     public static void init(ApplicationContext context) {
-    	applicationContext = context;
+        applicationContext = context;
     }
     
     public static void initProperties(StandardEnvironment standardEnvironment) {
-    	properties = standardEnvironment;
+        properties = standardEnvironment;
     }
     
     /**
@@ -140,7 +140,7 @@ public final class WebContext {
     }
     
     public static <T> T getBean(String name, Class<T> requiredType) throws BeansException{
-    	if(applicationContext==null) {
+        if(applicationContext==null) {
             return getApplicationContext().getBean(name,requiredType);
         }else {
             return applicationContext.getBean(name,requiredType);
@@ -148,11 +148,11 @@ public final class WebContext {
     }
     
     public static String getProperty(String key) {
-    	return properties.getProperty(key);
+        return properties.getProperty(key);
     }
     
     public static String getServerPort() {
-    	return getProperty("server.port");
+        return getProperty("server.port");
     }
 
     // below method is common HttpServlet method
@@ -186,11 +186,11 @@ public final class WebContext {
      *         http://www.website.com/webcontext
      */
     public static String getContextPath(HttpServletRequest request,boolean isContextPath) {
-    	String fullRequestUrl = UrlUtils.buildFullRequestUrl(request);
-    	StringBuilder url = new StringBuilder(fullRequestUrl.substring(0, fullRequestUrl.indexOf(request.getContextPath())));
+        String fullRequestUrl = UrlUtils.buildFullRequestUrl(request);
+        StringBuilder url = new StringBuilder(fullRequestUrl.substring(0, fullRequestUrl.indexOf(request.getContextPath())));
         
         if(isContextPath) {
-        	url.append(request.getContextPath());
+            url.append(request.getContextPath());
         }
         
         _logger.trace("http ContextPath {}" , url);
@@ -203,12 +203,12 @@ public final class WebContext {
      * @param request
      */
     public static void printRequest(final HttpServletRequest request) {
-		_logger.info("getContextPath : {}"  , request.getContextPath());
-    	_logger.info("getRequestURL : {} " , request.getRequestURL());
-		_logger.info("URL : {}" , request.getRequestURI().substring(request.getContextPath().length()));
-    	_logger.info("getMethod : {} " , request.getMethod());
-    	_logger.info("Request IpAddress : {} " , getRequestIpAddress(request));
-    	
+        _logger.info("getContextPath : {}"  , request.getContextPath());
+        _logger.info("getRequestURL : {} " , request.getRequestURL());
+        _logger.info("URL : {}" , request.getRequestURI().substring(request.getContextPath().length()));
+        _logger.info("getMethod : {} " , request.getMethod());
+        _logger.info("Request IpAddress : {} " , getRequestIpAddress(request));
+        
         Enumeration<String> headerNames = request.getHeaderNames();
         while (headerNames.hasMoreElements()) {
           String key = headerNames.nextElement();
@@ -307,7 +307,7 @@ public final class WebContext {
         Locale locale = null;
         try {
             CookieLocaleResolver cookieLocaleResolver = 
-            			getBean("localeResolver",CookieLocaleResolver.class);
+                        getBean("localeResolver",CookieLocaleResolver.class);
             locale = cookieLocaleResolver.resolveLocale(getRequest());
 
         } catch (Exception e) {
@@ -339,7 +339,7 @@ public final class WebContext {
     public static Cookie getCookie(HttpServletRequest request, String name) {
         Map<String, Cookie> cookieMap = getCookieAll(request);
         if (cookieMap.containsKey(name)) {
-        	return cookieMap.get(name);
+            return cookieMap.get(name);
         } else {
             return null;
         }
@@ -462,7 +462,7 @@ public final class WebContext {
      */
     public static boolean captchaValid(String captcha) {
         return (captcha != null && 
-        		captcha.equals(WebContext.getSession().getAttribute(
+                captcha.equals(WebContext.getSession().getAttribute(
                         WebConstants.KAPTCHA_SESSION_KEY).toString()));
     }
 
@@ -519,17 +519,17 @@ public final class WebContext {
      * @return String
      */
     public static String genId() {
-    	if(idGenerator == null) {
-    		idGenerator = new IdGenerator();
-    	}
+        if(idGenerator == null) {
+            idGenerator = new IdGenerator();
+        }
         return idGenerator.generate();
     }
 
     public static void setIdGenerator(IdGenerator idGenerator) {
-		WebContext.idGenerator = idGenerator;
-	}
+        WebContext.idGenerator = idGenerator;
+    }
 
-	public static ModelAndView redirect(String redirectUrl) {
+    public static ModelAndView redirect(String redirectUrl) {
         return new ModelAndView("redirect:" + redirectUrl);
     }
 
@@ -538,22 +538,22 @@ public final class WebContext {
     }
     
     public static boolean compare(String databaseProduct) {
-    	return databaseProduct.equalsIgnoreCase(ApplicationConfig.getDatabaseProduct());
+        return databaseProduct.equalsIgnoreCase(ApplicationConfig.getDatabaseProduct());
     }
     
     public static String version() {
-		StringBuffer version = new StringBuffer();
-		version.append("-----------------------------------------------------------");
-		version.append("+                      MaxKey Community  Edition  ");
-		version.append("+                      Single   Sign   On ( SSO ) ");
-		version.append("+                           Version %s".formatted(
+        StringBuffer version = new StringBuffer();
+        version.append("-----------------------------------------------------------");
+        version.append("+                      MaxKey Community  Edition  ");
+        version.append("+                      Single   Sign   On ( SSO ) ");
+        version.append("+                           Version %s".formatted(
                         WebContext.properties.getProperty("application.formatted-version")));
-		version.append("+");
-		version.append("+                 {}Copyright 2018 - {} https://www.maxkey.top/",
-        			    (char)0xA9 , new DateTime().getYear()
-        			);
-		version.append("+                 .         All rights reserved         . ");
-		version.append("-----------------------------------------------------------");
-		return version.toString();
+        version.append("+");
+        version.append("+                 {}Copyright 2018 - {} https://www.maxkey.top/",
+                        (char)0xA9 , new DateTime().getYear()
+                    );
+        version.append("+                 .         All rights reserved         . ");
+        version.append("-----------------------------------------------------------");
+        return version.toString();
     }
 }

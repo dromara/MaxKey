@@ -48,15 +48,15 @@ public class MaxKeyMgtConfig  {
                 UserInfoService userInfoService,
                 IpLocationParser  ipLocationParser,
                 JdbcTemplate jdbcTemplate) {
-		
+        
         JdbcAuthenticationRealm authenticationRealm = new JdbcAuthenticationRealm(
-        		passwordEncoder,
-        		passwordPolicyValidatorService,
-        		loginService,
-        		historyLoginService,
-        		userInfoService,
-        		ipLocationParser,
-        		jdbcTemplate);
+                passwordEncoder,
+                passwordPolicyValidatorService,
+                loginService,
+                historyLoginService,
+                userInfoService,
+                ipLocationParser,
+                jdbcTemplate);
         
         logger.debug("JdbcAuthenticationRealm inited.");
         return authenticationRealm;
@@ -64,17 +64,17 @@ public class MaxKeyMgtConfig  {
 
     @Bean
     AbstractOtpAuthn timeBasedOtpAuthn() {
-		AbstractOtpAuthn tfaOtpAuthn = new TimeBasedOtpAuthn();
-	    logger.debug("TimeBasedOtpAuthn inited.");
+        AbstractOtpAuthn tfaOtpAuthn = new TimeBasedOtpAuthn();
+        logger.debug("TimeBasedOtpAuthn inited.");
         return tfaOtpAuthn;
     }
 
-	/*@Bean
-	public ISynchronizerService ldapSynchronizerService() {
-		LdapSynchronizerService ldapSynchronizerService = new LdapSynchronizerService();
-		ldapSynchronizerService.setId("LDAP_11122");
-		ldapSynchronizerService.syncOrg();
-		return ldapSynchronizerService;
-	}*/
+    /*@Bean
+    public ISynchronizerService ldapSynchronizerService() {
+        LdapSynchronizerService ldapSynchronizerService = new LdapSynchronizerService();
+        ldapSynchronizerService.setId("LDAP_11122");
+        ldapSynchronizerService.syncOrg();
+        return ldapSynchronizerService;
+    }*/
 
 }

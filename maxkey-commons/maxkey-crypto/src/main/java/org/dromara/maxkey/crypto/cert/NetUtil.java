@@ -43,165 +43,165 @@ import org.slf4j.LoggerFactory;
  */
 public final class NetUtil
 {
-	/** Logger */
-	private static final Logger _logger = LoggerFactory.getLogger(NetUtil.class);
+    /** Logger */
+    private static final Logger _logger = LoggerFactory.getLogger(NetUtil.class);
 
-	//  make this configurable
-	private static final int CONNECT_TIMEOUT = 10000;
+    //  make this configurable
+    private static final int CONNECT_TIMEOUT = 10000;
 
-	//  make this configurable
-	private static final int READ_TIMEOUT = 20000;
+    //  make this configurable
+    private static final int READ_TIMEOUT = 20000;
 
-	/**
-	 * Private to prevent construction.
-	 */
-	private NetUtil()
-	{
-		// Nothing to do
-	}
+    /**
+     * Private to prevent construction.
+     */
+    private NetUtil()
+    {
+        // Nothing to do
+    }
 
-	/**
-	 * Open an input stream to a GET(-like) operation on an URL.
-	 * 
-	 * @param url The URL
-	 * @return Input stream to the URL connection
-	 * @throws IOException If an I/O error occurs
-	 */
-	public static InputStream openGetStream(URL url)
-	    throws IOException
-	{
-		URLConnection conn = url.openConnection();
+    /**
+     * Open an input stream to a GET(-like) operation on an URL.
+     * 
+     * @param url The URL
+     * @return Input stream to the URL connection
+     * @throws IOException If an I/O error occurs
+     */
+    public static InputStream openGetStream(URL url)
+        throws IOException
+    {
+        URLConnection conn = url.openConnection();
 
-		conn.setConnectTimeout(CONNECT_TIMEOUT);
-		conn.setReadTimeout(READ_TIMEOUT);
+        conn.setConnectTimeout(CONNECT_TIMEOUT);
+        conn.setReadTimeout(READ_TIMEOUT);
 
-		//  User-Agent?
+        //  User-Agent?
 
-		return conn.getInputStream();
-	}
+        return conn.getInputStream();
+    }
 
-	/**
-	 * Open an input stream to a POST(-like) operation on an URL.
-	 * 
-	 * @param url The URL
-	 * @param content Content to POST
-	 * @param contentType Content type
-	 * @return Input stream to the URL connection
-	 * @throws IOException If an I/O error occurs
-	 */
-	public static InputStream openPostStream(URL url, byte[] content, String contentType)
-	    throws IOException
-	{
-		URLConnection conn = url.openConnection();
-		conn.setDoOutput(true);
+    /**
+     * Open an input stream to a POST(-like) operation on an URL.
+     * 
+     * @param url The URL
+     * @param content Content to POST
+     * @param contentType Content type
+     * @return Input stream to the URL connection
+     * @throws IOException If an I/O error occurs
+     */
+    public static InputStream openPostStream(URL url, byte[] content, String contentType)
+        throws IOException
+    {
+        URLConnection conn = url.openConnection();
+        conn.setDoOutput(true);
 
-		conn.setConnectTimeout(CONNECT_TIMEOUT);
-		conn.setReadTimeout(READ_TIMEOUT);
+        conn.setConnectTimeout(CONNECT_TIMEOUT);
+        conn.setReadTimeout(READ_TIMEOUT);
 
-		//  User-Agent?
+        //  User-Agent?
 
-		if (contentType != null)
-		{
-			conn.setRequestProperty("Content-Type", contentType);
-		}
+        if (contentType != null)
+        {
+            conn.setRequestProperty("Content-Type", contentType);
+        }
 
-		conn.setRequestProperty("Content-Length", String.valueOf(content.length));
+        conn.setRequestProperty("Content-Length", String.valueOf(content.length));
 
-		OutputStream out = conn.getOutputStream();
-		try
-		{
-			out.write(content);
-		}
-		finally
-		{
-			out.close();
-		}
+        OutputStream out = conn.getOutputStream();
+        try
+        {
+            out.write(content);
+        }
+        finally
+        {
+            out.close();
+        }
 
-		return conn.getInputStream();
-	}
+        return conn.getInputStream();
+    }
 
-	/**
-	 * Download the given URL to a temporary local file. The temporary file is marked for deletion at exit.
-	 * 
-	 * @param url
-	 * @return URL pointing to the temporary file, <code>url</code> itself if it's a file: one.
-	 * @throws IOException
-	 */
-	public static URL download(URL url)
-	    throws IOException
-	{
-		if ("file".equals(url.getProtocol()))
-		{
-			return url;
-		}
+    /**
+     * Download the given URL to a temporary local file. The temporary file is marked for deletion at exit.
+     * 
+     * @param url
+     * @return URL pointing to the temporary file, <code>url</code> itself if it's a file: one.
+     * @throws IOException
+     */
+    public static URL download(URL url)
+        throws IOException
+    {
+        if ("file".equals(url.getProtocol()))
+        {
+            return url;
+        }
 
-		InputStream in = openGetStream(url);
-		File tempFile = null;
-		OutputStream out = null;
+        InputStream in = openGetStream(url);
+        File tempFile = null;
+        OutputStream out = null;
 
-		try
-		{
-			tempFile = Files.createTempFile("portecle",null).toFile();
-			out = new BufferedOutputStream(new FileOutputStream(tempFile));
-			byte[] buf = new byte[2048];
-			int n;
-			while ((n = in.read(buf)) != -1)
-			{
-				out.write(buf, 0, n);
-			}
-			out.flush();
-			out.close();
-		}
-		catch (IOException e)
-		{
-			try
-			{
-				if (out != null)
-				{
-					out.close();
-				}
-			}
-			finally
-			{
-				if (tempFile != null && !tempFile.delete())
-				{
-					_logger.info("Could not delete temporary file " + tempFile);
-				}
-			}
-			throw e;
-		}
-		finally
-		{
-			in.close();
-		}
+        try
+        {
+            tempFile = Files.createTempFile("portecle",null).toFile();
+            out = new BufferedOutputStream(new FileOutputStream(tempFile));
+            byte[] buf = new byte[2048];
+            int n;
+            while ((n = in.read(buf)) != -1)
+            {
+                out.write(buf, 0, n);
+            }
+            out.flush();
+            out.close();
+        }
+        catch (IOException e)
+        {
+            try
+            {
+                if (out != null)
+                {
+                    out.close();
+                }
+            }
+            finally
+            {
+                if (tempFile != null && !tempFile.delete())
+                {
+                    _logger.info("Could not delete temporary file " + tempFile);
+                }
+            }
+            throw e;
+        }
+        finally
+        {
+            in.close();
+        }
 
-		tempFile.deleteOnExit();
+        tempFile.deleteOnExit();
 
-		return tempFile.toURI().toURL();
-	}
+        return tempFile.toURI().toURL();
+    }
 
-	/**
-	 * Creates a URL pointing to a URL, URI or a File object.
-	 * 
-	 * @param obj Object to create a URI to
-	 * @return URL
-	 * @throws ClassCastException if obj is not a supported object
-	 * @throws MalformedURLException if converting obj to a URL fails
-	 */
-	public static URL toURL(Object obj)
-	    throws MalformedURLException
-	{
-		if (obj instanceof File)
-		{
-			return ((File) obj).toURI().toURL();
-		}
-		else if (obj instanceof URI)
-		{
-			return ((URI) obj).toURL();
-		}
-		else
-		{
-			return (URL) obj;
-		}
-	}
+    /**
+     * Creates a URL pointing to a URL, URI or a File object.
+     * 
+     * @param obj Object to create a URI to
+     * @return URL
+     * @throws ClassCastException if obj is not a supported object
+     * @throws MalformedURLException if converting obj to a URL fails
+     */
+    public static URL toURL(Object obj)
+        throws MalformedURLException
+    {
+        if (obj instanceof File)
+        {
+            return ((File) obj).toURI().toURL();
+        }
+        else if (obj instanceof URI)
+        {
+            return ((URI) obj).toURL();
+        }
+        else
+        {
+            return (URL) obj;
+        }
+    }
 }

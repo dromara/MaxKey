@@ -25,30 +25,30 @@ import org.dromara.mybatis.jpa.entity.JpaEntity;
 
 public interface ReportService  extends IJpaService<JpaEntity>{
 
-	public Integer analysisDay(HashMap<String,Object> reportParameter) ;
-	
-	public Integer analysisNewUsers(HashMap<String,Object> reportParameter) ;
-	
-	public Integer analysisOnlineUsers(HashMap<String,Object> reportParameter) ;
-	
-	public Integer analysisActiveUsers(HashMap<String,Object> reportParameter);
-	
-	public Integer totalUsers(HashMap<String,Object> reportParameter);
-	
-	public Integer totalDepts(HashMap<String,Object> reportParameter);
-	
-	public Integer totalApps(HashMap<String,Object> reportParameter);
-	
-	public List<Map<String,Object>> analysisDayHour(HashMap<String,Object> reportParameter);
-	
-	public List<Map<String,Object>> analysisMonth(HashMap<String,Object> reportParameter);
-	
-	
-	public List<Map<String,Object>> analysisBrowser(HashMap<String,Object> reportParameter);
-	
-	public List<Map<String,Object>> analysisApp(HashMap<String,Object> reportParameter);
+    public Integer analysisDay(HashMap<String,Object> reportParameter) ;
+    
+    public Integer analysisNewUsers(HashMap<String,Object> reportParameter) ;
+    
+    public Integer analysisOnlineUsers(HashMap<String,Object> reportParameter) ;
+    
+    public Integer analysisActiveUsers(HashMap<String,Object> reportParameter);
+    
+    public Integer totalUsers(HashMap<String,Object> reportParameter);
+    
+    public Integer totalDepts(HashMap<String,Object> reportParameter);
+    
+    public Integer totalApps(HashMap<String,Object> reportParameter);
+    
+    public List<Map<String,Object>> analysisDayHour(HashMap<String,Object> reportParameter);
+    
+    public List<Map<String,Object>> analysisMonth(HashMap<String,Object> reportParameter);
+    
+    
+    public List<Map<String,Object>> analysisBrowser(HashMap<String,Object> reportParameter);
+    
+    public List<Map<String,Object>> analysisApp(HashMap<String,Object> reportParameter);
 
-	public List<Map<String,Object>> analysisProvince(HashMap<String,Object> reportParameter);
-	
-	public List<Map<String,Object>> analysisCountry(HashMap<String,Object> reportParameter);
+    public List<Map<String,Object>> analysisProvince(HashMap<String,Object> reportParameter);
+    
+    public List<Map<String,Object>> analysisCountry(HashMap<String,Object> reportParameter);
 }

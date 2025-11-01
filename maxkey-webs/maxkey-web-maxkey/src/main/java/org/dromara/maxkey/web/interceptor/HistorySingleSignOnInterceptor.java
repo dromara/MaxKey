@@ -64,9 +64,9 @@ public class HistorySingleSignOnInterceptor  implements AsyncHandlerInterceptor 
         
         SignPrincipal principal = AuthorizationUtils.getPrincipal();
         if(principal != null && app !=null) {
-        	final UserInfo userInfo = principal.getUserInfo();
-        	String sessionId = principal.getSessionId();
-        	 logger.debug("sessionId : {} , appId {}" , sessionId , app.getId());
+            final UserInfo userInfo = principal.getUserInfo();
+            String sessionId = principal.getSessionId();
+             logger.debug("sessionId : {} , appId {}" , sessionId , app.getId());
              HistoryLoginApps historyLoginApps = new HistoryLoginApps();
              historyLoginApps.setAppId(app.getId());
              historyLoginApps.setSessionId(sessionId);

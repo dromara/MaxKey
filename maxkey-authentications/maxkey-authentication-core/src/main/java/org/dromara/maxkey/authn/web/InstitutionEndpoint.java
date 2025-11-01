@@ -35,45 +35,45 @@ import jakarta.servlet.http.HttpServletRequest;
 @RestController
 @RequestMapping(value = "/inst")
 public class InstitutionEndpoint {
-	private static final  Logger _logger = LoggerFactory.getLogger(InstitutionEndpoint.class);
-	
-	public static final  String  HEADER_HOST 		= "host";
-	
-	public static final  String  HEADER_HOSTNAME 	= "hostname";
-	
-	@Autowired
-	InstitutionsService institutionsService;
-	
-	@Autowired
-	ApplicationConfig applicationConfig;
-	
- 	@GetMapping(value={"/get"})
-	public Message<Institutions> get(
-			HttpServletRequest request,
-			@RequestHeader(value = "Origin",required=false) String originURL,
-			@RequestHeader(value = HEADER_HOSTNAME,required=false) String headerHostName,
-			@RequestHeader(value = HEADER_HOST,required=false) String headerHost) {
- 		_logger.debug("get Institution" );
- 		
-		String host = headerHostName;
-		_logger.trace("hostname {}",host);
-		if(StringUtils.isEmpty(host)) {
-			host = headerHost;
-			_logger.trace("host {}",host);
-		}
-		
-		if(StringUtils.isEmpty(host)) {
-			host = applicationConfig.getDomainName();
-			_logger.trace("config domain {}",host);
-		}
-		
-		if(host.indexOf(":")> -1 ) {
-			host = host.split(":")[0];
-			_logger.trace("domain split {}",host);
-		}
-		
-		Institutions inst = institutionsService.get(host);
-		_logger.debug("inst {}",inst);
-		return new Message<>(inst);
- 	}
+    private static final  Logger _logger = LoggerFactory.getLogger(InstitutionEndpoint.class);
+    
+    public static final  String  HEADER_HOST         = "host";
+    
+    public static final  String  HEADER_HOSTNAME     = "hostname";
+    
+    @Autowired
+    InstitutionsService institutionsService;
+    
+    @Autowired
+    ApplicationConfig applicationConfig;
+    
+     @GetMapping(value={"/get"})
+    public Message<Institutions> get(
+            HttpServletRequest request,
+            @RequestHeader(value = "Origin",required=false) String originURL,
+            @RequestHeader(value = HEADER_HOSTNAME,required=false) String headerHostName,
+            @RequestHeader(value = HEADER_HOST,required=false) String headerHost) {
+         _logger.debug("get Institution" );
+         
+        String host = headerHostName;
+        _logger.trace("hostname {}",host);
+        if(StringUtils.isEmpty(host)) {
+            host = headerHost;
+            _logger.trace("host {}",host);
+        }
+        
+        if(StringUtils.isEmpty(host)) {
+            host = applicationConfig.getDomainName();
+            _logger.trace("config domain {}",host);
+        }
+        
+        if(host.indexOf(":")> -1 ) {
+            host = host.split(":")[0];
+            _logger.trace("domain split {}",host);
+        }
+        
+        Institutions inst = institutionsService.get(host);
+        _logger.debug("inst {}",inst);
+        return new Message<>(inst);
+     }
 }

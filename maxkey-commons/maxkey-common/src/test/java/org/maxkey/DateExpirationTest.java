@@ -25,19 +25,19 @@ import org.joda.time.DateTime;
 
 public class DateExpirationTest {
 
-	public static void main(String[] args) {
-		// 当前时间
-		Date now = DateTime.now().toDate();
-		// 用户时间
-		Date uDate = DateUtils.parse("2025-01-04 16:59:53",DateUtils.FORMAT_DATE_YYYY_MM_DD_HH_MM_SS);
-		
-		System.out.println("user time " + DateUtils.formatDateTime(uDate));
-		System.out.println("now  time " + DateUtils.formatDateTime(now));
-		
-		//用户时间 > 当前时间 
-		System.out.println("after "+uDate.after(now));
-		//用户时间 < 当前时间
-		System.out.println("before "+uDate.before(now));
-	}
+    public static void main(String[] args) {
+        // 当前时间
+        Date now = DateTime.now().toDate();
+        // 用户时间
+        Date uDate = DateUtils.parse("2025-01-04 16:59:53",DateUtils.FORMAT_DATE_YYYY_MM_DD_HH_MM_SS);
+        
+        System.out.println("user time " + DateUtils.formatDateTime(uDate));
+        System.out.println("now  time " + DateUtils.formatDateTime(now));
+        
+        //用户时间 > 当前时间 
+        System.out.println("after "+uDate.after(now));
+        //用户时间 < 当前时间
+        System.out.println("before "+uDate.before(now));
+    }
 
 }

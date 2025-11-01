@@ -71,11 +71,11 @@ public class Resources  extends JpaEntity implements Serializable {
     String modifiedBy;
     @Column
     Date modifiedDate;
-	@Column
-	private String instId;
+    @Column
+    private String instId;
 
-	private String instName;
-	
+    private String instName;
+    
     public Resources() {
         super();
     }
@@ -89,14 +89,14 @@ public class Resources  extends JpaEntity implements Serializable {
     }
 
     public String getResourceName() {
-		return resourceName;
-	}
+        return resourceName;
+    }
 
-	public void setResourceName(String resourceName) {
-		this.resourceName = resourceName;
-	}
+    public void setResourceName(String resourceName) {
+        this.resourceName = resourceName;
+    }
 
-	public String getAppId() {
+    public String getAppId() {
         return appId;
     }
 
@@ -113,14 +113,14 @@ public class Resources  extends JpaEntity implements Serializable {
     }
 
     public String getPermission() {
-		return permission;
-	}
+        return permission;
+    }
 
-	public void setPermission(String permission) {
-		this.permission = permission;
-	}
+    public void setPermission(String permission) {
+        this.permission = permission;
+    }
 
-	public String getParentId() {
+    public String getParentId() {
         return parentId;
     }
 
@@ -209,22 +209,22 @@ public class Resources  extends JpaEntity implements Serializable {
     }
 
     public Date getCreatedDate() {
-		return createdDate;
-	}
+        return createdDate;
+    }
 
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
 
-	public Date getModifiedDate() {
-		return modifiedDate;
-	}
+    public Date getModifiedDate() {
+        return modifiedDate;
+    }
 
-	public void setModifiedDate(Date modifiedDate) {
-		this.modifiedDate = modifiedDate;
-	}
+    public void setModifiedDate(Date modifiedDate) {
+        this.modifiedDate = modifiedDate;
+    }
 
-	public int getSortIndex() {
+    public int getSortIndex() {
         return sortIndex;
     }
 
@@ -233,22 +233,22 @@ public class Resources  extends JpaEntity implements Serializable {
     }
 
     public String getInstId() {
-		return instId;
-	}
+        return instId;
+    }
 
-	public void setInstId(String instId) {
-		this.instId = instId;
-	}
+    public void setInstId(String instId) {
+        this.instId = instId;
+    }
 
-	public String getInstName() {
-		return instName;
-	}
+    public String getInstName() {
+        return instName;
+    }
 
-	public void setInstName(String instName) {
-		this.instName = instName;
-	}
+    public void setInstName(String instName) {
+        this.instName = instName;
+    }
 
-	@Override
+    @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("Resources [id=");

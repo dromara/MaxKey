@@ -40,59 +40,59 @@ import org.springframework.web.servlet.ModelAndView;
  *
  */
 public class ExtendApiZentaoAdapter extends AbstractAuthorizeAdapter {
-	static final  Logger _logger = LoggerFactory.getLogger(ExtendApiZentaoAdapter.class);
-	static String login_url_template="api.php?m=user&f=apilogin&account=%s&code=%s&time=%s&token=%s";
-	static String login_url_m_template="account=%s&code=%s&time=%s&token=%s";
-	
-	Accounts account;
-	
-	@Override
-	public Object generateInfo() {
-		return null;
-	}
+    static final  Logger _logger = LoggerFactory.getLogger(ExtendApiZentaoAdapter.class);
+    static String login_url_template="api.php?m=user&f=apilogin&account=%s&code=%s&time=%s&token=%s";
+    static String login_url_m_template="account=%s&code=%s&time=%s&token=%s";
+    
+    Accounts account;
+    
+    @Override
+    public Object generateInfo() {
+        return null;
+    }
 
-	@Override
-	public Object encrypt(Object data, String algorithmKey, String algorithm) {
-		return null;
-	}
+    @Override
+    public Object encrypt(Object data, String algorithmKey, String algorithm) {
+        return null;
+    }
 
-	@Override
-	public ModelAndView authorize(ModelAndView modelAndView) {
-		Apps details=(Apps)app;
-		//extraAttrs from Applications
-		ExtraAttrs extraAttrs=null;
-		if(details.getIsExtendAttr()==1){
-			extraAttrs=new ExtraAttrs(details.getExtendAttr());
-		}
-		_logger.trace("Extra Attrs " + extraAttrs);
-		String code = details.getPrincipal();
-		String key   = details.getCredentials();
-		String time  = ""+Instant.now().getEpochSecond();
+    @Override
+    public ModelAndView authorize(ModelAndView modelAndView) {
+        Apps details=(Apps)app;
+        //extraAttrs from Applications
+        ExtraAttrs extraAttrs=null;
+        if(details.getIsExtendAttr()==1){
+            extraAttrs=new ExtraAttrs(details.getExtendAttr());
+        }
+        _logger.trace("Extra Attrs " + extraAttrs);
+        String code = details.getPrincipal();
+        String key   = details.getCredentials();
+        String time  = ""+Instant.now().getEpochSecond();
 
-		String token =DigestUtils.md5Hex(code+key+time);
-		
-		_logger.debug(""+token);
-		String account = userInfo.getUsername();
-		
-		String redirect_uri = details.getLoginUrl();
-		if(redirect_uri.indexOf("api.php?")<0) {
-			if(redirect_uri.endsWith("/")) {
-			    redirect_uri += String.format(login_url_template,account,code,time,token);
-			}else {
-			    redirect_uri +="/" + String.format(login_url_template,account,code,time,token);
-			}
-		}else if(redirect_uri.endsWith("&")){
-		    redirect_uri += String.format(login_url_m_template,account,code,time,token);
-		}else {
-		    redirect_uri += "&" +String.format(login_url_m_template,account,code,time,token);
-		}
-		
-		_logger.debug("redirect_uri : "+redirect_uri);
-		modelAndView=new ModelAndView("authorize/redirect_sso_submit");
+        String token =DigestUtils.md5Hex(code+key+time);
+        
+        _logger.debug(""+token);
+        String account = userInfo.getUsername();
+        
+        String redirect_uri = details.getLoginUrl();
+        if(redirect_uri.indexOf("api.php?")<0) {
+            if(redirect_uri.endsWith("/")) {
+                redirect_uri += String.format(login_url_template,account,code,time,token);
+            }else {
+                redirect_uri +="/" + String.format(login_url_template,account,code,time,token);
+            }
+        }else if(redirect_uri.endsWith("&")){
+            redirect_uri += String.format(login_url_m_template,account,code,time,token);
+        }else {
+            redirect_uri += "&" +String.format(login_url_m_template,account,code,time,token);
+        }
+        
+        _logger.debug("redirect_uri : "+redirect_uri);
+        modelAndView=new ModelAndView("authorize/redirect_sso_submit");
         modelAndView.addObject("redirect_uri", redirect_uri);
-		
-		return modelAndView;
-	}
+        
+        return modelAndView;
+    }
 
 }
 

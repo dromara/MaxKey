@@ -127,26 +127,26 @@ public class JdbcClientDetailsService implements ClientDetailsService, ClientReg
 
     public ClientDetails loadClientByClientId(String clientId,boolean cached) {
         // cache in memory
-    	ClientDetails details = null;
-    	try {
-	        if(cached) {
-	        	details = detailsCache.getIfPresent(clientId);
-	        	if(details == null) {
-	        		details = jdbcTemplate.queryForObject(
-	        							selectClientDetailsSql, 
-	        							new ClientDetailsRowMapper(), 
-	        							clientId
-	        						);
-	        		detailsCache.put(clientId, details);
-	        	}
-	        }else {
-	        	details = jdbcTemplate.queryForObject(
-	        							selectClientDetailsSql, 
-	        							new ClientDetailsRowMapper(), 
-	        							clientId
-	        						);
-	        }
-    	} catch (EmptyResultDataAccessException e) {
+        ClientDetails details = null;
+        try {
+            if(cached) {
+                details = detailsCache.getIfPresent(clientId);
+                if(details == null) {
+                    details = jdbcTemplate.queryForObject(
+                                        selectClientDetailsSql, 
+                                        new ClientDetailsRowMapper(), 
+                                        clientId
+                                    );
+                    detailsCache.put(clientId, details);
+                }
+            }else {
+                details = jdbcTemplate.queryForObject(
+                                        selectClientDetailsSql, 
+                                        new ClientDetailsRowMapper(), 
+                                        clientId
+                                    );
+            }
+        } catch (EmptyResultDataAccessException e) {
             throw new NoSuchClientException("No client with requested id: " + clientId);
         }
         return details;

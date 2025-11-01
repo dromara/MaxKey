@@ -35,24 +35,24 @@ import org.springframework.context.ConfigurableApplicationContext;
 @EnableDiscoveryClient
 @MapperScan("org.dromara.maxkey.persistence.mapper,")
 public class MaxKeyMgtApplication extends SpringBootServletInitializer {
-	static final Logger _logger = LoggerFactory.getLogger(MaxKeyMgtApplication.class);
+    static final Logger _logger = LoggerFactory.getLogger(MaxKeyMgtApplication.class);
 
-	public static void main(String[] args) {
-		_logger.info("Start MaxKeyMgt Application ...");
-	    ProductEnvironment.listEnvVars();
-	    
-		ConfigurableApplicationContext  applicationContext = SpringApplication.run(MaxKeyMgtApplication.class, args);
-		new InitializeContext(applicationContext).init();
-		
-		_logger.info("MaxKeyMgt at {}" , new DateTime());
-		_logger.info("MaxKeyMgt Server Port {}" , WebContext.getServerPort());
-		_logger.info("MaxKeyMgt started.");
-		
-	}
+    public static void main(String[] args) {
+        _logger.info("Start MaxKeyMgt Application ...");
+        ProductEnvironment.listEnvVars();
+        
+        ConfigurableApplicationContext  applicationContext = SpringApplication.run(MaxKeyMgtApplication.class, args);
+        new InitializeContext(applicationContext).init();
+        
+        _logger.info("MaxKeyMgt at {}" , new DateTime());
+        _logger.info("MaxKeyMgt Server Port {}" , WebContext.getServerPort());
+        _logger.info("MaxKeyMgt started.");
+        
+    }
 
-	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		return application.sources(MaxKeyMgtApplication.class);
-	}
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(MaxKeyMgtApplication.class);
+    }
 
 }

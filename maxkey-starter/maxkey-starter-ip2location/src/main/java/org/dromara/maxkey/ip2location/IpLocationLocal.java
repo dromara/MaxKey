@@ -24,12 +24,12 @@ package org.dromara.maxkey.ip2location;
  *
  */
 public class IpLocationLocal extends AbstractIpLocation implements IpLocation{
-	
-	@Override
-	public Region region(String ipAddress) {
-		if(ipAddress.equals("127.0.0.1") || ipAddress.equals("0:0:0:0:0:0:0:1")) {
-			return new Region("local");
-		}
-		return null;
-	}
+    
+    @Override
+    public Region region(String ipAddress) {
+        if(ipAddress.equals("127.0.0.1") || ipAddress.equals("0:0:0:0:0:0:0:1")) {
+            return new Region("local");
+        }
+        return null;
+    }
 }

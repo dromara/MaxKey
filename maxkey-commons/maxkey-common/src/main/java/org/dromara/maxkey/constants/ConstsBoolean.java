@@ -25,11 +25,11 @@ package org.dromara.maxkey.constants;
  */
 public class ConstsBoolean {
 
-    public static final int FALSE 	= 0;
+    public static final int FALSE     = 0;
 
-    public static  final int TRUE 	= 1;
+    public static  final int TRUE     = 1;
 
-    private int value 				= FALSE;
+    private int value                 = FALSE;
 
     public ConstsBoolean() {
 

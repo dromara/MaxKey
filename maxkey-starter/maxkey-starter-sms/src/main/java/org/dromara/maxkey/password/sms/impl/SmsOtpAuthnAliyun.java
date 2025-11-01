@@ -42,12 +42,12 @@ public class SmsOtpAuthnAliyun extends SmsOtpAuthn {
     }
 
     public SmsOtpAuthnAliyun(String accessKeyId, String accessSecret, String templateCode, String signName) {
-    	otpType = OtpTypes.SMS;
-		this.accessKeyId = accessKeyId;
-		this.accessSecret = accessSecret;
-		this.templateCode = templateCode;
-		this.signName = signName;
-	}
+        otpType = OtpTypes.SMS;
+        this.accessKeyId = accessKeyId;
+        this.accessSecret = accessSecret;
+        this.templateCode = templateCode;
+        this.signName = signName;
+    }
     
     //请替换你在管理后台应用下申请的accessKeyId
     private   String accessKeyId = "94395d754eb55693043f5d6a2b772ef3";
@@ -60,7 +60,7 @@ public class SmsOtpAuthnAliyun extends SmsOtpAuthn {
     
 
 
-	@Override
+    @Override
     public boolean produce(UserInfo userInfo) {
         // 手机号
         String mobile = userInfo.getMobile();

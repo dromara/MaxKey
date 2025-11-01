@@ -36,8 +36,8 @@ public class CasAuthnAutoConfiguration  {
     @Bean
     CasTrustLoginService casTrustLoginService(LoginConfig loginConfig) {
         CasTrustLoginService casTrustLoginService = new CasTrustLoginService(
-        		loginConfig.getCasServerUrlPrefix() , 
-        		loginConfig.getCasService());
+                loginConfig.getCasServerUrlPrefix() , 
+                loginConfig.getCasService());
         _logger.debug("CAS Login Service init.");
         return casTrustLoginService;
     }

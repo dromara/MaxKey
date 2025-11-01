@@ -50,11 +50,11 @@ public class PermissionRole  extends JpaEntity implements Serializable {
     String createdDate;
     
     int status = ConstsStatus.ACTIVE;
-	@Column
-	private String instId;
+    @Column
+    private String instId;
 
-	private String instName;
-	
+    private String instName;
+    
     public PermissionRole() {
     }
 
@@ -124,61 +124,61 @@ public class PermissionRole  extends JpaEntity implements Serializable {
     }
 
     public String getCreatedBy() {
-		return createdBy;
-	}
+        return createdBy;
+    }
 
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
-	}
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
 
-	public String getCreatedDate() {
-		return createdDate;
-	}
+    public String getCreatedDate() {
+        return createdDate;
+    }
 
-	public void setCreatedDate(String createdDate) {
-		this.createdDate = createdDate;
-	}
+    public void setCreatedDate(String createdDate) {
+        this.createdDate = createdDate;
+    }
 
-	public String getInstId() {
-		return instId;
-	}
+    public String getInstId() {
+        return instId;
+    }
 
-	public void setInstId(String instId) {
-		this.instId = instId;
-	}
+    public void setInstId(String instId) {
+        this.instId = instId;
+    }
 
-	public String getInstName() {
-		return instName;
-	}
+    public String getInstName() {
+        return instName;
+    }
 
-	public void setInstName(String instName) {
-		this.instName = instName;
-	}
+    public void setInstName(String instName) {
+        this.instName = instName;
+    }
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("PermissionRole [id=");
-		builder.append(id);
-		builder.append(", appId=");
-		builder.append(appId);
-		builder.append(", roleId=");
-		builder.append(roleId);
-		builder.append(", resourceId=");
-		builder.append(resourceId);
-		builder.append(", createdBy=");
-		builder.append(createdBy);
-		builder.append(", createdDate=");
-		builder.append(createdDate);
-		builder.append(", status=");
-		builder.append(status);
-		builder.append(", instId=");
-		builder.append(instId);
-		builder.append(", instName=");
-		builder.append(instName);
-		builder.append("]");
-		return builder.toString();
-	}
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("PermissionRole [id=");
+        builder.append(id);
+        builder.append(", appId=");
+        builder.append(appId);
+        builder.append(", roleId=");
+        builder.append(roleId);
+        builder.append(", resourceId=");
+        builder.append(resourceId);
+        builder.append(", createdBy=");
+        builder.append(createdBy);
+        builder.append(", createdDate=");
+        builder.append(createdDate);
+        builder.append(", status=");
+        builder.append(status);
+        builder.append(", instId=");
+        builder.append(instId);
+        builder.append(", instName=");
+        builder.append(instName);
+        builder.append("]");
+        return builder.toString();
+    }
     
 
 }

@@ -52,100 +52,100 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value={"/permissions/roles"})
 public class RolesController {
-	static final Logger _logger = LoggerFactory.getLogger(RolesController.class);
-	
-	@Autowired
-	RolesService rolesService;
-	
-	@Autowired
-	HistorySystemLogsService systemLog;
-	
-	@GetMapping(value = { "/fetch" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<JpaPageResults<Roles>> fetch(
-			@ModelAttribute Roles role,
-			@CurrentUser UserInfo currentUser) {
-		_logger.debug("fetch {}",role);
-		role.setInstId(currentUser.getInstId());
-		return new Message<>(rolesService.fetchPageResults(role));
-	}
+    static final Logger _logger = LoggerFactory.getLogger(RolesController.class);
+    
+    @Autowired
+    RolesService rolesService;
+    
+    @Autowired
+    HistorySystemLogsService systemLog;
+    
+    @GetMapping(value = { "/fetch" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public Message<JpaPageResults<Roles>> fetch(
+            @ModelAttribute Roles role,
+            @CurrentUser UserInfo currentUser) {
+        _logger.debug("fetch {}",role);
+        role.setInstId(currentUser.getInstId());
+        return new Message<>(rolesService.fetchPageResults(role));
+    }
 
-	@GetMapping(value={"/query"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<Roles> query(@ModelAttribute Roles role,@CurrentUser UserInfo currentUser) {
-		_logger.debug("-query  : {}" , role);
-		role.setInstId(currentUser.getInstId());
-		if (!rolesService.query(role).isEmpty()) {
-			 return new Message<>(Message.SUCCESS);
-		} else {
-			 return new Message<>(Message.FAIL);
-		}
-		
-	}
-	
-	@GetMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<Roles> get(@PathVariable("id") String id,@CurrentUser UserInfo currentUser) {
-		Roles role=rolesService.get(id);
-		return new Message<>(role);
-	}
-	
-	@PostMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<Roles> insert(@RequestBody Roles role,@CurrentUser UserInfo currentUser) {
-		_logger.debug("-Add  : {}" , role);
-		role.setCreatedBy(currentUser.getId());
-		role.setInstId(currentUser.getInstId());
-		role.setId(role.generateId());
-		if(StringUtils.isBlank(role.getRoleCode())) {
-			role.setRoleCode(role.getId());
-		}
-		if (rolesService.insert(role)) {
-			rolesService.refreshDynamicRoles(role);
-		    systemLog.insert(
-					ConstsEntryType.ROLE, 
-					role, 
-					ConstsAct.CREATE, 
-					ConstsActResult.SUCCESS, 
-					currentUser);
-		    return new Message<>(Message.SUCCESS);
-		} else {
-			return new Message<>(Message.FAIL);
-		}
-	}
+    @GetMapping(value={"/query"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public Message<Roles> query(@ModelAttribute Roles role,@CurrentUser UserInfo currentUser) {
+        _logger.debug("-query  : {}" , role);
+        role.setInstId(currentUser.getInstId());
+        if (!rolesService.query(role).isEmpty()) {
+             return new Message<>(Message.SUCCESS);
+        } else {
+             return new Message<>(Message.FAIL);
+        }
+        
+    }
+    
+    @GetMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public Message<Roles> get(@PathVariable("id") String id,@CurrentUser UserInfo currentUser) {
+        Roles role=rolesService.get(id);
+        return new Message<>(role);
+    }
+    
+    @PostMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public Message<Roles> insert(@RequestBody Roles role,@CurrentUser UserInfo currentUser) {
+        _logger.debug("-Add  : {}" , role);
+        role.setCreatedBy(currentUser.getId());
+        role.setInstId(currentUser.getInstId());
+        role.setId(role.generateId());
+        if(StringUtils.isBlank(role.getRoleCode())) {
+            role.setRoleCode(role.getId());
+        }
+        if (rolesService.insert(role)) {
+            rolesService.refreshDynamicRoles(role);
+            systemLog.insert(
+                    ConstsEntryType.ROLE, 
+                    role, 
+                    ConstsAct.CREATE, 
+                    ConstsActResult.SUCCESS, 
+                    currentUser);
+            return new Message<>(Message.SUCCESS);
+        } else {
+            return new Message<>(Message.FAIL);
+        }
+    }
 
-	@PutMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<Roles> update(@RequestBody Roles role,@CurrentUser UserInfo currentUser) {
-		_logger.debug("-update  group : {}" , role);
-		if(role.getId().equalsIgnoreCase("ROLE_ALL_USER")) {
-			role.setDefaultAllUser();
-		}
-		role.setModifiedBy(currentUser.getId());
-		role.setInstId(currentUser.getInstId());
-		if (rolesService.update(role)) {
-			rolesService.refreshDynamicRoles(role);
-		    systemLog.insert(
-					ConstsEntryType.ROLE, 
-					role, 
-					ConstsAct.UPDATE, 
-					ConstsActResult.SUCCESS, 
-					currentUser);
-		    return new Message<>(Message.SUCCESS);
-		} else {
-			return new Message<>(Message.FAIL);
-		}
-	}
+    @PutMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public Message<Roles> update(@RequestBody Roles role,@CurrentUser UserInfo currentUser) {
+        _logger.debug("-update  group : {}" , role);
+        if(role.getId().equalsIgnoreCase("ROLE_ALL_USER")) {
+            role.setDefaultAllUser();
+        }
+        role.setModifiedBy(currentUser.getId());
+        role.setInstId(currentUser.getInstId());
+        if (rolesService.update(role)) {
+            rolesService.refreshDynamicRoles(role);
+            systemLog.insert(
+                    ConstsEntryType.ROLE, 
+                    role, 
+                    ConstsAct.UPDATE, 
+                    ConstsActResult.SUCCESS, 
+                    currentUser);
+            return new Message<>(Message.SUCCESS);
+        } else {
+            return new Message<>(Message.FAIL);
+        }
+    }
 
-	@DeleteMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<Roles> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
-		_logger.debug("-delete ids : {}" , ids);
-		ids.removeAll(Arrays.asList("ROLE_ALL_USER","ROLE_ADMINISTRATORS","-1"));
-		if (rolesService.deleteBatch(ids)) {
-			systemLog.insert(
-					ConstsEntryType.ROLE, 
-					ids, 
-					ConstsAct.DELETE, 
-					ConstsActResult.SUCCESS, 
-					currentUser);
-			 return new Message<>(Message.SUCCESS);
-		} else {
-			return new Message<>(Message.FAIL);
-		}
-	}
+    @DeleteMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public Message<Roles> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
+        _logger.debug("-delete ids : {}" , ids);
+        ids.removeAll(Arrays.asList("ROLE_ALL_USER","ROLE_ADMINISTRATORS","-1"));
+        if (rolesService.deleteBatch(ids)) {
+            systemLog.insert(
+                    ConstsEntryType.ROLE, 
+                    ids, 
+                    ConstsAct.DELETE, 
+                    ConstsActResult.SUCCESS, 
+                    currentUser);
+             return new Message<>(Message.SUCCESS);
+        } else {
+            return new Message<>(Message.FAIL);
+        }
+    }
 }

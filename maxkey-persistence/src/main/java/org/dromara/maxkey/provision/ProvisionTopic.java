@@ -27,19 +27,19 @@ public class ProvisionTopic {
     
     public static final  String  ACCOUNT_TOPIC                      = "MXK_IDENTITY_ACCOUNT_TOPIC";
     
-    public static final  String  GROUP_TOPIC               			= "MXK_GROUP_TOPIC";
+    public static final  String  GROUP_TOPIC                           = "MXK_GROUP_TOPIC";
     
-    public static final  String  GROUP_MEMBER_TOPIC        			= "MXK_GROUP_MEMBER_TOPIC";
+    public static final  String  GROUP_MEMBER_TOPIC                    = "MXK_GROUP_MEMBER_TOPIC";
     
-    public static final  String  GROUP_PERMISSIONS_TOPIC    		= "MXK_GROUP_PERMISSIONS_TOPIC";
+    public static final  String  GROUP_PERMISSIONS_TOPIC            = "MXK_GROUP_PERMISSIONS_TOPIC";
     
-    public static final  String  ROLE_TOPIC               			= "MXK_ROLE_TOPIC";
+    public static final  String  ROLE_TOPIC                           = "MXK_ROLE_TOPIC";
     
-    public static final  String  ROLE_MEMBER_TOPIC        			= "MXK_ROLE_MEMBER_TOPIC";
+    public static final  String  ROLE_MEMBER_TOPIC                    = "MXK_ROLE_MEMBER_TOPIC";
     
-    public static final  String  ROLE_PERMISSIONS_TOPIC    			= "MXK_ROLE_PERMISSIONS_TOPIC";
+    public static final  String  ROLE_PERMISSIONS_TOPIC                = "MXK_ROLE_PERMISSIONS_TOPIC";
     
-    public static final  String  RESOURCE_TOPIC           			= "MXK_RESOURCE_TOPIC";
+    public static final  String  RESOURCE_TOPIC                       = "MXK_RESOURCE_TOPIC";
     
     public static final  String  CONNECTOR_HISTORY_TOPIC            = "MXK_CONNECTOR_HISTORY_TOPIC";
      

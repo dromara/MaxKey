@@ -22,11 +22,11 @@ import org.junit.Test;
 
 public class XMLHelperTest {
 
-	@Test
-	public void testSqlFormat()  {
-		String sqlString="<?xml version=\"1.0\" encoding=\"UTF-8\"?><xml><data><name>maxkey</name><age v=\"20\"/></data></xml>";
-		System.out.println(XMLHelper.prettyPrintXML(sqlString));
-		System.out.println(XMLHelper.transformer(sqlString));
-	}
+    @Test
+    public void testSqlFormat()  {
+        String sqlString="<?xml version=\"1.0\" encoding=\"UTF-8\"?><xml><data><name>maxkey</name><age v=\"20\"/></data></xml>";
+        System.out.println(XMLHelper.prettyPrintXML(sqlString));
+        System.out.println(XMLHelper.transformer(sqlString));
+    }
     
 }

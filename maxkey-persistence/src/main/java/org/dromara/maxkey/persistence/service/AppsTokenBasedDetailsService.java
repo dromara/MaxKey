@@ -22,5 +22,5 @@ import org.dromara.mybatis.jpa.service.IJpaService;
 
 public interface AppsTokenBasedDetailsService  extends IJpaService<AppsTokenBasedDetails>{
 
-	public  AppsTokenBasedDetails  getAppDetails(String id , boolean cached) ;
+    public  AppsTokenBasedDetails  getAppDetails(String id , boolean cached) ;
 }

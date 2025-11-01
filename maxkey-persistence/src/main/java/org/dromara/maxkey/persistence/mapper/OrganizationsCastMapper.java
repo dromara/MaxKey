@@ -24,8 +24,8 @@ import org.dromara.mybatis.jpa.IJpaMapper;
 
 public interface OrganizationsCastMapper extends IJpaMapper<OrganizationsCast> {
 
-	public List<Organizations> queryOrgs(Organizations organization);
-	
-	
-	public long updateCast(OrganizationsCast organizationsCast);
+    public List<Organizations> queryOrgs(Organizations organization);
+    
+    
+    public long updateCast(OrganizationsCast organizationsCast);
 }

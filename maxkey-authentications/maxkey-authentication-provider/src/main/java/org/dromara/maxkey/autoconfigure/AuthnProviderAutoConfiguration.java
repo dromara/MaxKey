@@ -55,102 +55,102 @@ public class AuthnProviderAutoConfiguration {
 
     @Bean
      AbstractAuthenticationProvider authenticationProvider(
-    		NormalAuthenticationProvider normalAuthenticationProvider,
-    		MobileAuthenticationProvider mobileAuthenticationProvider,
-    		TrustedAuthenticationProvider trustedAuthenticationProvider,
-			ScanCodeAuthenticationProvider scanCodeAuthenticationProvider,
-			AppAuthenticationProvider appAuthenticationProvider,
-			TwoFactorAuthenticationProvider twoFactorAuthenticationProvider
-    		) {
-    	AuthenticationProviderFactory authenticationProvider = new AuthenticationProviderFactory();
-    	authenticationProvider.addAuthenticationProvider(normalAuthenticationProvider);
-    	authenticationProvider.addAuthenticationProvider(mobileAuthenticationProvider);
-    	authenticationProvider.addAuthenticationProvider(trustedAuthenticationProvider);
-    	authenticationProvider.addAuthenticationProvider(scanCodeAuthenticationProvider);
-    	authenticationProvider.addAuthenticationProvider(appAuthenticationProvider);
+            NormalAuthenticationProvider normalAuthenticationProvider,
+            MobileAuthenticationProvider mobileAuthenticationProvider,
+            TrustedAuthenticationProvider trustedAuthenticationProvider,
+            ScanCodeAuthenticationProvider scanCodeAuthenticationProvider,
+            AppAuthenticationProvider appAuthenticationProvider,
+            TwoFactorAuthenticationProvider twoFactorAuthenticationProvider
+            ) {
+        AuthenticationProviderFactory authenticationProvider = new AuthenticationProviderFactory();
+        authenticationProvider.addAuthenticationProvider(normalAuthenticationProvider);
+        authenticationProvider.addAuthenticationProvider(mobileAuthenticationProvider);
+        authenticationProvider.addAuthenticationProvider(trustedAuthenticationProvider);
+        authenticationProvider.addAuthenticationProvider(scanCodeAuthenticationProvider);
+        authenticationProvider.addAuthenticationProvider(appAuthenticationProvider);
 
-    	//二次认证
-    	authenticationProvider.addAuthenticationProvider(twoFactorAuthenticationProvider);
-    	
-    	return authenticationProvider;
+        //二次认证
+        authenticationProvider.addAuthenticationProvider(twoFactorAuthenticationProvider);
+        
+        return authenticationProvider;
     }
 
     @Bean
     NormalAuthenticationProvider normalAuthenticationProvider(
-    		AbstractAuthenticationRealm authenticationRealm,
-    		ApplicationConfig applicationConfig,
-    	    SessionManager sessionManager,
-    	    AuthTokenService authTokenService
-    		) {
-    	_logger.debug("init authentication Provider .");
-    	return new NormalAuthenticationProvider(
-        		authenticationRealm,
-        		applicationConfig,
-        		sessionManager,
-        		authTokenService
-        	);
+            AbstractAuthenticationRealm authenticationRealm,
+            ApplicationConfig applicationConfig,
+            SessionManager sessionManager,
+            AuthTokenService authTokenService
+            ) {
+        _logger.debug("init authentication Provider .");
+        return new NormalAuthenticationProvider(
+                authenticationRealm,
+                applicationConfig,
+                sessionManager,
+                authTokenService
+            );
     }
 
-	@Bean
-	ScanCodeAuthenticationProvider scanCodeAuthenticationProvider(
-			AbstractAuthenticationRealm authenticationRealm,
-			SessionManager sessionManager
-	) {
-		return new ScanCodeAuthenticationProvider(
-				authenticationRealm,
-				sessionManager
-		);
-	}
+    @Bean
+    ScanCodeAuthenticationProvider scanCodeAuthenticationProvider(
+            AbstractAuthenticationRealm authenticationRealm,
+            SessionManager sessionManager
+    ) {
+        return new ScanCodeAuthenticationProvider(
+                authenticationRealm,
+                sessionManager
+        );
+    }
 
-	@Bean
-	AppAuthenticationProvider appAuthenticationProvider(
-			AbstractAuthenticationRealm authenticationRealm,
-			ApplicationConfig applicationConfig,
-			SessionManager sessionManager,
-			AuthTokenService authTokenService
-	) {
-		return new AppAuthenticationProvider(
-				authenticationRealm,
-				applicationConfig,
-				sessionManager,
-				authTokenService
-		);
-	}
+    @Bean
+    AppAuthenticationProvider appAuthenticationProvider(
+            AbstractAuthenticationRealm authenticationRealm,
+            ApplicationConfig applicationConfig,
+            SessionManager sessionManager,
+            AuthTokenService authTokenService
+    ) {
+        return new AppAuthenticationProvider(
+                authenticationRealm,
+                applicationConfig,
+                sessionManager,
+                authTokenService
+        );
+    }
 
     @Bean
     MobileAuthenticationProvider mobileAuthenticationProvider(
-    		AbstractAuthenticationRealm authenticationRealm,
-    		ApplicationConfig applicationConfig,
-    	    SmsOtpAuthnService smsAuthnService,
-    	    SessionManager sessionManager
-    		) {
-    	_logger.debug("init Mobile authentication Provider .");
-    	return new MobileAuthenticationProvider(
-        		authenticationRealm,
-        		applicationConfig,
-        		smsAuthnService,
-        		sessionManager
-        	);
+            AbstractAuthenticationRealm authenticationRealm,
+            ApplicationConfig applicationConfig,
+            SmsOtpAuthnService smsAuthnService,
+            SessionManager sessionManager
+            ) {
+        _logger.debug("init Mobile authentication Provider .");
+        return new MobileAuthenticationProvider(
+                authenticationRealm,
+                applicationConfig,
+                smsAuthnService,
+                sessionManager
+            );
     }
 
     @Bean
     TrustedAuthenticationProvider trustedAuthenticationProvider(
-    		AbstractAuthenticationRealm authenticationRealm,
-    		ApplicationConfig applicationConfig,
-    	    SessionManager sessionManager
-    		) {
-    	_logger.debug("init Mobile authentication Provider .");
-    	return new TrustedAuthenticationProvider(
-        		authenticationRealm,
-        		applicationConfig,
-        		sessionManager
-        	);
+            AbstractAuthenticationRealm authenticationRealm,
+            ApplicationConfig applicationConfig,
+            SessionManager sessionManager
+            ) {
+        _logger.debug("init Mobile authentication Provider .");
+        return new TrustedAuthenticationProvider(
+                authenticationRealm,
+                applicationConfig,
+                sessionManager
+            );
     }
 
     @Bean
     PasswordPolicyValidatorService passwordPolicyValidatorService(
-    		CnfPasswordPolicyService cnfPasswordPolicyService,
-    		MessageSource messageSource) {
+            CnfPasswordPolicyService cnfPasswordPolicyService,
+            MessageSource messageSource) {
         return new PasswordPolicyValidatorServiceImpl(cnfPasswordPolicyService,messageSource);
     }
 
@@ -165,14 +165,14 @@ public class AuthnProviderAutoConfiguration {
             ApplicationConfig applicationConfig,
             AuthTokenService authTokenService,
             JdbcTemplate jdbcTemplate) {
-    	_logger.trace("init RemeberMeManager , validity {}." , validity);
+        _logger.trace("init RemeberMeManager , validity {}." , validity);
         return new  JdbcRemeberMeManager(
-        		jdbcTemplate,applicationConfig,authTokenService,validity);
+                jdbcTemplate,applicationConfig,authTokenService,validity);
     }
     
     @Bean
     TwoFactorAuthenticationProvider twoFactorAuthenticationProvider(
-    		AbstractAuthenticationRealm authenticationRealm,
+            AbstractAuthenticationRealm authenticationRealm,
             SessionManager sessionManager,
             LoginService loginService,
             AuthTokenService authTokenService,
@@ -180,37 +180,37 @@ public class AuthnProviderAutoConfiguration {
             TwoFactorTotpAuthenticationProvider twoFactorTotpAuthenticationProvider,
             TwoFactorMobileAuthenticationProvider twoFactorMobileAuthenticationProvider,
             TwoFactorEmailAuthenticationProvider twoFactorEmailAuthenticationProvider) {
-    	_logger.debug("init TwoFactor authentication Provider .");
-    	TwoFactorAuthenticationProvider  twoFactorProvider =new TwoFactorAuthenticationProvider(
-        		authenticationRealm,
-        		sessionManager,
-        		loginService,
-        		authTokenService
-        	);
-    	
-    	twoFactorProvider.addProvider(ConstsTwoFactor.TOTP, twoFactorTotpAuthenticationProvider);
-    	twoFactorProvider.addProvider(ConstsTwoFactor.EMAIL, twoFactorEmailAuthenticationProvider);
-    	twoFactorProvider.addProvider(ConstsTwoFactor.SMS, twoFactorMobileAuthenticationProvider);
-    	return twoFactorProvider;
+        _logger.debug("init TwoFactor authentication Provider .");
+        TwoFactorAuthenticationProvider  twoFactorProvider =new TwoFactorAuthenticationProvider(
+                authenticationRealm,
+                sessionManager,
+                loginService,
+                authTokenService
+            );
+        
+        twoFactorProvider.addProvider(ConstsTwoFactor.TOTP, twoFactorTotpAuthenticationProvider);
+        twoFactorProvider.addProvider(ConstsTwoFactor.EMAIL, twoFactorEmailAuthenticationProvider);
+        twoFactorProvider.addProvider(ConstsTwoFactor.SMS, twoFactorMobileAuthenticationProvider);
+        return twoFactorProvider;
     }
     
     @Bean
     TwoFactorTotpAuthenticationProvider twoFactorTotpAuthenticationProvider(@Qualifier("tfaOtpAuthn") AbstractOtpAuthn tfaOtpAuthn,
-    		AbstractAuthenticationRealm authenticationRealm) {
-    	_logger.debug("init TwoFactor authentication Provider .");
-    	return new TwoFactorTotpAuthenticationProvider(authenticationRealm,tfaOtpAuthn);
+            AbstractAuthenticationRealm authenticationRealm) {
+        _logger.debug("init TwoFactor authentication Provider .");
+        return new TwoFactorTotpAuthenticationProvider(authenticationRealm,tfaOtpAuthn);
     }
     
     @Bean
     TwoFactorMobileAuthenticationProvider twoFactorMobileAuthenticationProvider(SmsOtpAuthnService smsOtpAuthnService) {
-    	_logger.debug("init TwoFactor Mobile authentication Provider .");
-    	return new TwoFactorMobileAuthenticationProvider(smsOtpAuthnService);
+        _logger.debug("init TwoFactor Mobile authentication Provider .");
+        return new TwoFactorMobileAuthenticationProvider(smsOtpAuthnService);
     }
     
     @Bean
     TwoFactorEmailAuthenticationProvider twoFactorEmailAuthenticationProvider(MailOtpAuthnService mailOtpAuthnService) {
-    	_logger.debug("init TwoFactor Email authentication Provider .");
-    	return new TwoFactorEmailAuthenticationProvider(mailOtpAuthnService);
+        _logger.debug("init TwoFactor Email authentication Provider .");
+        return new TwoFactorEmailAuthenticationProvider(mailOtpAuthnService);
     }
 
 }

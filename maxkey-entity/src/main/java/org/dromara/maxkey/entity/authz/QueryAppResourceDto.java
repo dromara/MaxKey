@@ -23,53 +23,53 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class QueryAppResourceDto {
-	
-	String appId;
-	
-	String userId;
-	
-	List<String> groupIds;
-	
-	List<String> roleIds;
+    
+    String appId;
+    
+    String userId;
+    
+    List<String> groupIds;
+    
+    List<String> roleIds;
 
-	public QueryAppResourceDto(String userId,String appId) {
-		super();
-		this.appId = appId;
-		this.userId = userId;
-		groupIds = new ArrayList<>();
-		roleIds = new ArrayList<>();
-	}
+    public QueryAppResourceDto(String userId,String appId) {
+        super();
+        this.appId = appId;
+        this.userId = userId;
+        groupIds = new ArrayList<>();
+        roleIds = new ArrayList<>();
+    }
 
-	public String getAppId() {
-		return appId;
-	}
+    public String getAppId() {
+        return appId;
+    }
 
-	public void setAppId(String appId) {
-		this.appId = appId;
-	}
+    public void setAppId(String appId) {
+        this.appId = appId;
+    }
 
-	public String getUserId() {
-		return userId;
-	}
+    public String getUserId() {
+        return userId;
+    }
 
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
-	public List<String> getGroupIds() {
-		return groupIds;
-	}
+    public List<String> getGroupIds() {
+        return groupIds;
+    }
 
-	public void setGroupIds(List<String> groupIds) {
-		this.groupIds = groupIds;
-	}
+    public void setGroupIds(List<String> groupIds) {
+        this.groupIds = groupIds;
+    }
 
-	public List<String> getRoleIds() {
-		return roleIds;
-	}
+    public List<String> getRoleIds() {
+        return roleIds;
+    }
 
-	public void setRoleIds(List<String> roleIds) {
-		this.roleIds = roleIds;
-	}
+    public void setRoleIds(List<String> roleIds) {
+        this.roleIds = roleIds;
+    }
 
 }

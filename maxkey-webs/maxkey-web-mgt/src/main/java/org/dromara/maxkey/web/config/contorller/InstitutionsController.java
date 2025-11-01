@@ -34,27 +34,27 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value={"/config/institutions"})
 public class InstitutionsController {
-		static final  Logger logger = LoggerFactory.getLogger(InstitutionsController.class);
-		
-		@Autowired
-		InstitutionsService institutionsService;
-		
-		@RequestMapping(value={"/get"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-		public Message<?> get(@CurrentUser UserInfo currentUser){
-			Institutions institutions = institutionsService.get(currentUser.getInstId());
-			return new Message<Institutions>(Message.SUCCESS,institutions);
-		}
-		
-		@RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-		public Message<?> update(
-				@RequestBody  Institutions institutions,
-				@CurrentUser UserInfo currentUser,
-				BindingResult result) {
-			logger.debug("updateRole institutions : {}" , institutions);
-			if(institutionsService.update(institutions)) {
-				return new Message<Institutions>(Message.SUCCESS);
-			} else {
-				return new Message<Institutions>(Message.FAIL);
-			}
-		}
+        static final  Logger logger = LoggerFactory.getLogger(InstitutionsController.class);
+        
+        @Autowired
+        InstitutionsService institutionsService;
+        
+        @RequestMapping(value={"/get"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+        public Message<?> get(@CurrentUser UserInfo currentUser){
+            Institutions institutions = institutionsService.get(currentUser.getInstId());
+            return new Message<Institutions>(Message.SUCCESS,institutions);
+        }
+        
+        @RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+        public Message<?> update(
+                @RequestBody  Institutions institutions,
+                @CurrentUser UserInfo currentUser,
+                BindingResult result) {
+            logger.debug("updateRole institutions : {}" , institutions);
+            if(institutionsService.update(institutions)) {
+                return new Message<Institutions>(Message.SUCCESS);
+            } else {
+                return new Message<Institutions>(Message.FAIL);
+            }
+        }
 }

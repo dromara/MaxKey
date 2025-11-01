@@ -31,23 +31,23 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 @Repository
 public class AppsTokenBasedDetailsServiceImpl  extends JpaServiceImpl<AppsTokenBasedDetailsMapper,AppsTokenBasedDetails> implements AppsTokenBasedDetailsService{
 
-	protected static final   Cache<String, AppsTokenBasedDetails> detailsCache = 
+    protected static final   Cache<String, AppsTokenBasedDetails> detailsCache = 
             Caffeine.newBuilder()
                 .expireAfterWrite(30, TimeUnit.MINUTES)
                 .maximumSize(200000)
                 .build();
 
-	public  AppsTokenBasedDetails  getAppDetails(String id , boolean cached) {
-		AppsTokenBasedDetails details = null;
-		if(cached) {
-			details = detailsCache.getIfPresent(id);
-			if(details == null) {
-				details = getMapper().getAppDetails(id);
-				detailsCache.put(id, details);
-			}
-		}else {
-			details = getMapper().getAppDetails(id);
-		}
-		return details;
-	}
+    public  AppsTokenBasedDetails  getAppDetails(String id , boolean cached) {
+        AppsTokenBasedDetails details = null;
+        if(cached) {
+            details = detailsCache.getIfPresent(id);
+            if(details == null) {
+                details = getMapper().getAppDetails(id);
+                detailsCache.put(id, details);
+            }
+        }else {
+            details = getMapper().getAppDetails(id);
+        }
+        return details;
+    }
 }

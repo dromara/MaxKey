@@ -18,6 +18,6 @@
 package org.dromara.maxkey.authn.support.wsfederation;
 
 public interface WsFederationService {
-	public WsFederationConfiguration getWsFederationConfiguration();
-	
+    public WsFederationConfiguration getWsFederationConfiguration();
+    
 }

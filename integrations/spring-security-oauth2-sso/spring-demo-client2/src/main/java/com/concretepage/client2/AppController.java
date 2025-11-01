@@ -9,17 +9,17 @@ import java.util.Map;
 
 @Controller
 public class AppController {
-	@GetMapping("hello")
-	public ModelAndView welcome() {
-	    ModelAndView mav = new ModelAndView();
-	    mav.setViewName("welcome");
-	    return mav;
+    @GetMapping("hello")
+    public ModelAndView welcome() {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("welcome");
+        return mav;
     }
-	@GetMapping("error")
-	public ModelAndView error() {
-		Map<String, String> model = new HashMap<>();
-	    ModelAndView mav = new ModelAndView();
-		mav.setViewName("error");
-	    return mav;
-    }	
+    @GetMapping("error")
+    public ModelAndView error() {
+        Map<String, String> model = new HashMap<>();
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("error");
+        return mav;
+    }    
 }

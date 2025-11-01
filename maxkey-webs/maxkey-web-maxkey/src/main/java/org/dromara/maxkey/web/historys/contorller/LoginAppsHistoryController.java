@@ -47,30 +47,30 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value={"/historys"})
 public class LoginAppsHistoryController {
-	static final Logger logger = LoggerFactory.getLogger(LoginAppsHistoryController.class);
-	
-	@Autowired
-  	HistoryLoginAppsService historyLoginAppsService;
-	
-	/**
-	 * @param loginAppsHistory
-	 * @return
-	 */
-	@RequestMapping(value={"/loginAppsHistory/fetch"})
-	@ResponseBody
-	public Message<?> fetch(
-				@ModelAttribute("historyLoginApp") HistoryLoginApps historyLoginApp,
-				@CurrentUser UserInfo currentUser){
-		logger.debug("historys/loginAppsHistory/fetch/  {}",historyLoginApp);
-		historyLoginApp.setId(null);
-		historyLoginApp.setUserId(currentUser.getId());
-		historyLoginApp.setInstId(currentUser.getInstId());
-		return new Message<JpaPageResults<HistoryLoginApps>>(
-					historyLoginAppsService.fetchPageResults(historyLoginApp)
-				);
-	}
+    static final Logger logger = LoggerFactory.getLogger(LoginAppsHistoryController.class);
+    
+    @Autowired
+      HistoryLoginAppsService historyLoginAppsService;
+    
+    /**
+     * @param loginAppsHistory
+     * @return
+     */
+    @RequestMapping(value={"/loginAppsHistory/fetch"})
+    @ResponseBody
+    public Message<?> fetch(
+                @ModelAttribute("historyLoginApp") HistoryLoginApps historyLoginApp,
+                @CurrentUser UserInfo currentUser){
+        logger.debug("historys/loginAppsHistory/fetch/  {}",historyLoginApp);
+        historyLoginApp.setId(null);
+        historyLoginApp.setUserId(currentUser.getId());
+        historyLoginApp.setInstId(currentUser.getInstId());
+        return new Message<JpaPageResults<HistoryLoginApps>>(
+                    historyLoginAppsService.fetchPageResults(historyLoginApp)
+                );
+    }
 
-	@InitBinder
+    @InitBinder
     public void initBinder(WebDataBinder binder) {
         SimpleDateFormat dateFormat = new SimpleDateFormat(DateUtils.FORMAT_DATE_HH_MM_SS);
         dateFormat.setLenient(false);  

@@ -28,7 +28,7 @@ public class ScimMemberRef extends ScimMultiValuedAttribute{
     }
     
     public ScimMemberRef(String display,String value) {
-    	this.display    =	display;
-    	this.value 		=	value;
+        this.display    =    display;
+        this.value         =    value;
     }
 }

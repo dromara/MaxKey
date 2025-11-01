@@ -28,6 +28,6 @@ import org.dromara.mybatis.jpa.IJpaMapper;
  *
  */
 public  interface AppsAdaptersMapper extends IJpaMapper<AppsAdapters> {
-	
+    
 
 }

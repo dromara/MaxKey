@@ -45,7 +45,7 @@ import io.swagger.v3.oas.annotations.Operation;
 @RestController
 @RequestMapping("/api/idm/Resources")
 public class RestResourcesController {
-	static final  Logger logger = LoggerFactory.getLogger(RestResourcesController.class);
+    static final  Logger logger = LoggerFactory.getLogger(RestResourcesController.class);
 
     @Autowired
     UserInfoService userInfoService;
@@ -59,27 +59,27 @@ public class RestResourcesController {
     @Operation(summary = "获取应用功能权限清单", description = "获取应用功能权限清单",method="GET")
     @GetMapping("/functionList")
     public Message<AppResourcesVo> getFunctionList(@RequestParam("userId") String userId) {
-    	logger.debug("userId {} ", userId);
+        logger.debug("userId {} ", userId);
         UserInfo user = userInfoService.get(userId);
         ///获取appId登录
         User  principal = (User)AuthorizationUtils.getAuthentication().getPrincipal();
         Apps app = appsService.get(principal.getUsername(),true);
-    	logger.debug("appId {} " , app.getId());	
-    	Apps relatedApp = new Apps();
-    	if(user != null) {
-	    	relatedApp.setId(app.getId());
-	    	relatedApp.setAppName(app.getAppName());
-	    	relatedApp.setLoginUrl(app.getLoginUrl());
-	    	relatedApp.setLogoutUrl(app.getLogoutUrl());
-	    	relatedApp.setProtocol(app.getProtocol());
-	    	relatedApp.setCategory(app.getCategory());
-	    	relatedApp.setVendor(app.getVendor());
-	    	relatedApp.setVendorUrl(app.getVendorUrl());
-	    	relatedApp.setDescription(app.getDescription());
-	    	Set<Resources> functions  = authzResourceService.getResourcesBySubject(user,app);
-	    	return new Message<>(new AppResourcesVo(relatedApp,functions)); 
-    	}else {
-    		return new Message<>(new AppResourcesVo(relatedApp,new HashSet<>())); 
-    	}
+        logger.debug("appId {} " , app.getId());    
+        Apps relatedApp = new Apps();
+        if(user != null) {
+            relatedApp.setId(app.getId());
+            relatedApp.setAppName(app.getAppName());
+            relatedApp.setLoginUrl(app.getLoginUrl());
+            relatedApp.setLogoutUrl(app.getLogoutUrl());
+            relatedApp.setProtocol(app.getProtocol());
+            relatedApp.setCategory(app.getCategory());
+            relatedApp.setVendor(app.getVendor());
+            relatedApp.setVendorUrl(app.getVendorUrl());
+            relatedApp.setDescription(app.getDescription());
+            Set<Resources> functions  = authzResourceService.getResourcesBySubject(user,app);
+            return new Message<>(new AppResourcesVo(relatedApp,functions)); 
+        }else {
+            return new Message<>(new AppResourcesVo(relatedApp,new HashSet<>())); 
+        }
     }
 }

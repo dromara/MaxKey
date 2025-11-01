@@ -57,10 +57,10 @@ public class TokenKeyEndpoint {
 
     private JwtAccessTokenConverter converter;
 
- 	public TokenKeyEndpoint(JwtAccessTokenConverter converter) {
-		super();
-		this.converter = converter;
-	}
+     public TokenKeyEndpoint(JwtAccessTokenConverter converter) {
+        super();
+        this.converter = converter;
+    }
 
     /**
      * Get the verification key for the token signatures. The principal has to

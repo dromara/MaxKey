@@ -23,20 +23,20 @@ import org.junit.Test;
 
 public class SonwFlakeIdTest {
 
-	
-	@Test
-	public void UidGenerator()  {
-	    DateTime d= new DateTime("2020-01-01T01:01:01");
-	    System.out.println("time "+d.getMillis());
-		SnowFlakeId snowFlake = new SnowFlakeId(1, 1,8,d.getMillis());
-		long seq = snowFlake.nextId();
-		
-		System.out.println(seq);
-		System.out.println(snowFlake.parse(seq).getDateTime());
-	}
-	
-	@Test
-	public void performance()  {
+    
+    @Test
+    public void UidGenerator()  {
+        DateTime d= new DateTime("2020-01-01T01:01:01");
+        System.out.println("time "+d.getMillis());
+        SnowFlakeId snowFlake = new SnowFlakeId(1, 1,8,d.getMillis());
+        long seq = snowFlake.nextId();
+        
+        System.out.println(seq);
+        System.out.println(snowFlake.parse(seq).getDateTime());
+    }
+    
+    @Test
+    public void performance()  {
         SnowFlakeId snowFlake = new SnowFlakeId(1, 1);
     
         long start = System.currentTimeMillis();
@@ -45,5 +45,5 @@ public class SonwFlakeIdTest {
         }
     
         System.out.println(System.currentTimeMillis() - start);
-	}
+    }
 }

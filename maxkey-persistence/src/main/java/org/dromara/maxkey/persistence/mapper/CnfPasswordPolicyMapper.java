@@ -28,6 +28,6 @@ import org.dromara.mybatis.jpa.IJpaMapper;
  *
  */
 public  interface CnfPasswordPolicyMapper extends IJpaMapper<CnfPasswordPolicy> {
-	
+    
 
 }

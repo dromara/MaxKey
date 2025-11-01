@@ -26,14 +26,14 @@ import org.dromara.mybatis.jpa.service.IJpaService;
 
 public interface RolesService  extends IJpaService<Roles> {
 
-	public List<Roles> queryDynamicRoles(Roles groups);
-	
-	public boolean deleteById(String groupId);
-	
-	public List<Roles> queryRolesByUserId(String userId);
-	
-	public void refreshDynamicRoles(Roles dynamicRole);
-	
-	public void refreshAllDynamicRoles();
+    public List<Roles> queryDynamicRoles(Roles groups);
+    
+    public boolean deleteById(String groupId);
+    
+    public List<Roles> queryRolesByUserId(String userId);
+    
+    public void refreshDynamicRoles(Roles dynamicRole);
+    
+    public void refreshAllDynamicRoles();
 
 }

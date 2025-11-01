@@ -31,23 +31,23 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 @Repository
 public class AppsSaml20DetailsServiceImpl  extends JpaServiceImpl<AppsSaml20DetailsMapper,AppsSAML20Details> implements AppsSaml20DetailsService{
 
-	protected static final   Cache<String, AppsSAML20Details> detailsCache = 
+    protected static final   Cache<String, AppsSAML20Details> detailsCache = 
             Caffeine.newBuilder()
                 .expireAfterWrite(30, TimeUnit.MINUTES)
                 .maximumSize(200000)
                 .build();
-	
-	public  AppsSAML20Details  getAppDetails(String id , boolean cached){
-		AppsSAML20Details details = null;
-		if(cached) {
-			details = detailsCache.getIfPresent(id);
-			if(details == null) {
-				details = getMapper().getAppDetails(id);
-				detailsCache.put(id, details);
-			}
-		}else {
-			details = getMapper().getAppDetails(id);
-		}
-		return details;
-	}
+    
+    public  AppsSAML20Details  getAppDetails(String id , boolean cached){
+        AppsSAML20Details details = null;
+        if(cached) {
+            details = detailsCache.getIfPresent(id);
+            if(details == null) {
+                details = getMapper().getAppDetails(id);
+                detailsCache.put(id, details);
+            }
+        }else {
+            details = getMapper().getAppDetails(id);
+        }
+        return details;
+    }
 }

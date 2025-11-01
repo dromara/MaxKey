@@ -44,15 +44,15 @@ public class SocialsProvider extends JpaEntity implements Serializable {
     @GeneratedValue
     private String id;
     @Column
-	private String provider;
+    private String provider;
     @Column
-	private String providerName;
+    private String providerName;
     @Column
-	private String icon;
+    private String icon;
     @Column
-	private String clientId;
+    private String clientId;
     @Column
-	private String clientSecret;
+    private String clientSecret;
     @Column
     private String agentId;
     @Column
@@ -64,7 +64,7 @@ public class SocialsProvider extends JpaEntity implements Serializable {
     @Column
     private int status;
     @Column
-	private String instId;
+    private String instId;
     @Column
     String createdBy;
     @Column
@@ -74,91 +74,91 @@ public class SocialsProvider extends JpaEntity implements Serializable {
     @Column
     Date modifiedDate;
     
-	private String redirectUri;
-	
-	private String accountId;
-	private String bindTime;
-	private String unBindTime;
-	private String lastLoginTime;
-	private String state;
-	
-	
-	private boolean userBind;
-	
-	/**
-	 * 
-	 */
-	public SocialsProvider() {
+    private String redirectUri;
+    
+    private String accountId;
+    private String bindTime;
+    private String unBindTime;
+    private String lastLoginTime;
+    private String state;
+    
+    
+    private boolean userBind;
+    
+    /**
+     * 
+     */
+    public SocialsProvider() {
 
-	}
-	
-	public SocialsProvider(SocialsProvider copy) {
-		this.clientId = copy.getClientId();
-		this.id = copy.getId();
-		this.provider = copy.getProvider();
-		this.providerName = copy.getProviderName();
-		this.agentId = copy.getAgentId();
-		this.icon = copy.getIcon();
-		this.scanCode = copy.getScanCode();
-	}
+    }
+    
+    public SocialsProvider(SocialsProvider copy) {
+        this.clientId = copy.getClientId();
+        this.id = copy.getId();
+        this.provider = copy.getProvider();
+        this.providerName = copy.getProviderName();
+        this.agentId = copy.getAgentId();
+        this.icon = copy.getIcon();
+        this.scanCode = copy.getScanCode();
+    }
 
-	public String getProvider() {
-		return provider;
-	}
+    public String getProvider() {
+        return provider;
+    }
 
-	public void setProvider(String provider) {
-		this.provider = provider;
-	}
+    public void setProvider(String provider) {
+        this.provider = provider;
+    }
 
-	public String getProviderName() {
-		return providerName;
-	}
+    public String getProviderName() {
+        return providerName;
+    }
 
-	public void setProviderName(String providerName) {
-		this.providerName = providerName;
-	}
+    public void setProviderName(String providerName) {
+        this.providerName = providerName;
+    }
 
-	public String getIcon() {
-		return icon;
-	}
+    public String getIcon() {
+        return icon;
+    }
 
-	public void setIcon(String icon) {
-		this.icon = icon;
-	}
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
 
-	public String getClientId() {
-		return clientId;
-	}
+    public String getClientId() {
+        return clientId;
+    }
 
-	public void setClientId(String clientId) {
-		this.clientId = clientId;
-	}
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
+    }
 
-	public String getClientSecret() {
-		return clientSecret;
-	}
+    public String getClientSecret() {
+        return clientSecret;
+    }
 
-	public void setClientSecret(String clientSecret) {
-		this.clientSecret = clientSecret;
-	}
+    public void setClientSecret(String clientSecret) {
+        this.clientSecret = clientSecret;
+    }
 
-	public String getAccountId() {
-		return accountId;
-	}
+    public String getAccountId() {
+        return accountId;
+    }
 
-	public void setAccountId(String accountId) {
-		this.accountId = accountId;
-	}
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
+    }
 
-	public boolean isUserBind() {
-		return userBind;
-	}
+    public boolean isUserBind() {
+        return userBind;
+    }
 
-	public void setUserBind(boolean userBind) {
-		this.userBind = userBind;
-	}
+    public void setUserBind(boolean userBind) {
+        this.userBind = userBind;
+    }
 
-	
+    
     public String getBindTime() {
         return bindTime;
     }
@@ -184,28 +184,28 @@ public class SocialsProvider extends JpaEntity implements Serializable {
     }
 
     public String getRedirectUri() {
-		return redirectUri;
-	}
+        return redirectUri;
+    }
 
-	public void setRedirectUri(String redirectUri) {
-		this.redirectUri = redirectUri;
-	}
+    public void setRedirectUri(String redirectUri) {
+        this.redirectUri = redirectUri;
+    }
 
-	public String getAgentId() {
-		return agentId;
-	}
+    public String getAgentId() {
+        return agentId;
+    }
 
-	public void setAgentId(String agentId) {
-		this.agentId = agentId;
-	}
+    public void setAgentId(String agentId) {
+        this.agentId = agentId;
+    }
 
-	public String getState() {
-		return state;
-	}
+    public String getState() {
+        return state;
+    }
 
-	public void setState(String state) {
-		this.state = state;
-	}
+    public void setState(String state) {
+        this.state = state;
+    }
 
 
 
@@ -218,14 +218,14 @@ public class SocialsProvider extends JpaEntity implements Serializable {
     }
 
     public String getDisplay() {
-		return display;
-	}
+        return display;
+    }
 
-	public void setDisplay(String display) {
-		this.display = display;
-	}
+    public void setDisplay(String display) {
+        this.display = display;
+    }
 
-	public int getStatus() {
+    public int getStatus() {
         return status;
     }
 
@@ -250,22 +250,22 @@ public class SocialsProvider extends JpaEntity implements Serializable {
     }
 
     public Date getCreatedDate() {
-		return createdDate;
-	}
+        return createdDate;
+    }
 
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
 
-	public Date getModifiedDate() {
-		return modifiedDate;
-	}
+    public Date getModifiedDate() {
+        return modifiedDate;
+    }
 
-	public void setModifiedDate(Date modifiedDate) {
-		this.modifiedDate = modifiedDate;
-	}
+    public void setModifiedDate(Date modifiedDate) {
+        this.modifiedDate = modifiedDate;
+    }
 
-	public long getSortIndex() {
+    public long getSortIndex() {
         return sortIndex;
     }
 
@@ -274,74 +274,74 @@ public class SocialsProvider extends JpaEntity implements Serializable {
     }
 
     public String getScanCode() {
-		return scanCode;
-	}
+        return scanCode;
+    }
 
-	public void setScanCode(String scanCode) {
-		this.scanCode = scanCode;
-	}
+    public void setScanCode(String scanCode) {
+        this.scanCode = scanCode;
+    }
 
-	public String getInstId() {
-		return instId;
-	}
+    public String getInstId() {
+        return instId;
+    }
 
-	public void setInstId(String instId) {
-		this.instId = instId;
-	}
+    public void setInstId(String instId) {
+        this.instId = instId;
+    }
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("SocialsProvider [id=");
-		builder.append(id);
-		builder.append(", provider=");
-		builder.append(provider);
-		builder.append(", providerName=");
-		builder.append(providerName);
-		builder.append(", icon=");
-		builder.append(icon);
-		builder.append(", clientId=");
-		builder.append(clientId);
-		builder.append(", clientSecret=");
-		builder.append(clientSecret);
-		builder.append(", agentId=");
-		builder.append(agentId);
-		builder.append(", display=");
-		builder.append(display);
-		builder.append(", sortIndex=");
-		builder.append(sortIndex);
-		builder.append(", scanCode=");
-		builder.append(scanCode);
-		builder.append(", status=");
-		builder.append(status);
-		builder.append(", instId=");
-		builder.append(instId);
-		builder.append(", createdBy=");
-		builder.append(createdBy);
-		builder.append(", createdDate=");
-		builder.append(createdDate);
-		builder.append(", modifiedBy=");
-		builder.append(modifiedBy);
-		builder.append(", modifiedDate=");
-		builder.append(modifiedDate);
-		builder.append(", redirectUri=");
-		builder.append(redirectUri);
-		builder.append(", accountId=");
-		builder.append(accountId);
-		builder.append(", bindTime=");
-		builder.append(bindTime);
-		builder.append(", unBindTime=");
-		builder.append(unBindTime);
-		builder.append(", lastLoginTime=");
-		builder.append(lastLoginTime);
-		builder.append(", state=");
-		builder.append(state);
-		builder.append(", userBind=");
-		builder.append(userBind);
-		builder.append("]");
-		return builder.toString();
-	}
-	
-	
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("SocialsProvider [id=");
+        builder.append(id);
+        builder.append(", provider=");
+        builder.append(provider);
+        builder.append(", providerName=");
+        builder.append(providerName);
+        builder.append(", icon=");
+        builder.append(icon);
+        builder.append(", clientId=");
+        builder.append(clientId);
+        builder.append(", clientSecret=");
+        builder.append(clientSecret);
+        builder.append(", agentId=");
+        builder.append(agentId);
+        builder.append(", display=");
+        builder.append(display);
+        builder.append(", sortIndex=");
+        builder.append(sortIndex);
+        builder.append(", scanCode=");
+        builder.append(scanCode);
+        builder.append(", status=");
+        builder.append(status);
+        builder.append(", instId=");
+        builder.append(instId);
+        builder.append(", createdBy=");
+        builder.append(createdBy);
+        builder.append(", createdDate=");
+        builder.append(createdDate);
+        builder.append(", modifiedBy=");
+        builder.append(modifiedBy);
+        builder.append(", modifiedDate=");
+        builder.append(modifiedDate);
+        builder.append(", redirectUri=");
+        builder.append(redirectUri);
+        builder.append(", accountId=");
+        builder.append(accountId);
+        builder.append(", bindTime=");
+        builder.append(bindTime);
+        builder.append(", unBindTime=");
+        builder.append(unBindTime);
+        builder.append(", lastLoginTime=");
+        builder.append(lastLoginTime);
+        builder.append(", state=");
+        builder.append(state);
+        builder.append(", userBind=");
+        builder.append(userBind);
+        builder.append("]");
+        return builder.toString();
+    }
+    
+    
 
 }

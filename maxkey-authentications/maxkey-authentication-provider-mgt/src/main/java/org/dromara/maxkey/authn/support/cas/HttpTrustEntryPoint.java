@@ -38,49 +38,49 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "/login")
 public class HttpTrustEntryPoint {
-	private static final Logger _logger = LoggerFactory.getLogger(HttpTrustEntryPoint.class);
+    private static final Logger _logger = LoggerFactory.getLogger(HttpTrustEntryPoint.class);
     
-	@Autowired
-  	ApplicationConfig applicationConfig;
+    @Autowired
+      ApplicationConfig applicationConfig;
     
-  	@Autowired
+      @Autowired
     AbstractAuthenticationProvider authenticationProvider ;
-  	
-  	@Autowired
-	AuthTokenService authTokenService;
-  	
-  	 @Autowired
- 	CasTrustLoginService casTrustLoginService;
- 	
- 	@GetMapping(value={"/trust"}, produces = {MediaType.APPLICATION_JSON_VALUE})
- 	public Message<AuthJwt> trust(@RequestParam(value = WebConstants.CAS_TICKET_PARAMETER, required = true) String ticket) {
- 		try {
- 			//for ticket Login
- 			_logger.debug("ticket : {}" , ticket);
- 	
- 			 String username = casTrustLoginService.buildLoginUser(ticket);
- 			 
- 			 if(username != null) {
- 				 LoginCredential loginCredential =new LoginCredential(username,"",ConstsLoginType.CAS);
- 				 Authentication  authentication = authenticationProvider.authenticate(loginCredential,true);
- 				_logger.debug("CAS Logined in , username {}" , username);
- 				 AuthJwt authJwt = authTokenService.genAuthJwt(authentication);
- 		 		 return new Message<>(authJwt);
- 			 }
- 		}catch(Exception e) {
- 			_logger.error("Exception ",e);
- 		}
- 		
- 		 return new Message<>(Message.FAIL);
- 	}
+      
+      @Autowired
+    AuthTokenService authTokenService;
+      
+       @Autowired
+     CasTrustLoginService casTrustLoginService;
+     
+     @GetMapping(value={"/trust"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+     public Message<AuthJwt> trust(@RequestParam(value = WebConstants.CAS_TICKET_PARAMETER, required = true) String ticket) {
+         try {
+             //for ticket Login
+             _logger.debug("ticket : {}" , ticket);
+     
+              String username = casTrustLoginService.buildLoginUser(ticket);
+              
+              if(username != null) {
+                  LoginCredential loginCredential =new LoginCredential(username,"",ConstsLoginType.CAS);
+                  Authentication  authentication = authenticationProvider.authenticate(loginCredential,true);
+                 _logger.debug("CAS Logined in , username {}" , username);
+                  AuthJwt authJwt = authTokenService.genAuthJwt(authentication);
+                   return new Message<>(authJwt);
+              }
+         }catch(Exception e) {
+             _logger.error("Exception ",e);
+         }
+         
+          return new Message<>(Message.FAIL);
+     }
 
 
-	public void setApplicationConfig(ApplicationConfig applicationConfig) {
-		this.applicationConfig = applicationConfig;
-	}
+    public void setApplicationConfig(ApplicationConfig applicationConfig) {
+        this.applicationConfig = applicationConfig;
+    }
 
-	public void setAuthenticationProvider(AbstractAuthenticationProvider authenticationProvider) {
-		this.authenticationProvider = authenticationProvider;
-	}
-	
+    public void setAuthenticationProvider(AbstractAuthenticationProvider authenticationProvider) {
+        this.authenticationProvider = authenticationProvider;
+    }
+    
 }

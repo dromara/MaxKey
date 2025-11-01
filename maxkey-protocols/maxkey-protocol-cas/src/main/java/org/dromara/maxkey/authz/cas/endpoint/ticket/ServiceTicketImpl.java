@@ -68,7 +68,7 @@ public class ServiceTicketImpl extends AbstractTicket  implements ServiceTicket{
      */
     public ServiceTicketImpl(Authentication authentication) {
         // exists for JPA purposes
-    	this.authentication=authentication;
+        this.authentication=authentication;
     }
     
     /**
@@ -76,8 +76,8 @@ public class ServiceTicketImpl extends AbstractTicket  implements ServiceTicket{
      */
     public ServiceTicketImpl(Authentication authentication,AppsCasDetails casDetails) {
         // exists for JPA purposes
-    	this.authentication=authentication;
-    	this.casDetails=casDetails;
+        this.authentication=authentication;
+        this.casDetails=casDetails;
     }
 
     /**

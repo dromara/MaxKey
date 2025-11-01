@@ -80,275 +80,275 @@ import jakarta.servlet.http.HttpServletResponse;
 @Controller
 public class ConsumerEndpoint {
 
-	private static final  Logger logger = LoggerFactory.getLogger(ConsumerEndpoint.class);
+    private static final  Logger logger = LoggerFactory.getLogger(ConsumerEndpoint.class);
 
-	private BindingAdapter bindingAdapter;
-	
-	@Autowired
-	@Qualifier("serviceProviderKeyStoreLoader")
-	private KeyStoreLoader keyStoreLoader;
+    private BindingAdapter bindingAdapter;
+    
+    @Autowired
+    @Qualifier("serviceProviderKeyStoreLoader")
+    private KeyStoreLoader keyStoreLoader;
 
-	@Autowired
-	@Qualifier("timeService")
-	private TimeService timeService;
+    @Autowired
+    @Qualifier("timeService")
+    private TimeService timeService;
 
-	@Autowired
-	@Qualifier("idService")
-	private IDService idService;
-	
-	@Autowired
+    @Autowired
+    @Qualifier("idService")
+    private IDService idService;
+    
+    @Autowired
     @Qualifier("authenticationProvider")
-	AbstractAuthenticationProvider authenticationProvider ;
+    AbstractAuthenticationProvider authenticationProvider ;
 
-	private String singleSignOnServiceURL;
-	private String assertionConsumerServiceURL;
-	
-	@Autowired
-	@Qualifier("extractRedirectBindingAdapter")
-	private ExtractBindingAdapter extractBindingAdapter;
+    private String singleSignOnServiceURL;
+    private String assertionConsumerServiceURL;
+    
+    @Autowired
+    @Qualifier("extractRedirectBindingAdapter")
+    private ExtractBindingAdapter extractBindingAdapter;
 
-	@Autowired
-	private AppsSaml20DetailsService saml20DetailsService;
+    @Autowired
+    private AppsSaml20DetailsService saml20DetailsService;
 
-	@Autowired
-	@Qualifier("issueInstantRule")
-	private IssueInstantRule issueInstantRule;
+    @Autowired
+    @Qualifier("issueInstantRule")
+    private IssueInstantRule issueInstantRule;
 
-	@Autowired
-	@Qualifier("messageReplayRule")
-	private MessageReplayRule messageReplayRule;
-	
-	@Autowired
-	AuthTokenService authJwtService;
+    @Autowired
+    @Qualifier("messageReplayRule")
+    private MessageReplayRule messageReplayRule;
+    
+    @Autowired
+    AuthTokenService authJwtService;
 
-	EndpointGenerator endpointGenerator;
-	AuthnRequestGenerator authnRequestGenerator;
-	CredentialResolver credentialResolver;
+    EndpointGenerator endpointGenerator;
+    AuthnRequestGenerator authnRequestGenerator;
+    CredentialResolver credentialResolver;
 
-	Credential signingCredential;
-	
-	SAML2ValidatorSuite validatorSuite = new SAML2ValidatorSuite();
+    Credential signingCredential;
+    
+    SAML2ValidatorSuite validatorSuite = new SAML2ValidatorSuite();
 
-	@RequestMapping(value = "/authz/saml20/consumer/{id}")
-	public ModelAndView consumer(HttpServletRequest request,
-			HttpServletResponse response, @PathVariable("id") String appId)
-			throws Exception {
+    @RequestMapping(value = "/authz/saml20/consumer/{id}")
+    public ModelAndView consumer(HttpServletRequest request,
+            HttpServletResponse response, @PathVariable("id") String appId)
+            throws Exception {
 
-		logger.debug("Attempting authentication.");
-		// 初始化SP 证书
-		initCredential(appId);
+        logger.debug("Attempting authentication.");
+        // 初始化SP 证书
+        initCredential(appId);
 
-		SAMLMessageContext messageContext=null;
-		/*
-		try {
-			messageContext = bindingAdapter.extractSAMLMessageContext(request);
-		} catch (MessageDecodingException me) {
-			logger.error("Could not decode SAML Response", me);
-			throw new Exception(me);
-		} catch (SecurityException se) {
-			logger.error("Could not decode SAML Response", se);
-			throw new Exception(se);
-		}*/
+        SAMLMessageContext messageContext=null;
+        /*
+        try {
+            messageContext = bindingAdapter.extractSAMLMessageContext(request);
+        } catch (MessageDecodingException me) {
+            logger.error("Could not decode SAML Response", me);
+            throw new Exception(me);
+        } catch (SecurityException se) {
+            logger.error("Could not decode SAML Response", se);
+            throw new Exception(se);
+        }*/
 
-		logger.debug("Message received from issuer: "
-				+ messageContext.getInboundMessageIssuer());
+        logger.debug("Message received from issuer: "
+                + messageContext.getInboundMessageIssuer());
 
-		if (!(messageContext.getInboundSAMLMessage() instanceof Response)) {
-			logger.error("SAML Message was not a Response");
-			throw new Exception();
-		}
-		List<Assertion> assertionList = ((Response) messageContext
-				.getInboundSAMLMessage()).getAssertions();
-
-
-
-		String credentials = extractBindingAdapter.extractSAMLMessage(request);
-
-		// 未认证token
-		Response samlResponse=(Response) messageContext.getInboundSAMLMessage();
-		
-		AuthenticationDetailsSource<HttpServletRequest, ?> authenticationDetailsSource = new WebAuthenticationDetailsSource();
-	
-
-		try {
-			validatorSuite.validate(samlResponse);
-		} catch (ValidationException ve) {
-			logger.warn("Response Message failed Validation", ve);
-			throw new ServiceProviderAuthenticationException("Invalid SAML REsponse Message", ve);
-		}
-
-		
-		checkResponseStatus(samlResponse);
-
-		Assertion assertion = samlResponse.getAssertions().get(0);
-		
-		logger.debug("authenticationResponseIssuingEntityName {}" ,samlResponse.getIssuer().getValue()); 
-		
-		String username=assertion.getSubject().getNameID().getValue();
-		
-		logger.debug("assertion.getID() " ,assertion.getID());
-		logger.debug("assertion.getSubject().getNameID().getValue() ", username);
-		
-	
-		logger.debug("assertion.getID() ", assertion.getAuthnStatements());
-		LoginCredential loginCredential =new LoginCredential(
-		        username,"",ConstsLoginType.SAMLTRUST);
-		
-		Authentication  authentication = authenticationProvider.authenticate(loginCredential,true);
-		if(authentication == null) {
-			String congress = authJwtService.createCongress(authentication);
-		}
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("username", username);
-		mav.setViewName("redirect:/appList");
-		return mav;
-	}
+        if (!(messageContext.getInboundSAMLMessage() instanceof Response)) {
+            logger.error("SAML Message was not a Response");
+            throw new Exception();
+        }
+        List<Assertion> assertionList = ((Response) messageContext
+                .getInboundSAMLMessage()).getAssertions();
 
 
 
-	public void afterPropertiesSet() throws Exception {
+        String credentials = extractBindingAdapter.extractSAMLMessage(request);
 
-		authnRequestGenerator = new AuthnRequestGenerator(keyStoreLoader.getEntityName(), timeService, idService);
-		endpointGenerator = new EndpointGenerator();
+        // 未认证token
+        Response samlResponse=(Response) messageContext.getInboundSAMLMessage();
+        
+        AuthenticationDetailsSource<HttpServletRequest, ?> authenticationDetailsSource = new WebAuthenticationDetailsSource();
+    
 
-		CriteriaSet criteriaSet = new CriteriaSet();
-		criteriaSet.add(new EntityIDCriteria(keyStoreLoader.getEntityName()));
-		criteriaSet.add(new UsageCriteria(UsageType.SIGNING));
+        try {
+            validatorSuite.validate(samlResponse);
+        } catch (ValidationException ve) {
+            logger.warn("Response Message failed Validation", ve);
+            throw new ServiceProviderAuthenticationException("Invalid SAML REsponse Message", ve);
+        }
 
-		try {
-			signingCredential = credentialResolver.resolveSingle(criteriaSet);
-		} catch (SecurityException e) {
-			logger.error("证书解析出错", e);
-			throw new Exception(e);
-		}
-		Validate.notNull(signingCredential);
+        
+        checkResponseStatus(samlResponse);
 
-	}
+        Assertion assertion = samlResponse.getAssertions().get(0);
+        
+        logger.debug("authenticationResponseIssuingEntityName {}" ,samlResponse.getIssuer().getValue()); 
+        
+        String username=assertion.getSubject().getNameID().getValue();
+        
+        logger.debug("assertion.getID() " ,assertion.getID());
+        logger.debug("assertion.getSubject().getNameID().getValue() ", username);
+        
+    
+        logger.debug("assertion.getID() ", assertion.getAuthnStatements());
+        LoginCredential loginCredential =new LoginCredential(
+                username,"",ConstsLoginType.SAMLTRUST);
+        
+        Authentication  authentication = authenticationProvider.authenticate(loginCredential,true);
+        if(authentication == null) {
+            String congress = authJwtService.createCongress(authentication);
+        }
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("username", username);
+        mav.setViewName("redirect:/appList");
+        return mav;
+    }
 
-	/**
-	 * 初始化sp证书
-	 * 
-	 * @throws Exception
-	 */
-	private void initCredential(String appId) throws Exception {
-		// 1. 获取 sp keyStore
-		AppsSAML20Details saml20Details = saml20DetailsService.get(appId);
-		if (saml20Details == null) {
-			logger.error("appId[" + appId + "] not exists");
-			throw new Exception();
-		}
-		byte[] keyStoreBytes = saml20Details.getKeyStore();
-		InputStream keyStoreStream = new ByteArrayInputStream(keyStoreBytes);
 
-		try {
-			KeyStore keyStore = KeyStore.getInstance(keyStoreLoader.getKeystoreType());
-			keyStore.load(keyStoreStream, keyStoreLoader.getKeystorePassword().toCharArray());
 
-			Map<String, String> passwords = new HashMap<String, String>();
-			for (Enumeration<String> en = keyStore.aliases(); en.hasMoreElements();) {
-				String aliase = en.nextElement();
-				if (aliase.equalsIgnoreCase(keyStoreLoader.getEntityName())) {
-					passwords.put(aliase, keyStoreLoader.getKeystorePassword());
-				}
-			}
-			// TrustResolver trustResolver = new
-			// TrustResolver(keyStore,keyStoreLoader.getIdpIssuingEntityName(),keyStoreLoader.getKeystorePassword());
+    public void afterPropertiesSet() throws Exception {
 
-			AuthnResponseGenerator authnResponseGenerator = new AuthnResponseGenerator(
-					keyStoreLoader.getEntityName(), timeService,
-					idService);
-			// endpointGenerator = new EndpointGenerator();
+        authnRequestGenerator = new AuthnRequestGenerator(keyStoreLoader.getEntityName(), timeService, idService);
+        endpointGenerator = new EndpointGenerator();
 
-			CriteriaSet criteriaSet = new CriteriaSet();
-			criteriaSet.add(new EntityIDCriteria(keyStoreLoader
-					.getEntityName()));
-			criteriaSet.add(new UsageCriteria(UsageType.SIGNING));
+        CriteriaSet criteriaSet = new CriteriaSet();
+        criteriaSet.add(new EntityIDCriteria(keyStoreLoader.getEntityName()));
+        criteriaSet.add(new UsageCriteria(UsageType.SIGNING));
 
-			KeyStoreCredentialResolver credentialResolver = new KeyStoreCredentialResolver(
-					keyStore, passwords);
-			signingCredential = credentialResolver.resolveSingle(criteriaSet);
-			Validate.notNull(signingCredential);
+        try {
+            signingCredential = credentialResolver.resolveSingle(criteriaSet);
+        } catch (SecurityException e) {
+            logger.error("证书解析出错", e);
+            throw new Exception(e);
+        }
+        Validate.notNull(signingCredential);
 
-			// adapter set resolver
-			TrustResolver trustResolver = new TrustResolver(keyStore,
-					keyStoreLoader.getEntityName(),
-					keyStoreLoader.getKeystorePassword(), issueInstantRule,
-					messageReplayRule,"POST");
-			extractBindingAdapter.setSecurityPolicyResolver(trustResolver
-					.getStaticSecurityPolicyResolver());
-		} catch (Exception e) {
-			logger.error("初始化sp证书出错");
-			throw new Exception(e);
-		}
-	}
-	
-	
-	private void checkResponseStatus(Response samlResponse) {
+    }
 
-		
-		if(StatusCode.SUCCESS_URI.equals( StringUtils.trim(samlResponse.getStatus().getStatusCode().getValue()))) {
-			
-			additionalValidationChecksOnSuccessfulResponse(samlResponse);
-			
-		}
-		
-		
-		else {
-			
-			StringBuilder extraInformation = extractExtraInformation(samlResponse);
-			
-			if(extraInformation.length() > 0) {
-				logger.warn("Extra information extracted from authentication failure was {}", extraInformation.toString());
-				
-				throw new IdentityProviderAuthenticationException("Identity Provider has failed the authentication.", extraInformation.toString());
-			}
-			
-			else {
-				throw new IdentityProviderAuthenticationException("Identity Provider has failed the authentication.");
-			}
-			
-		}
-	}
-	
-	
-	private void additionalValidationChecksOnSuccessfulResponse(
-			Response samlResponse) {
-		//saml validator suite does not check for assertions on successful auths
-		if(samlResponse.getAssertions().isEmpty()){
-			throw new ServiceProviderAuthenticationException("Successful Response did not contain any assertions");
-		}
-		
-		//nor authnStatements
-		else if(samlResponse.getAssertions().get(0).getAuthnStatements().isEmpty()){
-			throw new ServiceProviderAuthenticationException("Successful Response did not contain an assertions with an AuthnStatement");
-		}
+    /**
+     * 初始化sp证书
+     * 
+     * @throws Exception
+     */
+    private void initCredential(String appId) throws Exception {
+        // 1. 获取 sp keyStore
+        AppsSAML20Details saml20Details = saml20DetailsService.get(appId);
+        if (saml20Details == null) {
+            logger.error("appId[" + appId + "] not exists");
+            throw new Exception();
+        }
+        byte[] keyStoreBytes = saml20Details.getKeyStore();
+        InputStream keyStoreStream = new ByteArrayInputStream(keyStoreBytes);
 
-		//we require at attribute statements
-		else if(samlResponse.getAssertions().get(0).getAttributeStatements().isEmpty()){
-			throw new ServiceProviderAuthenticationException("Successful Response did not contain an assertions with an AttributeStatements");
+        try {
+            KeyStore keyStore = KeyStore.getInstance(keyStoreLoader.getKeystoreType());
+            keyStore.load(keyStoreStream, keyStoreLoader.getKeystorePassword().toCharArray());
 
-		}
-		//we will require an issuer
-		else if(samlResponse.getIssuer() == null) {
-			throw new ServiceProviderAuthenticationException("Successful Response did not contain any Issuer");
+            Map<String, String> passwords = new HashMap<String, String>();
+            for (Enumeration<String> en = keyStore.aliases(); en.hasMoreElements();) {
+                String aliase = en.nextElement();
+                if (aliase.equalsIgnoreCase(keyStoreLoader.getEntityName())) {
+                    passwords.put(aliase, keyStoreLoader.getKeystorePassword());
+                }
+            }
+            // TrustResolver trustResolver = new
+            // TrustResolver(keyStore,keyStoreLoader.getIdpIssuingEntityName(),keyStoreLoader.getKeystorePassword());
 
-		}
-	}
+            AuthnResponseGenerator authnResponseGenerator = new AuthnResponseGenerator(
+                    keyStoreLoader.getEntityName(), timeService,
+                    idService);
+            // endpointGenerator = new EndpointGenerator();
 
-	private StringBuilder extractExtraInformation(Response samlResponse) {
-		StringBuilder extraInformation = new StringBuilder();
-		
-		if( samlResponse.getStatus().getStatusCode().getStatusCode() !=null ) {
-		
-			extraInformation.append(samlResponse.getStatus().getStatusCode().getStatusCode().getValue());
-		}
-		
-		if(samlResponse.getStatus().getStatusMessage() != null) {
-			if(extraInformation.length() > 0) {
-				extraInformation.append("  -  ");
-			}
-			extraInformation.append(samlResponse.getStatus().getStatusMessage());
-		}
-		return extraInformation;
-	}
+            CriteriaSet criteriaSet = new CriteriaSet();
+            criteriaSet.add(new EntityIDCriteria(keyStoreLoader
+                    .getEntityName()));
+            criteriaSet.add(new UsageCriteria(UsageType.SIGNING));
+
+            KeyStoreCredentialResolver credentialResolver = new KeyStoreCredentialResolver(
+                    keyStore, passwords);
+            signingCredential = credentialResolver.resolveSingle(criteriaSet);
+            Validate.notNull(signingCredential);
+
+            // adapter set resolver
+            TrustResolver trustResolver = new TrustResolver(keyStore,
+                    keyStoreLoader.getEntityName(),
+                    keyStoreLoader.getKeystorePassword(), issueInstantRule,
+                    messageReplayRule,"POST");
+            extractBindingAdapter.setSecurityPolicyResolver(trustResolver
+                    .getStaticSecurityPolicyResolver());
+        } catch (Exception e) {
+            logger.error("初始化sp证书出错");
+            throw new Exception(e);
+        }
+    }
+    
+    
+    private void checkResponseStatus(Response samlResponse) {
+
+        
+        if(StatusCode.SUCCESS_URI.equals( StringUtils.trim(samlResponse.getStatus().getStatusCode().getValue()))) {
+            
+            additionalValidationChecksOnSuccessfulResponse(samlResponse);
+            
+        }
+        
+        
+        else {
+            
+            StringBuilder extraInformation = extractExtraInformation(samlResponse);
+            
+            if(extraInformation.length() > 0) {
+                logger.warn("Extra information extracted from authentication failure was {}", extraInformation.toString());
+                
+                throw new IdentityProviderAuthenticationException("Identity Provider has failed the authentication.", extraInformation.toString());
+            }
+            
+            else {
+                throw new IdentityProviderAuthenticationException("Identity Provider has failed the authentication.");
+            }
+            
+        }
+    }
+    
+    
+    private void additionalValidationChecksOnSuccessfulResponse(
+            Response samlResponse) {
+        //saml validator suite does not check for assertions on successful auths
+        if(samlResponse.getAssertions().isEmpty()){
+            throw new ServiceProviderAuthenticationException("Successful Response did not contain any assertions");
+        }
+        
+        //nor authnStatements
+        else if(samlResponse.getAssertions().get(0).getAuthnStatements().isEmpty()){
+            throw new ServiceProviderAuthenticationException("Successful Response did not contain an assertions with an AuthnStatement");
+        }
+
+        //we require at attribute statements
+        else if(samlResponse.getAssertions().get(0).getAttributeStatements().isEmpty()){
+            throw new ServiceProviderAuthenticationException("Successful Response did not contain an assertions with an AttributeStatements");
+
+        }
+        //we will require an issuer
+        else if(samlResponse.getIssuer() == null) {
+            throw new ServiceProviderAuthenticationException("Successful Response did not contain any Issuer");
+
+        }
+    }
+
+    private StringBuilder extractExtraInformation(Response samlResponse) {
+        StringBuilder extraInformation = new StringBuilder();
+        
+        if( samlResponse.getStatus().getStatusCode().getStatusCode() !=null ) {
+        
+            extraInformation.append(samlResponse.getStatus().getStatusCode().getStatusCode().getValue());
+        }
+        
+        if(samlResponse.getStatus().getStatusMessage() != null) {
+            if(extraInformation.length() > 0) {
+                extraInformation.append("  -  ");
+            }
+            extraInformation.append(samlResponse.getStatus().getStatusMessage());
+        }
+        return extraInformation;
+    }
 }

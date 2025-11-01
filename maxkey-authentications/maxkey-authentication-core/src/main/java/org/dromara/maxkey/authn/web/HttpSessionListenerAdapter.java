@@ -58,31 +58,31 @@ public class HttpSessionListenerAdapter implements HttpSessionListener {
         Object principal  = authentication == null ? null : authentication.getPrincipal();
         _logger.trace("principal {}",principal);
         if(principal != null ) {
-        	if(principal instanceof SignPrincipal && ((SignPrincipal)principal).getUserInfo()!=null) {
-        		SignPrincipal signPrincipal = (SignPrincipal)principal;
-        		_logger.trace("{} HttpSession Id  {} for userId  {} , username {} @Ticket {} Destroyed" ,
-        			DateUtils.formatDateTime(new Date()),
-        			session.getId(), 
-        			signPrincipal.getUserInfo().getId(),
-        			signPrincipal.getUserInfo().getUsername(),
-        			signPrincipal.getSessionId());
-        	}else if(principal instanceof User) {
-        		User user = (User)principal;
-        		_logger.trace("{} HttpSession Id  {} for username {} password {} Destroyed" ,
-        			DateUtils.formatDateTime(new Date()),
-        			session.getId(), 
-        			user.getUsername(),
-        			user.getPassword());
-        	}else{
-        		_logger.trace("{} HttpSession Id  {} for principal {} Destroyed" ,
-        			DateUtils.formatDateTime(new Date()),
-        			session.getId(), 
-        			principal);
-        	}
+            if(principal instanceof SignPrincipal && ((SignPrincipal)principal).getUserInfo()!=null) {
+                SignPrincipal signPrincipal = (SignPrincipal)principal;
+                _logger.trace("{} HttpSession Id  {} for userId  {} , username {} @Ticket {} Destroyed" ,
+                    DateUtils.formatDateTime(new Date()),
+                    session.getId(), 
+                    signPrincipal.getUserInfo().getId(),
+                    signPrincipal.getUserInfo().getUsername(),
+                    signPrincipal.getSessionId());
+            }else if(principal instanceof User) {
+                User user = (User)principal;
+                _logger.trace("{} HttpSession Id  {} for username {} password {} Destroyed" ,
+                    DateUtils.formatDateTime(new Date()),
+                    session.getId(), 
+                    user.getUsername(),
+                    user.getPassword());
+            }else{
+                _logger.trace("{} HttpSession Id  {} for principal {} Destroyed" ,
+                    DateUtils.formatDateTime(new Date()),
+                    session.getId(), 
+                    principal);
+            }
         }else {
-        	_logger.trace("{} HttpSession Id  {} Destroyed" ,
-        			DateUtils.formatDateTime(new Date()),
-        			session.getId());
+            _logger.trace("{} HttpSession Id  {} Destroyed" ,
+                    DateUtils.formatDateTime(new Date()),
+                    session.getId());
         }
     }
 

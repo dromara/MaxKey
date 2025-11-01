@@ -48,79 +48,79 @@ import jakarta.servlet.http.HttpServletResponse;
  */
 @Component
 public class RestApiPermissionAdapter  implements AsyncHandlerInterceptor  {
-	private static final Logger logger = LoggerFactory.getLogger(RestApiPermissionAdapter.class);
+    private static final Logger logger = LoggerFactory.getLogger(RestApiPermissionAdapter.class);
 
-	static final String PASSWORD = "password";
-	
-	@Autowired
-	DefaultTokenServices oauth20TokenServices;
+    static final String PASSWORD = "password";
+    
+    @Autowired
+    DefaultTokenServices oauth20TokenServices;
 
-	@Autowired
-	AppsService appsService;
-	
-	/*
-	 * 请求前处理
-	 *  (non-Javadoc)
-	 * @see org.springframework.web.servlet.handler.HandlerInterceptorAdapter#preHandle(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, java.lang.Object)
-	 */
-	@Override
-	public boolean preHandle(HttpServletRequest request,HttpServletResponse response, Object handler) throws Exception {
-		logger.trace("Rest API Permission Adapter pre handle");
-		 AuthorizationHeader headerCredential = AuthorizationHeaderUtils.resolve(request);
-		 
-		//判断应用的AppId和Secret
-		if(headerCredential != null){
-			UsernamePasswordAuthenticationToken authenticationToken = null;
-			if(headerCredential.isBasic()) {
-			    if(StringUtils.isNotBlank(headerCredential.getUsername())&&
-			    		StringUtils.isNotBlank(headerCredential.getCredential())
-			    		) {
-			    	String appId = headerCredential.getUsername();
-			    	String credential = headerCredential.getCredential();
-			    	Apps app = appsService.get(appId, true);
-			    	if(app != null ) {
-			    		if(	PasswordReciprocal.getInstance().matches(credential, app.getSecret())) {
-			    			ArrayList<SimpleGrantedAuthority> grantedAuthoritys = new ArrayList<>();
-			    			grantedAuthoritys.add(new SimpleGrantedAuthority("ROLE_USER"));
-			    			User user = new User(appId, PASSWORD, grantedAuthoritys);
-			    			authenticationToken= new UsernamePasswordAuthenticationToken(user, PASSWORD, grantedAuthoritys);
-			    		}else {
-			    			logger.trace("app {} secret not matches . ",appId);
-			    		}
-				    }else {
-				    	logger.trace("app {} not exists . ",appId);
-				    }
-			    }
-			}else if(StringUtils.isNotBlank(headerCredential.getCredential())){
-				logger.trace("Authentication bearer {}" , headerCredential.getCredential());
-				OAuth2Authentication oauth2Authentication = 
-						oauth20TokenServices.loadAuthentication(headerCredential.getCredential());
-				
-				if(oauth2Authentication != null) {
-					logger.trace("Authentication token {}" , oauth2Authentication.getPrincipal().toString());
-					authenticationToken= new UsernamePasswordAuthenticationToken(
-			    			new User(
-			    					oauth2Authentication.getPrincipal().toString(), 
-			    					"CLIENT_SECRET", 
-			    					oauth2Authentication.getAuthorities()), 
-	                        "PASSWORD", 
-	                        oauth2Authentication.getAuthorities()
-	                );
-				}else {
-					logger.trace("Authentication token is null ");
-				}
-			}
-			
-			if(authenticationToken !=null && authenticationToken.isAuthenticated()) {
-				AuthorizationUtils.setAuthentication(authenticationToken);
-				return true;
-			}
-		}
-		
-		logger.trace("No Authentication ... forward to /login");
+    @Autowired
+    AppsService appsService;
+    
+    /*
+     * 请求前处理
+     *  (non-Javadoc)
+     * @see org.springframework.web.servlet.handler.HandlerInterceptorAdapter#preHandle(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, java.lang.Object)
+     */
+    @Override
+    public boolean preHandle(HttpServletRequest request,HttpServletResponse response, Object handler) throws Exception {
+        logger.trace("Rest API Permission Adapter pre handle");
+         AuthorizationHeader headerCredential = AuthorizationHeaderUtils.resolve(request);
+         
+        //判断应用的AppId和Secret
+        if(headerCredential != null){
+            UsernamePasswordAuthenticationToken authenticationToken = null;
+            if(headerCredential.isBasic()) {
+                if(StringUtils.isNotBlank(headerCredential.getUsername())&&
+                        StringUtils.isNotBlank(headerCredential.getCredential())
+                        ) {
+                    String appId = headerCredential.getUsername();
+                    String credential = headerCredential.getCredential();
+                    Apps app = appsService.get(appId, true);
+                    if(app != null ) {
+                        if(    PasswordReciprocal.getInstance().matches(credential, app.getSecret())) {
+                            ArrayList<SimpleGrantedAuthority> grantedAuthoritys = new ArrayList<>();
+                            grantedAuthoritys.add(new SimpleGrantedAuthority("ROLE_USER"));
+                            User user = new User(appId, PASSWORD, grantedAuthoritys);
+                            authenticationToken= new UsernamePasswordAuthenticationToken(user, PASSWORD, grantedAuthoritys);
+                        }else {
+                            logger.trace("app {} secret not matches . ",appId);
+                        }
+                    }else {
+                        logger.trace("app {} not exists . ",appId);
+                    }
+                }
+            }else if(StringUtils.isNotBlank(headerCredential.getCredential())){
+                logger.trace("Authentication bearer {}" , headerCredential.getCredential());
+                OAuth2Authentication oauth2Authentication = 
+                        oauth20TokenServices.loadAuthentication(headerCredential.getCredential());
+                
+                if(oauth2Authentication != null) {
+                    logger.trace("Authentication token {}" , oauth2Authentication.getPrincipal().toString());
+                    authenticationToken= new UsernamePasswordAuthenticationToken(
+                            new User(
+                                    oauth2Authentication.getPrincipal().toString(), 
+                                    "CLIENT_SECRET", 
+                                    oauth2Authentication.getAuthorities()), 
+                            "PASSWORD", 
+                            oauth2Authentication.getAuthorities()
+                    );
+                }else {
+                    logger.trace("Authentication token is null ");
+                }
+            }
+            
+            if(authenticationToken !=null && authenticationToken.isAuthenticated()) {
+                AuthorizationUtils.setAuthentication(authenticationToken);
+                return true;
+            }
+        }
+        
+        logger.trace("No Authentication ... forward to /login");
         RequestDispatcher dispatcher = request.getRequestDispatcher("/login");
         dispatcher.forward(request, response);
         
-		return false;
-	}
+        return false;
+    }
 }

@@ -34,7 +34,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping(value={"/api/otp"})
 public class RestTimeBasedOtpController {
 
-	@Autowired
+    @Autowired
     AbstractOtpAuthn timeBasedOtpAuthn;
     
     @Autowired
@@ -44,15 +44,15 @@ public class RestTimeBasedOtpController {
     @ResponseBody
     @RequestMapping(value = "/timebased/validate", method = RequestMethod.GET)
     public boolean getUser(@RequestParam String username,
-    							 @RequestParam String token) {
-    	
-    	UserInfo validUserInfo = userInfoService.findByUsername(username);
-    	if(validUserInfo != null) {
-    		if(timeBasedOtpAuthn.validate(validUserInfo, token)) {
-    			return true;
-    		}
-    	}
-    	
+                                 @RequestParam String token) {
+        
+        UserInfo validUserInfo = userInfoService.findByUsername(username);
+        if(validUserInfo != null) {
+            if(timeBasedOtpAuthn.validate(validUserInfo, token)) {
+                return true;
+            }
+        }
+        
         return false;
     }
 

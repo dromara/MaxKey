@@ -30,76 +30,76 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class ReportServiceImpl  extends JpaServiceImpl<ReportMapper,JpaEntity> implements ReportService{
 
-	public Integer analysisDay(HashMap<String,Object> reportParameter) {
-		return getMapper().analysisDay(reportParameter);
-	}
-	
-	public Integer analysisNewUsers(HashMap<String,Object> reportParameter) {
-		return getMapper().analysisNewUsers(reportParameter);
-	}
-	
-	public Integer analysisOnlineUsers(HashMap<String,Object> reportParameter) {
-		return getMapper().analysisOnlineUsers(reportParameter);
-	}
-	
-	public Integer analysisActiveUsers(HashMap<String,Object> reportParameter) {
-		return getMapper().analysisActiveUsers(reportParameter);
-	}
-	
-	public Integer totalUsers(HashMap<String,Object> reportParameter) {
-		return getMapper().totalUsers(reportParameter);
-	}
-	
-	public Integer totalDepts(HashMap<String,Object> reportParameter) {
-		return getMapper().totalDepts(reportParameter);
-	}
-	
-	public Integer totalApps(HashMap<String,Object> reportParameter) {
-		return getMapper().totalApps(reportParameter);
-	}
-	
-	public List<Map<String,Object>> analysisDayHour(HashMap<String,Object> reportParameter){
-		return getMapper().analysisDayHour(reportParameter);
-	}
-	
-	public List<Map<String,Object>> analysisMonth(HashMap<String,Object> reportParameter){
-		return getMapper().analysisMonth(reportParameter);
-	}
-	
-	
-	public List<Map<String,Object>> analysisBrowser(HashMap<String,Object> reportParameter){
-		return getMapper().analysisBrowser(reportParameter);
-	}
-	
-	public List<Map<String,Object>> analysisApp(HashMap<String,Object> reportParameter){
-		return getMapper().analysisApp(reportParameter);
-	}
-	
-	public List<Map<String,Object>> analysisProvince(HashMap<String,Object> reportParameter){
-		List<Map<String,Object>> maps = getMapper().analysisProvince(reportParameter);
-		if(null == maps) {
-			return new ArrayList<>();
-		}
-		for(Map<String,Object> map : maps) {
-			if(map.containsKey("reportstring")){
-				String name = map.get("reportstring").toString();
-				if (name.endsWith("省")
-						|| name.endsWith("市")
-						|| name.endsWith("特别行政区")
-						|| name.endsWith("自治区")) {
-					name = name.replace("省","")
-							.replace("市","")
-							.replace("特别行政区","")
-							.replace("自治区","");
-				}
-				map.put("name",name);
-			}
-		}
-		return maps;
-	}
-	
-	public List<Map<String,Object>> analysisCountry(HashMap<String,Object> reportParameter){
-		return getMapper().analysisCountry(reportParameter);
-	}
-	
+    public Integer analysisDay(HashMap<String,Object> reportParameter) {
+        return getMapper().analysisDay(reportParameter);
+    }
+    
+    public Integer analysisNewUsers(HashMap<String,Object> reportParameter) {
+        return getMapper().analysisNewUsers(reportParameter);
+    }
+    
+    public Integer analysisOnlineUsers(HashMap<String,Object> reportParameter) {
+        return getMapper().analysisOnlineUsers(reportParameter);
+    }
+    
+    public Integer analysisActiveUsers(HashMap<String,Object> reportParameter) {
+        return getMapper().analysisActiveUsers(reportParameter);
+    }
+    
+    public Integer totalUsers(HashMap<String,Object> reportParameter) {
+        return getMapper().totalUsers(reportParameter);
+    }
+    
+    public Integer totalDepts(HashMap<String,Object> reportParameter) {
+        return getMapper().totalDepts(reportParameter);
+    }
+    
+    public Integer totalApps(HashMap<String,Object> reportParameter) {
+        return getMapper().totalApps(reportParameter);
+    }
+    
+    public List<Map<String,Object>> analysisDayHour(HashMap<String,Object> reportParameter){
+        return getMapper().analysisDayHour(reportParameter);
+    }
+    
+    public List<Map<String,Object>> analysisMonth(HashMap<String,Object> reportParameter){
+        return getMapper().analysisMonth(reportParameter);
+    }
+    
+    
+    public List<Map<String,Object>> analysisBrowser(HashMap<String,Object> reportParameter){
+        return getMapper().analysisBrowser(reportParameter);
+    }
+    
+    public List<Map<String,Object>> analysisApp(HashMap<String,Object> reportParameter){
+        return getMapper().analysisApp(reportParameter);
+    }
+    
+    public List<Map<String,Object>> analysisProvince(HashMap<String,Object> reportParameter){
+        List<Map<String,Object>> maps = getMapper().analysisProvince(reportParameter);
+        if(null == maps) {
+            return new ArrayList<>();
+        }
+        for(Map<String,Object> map : maps) {
+            if(map.containsKey("reportstring")){
+                String name = map.get("reportstring").toString();
+                if (name.endsWith("省")
+                        || name.endsWith("市")
+                        || name.endsWith("特别行政区")
+                        || name.endsWith("自治区")) {
+                    name = name.replace("省","")
+                            .replace("市","")
+                            .replace("特别行政区","")
+                            .replace("自治区","");
+                }
+                map.put("name",name);
+            }
+        }
+        return maps;
+    }
+    
+    public List<Map<String,Object>> analysisCountry(HashMap<String,Object> reportParameter){
+        return getMapper().analysisCountry(reportParameter);
+    }
+    
 }

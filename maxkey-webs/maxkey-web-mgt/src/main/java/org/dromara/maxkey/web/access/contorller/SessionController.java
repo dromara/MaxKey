@@ -60,7 +60,7 @@ public class SessionController {
     SessionManager sessionManager;
 
     @Autowired
-	HistorySystemLogsService systemLog;
+    HistorySystemLogsService systemLog;
     
     /**
      * 查询登录日志.
@@ -71,13 +71,13 @@ public class SessionController {
     @RequestMapping(value = { "/fetch" })
     @ResponseBody
     public Message<?> fetch(
-    			@ModelAttribute("historyLogin") HistoryLogin historyLogin,
-    			@CurrentUser UserInfo currentUser) {
+                @ModelAttribute("historyLogin") HistoryLogin historyLogin,
+                @CurrentUser UserInfo currentUser) {
         logger.debug("history/session/fetch {}" , historyLogin);
         historyLogin.setInstId(currentUser.getInstId());
         return new Message<JpaPageResults<HistoryLogin>>(
-        			historyLoginService.queryOnlineSession(historyLogin)
-        		);
+                    historyLoginService.queryOnlineSession(historyLogin)
+                );
     }
 
 
@@ -101,9 +101,9 @@ public class SessionController {
         }
         
         if(isTerminated) {
-        	return new Message<HistoryLogin>(Message.SUCCESS);
+            return new Message<HistoryLogin>(Message.SUCCESS);
         } else {
-        	return new Message<HistoryLogin>(Message.ERROR);
+            return new Message<HistoryLogin>(Message.ERROR);
         }
     }
     

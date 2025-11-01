@@ -34,36 +34,36 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value={"/config/smsprovider"})
 public class CnfSmsProviderController {
-	static final  Logger logger = LoggerFactory.getLogger(CnfSmsProviderController.class);
-	
-	@Autowired
-	CnfSmsProviderService smsProviderService;
+    static final  Logger logger = LoggerFactory.getLogger(CnfSmsProviderController.class);
+    
+    @Autowired
+    CnfSmsProviderService smsProviderService;
 
-	@GetMapping(value={"/get"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<CnfSmsProvider> get(@CurrentUser UserInfo currentUser){
-		CnfSmsProvider smsProvider = smsProviderService.get(currentUser.getInstId());
-		if(smsProvider != null && StringUtils.isNoneBlank(smsProvider.getId())) {
-			smsProvider.setAppSecret(PasswordReciprocal.getInstance().decoder(smsProvider.getAppSecret()));
-		}
-		return new Message<>(smsProvider);
-	}
+    @GetMapping(value={"/get"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public Message<CnfSmsProvider> get(@CurrentUser UserInfo currentUser){
+        CnfSmsProvider smsProvider = smsProviderService.get(currentUser.getInstId());
+        if(smsProvider != null && StringUtils.isNoneBlank(smsProvider.getId())) {
+            smsProvider.setAppSecret(PasswordReciprocal.getInstance().decoder(smsProvider.getAppSecret()));
+        }
+        return new Message<>(smsProvider);
+    }
 
-	@PutMapping({"/update"})
-	public Message<CnfSmsProvider> update( @RequestBody CnfSmsProvider smsProvider,@CurrentUser UserInfo currentUser,BindingResult result) {
-		logger.debug("update smsProvider : {}" ,smsProvider);
-		smsProvider.setAppSecret(PasswordReciprocal.getInstance().encode(smsProvider.getAppSecret()));
-		smsProvider.setInstId(currentUser.getInstId());
-		boolean updateResult = false;
-		if(StringUtils.isBlank(smsProvider.getId())) {
-			smsProvider.setId(smsProvider.getInstId());
-			updateResult = smsProviderService.insert(smsProvider);
-		}else {
-			updateResult = smsProviderService.update(smsProvider);
-		}
-		if(updateResult) {
-			return new Message<>(Message.SUCCESS);
-		} else {
-			return new Message<>(Message.FAIL);
-		}
-	}
+    @PutMapping({"/update"})
+    public Message<CnfSmsProvider> update( @RequestBody CnfSmsProvider smsProvider,@CurrentUser UserInfo currentUser,BindingResult result) {
+        logger.debug("update smsProvider : {}" ,smsProvider);
+        smsProvider.setAppSecret(PasswordReciprocal.getInstance().encode(smsProvider.getAppSecret()));
+        smsProvider.setInstId(currentUser.getInstId());
+        boolean updateResult = false;
+        if(StringUtils.isBlank(smsProvider.getId())) {
+            smsProvider.setId(smsProvider.getInstId());
+            updateResult = smsProviderService.insert(smsProvider);
+        }else {
+            updateResult = smsProviderService.update(smsProvider);
+        }
+        if(updateResult) {
+            return new Message<>(Message.SUCCESS);
+        } else {
+            return new Message<>(Message.FAIL);
+        }
+    }
 }

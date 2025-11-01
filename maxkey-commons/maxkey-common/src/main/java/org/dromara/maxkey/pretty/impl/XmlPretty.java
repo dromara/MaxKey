@@ -29,47 +29,47 @@ import org.xml.sax.InputSource;
 
 public class XmlPretty implements Pretty{
 
-	static XmlPretty instance ;
-	
-	public XmlPretty() {
+    static XmlPretty instance ;
+    
+    public XmlPretty() {
 
-	}
-	
-	public static XmlPretty getInstance() {
-		if (null == instance) {
-			synchronized (JsonPretty.class) {
-				if (instance == null) {
-					instance = new XmlPretty();
-				}
-			}
-		}
-		return instance;
-	}
-	
-	@Override
-	public  String format(String xmlString){
-		try{
-			DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-		    DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-		    Document document = documentBuilder.parse(new InputSource(new StringReader(xmlString)));
-			return format(document);
-		}catch(Exception e){
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
-	public  String format(Node node){
-		try{
-			return XMLHelper.prettyPrintXML(node);
-		}catch(Exception e){
-			e.printStackTrace();
-			return null;
-		}
-	}
+    }
+    
+    public static XmlPretty getInstance() {
+        if (null == instance) {
+            synchronized (JsonPretty.class) {
+                if (instance == null) {
+                    instance = new XmlPretty();
+                }
+            }
+        }
+        return instance;
+    }
+    
+    @Override
+    public  String format(String xmlString){
+        try{
+            DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+            Document document = documentBuilder.parse(new InputSource(new StringReader(xmlString)));
+            return format(document);
+        }catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    public  String format(Node node){
+        try{
+            return XMLHelper.prettyPrintXML(node);
+        }catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
 
-	@Override
-	public String formatln(String source) {
-		return LINE_BREAK + format(source);
-	}
+    @Override
+    public String formatln(String source) {
+        return LINE_BREAK + format(source);
+    }
 }

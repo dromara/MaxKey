@@ -57,7 +57,7 @@ public class ExcelImport extends JpaEntity {
 
     InputStream inputStream = null;
     
-    Workbook 	workbook 	= null;
+    Workbook     workbook     = null;
     
     public ExcelImport() {
         super();
@@ -88,34 +88,34 @@ public class ExcelImport extends JpaEntity {
     }
  
     public boolean isExcelNotEmpty() {
-    	return excelFile != null && !excelFile.isEmpty() ;
+        return excelFile != null && !excelFile.isEmpty() ;
     }
     
     
     public Workbook biuldWorkbook() throws IOException {
-    	workbook = null;
-    	inputStream = excelFile.getInputStream();
-    	if (excelFile.getOriginalFilename().toLowerCase().endsWith(".xls")) {
-    		workbook = new HSSFWorkbook(inputStream);
+        workbook = null;
+        inputStream = excelFile.getInputStream();
+        if (excelFile.getOriginalFilename().toLowerCase().endsWith(".xls")) {
+            workbook = new HSSFWorkbook(inputStream);
         } else if (excelFile.getOriginalFilename().toLowerCase().endsWith(".xlsx")) {
-        	workbook = new XSSFWorkbook(inputStream);
+            workbook = new XSSFWorkbook(inputStream);
         } else {
             throw new RuntimeException("Excel suffix error.");
         }
-    	return workbook;
+        return workbook;
     }
     
     public void closeWorkbook() {
-    	if (inputStream != null) {
+        if (inputStream != null) {
             try {
-            	inputStream.close();
+                inputStream.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
         if(workbook != null) {
             try {
-            	workbook.close();
+                workbook.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }

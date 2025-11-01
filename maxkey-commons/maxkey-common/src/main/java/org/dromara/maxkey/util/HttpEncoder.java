@@ -43,7 +43,7 @@ public abstract class HttpEncoder {
                 encoded = applyRule(encoded, rule.getKey(), rule.getValue());
             }
         } catch (UnsupportedEncodingException uee) {
-        	uee.printStackTrace();
+            uee.printStackTrace();
         }
         
         return encoded;

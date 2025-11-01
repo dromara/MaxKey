@@ -54,16 +54,16 @@ public class SmsOtpAuthnTencentCloud extends SmsOtpAuthn {
     }
     
     public SmsOtpAuthnTencentCloud(String secretId, String secretKey, String smsSdkAppid, String templateId,
-			String sign) {
-    	otpType = OtpTypes.SMS;
-		this.secretId = secretId;
-		this.secretKey = secretKey;
-		this.smsSdkAppid = smsSdkAppid;
-		this.templateId = templateId;
-		this.sign = sign;
-	}
+            String sign) {
+        otpType = OtpTypes.SMS;
+        this.secretId = secretId;
+        this.secretKey = secretKey;
+        this.smsSdkAppid = smsSdkAppid;
+        this.templateId = templateId;
+        this.sign = sign;
+    }
 
-	@Override
+    @Override
     public boolean produce(UserInfo userInfo) {
         // 手机号
         String mobile = userInfo.getMobile();

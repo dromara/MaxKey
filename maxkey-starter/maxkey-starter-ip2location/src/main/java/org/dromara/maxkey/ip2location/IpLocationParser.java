@@ -27,47 +27,47 @@ package org.dromara.maxkey.ip2location;
  */
 public class IpLocationParser extends AbstractIpLocation  implements IpLocation{
 
-	IpLocation ipRegionLocal = new IpLocationLocal();
-	
-	IpLocation ipLocationOnLine;
-	
-	IpLocation ipLocationOffLine;
-	
-	boolean isIpLocation;
+    IpLocation ipRegionLocal = new IpLocationLocal();
+    
+    IpLocation ipLocationOnLine;
+    
+    IpLocation ipLocationOffLine;
+    
+    boolean isIpLocation;
 
-	
-	public IpLocationParser() {
-	}
+    
+    public IpLocationParser() {
+    }
 
 
-	public IpLocationParser(boolean isIpLocation,IpLocation ipLocationOnLine, IpLocation ipLocationOffLine) {
-		super();
-		this.ipLocationOnLine  = ipLocationOnLine;
-		this.ipLocationOffLine = ipLocationOffLine;
-		this.isIpLocation = isIpLocation;
-	}
+    public IpLocationParser(boolean isIpLocation,IpLocation ipLocationOnLine, IpLocation ipLocationOffLine) {
+        super();
+        this.ipLocationOnLine  = ipLocationOnLine;
+        this.ipLocationOffLine = ipLocationOffLine;
+        this.isIpLocation = isIpLocation;
+    }
 
-	/**
-	 * ip转换区域地址
-	 */
-	@Override
-	public Region region(String ipAddress) {
-		Region region = null;
-		if( isIpLocation ){//true 需要转换，否则跳过
-			//本地转换
-			region = ipRegionLocal.region(ipAddress);
-			//在线转换
-			if(ipLocationOnLine != null && region == null) {
-				region = ipLocationOnLine.region(ipAddress);
-			}
-			//离线转换
-			if(ipLocationOffLine != null && region == null) {
-				region = ipLocationOffLine.region(ipAddress);
-			}
-		}
-		//不转换或者未找到返回unknown
-		return region == null ? new Region("unknown") : region;
-	}
+    /**
+     * ip转换区域地址
+     */
+    @Override
+    public Region region(String ipAddress) {
+        Region region = null;
+        if( isIpLocation ){//true 需要转换，否则跳过
+            //本地转换
+            region = ipRegionLocal.region(ipAddress);
+            //在线转换
+            if(ipLocationOnLine != null && region == null) {
+                region = ipLocationOnLine.region(ipAddress);
+            }
+            //离线转换
+            if(ipLocationOffLine != null && region == null) {
+                region = ipLocationOffLine.region(ipAddress);
+            }
+        }
+        //不转换或者未找到返回unknown
+        return region == null ? new Region("unknown") : region;
+    }
 
-	
+    
 }

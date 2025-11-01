@@ -27,7 +27,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class DynamicGroupsListenerAdapter extends ScheduleAdapter  implements Job , Serializable {
-	static final  Logger logger = LoggerFactory.getLogger(DynamicGroupsListenerAdapter.class);
+    static final  Logger logger = LoggerFactory.getLogger(DynamicGroupsListenerAdapter.class);
     
     private static final long serialVersionUID = 8831626240807856084L;
 
@@ -43,8 +43,8 @@ public class DynamicGroupsListenerAdapter extends ScheduleAdapter  implements Jo
         jobStatus = JOBSTATUS.RUNNING;
         try {
             if(groupsService != null) {
-            	groupsService.refreshAllDynamicGroups();
-            	Thread.sleep(10 * 1000);//10 minutes
+                groupsService.refreshAllDynamicGroups();
+                Thread.sleep(10 * 1000);//10 minutes
             }
             logger.debug("finished  " );
             jobStatus = JOBSTATUS.FINISHED;
@@ -55,10 +55,10 @@ public class DynamicGroupsListenerAdapter extends ScheduleAdapter  implements Jo
     }
 
     @Override
-	protected void init(JobExecutionContext context){
-    	super.init(context);
-    	if(groupsService == null) {
-    		groupsService = getParameter("groupsService",GroupsService.class);
+    protected void init(JobExecutionContext context){
+        super.init(context);
+        if(groupsService == null) {
+            groupsService = getParameter("groupsService",GroupsService.class);
         }
     }
 

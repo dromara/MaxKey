@@ -53,299 +53,299 @@ import jakarta.annotation.PostConstruct;
  */
 public class DefaultJwtEncryptionAndDecryptionService implements JwtEncryptionAndDecryptionService {
 
-	private static Logger _logger = LoggerFactory.getLogger(DefaultJwtEncryptionAndDecryptionService.class);
+    private static Logger _logger = LoggerFactory.getLogger(DefaultJwtEncryptionAndDecryptionService.class);
 
-	// map of identifier to encrypter
-	private Map<String, JWEEncrypter> encrypters = new HashMap<String, JWEEncrypter>();
+    // map of identifier to encrypter
+    private Map<String, JWEEncrypter> encrypters = new HashMap<String, JWEEncrypter>();
 
-	// map of identifier to decrypter
-	private Map<String, JWEDecrypter> decrypters = new HashMap<String, JWEDecrypter>();
+    // map of identifier to decrypter
+    private Map<String, JWEDecrypter> decrypters = new HashMap<String, JWEDecrypter>();
 
-	private String defaultEncryptionKeyId;
+    private String defaultEncryptionKeyId;
 
-	private String defaultDecryptionKeyId;
+    private String defaultDecryptionKeyId;
 
-	private JWEAlgorithm defaultAlgorithm;
+    private JWEAlgorithm defaultAlgorithm;
 
-	// map of identifier to key
-	private Map<String, JWK> keys = new HashMap<String, JWK>();
+    // map of identifier to key
+    private Map<String, JWK> keys = new HashMap<String, JWK>();
 
-	/**
-	 * Build this service based on the keys given. All public keys will be used to make encrypters,
-	 * all private keys will be used to make decrypters.
-	 * 
-	 * @param keys
-	 * @throws NoSuchAlgorithmException
-	 * @throws InvalidKeySpecException
-	 * @throws JOSEException
-	 */
-	public DefaultJwtEncryptionAndDecryptionService(Map<String, JWK> keys) throws NoSuchAlgorithmException, InvalidKeySpecException, JOSEException {
-		this.keys = keys;
-		buildEncryptersAndDecrypters();
-	}
+    /**
+     * Build this service based on the keys given. All public keys will be used to make encrypters,
+     * all private keys will be used to make decrypters.
+     * 
+     * @param keys
+     * @throws NoSuchAlgorithmException
+     * @throws InvalidKeySpecException
+     * @throws JOSEException
+     */
+    public DefaultJwtEncryptionAndDecryptionService(Map<String, JWK> keys) throws NoSuchAlgorithmException, InvalidKeySpecException, JOSEException {
+        this.keys = keys;
+        buildEncryptersAndDecrypters();
+    }
 
-	/**
-	 * Build this service based on the given keystore. All keys must have a key
-	 * id ({@code kid}) field in order to be used.
-	 * 
-	 * @param keyStore
-	 * @throws NoSuchAlgorithmException
-	 * @throws InvalidKeySpecException
-	 * @throws JOSEException
-	 */
-	public DefaultJwtEncryptionAndDecryptionService(JWKSetKeyStore keyStore) throws NoSuchAlgorithmException, InvalidKeySpecException, JOSEException {
+    /**
+     * Build this service based on the given keystore. All keys must have a key
+     * id ({@code kid}) field in order to be used.
+     * 
+     * @param keyStore
+     * @throws NoSuchAlgorithmException
+     * @throws InvalidKeySpecException
+     * @throws JOSEException
+     */
+    public DefaultJwtEncryptionAndDecryptionService(JWKSetKeyStore keyStore) throws NoSuchAlgorithmException, InvalidKeySpecException, JOSEException {
 
-		// convert all keys in the keystore to a map based on key id
-		for (JWK key : keyStore.getKeys()) {
-			if (!Strings.isNullOrEmpty(key.getKeyID())) {
-				this.keys.put(key.getKeyID(), key);
-			} else {
-				throw new IllegalArgumentException("Tried to load a key from a keystore without a 'kid' field: " + key);
-			}
-		}
+        // convert all keys in the keystore to a map based on key id
+        for (JWK key : keyStore.getKeys()) {
+            if (!Strings.isNullOrEmpty(key.getKeyID())) {
+                this.keys.put(key.getKeyID(), key);
+            } else {
+                throw new IllegalArgumentException("Tried to load a key from a keystore without a 'kid' field: " + key);
+            }
+        }
 
-		buildEncryptersAndDecrypters();
+        buildEncryptersAndDecrypters();
 
-	}
-	
-	public DefaultJwtEncryptionAndDecryptionService(String jwkSetString, String defaultEncryptionKeyId,String defaultAlgorithm) throws NoSuchAlgorithmException, InvalidKeySpecException, JOSEException {
-		JWKSetKeyStore keyStore = new JWKSetKeyStore("{\"keys\": [" + jwkSetString + "]}");
-		this.defaultEncryptionKeyId = defaultEncryptionKeyId;
-		this.defaultAlgorithm = JWEAlgorithm.parse(defaultAlgorithm);
-		_logger.trace(" encryptAlgorithm {}" , defaultAlgorithm);
-		
-		// convert all keys in the keystore to a map based on key id
-		for (JWK key : keyStore.getKeys()) {
-			if (!Strings.isNullOrEmpty(key.getKeyID())) {
-				this.keys.put(key.getKeyID(), key);
-			} else {
-				throw new IllegalArgumentException("Tried to load a key from a keystore without a 'kid' field: " + key);
-			}
-		}
+    }
+    
+    public DefaultJwtEncryptionAndDecryptionService(String jwkSetString, String defaultEncryptionKeyId,String defaultAlgorithm) throws NoSuchAlgorithmException, InvalidKeySpecException, JOSEException {
+        JWKSetKeyStore keyStore = new JWKSetKeyStore("{\"keys\": [" + jwkSetString + "]}");
+        this.defaultEncryptionKeyId = defaultEncryptionKeyId;
+        this.defaultAlgorithm = JWEAlgorithm.parse(defaultAlgorithm);
+        _logger.trace(" encryptAlgorithm {}" , defaultAlgorithm);
+        
+        // convert all keys in the keystore to a map based on key id
+        for (JWK key : keyStore.getKeys()) {
+            if (!Strings.isNullOrEmpty(key.getKeyID())) {
+                this.keys.put(key.getKeyID(), key);
+            } else {
+                throw new IllegalArgumentException("Tried to load a key from a keystore without a 'kid' field: " + key);
+            }
+        }
 
-		buildEncryptersAndDecrypters();
+        buildEncryptersAndDecrypters();
 
-	}
+    }
 
 
-	@PostConstruct
-	public void afterPropertiesSet() {
+    @PostConstruct
+    public void afterPropertiesSet() {
 
-		if (keys == null) {
-			throw new IllegalArgumentException("Encryption and decryption service must have at least one key configured.");
-		}
-		try {
-			buildEncryptersAndDecrypters();
-		} catch (NoSuchAlgorithmException e) {
-			throw new IllegalArgumentException("Encryption and decryption service could not find given algorithm.");
-		} catch (InvalidKeySpecException e) {
-			throw new IllegalArgumentException("Encryption and decryption service saw an invalid key specification.");
-		} catch (JOSEException e) {
-			throw new IllegalArgumentException("Encryption and decryption service was unable to process JOSE object.");
-		}
-	}
+        if (keys == null) {
+            throw new IllegalArgumentException("Encryption and decryption service must have at least one key configured.");
+        }
+        try {
+            buildEncryptersAndDecrypters();
+        } catch (NoSuchAlgorithmException e) {
+            throw new IllegalArgumentException("Encryption and decryption service could not find given algorithm.");
+        } catch (InvalidKeySpecException e) {
+            throw new IllegalArgumentException("Encryption and decryption service saw an invalid key specification.");
+        } catch (JOSEException e) {
+            throw new IllegalArgumentException("Encryption and decryption service was unable to process JOSE object.");
+        }
+    }
 
-	public String getDefaultEncryptionKeyId() {
-		if (defaultEncryptionKeyId != null) {
-			return defaultEncryptionKeyId;
-		} else if (keys.size() == 1) {
-			// if there's only one key in the map, it's the default
-			return keys.keySet().iterator().next();
-		} else {
-			return null;
-		}
-	}
+    public String getDefaultEncryptionKeyId() {
+        if (defaultEncryptionKeyId != null) {
+            return defaultEncryptionKeyId;
+        } else if (keys.size() == 1) {
+            // if there's only one key in the map, it's the default
+            return keys.keySet().iterator().next();
+        } else {
+            return null;
+        }
+    }
 
-	public void setDefaultEncryptionKeyId(String defaultEncryptionKeyId) {
-		this.defaultEncryptionKeyId = defaultEncryptionKeyId;
-	}
+    public void setDefaultEncryptionKeyId(String defaultEncryptionKeyId) {
+        this.defaultEncryptionKeyId = defaultEncryptionKeyId;
+    }
 
-	public String getDefaultDecryptionKeyId() {
-		if (defaultDecryptionKeyId != null) {
-			return defaultDecryptionKeyId;
-		} else if (keys.size() == 1) {
-			// if there's only one key in the map, it's the default
-			return keys.keySet().iterator().next();
-		} else {
-			return null;
-		}
-	}
+    public String getDefaultDecryptionKeyId() {
+        if (defaultDecryptionKeyId != null) {
+            return defaultDecryptionKeyId;
+        } else if (keys.size() == 1) {
+            // if there's only one key in the map, it's the default
+            return keys.keySet().iterator().next();
+        } else {
+            return null;
+        }
+    }
 
-	public void setDefaultDecryptionKeyId(String defaultDecryptionKeyId) {
-		this.defaultDecryptionKeyId = defaultDecryptionKeyId;
-	}
+    public void setDefaultDecryptionKeyId(String defaultDecryptionKeyId) {
+        this.defaultDecryptionKeyId = defaultDecryptionKeyId;
+    }
 
-	public JWEAlgorithm getDefaultAlgorithm() {
-		return defaultAlgorithm;
-	}
-	
-	public JWEAlgorithm getDefaultAlgorithm(String algorithm) {
-		if(algorithm.startsWith("RSA")) {
-			return defaultAlgorithm;
-		}else {
-			return JWEAlgorithm.DIR;
-		}
-	}
+    public JWEAlgorithm getDefaultAlgorithm() {
+        return defaultAlgorithm;
+    }
+    
+    public JWEAlgorithm getDefaultAlgorithm(String algorithm) {
+        if(algorithm.startsWith("RSA")) {
+            return defaultAlgorithm;
+        }else {
+            return JWEAlgorithm.DIR;
+        }
+    }
 
-	public void setDefaultAlgorithm(String algorithm) {
-		defaultAlgorithm = JWEAlgorithm.parse(algorithm);
-	}
-	
-	public void setDefaultAlgorithm(JWEAlgorithm defaultAlgorithm) {
-		this.defaultAlgorithm = defaultAlgorithm;
-	}
+    public void setDefaultAlgorithm(String algorithm) {
+        defaultAlgorithm = JWEAlgorithm.parse(algorithm);
+    }
+    
+    public void setDefaultAlgorithm(JWEAlgorithm defaultAlgorithm) {
+        this.defaultAlgorithm = defaultAlgorithm;
+    }
 
-	/* (non-Javadoc)
-	 * @see org.mitre.jwt.encryption.service.JwtEncryptionAndDecryptionService#encryptJwt(com.nimbusds.jwt.EncryptedJWT)
-	 */
-	@Override
-	public void encryptJwt(JWEObject jwt) {
-		if (getDefaultEncryptionKeyId() == null) {
-			throw new IllegalStateException("Tried to call default encryption with no default encrypter ID set");
-		}
+    /* (non-Javadoc)
+     * @see org.mitre.jwt.encryption.service.JwtEncryptionAndDecryptionService#encryptJwt(com.nimbusds.jwt.EncryptedJWT)
+     */
+    @Override
+    public void encryptJwt(JWEObject jwt) {
+        if (getDefaultEncryptionKeyId() == null) {
+            throw new IllegalStateException("Tried to call default encryption with no default encrypter ID set");
+        }
 
-		JWEEncrypter encrypter = encrypters.get(getDefaultEncryptionKeyId());
+        JWEEncrypter encrypter = encrypters.get(getDefaultEncryptionKeyId());
 
-		try {
-			jwt.encrypt(encrypter);
-		} catch (JOSEException e) {
+        try {
+            jwt.encrypt(encrypter);
+        } catch (JOSEException e) {
 
-			_logger.error("Failed to encrypt JWT, error was: ", e);
-		}
+            _logger.error("Failed to encrypt JWT, error was: ", e);
+        }
 
-	}
+    }
 
-	/* (non-Javadoc)
-	 * @see org.mitre.jwt.encryption.service.JwtEncryptionAndDecryptionService#decryptJwt(com.nimbusds.jwt.EncryptedJWT)
-	 */
-	@Override
-	public void decryptJwt(JWEObject jwt) {
-		if (getDefaultDecryptionKeyId() == null) {
-			throw new IllegalStateException("Tried to call default decryption with no default decrypter ID set");
-		}
+    /* (non-Javadoc)
+     * @see org.mitre.jwt.encryption.service.JwtEncryptionAndDecryptionService#decryptJwt(com.nimbusds.jwt.EncryptedJWT)
+     */
+    @Override
+    public void decryptJwt(JWEObject jwt) {
+        if (getDefaultDecryptionKeyId() == null) {
+            throw new IllegalStateException("Tried to call default decryption with no default decrypter ID set");
+        }
 
-		JWEDecrypter decrypter = decrypters.get(getDefaultDecryptionKeyId());
+        JWEDecrypter decrypter = decrypters.get(getDefaultDecryptionKeyId());
 
-		try {
-			jwt.decrypt(decrypter);
-		} catch (JOSEException e) {
+        try {
+            jwt.decrypt(decrypter);
+        } catch (JOSEException e) {
 
-			_logger.error("Failed to decrypt JWT, error was: ", e);
-		}
+            _logger.error("Failed to decrypt JWT, error was: ", e);
+        }
 
-	}
+    }
 
-	/**
-	 * Builds all the encrypters and decrypters for this service based on the key map.
-	 * @throws
-	 * @throws InvalidKeySpecException
-	 * @throws NoSuchAlgorithmException
-	 * @throws JOSEException
-	 */
-	private void buildEncryptersAndDecrypters() throws NoSuchAlgorithmException, InvalidKeySpecException, JOSEException {
+    /**
+     * Builds all the encrypters and decrypters for this service based on the key map.
+     * @throws
+     * @throws InvalidKeySpecException
+     * @throws NoSuchAlgorithmException
+     * @throws JOSEException
+     */
+    private void buildEncryptersAndDecrypters() throws NoSuchAlgorithmException, InvalidKeySpecException, JOSEException {
 
-		for (Map.Entry<String, JWK> jwkEntry : keys.entrySet()) {
+        for (Map.Entry<String, JWK> jwkEntry : keys.entrySet()) {
 
-			String id = jwkEntry.getKey();
-			JWK jwk = jwkEntry.getValue();
+            String id = jwkEntry.getKey();
+            JWK jwk = jwkEntry.getValue();
 
-			if (jwk instanceof RSAKey) {
-				// build RSA encrypters and decrypters
+            if (jwk instanceof RSAKey) {
+                // build RSA encrypters and decrypters
 
-				RSAEncrypter encrypter = new RSAEncrypter(((RSAKey) jwk).toRSAPublicKey()); // there should always at least be the public key
-				encrypters.put(id, encrypter);
+                RSAEncrypter encrypter = new RSAEncrypter(((RSAKey) jwk).toRSAPublicKey()); // there should always at least be the public key
+                encrypters.put(id, encrypter);
 
-				if (jwk.isPrivate()) { // we can decrypt!
-					RSADecrypter decrypter = new RSADecrypter(((RSAKey) jwk).toRSAPrivateKey());
-					decrypters.put(id, decrypter);
-				} else {
-					_logger.warn("No private key for key #" + jwk.getKeyID());
-				}
+                if (jwk.isPrivate()) { // we can decrypt!
+                    RSADecrypter decrypter = new RSADecrypter(((RSAKey) jwk).toRSAPrivateKey());
+                    decrypters.put(id, decrypter);
+                } else {
+                    _logger.warn("No private key for key #" + jwk.getKeyID());
+                }
 
-				//  add support for EC keys
+                //  add support for EC keys
 
-			} else if (jwk instanceof OctetSequenceKey) {
-				// build symmetric encrypters and decrypters
+            } else if (jwk instanceof OctetSequenceKey) {
+                // build symmetric encrypters and decrypters
 
-				DirectEncrypter encrypter = new DirectEncrypter(((OctetSequenceKey) jwk).toByteArray());
-				DirectDecrypter decrypter = new DirectDecrypter(((OctetSequenceKey) jwk).toByteArray());
+                DirectEncrypter encrypter = new DirectEncrypter(((OctetSequenceKey) jwk).toByteArray());
+                DirectDecrypter decrypter = new DirectDecrypter(((OctetSequenceKey) jwk).toByteArray());
 
-				encrypters.put(id, encrypter);
-				decrypters.put(id, decrypter);
+                encrypters.put(id, encrypter);
+                decrypters.put(id, decrypter);
 
-			} else {
-				_logger.warn("Unknown key type: " + jwk);
-			}
+            } else {
+                _logger.warn("Unknown key type: " + jwk);
+            }
 
-		}
-	}
+        }
+    }
 
-	@Override
-	public Map<String, JWK> getAllPublicKeys() {
-		Map<String, JWK> pubKeys = new HashMap<String, JWK>();
+    @Override
+    public Map<String, JWK> getAllPublicKeys() {
+        Map<String, JWK> pubKeys = new HashMap<String, JWK>();
 
-		// pull out all public keys
-		for (String keyId : keys.keySet()) {
-			JWK key = keys.get(keyId);
-			JWK pub = key.toPublicJWK();
-			if (pub != null) {
-				pubKeys.put(keyId, pub);
-			}
-		}
+        // pull out all public keys
+        for (String keyId : keys.keySet()) {
+            JWK key = keys.get(keyId);
+            JWK pub = key.toPublicJWK();
+            if (pub != null) {
+                pubKeys.put(keyId, pub);
+            }
+        }
 
-		return pubKeys;
-	}
+        return pubKeys;
+    }
 
-	@Override
-	public Collection<JWEAlgorithm> getAllEncryptionAlgsSupported() {
-		Set<JWEAlgorithm> algs = new HashSet<JWEAlgorithm>();
+    @Override
+    public Collection<JWEAlgorithm> getAllEncryptionAlgsSupported() {
+        Set<JWEAlgorithm> algs = new HashSet<JWEAlgorithm>();
 
-		for (JWEEncrypter encrypter : encrypters.values()) {
-			algs.addAll(encrypter.supportedJWEAlgorithms());
-		}
+        for (JWEEncrypter encrypter : encrypters.values()) {
+            algs.addAll(encrypter.supportedJWEAlgorithms());
+        }
 
-		for (JWEDecrypter decrypter : decrypters.values()) {
-			algs.addAll(decrypter.supportedJWEAlgorithms());
-		}
+        for (JWEDecrypter decrypter : decrypters.values()) {
+            algs.addAll(decrypter.supportedJWEAlgorithms());
+        }
 
-		return algs;
-	}
+        return algs;
+    }
 
-	/* (non-Javadoc)
-	 * @see org.mitre.jwt.encryption.service.JwtEncryptionAndDecryptionService#getAllEncryptionEncsSupported()
-	 */
-	@Override
-	public Collection<EncryptionMethod> getAllEncryptionEncsSupported() {
-		Set<EncryptionMethod> encs = new HashSet<EncryptionMethod>();
+    /* (non-Javadoc)
+     * @see org.mitre.jwt.encryption.service.JwtEncryptionAndDecryptionService#getAllEncryptionEncsSupported()
+     */
+    @Override
+    public Collection<EncryptionMethod> getAllEncryptionEncsSupported() {
+        Set<EncryptionMethod> encs = new HashSet<EncryptionMethod>();
 
-		for (JWEEncrypter encrypter : encrypters.values()) {
-			encs.addAll(encrypter.supportedEncryptionMethods());
-		}
+        for (JWEEncrypter encrypter : encrypters.values()) {
+            encs.addAll(encrypter.supportedEncryptionMethods());
+        }
 
-		for (JWEDecrypter decrypter : decrypters.values()) {
-			encs.addAll(decrypter.supportedEncryptionMethods());
-		}
+        for (JWEDecrypter decrypter : decrypters.values()) {
+            encs.addAll(decrypter.supportedEncryptionMethods());
+        }
 
-		return encs;
-	}
+        return encs;
+    }
 
-	public EncryptionMethod parseEncryptionMethod(String encryptionMethodName) {
-		EncryptionMethod encryptionMethod = null;
-		if(encryptionMethodName.equalsIgnoreCase("A128GCM")) {
-			encryptionMethod = EncryptionMethod.A128GCM;
-		}else if(encryptionMethodName.equalsIgnoreCase("A192GCM")) {
-			encryptionMethod = EncryptionMethod.A192GCM;
-		}else if(encryptionMethodName.equalsIgnoreCase("A256GCM")) {
-			encryptionMethod = EncryptionMethod.A256GCM;
-		}else if(encryptionMethodName.equalsIgnoreCase("A128CBC_HS256")) {
-			encryptionMethod = EncryptionMethod.A128CBC_HS256;
-		}else if(encryptionMethodName.equalsIgnoreCase("A192CBC_HS384")) {
-			encryptionMethod = EncryptionMethod.A192CBC_HS384;
-		}else if(encryptionMethodName.equalsIgnoreCase("A256CBC_HS512")) {
-			encryptionMethod = EncryptionMethod.A256CBC_HS512;
-		}else if(encryptionMethodName.equalsIgnoreCase("XC20P")) {
-			encryptionMethod = EncryptionMethod.XC20P;
-		}
-		return encryptionMethod;
-	}
+    public EncryptionMethod parseEncryptionMethod(String encryptionMethodName) {
+        EncryptionMethod encryptionMethod = null;
+        if(encryptionMethodName.equalsIgnoreCase("A128GCM")) {
+            encryptionMethod = EncryptionMethod.A128GCM;
+        }else if(encryptionMethodName.equalsIgnoreCase("A192GCM")) {
+            encryptionMethod = EncryptionMethod.A192GCM;
+        }else if(encryptionMethodName.equalsIgnoreCase("A256GCM")) {
+            encryptionMethod = EncryptionMethod.A256GCM;
+        }else if(encryptionMethodName.equalsIgnoreCase("A128CBC_HS256")) {
+            encryptionMethod = EncryptionMethod.A128CBC_HS256;
+        }else if(encryptionMethodName.equalsIgnoreCase("A192CBC_HS384")) {
+            encryptionMethod = EncryptionMethod.A192CBC_HS384;
+        }else if(encryptionMethodName.equalsIgnoreCase("A256CBC_HS512")) {
+            encryptionMethod = EncryptionMethod.A256CBC_HS512;
+        }else if(encryptionMethodName.equalsIgnoreCase("XC20P")) {
+            encryptionMethod = EncryptionMethod.XC20P;
+        }
+        return encryptionMethod;
+    }
 }

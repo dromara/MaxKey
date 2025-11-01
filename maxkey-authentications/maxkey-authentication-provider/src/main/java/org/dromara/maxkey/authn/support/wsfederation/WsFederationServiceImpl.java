@@ -22,20 +22,20 @@ import org.slf4j.LoggerFactory;
 
 
 public class WsFederationServiceImpl implements   WsFederationService{
-	static final  Logger _logger = LoggerFactory.getLogger(WsFederationServiceImpl.class);
-	
-	private WsFederationConfiguration wsFederationConfiguration;
+    static final  Logger _logger = LoggerFactory.getLogger(WsFederationServiceImpl.class);
+    
+    private WsFederationConfiguration wsFederationConfiguration;
 
-	public void setWsFederationConfiguration(
-			WsFederationConfiguration wsFederationConfiguration) {
-		this.wsFederationConfiguration = wsFederationConfiguration;
-	}
+    public void setWsFederationConfiguration(
+            WsFederationConfiguration wsFederationConfiguration) {
+        this.wsFederationConfiguration = wsFederationConfiguration;
+    }
 
-	@Override
-	public WsFederationConfiguration getWsFederationConfiguration() {
-		return wsFederationConfiguration;
-	}
-	
-	
-	
+    @Override
+    public WsFederationConfiguration getWsFederationConfiguration() {
+        return wsFederationConfiguration;
+    }
+    
+    
+    
 }

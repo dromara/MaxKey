@@ -48,15 +48,15 @@ public class MaxKeyOpenApiConfig{
                 UserInfoService userInfoService,
                 IpLocationParser  ipLocationParser,
                 JdbcTemplate jdbcTemplate) {
-		
+        
         JdbcAuthenticationRealm authenticationRealm = new JdbcAuthenticationRealm(
-        		passwordEncoder,
-        		passwordPolicyValidatorService,
-        		loginService,
-        		historyLoginService,
-        		userInfoService,
-        		ipLocationParser,
-        		jdbcTemplate);
+                passwordEncoder,
+                passwordPolicyValidatorService,
+                loginService,
+                historyLoginService,
+                userInfoService,
+                ipLocationParser,
+                jdbcTemplate);
         
         logger.debug("JdbcAuthenticationRealm inited.");
         return authenticationRealm;
@@ -64,8 +64,8 @@ public class MaxKeyOpenApiConfig{
 
     @Bean
     AbstractOtpAuthn timeBasedOtpAuthn() {
-		AbstractOtpAuthn tfaOtpAuthn = new TimeBasedOtpAuthn();
-	    logger.debug("TimeBasedOtpAuthn inited.");
+        AbstractOtpAuthn tfaOtpAuthn = new TimeBasedOtpAuthn();
+        logger.debug("TimeBasedOtpAuthn inited.");
         return tfaOtpAuthn;
     }
 }

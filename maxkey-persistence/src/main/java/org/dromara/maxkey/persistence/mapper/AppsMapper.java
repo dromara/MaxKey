@@ -32,14 +32,14 @@ import org.dromara.mybatis.jpa.IJpaMapper;
  *
  */
 public  interface AppsMapper extends IJpaMapper<Apps> {
-	
-	public int insertApp(Apps app);
-	
-	public int updateApp(Apps app);
-	
-	@Update("update mxk_apps set extendattr=#{extendAttr} where id = #{id}")
-	public int updateExtendAttr(Apps app);  
-	
+    
+    public int insertApp(Apps app);
+    
+    public int updateApp(Apps app);
+    
+    @Update("update mxk_apps set extendattr=#{extendAttr} where id = #{id}")
+    public int updateExtendAttr(Apps app);  
+    
 
     public List<UserApps> queryMyApps(UserApps userApplications);
 }

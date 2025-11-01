@@ -28,6 +28,6 @@ import org.dromara.mybatis.jpa.IJpaMapper;
  *
  */
 public  interface AppsJwtDetailsMapper extends IJpaMapper<AppsJwtDetails> {
-	
-	public  AppsJwtDetails  getAppDetails(String id);
+    
+    public  AppsJwtDetails  getAppDetails(String id);
 }

@@ -35,8 +35,8 @@ public abstract class AbstractTicketException{
      * @param throwable the throwable
      */
     public AbstractTicketException(final String code, final Throwable throwable) {
-    	this.code=code;
-    	this.throwable=throwable;
+        this.code=code;
+        this.throwable=throwable;
     }
 
     /**
@@ -45,7 +45,7 @@ public abstract class AbstractTicketException{
      * @param code the code
      */
     public AbstractTicketException(final String code) {
-    	this.code=code;
+        this.code=code;
     }
 
     /**
@@ -55,7 +55,7 @@ public abstract class AbstractTicketException{
      * @param msg the msg
      */
     public AbstractTicketException(final String code, final String msg) {
-    	this.code=code;
-    	this.msg=msg;
+        this.code=code;
+        this.msg=msg;
     }
 }

@@ -85,8 +85,8 @@ public class Oauth20AutoConfiguration implements InitializingBean {
         FilterRegistrationBean<Filter> registration = new FilterRegistrationBean<>();
         registration.setFilter(new TokenEndpointAuthenticationFilter());
         registration.addUrlPatterns(
-        							OAuth2Constants.ENDPOINT.ENDPOINT_TOKEN + "/*",
-        							OAuth2Constants.ENDPOINT.ENDPOINT_TENCENT_IOA_TOKEN + "/*");
+                                    OAuth2Constants.ENDPOINT.ENDPOINT_TOKEN + "/*",
+                                    OAuth2Constants.ENDPOINT.ENDPOINT_TENCENT_IOA_TOKEN + "/*");
         registration.setName("TokenEndpointAuthenticationFilter");
         registration.setOrder(1);
         return registration;
@@ -203,7 +203,7 @@ public class Oauth20AutoConfiguration implements InitializingBean {
             authorizationCodeServices = new RedisAuthorizationCodeServices(redisConnFactory);
             _logger.debug("RedisAuthorizationCodeServices");
         }else {
-        	authorizationCodeServices = new InMemoryAuthorizationCodeServices();
+            authorizationCodeServices = new InMemoryAuthorizationCodeServices();
             _logger.debug("InMemoryAuthorizationCodeServices");
         }
         return authorizationCodeServices;
@@ -224,7 +224,7 @@ public class Oauth20AutoConfiguration implements InitializingBean {
             tokenStore = new RedisTokenStore(redisConnFactory);
             _logger.debug("RedisTokenStore");
         }else {
-        	 tokenStore = new InMemoryTokenStore();
+             tokenStore = new InMemoryTokenStore();
              _logger.debug("InMemoryTokenStore");
         }
         return tokenStore;

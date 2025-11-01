@@ -28,6 +28,6 @@ import org.dromara.mybatis.jpa.IJpaMapper;
  *
  */
 public  interface HistorySystemLogsMapper extends IJpaMapper<HistorySystemLogs> {
-	
+    
 
 }

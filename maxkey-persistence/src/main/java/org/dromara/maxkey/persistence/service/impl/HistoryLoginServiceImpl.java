@@ -30,37 +30,37 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class HistoryLoginServiceImpl  extends JpaServiceImpl<HistoryLoginMapper,HistoryLogin> implements HistoryLoginService{
-	private static Logger logger = LoggerFactory.getLogger(HistoryLoginServiceImpl.class);
-	
-	public JpaPageResults<HistoryLogin> queryOnlineSession(HistoryLogin historyLogin) {
-	    return this.fetchPageResults("queryOnlineSession",historyLogin);
-	}
-	
-	 public void login(HistoryLogin historyLogin) {
-	        historyLogin.setId(WebContext.genId());
-	        if(StringUtils.isBlank(historyLogin.getInstId())) {
-	        	historyLogin.setInstId("1");
-	        }
-	        //Thread insert 
-	        new Thread(new HistoryLoginRunnable(this,historyLogin)).start();
-	    }
-	    
-		public class HistoryLoginRunnable implements Runnable{
-			
-			HistoryLoginService historyLoginService;
-			
-			HistoryLogin historyLogin;
-			
-			public HistoryLoginRunnable(HistoryLoginService historyLoginService, HistoryLogin historyLogin) {
-				super();
-				this.historyLoginService = historyLoginService;
-				this.historyLogin = historyLogin;
-			}
+    private static Logger logger = LoggerFactory.getLogger(HistoryLoginServiceImpl.class);
+    
+    public JpaPageResults<HistoryLogin> queryOnlineSession(HistoryLogin historyLogin) {
+        return this.fetchPageResults("queryOnlineSession",historyLogin);
+    }
+    
+     public void login(HistoryLogin historyLogin) {
+            historyLogin.setId(WebContext.genId());
+            if(StringUtils.isBlank(historyLogin.getInstId())) {
+                historyLogin.setInstId("1");
+            }
+            //Thread insert 
+            new Thread(new HistoryLoginRunnable(this,historyLogin)).start();
+        }
+        
+        public class HistoryLoginRunnable implements Runnable{
+            
+            HistoryLoginService historyLoginService;
+            
+            HistoryLogin historyLogin;
+            
+            public HistoryLoginRunnable(HistoryLoginService historyLoginService, HistoryLogin historyLogin) {
+                super();
+                this.historyLoginService = historyLoginService;
+                this.historyLogin = historyLogin;
+            }
 
-			@Override
-		    public void run() {
-				logger.debug("History Login {}" , historyLogin);
-				this.historyLoginService.insert(historyLogin);
-			}
-		}
+            @Override
+            public void run() {
+                logger.debug("History Login {}" , historyLogin);
+                this.historyLoginService.insert(historyLogin);
+            }
+        }
 }

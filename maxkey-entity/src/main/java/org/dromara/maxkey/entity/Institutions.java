@@ -29,278 +29,278 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "MXK_INSTITUTIONS")
 public class Institutions extends JpaEntity implements Serializable {
-	private static final long serialVersionUID = -2375872012431214098L;
+    private static final long serialVersionUID = -2375872012431214098L;
 
-	@Id
-	@Column
-	@GeneratedValue
-	private String id;
-	@Column
-	private String name;
-	@Column
-	private String fullName;
-	@Column
-	private String division;
-	@Column
-	private String country;
-	@Column
-	private String region;
-	@Column
-	private String locality;
-	@Column
-	private String street;
-	@Column
-	private String address;
-	@Column
-	private String contact;
-	@Column
-	private String postalCode;
-	@Column
-	private String phone;
-	@Column
-	private String fax;
-	@Column
-	private String email;
+    @Id
+    @Column
+    @GeneratedValue
+    private String id;
+    @Column
+    private String name;
+    @Column
+    private String fullName;
+    @Column
+    private String division;
+    @Column
+    private String country;
+    @Column
+    private String region;
+    @Column
+    private String locality;
+    @Column
+    private String street;
+    @Column
+    private String address;
+    @Column
+    private String contact;
+    @Column
+    private String postalCode;
+    @Column
+    private String phone;
+    @Column
+    private String fax;
+    @Column
+    private String email;
 
-	@Column
-	private String description;
-
-
-	@Column
-	private String logo;
-	@Column
-	private String domain;
-	@Column
-	private String frontTitle;
-	@Column
-	private String consoleDomain;
-	@Column
-	private String consoleTitle;
-	
-	@Column
-	private String defaultUri;
+    @Column
+    private String description;
 
 
-	public Institutions() {
-		super();
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getFullName() {
-		return fullName;
-	}
-
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
-	}
-
-	public String getLogo() {
-		return logo;
-	}
-
-	public void setLogo(String logo) {
-		this.logo = logo;
-	}
+    @Column
+    private String logo;
+    @Column
+    private String domain;
+    @Column
+    private String frontTitle;
+    @Column
+    private String consoleDomain;
+    @Column
+    private String consoleTitle;
+    
+    @Column
+    private String defaultUri;
 
 
-	public String getFrontTitle() {
-		return frontTitle;
-	}
+    public Institutions() {
+        super();
+    }
 
-	public void setFrontTitle(String frontTitle) {
-		this.frontTitle = frontTitle;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public String getConsoleDomain() {
-		return consoleDomain;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public void setConsoleDomain(String consoleDomain) {
-		this.consoleDomain = consoleDomain;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getConsoleTitle() {
-		return consoleTitle;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setConsoleTitle(String consoleTitle) {
-		this.consoleTitle = consoleTitle;
-	}
+    public String getFullName() {
+        return fullName;
+    }
 
-	public String getDomain() {
-		return domain;
-	}
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
 
-	public void setDomain(String domain) {
-		this.domain = domain;
-	}
+    public String getLogo() {
+        return logo;
+    }
 
-	public String getDivision() {
-		return division;
-	}
+    public void setLogo(String logo) {
+        this.logo = logo;
+    }
 
-	public void setDivision(String division) {
-		this.division = division;
-	}
 
-	public String getCountry() {
-		return country;
-	}
+    public String getFrontTitle() {
+        return frontTitle;
+    }
 
-	public void setCountry(String country) {
-		this.country = country;
-	}
+    public void setFrontTitle(String frontTitle) {
+        this.frontTitle = frontTitle;
+    }
 
-	public String getRegion() {
-		return region;
-	}
+    public String getConsoleDomain() {
+        return consoleDomain;
+    }
 
-	public void setRegion(String region) {
-		this.region = region;
-	}
+    public void setConsoleDomain(String consoleDomain) {
+        this.consoleDomain = consoleDomain;
+    }
 
-	public String getLocality() {
-		return locality;
-	}
+    public String getConsoleTitle() {
+        return consoleTitle;
+    }
 
-	public void setLocality(String locality) {
-		this.locality = locality;
-	}
+    public void setConsoleTitle(String consoleTitle) {
+        this.consoleTitle = consoleTitle;
+    }
 
-	public String getStreet() {
-		return street;
-	}
+    public String getDomain() {
+        return domain;
+    }
 
-	public void setStreet(String street) {
-		this.street = street;
-	}
+    public void setDomain(String domain) {
+        this.domain = domain;
+    }
 
-	public String getAddress() {
-		return address;
-	}
+    public String getDivision() {
+        return division;
+    }
 
-	public void setAddress(String address) {
-		this.address = address;
-	}
+    public void setDivision(String division) {
+        this.division = division;
+    }
 
-	public String getContact() {
-		return contact;
-	}
+    public String getCountry() {
+        return country;
+    }
 
-	public void setContact(String contact) {
-		this.contact = contact;
-	}
+    public void setCountry(String country) {
+        this.country = country;
+    }
 
-	public String getPostalCode() {
-		return postalCode;
-	}
+    public String getRegion() {
+        return region;
+    }
 
-	public void setPostalCode(String postalCode) {
-		this.postalCode = postalCode;
-	}
+    public void setRegion(String region) {
+        this.region = region;
+    }
 
-	public String getPhone() {
-		return phone;
-	}
+    public String getLocality() {
+        return locality;
+    }
 
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
+    public void setLocality(String locality) {
+        this.locality = locality;
+    }
 
-	public String getFax() {
-		return fax;
-	}
+    public String getStreet() {
+        return street;
+    }
 
-	public void setFax(String fax) {
-		this.fax = fax;
-	}
+    public void setStreet(String street) {
+        this.street = street;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public String getAddress() {
+        return address;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public String getContact() {
+        return contact;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
 
-	public String getDefaultUri() {
-		return defaultUri;
-	}
+    public String getPostalCode() {
+        return postalCode;
+    }
 
-	public void setDefaultUri(String defaultUri) {
-		this.defaultUri = defaultUri;
-	}
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
+    }
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Institutions [id=");
-		builder.append(id);
-		builder.append(", name=");
-		builder.append(name);
-		builder.append(", fullName=");
-		builder.append(fullName);
-		builder.append(", division=");
-		builder.append(division);
-		builder.append(", country=");
-		builder.append(country);
-		builder.append(", region=");
-		builder.append(region);
-		builder.append(", locality=");
-		builder.append(locality);
-		builder.append(", street=");
-		builder.append(street);
-		builder.append(", address=");
-		builder.append(address);
-		builder.append(", contact=");
-		builder.append(contact);
-		builder.append(", postalCode=");
-		builder.append(postalCode);
-		builder.append(", phone=");
-		builder.append(phone);
-		builder.append(", fax=");
-		builder.append(fax);
-		builder.append(", email=");
-		builder.append(email);
-		builder.append(", description=");
-		builder.append(description);
-		builder.append(", logo=");
-		builder.append(logo);
-		builder.append(", domain=");
-		builder.append(domain);
-		builder.append(", frontTitle=");
-		builder.append(frontTitle);
-		builder.append(", consoleDomain=");
-		builder.append(consoleDomain);
-		builder.append(", consoleTitle=");
-		builder.append(consoleTitle);
-		builder.append(", defaultUri=");
-		builder.append(defaultUri);
-		builder.append("]");
-		return builder.toString();
-	}
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getFax() {
+        return fax;
+    }
+
+    public void setFax(String fax) {
+        this.fax = fax;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDefaultUri() {
+        return defaultUri;
+    }
+
+    public void setDefaultUri(String defaultUri) {
+        this.defaultUri = defaultUri;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Institutions [id=");
+        builder.append(id);
+        builder.append(", name=");
+        builder.append(name);
+        builder.append(", fullName=");
+        builder.append(fullName);
+        builder.append(", division=");
+        builder.append(division);
+        builder.append(", country=");
+        builder.append(country);
+        builder.append(", region=");
+        builder.append(region);
+        builder.append(", locality=");
+        builder.append(locality);
+        builder.append(", street=");
+        builder.append(street);
+        builder.append(", address=");
+        builder.append(address);
+        builder.append(", contact=");
+        builder.append(contact);
+        builder.append(", postalCode=");
+        builder.append(postalCode);
+        builder.append(", phone=");
+        builder.append(phone);
+        builder.append(", fax=");
+        builder.append(fax);
+        builder.append(", email=");
+        builder.append(email);
+        builder.append(", description=");
+        builder.append(description);
+        builder.append(", logo=");
+        builder.append(logo);
+        builder.append(", domain=");
+        builder.append(domain);
+        builder.append(", frontTitle=");
+        builder.append(frontTitle);
+        builder.append(", consoleDomain=");
+        builder.append(consoleDomain);
+        builder.append(", consoleTitle=");
+        builder.append(consoleTitle);
+        builder.append(", defaultUri=");
+        builder.append(defaultUri);
+        builder.append("]");
+        return builder.toString();
+    }
 
 }

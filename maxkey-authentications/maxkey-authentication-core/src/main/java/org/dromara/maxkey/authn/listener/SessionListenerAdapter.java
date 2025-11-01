@@ -30,49 +30,49 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class SessionListenerAdapter extends ScheduleAdapter   implements Job , Serializable {
-	static final Logger logger = LoggerFactory.getLogger(SessionListenerAdapter.class);
-	
-	private static final long serialVersionUID = 4782358765969474833L;
-	
-	transient SessionManager sessionManager;
+    static final Logger logger = LoggerFactory.getLogger(SessionListenerAdapter.class);
+    
+    private static final long serialVersionUID = 4782358765969474833L;
+    
+    transient SessionManager sessionManager;
 
-	Integer category;
-	
-	@Override
-	public void execute(JobExecutionContext context) throws JobExecutionException {
-		 if(jobStatus == JOBSTATUS.RUNNING) {return;}
-		 init(context);
-		 	
-		 logger.debug("running ... " );
+    Integer category;
+    
+    @Override
+    public void execute(JobExecutionContext context) throws JobExecutionException {
+         if(jobStatus == JOBSTATUS.RUNNING) {return;}
+         init(context);
+             
+         logger.debug("running ... " );
         jobStatus = JOBSTATUS.RUNNING;
         try {
             if(sessionManager != null) { 
-            	int sessionCount = 0;
-            	for (HistoryLogin login : sessionManager.querySessions(category)) {
-            		Session session = sessionManager.get(login.getSessionId());
-            		if(session == null) {
-            			logger.debug("TimeOut user {} session {}  Login at {} and  at {} ." ,
-            					login.getUsername(), 
-            					login.getId(),
-            					login.getLoginTime(),
-            					DateUtils.formatDateTime(new Date())
-            			);
-            			sessionManager.terminate(
-            					login.getSessionId(), 
-            					login.getUserId(), 
-            					login.getUsername());
-            		}else {
-            			logger.debug("user {} session {} Login at {} , Last Access at {} will Expired at {}." ,
-            					login.getUsername(), 
-            					login.getId(),
-            					session.getStartTimestamp(),
-            					session.getLastAccessTime(),
-            					session.getExpiredTime()
-            			);
-            			sessionCount ++ ;
-            		}
-            	}
-            	logger.debug("current session count {} ." ,sessionCount);
+                int sessionCount = 0;
+                for (HistoryLogin login : sessionManager.querySessions(category)) {
+                    Session session = sessionManager.get(login.getSessionId());
+                    if(session == null) {
+                        logger.debug("TimeOut user {} session {}  Login at {} and  at {} ." ,
+                                login.getUsername(), 
+                                login.getId(),
+                                login.getLoginTime(),
+                                DateUtils.formatDateTime(new Date())
+                        );
+                        sessionManager.terminate(
+                                login.getSessionId(), 
+                                login.getUserId(), 
+                                login.getUsername());
+                    }else {
+                        logger.debug("user {} session {} Login at {} , Last Access at {} will Expired at {}." ,
+                                login.getUsername(), 
+                                login.getId(),
+                                session.getStartTimestamp(),
+                                session.getLastAccessTime(),
+                                session.getExpiredTime()
+                        );
+                        sessionCount ++ ;
+                    }
+                }
+                logger.debug("current session count {} ." ,sessionCount);
             }
             logger.debug("finished  " );
             jobStatus = JOBSTATUS.FINISHED;
@@ -80,15 +80,15 @@ public class SessionListenerAdapter extends ScheduleAdapter   implements Job , S
             jobStatus = JOBSTATUS.ERROR;
             logger.error("Exception " ,e);
         }
-		
-	}
+        
+    }
 
-	 @Override
-	protected void init(JobExecutionContext context){
-		 super.init(context);
-    	if(sessionManager == null) {
-    		sessionManager = getParameter("sessionManager",SessionManager.class);
-    		category = getParameter("category",Integer.class);
+     @Override
+    protected void init(JobExecutionContext context){
+         super.init(context);
+        if(sessionManager == null) {
+            sessionManager = getParameter("sessionManager",SessionManager.class);
+            category = getParameter("category",Integer.class);
         }
     }
 }

@@ -28,15 +28,15 @@ import org.dromara.mybatis.jpa.entity.JpaPageResults;
 
 public interface RoleMemberService  extends IJpaService<RoleMember>{
 
-	public int addDynamicRoleMember(Roles dynamicGroup);
-	
-	public int deleteDynamicRoleMember(Roles dynamicGroup) ;
-	
-	public int deleteByRoleId(String groupId) ;
-	
-	public List<UserInfo> queryMemberByRoleId(String groupId);
-	
-	
-	public JpaPageResults<Roles> rolesNoMember(RoleMember entity) ;
-	
+    public int addDynamicRoleMember(Roles dynamicGroup);
+    
+    public int deleteDynamicRoleMember(Roles dynamicGroup) ;
+    
+    public int deleteByRoleId(String groupId) ;
+    
+    public List<UserInfo> queryMemberByRoleId(String groupId);
+    
+    
+    public JpaPageResults<Roles> rolesNoMember(RoleMember entity) ;
+    
 }

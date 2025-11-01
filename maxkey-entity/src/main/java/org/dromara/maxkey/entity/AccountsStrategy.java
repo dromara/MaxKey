@@ -131,22 +131,22 @@ public class AccountsStrategy extends JpaEntity implements Serializable {
     }
 
     public Date getCreatedDate() {
-		return createdDate;
-	}
+        return createdDate;
+    }
 
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
 
-	public Date getModifiedDate() {
-		return modifiedDate;
-	}
+    public Date getModifiedDate() {
+        return modifiedDate;
+    }
 
-	public void setModifiedDate(Date modifiedDate) {
-		this.modifiedDate = modifiedDate;
-	}
+    public void setModifiedDate(Date modifiedDate) {
+        this.modifiedDate = modifiedDate;
+    }
 
-	public String getFilters() {
+    public String getFilters() {
         return filters;
     }
 
@@ -187,63 +187,63 @@ public class AccountsStrategy extends JpaEntity implements Serializable {
     }
 
     public byte[] getAppIcon() {
-		return appIcon;
-	}
+        return appIcon;
+    }
 
-	public String getAppIconBase64() {
-		return appIconBase64;
-	}
+    public String getAppIconBase64() {
+        return appIconBase64;
+    }
 
-	public void setAppIconBase64(String appIconBase64) {
-		this.appIconBase64 = appIconBase64;
-	}
+    public void setAppIconBase64(String appIconBase64) {
+        this.appIconBase64 = appIconBase64;
+    }
 
-	public void setAppIcon(byte[] appIcon) {
-		this.appIcon = appIcon;
-	}
+    public void setAppIcon(byte[] appIcon) {
+        this.appIcon = appIcon;
+    }
 
-	public String getCreateType() {
-		return createType;
-	}
+    public String getCreateType() {
+        return createType;
+    }
 
-	public void setCreateType(String createType) {
-		this.createType = createType;
-	}
+    public void setCreateType(String createType) {
+        this.createType = createType;
+    }
 
-	public String getSuffixes() {
-		return suffixes;
-	}
+    public String getSuffixes() {
+        return suffixes;
+    }
 
-	public void setSuffixes(String suffixes) {
-		this.suffixes = suffixes;
-	}
+    public void setSuffixes(String suffixes) {
+        this.suffixes = suffixes;
+    }
 
-	public String getInstId() {
-		return instId;
-	}
+    public String getInstId() {
+        return instId;
+    }
 
-	public void setInstId(String instId) {
-		this.instId = instId;
-	}
+    public void setInstId(String instId) {
+        this.instId = instId;
+    }
 
-	public String getInstName() {
-		return instName;
-	}
+    public String getInstName() {
+        return instName;
+    }
 
-	public void setInstName(String instName) {
-		this.instName = instName;
-	}
+    public void setInstName(String instName) {
+        this.instName = instName;
+    }
 
-	
-	public void transIconBase64() {
-		if(this.appIcon !=null) {
-			this.appIconBase64 = "data:image/png;base64," + 
-					Base64.getEncoder().encodeToString(appIcon);
-		}
-	}
-	
-	
-	@Override
+    
+    public void transIconBase64() {
+        if(this.appIcon !=null) {
+            this.appIconBase64 = "data:image/png;base64," + 
+                    Base64.getEncoder().encodeToString(appIcon);
+        }
+    }
+    
+    
+    @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("AccountsStrategy [id=");

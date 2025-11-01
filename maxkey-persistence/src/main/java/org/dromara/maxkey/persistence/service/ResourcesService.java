@@ -23,6 +23,6 @@ import org.dromara.maxkey.entity.permissions.Resources;
 import org.dromara.mybatis.jpa.service.IJpaService;
 
 public interface ResourcesService  extends IJpaService<Resources>{
-	
-	public List<Resources> queryResourcesTree(Resources resource);
+    
+    public List<Resources> queryResourcesTree(Resources resource);
 }

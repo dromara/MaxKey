@@ -26,6 +26,6 @@ import org.dromara.mybatis.jpa.service.IJpaService;
 
 public interface SocialsAssociatesService  extends IJpaService<SocialsAssociate>{
 
-	public List<SocialsAssociate>  queryByUser(UserInfo user);
-	 
+    public List<SocialsAssociate>  queryByUser(UserInfo user);
+     
 }
