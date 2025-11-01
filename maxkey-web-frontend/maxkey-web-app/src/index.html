@@ -144,16 +144,18 @@
 </body>
 <!--attention http or https-->
 <!--企业微信-->
-<script src="https://wwcdn.weixin.qq.com/node/wework/wwopen/js/wwLogin-1.2.7.js"></script>
-
+<script type="text/javascript">
+  appendScriptSrc(location.protocol+"//wwcdn.weixin.qq.com/node/wework/wwopen/js/wwLogin-1.2.7.js");
+</script>
 <!--钉钉-->
 <!---->
-<script src="https://g.alicdn.com/dingding/dinglogin/0.0.5/ddLogin.js"></script>
-<script>
+<script type="text/javascript">
+  appendScriptSrc(location.protocol+"//g.alicdn.com/dingding/dinglogin/0.0.5/ddLogin.js");
   var ddredirect_uri = "";
   var handleMessage = function (event) {
     var origin = event.origin;
-    if (origin == "https://login.dingtalk.com") { //判断是否来自ddLogin扫码事件。
+    console.log("ding handleMessage origin "+origin);
+    if (origin.indexOf("//login.dingtalk.com")>-1) { //判断是否来自ddLogin扫码事件。
       var loginTmpCode = event.data;
       ddredirect_uri = ddredirect_uri + '&loginTmpCode=' + loginTmpCode;
       //获取到loginTmpCode后就可以在这里构造跳转链接进行跳转了
@@ -168,14 +170,13 @@
 </script>
 
 <!--飞书-->
-
-<script src="https://lf-package-cn.feishucdn.com/obj/feishu-static/lark/passport/qrcode/LarkSSOSDKWebQRCode-1.0.3.js"></script>
-
 <script type="text/javascript">
+  appendScriptSrc(location.protocol+"//lf-package-cn.feishucdn.com/obj/feishu-static/lark/passport/qrcode/LarkSSOSDKWebQRCode-1.0.3.js");
   var fsredirectUri = "";
   var QRLoginObj;
   var handleMessage = function (event) {
     var origin = event.origin;
+    console.log("feishu handleMessage origin "+origin);
     // 使用 matchOrigin 方法来判断 message 是否来自飞书页面
     if (QRLoginObj && QRLoginObj.matchOrigin(origin)) {
       var loginTmpCode = event.data;
