@@ -137,6 +137,9 @@ public class OrganizationsController {
     @RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public Message<?> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
         logger.debug("-delete  ids : {} " , ids);
+        if (ids != null && ids.contains(Organizations.ROOT_ORG_ID)) {
+            return new Message<Organizations>(Message.FAIL, "根组织不允许删除");
+        }
         if (organizationsService.deleteBatch(ids)) {
             systemLog.insert(
                     ConstsEntryType.ORGANIZATION, 
