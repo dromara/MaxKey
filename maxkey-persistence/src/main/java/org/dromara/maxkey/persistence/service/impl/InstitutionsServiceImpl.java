@@ -71,5 +71,30 @@ public class InstitutionsServiceImpl  extends JpaServiceImpl<InstitutionsMapper,
 
             return inst;
         }
-     
+
+        @Override
+        public void clearInstitutionsCache(String instIdOrDomain) {
+            _logger.debug("clearInstitutionsCache instIdOrDomain: {}", instIdOrDomain);
+
+            // 先尝试从缓存中获取
+            Institutions inst = institutionsStore.getIfPresent(instIdOrDomain);
+
+            // 如果缓存中没有，从数据库查询
+            if(inst == null) {
+                inst = findByDomain(instIdOrDomain);
+            }
+
+            // 清除所有相关的缓存key
+            if(inst != null) {
+                institutionsStore.invalidate(inst.getDomain());
+                institutionsStore.invalidate(inst.getConsoleDomain());
+                institutionsStore.invalidate(inst.getId());
+                _logger.debug("Cleared cache for domain: {}, consoleDomain: {}, id: {}",
+                    inst.getDomain(), inst.getConsoleDomain(), inst.getId());
+            }
+
+            // 同时清除传入的key（可能是别名或其他key）
+            institutionsStore.invalidate(instIdOrDomain);
+        }
+
 }

@@ -52,6 +52,9 @@ public class InstitutionsController {
                 BindingResult result) {
             logger.debug("updateRole institutions : {}" , institutions);
             if(institutionsService.update(institutions)) {
+                // 更新成功后清除缓存
+                institutionsService.clearInstitutionsCache(institutions.getId());
+                logger.debug("Cleared institutions cache for id: {}", institutions.getId());
                 return new Message<Institutions>(Message.SUCCESS);
             } else {
                 return new Message<Institutions>(Message.FAIL);
