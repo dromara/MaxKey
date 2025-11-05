@@ -66,14 +66,19 @@ public class WorkweixinOrganizationService extends AbstractSynchronizerService i
             // 关键字段不能依赖映射关系,否则映射数据有问题会导致功能异常
             // 先拿出字段映射关系
             Map<String, String> fieldMap = getFieldMap(Long.parseLong(synchronizer.getId()));
+            // 从映射里面拿到企业微信Id映射后的本地组织的字段 用于判断本地的组织是否存在
+            String targetIdField = getLocalFieldMappingByWx(fieldMap, "id");
 
             for (WorkWeixinDepts deptWxCur : deptWxListAfterLevelSort) {
                 _logger.debug("sync workweixin dept : {} {} {}", deptWxCur.getId(), deptWxCur.getName(), deptWxCur.getParentid());
                 //root
                 if (deptWxCur.getId() == ROOT_DEPT_ID) {
                     // 当前根节点
-                    // 先查询本地根节点, 这里可能有问题, ROOT_ORG_ID的组织可能不存在(原本的被删除了), 这里先假设存在
                     Organizations rootOrganization = organizationsService.get(Organizations.ROOT_ORG_ID);
+                    if (rootOrganization == null) {
+                        _logger.error("根组织不存在(ID: {}), 无法同步企业微信根部门", Organizations.ROOT_ORG_ID);
+                        throw new RuntimeException("根组织不存在, 同步失败! 请先确保系统中存在根组织(ID: " + Organizations.ROOT_ORG_ID + ")");
+                    }
                     // 构建同步关系
                     SynchroRelated rootSynchroRelated = buildSynchroRelated(rootOrganization, deptWxCur);
                     // 更新同步关系
@@ -98,9 +103,8 @@ public class WorkweixinOrganizationService extends AbstractSynchronizerService i
                     // 这里需要修正一下层级关系, 防止因为映射关系错误导致的层级错乱
                     String deptWxParentId = String.valueOf(deptWxCur.getParentid());
                     // 进入到这个节点的应该都是有上级的, 现在只需要根据上级Id查询上级的组织档案
-                    String targetIdField = getLocalFieldMappingByWx(fieldMap, "id"); // 从映射里面拿到企业微信Id映射后的本地组织的字段
-                    Organizations parentOrg = organizationsService.findOne(targetIdField + "   = ? and instId = ? ",
-                            new Object[]{deptWxParentId, this.synchronizer.getInstId()}, new int[]{Types.VARCHAR, Types.VARCHAR});
+
+                    Organizations parentOrg = findOrganizationByField(targetIdField, deptWxParentId);
                     // 这里父级不应该为 null
                     if (parentOrg == null) {
                         throw new RuntimeException("无法找到上级组织, 同步失败! 企业微信父部门Id: " + deptWxParentId);
@@ -125,16 +129,16 @@ public class WorkweixinOrganizationService extends AbstractSynchronizerService i
                         synchroRelated = buildSynchroRelated(orgCurrent, deptWxCur);
                     } else {
                         // 部门曾经同步过, 但是不能保证没被删除过, 所以还需要判定一次
-                        Organizations currentOrg = organizationsService.findOne(targetIdField + "   = ? and instId = ? ",
-                                new Object[]{deptWxCur.getId(), this.synchronizer.getInstId()}, new int[]{Types.VARCHAR, Types.VARCHAR});
+                        Organizations currentOrg = findOrganizationByField(targetIdField, String.valueOf(deptWxCur.getId()));
                         if (currentOrg == null) {
                             // 当前部门已经被删除, 那就需要重新写入一次
                             orgCurrent.setId(synchroRelated.getObjectId());
                             organizationsService.insert(orgCurrent);
+                        } else {
+                            // 组织存在, 执行更新操作
+                            orgCurrent.setId(synchroRelated.getObjectId());
+                            organizationsService.update(orgCurrent);
                         }
-
-                        orgCurrent.setId(synchroRelated.getObjectId());
-                        organizationsService.update(orgCurrent);
                     }
 
                     synchroRelatedService.updateSynchroRelated(
@@ -143,7 +147,8 @@ public class WorkweixinOrganizationService extends AbstractSynchronizerService i
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            _logger.error("同步企业微信组织失败", e);
+            throw new RuntimeException("同步企业微信组织失败: " + e.getMessage(), e);
         }
 
     }
@@ -210,7 +215,9 @@ public class WorkweixinOrganizationService extends AbstractSynchronizerService i
                 return orgProperty;
             }
         }
-        throw new RuntimeException("未找到企业微信字段映射后的本地字段");
+        throw new RuntimeException(String.format(
+                "未找到企业微信字段'%s'映射后的本地字段，请检查同步器(ID: %s)的字段映射配置",
+                expectField, this.synchronizer.getId()));
     }
 
     /**
@@ -262,6 +269,40 @@ public class WorkweixinOrganizationService extends AbstractSynchronizerService i
             }
         }
         return filedMap;
+    }
+
+    /**
+     * 验证字段名是否合法，防止SQL注入
+     *
+     * @param fieldName 字段名
+     * @throws IllegalArgumentException 如果字段名不合法
+     */
+    private void validateFieldName(String fieldName) {
+        if (fieldName == null || fieldName.trim().isEmpty()) {
+            throw new IllegalArgumentException("字段名不能为空");
+        }
+        // 只允许字母、数字、下划线，且必须以字母或下划线开头
+        if (!fieldName.matches("^[a-zA-Z_][a-zA-Z0-9_]*$")) {
+            throw new IllegalArgumentException("非法的字段名: " + fieldName + ", 字段名只能包含字母、数字和下划线，且必须以字母或下划线开头");
+        }
+    }
+
+    /**
+     * 根据指定字段查询组织
+     *
+     * @param fieldName  字段名
+     * @param fieldValue 字段值
+     * @return 查询到的组织，如果不存在返回null
+     */
+    private Organizations findOrganizationByField(String fieldName, String fieldValue) {
+        // 验证字段名防止SQL注入
+        validateFieldName(fieldName);
+
+        return organizationsService.findOne(
+                fieldName + " = ? AND instId = ?",
+                new Object[]{fieldValue, this.synchronizer.getInstId()},
+                new int[]{Types.VARCHAR, Types.VARCHAR}
+        );
     }
 
     /**
