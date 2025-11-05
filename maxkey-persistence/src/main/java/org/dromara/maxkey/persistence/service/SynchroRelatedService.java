@@ -31,5 +31,11 @@ public interface SynchroRelatedService  extends IJpaService<SynchroRelated>{
     
     public SynchroRelated findByOriginId(Synchronizers synchronizer,String originId,String classType) ;
     
+     /**
+     * 根据 同步器 + originId + classType 查询同步关系, 如果存在则更新, 不存在则插入
+     * @param synchronizer 同步器
+     * @param synchroRelated 同步关系
+     * @param classType 对象类型
+     */
     public void updateSynchroRelated(Synchronizers synchronizer,SynchroRelated synchroRelated,String classType) ;
 }

@@ -69,4 +69,14 @@ public class WorkWeixinDepts {
         this.order = order;
     }
 
+    @Override
+    public String toString() {
+        return "WorkWeixinDepts{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", name_en='" + name_en + '\'' +
+                ", parentid=" + parentid +
+                ", order=" + order +
+                '}';
+    }
 }
