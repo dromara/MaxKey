@@ -23,7 +23,13 @@ import org.dromara.mybatis.jpa.service.IJpaService;
 public interface InstitutionsService  extends IJpaService<Institutions>{
 
      public Institutions findByDomain(String domain) ;
-     
-     
+
+
      public Institutions get(String instIdOrDomain) ;
+
+     /**
+      * 清除指定机构的缓存
+      * @param instIdOrDomain 机构ID或域名
+      */
+     void clearInstitutionsCache(String instIdOrDomain);
 }
