@@ -20,13 +20,7 @@ package org.dromara.maxkey.web.idm.contorller;
 import java.beans.PropertyEditorSupport;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
@@ -34,15 +28,14 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.dromara.maxkey.authn.annotation.CurrentUser;
-import org.dromara.maxkey.constants.ConstsEntryType;
-import org.dromara.maxkey.constants.ConstsAct;
-import org.dromara.maxkey.constants.ConstsActResult;
-import org.dromara.maxkey.constants.ConstsPasswordSetType;
+import org.dromara.maxkey.constants.*;
 import org.dromara.maxkey.entity.ChangePassword;
 import org.dromara.maxkey.entity.ExcelImport;
 import org.dromara.maxkey.entity.Message;
 import org.dromara.maxkey.entity.idm.UserInfo;
+import org.dromara.maxkey.exception.BusinessException;
 import org.dromara.maxkey.persistence.service.FileUploadService;
+import org.dromara.maxkey.persistence.service.GroupMemberService;
 import org.dromara.maxkey.persistence.service.HistorySystemLogsService;
 import org.dromara.maxkey.persistence.service.UserInfoService;
 import org.dromara.maxkey.util.ExcelUtils;
@@ -53,6 +46,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.WebDataBinder;
@@ -85,6 +79,9 @@ public class UserInfoController {
 
     @Autowired
     HistorySystemLogsService systemLog;
+
+    @Autowired
+    GroupMemberService groupMemberService;
     
     @RequestMapping(value = { "/fetch" }, produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
@@ -175,6 +172,18 @@ public class UserInfoController {
     @RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public Message<?> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
         logger.debug("-delete  ids : {} " , ids);
+
+        // 查询 ROLE_ADMINISTRATORS 组下有哪些用户
+        List<UserInfo> adminUsers = groupMemberService.queryMemberByGroupId(ConstsRoles.ROLE_ADMINISTRATORS.getAuthority());
+        if (!CollectionUtils.isEmpty(adminUsers)) {
+            List<String> instAdminIds = adminUsers.stream()
+                    .map(UserInfo::getId)
+                    .toList();
+            // 如果要删除的用户中包含了所有的管理员用户，则报错，至少保留一个管理员用户
+            if (!instAdminIds.isEmpty() && new HashSet<>(ids).containsAll(instAdminIds)) {
+                throw new BusinessException(HttpStatus.BAD_REQUEST.value(), "至少保留一名管理员");
+            }
+        }
         
         if (userInfoService.deleteBatch(ids)) {
             systemLog.insert(

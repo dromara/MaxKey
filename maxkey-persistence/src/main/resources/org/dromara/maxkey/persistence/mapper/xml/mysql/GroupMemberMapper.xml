@@ -11,7 +11,7 @@
 		</if>
     </sql>
     
-    <select id="memberIn" parameterType="GroupMember" resultType="GroupMember">
+    <select id="memberIn" parameterType="org.dromara.maxkey.entity.idm.GroupMember" resultType="org.dromara.maxkey.entity.idm.GroupMember">
 			select	distinct
 				gm.id as id,
 				g.id as groupid,
@@ -75,7 +75,7 @@
 	</select>
 	
 	
-	<select id="memberNotIn" parameterType="GroupMember" resultType="GroupMember">
+	<select id="memberNotIn" parameterType="org.dromara.maxkey.entity.idm.GroupMember" resultType="org.dromara.maxkey.entity.idm.GroupMember">
 		select	distinct
 			u.id,
 			u.username,
@@ -139,7 +139,7 @@
 		</if>
 	</select>
 	
-	<select id="noMember" parameterType="GroupMember" resultType="Groups">
+	<select id="noMember" parameterType="org.dromara.maxkey.entity.idm.GroupMember" resultType="org.dromara.maxkey.entity.idm.Groups">
         select  distinct
             g.*
         from
@@ -154,7 +154,7 @@
 		           and u.username = #{username}
 		        </if>
 		        <if test="memberId != null and memberId != ''">
-                   and gm.memberid = #{memberid}
+                   and gm.memberid = #{memberId}
                 </if>
             )
         <if test="groupName != null and groupName != ''">
@@ -163,7 +163,7 @@
     </select>
 	
 	<!-- ROLE_MEMBER  ROLE Member-->
-	<select id="groupMemberInGroup" parameterType="GroupMember" resultType="Groups">
+	<select id="groupMemberInGroup" parameterType="org.dromara.maxkey.entity.idm.GroupMember" resultType="org.dromara.maxkey.entity.idm.Groups">
 		select	distinct
 			ig.*
 		from
@@ -184,7 +184,7 @@
 		</if>
 	</select>
 
-	<update id="addDynamicMember" parameterType="Groups" >
+	<update id="addDynamicMember" parameterType="org.dromara.maxkey.entity.idm.Groups" >
     	insert into mxk_group_member(
     		id,
     		groupid,
@@ -213,7 +213,7 @@
 		</if>
     </update>
     
-    <delete id="deleteDynamicMember" parameterType="Groups" >
+    <delete id="deleteDynamicMember" parameterType="org.dromara.maxkey.entity.idm.Groups" >
     	delete gm from mxk_group_member gm
     	where type = 'user-dynamic'
     		and gm.groupid=#{id}
@@ -231,9 +231,9 @@
 			)
     </delete>
     
-    <select id="queryMemberByGroupId" parameterType="string"  resultType="UserInfo">
+    <select id="queryMemberByGroupId" parameterType="string"  resultType="org.dromara.maxkey.entity.idm.UserInfo">
             select  distinct
-                g.groupId,
+                g.id groupId,
                 g.groupName,
                 u.id,
                 u.username,
