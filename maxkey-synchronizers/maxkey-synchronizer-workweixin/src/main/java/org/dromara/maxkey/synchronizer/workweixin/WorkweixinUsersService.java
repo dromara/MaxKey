@@ -58,20 +58,33 @@ public class WorkweixinUsersService extends AbstractSynchronizerService implemen
         try {
             // 获取前面已经拉取下来的微信部门同步记录
             List<SynchroRelated> synchroRelatedOrgList = synchroRelatedService.findOrgs(this.synchronizer);
-            Map<String, String> fieldMap = getFieldMap(Long.parseLong(synchronizer.getId()));
+            // 加载同步器的历史数据
+            Map<String, SynchroRelated> userRelationHistoryMap = loadUserRelationHistory();
 
+            // 获取同步器的字段映射
+            Map<String, String> fieldMap = getFieldMap(Long.parseLong(synchronizer.getId()));
             // 拿到微信用户Id映射后的MaxKey字段名称
             String wxUserIdInMaxkeyField = getWxUserMappingField(fieldMap, "userid");
 
+            boolean fetchFailed = false;
             for (SynchroRelated relatedOrg : synchroRelatedOrgList) {
                 // 根据微信部门ID，拉取微信用户列表, 这里拉取的是直属员工
                 HttpRequestAdapter request = new HttpRequestAdapter();
                 String responseBody = request.get(String.format(USERS_URL, access_token, relatedOrg.getOriginId()));
                 WorkWeixinUsersResponse usersResponse = JsonUtils.gsonStringToObject(responseBody, WorkWeixinUsersResponse.class);
-                _logger.trace("response : " + responseBody);
+                _logger.trace("response : {}", responseBody);
 
+                if (usersResponse == null || usersResponse.getErrcode() != 0 || usersResponse.getUserlist() == null) {
+                    fetchFailed = true;
+                    _logger.warn("[同步微信用户] 拉取部门 {} (originId={}) 用户失败, errcode={}, errmsg={}",
+                            relatedOrg.getObjectName(), relatedOrg.getOriginId(),
+                            usersResponse == null ? "null" : usersResponse.getErrcode(),
+                            usersResponse == null ? "null" : usersResponse.getErrmsg());
+                    continue;
+                }
 
                 for (WorkWeixinUsers wxUser : usersResponse.getUserlist()) {
+                    userRelationHistoryMap.remove(wxUser.getUserid());
                     // 依次处理每个员工
                     // 根据员工信息，构建MaxKey用户信息
                     UserInfo maxkeyUserNew = buildUserInfoByFiledMap(wxUser, fieldMap);
@@ -156,6 +169,12 @@ public class WorkweixinUsersService extends AbstractSynchronizerService implemen
                 }
             }
 
+            if (fetchFailed) {
+                _logger.warn("[同步微信用户] 存在部门用户拉取失败，跳过缺失用户禁用流程。");
+                return;
+            }
+
+            disableMissingUsers(userRelationHistoryMap);
         } catch (Exception e) {
             _logger.error("[同步微信用户] 同步用户失败", e);
         }
@@ -289,6 +308,54 @@ public class WorkweixinUsersService extends AbstractSynchronizerService implemen
 
     public void setAccess_token(String access_token) {
         this.access_token = access_token;
+    }
+
+    /**
+     * 加载当前同步器历史同步的企业微信用户映射，用于判定本次缺失用户。
+     *
+     * @return 以企业微信用户 originId 为键的同步关系映射
+     */
+    private Map<String, SynchroRelated> loadUserRelationHistory() {
+        Map<String, SynchroRelated> _userRelationHistoryMap = new HashMap<>();
+        List<SynchroRelated> historyRecords = synchroRelatedService.find(
+                "instid = ? and syncId = ? and objecttype = ?",
+                new Object[]{synchronizer.getInstId(), synchronizer.getId(), UserInfo.CLASS_TYPE},
+                new int[]{Types.VARCHAR, Types.VARCHAR, Types.VARCHAR}
+        );
+        if (historyRecords != null) {
+            for (SynchroRelated related : historyRecords) {
+                _userRelationHistoryMap.put(related.getOriginId(), related);
+            }
+        }
+        return _userRelationHistoryMap;
+    }
+
+    /**
+     * 禁用本次企业微信未返回的历史同步用户，并将 userState 标记为 WITHDRAWN。
+     *
+     * @param _userRelationHistoryMap 尚未在本次同步中匹配到的历史同步关系
+     */
+    private void disableMissingUsers(Map<String, SynchroRelated> _userRelationHistoryMap) {
+        if (_userRelationHistoryMap.isEmpty()) {
+            _logger.info("[同步微信用户] 本次同步未发现需要禁用的历史用户。");
+            return;
+        }
+        _logger.info("[同步微信用户] 发现 {} 个历史同步用户未出现在本次企业微信返回，开始禁用。", _userRelationHistoryMap.size());
+        for (SynchroRelated orphanRelation : _userRelationHistoryMap.values()) {
+            UserInfo localUser = userInfoService.get(orphanRelation.getObjectId());
+            if (localUser == null) {
+                _logger.warn("[同步微信用户] 历史同步用户 originId={} (objectId={}) 在本地不存在，跳过禁用。", orphanRelation.getOriginId(), orphanRelation.getObjectId());
+                continue;
+            }
+            if (localUser.getStatus() == ConstsStatus.DISABLED && "WITHDRAWN".equals(localUser.getUserState())) {
+                _logger.debug("[同步微信用户] 用户 {} (originId={}) 已处于禁用且离职状态，跳过更新。", localUser.getUsername(), orphanRelation.getOriginId());
+                continue;
+            }
+            localUser.setStatus(ConstsStatus.DISABLED);
+            localUser.setUserState("WITHDRAWN");
+            userInfoService.update(localUser);
+            _logger.info("[同步微信用户] 用户 {} (originId={}) 已标记为禁用，userState=WITHDRAWN。", localUser.getUsername(), orphanRelation.getOriginId());
+        }
     }
 
     public SyncJobConfigFieldService getSyncJobConfigFieldService() {
