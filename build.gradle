@@ -347,8 +347,8 @@ subprojects {
         //mybatis
         implementation group: 'org.mybatis', name: 'mybatis', version: "${mybatisVersion}"
         implementation group: 'org.mybatis', name: 'mybatis-spring', version: "${mybatisspringVersion}"
-        //implementation group: 'org.dromara.mybatis-jpa-extra', name: 'mybatis-jpa-extra', version: "${mybatisjpaextraVersion}"
-        //implementation group: 'org.dromara.mybatis-jpa-extra', name: 'mybatis-jpa-extra-spring-boot-starter', version: "${mybatisjpaextraVersion}"
+        implementation group: 'org.dromara.mybatis-jpa-extra', name: 'mybatis-jpa-extra', version: "${mybatisjpaextraVersion}"
+        implementation group: 'org.dromara.mybatis-jpa-extra', name: 'mybatis-jpa-extra-spring-boot-starter', version: "${mybatisjpaextraVersion}"
         //hibernate
         implementation group: 'org.hibernate.validator', name: 'hibernate-validator', version: "${hibernateVersion}"
         implementation group: 'org.hibernate', name: 'hibernate-validator-cdi', version: "${hibernateVersion}"
