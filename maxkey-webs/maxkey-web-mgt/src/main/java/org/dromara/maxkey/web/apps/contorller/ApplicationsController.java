@@ -190,7 +190,7 @@ public class ApplicationsController extends BaseAppContorller {
             secret=StringGenerator.generateKey("");
         }
         
-        return new Message<>(Message.SUCCESS,secret);
+        return new Message<>(Message.SUCCESS,null,secret);
     }
     
     
