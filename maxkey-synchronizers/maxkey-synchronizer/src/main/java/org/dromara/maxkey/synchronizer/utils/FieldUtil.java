@@ -62,6 +62,9 @@ public class FieldUtil {
     }
 
     public static Object convertValueToFieldType(Object value, Class<?> fieldType) {
+        if (value == null) {
+            return null;
+        }
         if (fieldType.isInstance(value)) {
             return value;
         }
