@@ -15,7 +15,7 @@
  */
  
 
-package org.dromara.maxkey.util;
+package org.dromara.maxkey.http;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;

@@ -38,12 +38,12 @@ import org.dromara.maxkey.crypto.jwt.encryption.service.impl.DefaultJwtEncryptio
 import org.dromara.maxkey.crypto.jwt.signer.service.impl.DefaultJwtSigningAndValidationService;
 import org.dromara.maxkey.entity.apps.oauth2.provider.ClientDetails;
 import org.dromara.maxkey.entity.idm.UserInfo;
+import org.dromara.maxkey.http.HttpResponseAdapter;
 import org.dromara.maxkey.persistence.service.AppsService;
 import org.dromara.maxkey.persistence.service.UserInfoService;
 import org.dromara.maxkey.util.JsonUtils;
 import org.dromara.maxkey.util.RequestTokenUtils;
 import org.dromara.maxkey.util.StringGenerator;
-import org.dromara.maxkey.web.HttpResponseAdapter;
 import org.dromara.maxkey.web.WebConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.dromara.maxkey.util;
+package org.dromara.maxkey.http;
 
 public class AuthorizationHeader {
 

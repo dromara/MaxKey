@@ -20,7 +20,7 @@ package org.dromara.maxkey.authz.cas.endpoint.response;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import org.dromara.maxkey.web.HttpResponseConstants;
+import org.dromara.maxkey.http.HttpResponseConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,12 +45,12 @@ public class ServiceResponseBuilder extends CasServiceResponse {
             responseString= serviceResponseJsonBuilder();
         }
         
-        _logger.trace("Response String : "+responseString);
+        _logger.trace("Response String : {}",responseString);
         return responseString;
     }
     
     public String  serviceResponseXmlBuilder() {
-        StringBuffer responseResult=new StringBuffer("");
+    	StringBuilder responseResult=new StringBuilder("");
         responseResult.append("<cas:serviceResponse xmlns:cas=\"http://www.yale.edu/tp/cas\">");
         if(result){
             responseResult.append("<cas:authenticationSuccess>");
@@ -63,7 +63,7 @@ public class ServiceResponseBuilder extends CasServiceResponse {
                  //采用Iterator遍历HashMap  
                 Iterator<String> it = casAttributes.keySet().iterator();  
                 while(it.hasNext()) {  
-                    String key = (String)it.next();  
+                    String key = it.next();  
                     ArrayList<String> attrList=casAttributes.get(key);
                     //<cas:firstname>John</cas:firstname>
                     for(String value : attrList){
@@ -83,16 +83,17 @@ public class ServiceResponseBuilder extends CasServiceResponse {
             }
             responseResult.append("</cas:authenticationSuccess>");
         }else{
-            responseResult.append("<cas:authenticationFailure code=\""+code+"\">");
-            responseResult.append(this.description);
-            responseResult.append("</cas:authenticationFailure>");
+            responseResult
+            	.append("<cas:authenticationFailure code=\""+code+"\">")
+            	.append(this.description)
+            	.append("</cas:authenticationFailure>");
         }
         responseResult.append("</cas:serviceResponse>");
         return responseResult.toString();
     }
     
     public String  serviceResponseJsonBuilder() {
-        StringBuffer responseResult=new StringBuffer("");
+    	StringBuilder responseResult=new StringBuilder("");
         responseResult.append("{\"serviceResponse\" :{");
         if(result){
             responseResult.append("\"authenticationSuccess\" : {");
@@ -107,7 +108,7 @@ public class ServiceResponseBuilder extends CasServiceResponse {
                 Iterator<String> it = casAttributes.keySet().iterator();  
                 int attrCount=1;
                 while(it.hasNext()) {  
-                    String key = (String)it.next();  
+                    String key = it.next();  
                     ArrayList<String> attrList=casAttributes.get(key);
                     if(attrCount==1){
                         responseResult.append("\"").append(key).append("\":");

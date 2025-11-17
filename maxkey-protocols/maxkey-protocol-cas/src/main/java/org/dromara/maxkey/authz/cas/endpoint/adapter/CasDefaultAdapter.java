@@ -17,7 +17,7 @@
 
 package org.dromara.maxkey.authz.cas.endpoint.adapter;
 
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.codec.binary.Base64;
 import org.dromara.maxkey.authz.cas.endpoint.response.ServiceResponseBuilder;
@@ -31,8 +31,6 @@ import org.springframework.web.servlet.ModelAndView;
 public class CasDefaultAdapter extends AbstractAuthorizeAdapter {
     static final  Logger _logger = LoggerFactory.getLogger(CasDefaultAdapter.class);
     
-    static String Charset_UTF8="UTF-8";
-    
     ServiceResponseBuilder serviceResponseBuilder;
     
     @Override
@@ -42,13 +40,7 @@ public class CasDefaultAdapter extends AbstractAuthorizeAdapter {
     }
 
     public String base64Attr(String attrValue){
-        String b64="";
-        try {
-            b64=(attrValue == null? "":"base64:"+Base64.encodeBase64String(attrValue.getBytes(Charset_UTF8)));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        return b64;
+        return (attrValue == null ? "" : "base64:"+Base64.encodeBase64String(attrValue.getBytes(StandardCharsets.UTF_8)));
     }
     
     @Override

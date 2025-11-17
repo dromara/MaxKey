@@ -17,7 +17,7 @@
 
 package org.dromara.maxkey.authz.cas.endpoint.response;
 
-import org.dromara.maxkey.web.HttpResponseConstants;
+import org.dromara.maxkey.http.HttpResponseConstants;
 
 public class ProxyServiceResponseBuilder extends  ServiceResponseBuilder{
 
@@ -37,22 +37,23 @@ public class ProxyServiceResponseBuilder extends  ServiceResponseBuilder{
         }else{
             responseString =serviceResponseJsonBuilder();
         }
-        _logger.trace("Response String : "+responseString);
+        _logger.trace("Response String : {}",responseString);
         return responseString;
     }
     
     @Override
     public String  serviceResponseXmlBuilder() {
-        StringBuffer responseResult=new StringBuffer("");
+    	StringBuilder responseResult=new StringBuilder("");
         responseResult.append("<cas:serviceResponse xmlns:cas=\"http://www.yale.edu/tp/cas\">");
         if(result){
-            responseResult.append("<cas:proxySuccess>");
-            responseResult.append("<cas:proxyTicket>").append(ticket).append("</cas:proxyTicket>");
-            responseResult.append("</cas:proxySuccess>");
+            responseResult.append("<cas:proxySuccess>")
+            .append("<cas:proxyTicket>").append(ticket).append("</cas:proxyTicket>")
+            .append("</cas:proxySuccess>");
         }else{
-            responseResult.append("<cas:proxyFailure code=\""+code+"\">");
-            responseResult.append(this.description);
-            responseResult.append("</cas:proxyFailure>");
+            responseResult
+            .append("<cas:proxyFailure code=\"").append(code).append("\">")
+            .append(this.description)
+            .append("</cas:proxyFailure>");
         }
         responseResult.append("</cas:serviceResponse>");
         return responseResult.toString();
@@ -60,20 +61,19 @@ public class ProxyServiceResponseBuilder extends  ServiceResponseBuilder{
     
     @Override
     public String  serviceResponseJsonBuilder() {
-        StringBuffer responseResult=new StringBuffer("");
+    	StringBuilder responseResult=new StringBuilder("");
         responseResult.append("{\"serviceResponse\" :{");
         if(result){
-            responseResult.append("\"proxySuccess\" : {");
-            responseResult.append("\"proxyTicket\" : \"").append(ticket).append("\"");
-            responseResult.append("}");
+            responseResult.append("\"proxySuccess\" : {")
+	            .append("\"proxyTicket\" : \"").append(ticket).append("\"")
+	            .append("}");
         }else{
-            responseResult.append("\"authenticationFailure\" : {");
-            responseResult.append("\"code\" : \"").append(this.code).append("\"");
-            responseResult.append(",\"description\" : \"").append(this.description).append("\"");
-            responseResult.append("}");
+            responseResult.append("\"authenticationFailure\" : {")
+	            .append("\"code\" : \"").append(this.code).append("\"")
+	            .append(",\"description\" : \"").append(this.description).append("\"")
+	            .append("}");
         }
-        responseResult.append("}");
-        responseResult.append("}");
+        responseResult.append("}").append("}");
         return responseResult.toString();
     }
     

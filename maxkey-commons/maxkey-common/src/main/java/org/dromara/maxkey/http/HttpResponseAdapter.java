@@ -15,7 +15,7 @@
  */
  
 
-package org.dromara.maxkey.web;
+package org.dromara.maxkey.http;
 
 import java.io.IOException;
 import org.dromara.maxkey.constants.ContentType;

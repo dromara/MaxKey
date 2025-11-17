@@ -15,7 +15,7 @@
  */
  
 
-package org.dromara.maxkey.util;
+package org.dromara.maxkey.http;
 
 import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.crypto.Base64Utils;

@@ -15,7 +15,7 @@
  */
  
 
-package org.dromara.maxkey.web;
+package org.dromara.maxkey.http;
 
 public class HttpResponseConstants {
     

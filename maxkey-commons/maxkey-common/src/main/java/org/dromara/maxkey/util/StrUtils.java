@@ -491,7 +491,7 @@ public final class StrUtils {
     public static ArrayList<String> sqlInjection = null;
     
     static{
-        sqlInjection = new ArrayList<String>();
+        sqlInjection = new ArrayList<>();
         sqlInjection.add("--");
         sqlInjection.add(";");
         sqlInjection.add("/");

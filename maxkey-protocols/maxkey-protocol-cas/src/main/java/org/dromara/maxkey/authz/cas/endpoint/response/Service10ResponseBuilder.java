@@ -21,7 +21,7 @@ public class Service10ResponseBuilder extends CasServiceResponse {
     
     @Override
     public String  serviceResponseBuilder() {
-        StringBuffer responseResult=new StringBuffer("");
+    	StringBuilder responseResult = new StringBuilder("");
         if(result){
             responseResult.append("yes").append("\n").append(user);
         }else{

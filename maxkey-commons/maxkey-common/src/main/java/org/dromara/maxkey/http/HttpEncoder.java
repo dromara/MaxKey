@@ -15,7 +15,7 @@
  */
  
 
-package org.dromara.maxkey.util;
+package org.dromara.maxkey.http;
 
 import java.io.*;
 import java.net.*;

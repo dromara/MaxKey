@@ -341,7 +341,7 @@ subprojects {
         //implementation group: 'com.highgo', name: 'HgdbJdbc', version: '6.2.3'
         //implementation group: 'org.liquibase', name: 'liquibase-core', version: '4.3.5'
         implementation group: 'com.alibaba', name: 'druid', version: "${druidVersion}"
-        implementation group: 'com.alibaba', name: 'druid-spring-boot-starter', version: "${druidspringbootstarterVersion}"
+        implementation group: 'com.alibaba', name: 'druid-spring-boot-3-starter', version: "${druidspringbootstarterVersion}"
         implementation group: 'redis.clients', name: 'jedis', version: "${jedisVersion}"
         implementation group: 'com.github.ben-manes.caffeine', name: 'caffeine', version: "${caffeineVersion}"
         //mybatis

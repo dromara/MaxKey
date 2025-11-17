@@ -15,7 +15,7 @@
  */
  
 
-package org.dromara.maxkey.web;
+package org.dromara.maxkey.http;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -43,7 +43,6 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.dromara.maxkey.constants.ContentType;
-import org.dromara.maxkey.util.AuthorizationHeaderUtils;
 import org.dromara.maxkey.util.JsonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

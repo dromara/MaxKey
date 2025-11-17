@@ -20,7 +20,7 @@ package org.dromara.maxkey.authz.cas.endpoint.response;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.dromara.maxkey.web.HttpResponseConstants;
+import org.dromara.maxkey.http.HttpResponseConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,12 +33,12 @@ public class CasServiceResponse {
     protected String user;
     protected String ticket;
     protected String format=HttpResponseConstants.FORMAT_TYPE.XML;
-    protected ArrayList<String >proxies=new ArrayList<String>();
+    protected ArrayList<String >proxies=new ArrayList<>();
     
-    protected HashMap<String,ArrayList<String>>casAttributes=new HashMap<String,ArrayList<String>>();
+    protected HashMap<String,ArrayList<String>>casAttributes=new HashMap<>();
     
     public CasServiceResponse() {
-        
+        super();
     }
 
     public String getCode() {
@@ -49,16 +49,18 @@ public class CasServiceResponse {
         if(casAttributes.containsKey(attr)){
             casAttributes.get(attr).add(value);
         }else{
-            ArrayList<String> newList=new ArrayList<String>();
+            ArrayList<String> newList=new ArrayList<>();
             newList.add(value);
             casAttributes.put(attr, newList);
         }
         return this;
     }
+    
     public CasServiceResponse setProxy(String proxy){
         proxies.add(proxy);
         return this;
     }
+    
     public CasServiceResponse setCode(String code) {
         this.code = code;
         return this;

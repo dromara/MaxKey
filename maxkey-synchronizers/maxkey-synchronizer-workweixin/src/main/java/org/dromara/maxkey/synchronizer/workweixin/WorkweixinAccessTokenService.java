@@ -17,9 +17,9 @@
 
 package org.dromara.maxkey.synchronizer.workweixin;
 
+import org.dromara.maxkey.http.HttpRequestAdapter;
 import org.dromara.maxkey.synchronizer.entity.AccessToken;
 import org.dromara.maxkey.util.JsonUtils;
-import org.dromara.maxkey.web.HttpRequestAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
