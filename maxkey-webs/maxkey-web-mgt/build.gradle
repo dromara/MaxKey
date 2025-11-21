@@ -1,27 +1,16 @@
 buildscript {
-	repositories {
-		maven { url 'https://maven.aliyun.com/nexus/content/groups/public/'}
-	}
 	dependencies {
 		//springboot jar
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springbootpluginVersion}")
 	}
 }
 
 plugins {
-	id 'org.springframework.boot' version "${springBootVersion}"
-	id "io.spring.dependency-management" version "1.0.11.RELEASE"
+	id 'java' //add support for Java
+	id 'org.springframework.boot' version "${springbootpluginVersion}"
 }
 
 description = "maxkey-web-mgt"
-
-//springboot jar
-apply plugin: 'io.spring.dependency-management'
-
-//add support for Java
-apply plugin: 'java'
-
-
 
 bootJar {
 	dependsOn jar
