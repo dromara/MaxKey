@@ -19,8 +19,6 @@ package org.dromara.maxkey.autoconfigure;
 
 import org.dromara.maxkey.authn.realm.jdbc.JdbcAuthenticationRealm;
 import org.dromara.maxkey.ip2location.IpLocationParser;
-import org.dromara.maxkey.password.onetimepwd.AbstractOtpAuthn;
-import org.dromara.maxkey.password.onetimepwd.impl.TimeBasedOtpAuthn;
 import org.dromara.maxkey.persistence.service.HistoryLoginService;
 import org.dromara.maxkey.persistence.service.LoginService;
 import org.dromara.maxkey.persistence.service.PasswordPolicyValidatorService;
@@ -61,20 +59,5 @@ public class MaxKeyMgtConfig  {
         logger.debug("JdbcAuthenticationRealm inited.");
         return authenticationRealm;
     }
-
-    @Bean
-    AbstractOtpAuthn timeBasedOtpAuthn() {
-        AbstractOtpAuthn tfaOtpAuthn = new TimeBasedOtpAuthn();
-        logger.debug("TimeBasedOtpAuthn inited.");
-        return tfaOtpAuthn;
-    }
-
-    /*@Bean
-    public ISynchronizerService ldapSynchronizerService() {
-        LdapSynchronizerService ldapSynchronizerService = new LdapSynchronizerService();
-        ldapSynchronizerService.setId("LDAP_11122");
-        ldapSynchronizerService.syncOrg();
-        return ldapSynchronizerService;
-    }*/
 
 }
