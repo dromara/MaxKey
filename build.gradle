@@ -143,6 +143,7 @@ subprojects {
         //implementation group: 'org.apache.commons', name: 'commons-digester3', version: "${commonsdigester3Version}"
         //implementation group: 'commons-digester', name: 'commons-digester', version: "${commonsdigesterVersion}"
         implementation group: 'commons-io', name: 'commons-io', version: "${commonsioVersion}"
+        implementation group: 'commons-logging', name: 'commons-logging', version: "${commonsloggingVersion}"
         implementation group: 'commons-lang', name: 'commons-lang', version: "${commonslangVersion}"
         implementation group: 'org.apache.commons', name: 'commons-lang3', version: "${commonslang3Version}"
         implementation group: 'commons-logging', name: 'commons-logging', version: "${commonsloggingVersion}"
