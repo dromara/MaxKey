@@ -19,8 +19,8 @@ package org.dromara.maxkey.authn.provider.scancode;
 
 import org.dromara.maxkey.authn.session.Session;
 import org.dromara.maxkey.exception.BusinessException;
+import org.dromara.maxkey.id.IdGenerator;
 import org.dromara.maxkey.persistence.cache.MomentaryService;
-import org.dromara.maxkey.util.IdGenerator;
 import org.dromara.maxkey.util.TimeJsonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

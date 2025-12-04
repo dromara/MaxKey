@@ -15,10 +15,12 @@
  */
  
 
-package org.dromara.maxkey.util;
+package org.dromara.maxkey.id;
 
 import java.util.Calendar;
 import java.util.Date;
+
+import org.dromara.maxkey.util.DateUtils;
 
 /**
  * 描述: Twitter的分布式自增ID雪花算法snowflake (Java版)

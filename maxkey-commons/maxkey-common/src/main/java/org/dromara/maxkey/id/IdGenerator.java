@@ -15,7 +15,9 @@
  */
  
 
-package org.dromara.maxkey.util;
+package org.dromara.maxkey.id;
+
+import org.dromara.maxkey.util.StringGenerator;
 
 public class IdGenerator {
 

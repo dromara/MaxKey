@@ -17,7 +17,7 @@
 
 package org.maxkey.util;
 
-import org.dromara.maxkey.util.SnowFlakeId;
+import org.dromara.maxkey.id.SnowFlakeId;
 import org.joda.time.DateTime;
 import org.junit.Test;
 

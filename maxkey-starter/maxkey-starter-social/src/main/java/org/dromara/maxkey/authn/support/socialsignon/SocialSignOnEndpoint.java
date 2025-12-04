@@ -30,7 +30,7 @@ import org.dromara.maxkey.entity.Message;
 import org.dromara.maxkey.entity.SocialsAssociate;
 import org.dromara.maxkey.entity.SocialsProvider;
 import org.dromara.maxkey.entity.idm.UserInfo;
-import org.dromara.maxkey.uuid.UUID;
+import org.dromara.maxkey.id.uuid.UUID;
 import org.dromara.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

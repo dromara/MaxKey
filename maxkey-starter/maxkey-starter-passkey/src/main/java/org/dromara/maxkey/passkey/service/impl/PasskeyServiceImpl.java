@@ -18,11 +18,11 @@ package org.dromara.maxkey.passkey.service.impl;
 
 import org.dromara.maxkey.passkey.service.PasskeyService;
 import org.dromara.maxkey.entity.passkey.UserPasskey;
+import org.dromara.maxkey.id.IdGenerator;
 import org.dromara.maxkey.entity.passkey.PasskeyChallenge;
 import org.dromara.maxkey.passkey.config.PasskeyProperties;
 import org.dromara.maxkey.persistence.service.UserPasskeyService;
 import org.dromara.maxkey.persistence.service.PasskeyChallengeService;
-import org.dromara.maxkey.util.IdGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

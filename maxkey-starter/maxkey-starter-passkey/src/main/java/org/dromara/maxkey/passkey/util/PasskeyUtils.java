@@ -27,8 +27,8 @@ import com.webauthn4j.server.ServerProperty;
 import org.apache.commons.codec.binary.Base64;
 import org.dromara.maxkey.entity.passkey.PasskeyChallenge;
 import org.dromara.maxkey.entity.passkey.UserPasskey;
+import org.dromara.maxkey.id.IdGenerator;
 import org.dromara.maxkey.passkey.config.PasskeyProperties;
-import org.dromara.maxkey.util.IdGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

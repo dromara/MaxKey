@@ -33,7 +33,7 @@
 // such third party rights.
 //
 
-package org.dromara.maxkey.uuid;
+package org.dromara.maxkey.id.uuid;
 
 import java.security.*;
 

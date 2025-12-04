@@ -15,7 +15,7 @@
  */
  
 
-package org.dromara.maxkey.uuid;
+package org.dromara.maxkey.id.uuid;
 
 /**
  * An interface representing an object that generates UUIDs.

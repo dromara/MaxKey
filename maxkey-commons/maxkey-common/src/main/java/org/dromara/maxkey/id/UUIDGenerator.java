@@ -15,7 +15,7 @@
  */
  
 
-package org.dromara.maxkey.util;
+package org.dromara.maxkey.id;
 
 import java.lang.management.ManagementFactory;
 import java.security.MessageDigest;
@@ -26,6 +26,8 @@ import java.util.Date;
 import java.util.Random;
 import java.util.TimeZone;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import org.dromara.maxkey.util.EthernetAddress;
 
 
 /**
@@ -377,7 +379,7 @@ public final class UUIDGenerator {
     }
     
 
-    public static void version(org.dromara.maxkey.util.UUIDGenerator generated){
+    public static void version(org.dromara.maxkey.id.UUIDGenerator generated){
         System.out.println("UUID            : " + generated.toString());
         System.out.println("raw bytes       : " + Arrays.toString(generated.getBytes()));
         System.out.println("process id      : " + generated.getProcessId());

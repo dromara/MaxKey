@@ -18,7 +18,7 @@
 /**
  * 
  */
-package org.dromara.maxkey.util;
+package org.dromara.maxkey.id;
 
 import java.util.Date;
 
