@@ -44,6 +44,7 @@ dependencies {
 	implementation project(":maxkey-starter:maxkey-starter-otp")
 	implementation project(":maxkey-starter:maxkey-starter-sms")
 	implementation project(":maxkey-starter:maxkey-starter-web")
+	implementation project(":maxkey-starter:maxkey-starter-web-static")
 	
 	implementation project(":maxkey-authentications:maxkey-authentication-core")
 	implementation project(":maxkey-authentications:maxkey-authentication-provider-mgt")

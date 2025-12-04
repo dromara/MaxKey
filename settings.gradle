@@ -37,6 +37,7 @@ include ('maxkey-starter:maxkey-starter-otp')
 include ('maxkey-starter:maxkey-starter-sms')
 include ('maxkey-starter:maxkey-starter-social')
 include ('maxkey-starter:maxkey-starter-web')
+include ('maxkey-starter:maxkey-starter-web-static')
 include ('maxkey-starter:maxkey-starter-passkey')
 
 //authentications

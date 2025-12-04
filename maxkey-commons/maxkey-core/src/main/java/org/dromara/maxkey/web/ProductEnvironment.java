@@ -48,9 +48,11 @@ public class ProductEnvironment {
             keyValueSet.add(key);
         }
         // out
-        for (Iterator<String> it = keyValueSet.iterator(); it.hasNext();) {
-            String key = it.next();
-            logger.trace("{}   =   {}" , key , map.get(key));
+        if(logger.isTraceEnabled()) {
+	        for (Iterator<String> it = keyValueSet.iterator(); it.hasNext();) {
+	            String key = it.next();
+	            logger.trace("{}   =   {}" , key , map.get(key));
+	        }
         }
         logger.info("APP_HOME" + "   =   {}" , PathUtils.getInstance().getAppPath());
 
@@ -84,5 +86,7 @@ public class ProductEnvironment {
         logger.info(WebConstants.DELIMITER);
         //WARN No Root logger was configured, creating default ERROR-level Root logger with Console appender
         System.setProperty("nacos.logging.default.config.enabled", "false");
+        //freemarker use slf4j
+        System.setProperty(freemarker.log.Logger.SYSTEM_PROPERTY_NAME_LOGGER_LIBRARY, freemarker.log.Logger.LIBRARY_NAME_SLF4J);
     }
 }
