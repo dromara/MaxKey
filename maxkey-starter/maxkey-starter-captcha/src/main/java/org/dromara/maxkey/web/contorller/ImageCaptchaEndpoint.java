@@ -18,6 +18,10 @@
 package org.dromara.maxkey.web.contorller;
 
 import com.google.code.kaptcha.Producer;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import java.awt.image.BufferedImage;
 import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.authn.jwt.AuthTokenService;
@@ -38,6 +42,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Crystal.Sea
  *
  */
+@Tag(name = "验证码模块")
 @RestController
 public class ImageCaptchaEndpoint {
     private static final Logger _logger = LoggerFactory.getLogger(ImageCaptchaEndpoint.class);
@@ -57,6 +62,7 @@ public class ImageCaptchaEndpoint {
      * @param request HttpServletRequest
      * @param response HttpServletResponse
      */
+    @Operation(summary = "图片验证码接口", description = "图片验证码接口",method="GET")
     @GetMapping(value={"/captcha"}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public  Message<ImageCaptcha> captchaHandleRequest( 
                 @RequestParam(value="captcha",required=false,defaultValue="text") String captchaType,

@@ -20,6 +20,8 @@ import io.swagger.v3.oas.models.info.License;
 public class SwaggerAutoConfiguration {
     static final  Logger _logger = LoggerFactory.getLogger(SwaggerAutoConfiguration.class);
     
+    static final String OFFICIAL_WEBSITE = "https://www.maxkey.top/";
+    
     @Value("${maxkey.swagger.title}")
     String title;
     
@@ -29,7 +31,7 @@ public class SwaggerAutoConfiguration {
     @Value("${maxkey.swagger.version}")
     String version;
     
-    @Value("${maxkey.swagger.enable}")
+    @Value("${springdoc.swagger-ui.enabled}")
     boolean enable;
 
     @Bean
@@ -66,20 +68,26 @@ public class SwaggerAutoConfiguration {
                 
             };
         String[] packagedToMatch = { "org.dromara.maxkey.authz" };
-        return GroupedOpenApi.builder().group(title)
+        _logger.debug("OpenApi enable {}",enable);
+        if(enable) {
+        	return GroupedOpenApi.builder().group(title)
                 .pathsToMatch(paths)
                 .packagesToScan(packagedToMatch).build();
+        }else {
+        	return null;
+        }
     }
 
     @Bean
     OpenAPI docOpenAPI() {
-        return new OpenAPI()
+        if(enable) {
+        	return new OpenAPI()
                 .info(
                     new Info()
                         .title(title)
                         .description(description)
                         .version(version)
-                        .termsOfService("https://www.maxkey.top/")
+                        .termsOfService(OFFICIAL_WEBSITE)
                         .license(
                             new License()
                                 .name("Apache License, Version 2.0")
@@ -89,7 +97,10 @@ public class SwaggerAutoConfiguration {
                 externalDocs(
                         new ExternalDocumentation()
                         .description("MaxKey.top contact support@maxsso.net")
-                        .url("https://www.maxkey.top/")
+                        .url(OFFICIAL_WEBSITE)
                 );
+        }else {
+        	return null;
+        }
     }
 }

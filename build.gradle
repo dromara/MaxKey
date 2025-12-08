@@ -216,6 +216,7 @@ subprojects {
         implementation group: 'org.springframework.retry', name: 'spring-retry', version: "${springretryVersion}"
         testImplementation group: 'org.springframework', name: 'spring-test', version: "${springVersion}"
         //spring-security
+        implementation group: 'org.springframework.security', name: 'spring-security-config', version: "${springSecurityVersion}"
         implementation group: 'org.springframework.security', name: 'spring-security-core', version: "${springSecurityVersion}"
         implementation group: 'org.springframework.security', name: 'spring-security-web', version: "${springSecurityVersion}"
         implementation group: 'org.springframework.security', name: 'spring-security-crypto', version: "${springSecurityVersion}"
