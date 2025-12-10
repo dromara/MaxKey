@@ -34,7 +34,7 @@ public class SwaggerAutoConfiguration {
     @Value("${springdoc.swagger-ui.enabled}")
     boolean enable;
 
-    @Bean
+    /*@Bean
     GlobalOpenApiCustomizer orderGlobalOpenApiCustomizer() {
         return openApi -> {
             if (openApi.getTags()!=null){
@@ -50,7 +50,7 @@ public class SwaggerAutoConfiguration {
             }
 
         };
-    }
+    }*/
 
     @Bean
     GroupedOpenApi userApi(){
@@ -67,8 +67,8 @@ public class SwaggerAutoConfiguration {
                 "/api/oauth/v20/me"
                 
             };
-        String[] packagedToMatch = { "org.dromara.maxkey.authz" };
-        _logger.debug("OpenApi enable {}",enable);
+        String[] packagedToMatch = { "org.dromara.maxkey" };
+        _logger.debug("swagger-ui enable {}",enable);
         if(enable) {
         	return GroupedOpenApi.builder().group(title)
                 .pathsToMatch(paths)
