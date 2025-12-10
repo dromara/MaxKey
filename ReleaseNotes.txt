@@ -1,4 +1,52 @@
-﻿MaxKey v 4.1.9 GA 2025/10/10
+﻿MaxKey v 4.1.10 GA 2025/12/13
+    *(MAXKEY-250601) 管理端密码修改在列表“更多”
+    *(MAXKEY-250602) Frontend Dockerfile
+    *(MAXKEY-250603) tableHasCheckedItem
+    *(MAXKEY-250604) 合并 用户编辑 机构信息和机构扩展信息
+    *(MAXKEY-250605) fix(starter-otp/MailOtpAuthn): 修复因为 ssl 配置未生效致使使用qq邮箱配置时, 选择ssl端口无法发送并报 by teratemitz 
+    *(MAXKEY-250606) 前端图片操作优化
+    *(MAXKEY-250607) #255  修复邮件发送OTP时, 邮件配置SSL未启用导致发送失败的问题
+    *(MAXKEY-250608) #ID3WQ3 修复query.in问题
+    *(MAXKEY-250609) 静态资源引入改为https 避免打包后生产环境使用报错 by link2fun 
+    *(MAXKEY-250610) 管理端增加官方网站链接菜单
+    *(MAXKEY-250611) appendScriptSrc
+    *(MAXKEY-250612) #257 fix: 接口需要禁止删除组织 Organizations#ROOT_ORG_ID 否则会导致同步器工作异常  by link2fun 
+    *(MAXKEY-250613) #258 fix: 修复机构配置修改后缓存没有清空，导致界面上看上去 修改失败了  by link2fun 
+    *(MAXKEY-250614) login loading
+    *(MAXKEY-250615) 完善企业微信同步器同步,修正 已同步的组织被删除后 后续同步无法恢复 & 代码整理  by link2fun 
+    *(MAXKEY-250616) 删除商业数据库驱动需手动引入
+    *(MAXKEY-250617) 对企业微信用户同步进行一些场景判断 , 大致应该是分成了4种情况优化  by link2fun 
+    *(MAXKEY-250618) 企业微信用户同步 增加自动禁用离职用户账号   by link2fun 
+    *(MAXKEY-250619) #260 完善企业微信同步器同步 同步组织和用户覆盖更多场景 by link2fun 
+    *(MAXKEY-250620) 修复 编辑应用 生成应用密钥无法自动回填 by link2fun 
+    *(MAXKEY-250621) cas Response & druid & org.dromara.maxkey.http优化
+    *(MAXKEY-250622) package controller
+    *(MAXKEY-250623) Gradle 9.1.0
+    *(MAXKEY-250624) OneTimePasswordAutoConfiguration优化
+    *(MAXKEY-250625) Update IdTimeSequence.java
+    *(MAXKEY-250626) RequestTokenUtils move to org.dromara.maxkey.http
+    *(MAXKEY-250627) freemarker use slf4j
+    *(MAXKEY-250628) maxkey-starter-web-static
+    *(MAXKEY-250629) 默认关闭 actuator，消除actuator 未授权访问漏洞
+    *(MAXKEY-250630) 新建 org.dromara.maxkey.id
+    *(MAXKEY-250631) sql olderVersions
+    *(MAXKEY-250632) actuator and /swagger-ui 安全性增强
+    *(MAXKEY-250633) eclipse jdt settings
+    *(MAXKEY-250634) 依赖项引用、更新和升级
+            springVersion                   6.2.14
+            springBootVersion               3.4.12
+            springSecurityVersion           6.5.7
+            springDataVersion               3.5.6
+            springkafkaVersion              3.3.11
+            springbootpluginVersion         3.4.12
+            tomcatVersion                   10.1.49
+            mybatisjpaextraVersion          3.3.8
+            jakartamailapiVersion           2.1.5
+            jakartaxmlbindapiVersion        4.0.4
+            angusmailVersion                2.0.5
+            classmateVersion                1.7.1
+            
+MaxKey v 4.1.9 GA 2025/10/10
     *(MAXKEY-250501) #248 最新镜像 启动登陆异常
     *(MAXKEY-250502) 仪表盘显示和数据优化，增加totalUsers、totalDepts、totalApps统计
     *(MAXKEY-250503) 开源之夏-官方操作手册 by xiaoyvhuv
