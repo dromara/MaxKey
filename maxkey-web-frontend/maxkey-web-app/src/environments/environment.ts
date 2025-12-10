@@ -27,8 +27,8 @@ export const environment = {
   production: false,
   useHash: true,
   api: {
-    //baseUrl: 'http://sso.maxkey.top/sign/',
-    baseUrl: 'http://localhost:9527/sign/',
+    baseUrl: 'http://sso.maxkey.top/sign/',
+    //baseUrl: 'http://localhost:9527/sign/',
     refreshTokenEnabled: true,
     refreshTokenType: 're-request'
   },
