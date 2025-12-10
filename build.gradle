@@ -62,15 +62,33 @@ allprojects {
     eclipse {
         /*设置工程字符集*/
         jdt  {
-            File prefs = file('.settings/org.eclipse.core.resources.prefs')
-            if(!prefs.getParentFile().exists()){
-            	prefs.getParentFile().mkdirs();
+            //.settings/org.eclipse.core.resources.prefs
+            File resourcesPrefs = file('.settings/org.eclipse.core.resources.prefs')
+            if(!resourcesPrefs.getParentFile().exists()){
+                resourcesPrefs.getParentFile().mkdirs();
             }
-            if (!prefs.exists()) {
-            	prefs.createNewFile();
+            if (!resourcesPrefs.exists()) {
+                resourcesPrefs.createNewFile();
             }
-            prefs.write('eclipse.preferences.version=1\n')
-            prefs.append('encoding/<project>=UTF-8') //use UTF-8
+            if(resourcesPrefs.text.indexOf('eclipse.preferences.version=1')==-1){
+                resourcesPrefs.append('eclipse.preferences.version=1\n')
+            }
+            if(resourcesPrefs.text.indexOf('encoding/<project>=UTF-8')==-1){
+                resourcesPrefs.append('encoding/<project>=UTF-8\n')//use UTF-8
+            }
+                
+            //.settings/org.eclipse.jdt.core.prefs
+            File corePrefs = file('.settings/org.eclipse.jdt.core.prefs')
+            if(!corePrefs.getParentFile().exists()){
+                corePrefs.getParentFile().mkdirs();
+            }
+            if (!corePrefs.exists()) {
+                corePrefs.createNewFile();
+            }
+            //methodParameters eclipse set -parameters
+            if(corePrefs.text.indexOf('org.eclipse.jdt.core.compiler.codegen.methodParameters=generate')==-1){
+                corePrefs.append('org.eclipse.jdt.core.compiler.codegen.methodParameters=generate\n')
+            }
         }
     }
       
