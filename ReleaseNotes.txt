@@ -1,4 +1,4 @@
-﻿MaxKey v 4.1.10 GA 2025/12/13
+﻿MaxKey v 4.1.10 2025/12/13
     *(MAXKEY-250601) 管理端密码修改在列表“更多”
     *(MAXKEY-250602) Frontend Dockerfile
     *(MAXKEY-250603) tableHasCheckedItem
@@ -32,7 +32,10 @@
     *(MAXKEY-250631) sql olderVersions
     *(MAXKEY-250632) actuator and /swagger-ui 安全性增强
     *(MAXKEY-250633) eclipse jdt settings
-    *(MAXKEY-250634) 依赖项引用、更新和升级
+    *(MAXKEY-250634) swagger参数优化及依赖升级
+    *(MAXKEY-250635) 增加SQL文件的说明
+    *(MAXKEY-250636) gradle repositories优化部分地址，增加org.gradle.caching=true
+    *(MAXKEY-250637) 依赖项引用、更新和升级
             springVersion                   6.2.14
             springBootVersion               3.4.12
             springSecurityVersion           6.5.7
