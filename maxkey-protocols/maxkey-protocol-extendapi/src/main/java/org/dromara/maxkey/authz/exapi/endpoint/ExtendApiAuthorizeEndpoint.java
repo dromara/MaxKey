@@ -53,7 +53,7 @@ public class ExtendApiAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
     @GetMapping("/authz/api/{id}")
     public ModelAndView authorize(
             HttpServletRequest request,
-            @PathVariable("id") String id,
+            @PathVariable String id,
             @CurrentUser UserInfo currentUser){
         
         ModelAndView modelAndView = new ModelAndView("authorize/redirect_sso_submit");

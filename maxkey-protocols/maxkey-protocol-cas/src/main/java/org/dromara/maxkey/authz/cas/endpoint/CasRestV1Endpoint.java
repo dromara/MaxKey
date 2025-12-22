@@ -112,7 +112,7 @@ public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
     public ResponseEntity<String> requestServiceTicket(
                 HttpServletRequest request,
                 HttpServletResponse response,
-                @PathVariable("ticketGrantingTicket") String ticketGrantingTicket,
+                @PathVariable String ticketGrantingTicket,
                 @RequestParam(value=CasConstants.PARAMETER.SERVICE) String casService,
                 @RequestParam(value=CasConstants.PARAMETER.RENEW,required=false) String renew,
                 @RequestParam(value=CasConstants.PARAMETER.REST_USERNAME,required=false) String username,
@@ -135,7 +135,7 @@ public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
     @Operation(summary = "CAS REST认证接口", description = "检查TGT状态",method="GET")
     @GetMapping(value=CasConstants.ENDPOINT.ENDPOINT_REST_TICKET_V1 + "/{ticketGrantingTicket}")
     public ResponseEntity<String> verifyTicketGrantingTicketStatus(
-                @PathVariable("ticketGrantingTicket") String ticketGrantingTicket,
+                @PathVariable String ticketGrantingTicket,
                 HttpServletRequest request,
                 HttpServletResponse response){
            try {
@@ -153,7 +153,7 @@ public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
     @Operation(summary = "CAS REST认证接口", description = "注销TGT状态",method="DELETE")
     @DeleteMapping(value=CasConstants.ENDPOINT.ENDPOINT_REST_TICKET_V1+"/{ticketGrantingTicket}")
     public ResponseEntity<String> destroyTicketGrantingTicket(
-            @PathVariable("ticketGrantingTicket") String ticketGrantingTicket,
+            @PathVariable String ticketGrantingTicket,
             HttpServletRequest request,
             HttpServletResponse response){
        try {

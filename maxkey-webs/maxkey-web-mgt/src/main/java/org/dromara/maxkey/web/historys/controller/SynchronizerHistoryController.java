@@ -55,7 +55,7 @@ public class SynchronizerHistoryController {
     @GetMapping({"/synchronizerHistory/fetch"})
     @ResponseBody
     public Message<?> fetch(
-                @ModelAttribute("historySynchronizer") HistorySynchronizer historySynchronizer,
+                @ModelAttribute HistorySynchronizer historySynchronizer,
                 @CurrentUser UserInfo currentUser){
         logger.debug("historys/synchronizerHistory/fetch/ {}",historySynchronizer);
         historySynchronizer.setInstId(currentUser.getInstId());

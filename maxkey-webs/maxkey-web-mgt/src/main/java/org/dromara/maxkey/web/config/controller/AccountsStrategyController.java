@@ -66,7 +66,7 @@ public class AccountsStrategyController {
     }
     
     @GetMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Message<AccountsStrategy> get(@PathVariable("id") String id) {
+    public Message<AccountsStrategy> get(@PathVariable String id) {
         AccountsStrategy accountsStrategy = accountsStrategyService.get(id);
         return new Message<>(accountsStrategy);
     }
@@ -95,7 +95,7 @@ public class AccountsStrategyController {
     }
     
     @DeleteMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Message<AccountsStrategy> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
+    public Message<AccountsStrategy> delete(@RequestParam List<String> ids,@CurrentUser UserInfo currentUser) {
         logger.debug("-delete  ids : {} " , ids);
         if (accountsStrategyService.deleteBatch(ids)) {
              return new Message<>(Message.SUCCESS);

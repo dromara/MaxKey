@@ -55,7 +55,7 @@ public class ConnectorHistoryController {
     @GetMapping({"/connectorHistory/fetch"})
     @ResponseBody
     public Message<?> fetch(
-            @ModelAttribute("historyConnector") HistoryConnector historyConnector,
+            @ModelAttribute HistoryConnector historyConnector,
             @CurrentUser UserInfo currentUser){
         logger.debug("historys/historyConnector/fetch/ {}",historyConnector);
         historyConnector.setInstId(currentUser.getInstId());

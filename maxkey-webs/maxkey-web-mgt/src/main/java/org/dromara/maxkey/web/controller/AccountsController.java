@@ -91,7 +91,7 @@ public class AccountsController {
     }
 
     @GetMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Message<Accounts> get(@PathVariable("id") String id) {
+    public Message<Accounts> get(@PathVariable String id) {
         Accounts account=accountsService.get(id);
         account.setRelatedPassword(PasswordReciprocal.getInstance().decoder(account.getRelatedPassword()));
         return new Message<>(account);
@@ -159,7 +159,7 @@ public class AccountsController {
     }
     
     @DeleteMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Message<Accounts> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
+    public Message<Accounts> delete(@RequestParam List<String> ids,@CurrentUser UserInfo currentUser) {
         _logger.debug("-delete ids : {} " , ids);
         
         if (accountsService.deleteBatch(ids)) {

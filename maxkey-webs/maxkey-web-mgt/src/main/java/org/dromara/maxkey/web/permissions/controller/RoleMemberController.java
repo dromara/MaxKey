@@ -185,7 +185,7 @@ public class RoleMemberController {
     
     @ResponseBody
     @RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Message<RoleMember> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
+    public Message<RoleMember> delete(@RequestParam List<String> ids,@CurrentUser UserInfo currentUser) {
         _logger.debug("-delete ids : {}" , ids);
         if (roleMemberService.deleteBatch(ids)) {
              return new Message<>(Message.SUCCESS);

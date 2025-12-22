@@ -107,14 +107,14 @@ public class UserInfoController {
     }
     
     @RequestMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Message<?> get(@PathVariable("id") String id) {
+    public Message<?> get(@PathVariable String id) {
         UserInfo userInfo=userInfoService.get(id);
         userInfo.trans();
         return new Message<UserInfo>(userInfo);
     }
     
     @RequestMapping(value = { "/getByUsername/{username}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Message<?> getByUsername(@PathVariable("username") String username) {
+    public Message<?> getByUsername(@PathVariable String username) {
         UserInfo userInfo=userInfoService.findByUsername(username);
         userInfo.trans();
         return new Message<UserInfo>(userInfo);
@@ -173,7 +173,7 @@ public class UserInfoController {
     
     @ResponseBody
     @RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Message<?> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
+    public Message<?> delete(@RequestParam List<String> ids,@CurrentUser UserInfo currentUser) {
         logger.debug("-delete  ids : {} " , ids);
         
         if (userInfoService.deleteBatch(ids)) {
@@ -273,7 +273,7 @@ public class UserInfoController {
     
     @RequestMapping(value = "/import")
     public Message<?> importingUsers(
-            @ModelAttribute("excelImportFile")ExcelImport excelImportFile,
+            @ModelAttribute ExcelImport excelImportFile,
             @CurrentUser UserInfo currentUser)  {
         if (excelImportFile.isExcelNotEmpty() ) {
             try {

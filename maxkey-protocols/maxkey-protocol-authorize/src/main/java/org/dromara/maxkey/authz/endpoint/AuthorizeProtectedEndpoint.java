@@ -50,7 +50,7 @@ public class AuthorizeProtectedEndpoint{
     
     @GetMapping("/authz/protected")
     public ModelAndView authorizeProtected(
-            @RequestParam("password") String password,
+            @RequestParam String password,
             @RequestParam("redirect_uri") String redirectUri,
             @CurrentUser UserInfo currentUser){
         if( currentUser.getAppLoginPassword().equals(PasswordReciprocal.getInstance().encode(password))){

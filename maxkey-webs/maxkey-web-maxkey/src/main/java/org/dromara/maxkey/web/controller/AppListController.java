@@ -67,7 +67,7 @@ public class AppListController {
      */
     @GetMapping(value = { "/appList" }, produces = {MediaType.APPLICATION_JSON_VALUE})
     public Message<List<UserApps>> appList(
-            @RequestParam(value = "gridList", required = false) String gridList,
+            @RequestParam(required = false) String gridList,
             @CurrentUser UserInfo currentUser) {
         userInfoService.updateGridList(gridList,currentUser);
         UserApps userApps = new UserApps();
@@ -83,8 +83,8 @@ public class AppListController {
     
     @GetMapping(value = { "/account/get" })
     public Message<Accounts> getAccount(
-            @RequestParam("credential") String credential,
-            @RequestParam("appId") String appId,
+            @RequestParam String credential,
+            @RequestParam String appId,
             @CurrentUser UserInfo currentUser) {
         Accounts account = null ;
         
@@ -106,7 +106,7 @@ public class AppListController {
 
     @PutMapping(value = { "/account/update" })
     public Message<Accounts> updateAccount(
-            @RequestParam("credential") String credential,
+            @RequestParam String credential,
             @ModelAttribute Accounts account,
             @CurrentUser UserInfo currentUser) {
         Accounts appUsers = new Accounts();

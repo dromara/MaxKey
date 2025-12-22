@@ -61,7 +61,7 @@ public class SynchronizersController {
     }
 
     @RequestMapping(value = {"/get/{id}"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Message<?> get(@PathVariable("id") String id) {
+    public Message<?> get(@PathVariable String id) {
         Synchronizers synchronizers = synchronizersService.get(id);
         synchronizers.setCredentials(PasswordReciprocal.getInstance().decoder(synchronizers.getCredentials()));
         return new Message<>(synchronizers);
@@ -97,7 +97,7 @@ public class SynchronizersController {
 
     @ResponseBody
     @RequestMapping(value = {"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Message<?> delete(@RequestParam("ids") List<String> ids) {
+    public Message<?> delete(@RequestParam List<String> ids) {
         logger.debug("-delete  ids : {} ", ids);
         if (synchronizersService.deleteBatch(ids)) {
             return new Message<Connectors>(Message.SUCCESS);
@@ -108,7 +108,7 @@ public class SynchronizersController {
 
     @ResponseBody
     @RequestMapping(value = {"/synchr"})
-    public Message<?> synchr(@RequestParam("id") String id) {
+    public Message<?> synchr(@RequestParam String id) {
         logger.debug("-sync ids : {}", id);
 
         List<String> ids = StrUtils.string2List(id, ",");

@@ -71,7 +71,7 @@ public class SessionController {
     @RequestMapping(value = { "/fetch" })
     @ResponseBody
     public Message<?> fetch(
-                @ModelAttribute("historyLogin") HistoryLogin historyLogin,
+                @ModelAttribute HistoryLogin historyLogin,
                 @CurrentUser UserInfo currentUser) {
         logger.debug("history/session/fetch {}" , historyLogin);
         historyLogin.setInstId(currentUser.getInstId());
@@ -84,7 +84,7 @@ public class SessionController {
     
     @ResponseBody
     @RequestMapping(value="/terminate")  
-    public Message<?> terminate(@RequestParam("ids") String ids,@CurrentUser UserInfo currentUser) {
+    public Message<?> terminate(@RequestParam String ids,@CurrentUser UserInfo currentUser) {
         logger.debug(ids);
         boolean isTerminated = false;
         try {

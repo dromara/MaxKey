@@ -48,7 +48,7 @@ public class ExtendApiDetailsController  extends BaseAppContorller {
     }
     
     @GetMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Message<AppsExtendApiDetails> get(@PathVariable("id") String id) {
+    public Message<AppsExtendApiDetails> get(@PathVariable String id) {
         Apps application= appsService.get(id);
         super.decoderSecret(application);
         AppsExtendApiDetails extendApiDetails=new AppsExtendApiDetails();
@@ -87,7 +87,7 @@ public class ExtendApiDetailsController  extends BaseAppContorller {
     }
     
     @DeleteMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Message<AppsExtendApiDetails> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
+    public Message<AppsExtendApiDetails> delete(@RequestParam List<String> ids,@CurrentUser UserInfo currentUser) {
         logger.debug("-delete  ids : {} " , ids);
         if (appsService.deleteBatch(ids)) {
              return new Message<>(Message.SUCCESS);

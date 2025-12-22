@@ -81,7 +81,7 @@ public class GroupsController {
     }
     
     @RequestMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Message<?> get(@PathVariable("id") String id,@CurrentUser UserInfo currentUser) {
+    public Message<?> get(@PathVariable String id,@CurrentUser UserInfo currentUser) {
         Groups group =service.get(id);
         return new Message<Groups>(group);
     }
@@ -133,7 +133,7 @@ public class GroupsController {
 
     @ResponseBody
     @RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Message<?> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
+    public Message<?> delete(@RequestParam List<String> ids,@CurrentUser UserInfo currentUser) {
         logger.debug("-delete ids : {}" , ids);
         ids.removeAll(Arrays.asList("ROLE_ALL_USER","ROLE_ADMINISTRATORS","-1"));
         if (service.deleteBatch(ids)) {

@@ -55,7 +55,7 @@ public class LoginAppsHistoryController {
     @GetMapping({"/loginAppsHistory/fetch"})
     @ResponseBody
     public Message<?> fetch(
-                @ModelAttribute("historyLoginApp") HistoryLoginApps historyLoginApp,
+                @ModelAttribute HistoryLoginApps historyLoginApp,
                 @CurrentUser UserInfo currentUser){
         logger.debug("historys/loginAppsHistory/fetch/  {}",historyLoginApp);
         historyLoginApp.setId(null);

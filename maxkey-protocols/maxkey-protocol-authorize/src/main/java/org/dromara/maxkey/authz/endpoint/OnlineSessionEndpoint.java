@@ -38,7 +38,7 @@ public class OnlineSessionEndpoint {
     
     @Operation(summary = "在线ticket验证接口", description = "")
     @GetMapping(value="/validate") 
-    public String ticketValidate(@RequestParam(value ="ticket",required = true) String ticket) {
+    public String ticketValidate(@RequestParam(required = true) String ticket) {
         Session session = sessionManager.get(ticket);
         return session == null ? "" : session.getId();
     }

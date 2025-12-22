@@ -57,7 +57,7 @@ public class JwtDetailsController  extends BaseAppContorller {
     }
     
     @RequestMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Message<?> get(@PathVariable("id") String id) {
+    public Message<?> get(@PathVariable String id) {
         AppsJwtDetails jwtDetails=jwtDetailsService.getAppDetails(id , false);
         decoderSecret(jwtDetails);
         jwtDetails.transIconBase64();
@@ -94,7 +94,7 @@ public class JwtDetailsController  extends BaseAppContorller {
     
     @ResponseBody
     @RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Message<?> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
+    public Message<?> delete(@RequestParam List<String> ids,@CurrentUser UserInfo currentUser) {
         logger.debug("-delete  ids : {} " , ids);
         if (jwtDetailsService.deleteBatch(ids)&&appsService.deleteBatch(ids)) {
              return new Message<AppsJwtDetails>(Message.SUCCESS);

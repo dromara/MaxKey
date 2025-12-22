@@ -69,7 +69,7 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
     
     @Operation(summary = "CAS页面跳转应用ID认证接口", description = "传递参数应用ID",method="GET")
     @GetMapping(CasConstants.ENDPOINT.ENDPOINT_BASE + "/{id}")
-    public ModelAndView authorize(  @PathVariable("id") String id,
+    public ModelAndView authorize(  @PathVariable String id,
                                     HttpServletRequest request,
                                     HttpServletResponse response
             ){

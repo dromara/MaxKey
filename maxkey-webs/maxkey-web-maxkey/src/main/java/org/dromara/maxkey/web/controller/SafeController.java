@@ -56,12 +56,12 @@ public class SafeController {
     public Message<?> setting(
             HttpServletRequest request,
             HttpServletResponse response,
-            @RequestParam("authnType") String authnType,
-            @RequestParam("mobile") String mobile,
-            @RequestParam("mobileVerify") String mobileVerify,
-            @RequestParam("email") String email,
-            @RequestParam("emailVerify") String emailVerify,
-            @RequestParam("theme") String theme,
+            @RequestParam String authnType,
+            @RequestParam String mobile,
+            @RequestParam String mobileVerify,
+            @RequestParam String email,
+            @RequestParam String emailVerify,
+            @RequestParam String theme,
             @CurrentUser UserInfo currentUser) {
         currentUser.setAuthnType(Integer.parseInt(authnType));
         userInfoService.updateAuthnType(currentUser);

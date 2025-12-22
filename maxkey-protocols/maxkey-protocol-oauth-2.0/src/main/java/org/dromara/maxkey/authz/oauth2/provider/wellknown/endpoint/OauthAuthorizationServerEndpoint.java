@@ -49,8 +49,8 @@ public class OauthAuthorizationServerEndpoint extends AbstractEndpoint {
                     method={RequestMethod.POST, RequestMethod.GET})
     @ResponseBody
     public OauthServerConfiguration  configurationByParam(
-            @RequestParam(value = "inst_id", required = false) String inst_id,
-            @RequestParam(value = "client_id", required = false) String client_id) {
+            @RequestParam(required = false) String inst_id,
+            @RequestParam(required = false) String client_id) {
         return configurationMetadata( inst_id,client_id,"RequestParam");
     }
     
@@ -60,8 +60,8 @@ public class OauthAuthorizationServerEndpoint extends AbstractEndpoint {
                     method={RequestMethod.POST, RequestMethod.GET})
     @ResponseBody
     public OauthServerConfiguration  configurationByPath(
-            @PathVariable("instId") String instId,
-            @PathVariable(value = "clientId", required = false) String clientId) {
+            @PathVariable String instId,
+            @PathVariable(required = false) String clientId) {
         return configurationMetadata(instId,clientId,"PathVariable");
     }
     

@@ -66,7 +66,7 @@ public class ImageCaptchaEndpoint {
     @GetMapping(value={"/captcha"}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public  Message<ImageCaptcha> captchaHandleRequest( 
                 @RequestParam(value="captcha",required=false,defaultValue="text") String captchaType,
-                @RequestParam(value="state",required=false,defaultValue="state") String state) {
+                @RequestParam(required=false,defaultValue="state") String state) {
         try {
             String kaptchaText = captchaProducer.createText();
             String kaptchaValue = kaptchaText;

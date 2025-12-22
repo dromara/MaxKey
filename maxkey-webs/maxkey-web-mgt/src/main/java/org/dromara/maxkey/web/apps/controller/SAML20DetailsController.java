@@ -80,7 +80,7 @@ public class SAML20DetailsController   extends BaseAppContorller {
     }
     
     @RequestMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Message<?> get(@PathVariable("id") String id) {
+    public Message<?> get(@PathVariable String id) {
         AppsSAML20Details saml20Details=saml20DetailsService.getAppDetails(id , false);
         decoderSecret(saml20Details);
         saml20Details.transIconBase64();
@@ -132,7 +132,7 @@ public class SAML20DetailsController   extends BaseAppContorller {
     @ResponseBody
     @RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public Message<?> delete(
-            @RequestParam("ids") List<String> ids,
+            @RequestParam List<String> ids,
             @CurrentUser UserInfo currentUser) {
         logger.debug("-delete  ids : {} " , ids);
         if (saml20DetailsService.deleteBatch(ids)&&appsService.deleteBatch(ids)) {

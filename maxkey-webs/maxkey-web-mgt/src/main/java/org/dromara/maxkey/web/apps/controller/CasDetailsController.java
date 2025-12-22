@@ -51,7 +51,7 @@ public class CasDetailsController  extends BaseAppContorller {
     }
     
     @GetMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Message<AppsCasDetails> get(@PathVariable("id") String id) {
+    public Message<AppsCasDetails> get(@PathVariable String id) {
         AppsCasDetails casDetails=casDetailsService.getAppDetails(id , false);
         super.decoderSecret(casDetails);
         casDetails.transIconBase64();
@@ -83,7 +83,7 @@ public class CasDetailsController  extends BaseAppContorller {
     }
     
     @DeleteMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Message<AppsCasDetails> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
+    public Message<AppsCasDetails> delete(@RequestParam List<String> ids,@CurrentUser UserInfo currentUser) {
         logger.debug("-delete  ids : {} " , ids);
         if (casDetailsService.deleteBatch(ids)&&appsService.deleteBatch(ids)) {
              return new Message<>(Message.SUCCESS);

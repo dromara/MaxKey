@@ -113,7 +113,7 @@ public class AccessController {
     }
     
     @DeleteMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Message<Access> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
+    public Message<Access> delete(@RequestParam List<String> ids,@CurrentUser UserInfo currentUser) {
         logger.debug("-delete ids : {}" , ids);
         if (accessService.deleteBatch(ids)) {
              return new Message<>(Message.SUCCESS);

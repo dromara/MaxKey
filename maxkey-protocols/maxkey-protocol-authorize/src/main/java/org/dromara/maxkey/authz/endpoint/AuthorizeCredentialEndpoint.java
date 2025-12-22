@@ -40,7 +40,7 @@ public class AuthorizeCredentialEndpoint extends AuthorizeBaseEndpoint{
 
     @GetMapping("/get/{appId}")
     public Message<Accounts>  get(
-            @PathVariable("appId") String appId,
+            @PathVariable String appId,
             @CurrentUser UserInfo currentUser){
         Apps app = getApp(appId);
         Accounts account = getAccounts(app,currentUser);

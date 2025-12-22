@@ -124,7 +124,7 @@ public class OneTimePasswordController {
     }
 
     @GetMapping("/verify")
-    public Message<String> verify(@RequestParam("otpCode") String otpCode, @CurrentUser UserInfo currentUser) {
+    public Message<String> verify(@RequestParam String otpCode, @CurrentUser UserInfo currentUser) {
         // 从当前用户信息中获取共享密钥
         UserInfo user = userInfoService.get(currentUser.getId());
         // 计算当前时间对应的动态密码

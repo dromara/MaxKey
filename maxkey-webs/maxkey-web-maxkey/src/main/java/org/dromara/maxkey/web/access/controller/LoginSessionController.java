@@ -68,7 +68,7 @@ public class LoginSessionController {
      */
     @GetMapping(value = { "/fetch" })
     public Message<JpaPageResults<HistoryLogin>> fetch(
-                @ModelAttribute("historyLogin") HistoryLogin historyLogin,
+                @ModelAttribute HistoryLogin historyLogin,
                 @CurrentUser UserInfo currentUser) {
         logger.debug("history/session/fetch {}" , historyLogin);
         historyLogin.setUserId(currentUser.getId());
@@ -79,7 +79,7 @@ public class LoginSessionController {
     }
 
     @DeleteMapping(value="/terminate")  
-    public Message<HistoryLogin> terminate(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
+    public Message<HistoryLogin> terminate(@RequestParam List<String> ids,@CurrentUser UserInfo currentUser) {
         logger.debug("ids {}",ids);
         boolean isTerminated = false;
         try {

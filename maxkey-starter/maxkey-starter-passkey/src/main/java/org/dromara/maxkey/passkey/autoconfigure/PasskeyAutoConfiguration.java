@@ -43,14 +43,14 @@ public class PasskeyAutoConfiguration {
     
     @Bean
     @ConditionalOnMissingBean
-    public PasskeyService passkeyService(PasskeyProperties passkeyProperties) {
+    PasskeyService passkeyService(PasskeyProperties passkeyProperties) {
         _logger.debug("Creating PasskeyService bean with properties: {}", passkeyProperties.isEnabled());
         return new PasskeyServiceImpl();
     }
     
     @Bean
     @ConditionalOnMissingBean
-    public PasskeyManager passkeyManager() {
+    PasskeyManager passkeyManager() {
         _logger.debug("Creating PasskeyManager bean");
         return new PasskeyManager();
     }

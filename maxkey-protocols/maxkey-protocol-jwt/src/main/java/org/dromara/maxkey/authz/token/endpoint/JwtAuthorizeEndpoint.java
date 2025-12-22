@@ -71,7 +71,7 @@ public class JwtAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
     public ModelAndView authorize(
             HttpServletRequest request,
             HttpServletResponse response,
-            @PathVariable("id") String id,
+            @PathVariable String id,
             @CurrentUser UserInfo currentUser){
         ModelAndView modelAndView=new ModelAndView();
         Apps  application = getApp(id);
@@ -110,7 +110,7 @@ public class JwtAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
     public String  metadata(HttpServletRequest request,
             HttpServletResponse response, 
             @PathVariable("appid") String appId, 
-            @PathVariable("mediaType") String mediaType) {
+            @PathVariable String mediaType) {
         AppsJwtDetails jwtDetails = jwtDetailsService.getAppDetails(appId , true);
         if(jwtDetails != null) {
             String jwkSetString = "";

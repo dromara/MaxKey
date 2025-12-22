@@ -113,7 +113,7 @@ public class LogoutEndpoint {
     @Operation(summary = "单点注销接口", description = "redirect_uri跳转地址",method="GET")
     @GetMapping({"/force/logout"})
      public ModelAndView forceLogout(HttpServletRequest request,
-                 @RequestParam(value = "redirect_uri",required = false) String redirect_uri){
+                 @RequestParam(required = false) String redirect_uri){
         //invalidate http session
         logger.debug("/force/logout http Session id {}",request.getSession().getId());
         request.getSession().invalidate();

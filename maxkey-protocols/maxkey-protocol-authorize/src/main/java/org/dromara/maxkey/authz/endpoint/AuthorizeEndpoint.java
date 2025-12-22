@@ -53,7 +53,7 @@ public class AuthorizeEndpoint extends AuthorizeBaseEndpoint{
     //all single sign on url
     @Operation(summary = "认证总地址接口", description = "参数应用ID，分发到不同应用的认证地址",method="GET")
     @GetMapping("/authz/{id}")
-    public ModelAndView authorize(HttpServletRequest request,@PathVariable("id") String id){
+    public ModelAndView authorize(HttpServletRequest request,@PathVariable String id){
         Apps  app = getApp(id);
         WebContext.setAttribute(WebConstants.SINGLE_SIGN_ON_APP_ID, app.getId());
         ModelAndView modelAndView = WebContext.redirect(app.getLoginUrl());

@@ -82,7 +82,7 @@ public class RolesController {
     }
     
     @GetMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Message<Roles> get(@PathVariable("id") String id,@CurrentUser UserInfo currentUser) {
+    public Message<Roles> get(@PathVariable String id,@CurrentUser UserInfo currentUser) {
         Roles role=rolesService.get(id);
         return new Message<>(role);
     }
@@ -133,7 +133,7 @@ public class RolesController {
     }
 
     @DeleteMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Message<Roles> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
+    public Message<Roles> delete(@RequestParam List<String> ids,@CurrentUser UserInfo currentUser) {
         _logger.debug("-delete ids : {}" , ids);
         ids.removeAll(Arrays.asList("ROLE_ALL_USER","ROLE_ADMINISTRATORS","-1"));
         if (rolesService.deleteBatch(ids)) {

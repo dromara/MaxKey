@@ -42,7 +42,7 @@ public class WebAuthnConfig {
      * 用于处理 WebAuthn 注册和认证的核心组件
      */
     @Bean
-    public WebAuthnManager webAuthnManager() {
+    WebAuthnManager webAuthnManager() {
         return WebAuthnManager.createNonStrictWebAuthnManager();
     }
 
@@ -51,7 +51,7 @@ public class WebAuthnConfig {
      * 用于 WebAuthn 数据的序列化和反序列化
      */
     @Bean
-    public ObjectConverter objectConverter() {
+    ObjectConverter objectConverter() {
         return new ObjectConverter();
     }
 
@@ -60,7 +60,7 @@ public class WebAuthnConfig {
      * 定义支持的算法类型
      */
     @Bean
-    public List<PublicKeyCredentialParameters> publicKeyCredentialParameters() {
+    List<PublicKeyCredentialParameters> publicKeyCredentialParameters() {
         return Arrays.asList(
             new PublicKeyCredentialParameters(PublicKeyCredentialType.PUBLIC_KEY, COSEAlgorithmIdentifier.ES256),
             new PublicKeyCredentialParameters(PublicKeyCredentialType.PUBLIC_KEY, COSEAlgorithmIdentifier.RS256),

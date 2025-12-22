@@ -60,7 +60,7 @@ public class TokenBasedDetailsController  extends BaseAppContorller {
     }
     
     @RequestMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Message<?> get(@PathVariable("id") String id) {
+    public Message<?> get(@PathVariable String id) {
         AppsTokenBasedDetails tokenBasedDetails=tokenBasedDetailsService.getAppDetails(id , false);
         decoderSecret(tokenBasedDetails);
         String algorithmKey=passwordReciprocal.decoder(tokenBasedDetails.getAlgorithmKey());
@@ -108,7 +108,7 @@ public class TokenBasedDetailsController  extends BaseAppContorller {
     @ResponseBody
     @RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public Message<?> delete(
-            @RequestParam("ids") List<String> ids,
+            @RequestParam List<String> ids,
             @CurrentUser UserInfo currentUser) {
         logger.debug("-delete  ids : {} " , ids);
         if (tokenBasedDetailsService.deleteBatch(ids)&&appsService.deleteBatch(ids)) {

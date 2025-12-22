@@ -92,7 +92,7 @@ public class OrganizationsController {
     }
     
     @RequestMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Message<?> get(@PathVariable("id") String id) {
+    public Message<?> get(@PathVariable String id) {
         Organizations org=organizationsService.get(id);
         return new Message<Organizations>(org);
     }
@@ -135,7 +135,7 @@ public class OrganizationsController {
     
     @ResponseBody
     @RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Message<?> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
+    public Message<?> delete(@RequestParam List<String> ids,@CurrentUser UserInfo currentUser) {
         logger.debug("-delete  ids : {} " , ids);
         if (ids != null && ids.contains(Organizations.ROOT_ORG_ID)) {
             return new Message<Organizations>(Message.FAIL, "根组织不允许删除");
@@ -196,7 +196,7 @@ public class OrganizationsController {
 
   @RequestMapping(value = "/import")
   public Message<?> importingOrganizations(
-          @ModelAttribute("excelImportFile")ExcelImport excelImportFile,
+          @ModelAttribute ExcelImport excelImportFile,
           @CurrentUser UserInfo currentUser)  {
       if (excelImportFile.isExcelNotEmpty() ) {
         try {

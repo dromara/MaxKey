@@ -45,8 +45,8 @@ public class OpenidConfigurationEndpoint extends AbstractEndpoint {
                     method={RequestMethod.POST, RequestMethod.GET})
     @ResponseBody
     public OpenidConfiguration  configurationByParam(
-            @RequestParam(value = "inst_id", required = false) String inst_id,
-            @RequestParam(value = "client_id", required = false) String client_id) {
+            @RequestParam(required = false) String inst_id,
+            @RequestParam(required = false) String client_id) {
         _logger.debug("Configuration By Param");
         return configurationMetadata(inst_id,client_id,"RequestParam");
     }
@@ -57,8 +57,8 @@ public class OpenidConfigurationEndpoint extends AbstractEndpoint {
                     method={RequestMethod.POST, RequestMethod.GET})
     @ResponseBody
     public OpenidConfiguration  configurationByPath(
-            @PathVariable("instId") String instId , 
-            @PathVariable(value = "clientId") String clientId) {
+            @PathVariable String instId , 
+            @PathVariable String clientId) {
         _logger.debug("Configuration By Path");
         return configurationMetadata(instId,clientId,"PathVariable");
     }

@@ -161,7 +161,7 @@ public class LoginEntryPoint {
 
 
      @RequestMapping(value={"/sendotp/{mobile}"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Message<AuthJwt> produceOtp(@PathVariable("mobile") String mobile) {
+    public Message<AuthJwt> produceOtp(@PathVariable String mobile) {
         UserInfo userInfo=userInfoService.findByEmailMobile(mobile);
         if(userInfo != null) {
             smsAuthnService.getByInstId(WebContext.getInst().getId()).produce(userInfo);

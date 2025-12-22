@@ -55,7 +55,7 @@ public class SocialSignOnListController {
     
     @ResponseBody
     @RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Message<?> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
+    public Message<?> delete(@RequestParam List<String> ids,@CurrentUser UserInfo currentUser) {
         logger.debug("-delete  ids : {} " , ids);
         if (socialsAssociatesService.deleteBatch(ids)) {
              return new Message<Apps>(Message.SUCCESS);

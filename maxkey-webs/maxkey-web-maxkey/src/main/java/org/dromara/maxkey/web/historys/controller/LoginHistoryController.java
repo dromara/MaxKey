@@ -59,7 +59,7 @@ public class LoginHistoryController {
     @RequestMapping(value={"/loginHistory/fetch"})
     @ResponseBody
     public Message<?> fetch(
-                @ModelAttribute("historyLogin") HistoryLogin historyLogin,
+                @ModelAttribute HistoryLogin historyLogin,
                 @CurrentUser UserInfo currentUser
             ){
         logger.debug("historys/loginHistory/fetch/ {}",historyLogin);

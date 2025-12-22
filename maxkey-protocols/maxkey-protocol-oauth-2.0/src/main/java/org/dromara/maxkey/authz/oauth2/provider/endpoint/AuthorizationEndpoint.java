@@ -121,7 +121,7 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
     public ModelAndView authorize(
             HttpServletRequest request,
             HttpServletResponse response,
-            @PathVariable("id") String id){
+            @PathVariable String id){
         ClientDetails  clientDetails =getClientDetailsService().loadClientByClientId(id,true);
         _logger.debug("clientDetails {}",clientDetails);
         String authorizationUrl = "";

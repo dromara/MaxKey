@@ -59,7 +59,7 @@ public class AdaptersController {
     }
     
     @GetMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Message<AppsAdapters> get(@PathVariable("id") String id) {
+    public Message<AppsAdapters> get(@PathVariable String id) {
         AppsAdapters appsAdapter=appsAdaptersService.get(id);
         return new Message<>(appsAdapter);
     }
@@ -86,7 +86,7 @@ public class AdaptersController {
     }
     
     @DeleteMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Message<AppsAdapters> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
+    public Message<AppsAdapters> delete(@RequestParam List<String> ids,@CurrentUser UserInfo currentUser) {
         logger.debug("-delete  ids : {} " , ids);
         if (appsAdaptersService.deleteBatch(ids)) {
              return new Message<>(Message.SUCCESS);

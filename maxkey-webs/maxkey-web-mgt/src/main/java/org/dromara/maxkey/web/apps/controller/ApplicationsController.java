@@ -83,7 +83,7 @@ public class ApplicationsController extends BaseAppContorller {
     }
     
     @GetMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Message<Apps> get(@PathVariable("id") String id) {
+    public Message<Apps> get(@PathVariable String id) {
         Apps apps = appsService.get(id);
         decoderSecret(apps);
         apps.transIconBase64();
@@ -115,7 +115,7 @@ public class ApplicationsController extends BaseAppContorller {
     }
     
     @DeleteMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Message<Apps> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
+    public Message<Apps> delete(@RequestParam List<String> ids,@CurrentUser UserInfo currentUser) {
         logger.debug("-delete  ids : {} " , ids);
         if (appsService.deleteBatch(ids)) {
              return new Message<>(Message.SUCCESS);
@@ -135,7 +135,7 @@ public class ApplicationsController extends BaseAppContorller {
     }
     
     @GetMapping({ "/generate/secret/{type}" })
-    public Message<String> generateSecret(@PathVariable("type") String type,@RequestParam(name="id",required=false) String id) throws JOSEException {
+    public Message<String> generateSecret(@PathVariable String type,@RequestParam(required=false) String id) throws JOSEException {
         String secret="";
         type=type.toLowerCase();
         if(type.equals("des")){

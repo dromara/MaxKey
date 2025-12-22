@@ -67,7 +67,7 @@ public class TokenBasedAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
     public ModelAndView authorize(
             HttpServletRequest request,
             HttpServletResponse response,
-            @PathVariable("id") String id,
+            @PathVariable String id,
             @CurrentUser UserInfo currentUser){
         ModelAndView modelAndView=new ModelAndView();
         

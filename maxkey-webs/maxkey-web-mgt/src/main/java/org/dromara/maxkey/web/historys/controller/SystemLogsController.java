@@ -55,7 +55,7 @@ public class SystemLogsController {
      */
     @GetMapping({"/systemLogs/fetch"})
     @ResponseBody
-    public Message<?> fetch(@ModelAttribute("historyLog") HistorySystemLogs historyLog,
+    public Message<?> fetch(@ModelAttribute HistorySystemLogs historyLog,
             @CurrentUser UserInfo currentUser){
         logger.debug("historys/historyLog/fetch {} ",historyLog);
         historyLog.setInstId(currentUser.getInstId());
