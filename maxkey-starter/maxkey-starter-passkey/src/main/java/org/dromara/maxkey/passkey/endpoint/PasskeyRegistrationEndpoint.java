@@ -156,7 +156,7 @@ public class PasskeyRegistrationEndpoint {
      */
     @GetMapping("/list/{userId}")
     public ResponseEntity<?> getUserPasskeys(
-            @PathVariable("userId") String userId,
+            @PathVariable String userId,
             HttpServletRequest httpRequest,
             HttpServletResponse httpResponse) {
         
@@ -195,8 +195,8 @@ public class PasskeyRegistrationEndpoint {
      */
     @DeleteMapping("/delete/{userId}/{credentialId}")
     public ResponseEntity<?> deletePasskey(
-            @PathVariable("userId") String userId,
-            @PathVariable("credentialId") String credentialId,
+            @PathVariable String userId,
+            @PathVariable String credentialId,
             HttpServletRequest httpRequest,
             HttpServletResponse httpResponse) {
         
@@ -240,7 +240,7 @@ public class PasskeyRegistrationEndpoint {
      */
     @GetMapping("/stats/{userId}")
     public ResponseEntity<?> getPasskeyStats(
-            @PathVariable("userId") String userId,
+            @PathVariable String userId,
             HttpServletRequest httpRequest,
             HttpServletResponse httpResponse) {
         
@@ -273,7 +273,7 @@ public class PasskeyRegistrationEndpoint {
      */
     @GetMapping("/support/{userId}")
     public ResponseEntity<?> checkPasskeySupport(
-            @PathVariable("userId") String userId,
+            @PathVariable String userId,
             HttpServletRequest httpRequest,
             HttpServletResponse httpResponse) {
         

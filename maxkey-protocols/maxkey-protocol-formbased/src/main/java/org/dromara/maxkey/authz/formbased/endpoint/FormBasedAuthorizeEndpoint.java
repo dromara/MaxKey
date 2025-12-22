@@ -62,7 +62,7 @@ public class FormBasedAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
     @RequestMapping("/authz/formbased/{id}")
     public ModelAndView authorize(
             HttpServletRequest request,
-            @PathVariable("id") String id,
+            @PathVariable String id,
             @CurrentUser UserInfo currentUser){
         
         AppsFormBasedDetails formBasedDetails = formBasedDetailsService.getAppDetails(id , true);

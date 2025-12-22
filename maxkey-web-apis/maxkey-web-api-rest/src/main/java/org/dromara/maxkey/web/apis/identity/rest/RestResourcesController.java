@@ -58,7 +58,7 @@ public class RestResourcesController {
    
     @Operation(summary = "获取应用功能权限清单", description = "获取应用功能权限清单",method="GET")
     @GetMapping("/functionList")
-    public Message<AppResourcesVo> getFunctionList(@RequestParam("userId") String userId) {
+    public Message<AppResourcesVo> getFunctionList(@RequestParam String userId) {
         logger.debug("userId {} ", userId);
         UserInfo user = userInfoService.get(userId);
         ///获取appId登录

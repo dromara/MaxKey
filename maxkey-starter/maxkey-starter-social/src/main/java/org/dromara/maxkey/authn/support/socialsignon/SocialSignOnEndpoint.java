@@ -52,7 +52,7 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
     static final  Logger _logger = LoggerFactory.getLogger(SocialSignOnEndpoint.class);
 
     @GetMapping("/authorize/{provider}")
-    public Message<Object> authorize( HttpServletRequest request,@PathVariable("provider") String provider) {
+    public Message<Object> authorize( HttpServletRequest request,@PathVariable String provider) {
         _logger.trace("SocialSignOn provider : {}" , provider);
         String instId = WebContext.getInst().getId();
         String originURL =WebContext.getContextPath(request,false);
@@ -68,7 +68,7 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
     }
 
     @GetMapping("/scanqrcode/{provider}")
-    public Message<SocialsProvider> scanQRCode(HttpServletRequest request,@PathVariable("provider") String provider) {
+    public Message<SocialsProvider> scanQRCode(HttpServletRequest request,@PathVariable String provider) {
         String instId = WebContext.getInst().getId();
         String originURL =WebContext.getContextPath(request,false);
         AuthRequest authRequest = 
@@ -100,7 +100,7 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
     }
 
     @GetMapping("/bind/{provider}")
-    public Message<AuthJwt> bind(@PathVariable("provider") String provider,
+    public Message<AuthJwt> bind(@PathVariable String provider,
                                   @CurrentUser UserInfo userInfo,
                                   HttpServletRequest request) {
          //auth call back may exception 
@@ -123,7 +123,7 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
     }
 
     @GetMapping("/callback/{provider}")
-    public Message<AuthJwt> callback(@PathVariable("provider") String provider,HttpServletRequest request) {
+    public Message<AuthJwt> callback(@PathVariable String provider,HttpServletRequest request) {
          //auth call back may exception 
         try {
             String originURL =WebContext.getContextPath(request,false);
@@ -209,7 +209,7 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
      * @return
      */
     @PostMapping("/qrcallback/{provider}/{state}")
-    public Message<AuthJwt> qrcallback(@PathVariable("provider") String provider,@PathVariable("state") String state,
+    public Message<AuthJwt> qrcallback(@PathVariable String provider,@PathVariable String state,
                                         HttpServletRequest request) {
         try {
             //判断只有maxkey扫码
