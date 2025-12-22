@@ -17,20 +17,22 @@
 
 package org.dromara.maxkey.web.api.endpoint;
 
+import org.dromara.maxkey.entity.Message;
 import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.password.onetimepwd.AbstractOtpAuthn;
 import org.dromara.maxkey.persistence.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name = "基于时间令牌验证 API文档模块")
-@Controller
+@RestController
 @RequestMapping(value={"/api/otp"})
 public class RestTimeBasedOtpController {
 
@@ -42,18 +44,15 @@ public class RestTimeBasedOtpController {
     
     @Operation(summary = "基于时间令牌验证 API文档模块", description = "传递参数username和token",method="GET")
     @ResponseBody
-    @RequestMapping(value = "/timebased/validate", method = RequestMethod.GET)
-    public boolean getUser(@RequestParam String username,
+    @GetMapping("/timebased/validate")
+    public Message<Boolean> getUser(@RequestParam String username,
                                  @RequestParam String token) {
-        
+        boolean isValidate = false;
         UserInfo validUserInfo = userInfoService.findByUsername(username);
-        if(validUserInfo != null) {
-            if(timeBasedOtpAuthn.validate(validUserInfo, token)) {
-                return true;
-            }
+        if(validUserInfo != null &&timeBasedOtpAuthn.validate(validUserInfo, token)) {
+            isValidate = true;
         }
-        
-        return false;
+        return new Message<>(isValidate);
     }
 
  
