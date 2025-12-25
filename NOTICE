@@ -1,17 +1,17 @@
-MaxKey单点登录认证系统，谐音为马克思的钥匙，寓意是最大钥匙，是业界领先的IAM-IDaas身份管理和身份认证产品；
+MaxKey单点登录认证系统，谐音为马克思的钥匙，寓意是最大钥匙，是业界领先的IAM/IDaaS身份管理和访问控制产品；
 支持OAuth 2.x/OpenID Connect、SAML 2.0、JWT、CAS、SCIM等标准协议；
-提供安全、标准和开放的用户身份管理(IDM)、身份认证(AM)、单点登录(SSO)、资源管理和权限管理等
+提供安全、标准和开放的用户身份管理(IDM)、访问管理(AM)、单点登录(SSO)、资源管理和基于角色的权限管理(RBAC)等。
 
-Maxkey Single Sign On system, which means the Maximum key, Leading-Edge IAM-IDaas Identity and Access management Product , 
-Support OAuth 2.x/OPENID CONNECT, SAML 2.0, JWT, CAS, SCIM and other standard protocols,
-Provide Secure , Standard and Open Identity management (IDM), Access management (AM), Single Sign On (SSO), RBAC permission management and Resource management.
+MaxKey Single Sign-On system, which means the Maximum key, is a leading-edge IAM/IDaaS (Identity and Access Management) product.
+Supports OAuth 2.x/OpenID Connect, SAML 2.0, JWT, CAS, SCIM and other standard protocols.
+Provides secure, standard and open Identity Management (IDM), Access Management (AM), Single Sign-On (SSO), RBAC permission management and Resource management.
 
-MaxKey声明/Maxkey Declaration
+MaxKey声明/MaxKey Declaration
 
 必须保留本作品及源码中的所有版权、专利、商标和归属声明，请遵守开源许可证，合规使用开源产品，避免法律纠纷。
-All copyrights, patents, trademarks, and ownership statements in this work and its source code must be retained. 
+All copyrights, patents, trademarks, and ownership statements in this work and its source code must be retained.
 Please comply with the open source license, use open source products in compliance, and avoid legal disputes.
 
-Copyright  http://www.maxkey.top  All Rights Reserved.
+Copyright © 2019-2024 http://www.maxkey.top All Rights Reserved.
 
-License http://www.maxkey.top/zh/about/licenses.html
+License: http://www.maxkey.top/zh/about/licenses.html
