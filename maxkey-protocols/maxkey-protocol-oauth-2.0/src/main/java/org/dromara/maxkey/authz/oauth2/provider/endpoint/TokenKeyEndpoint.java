@@ -39,8 +39,7 @@ import org.dromara.maxkey.authz.oauth2.provider.token.store.JwtAccessTokenConver
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -70,7 +69,7 @@ public class TokenKeyEndpoint {
      * @param principal the currently authenticated user if there is one
      * @return the key used to verify tokens
      */
-    @RequestMapping(value = OAuth2Constants.ENDPOINT.ENDPOINT_TOKEN_KEY, method = RequestMethod.GET)
+    @GetMapping(OAuth2Constants.ENDPOINT.ENDPOINT_TOKEN_KEY)
     @ResponseBody
     public Map<String, String> getKey(Principal principal) {
         if ((principal == null || principal instanceof AnonymousAuthenticationToken) && !converter.isPublic()) {

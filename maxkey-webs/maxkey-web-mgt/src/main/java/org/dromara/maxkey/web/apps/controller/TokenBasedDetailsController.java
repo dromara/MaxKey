@@ -32,12 +32,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -48,7 +43,7 @@ public class TokenBasedDetailsController  extends BaseAppContorller {
     @Autowired
     AppsTokenBasedDetailsService tokenBasedDetailsService;
     
-    @RequestMapping(value = { "/init" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @GetMapping(value = { "/init" }, produces = {MediaType.APPLICATION_JSON_VALUE})
     public Message<?> init() {
         AppsTokenBasedDetails tokenBasedDetails =new AppsTokenBasedDetails();
         tokenBasedDetails.setId(tokenBasedDetails.generateId());
@@ -59,7 +54,7 @@ public class TokenBasedDetailsController  extends BaseAppContorller {
         return new Message<AppsTokenBasedDetails>(tokenBasedDetails);
     }
     
-    @RequestMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @GetMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
     public Message<?> get(@PathVariable String id) {
         AppsTokenBasedDetails tokenBasedDetails=tokenBasedDetailsService.getAppDetails(id , false);
         decoderSecret(tokenBasedDetails);
@@ -70,7 +65,7 @@ public class TokenBasedDetailsController  extends BaseAppContorller {
     }
     
     @ResponseBody
-    @RequestMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @PostMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public Message<?> add(
             @RequestBody AppsTokenBasedDetails tokenBasedDetails,
             @CurrentUser UserInfo currentUser) {
@@ -89,7 +84,7 @@ public class TokenBasedDetailsController  extends BaseAppContorller {
     }
     
     @ResponseBody
-    @RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @PutMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public Message<?> update(
             @RequestBody AppsTokenBasedDetails tokenBasedDetails,
             @CurrentUser UserInfo currentUser) {
@@ -106,7 +101,7 @@ public class TokenBasedDetailsController  extends BaseAppContorller {
     }
     
     @ResponseBody
-    @RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @DeleteMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public Message<?> delete(
             @RequestParam List<String> ids,
             @CurrentUser UserInfo currentUser) {

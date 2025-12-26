@@ -36,8 +36,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -59,7 +59,7 @@ public class FormBasedAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
     FormBasedDefaultAdapter defaultFormBasedAdapter=new FormBasedDefaultAdapter();
     
     @Operation(summary = "FormBased认证地址接口", description = "参数应用ID",method="GET")
-    @RequestMapping("/authz/formbased/{id}")
+    @GetMapping("/authz/formbased/{id}")
     public ModelAndView authorize(
             HttpServletRequest request,
             @PathVariable String id,

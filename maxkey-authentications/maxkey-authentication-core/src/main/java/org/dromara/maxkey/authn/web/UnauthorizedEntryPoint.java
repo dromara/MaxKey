@@ -26,6 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.fasterxml.jackson.core.exc.StreamWriteException;
@@ -40,7 +41,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class UnauthorizedEntryPoint {
     private static final Logger _logger = LoggerFactory.getLogger(UnauthorizedEntryPoint.class);
     
-     @RequestMapping(value={"/entrypoint"})
+    @GetMapping({"/entrypoint"})
     public void entryPoint(
             HttpServletRequest request, HttpServletResponse response) 
                     throws StreamWriteException, DatabindException, IOException {

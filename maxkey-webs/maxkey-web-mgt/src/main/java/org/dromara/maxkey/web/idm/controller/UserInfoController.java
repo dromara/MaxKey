@@ -56,16 +56,7 @@ import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.MediaType;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 import com.google.common.collect.Lists;
 
 /**
@@ -86,7 +77,7 @@ public class UserInfoController {
     @Autowired
     HistorySystemLogsService systemLog;
     
-    @RequestMapping(value = { "/fetch" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @GetMapping(value = { "/fetch" }, produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
     public Message<?> fetch(@ModelAttribute UserInfo userInfo,@CurrentUser UserInfo currentUser) {
         logger.debug(""+userInfo);
@@ -96,7 +87,7 @@ public class UserInfoController {
     }
 
     @ResponseBody
-    @RequestMapping(value={"/query"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @GetMapping(value={"/query"}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public Message<?> query(@ModelAttribute UserInfo userInfo,@CurrentUser UserInfo currentUser) {
         logger.debug("-query  :" + userInfo);
         if (userInfoService.query(userInfo)!=null) {
@@ -106,14 +97,14 @@ public class UserInfoController {
         }
     }
     
-    @RequestMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @GetMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
     public Message<?> get(@PathVariable String id) {
         UserInfo userInfo=userInfoService.get(id);
         userInfo.trans();
         return new Message<UserInfo>(userInfo);
     }
     
-    @RequestMapping(value = { "/getByUsername/{username}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @GetMapping(value = { "/getByUsername/{username}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
     public Message<?> getByUsername(@PathVariable String username) {
         UserInfo userInfo=userInfoService.findByUsername(username);
         userInfo.trans();
@@ -121,7 +112,7 @@ public class UserInfoController {
     }
     
     @ResponseBody
-    @RequestMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @PostMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public Message<?> insert(@RequestBody UserInfo userInfo,@CurrentUser UserInfo currentUser) {
         logger.debug("-Add  :" + userInfo);
         userInfo.setId(WebContext.genId());
@@ -144,7 +135,7 @@ public class UserInfoController {
     }
     
     @ResponseBody
-    @RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @PutMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public Message<?> update(@RequestBody  UserInfo userInfo,@CurrentUser UserInfo currentUser) {
         logger.debug("-update  :" + userInfo);
         logger.info(userInfo.getExtraAttributeName());
@@ -172,7 +163,7 @@ public class UserInfoController {
     }
     
     @ResponseBody
-    @RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @DeleteMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public Message<?> delete(@RequestParam List<String> ids,@CurrentUser UserInfo currentUser) {
         logger.debug("-delete  ids : {} " , ids);
         
@@ -191,7 +182,7 @@ public class UserInfoController {
 
     
     @ResponseBody
-    @RequestMapping(value = "/randomPassword", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @GetMapping(value = "/randomPassword", produces = {MediaType.APPLICATION_JSON_VALUE})
     public Message<?> randomPassword() {
         return new Message<Object>(
                 Message.SUCCESS,
@@ -215,7 +206,7 @@ public class UserInfoController {
     
     
     @ResponseBody
-    @RequestMapping(value="/changePassword", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @PostMapping(value="/changePassword", produces = {MediaType.APPLICATION_JSON_VALUE})
     public Message<?> changePassword(
             @RequestBody ChangePassword changePassword,
             @CurrentUser UserInfo currentUser) {
@@ -234,7 +225,7 @@ public class UserInfoController {
         }
     }
     
-    @RequestMapping(value = { "/updateStatus" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @GetMapping(value = { "/updateStatus" }, produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
     public Message<?> updateStatus(@ModelAttribute UserInfo userInfo,@CurrentUser UserInfo currentUser) {
         logger.debug(""+userInfo);
@@ -271,7 +262,7 @@ public class UserInfoController {
         return new Message<>(Message.FAIL);
     }
     
-    @RequestMapping(value = "/import")
+    @PostMapping("/import")
     public Message<?> importingUsers(
             @ModelAttribute ExcelImport excelImportFile,
             @CurrentUser UserInfo currentUser)  {

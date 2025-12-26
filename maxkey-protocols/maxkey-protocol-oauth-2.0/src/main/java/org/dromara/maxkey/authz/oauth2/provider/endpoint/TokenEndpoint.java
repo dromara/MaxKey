@@ -49,8 +49,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -90,11 +90,10 @@ public class TokenEndpoint extends AbstractEndpoint {
      * @throws HttpRequestMethodNotSupportedException
      */
     @Operation(summary = "OAuth 2.0 获取AccessToken接口", description = "传递参数token等",method="GET")
-    @RequestMapping(value = {
+    @GetMapping({
                                 OAuth2Constants.ENDPOINT.ENDPOINT_TOKEN,
                                 OAuth2Constants.ENDPOINT.ENDPOINT_TENCENT_IOA_TOKEN
-                            }, 
-                    method=RequestMethod.GET)
+                            })
     public ResponseEntity<OAuth2AccessToken> getAccessToken(@RequestParam
     Map<String, String> parameters) throws HttpRequestMethodNotSupportedException {
         if (!allowedRequestMethods.contains(HttpMethod.GET)) {
@@ -104,11 +103,10 @@ public class TokenEndpoint extends AbstractEndpoint {
     }
     
     @Operation(summary = "OAuth 2.0 获取AccessToken接口", description = "传递参数token等",method="POST")
-    @RequestMapping(value = {
+    @PostMapping({
                                 OAuth2Constants.ENDPOINT.ENDPOINT_TOKEN,
                                 OAuth2Constants.ENDPOINT.ENDPOINT_TENCENT_IOA_TOKEN
-                            }, 
-                    method=RequestMethod.POST)
+                            })
     public ResponseEntity<OAuth2AccessToken> postAccessToken(@RequestParam
     Map<String, String> parameters) throws HttpRequestMethodNotSupportedException {
         // TokenEndpointAuthenticationFilter

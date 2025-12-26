@@ -30,9 +30,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 
 @Controller
@@ -43,7 +41,7 @@ public class SocialSignOnListController {
     @Autowired
     SocialsAssociatesService socialsAssociatesService;
     
-    @RequestMapping(value={"/fetch"})
+    @GetMapping({"/fetch"})
     @ResponseBody
     public Message<?> fetch(@CurrentUser UserInfo currentUser){
         
@@ -54,7 +52,7 @@ public class SocialSignOnListController {
     }
     
     @ResponseBody
-    @RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @DeleteMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public Message<?> delete(@RequestParam List<String> ids,@CurrentUser UserInfo currentUser) {
         logger.debug("-delete  ids : {} " , ids);
         if (socialsAssociatesService.deleteBatch(ids)) {
