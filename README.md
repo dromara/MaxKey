@@ -27,9 +27,7 @@
 
 # Overview
 
-Dromara <b>Maxkey </b> Single Sign On System is <b>Leading-Edge IAM/IDaas Identity and Access Management Product </b>.
-Its homophonic name is Marx's key, which means that it can unlock complex enterprise security needs like a master key (maximum key) and provide a simple and efficient solution. 
-The product Support OAuth 2.x/OpenID Connect, SAML 2.0, JWT, CAS, SCIM and other standard protocols, and provide <b> Secure , Standard and Open </b> Identity management (IDM), Access management (AM), Single Sign On (SSO), RBAC permission management and Resource management.
+Dromara <b>MaxKey</b> Single Sign-On System is <b>a leading-edge IAM/IDaaS (Identity and Access Management) Product</b>. Its name is a homophone of "Marx's key," symbolizing how it unlocks complex enterprise security needs like a master key while providing simple and efficient solutions. The product supports OAuth 2.x/OpenID Connect, SAML 2.0, JWT, CAS, SCIM and other standard protocols, and provides <b> Secure , Standard and Open </b> Identity Management (IDM), Access Management (AM), Single Sign-On (SSO), RBAC permission management and Resource Management.
 
 MaxKey focuses on performance, security, and ease of use in enterprise scenarios, is widely used in industries such as healthcare, finance, government, and manufacturing.
 
