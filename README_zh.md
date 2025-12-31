@@ -60,7 +60,7 @@ MaxKey <b>遵循 Apache License, Version 2.0 开源免费</b>，开源、安全�
 # 开源推荐
 - [[ JinBooks财务记账系统 ]](https://gitee.com/jinbooks/jinbooks)： 对标商业记账产品
 - [[ CeresCRM客户管理系统 ]](https://gitee.com/jinbooks/cerescrm)： 轻量级CRM客户关系管理产品
-- [[ surpass(Bootshiro)API权限开放平台 ]](https://gitee.com/tomsun28/bootshiro)： 基于RBAC的API和权限开放管理平台，通用API的自定义管理，无需编写代码
+- [[ Surpass API开放平台 ]](https://gitee.com/tomsun28/bootshiro)： 基于RBAC的API和权限开放平台，统一企业权限管理&零代码开发 API 服务
 
 # 产品特性
 
