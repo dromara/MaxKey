@@ -24,16 +24,12 @@ import org.dromara.maxkey.constants.ConstsStatus;
 import org.dromara.maxkey.crypto.password.PasswordReciprocal;
 import org.dromara.maxkey.entity.Accounts;
 import org.dromara.maxkey.entity.AccountsStrategy;
-import org.dromara.maxkey.entity.OrganizationsCast;
 import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.mapper.AccountsMapper;
 import org.dromara.maxkey.persistence.service.AccountsService;
 import org.dromara.maxkey.persistence.service.AccountsStrategyService;
 import org.dromara.maxkey.persistence.service.OrganizationsCastService;
 import org.dromara.maxkey.persistence.service.UserInfoService;
-import org.dromara.maxkey.provision.ProvisionAct;
-import org.dromara.maxkey.provision.ProvisionService;
-import org.dromara.maxkey.provision.ProvisionTopic;
 import org.dromara.mybatis.jpa.service.impl.JpaServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -47,10 +43,7 @@ import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombi
 
 @Repository
 public class AccountsServiceImpl  extends JpaServiceImpl<AccountsMapper,Accounts>  implements AccountsService{
-
-    @Autowired
-    ProvisionService provisionService;
-    
+  
     @Autowired
     UserInfoService  userInfoService;
     
@@ -63,19 +56,6 @@ public class AccountsServiceImpl  extends JpaServiceImpl<AccountsMapper,Accounts
     @Override
      public boolean insert(Accounts account) {
          if (super.insert(account)) {
-                if(provisionService.getApplicationConfig().isProvisionSupport()) {
-                    UserInfo loadUserInfo = userInfoService.findUserRelated(account.getUserId());
-                    account.setUserInfo(loadUserInfo);
-                    OrganizationsCast cast = new OrganizationsCast();
-                    cast.setProvider(account.getAppId());
-                    cast.setOrgId(loadUserInfo.getDepartmentId());
-                    account.setOrgCast(organizationsCastService.query(cast));
-                    provisionService.send(
-                            ProvisionTopic.ACCOUNT_TOPIC, 
-                            account,
-                            ProvisionAct.CREATE);
-                }
-                
                 return true;
             }
          return false;
@@ -84,19 +64,6 @@ public class AccountsServiceImpl  extends JpaServiceImpl<AccountsMapper,Accounts
     @Override
     public boolean update(Accounts account) {
          if (super.update(account)) {
-             if(provisionService.getApplicationConfig().isProvisionSupport()) {
-                    UserInfo loadUserInfo = userInfoService.findUserRelated(account.getUserId());
-                    account.setUserInfo(loadUserInfo);
-                    OrganizationsCast cast = new OrganizationsCast();
-                    cast.setProvider(account.getAppId());
-                    cast.setOrgId(loadUserInfo.getDepartmentId());
-                    account.setOrgCast(organizationsCastService.query(cast));
-                    provisionService.send(
-                            ProvisionTopic.ACCOUNT_TOPIC, 
-                            account,
-                            ProvisionAct.UPDATE);
-                }
-                
                 return true;
             }
          return false;
@@ -109,16 +76,6 @@ public class AccountsServiceImpl  extends JpaServiceImpl<AccountsMapper,Accounts
    public boolean remove(String id) {
        Accounts account = this.get(id);
        if (super.delete(id)) {
-              UserInfo loadUserInfo = null;
-              if(provisionService.getApplicationConfig().isProvisionSupport()) {
-                  loadUserInfo = userInfoService.findUserRelated(account.getUserId());
-                  account.setUserInfo(loadUserInfo);
-                  provisionService.send(
-                          ProvisionTopic.ACCOUNT_TOPIC, 
-                          account,
-                          ProvisionAct.DELETE);
-              }
-              
               return true;
           }
        return false;

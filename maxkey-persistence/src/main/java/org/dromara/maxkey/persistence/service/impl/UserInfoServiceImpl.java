@@ -31,9 +31,6 @@ import org.dromara.maxkey.persistence.mapper.UserInfoMapper;
 import org.dromara.maxkey.persistence.service.AccountsService;
 import org.dromara.maxkey.persistence.service.PasswordPolicyValidatorService;
 import org.dromara.maxkey.persistence.service.UserInfoService;
-import org.dromara.maxkey.provision.ProvisionAct;
-import org.dromara.maxkey.provision.ProvisionService;
-import org.dromara.maxkey.provision.ProvisionTopic;
 import org.dromara.maxkey.web.WebContext;
 import org.dromara.mybatis.jpa.service.impl.JpaServiceImpl;
 import org.slf4j.Logger;
@@ -60,9 +57,6 @@ public class UserInfoServiceImpl extends JpaServiceImpl<UserInfoMapper,UserInfo>
     @Autowired
     PasswordPolicyValidatorService passwordPolicyValidatorService;
     
-    @Autowired
-    ProvisionService provisionService;
-
     AccountsService accountsService;
     
     
@@ -70,14 +64,6 @@ public class UserInfoServiceImpl extends JpaServiceImpl<UserInfoMapper,UserInfo>
     public boolean insert(UserInfo userInfo) {
         this.passwordEncoder(userInfo);
         if (super.insert(userInfo)) {
-            if(provisionService.getApplicationConfig().isProvisionSupport()) {
-                UserInfo loadUserInfo = findUserRelated(userInfo.getId());
-                provisionService.send(
-                        ProvisionTopic.USERINFO_TOPIC, 
-                        loadUserInfo,
-                        ProvisionAct.CREATE);
-            }
-            
             return true;
         }
 
@@ -89,14 +75,6 @@ public class UserInfoServiceImpl extends JpaServiceImpl<UserInfoMapper,UserInfo>
             this.passwordEncoder(userInfo);
         }
         if (super.insert(userInfo)) {
-            if(provisionService.getApplicationConfig().isProvisionSupport()) {
-                UserInfo loadUserInfo = findUserRelated(userInfo.getId());
-                provisionService.send(
-                        ProvisionTopic.USERINFO_TOPIC, 
-                        loadUserInfo,
-                        ProvisionAct.CREATE);
-            }
-            
             return true;
         }
 
@@ -108,14 +86,6 @@ public class UserInfoServiceImpl extends JpaServiceImpl<UserInfoMapper,UserInfo>
         //更新用户信息，不更新密码
         userInfo.clearPassword();
         if (super.update(userInfo)) {
-            if(provisionService.getApplicationConfig().isProvisionSupport()) {
-                UserInfo loadUserInfo = findUserRelated(userInfo.getId());
-                accountUpdate(loadUserInfo);
-                provisionService.send(
-                        ProvisionTopic.USERINFO_TOPIC, 
-                        loadUserInfo,
-                        ProvisionAct.UPDATE);
-            }
             return true;
         }
         return false;
@@ -123,16 +93,7 @@ public class UserInfoServiceImpl extends JpaServiceImpl<UserInfoMapper,UserInfo>
     
     public boolean delete(UserInfo userInfo) {
         UserInfo loadUserInfo = null;
-        if(provisionService.getApplicationConfig().isProvisionSupport()) {
-            loadUserInfo = findUserRelated(userInfo.getId());
-        }
-        
         if( super.delete(userInfo.getId())){
-            provisionService.send(
-                    ProvisionTopic.USERINFO_TOPIC, 
-                    loadUserInfo, 
-                    ProvisionAct.DELETE);
-            accountUpdate(loadUserInfo);
              return true;
         }
         return false;
@@ -303,11 +264,7 @@ public class UserInfoServiceImpl extends JpaServiceImpl<UserInfoMapper,UserInfo>
 
             changePassword = passwordEncoder(changePassword);
 
-            if (getMapper().changePassword(changePassword) > 0) {
-                changePasswordProvisioning(changePassword);
-                return true;
-            }
-            return false;
+            return getMapper().changePassword(changePassword) > 0;
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -318,14 +275,6 @@ public class UserInfoServiceImpl extends JpaServiceImpl<UserInfoMapper,UserInfo>
     
     public String randomPassword() {
         return passwordPolicyValidatorService.generateRandomPassword();
-    }
-    
-    public void changePasswordProvisioning(ChangePassword changePassworded) {
-        if(changePassworded !=null && StringUtils.isNotBlank(changePassworded.getPassword())) {
-            UserInfo loadUserInfo = findByUsername(changePassworded.getUsername());
-            ChangePassword changePassword = new ChangePassword(loadUserInfo);
-            provisionService.send(ProvisionTopic.PASSWORD_TOPIC, changePassword, ProvisionAct.PASSWORD);
-        }
     }
     
     public boolean updateAppLoginPassword(UserInfo userinfo) {

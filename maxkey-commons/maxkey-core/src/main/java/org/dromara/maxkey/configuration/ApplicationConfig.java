@@ -65,9 +65,6 @@ public class ApplicationConfig {
     @Value("${server.port:8080}")
     private int port;
     
-    @Value("${maxkey.server.provision:false}")
-    private boolean provision;
-    
     @Value("${maxkey.server.persistence}") 
     int persistence;
     
@@ -192,18 +189,6 @@ public class ApplicationConfig {
     public void setDefaultUri(String defaultUri) {
         this.defaultUri = defaultUri;
     }
-
-    public boolean isProvision() {
-        return provision;
-    }
-
-    public void setProvision(boolean provision) {
-        this.provision = provision;
-    }
-
-    public boolean isProvisionSupport() {
-        return provision;
-    }
     
     public int getPersistence() {
         return persistence;
@@ -276,8 +261,6 @@ public class ApplicationConfig {
         builder.append(mgtUri);
         builder.append(", port=");
         builder.append(port);
-        builder.append(", provision=");
-        builder.append(provision);
         builder.append(", maxKeyUri=");
         builder.append(authzUri);
         builder.append("]");

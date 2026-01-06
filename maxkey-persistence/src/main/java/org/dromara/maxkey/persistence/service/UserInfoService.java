@@ -74,8 +74,6 @@ public interface UserInfoService extends IJpaService<UserInfo> {
     
     public String randomPassword() ;
     
-    public void changePasswordProvisioning(ChangePassword changePassworded) ;
-    
     public boolean updateAppLoginPassword(UserInfo userinfo) ;
     
     
