@@ -24,6 +24,11 @@ package org.dromara.maxkey.exception;
  */
 public class BusinessException extends RuntimeException {
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7960700377711971191L;
+
+	/**
      * 异常编码
      */
     private Integer code;
