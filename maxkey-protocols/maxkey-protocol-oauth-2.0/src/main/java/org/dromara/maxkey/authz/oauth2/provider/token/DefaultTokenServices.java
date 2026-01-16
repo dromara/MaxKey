@@ -94,7 +94,8 @@ public class DefaultTokenServices implements AuthorizationServerTokenServices, R
 
     private void saveVisited(OAuth2Authentication authentication, OAuth2AccessToken accessToken) {
         //存储oauth、oidc等的token,用户退出时清除
-        if(authentication.getUserAuthentication().getPrincipal() instanceof SignPrincipal principal) {
+        if(authentication.getUserAuthentication() != null 
+        		&& authentication.getUserAuthentication().getPrincipal() instanceof SignPrincipal principal) {
             _logger.debug("{}({}) , session {} access for logout clear ",
                     principal.getUsername(),principal.getUserId(),principal.getSessionId());
             String clientId = authentication.getOAuth2Request().getRequestParameters().get(OAuth2Constants.PARAMETER.CLIENT_ID);
