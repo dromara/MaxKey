@@ -16,7 +16,7 @@
  
 
 package org.maxkey.web.authorize.endpoint.cas.ticket.generator;
-import org.dromara.maxkey.authz.cas.endpoint.ticket.generator.DefaultUniqueTicketIdGenerator;
+import org.dromara.maxkey.authz.cas.ticket.generator.DefaultUniqueTicketIdGenerator;
 
 public class DefaultUniqueTicketIdGeneratorTest {
 

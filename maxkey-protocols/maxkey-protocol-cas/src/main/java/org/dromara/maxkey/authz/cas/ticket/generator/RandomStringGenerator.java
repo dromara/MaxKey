@@ -15,17 +15,36 @@
  */
  
 
-package org.maxkey.web.authorize.endpoint.cas.ticket.generator;
+package org.dromara.maxkey.authz.cas.ticket.generator;
 
-import org.dromara.maxkey.authz.cas.ticket.generator.InetAddressUtils;
+/**
+ * Interface to return a random String.
+ *
+ * @author Scott Battaglia
 
-public class InetAddressUtilsTest {
+ * @since 3.0.0
+ */
+public interface RandomStringGenerator {
 
-    public InetAddressUtilsTest() {
-    }
+    /**
+     * @return the minimum length as an int guaranteed by this generator.
+     */
+    int getMinLength();
 
-    public static void main(String[] args) {
-        System.out.println(InetAddressUtils.getCasServerHostName());
-    }
+    /**
+     * @return the maximum length as an int guaranteed by this generator.
+     */
+    int getMaxLength();
 
+    /**
+     * @return the new random string
+     */
+    String getNewString();
+
+    /**
+     * Gets the new string as bytes.
+     *
+     * @return the new random string as bytes
+     */
+    byte[] getNewStringAsBytes();
 }

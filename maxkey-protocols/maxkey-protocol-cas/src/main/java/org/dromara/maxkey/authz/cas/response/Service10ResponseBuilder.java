@@ -15,17 +15,19 @@
  */
  
 
-package org.maxkey.web.authorize.endpoint.cas.ticket.generator;
+package org.dromara.maxkey.authz.cas.response;
 
-import org.dromara.maxkey.authz.cas.ticket.generator.InetAddressUtils;
-
-public class InetAddressUtilsTest {
-
-    public InetAddressUtilsTest() {
-    }
-
-    public static void main(String[] args) {
-        System.out.println(InetAddressUtils.getCasServerHostName());
+public class Service10ResponseBuilder extends CasServiceResponse {
+    
+    @Override
+    public String  serviceResponseBuilder() {
+    	StringBuilder responseResult = new StringBuilder("");
+        if(result){
+            responseResult.append("yes").append("\n").append(user);
+        }else{
+            responseResult.append("no").append("\n").append("\n");
+        }
+        return responseResult.toString();
     }
 
 }

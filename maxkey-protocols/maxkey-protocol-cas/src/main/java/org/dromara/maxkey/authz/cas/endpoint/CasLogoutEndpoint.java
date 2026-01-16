@@ -22,7 +22,7 @@ package org.dromara.maxkey.authz.cas.endpoint;
 
 
 import org.apache.commons.lang3.StringUtils;
-import org.dromara.maxkey.authz.cas.endpoint.ticket.CasConstants;
+import org.dromara.maxkey.authz.cas.ticket.CasConstants;
 import org.dromara.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

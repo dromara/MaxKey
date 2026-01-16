@@ -15,17 +15,11 @@
  */
  
 
-package org.maxkey.web.authorize.endpoint.cas.ticket.generator;
-
-import org.dromara.maxkey.authz.cas.ticket.generator.InetAddressUtils;
-
-public class InetAddressUtilsTest {
-
-    public InetAddressUtilsTest() {
-    }
-
-    public static void main(String[] args) {
-        System.out.println(InetAddressUtils.getCasServerHostName());
-    }
-
-}
+/**
+ * 
+ */
+/**
+ * @author Crystal.Sea
+ *
+ */
+package org.dromara.maxkey.authz.cas.adapter;

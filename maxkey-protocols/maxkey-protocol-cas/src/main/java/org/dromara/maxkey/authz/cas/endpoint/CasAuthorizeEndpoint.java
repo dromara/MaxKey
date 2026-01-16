@@ -26,8 +26,8 @@ import java.util.Map.Entry;
 
 import org.dromara.maxkey.authn.session.VisitedDto;
 import org.dromara.maxkey.authn.web.AuthorizationUtils;
-import org.dromara.maxkey.authz.cas.endpoint.ticket.CasConstants;
-import org.dromara.maxkey.authz.cas.endpoint.ticket.ServiceTicketImpl;
+import org.dromara.maxkey.authz.cas.ticket.CasConstants;
+import org.dromara.maxkey.authz.cas.ticket.ServiceTicketImpl;
 import org.dromara.maxkey.authz.singlelogout.LogoutType;
 import org.dromara.maxkey.entity.apps.AppsCasDetails;
 import org.dromara.maxkey.web.WebConstants;

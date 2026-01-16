@@ -17,13 +17,13 @@
 
 package org.dromara.maxkey.autoconfigure;
 
-import org.dromara.maxkey.authz.cas.endpoint.ticket.TicketServices;
-import org.dromara.maxkey.authz.cas.endpoint.ticket.pgt.InMemoryProxyGrantingTicketServices;
-import org.dromara.maxkey.authz.cas.endpoint.ticket.pgt.RedisProxyGrantingTicketServices;
-import org.dromara.maxkey.authz.cas.endpoint.ticket.st.InMemoryTicketServices;
-import org.dromara.maxkey.authz.cas.endpoint.ticket.st.RedisTicketServices;
-import org.dromara.maxkey.authz.cas.endpoint.ticket.tgt.InMemoryTicketGrantingTicketServices;
-import org.dromara.maxkey.authz.cas.endpoint.ticket.tgt.RedisTicketGrantingTicketServices;
+import org.dromara.maxkey.authz.cas.ticket.TicketServices;
+import org.dromara.maxkey.authz.cas.ticket.pgt.InMemoryProxyGrantingTicketServices;
+import org.dromara.maxkey.authz.cas.ticket.pgt.RedisProxyGrantingTicketServices;
+import org.dromara.maxkey.authz.cas.ticket.st.InMemoryTicketServices;
+import org.dromara.maxkey.authz.cas.ticket.st.RedisTicketServices;
+import org.dromara.maxkey.authz.cas.ticket.tgt.InMemoryTicketGrantingTicketServices;
+import org.dromara.maxkey.authz.cas.ticket.tgt.RedisTicketGrantingTicketServices;
 import org.dromara.maxkey.constants.ConstsPersistence;
 import org.dromara.maxkey.persistence.redis.RedisConnectionFactory;
 import org.slf4j.Logger;

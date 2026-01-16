@@ -21,7 +21,7 @@ import org.dromara.maxkey.authn.SignPrincipal;
 import org.dromara.maxkey.authn.jwt.AuthTokenService;
 import org.dromara.maxkey.authn.session.SessionManager;
 import org.dromara.maxkey.authn.web.AuthorizationUtils;
-import org.dromara.maxkey.authz.cas.endpoint.ticket.CasConstants;
+import org.dromara.maxkey.authz.cas.ticket.CasConstants;
 import org.dromara.maxkey.authz.oauth2.common.OAuth2Constants;
 import org.dromara.maxkey.configuration.ApplicationConfig;
 import org.dromara.maxkey.crypto.Base64Utils;

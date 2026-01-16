@@ -18,7 +18,7 @@
 package org.dromara.maxkey.authz.cas.endpoint;
 
 import org.dromara.maxkey.authn.session.SessionManager;
-import org.dromara.maxkey.authz.cas.endpoint.ticket.TicketServices;
+import org.dromara.maxkey.authz.cas.ticket.TicketServices;
 import org.dromara.maxkey.authz.endpoint.AuthorizeBaseEndpoint;
 import org.dromara.maxkey.http.HttpRequestAdapter;
 import org.dromara.maxkey.http.HttpResponseAdapter;

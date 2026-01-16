@@ -15,17 +15,21 @@
  */
  
 
-package org.maxkey.web.authorize.endpoint.cas.ticket.generator;
+package org.dromara.maxkey.authz.cas.ticket.generator;
 
-import org.dromara.maxkey.authz.cas.ticket.generator.InetAddressUtils;
+/**
+ * Interface to guaranteed to return a long.
+ *
+ * @author Scott Battaglia
 
-public class InetAddressUtilsTest {
+ * @since 3.0.0
+ */
+public interface LongNumericGenerator extends NumericGenerator {
 
-    public InetAddressUtilsTest() {
-    }
-
-    public static void main(String[] args) {
-        System.out.println(InetAddressUtils.getCasServerHostName());
-    }
-
+    /**
+     * Get the next long in the sequence.
+     *
+     * @return the next long in the sequence.
+     */
+    long getNextLong();
 }

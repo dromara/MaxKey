@@ -17,8 +17,8 @@
 
 package org.maxkey.web.authorize.endpoint.response;
 
-import org.dromara.maxkey.authz.cas.endpoint.response.ProxyServiceResponseBuilder;
-import org.dromara.maxkey.authz.cas.endpoint.response.ServiceResponseBuilder;
+import org.dromara.maxkey.authz.cas.response.ProxyServiceResponseBuilder;
+import org.dromara.maxkey.authz.cas.response.ServiceResponseBuilder;
 import org.dromara.maxkey.pretty.impl.JsonPretty;
 import org.dromara.maxkey.pretty.impl.XmlPretty;
 
