@@ -14,22 +14,20 @@
  * limitations under the License.
  */
  
-
-/**
- * 
- */
 package org.dromara.maxkey.authz.cas.endpoint;
 
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.dromara.maxkey.authn.session.VisitedDto;
 import org.dromara.maxkey.authn.web.AuthorizationUtils;
 import org.dromara.maxkey.authz.cas.ticket.CasConstants;
 import org.dromara.maxkey.authz.cas.ticket.ServiceTicketImpl;
 import org.dromara.maxkey.authz.singlelogout.LogoutType;
 import org.dromara.maxkey.entity.apps.AppsCasDetails;
+import org.dromara.maxkey.http.HttpUtils;
 import org.dromara.maxkey.web.WebConstants;
 import org.dromara.maxkey.web.WebContext;
 import org.slf4j.Logger;
@@ -61,9 +59,9 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
                                  HttpServletRequest request,
                                  HttpServletResponse response
             ){
-        
-        AppsCasDetails  casDetails = casDetailsService.getAppDetails(casService , true);
-        
+    	String queryService  = HttpUtils.requestUrl(casService);
+    	_logger.debug("service {}" , queryService);
+        AppsCasDetails  casDetails = casDetailsService.getAppDetails(queryService , true);
         return buildCasModelAndView(request,response,casDetails,casService);
     }
     
@@ -90,20 +88,21 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
             return modelAndView;
         }
         
-        _logger.debug("Detail {}" , casDetails);
-        Map<String, String> parameterMap = WebContext.getRequestParameterMap(request);
-        String service = casService;
-        _logger.debug("CAS Parameter service = {}" , service);
-        if(casService.indexOf("?") >-1 ) {
-            service = casService.substring(casService.indexOf("?") + 1);
-            if(service.indexOf("=") > -1) {
-                String [] parameterValues = service.split("=");
-                if(parameterValues.length == 2) {
-                    parameterMap.put(parameterValues[0], parameterValues[1]);
-                }
-            }
-            _logger.debug("CAS service with Parameter : {}" , parameterMap);
+        _logger.debug("CAS service = {} , Detail {}" , casService,casDetails);
+        Map<String, String> parameterMap = new HashMap<>();
+        //配置参数
+        Map<String,String> serviceParamMap = HttpUtils.queryStringToMap(casDetails.getCallbackUrl());
+        if(ObjectUtils.isNotEmpty(serviceParamMap)) {
+            parameterMap.putAll(serviceParamMap);
         }
+        _logger.debug("CAS CallbackUrl Parameter : {}" , parameterMap);
+        //请求参数
+        Map<String, String> requestParameterMap = WebContext.getRequestParameterMap(request);
+        if(ObjectUtils.isNotEmpty(requestParameterMap)) {
+            parameterMap.putAll(requestParameterMap);
+        }
+        parameterMap.put(CasConstants.PARAMETER.SERVICE, casService);
+        _logger.debug("CAS service with Parameter : {}" , parameterMap);
         WebContext.setAttribute(CasConstants.PARAMETER.PARAMETER_MAP, parameterMap);
         WebContext.setAttribute(CasConstants.PARAMETER.ENDPOINT_CAS_DETAILS, casDetails);
         WebContext.setAttribute(WebConstants.SINGLE_SIGN_ON_APP_ID, casDetails.getId());
@@ -118,49 +117,35 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
                                         HttpServletResponse response){
         ModelAndView modelAndView = new ModelAndView("authorize/cas_sso_submint");
         AppsCasDetails casDetails = (AppsCasDetails)WebContext.getAttribute(CasConstants.PARAMETER.ENDPOINT_CAS_DETAILS);
-        
         ServiceTicketImpl serviceTicket = new ServiceTicketImpl(AuthorizationUtils.getAuthentication(),casDetails);
+        @SuppressWarnings("unchecked")
+        Map <String, String> parameterMap = (Map <String, String>)WebContext.getAttribute(CasConstants.PARAMETER.PARAMETER_MAP);
+        if(parameterMap == null) {
+            parameterMap = new HashMap<>();
+        }
         
-        _logger.trace("CAS start create ticket ... ");
         String ticket = ticketServices.createTicket(serviceTicket,casDetails.getExpires());
-        _logger.trace("CAS ticket {} created . " , ticket);
-        
-        StringBuffer callbackUrl = new StringBuffer(casDetails.getCallbackUrl());
-        if(casDetails.getCallbackUrl().indexOf("?")==-1) {
-            callbackUrl.append("?");
-        }
-        
-        if(callbackUrl.indexOf("&") != -1 ||callbackUrl.indexOf("=") != -1) {
-            callbackUrl.append("&");
-        }
-        
-        //append ticket
-        callbackUrl.append(CasConstants.PARAMETER.TICKET).append("=").append(ticket);
-        
-        callbackUrl.append("&");
-        //append service
-        callbackUrl.append(CasConstants.PARAMETER.SERVICE).append("=").append(casDetails.getService());
-        
-        //增加可自定义的参数
-        if(WebContext.getAttribute(CasConstants.PARAMETER.PARAMETER_MAP)!=null) {
-            @SuppressWarnings("unchecked")
-            Map <String, String> parameterMap = (Map <String, String>)WebContext.getAttribute(CasConstants.PARAMETER.PARAMETER_MAP);
-            parameterMap.remove(CasConstants.PARAMETER.TICKET);
-            parameterMap.remove(CasConstants.PARAMETER.SERVICE);
-            for (Entry<String, String> entry : parameterMap.entrySet()) {
-                callbackUrl.append("&").append(entry.getKey()).append("=").append(entry.getValue());
-            }
-        }
-        
+        _logger.trace("CAS ticket {} created for App {}  Name {} " , ticket , casDetails.getId(),casDetails.getAppName());
+
         if(casDetails.getLogoutType()==LogoutType.BACK_CHANNEL) {
-            _logger.debug("CAS LogoutType BACK_CHANNEL ... ");
             String sessionId = AuthorizationUtils.getPrincipal().getSessionId();
             VisitedDto visited = new VisitedDto(casDetails,ticket);
             sessionManager.visited(sessionId, visited);
-            _logger.debug("App id {} , name {} , CAS LogoutType BACK_CHANNEL ... " , casDetails.getId(),casDetails.getAppName());
+            _logger.debug("App CAS LogoutType BACK_CHANNEL ... ");
         }
         
-        _logger.debug("redirect to CAS Client URL {}" , callbackUrl);
+        //去除?和后面的参数
+        String callbackUri = HttpUtils.requestUrl(casDetails.getCallbackUrl());
+        //ticket
+        parameterMap.put(CasConstants.PARAMETER.TICKET, ticket);
+        //service
+        if(!parameterMap.containsKey(CasConstants.PARAMETER.SERVICE)) {
+            parameterMap.put(CasConstants.PARAMETER.SERVICE, casDetails.getService());
+        }
+        //增加可自定义的参数
+        String callbackUrl = HttpUtils.appendToUrl(callbackUri, parameterMap);
+        
+        _logger.debug("redirect to CAS URL {}" , callbackUrl);
         modelAndView.addObject("callbackUrl", callbackUrl.toString());
         return modelAndView;
     }
