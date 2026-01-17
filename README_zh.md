@@ -91,6 +91,7 @@ MaxKey <b>遵循 Apache License, Version 2.0 开源免费</b>，开源、安全�
 | 2.6     | LDAP          | OpenLDAP/ActiveDirectory/标准LDAP服务器 |
 | 2.7     | 社交账号      | 微信/QQ/微博/钉钉/Google/Facebook/其他  | 
 | 2.8     | 扫码登录      | 企业微信/钉钉/飞书扫码登录  | 
+| 2.9     | 无密码登录    | WebAuthn FIDO2/passkey  | 
 
 
 3. 提供标准的认证接口以便于其他应用集成SSO，安全的移动接入，安全的API、第三方认证和互联网认证的整合。

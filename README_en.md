@@ -88,7 +88,7 @@ Code Hosting <a href="https://github.com/dromara/MaxKey" target="_blank"><b>GitH
 | 2.6     | LDAP            | OpenLDAP/ActiveDirectory/Standard LDAP Server |
 | 2.7     | Social Account  | WeChat/QQ/ Weibo/DingTalk/Google/Facebook/other  | 
 | 2.8     | Scan QR Code    | WorkWeiXin/DingTalk/FeiShu Scan QR Code | 
-
+| 2.9     | No Password     | WebAuthn FIDO2/passkey  | 
 
 3. Standard Authentication Protocols for applications to integrate sso, secure mobile access, secure API, third-party authentication and Internet authentication.
 
