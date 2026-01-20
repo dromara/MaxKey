@@ -9,19 +9,19 @@
 </p>
 <p align="center">
     <a target="_blank" href="http://www.maxkey.top/zh/about/download.html">
-        <img src="https://img.shields.io/github/v/release/dromara/MaxKey" />
+        <img src="https://img.shields.io/github/v/release/dromara/MaxKey?style=for-the-badge" />
     </a>
     <a target="_blank" href="https://www.oracle.com/java/technologies/downloads/">
-        <img src="https://img.shields.io/badge/JDK-v17%2B-brightgreen" />
+        <img src="https://img.shields.io/badge/JDK-v17%2B-brightgreen?style=for-the-badge" />
     </a>
     <a target="_blank" href="https://www.mysql.com/">
-        <img src="https://img.shields.io/badge/MySQL-8.4.2%2B-brightgreen" />
+        <img src="https://img.shields.io/badge/MySQL-8.4.2%2B-brightgreen?style=for-the-badge" />
     </a>
     <a target="_blank" href="http://www.maxkey.top/zh/about/licenses.html">
-        <img src="https://img.shields.io/github/license/dromara/MaxKey" />
+        <img src="https://img.shields.io/github/license/dromara/MaxKey?style=for-the-badge" />
     </a>
     <a target="_blank" href="https://www.bt.cn/u/AjsXmi">
-        <img src="https://img.shields.io/badge/BT_Deploy-Install-20a53a" />
+        <img src="https://img.shields.io/badge/BT_Deploy-Install-20a53a?style=for-the-badge" />
     </a>
     
 </p>
@@ -58,9 +58,9 @@ MaxKey <b>遵循 Apache License, Version 2.0 开源免费</b>，开源、安全�
 >2) 所有应用系统能够识别和提取ticket信息
  
 # 开源推荐
-- [[ JinBooks财务记账系统 ]](https://gitee.com/jinbooks/jinbooks)： 对标商业记账产品
-- [[ CeresCRM客户管理系统 ]](https://gitee.com/jinbooks/cerescrm)： 轻量级CRM客户关系管理产品
-- [[ Surpass API开放平台 ]](https://gitee.com/tomsun28/bootshiro)： 基于RBAC的API和权限开放平台，统一企业权限管理&零代码开发 API 服务
+- [[ JinBooks财务记账系统 ]](https://gitee.com/jinbooks/jinbooks)： 对标商业财务记账产品，告别Excel手工记账，实现记账无纸化办公
+- [[ CeresCRM客户管理系统 ]](https://gitee.com/jinbooks/cerescrm)： 轻量级CRM客户关系管理产品，聚焦线索、商机、客户、合同、回款
+- [[ Surpass API权限开放平台 ]](https://gitee.com/tomsun28/bootshiro)： 基于RBAC的API和权限开放平台，统一企业权限管理&基于SQL零代码开发 API 服务
 
 # 产品特性
 

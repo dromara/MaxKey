@@ -9,19 +9,19 @@
 </p>     
 <p align="center">
     <a target="_blank" href="http://www.maxkey.top/zh/about/download.html">
-        <img src="https://img.shields.io/github/v/release/dromara/MaxKey" />
+        <img src="https://img.shields.io/github/v/release/dromara/MaxKey?style=for-the-badge" />
     </a>
     <a target="_blank" href="https://www.oracle.com/java/technologies/downloads/">
-        <img src="https://img.shields.io/badge/JDK-v17%2B-brightgreen" />
+        <img src="https://img.shields.io/badge/JDK-v17%2B-brightgreen?style=for-the-badge" />
     </a>
     <a target="_blank" href="https://www.mysql.com/">
-        <img src="https://img.shields.io/badge/MySQL-8.4.2%2B-brightgreen" />
+        <img src="https://img.shields.io/badge/MySQL-8.4.2%2B-brightgreen?style=for-the-badge" />
     </a>
     <a target="_blank" href="http://www.maxkey.top/zh/about/licenses.html">
-        <img src="https://img.shields.io/github/license/dromara/MaxKey" />
+        <img src="https://img.shields.io/github/license/dromara/MaxKey?style=for-the-badge" />
     </a>
-	<a target="_blank" href="https://www.bt.cn/u/AjsXmi">
-        <img src="https://img.shields.io/badge/BT_Deploy-Install-20a53a" />
+    <a target="_blank" href="https://www.bt.cn/u/AjsXmi">
+        <img src="https://img.shields.io/badge/BT_Deploy-Install-20a53a?style=for-the-badge" />
     </a>
 </p>
 
