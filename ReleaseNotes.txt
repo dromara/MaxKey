@@ -1,4 +1,23 @@
-﻿MaxKey v 4.1.10 2025/12/13
+﻿MaxKey v 4.1.11 2026/02/02
+    *(MAXKEY-260101) remove build_docker.gradle
+    *(MAXKEY-260102) RestTimeBasedOtpController优化
+    *(MAXKEY-260103) Unnecessary path variable definition [WEB_ANNOTATION_NAMES]
+    *(MAXKEY-260104) update NOTICE. 术语大小写不规范 by smxzk32145745 
+    *(MAXKEY-260105) README 优化 by smxzk32145745 
+    *(MAXKEY-260106) remove provision
+    *(MAXKEY-260107) redirect_uri 被Xss拦截器拦截 #IDEANO 
+    *(MAXKEY-260108) Cas Proxy分离
+    *(MAXKEY-260109) cas 目录优化
+    *(MAXKEY-260110) #IDGR9O cas登录grantingTicket生成的url会有重复参数
+    *(MAXKEY-260111) 使用client_credentials获取token报空指针 #IDK3Q0
+    *(MAXKEY-260112) 密码策略-密码过期取值范围问题修复
+    *(MAXKEY-260113) 代码优化和调整
+    *(MAXKEY-260114) 依赖项引用、更新和升级
+            springVersion                   6.2.15
+            springBootVersion               3.5.9
+            springcloudVersion              4.3.1
+            
+MaxKey v 4.1.10 2025/12/13
     *(MAXKEY-250601) 管理端密码修改在列表“更多”
     *(MAXKEY-250602) Frontend Dockerfile
     *(MAXKEY-250603) tableHasCheckedItem
