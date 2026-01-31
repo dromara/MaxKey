@@ -21,7 +21,7 @@
         <img src="https://img.shields.io/github/license/dromara/MaxKey?style=for-the-badge" />
     </a>
     <a target="_blank" href="https://www.bt.cn/u/AjsXmi">
-        <img src="https://img.shields.io/badge/BT_Deploy-Install-20a53a?style=for-the-badge" />
+        <img src="https://img.shields.io/badge/BT-Install-20a53a?style=for-the-badge" />
     </a>
     
 </p>
