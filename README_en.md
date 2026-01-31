@@ -102,7 +102,7 @@ Code Hosting <a href="https://github.com/dromara/MaxKey" target="_blank"><b>GitH
 
 8. Configured password and access policies; Supports precise IP positioning in Ip2region or GeoLite2 geographic databases, powerful security auditing, full lifecycle audit of users, traceability audit of access behavior records, security compliance audit, and security risk warning.
 
-9. Based on Java EE platform , microservice architecture, Use Spring, MySQL, Tomcat, Redis , MQ and other open source technologies, and has strong scalability.
+9. Based on Java EE platform , microservice architecture, Use Spring, MySQL, Tomcat, Redis and other open source technologies, and has strong scalability.
 
 10. Open Source, Secure, Compliance, Independent and Controllable . 
 

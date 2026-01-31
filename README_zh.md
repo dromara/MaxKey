@@ -106,7 +106,7 @@ MaxKey <b>遵循 Apache License, Version 2.0 开源免费</b>，开源、安全�
 
 8.  配置化的密码策略、访问策略；支持Ip2region或GeoLite2地理库精准IP定位 ，强大安全审计，对用户全生命周期审计、访问行为记录追溯审计、安全合规审计、安全风险预警。
 
-9. 基于Java EE平台，微服务架构，采用Spring、MySQL、Tomcat、Redis、MQ等开源技术，扩展性强。  
+9. 基于Java EE平台，微服务架构，采用Spring、MySQL、Tomcat、Redis等开源技术，扩展性强。  
 
 10. 开源、安全、合规、自主可控。 
 
