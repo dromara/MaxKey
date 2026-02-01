@@ -20,9 +20,6 @@
     <a target="_blank" href="http://www.maxkey.top/zh/about/licenses.html">
         <img src="https://img.shields.io/github/license/dromara/MaxKey?style=for-the-badge" />
     </a>
-    <a target="_blank" href="https://www.bt.cn/u/AjsXmi">
-        <img src="https://img.shields.io/badge/BT-Install-20a53a?style=for-the-badge" />
-    </a>
 </p>
 
 # Overview
@@ -131,7 +128,7 @@ App Management UI
 
 | Version    | Date   |  Download URL  |
 | --------   | :----- | :----           | 
-| v 4.1.10   | 2025/12/13   | <a href="https://www.maxkey.top/zh/about/download.html"  target="_blank">Download</a> |
+| v 4.1.11   | 2026/02/02   | <a href="https://www.maxkey.top/zh/about/download.html"  target="_blank">Download</a> |
 
 
 # Install
@@ -141,7 +138,7 @@ App Management UI
 | Windows  | <a href="https://www.maxkey.top/zh/about/download.html"  target="_blank">Document</a>  |
 | Linux    | <a href="https://www.maxkey.top/zh/about/download.html"  target="_blank">Document</a>  |
 | Docker   | <a href="https://www.maxkey.top/zh/about/download.html"  target="_blank">Document</a>  |
-| 宝塔     | <a href="https://www.maxkey.top/zh/about/download.html"  target="_blank">Document</a>  |
+| 宝塔 <a target="_blank" href="https://www.bt.cn/u/AjsXmi"> <img src="https://img.shields.io/badge/BT-Install-20a53a" /></a> | <a href="https://www.maxkey.top/zh/about/download.html"  target="_blank">Document</a>  |
 
 
 # License

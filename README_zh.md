@@ -20,9 +20,6 @@
     <a target="_blank" href="http://www.maxkey.top/zh/about/licenses.html">
         <img src="https://img.shields.io/github/license/dromara/MaxKey?style=for-the-badge" />
     </a>
-    <a target="_blank" href="https://www.bt.cn/u/AjsXmi">
-        <img src="https://img.shields.io/badge/BT-Install-20a53a?style=for-the-badge" />
-    </a>
     
 </p>
 
@@ -137,17 +134,17 @@ MaxKey <b>遵循 Apache License, Version 2.0 开源免费</b>，开源、安全�
 
 | 版本       | 日期    |  下载              | 
 | --------   | :-----  | :----              | 
-| v 4.1.10   | 2025/12/13   | <a href="https://www.maxkey.top/zh/about/download.html" target="_blank">下载</a>|
+| v 4.1.11   | 2026/02/02   | <a href="https://www.maxkey.top/zh/about/download.html" target="_blank">下载</a>|
  
  
 # 安装部署
 
-| 操作系统       | 安装手册    | 
-| --------      | :-----  |
-| Windows  | <a href="https://www.maxkey.top/zh/about/download.html"  target="_blank">链接</a>  |
-| Linux    | <a href="https://www.maxkey.top/zh/about/download.html"  target="_blank">链接</a>  |
-| Docker   | <a href="https://www.maxkey.top/zh/about/download.html"  target="_blank">链接</a>  |
-| 宝塔     | <a href="https://www.maxkey.top/zh/about/download.html"  target="_blank">链接</a>  |
+| 操作系统       | 安装手册    |
+| --------      | :-----  | 
+| Windows  | <a href="https://www.maxkey.top/zh/about/download.html"  target="_blank">链接</a>  | 
+| Linux    | <a href="https://www.maxkey.top/zh/about/download.html"  target="_blank">链接</a>  | 
+| Docker   | <a href="https://www.maxkey.top/zh/about/download.html"  target="_blank">链接</a>  | 
+| 宝塔 <a target="_blank" href="https://www.bt.cn/u/AjsXmi"> <img src="https://img.shields.io/badge/BT-Install-20a53a" /></a>| <a href="https://www.maxkey.top/zh/about/download.html"  target="_blank">链接</a>  |
  
  
 # License
