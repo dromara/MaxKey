@@ -40,7 +40,7 @@ public class RedisConnectionFactory {
 
     }
 
-    public void initConnectionFactory() {
+    public void initPool() {
         if (jedisPool == null) {
             _logger.debug("init Jedis Pool .");
             try {
@@ -67,7 +67,7 @@ public class RedisConnectionFactory {
     }
 
     public synchronized RedisConnection getConnection() {
-        initConnectionFactory();
+        initPool();
         _logger.trace("get connection .");
         RedisConnection redisConnection = new RedisConnection(this);
         _logger.trace("return connection .");
