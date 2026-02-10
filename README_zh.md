@@ -5,7 +5,7 @@
   <strong>业界领先的IAM-IDaas身份管理和认证产品</strong>
 </p>  
 <p align="center" >
-<a href="README_en.md" target="_blank"><b>English</b></a>  |  <a href="README_zh.md" target="_blank"><b>中文</b></a>
+<a href="README.md" target="_blank"><b>English</b></a>  |  <a href="README_zh.md" target="_blank"><b>中文</b></a>
 </p>
 <p align="center">
     <a target="_blank" href="http://www.maxkey.top/zh/about/download.html">

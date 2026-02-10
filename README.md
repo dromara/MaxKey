@@ -5,7 +5,7 @@
   <strong>Leading-Edge IAM/IDaas Identity and Access Management Product</strong>
 </p>     
 <p align="center" >
-<a href="README_en.md" target="_blank"><b>English</b></a>  |  <a href="README_zh.md" target="_blank"><b>中文</b></a>
+<a href="README.md" target="_blank"><b>English</b></a>  |  <a href="README_zh.md" target="_blank"><b>中文</b></a>
 </p>     
 <p align="center">
     <a target="_blank" href="http://www.maxkey.top/zh/about/download.html">
