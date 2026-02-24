@@ -335,11 +335,8 @@ subprojects {
         implementation group: 'io.projectreactor', name: 'reactor-core', version: "${reactorcoreVersion}"
         implementation group: 'eu.tekul', name: 'szxcvbn_2.9.2', version: "${szxcvbnVersion}"
         //database
-        implementation group: 'com.mysql', name: 'mysql-connector-j', version: "${mysqlconnectorjavaVersion}"
+        implementation group: 'com.mysql', name: 'mysql-connector-j', version: "${mysqlconnectorjVersion}"
         //implementation group: 'org.postgresql', name: 'postgresql', version: "${postgresqlVersion}"
-        //implementation group: 'com.dameng', name: 'DmJdbcDriver18', version:  "${dm8JdbcDriverVersion}"
-        //implementation group: 'com.highgo', name: 'HgdbJdbc', version: '6.2.3'
-        //implementation group: 'org.liquibase', name: 'liquibase-core', version: '4.3.5'
         implementation group: 'com.alibaba', name: 'druid', version: "${druidVersion}"
         implementation group: 'com.alibaba', name: 'druid-spring-boot-3-starter', version: "${druidspringbootstarterVersion}"
         implementation group: 'redis.clients', name: 'jedis', version: "${jedisVersion}"
