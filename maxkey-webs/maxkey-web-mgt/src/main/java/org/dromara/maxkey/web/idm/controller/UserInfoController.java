@@ -206,7 +206,7 @@ public class UserInfoController {
     
     
     @ResponseBody
-    @PostMapping(value="/changePassword", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @PutMapping(value="/changePassword", produces = {MediaType.APPLICATION_JSON_VALUE})
     public Message<?> changePassword(
             @RequestBody ChangePassword changePassword,
             @CurrentUser UserInfo currentUser) {
