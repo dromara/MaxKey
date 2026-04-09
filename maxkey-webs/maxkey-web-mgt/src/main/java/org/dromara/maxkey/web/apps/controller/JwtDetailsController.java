@@ -58,7 +58,7 @@ public class JwtDetailsController  extends BaseAppContorller {
     
     @RequestMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
     public Message<?> get(@PathVariable String id) {
-        AppsJwtDetails jwtDetails=jwtDetailsService.getAppDetails(id , false);
+        AppsJwtDetails jwtDetails=jwtDetailsService.get(id , false);
         decoderSecret(jwtDetails);
         jwtDetails.transIconBase64();
         return new Message<AppsJwtDetails>(jwtDetails);

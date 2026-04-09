@@ -81,7 +81,7 @@ public class SAML20DetailsController   extends BaseAppContorller {
     
     @RequestMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
     public Message<?> get(@PathVariable String id) {
-        AppsSAML20Details saml20Details=saml20DetailsService.getAppDetails(id , false);
+        AppsSAML20Details saml20Details=saml20DetailsService.get(id , false);
         decoderSecret(saml20Details);
         saml20Details.transIconBase64();
         //modelAndView.addObject("authzURI",applicationConfig.getAuthzUri());

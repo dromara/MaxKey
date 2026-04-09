@@ -37,7 +37,7 @@ public class AppsTokenBasedDetailsServiceImpl  extends JpaServiceImpl<AppsTokenB
                 .maximumSize(200000)
                 .build();
 
-    public  AppsTokenBasedDetails  getAppDetails(String id , boolean cached) {
+    public  AppsTokenBasedDetails  get(String id , boolean cached) {
         AppsTokenBasedDetails details = null;
         if(cached) {
             details = detailsCache.getIfPresent(id);

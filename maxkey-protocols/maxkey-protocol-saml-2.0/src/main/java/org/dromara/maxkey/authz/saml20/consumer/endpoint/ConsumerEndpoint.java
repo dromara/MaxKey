@@ -232,7 +232,7 @@ public class ConsumerEndpoint {
      */
     private void initCredential(String appId) throws Exception {
         // 1. 获取 sp keyStore
-        AppsSAML20Details saml20Details = saml20DetailsService.get(appId);
+        AppsSAML20Details saml20Details = saml20DetailsService.get(appId,true);
         if (saml20Details == null) {
             logger.error("appId[" + appId + "] not exists");
             throw new Exception();

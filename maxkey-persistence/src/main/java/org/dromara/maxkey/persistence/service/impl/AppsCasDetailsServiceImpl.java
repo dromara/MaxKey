@@ -37,7 +37,7 @@ public class AppsCasDetailsServiceImpl  extends JpaServiceImpl<AppsCasDetailsMap
                 .maximumSize(200000)
                 .build();
     
-    public  AppsCasDetails  getAppDetails(String id , boolean cached) {
+    public  AppsCasDetails  get(String id , boolean cached) {
         AppsCasDetails details = null;
         if(cached) {
             details = detailsCache.getIfPresent(id);

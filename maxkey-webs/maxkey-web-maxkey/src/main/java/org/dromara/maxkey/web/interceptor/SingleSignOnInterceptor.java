@@ -86,7 +86,7 @@ public class SingleSignOnInterceptor  implements AsyncHandlerInterceptor {
                 
                 String requestURI = request.getRequestURI();
                 if(requestURI.contains("/authz/cas/login")) {//for CAS service
-                    app = casDetailsService.getAppDetails(
+                    app = casDetailsService.get(
                             request.getParameter(CasConstants.PARAMETER.SERVICE), true);
                 }else if(requestURI.contains("/authz/jwt/")
                         ||requestURI.contains("/authz/api/")

@@ -57,7 +57,7 @@ public class FormBasedDetailsController  extends BaseAppContorller {
     
     @RequestMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
     public Message<?> get(@PathVariable String id) {
-        AppsFormBasedDetails formBasedDetails=formBasedDetailsService.getAppDetails(id , false);
+        AppsFormBasedDetails formBasedDetails=formBasedDetailsService.get(id , false);
         decoderSecret(formBasedDetails);
         decoderSharedPassword(formBasedDetails);
         formBasedDetails.transIconBase64();

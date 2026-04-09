@@ -61,7 +61,7 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
             ){
     	String queryService  = HttpUtils.requestUrl(casService);
     	_logger.debug("service {}" , queryService);
-        AppsCasDetails  casDetails = casDetailsService.getAppDetails(queryService , true);
+        AppsCasDetails  casDetails = casDetailsService.get(queryService , true);
         return buildCasModelAndView(request,response,casDetails,casService);
     }
     
@@ -72,7 +72,7 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
                                     HttpServletResponse response
             ){
         
-        AppsCasDetails casDetails = casDetailsService.getAppDetails(id , true);
+        AppsCasDetails casDetails = casDetailsService.get(id , true);
         
         return buildCasModelAndView(request,response,casDetails,casDetails == null ? id : casDetails.getCallbackUrl());
     }

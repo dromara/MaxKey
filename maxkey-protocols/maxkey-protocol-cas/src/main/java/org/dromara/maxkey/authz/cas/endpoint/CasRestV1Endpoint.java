@@ -121,7 +121,7 @@ public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
             TicketGrantingTicketImpl ticketGrantingTicketImpl = 
                     (TicketGrantingTicketImpl) casTicketGrantingTicketServices.get(ticketGrantingTicket);
             
-            AppsCasDetails  casDetails=casDetailsService.getAppDetails(casService , true);
+            AppsCasDetails  casDetails=casDetailsService.get(casService , true);
             
             ServiceTicketImpl serviceTicket=new ServiceTicketImpl(ticketGrantingTicketImpl.getAuthentication(),casDetails);
             String ticket = ticketServices.createTicket(serviceTicket);

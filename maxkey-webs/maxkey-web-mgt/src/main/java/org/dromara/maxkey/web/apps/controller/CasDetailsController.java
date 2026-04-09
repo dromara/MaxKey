@@ -52,7 +52,7 @@ public class CasDetailsController  extends BaseAppContorller {
     
     @GetMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
     public Message<AppsCasDetails> get(@PathVariable String id) {
-        AppsCasDetails casDetails=casDetailsService.getAppDetails(id , false);
+        AppsCasDetails casDetails=casDetailsService.get(id , false);
         super.decoderSecret(casDetails);
         casDetails.transIconBase64();
         return new Message<>(casDetails);

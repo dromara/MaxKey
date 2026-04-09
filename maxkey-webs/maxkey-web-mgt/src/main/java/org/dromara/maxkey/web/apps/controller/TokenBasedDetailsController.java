@@ -56,7 +56,7 @@ public class TokenBasedDetailsController  extends BaseAppContorller {
     
     @GetMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
     public Message<?> get(@PathVariable String id) {
-        AppsTokenBasedDetails tokenBasedDetails=tokenBasedDetailsService.getAppDetails(id , false);
+        AppsTokenBasedDetails tokenBasedDetails=tokenBasedDetailsService.get(id , false);
         decoderSecret(tokenBasedDetails);
         String algorithmKey=passwordReciprocal.decoder(tokenBasedDetails.getAlgorithmKey());
         tokenBasedDetails.setAlgorithmKey(algorithmKey);

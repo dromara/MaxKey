@@ -85,11 +85,11 @@ public class UserInfoEndpoint {
             try{
                  oAuth2Authentication = oauth20tokenServices.loadAuthentication(access_token);
                  
-                 String client_id= oAuth2Authentication.getOAuth2Request().getClientId();
+                 String client_id = oAuth2Authentication.getOAuth2Request().getClientId();
                  ClientDetails clientDetails = 
                          clientDetailsService.loadClientByClientId(client_id,true);
                  
-                 Apps app = appsService.get(client_id);
+                 Apps app = appsService.get(client_id,true);
                  
                  AbstractAuthorizeAdapter adapter;
                  if(ConstsBoolean.isTrue(app.getIsAdapter())){
