@@ -155,11 +155,14 @@
   var handleMessage = function (event) {
     var origin = event.origin;
     console.log("ding handleMessage origin "+origin);
-    if (origin.indexOf("//login.dingtalk.com")>-1) { //判断是否来自ddLogin扫码事件。
+    console.log("typeof loginTmpCode " + (typeof loginTmpCode));
+    if (typeof loginTmpCode === "string" && origin.indexOf("//login.dingtalk.com")>-1) { //判断是否来自ddLogin扫码事件。
       var loginTmpCode = event.data;
       ddredirect_uri = ddredirect_uri + '&loginTmpCode=' + loginTmpCode;
       //获取到loginTmpCode后就可以在这里构造跳转链接进行跳转了
       window.top.location.href = ddredirect_uri;
+    }else {
+        console.log("loginTmpCode " + JSON.parse(loginTmpCode));
     }
   };
   if (typeof window.addEventListener != 'undefined') {
