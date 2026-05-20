@@ -247,7 +247,7 @@ public class LoginCredential  implements Authentication {
         builder.append(", username=");
         builder.append(username);
         builder.append(", password=");
-        builder.append(password);
+        builder.append("********");
         builder.append(", state=");
         builder.append(state);
         builder.append(", mobile=");
