@@ -20,6 +20,7 @@ package org.dromara.maxkey.persistence.service.impl;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.entity.apps.Apps;
 import org.dromara.maxkey.entity.apps.UserApps;
 import org.dromara.maxkey.persistence.mapper.AppsMapper;
@@ -63,7 +64,10 @@ public class AppsServiceImpl extends JpaServiceImpl<AppsMapper,Apps> implements 
     }
     
     public Apps get(String appId, boolean cached) {
-        appId = appId.equalsIgnoreCase("maxkey_mgt") ? MGT_APP_ID : appId;
+        if(StringUtils.isNotBlank(appId) 
+        		&& appId.equalsIgnoreCase("maxkey_mgt") ) {
+        	appId = MGT_APP_ID ;
+        }
         Apps appDetails = null;
         if(cached) {
             appDetails = detailsCacheStore.getIfPresent(appId + DETAIL_SUFFIX); 
