@@ -1,6 +1,4 @@
-
 description = "maxkey-authentication-core"
-
 
 dependencies {
 	//local jars
