@@ -24,11 +24,6 @@ import org.dromara.mybatis.jpa.entity.JpaEntity;
 
 public class ChangePassword extends JpaEntity{
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = -2362608803392892403L;
-
     private String id;
     private String userId;
     private String username;

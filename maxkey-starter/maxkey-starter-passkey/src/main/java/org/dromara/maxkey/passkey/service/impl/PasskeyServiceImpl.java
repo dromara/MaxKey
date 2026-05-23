@@ -32,13 +32,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.webauthn4j.WebAuthnManager;
 import com.webauthn4j.converter.util.ObjectConverter;
 import com.webauthn4j.data.*;
-import com.webauthn4j.data.client.*;
-import com.webauthn4j.data.attestation.*;
 import com.webauthn4j.server.ServerProperty;
-import com.webauthn4j.data.client.Origin;
-import com.webauthn4j.data.client.challenge.Challenge;
-import com.webauthn4j.data.client.challenge.DefaultChallenge;
-import com.webauthn4j.converter.exception.DataConversionException;
 import com.webauthn4j.data.RegistrationData;
 import com.webauthn4j.data.RegistrationParameters;
 import com.webauthn4j.data.AuthenticationData;
@@ -55,11 +49,8 @@ import org.dromara.maxkey.passkey.util.PasskeyUtils;
 
 import java.util.*;
 import java.security.SecureRandom;
-import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.concurrent.ConcurrentHashMap;
 import org.apache.commons.codec.binary.Base64;
-import java.util.Objects;
 
 /**
  * Passkey服务实现类 - 重构版本

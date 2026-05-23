@@ -39,11 +39,6 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public class ExcelImport extends JpaEntity {
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 4665009770629818479L;
-
     @Id
     @Column
     @GeneratedValue

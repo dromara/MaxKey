@@ -107,14 +107,7 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 
     private String userApprovalPage = "forward:" + OAuth2Constants.ENDPOINT.ENDPOINT_APPROVAL_CONFIRM;
 
-    private String errorPage = "forward:" + OAuth2Constants.ENDPOINT.ENDPOINT_ERROR;
-    
     private Object implicitLock = new Object();
-
-
-    public void setErrorPage(String errorPage) {
-        this.errorPage = errorPage;
-    }
 
     @Operation(summary = "OAuth 2.0 认证接口", description = "传递参数应用ID，自动完成跳转认证拼接",method="GET")
     @GetMapping(value = {OAuth2Constants.ENDPOINT.ENDPOINT_BASE + "/{id}"})

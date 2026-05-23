@@ -335,9 +335,8 @@ public class Oauth20AutoConfiguration implements InitializingBean {
         OAuth2UserDetailsService userDetailsService =new OAuth2UserDetailsService();
         userDetailsService.setLoginRepository(loginRepository);
         
-        DaoAuthenticationProvider daoAuthenticationProvider= new DaoAuthenticationProvider();
+        DaoAuthenticationProvider daoAuthenticationProvider= new DaoAuthenticationProvider(userDetailsService);
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
-        daoAuthenticationProvider.setUserDetailsService(userDetailsService);
         ProviderManager authenticationManager = new ProviderManager(daoAuthenticationProvider);
         _logger.debug("OAuth 2 User Authentication Manager init.");
         return authenticationManager;
@@ -357,9 +356,8 @@ public class Oauth20AutoConfiguration implements InitializingBean {
         ClientDetailsUserDetailsService cientDetailsUserDetailsService = 
                 new ClientDetailsUserDetailsService(oauth20JdbcClientDetailsService);
         
-        DaoAuthenticationProvider daoAuthenticationProvider= new DaoAuthenticationProvider();
+        DaoAuthenticationProvider daoAuthenticationProvider= new DaoAuthenticationProvider(cientDetailsUserDetailsService);
         daoAuthenticationProvider.setPasswordEncoder(passwordReciprocal);
-        daoAuthenticationProvider.setUserDetailsService(cientDetailsUserDetailsService);
         ProviderManager authenticationManager = new ProviderManager(daoAuthenticationProvider);
         _logger.debug("OAuth 2 Client Authentication Manager init.");
         return authenticationManager;

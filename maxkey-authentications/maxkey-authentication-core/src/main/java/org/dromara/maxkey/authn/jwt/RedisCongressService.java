@@ -30,7 +30,7 @@ public class RedisCongressService implements CongressService {
     
     RedisConnectionFactory connectionFactory;
     
-    public static final String PREFIX = "REDIS:CONGRESS:";
+    public static final String PREFIX = "redis:congress:";
     /**
      * @param connectionFactory
      */
@@ -60,6 +60,7 @@ public class RedisCongressService implements CongressService {
 
     @Override
     public AuthJwt remove(String congress) {
+    	logger.debug("remove congress {}",congress);
         RedisConnection conn=connectionFactory.getConnection();
         AuthJwt authJwt = conn.getObject(PREFIX + congress);
         conn.delete(PREFIX+congress);

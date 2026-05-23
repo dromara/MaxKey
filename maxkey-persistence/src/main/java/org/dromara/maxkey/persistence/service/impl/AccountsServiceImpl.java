@@ -74,7 +74,6 @@ public class AccountsServiceImpl  extends JpaServiceImpl<AccountsMapper,Accounts
    }
    
    public boolean remove(String id) {
-       Accounts account = this.get(id);
        if (super.delete(id)) {
               return true;
           }

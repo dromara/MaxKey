@@ -32,11 +32,6 @@ public class UserInfoXML extends JpaEntity {
     /**
      * 
      */
-    private static final long serialVersionUID = 6942731467730249291L;
-
-    /**
-     * 
-     */
     public UserInfoXML() {
         super();
     }

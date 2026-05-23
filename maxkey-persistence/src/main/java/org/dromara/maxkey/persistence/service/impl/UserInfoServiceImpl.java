@@ -92,7 +92,6 @@ public class UserInfoServiceImpl extends JpaServiceImpl<UserInfoMapper,UserInfo>
     }
     
     public boolean delete(UserInfo userInfo) {
-        UserInfo loadUserInfo = null;
         if( super.delete(userInfo.getId())){
              return true;
         }

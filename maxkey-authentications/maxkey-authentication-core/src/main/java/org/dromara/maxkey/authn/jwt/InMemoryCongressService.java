@@ -45,6 +45,7 @@ public class InMemoryCongressService implements CongressService{
 
     @Override
     public AuthJwt remove(String congress) {
+    	logger.debug("remove congress {}",congress);
         AuthJwt authJwt = congressStore.getIfPresent(congress);    
         congressStore.invalidate(congress);
         return authJwt;
