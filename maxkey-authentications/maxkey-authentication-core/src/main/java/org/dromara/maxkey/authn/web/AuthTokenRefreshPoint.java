@@ -23,7 +23,6 @@ import org.dromara.maxkey.authn.jwt.AuthTokenService;
 import org.dromara.maxkey.authn.session.Session;
 import org.dromara.maxkey.authn.session.SessionManager;
 import org.dromara.maxkey.entity.Message;
-import org.dromara.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,9 +59,7 @@ public class AuthTokenRefreshPoint {
      @PostMapping(value={"/token/refresh"})
     public ResponseEntity<?> refresh(HttpServletRequest request,
             @RequestParam(name = "refresh_token", required = false) String refreshToken) {
-         _logger.debug("try to refresh token " );
-         _logger.trace("refresh token {} " , refreshToken);
-         if(_logger.isTraceEnabled()) {WebContext.printRequest(request);}
+         _logger.debug("try to refresh token {}",refreshToken );
          try {
              if(refreshTokenService.validateJwtToken(refreshToken)) {
                  String sessionId = refreshTokenService.resolveJWTID(refreshToken);
@@ -81,6 +78,6 @@ public class AuthTokenRefreshPoint {
          }catch(Exception e) {
              _logger.error("Refresh Exception !",e);
          }
-         return new ResponseEntity<>("Refresh Token Fail !", HttpStatus.UNAUTHORIZED);
+         return new ResponseEntity<>(new Message<>(Message.FAIL,"Refresh Token Fail !"), HttpStatus.UNAUTHORIZED);
      }
 }
