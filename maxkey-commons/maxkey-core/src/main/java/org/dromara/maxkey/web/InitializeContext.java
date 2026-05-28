@@ -131,7 +131,7 @@ public class InitializeContext extends HttpServlet {
         
         Iterator<PropertySource<?>> it =WebContext.properties.getPropertySources().iterator();
         while(it.hasNext()) {
-             logger.debug("propertySource {}" , it.next());
+             logger.trace("propertySource {}" , it.next());
         }
         
         logger.trace(WebConstants.DELIMITER);
