@@ -27,7 +27,7 @@ import com.webauthn4j.server.ServerProperty;
 import org.apache.commons.codec.binary.Base64;
 import org.dromara.maxkey.entity.passkey.PasskeyChallenge;
 import org.dromara.maxkey.entity.passkey.UserPasskey;
-import org.dromara.maxkey.id.IdGenerator;
+import org.dromara.maxkey.id.generator.IdGeneratorFactory;
 import org.dromara.maxkey.passkey.config.PasskeyProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +45,7 @@ public class PasskeyUtils {
     private static final Logger logger = LoggerFactory.getLogger(PasskeyUtils.class);
     private static final ObjectMapper objectMapper = new ObjectMapper();
     private static final SecureRandom secureRandom = new SecureRandom();
-    private static final IdGenerator idGenerator = new IdGenerator();
+    private static final IdGeneratorFactory idGeneratorFactory = new IdGeneratorFactory();
     
     /**
      * 从clientDataJSON中解析并验证origin
@@ -124,7 +124,7 @@ public class PasskeyUtils {
         secureRandom.nextBytes(challenge);
         String challengeBase64 = Base64.encodeBase64URLSafeString(challenge);
         
-        String challengeId = idGenerator.generate();
+        String challengeId = idGeneratorFactory.generate();
         PasskeyChallenge passkeyChallenge = new PasskeyChallenge(challengeId, challengeBase64, challengeType);
         passkeyChallenge.setUserId(userId);
         

@@ -19,7 +19,7 @@ package org.dromara.maxkey.authn.provider.scancode;
 
 import org.dromara.maxkey.authn.session.Session;
 import org.dromara.maxkey.exception.BusinessException;
-import org.dromara.maxkey.id.IdGenerator;
+import org.dromara.maxkey.id.generator.IdGeneratorFactory;
 import org.dromara.maxkey.persistence.cache.MomentaryService;
 import org.dromara.maxkey.util.TimeJsonUtils;
 import org.slf4j.Logger;
@@ -58,7 +58,7 @@ public class ScanCodeService {
 
 
     @Autowired
-    IdGenerator idGenerator;
+    IdGeneratorFactory idGeneratorFactory;
 
     @Autowired
     MomentaryService momentaryService;
@@ -72,7 +72,7 @@ public class ScanCodeService {
     }
 
     public String createTicket() {
-        String ticket = idGenerator.generate();
+        String ticket = idGeneratorFactory.generate();
         ScanCodeState scanCodeState = new ScanCodeState();
         scanCodeState.setState("unscanned");
 

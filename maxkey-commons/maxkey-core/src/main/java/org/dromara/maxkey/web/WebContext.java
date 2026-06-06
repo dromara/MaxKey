@@ -28,7 +28,7 @@ import java.util.Map;
 import org.apache.commons.logging.LogFactory;
 import org.dromara.maxkey.configuration.ApplicationConfig;
 import org.dromara.maxkey.entity.Institutions;
-import org.dromara.maxkey.id.IdGenerator;
+import org.dromara.maxkey.id.generator.IdGeneratorFactory;
 import org.dromara.maxkey.util.DateUtils;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -72,7 +72,7 @@ public final class WebContext {
     
     public static ArrayList<String> logoutAttributeNameList = new ArrayList<String>();
     
-    public static IdGenerator idGenerator;
+    public static IdGeneratorFactory idGeneratorFactory;
     
     static {
         sessionAttributeNameList.add(WebConstants.AUTHENTICATION);
@@ -519,14 +519,14 @@ public final class WebContext {
      * @return String
      */
     public static String genId() {
-        if(idGenerator == null) {
-            idGenerator = new IdGenerator();
+        if(idGeneratorFactory == null) {
+        	idGeneratorFactory = new IdGeneratorFactory();
         }
-        return idGenerator.generate();
+        return idGeneratorFactory.generate();
     }
 
-    public static void setIdGenerator(IdGenerator idGenerator) {
-        WebContext.idGenerator = idGenerator;
+    public static void setIdGeneratorFactory(IdGeneratorFactory idGeneratorFactory) {
+        WebContext.idGeneratorFactory = idGeneratorFactory;
     }
 
     public static ModelAndView redirect(String redirectUrl) {

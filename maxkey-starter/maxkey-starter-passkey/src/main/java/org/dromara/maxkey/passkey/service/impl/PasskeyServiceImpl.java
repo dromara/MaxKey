@@ -18,7 +18,7 @@ package org.dromara.maxkey.passkey.service.impl;
 
 import org.dromara.maxkey.passkey.service.PasskeyService;
 import org.dromara.maxkey.entity.passkey.UserPasskey;
-import org.dromara.maxkey.id.IdGenerator;
+import org.dromara.maxkey.id.generator.IdGeneratorFactory;
 import org.dromara.maxkey.entity.passkey.PasskeyChallenge;
 import org.dromara.maxkey.passkey.config.PasskeyProperties;
 import org.dromara.maxkey.persistence.service.UserPasskeyService;
@@ -86,7 +86,7 @@ public class PasskeyServiceImpl implements PasskeyService {
     private PasskeyChallengeService passkeyChallengeService;
     
     private final SecureRandom secureRandom = new SecureRandom();
-    private final IdGenerator idGenerator = new IdGenerator();
+    private final IdGeneratorFactory idGeneratorFactory = new IdGeneratorFactory();
     
     @Override
     public Map<String, Object> generateRegistrationOptions(String userId, String username, String displayName) {
@@ -357,7 +357,7 @@ public class PasskeyServiceImpl implements PasskeyService {
      */
     private UserPasskey createUserPasskey(String userId, String credentialIdBase64, RegistrationData registrationData) {
         UserPasskey userPasskey = new UserPasskey();
-        userPasskey.setId(idGenerator.generate());
+        userPasskey.setId(idGeneratorFactory.generate());
         userPasskey.setUserId(userId);
         userPasskey.setCredentialId(credentialIdBase64);
         
@@ -396,7 +396,7 @@ public class PasskeyServiceImpl implements PasskeyService {
             String challengeBase64 = Base64.encodeBase64URLSafeString(challenge);
             
             // 保存挑战信息 - 仅支持无用户名登录
-            String challengeId = new IdGenerator().generate();
+            String challengeId = new IdGeneratorFactory().generate();
             PasskeyChallenge passkeyChallenge = new PasskeyChallenge(challengeId, challengeBase64, "AUTHENTICATION");
             passkeyChallenge.setUserId(null); // 无用户名登录，userId 设为 null
             passkeyChallenge.setInstId("1");

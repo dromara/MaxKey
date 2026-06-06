@@ -19,7 +19,7 @@ package org.dromara.maxkey.passkey.endpoint;
 import org.dromara.maxkey.passkey.manager.PasskeyManager;
 import org.dromara.maxkey.entity.Message;
 import org.dromara.maxkey.entity.idm.UserInfo;
-import org.dromara.maxkey.id.IdGenerator;
+import org.dromara.maxkey.id.generator.IdGeneratorFactory;
 import org.dromara.maxkey.persistence.service.UserInfoService;
 import org.dromara.maxkey.authn.web.AuthorizationUtils;
 import org.dromara.maxkey.authn.session.Session;
@@ -114,8 +114,8 @@ public class PasskeyAuthenticationEndpoint {
             authenticationToken.setDetails(new WebAuthenticationDetails(WebContext.getRequest()));
             
             // 创建会话
-            IdGenerator idGenerator = new IdGenerator();
-            String sessionId = idGenerator.generate();
+            IdGeneratorFactory idGeneratorFactory = new IdGeneratorFactory();
+            String sessionId = idGeneratorFactory.generate();
             Session session = new Session(sessionId, authenticationToken);
             session.setLastAccessTime(LocalDateTime.now());
             

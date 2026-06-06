@@ -17,8 +17,10 @@
 
 package org.dromara.maxkey.id;
 
+import java.net.NetworkInterface;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Enumeration;
 
 import org.dromara.maxkey.util.DateUtils;
 
@@ -39,8 +41,8 @@ public class SnowFlakeId {
      * 每一部分占用的位数
      */
     private static final  long SEQUENCE_BIT = 12; //序列号占用的位数
-    private static final  long MACHINE_BIT = 5;   //机器标识占用的位数
-    private static final  long DATACENTER_BIT = 5;//数据中心占用的位数
+    private static final  long MACHINE_BIT = 6;   //机器标识占用的位数
+    private static final  long DATACENTER_BIT = 4;//数据中心占用的位数
 
     /**
      * 每一部分的最大值
@@ -68,6 +70,10 @@ public class SnowFlakeId {
         }
         if (machineId > MAX_MACHINE_NUM || machineId < 0) {
             throw new IllegalArgumentException("machineId can't be greater than MAX_MACHINE_NUM or less than 0");
+        }
+        
+        if(machineId == 0) {
+        	machineId =SnowFlakeId.generateMacMachineId();
         }
         this.datacenterId = datacenterId;
         this.machineId = machineId;
@@ -158,6 +164,33 @@ public class SnowFlakeId {
         return snowFlakeIdParse;
     }
 
+    /**
+     * 基于本机 MAC 地址末段 生成唯一的 Machine ID
+     */
+    public static long generateMacMachineId() {
+        long macSegment = 0L;
+        // 获取本机非回环、非虚拟网卡的 MAC 地址最后一段
+        try {
+            Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+            while (interfaces.hasMoreElements()) {
+                NetworkInterface iface = interfaces.nextElement();
+                // 过滤掉无效接口
+                if (iface.isLoopback() || iface.isVirtual() || !iface.isUp()) continue;
+
+                byte[] mac = iface.getHardwareAddress();
+                if (mac != null && mac.length > 0) {
+                    // 提取最后一个字节并转换为无符号整数 (0 ~ 255)
+                    macSegment = ((0x000000FF & (long) mac[mac.length - 2]) | (0x0000FF00 & (((long) mac[mac.length - 1]) << 8))) >> 6;
+                    break; // 找到第一个有效网卡即可退出
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("获取本机 MAC 地址失败: " + e.getMessage());
+        }
+        // 保证结果为非负数，并对最大值取模
+        return (macSegment & 0x7FFFFFFF) % (MAX_MACHINE_NUM + 1);
+    }
+    
     private static Date fromatTime(long date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(date);

@@ -30,8 +30,9 @@ import org.dromara.maxkey.crypto.password.NoOpPasswordEncoder;
 import org.dromara.maxkey.crypto.password.PasswordReciprocal;
 import org.dromara.maxkey.crypto.password.SM3PasswordEncoder;
 import org.dromara.maxkey.crypto.password.StandardPasswordEncoder;
-import org.dromara.maxkey.id.IdGenerator;
 import org.dromara.maxkey.id.SnowFlakeId;
+import org.dromara.maxkey.id.generator.IdGeneratorFactory;
+import org.dromara.maxkey.id.generator.impl.SnowFlakeIdGenerator;
 import org.dromara.maxkey.persistence.cache.InMemoryMomentaryService;
 import org.dromara.maxkey.persistence.cache.MomentaryService;
 import org.dromara.maxkey.persistence.cache.RedisMomentaryService;
@@ -152,15 +153,15 @@ public class ApplicationAutoConfiguration {
      * @return
      */
     @Bean
-    IdGenerator idGenerator(
+    IdGeneratorFactory idGeneratorFactory(
             @Value("${maxkey.id.strategy:SnowFlake}") String strategy,
             @Value("${maxkey.id.datacenterId:0}") int datacenterId,
             @Value("${maxkey.id.machineId:0}") int machineId) {
-        IdGenerator idGenerator = new IdGenerator(strategy);
+        IdGeneratorFactory idGeneratorFactory = new IdGeneratorFactory(strategy);
         SnowFlakeId snowFlakeId = new SnowFlakeId(datacenterId,machineId);
-        idGenerator.setSnowFlakeId(snowFlakeId);
-        WebContext.setIdGenerator(idGenerator); 
-        return idGenerator;
+        IdGeneratorFactory.register(strategy, new SnowFlakeIdGenerator(snowFlakeId));
+        WebContext.setIdGeneratorFactory(idGeneratorFactory); 
+        return idGeneratorFactory;
     }
 
 
