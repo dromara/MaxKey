@@ -18,7 +18,7 @@
 /**
  * 
  */
-package org.dromara.maxkey.authz.token.endpoint;
+package org.dromara.maxkey.authz.jwt.endpoint;
 
 import java.lang.reflect.InvocationTargetException;
 
