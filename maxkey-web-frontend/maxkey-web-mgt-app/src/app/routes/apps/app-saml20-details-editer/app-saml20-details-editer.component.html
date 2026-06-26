@@ -339,7 +339,6 @@
               <nz-select [(ngModel)]="form.model.fileType" [ngModelOptions]="{ standalone: true }" nz-input name="fileType" id="fileType">
                 <nz-option nzValue="certificate" nzLabel="{{ 'mxk.apps.saml.fileType.certificate' | i18n }}"> </nz-option>
                 <nz-option nzValue="metadata_file" nzLabel="{{ 'mxk.apps.saml.fileType.metadata.file' | i18n }}"> </nz-option>
-                <nz-option nzValue="metadata_url" nzLabel="{{ 'mxk.apps.saml.fileType.metadata.url' | i18n }}"> </nz-option>
               </nz-select>
             </nz-form-control>
           </nz-form-item>
@@ -357,14 +356,6 @@
                   {{ 'mxk.text.upload' | i18n }}
                 </div>
               </nz-upload>
-              <input
-                *ngIf="form.model.fileType == 'metadata_url'"
-                [(ngModel)]="form.model.metaUrl"
-                [ngModelOptions]="{ standalone: true }"
-                nz-input
-                name="metaUrl"
-                id="metaUrl"
-              />
             </nz-form-control>
           </nz-form-item>
         </div>

@@ -165,14 +165,6 @@ public class SAML20DetailsController   extends BaseAppContorller {
                 if(bArrayInputStream != null) {
                     samlDetails = resolveMetaData(samlDetails,bArrayInputStream);
                 }
-            }else if(samlDetails.getFileType().equals("metadata_url")
-                    &&StringUtils.isNotBlank(samlDetails.getMetaUrl())){//metadata url
-                CloseableHttpClient httpClient = HttpClients.createDefault();
-                HttpPost post = new HttpPost(samlDetails.getMetaUrl());
-                CloseableHttpResponse response = httpClient.execute(post);
-                samlDetails = resolveMetaData(samlDetails,response.getEntity().getContent());;
-                response.close();
-                httpClient.close();
             }
         }
             
