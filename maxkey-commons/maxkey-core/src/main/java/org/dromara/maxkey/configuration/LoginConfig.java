@@ -41,6 +41,9 @@ public class LoginConfig {
     @Value("${maxkey.login.wsfederation:false}")
     boolean wsFederation;
     
+    @Value("${maxkey.login.jwt:false}")
+    boolean jwt;
+    
     @Value("${maxkey.login.cas.serverUrlPrefix:http://sso.maxkey.top/sign/authz/cas}")
     String casServerUrlPrefix;
     
@@ -119,7 +122,15 @@ public class LoginConfig {
         this.captchaType = captchaType;
     }
 
-    @Override
+    public boolean isJwt() {
+		return jwt;
+	}
+
+	public void setJwt(boolean jwt) {
+		this.jwt = jwt;
+	}
+
+	@Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("LoginConfig [mfa=");

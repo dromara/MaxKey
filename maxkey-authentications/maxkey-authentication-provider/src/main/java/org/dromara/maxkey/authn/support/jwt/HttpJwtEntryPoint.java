@@ -43,12 +43,12 @@ public class HttpJwtEntryPoint {
     private static final Logger _logger = LoggerFactory.getLogger(HttpJwtEntryPoint.class);
     
     @Autowired
-      ApplicationConfig applicationConfig;
+    ApplicationConfig applicationConfig;
     
-      @Autowired
+    @Autowired
     AbstractAuthenticationProvider authenticationProvider ;
       
-      @Autowired
+    @Autowired
     AuthTokenService authTokenService;
       
     @Autowired
@@ -57,53 +57,27 @@ public class HttpJwtEntryPoint {
     @RequestMapping(value={"/jwt"}, produces = {MediaType.APPLICATION_JSON_VALUE},method={RequestMethod.GET,RequestMethod.POST})
     public Message<AuthJwt> jwt(@RequestParam(value = WebConstants.JWT_TOKEN_PARAMETER, required = true) String jwt) {
         try {
-            //for jwt Login
-             _logger.debug("jwt : {}" , jwt);
-    
-             SignedJWT signedJWT = jwtLoginService.jwtTokenValidation(jwt);
-             
-             if(signedJWT != null) {
-                 String username =signedJWT.getJWTClaimsSet().getSubject();
-                 LoginCredential loginCredential =new LoginCredential(username,"",ConstsLoginType.JWT);
-                 Authentication  authentication = authenticationProvider.authenticate(loginCredential,true);
-                 _logger.debug("JWT Logined in , username {}" , username);
-                 AuthJwt authJwt = authTokenService.genAuthJwt(authentication);
-                  return new Message<>(authJwt);
-             }
+        	if(applicationConfig.getLoginConfig().isJwt()) {
+	            //for jwt Login
+	             _logger.debug("jwt : {}" , jwt);
+	             SignedJWT signedJWT = jwtLoginService.jwtTokenValidation(jwt);
+	             if(signedJWT != null) {
+	                 String subject =signedJWT.getJWTClaimsSet().getSubject();
+	                 LoginCredential loginCredential =new LoginCredential(subject,"",ConstsLoginType.JWT);
+	                 Authentication  authentication = authenticationProvider.authenticate(loginCredential,true);
+	                 _logger.debug("JWT Logined in , subject {}" , subject);
+	                 AuthJwt authJwt = authTokenService.genAuthJwt(authentication);
+	                  return new Message<>(authJwt);
+	             }
+        	}else {
+				_logger.debug("JWT Login is not enabled.");
+        	}
         }catch(Exception e) {
             _logger.error("Exception ",e);
         }
-        
-         return new Message<>(Message.FAIL);
+        return new Message<>(Message.FAIL);
     }
     
-    /**
-     * trust same HS512
-     * @param jwt
-     * @return
-     */
-    @RequestMapping(value={"/jwt/trust"}, produces = {MediaType.APPLICATION_JSON_VALUE},method={RequestMethod.GET,RequestMethod.POST})
-    public Message<AuthJwt> jwtTrust(@RequestParam(value = WebConstants.JWT_TOKEN_PARAMETER, required = true) String jwt) {
-        try {
-            //for jwt Login
-             _logger.debug("jwt : {}" , jwt);
-
-             if(authTokenService.validateJwtToken(jwt)) {
-                 String username =authTokenService.resolve(jwt).getSubject();
-                 LoginCredential loginCredential =new LoginCredential(username,"",ConstsLoginType.JWT);
-                 Authentication  authentication = authenticationProvider.authenticate(loginCredential,true);
-                 _logger.debug("JWT Logined in , username {}" , username);
-                 AuthJwt authJwt = authTokenService.genAuthJwt(authentication);
-                  return new Message<>(authJwt);
-             }
-        }catch(Exception e) {
-            _logger.error("Exception ",e);
-        }
-        
-         return new Message<>(Message.FAIL);
-    }
-
-
     public void setApplicationConfig(ApplicationConfig applicationConfig) {
         this.applicationConfig = applicationConfig;
     }
