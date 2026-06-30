@@ -1,4 +1,24 @@
-﻿MaxKey v 4.1.11 2026/02/02
+﻿MaxKey v 4.1.12 2026/06/30
+    *(MAXKEY-260601) 管理端密码修改问题
+    *(MAXKEY-260602) remove build_*.gradle，保留*_boot.jar打包方式
+    *(MAXKEY-260603) getAppDetails rename to get & cached load
+    *(MAXKEY-260604) Skip OAuth 2 authorize approval
+    *(MAXKEY-260605) Update AuthTokenRefreshPoint，刷新token优化
+    *(MAXKEY-260606) IdGeneratorFactory 优化
+    *(MAXKEY-260607) JwtAuthorizeEndpoint to org.dromara.maxkey.authz.jwt.endpoint
+    *(MAXKEY-260608) 去除外部SAML元数据请求
+    *(MAXKEY-260609) 代码优化和调整
+    *(MAXKEY-260610) 依赖项引用、更新和升级
+            springVersion                 6.2.19
+            springBootVersion             3.5.16
+            springSecurityVersion         6.5.11
+            springDataVersion             3.5.13
+            tomcatVersion                 10.1.56
+            caffeineVersion               3.2.4
+            log4jVersion                  2.25.4
+            jbossloggingVersion           3.6.3.Final
+            
+MaxKey v 4.1.11 2026/02/02
     *(MAXKEY-260101) remove build_docker.gradle
     *(MAXKEY-260102) RestTimeBasedOtpController优化
     *(MAXKEY-260103) Unnecessary path variable definition [WEB_ANNOTATION_NAMES]
