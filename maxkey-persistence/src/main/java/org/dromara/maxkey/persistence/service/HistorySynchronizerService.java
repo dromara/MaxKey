@@ -20,6 +20,6 @@ package org.dromara.maxkey.persistence.service;
 import org.dromara.maxkey.entity.history.HistorySynchronizer;
 import org.dromara.mybatis.jpa.service.IJpaService;
 
-public interface HistorySynchronizerService  extends IJpaService<HistorySynchronizer>{
+public interface HistorySynchronizerService  extends IJpaService<HistorySynchronizer,String>{
 
 }

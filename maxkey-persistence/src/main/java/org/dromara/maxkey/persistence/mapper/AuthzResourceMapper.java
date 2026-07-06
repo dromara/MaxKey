@@ -30,7 +30,7 @@ import org.dromara.maxkey.entity.permissions.Resources;
 import org.dromara.maxkey.entity.permissions.Roles;
 import org.dromara.mybatis.jpa.IJpaMapper;
 
-public  interface AuthzResourceMapper extends IJpaMapper<UserInfo> {
+public  interface AuthzResourceMapper extends IJpaMapper<UserInfo,String> {
     
     public List<Resources> queryResourcesByGroupId(QueryAppResourceDto dto) ;
     

@@ -38,7 +38,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional
-public class UserPasskeyServiceImpl extends JpaServiceImpl<UserPasskeyMapper, UserPasskey> implements UserPasskeyService {
+public class UserPasskeyServiceImpl extends JpaServiceImpl<UserPasskeyMapper, UserPasskey,String> implements UserPasskeyService {
     
     private static final Logger _logger = LoggerFactory.getLogger(UserPasskeyServiceImpl.class);
     

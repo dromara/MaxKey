@@ -19,6 +19,6 @@ package org.dromara.maxkey.persistence.mapper;
 import org.dromara.maxkey.entity.cnf.CnfLdapContext;
 import org.dromara.mybatis.jpa.IJpaMapper;
 
-public interface CnfLdapContextMapper extends IJpaMapper<CnfLdapContext> {
+public interface CnfLdapContextMapper extends IJpaMapper<CnfLdapContext,String> {
 
 }

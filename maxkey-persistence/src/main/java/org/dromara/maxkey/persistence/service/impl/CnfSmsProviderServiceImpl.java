@@ -25,6 +25,6 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public class CnfSmsProviderServiceImpl  extends JpaServiceImpl<CnfSmsProviderMapper,CnfSmsProvider> implements CnfSmsProviderService{
+public class CnfSmsProviderServiceImpl  extends JpaServiceImpl<CnfSmsProviderMapper,CnfSmsProvider,String> implements CnfSmsProviderService{
  
 }

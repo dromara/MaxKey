@@ -27,7 +27,7 @@ import org.dromara.mybatis.jpa.IJpaMapper;
  * @author Crystal.sea
  *
  */
-public  interface AppsSaml20DetailsMapper extends IJpaMapper<AppsSAML20Details> {
+public  interface AppsSaml20DetailsMapper extends IJpaMapper<AppsSAML20Details,String> {
     
     public  AppsSAML20Details  getAppDetails(String id);
 }

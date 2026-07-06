@@ -20,7 +20,7 @@ package org.dromara.maxkey.persistence.service;
 import org.dromara.maxkey.entity.apps.AppsTokenBasedDetails;
 import org.dromara.mybatis.jpa.service.IJpaService;
 
-public interface AppsTokenBasedDetailsService  extends IJpaService<AppsTokenBasedDetails>{
+public interface AppsTokenBasedDetailsService  extends IJpaService<AppsTokenBasedDetails,String>{
 
     public  AppsTokenBasedDetails  get(String id , boolean cached) ;
 }

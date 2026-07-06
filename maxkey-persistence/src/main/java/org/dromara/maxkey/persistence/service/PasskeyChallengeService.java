@@ -25,7 +25,7 @@ import org.dromara.mybatis.jpa.service.IJpaService;
  * 
  * @author MaxKey Team
  */
-public interface PasskeyChallengeService extends IJpaService<PasskeyChallenge> {
+public interface PasskeyChallengeService extends IJpaService<PasskeyChallenge,String> {
     
     /**
      * 根据挑战ID查询挑战数据

@@ -27,7 +27,7 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public class OrganizationsCastServiceImpl  extends JpaServiceImpl<OrganizationsCastMapper,OrganizationsCast> implements OrganizationsCastService{
+public class OrganizationsCastServiceImpl  extends JpaServiceImpl<OrganizationsCastMapper,OrganizationsCast,String> implements OrganizationsCastService{
     static final  Logger _logger = LoggerFactory.getLogger(OrganizationsCastServiceImpl.class);
 
 

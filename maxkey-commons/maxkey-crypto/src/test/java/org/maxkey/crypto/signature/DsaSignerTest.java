@@ -21,7 +21,8 @@ import java.util.Map;
 
 import org.dromara.maxkey.crypto.KeyPairUtil;
 import org.dromara.maxkey.crypto.signature.DsaSigner;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
 
 public final class DsaSignerTest {
     @Test

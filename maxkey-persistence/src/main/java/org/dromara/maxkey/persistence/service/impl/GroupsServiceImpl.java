@@ -37,7 +37,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class GroupsServiceImpl  extends JpaServiceImpl<GroupsMapper,Groups> implements GroupsService{
+public class GroupsServiceImpl  extends JpaServiceImpl<GroupsMapper,Groups,String> implements GroupsService{
     static final  Logger _logger = LoggerFactory.getLogger(GroupsServiceImpl.class);
 
     @Autowired

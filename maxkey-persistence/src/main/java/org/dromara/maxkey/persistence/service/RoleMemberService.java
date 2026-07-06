@@ -26,7 +26,7 @@ import org.dromara.maxkey.entity.permissions.Roles;
 import org.dromara.mybatis.jpa.service.IJpaService;
 import org.dromara.mybatis.jpa.entity.JpaPageResults;
 
-public interface RoleMemberService  extends IJpaService<RoleMember>{
+public interface RoleMemberService  extends IJpaService<RoleMember,String>{
 
     public int addDynamicRoleMember(Roles dynamicGroup);
     

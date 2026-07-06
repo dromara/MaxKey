@@ -30,21 +30,17 @@ import org.dromara.maxkey.web.WebInstRequestFilter;
 import org.dromara.maxkey.web.WebXssRequestFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.actuate.endpoint.ApiVersion;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.boot.web.server.ConfigurableWebServerFactory;
-import org.springframework.boot.web.server.ErrorPage;
-import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.http.converter.json.JacksonJsonHttpMessageConverter;
 import org.springframework.http.converter.xml.MarshallingHttpMessageConverter;
 import org.springframework.http.converter.ByteArrayHttpMessageConverter;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
@@ -61,10 +57,11 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.servlet.Filter;
+import tools.jackson.core.StreamReadFeature;
+import tools.jackson.databind.DeserializationFeature;
+import tools.jackson.databind.json.JsonMapper;
 
 
 @AutoConfiguration
@@ -132,8 +129,7 @@ public class MvcAutoConfiguration implements WebMvcConfigurer {
      * @return marshallingHttpMessageConverter
      */
     @Bean(name = "marshallingHttpMessageConverter")
-    MarshallingHttpMessageConverter marshallingHttpMessageConverter(
-                                                Jaxb2Marshaller jaxb2Marshaller) {
+    MarshallingHttpMessageConverter marshallingHttpMessageConverter(Jaxb2Marshaller jaxb2Marshaller) {
         MarshallingHttpMessageConverter marshallingHttpMessageConverter = new MarshallingHttpMessageConverter();
         marshallingHttpMessageConverter.setMarshaller(jaxb2Marshaller);
         marshallingHttpMessageConverter.setUnmarshaller(jaxb2Marshaller);
@@ -151,23 +147,22 @@ public class MvcAutoConfiguration implements WebMvcConfigurer {
      * @return mappingJacksonHttpMessageConverter
      */
     @Bean(name = "mappingJacksonHttpMessageConverter")
-    MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter() {
-        MappingJackson2HttpMessageConverter mappingJacksonHttpMessageConverter = new MappingJackson2HttpMessageConverter();
+    JacksonJsonHttpMessageConverter jacksonJsonHttpMessageConverter() {
+        _logger.debug("ObjectMapper DateFormat {}" , pattern);
+        JsonMapper mapper =JsonMapper.builder()
+                .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+                .enable(StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION)
+                .defaultDateFormat(new SimpleDateFormat(pattern))
+                .build();
+        JacksonJsonHttpMessageConverter jacksonJsonHttpMessageConverter = new JacksonJsonHttpMessageConverter(mapper);
         ArrayList<MediaType> mediaTypesList = new ArrayList<>();
         mediaTypesList.add(MediaType.APPLICATION_JSON);
         mediaTypesList.add(MediaType.valueOf(ApiVersion.V2.getProducedMimeType().toString()));
         mediaTypesList.add(MediaType.valueOf(ApiVersion.V3.getProducedMimeType().toString()));
-        //mediaTypesList.add(MediaType.TEXT_PLAIN);
-        _logger.debug("mappingJacksonHttpMessageConverter MediaTypes {}" , mediaTypesList);
-        mappingJacksonHttpMessageConverter.setSupportedMediaTypes(mediaTypesList);
-        ObjectMapper objectMapper = mappingJacksonHttpMessageConverter.getObjectMapper();
-        // 时间格式化
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        _logger.debug("DateFormat {}" , pattern);
-        objectMapper.setDateFormat(new SimpleDateFormat(pattern));
-        // 设置格式化内容
-        mappingJacksonHttpMessageConverter.setObjectMapper(objectMapper);
-        return mappingJacksonHttpMessageConverter;
+        //mediaTypesList.add(MediaType.TEXT_PLAIN)
+        _logger.debug("jacksonJsonHttpMessageConverter MediaTypes {}" , mediaTypesList);
+        jacksonJsonHttpMessageConverter.setSupportedMediaTypes(mediaTypesList);
+        return jacksonJsonHttpMessageConverter;
     }
 
     /**
@@ -187,6 +182,11 @@ public class MvcAutoConfiguration implements WebMvcConfigurer {
         return cookieLocaleResolver;
     }
 
+    @Bean
+    StringHttpMessageConverter stringHttpMessageConverter() {
+        return new StringHttpMessageConverter();
+    }
+    
     /**
      * AnnotationMethodHandlerAdapter
      * requestMappingHandlerAdapter .
@@ -194,8 +194,7 @@ public class MvcAutoConfiguration implements WebMvcConfigurer {
      */
     @Bean(name = "addConverterRequestMappingHandlerAdapter")
     RequestMappingHandlerAdapter requestMappingHandlerAdapter(
-            @Qualifier("mappingJacksonHttpMessageConverter")
-            MappingJackson2HttpMessageConverter mappingJacksonHttpMessageConverter,
+            JacksonJsonHttpMessageConverter jacksonJsonHttpMessageConverter,
             MarshallingHttpMessageConverter marshallingHttpMessageConverter,
             StringHttpMessageConverter stringHttpMessageConverter,
             RequestMappingHandlerAdapter requestMappingHandlerAdapter) {
@@ -205,7 +204,7 @@ public class MvcAutoConfiguration implements WebMvcConfigurer {
         // 解决方案
         httpMessageConverterList.add(new ByteArrayHttpMessageConverter());
         httpMessageConverterList.add(stringHttpMessageConverter);
-        httpMessageConverterList.add(mappingJacksonHttpMessageConverter);
+        httpMessageConverterList.add(jacksonJsonHttpMessageConverter);
         httpMessageConverterList.add(marshallingHttpMessageConverter);
         _logger.debug("stringHttpMessageConverter {}",stringHttpMessageConverter.getDefaultCharset());   
         
@@ -219,38 +218,16 @@ public class MvcAutoConfiguration implements WebMvcConfigurer {
      */
     @Bean(name = "restTemplate")
     RestTemplate restTemplate(
-            @Qualifier("mappingJacksonHttpMessageConverter")
-            MappingJackson2HttpMessageConverter mappingJacksonHttpMessageConverter,
+            JacksonJsonHttpMessageConverter jacksonJsonHttpMessageConverter,
             MarshallingHttpMessageConverter marshallingHttpMessageConverter) {
         RestTemplate restTemplate = new RestTemplate();
         List<HttpMessageConverter<?>> httpMessageConverterList = new ArrayList<>();
-        httpMessageConverterList.add(mappingJacksonHttpMessageConverter);
+        httpMessageConverterList.add(jacksonJsonHttpMessageConverter);
         httpMessageConverterList.add(marshallingHttpMessageConverter);
         restTemplate.setMessageConverters(httpMessageConverterList);
         return restTemplate;
     }
 
-    /**
-     * 配置默认错误页面（仅用于内嵌tomcat启动时） 使用这种方式，在打包为war后不起作用.
-     *
-     * @return webServerFactoryCustomizer
-     */
-    @Bean
-    WebServerFactoryCustomizer<ConfigurableWebServerFactory> webServerFactoryCustomizer() {
-        return new WebServerFactoryCustomizer<ConfigurableWebServerFactory>() {
-            @Override
-            public void customize(ConfigurableWebServerFactory factory) {
-                _logger.debug("WebServerFactoryCustomizer ... ");
-                ErrorPage errorPage400 = 
-                        new ErrorPage(HttpStatus.BAD_REQUEST, "/exception/error/400");
-                ErrorPage errorPage404 = 
-                        new ErrorPage(HttpStatus.NOT_FOUND, "/exception/error/404");
-                ErrorPage errorPage500 = 
-                        new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/exception/error/500");
-                factory.addErrorPages(errorPage400, errorPage404, errorPage500);
-            }
-        };
-    }
 
     @Bean
     SecurityContextHolderAwareRequestFilter securityContextHolderAwareRequestFilter() {
@@ -260,12 +237,19 @@ public class MvcAutoConfiguration implements WebMvcConfigurer {
 
     @Bean
     FilterRegistrationBean<CorsFilter> corsFilter() {
+        _logger.debug("CorsConfiguration init for /* ");
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.setAllowCredentials(true);
         corsConfiguration.setAllowedOriginPatterns(Collections.singletonList(CorsConfiguration.ALL));
         corsConfiguration.addAllowedHeader(CorsConfiguration.ALL);
-        corsConfiguration.addAllowedMethod(CorsConfiguration.ALL);
+        corsConfiguration.addAllowedMethod(HttpMethod.GET.name());
+        corsConfiguration.addAllowedMethod(HttpMethod.POST.name());
+        corsConfiguration.addAllowedMethod(HttpMethod.PUT.name());
+        corsConfiguration.addAllowedMethod(HttpMethod.DELETE.name());
+        corsConfiguration.addAllowedMethod(HttpMethod.HEAD.name());
+        corsConfiguration.addAllowedMethod(HttpMethod.PATCH.name());
+        _logger.debug("CorsConfiguration AllowedMethods {} ",corsConfiguration.getAllowedMethods());
         source.registerCorsConfiguration("/**", corsConfiguration);
         FilterRegistrationBean<CorsFilter> bean = new FilterRegistrationBean<>();
         bean.setOrder(1);

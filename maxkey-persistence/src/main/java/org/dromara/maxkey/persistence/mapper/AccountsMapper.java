@@ -34,7 +34,7 @@ import org.dromara.mybatis.jpa.IJpaMapper;
  * @author Crystal.sea
  *
  */
-public  interface AccountsMapper extends IJpaMapper<Accounts> {
+public  interface AccountsMapper extends IJpaMapper<Accounts,String> {
     
 
     public List<UserInfo> queryUserNotInStrategy(AccountsStrategy strategy);

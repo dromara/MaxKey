@@ -31,7 +31,7 @@ import org.dromara.mybatis.jpa.service.impl.JpaServiceImpl;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class SynchroRelatedServiceImpl  extends JpaServiceImpl<SynchroRelatedMapper,SynchroRelated> implements SynchroRelatedService{
+public class SynchroRelatedServiceImpl  extends JpaServiceImpl<SynchroRelatedMapper,SynchroRelated,String> implements SynchroRelatedService{
 
     public int updateSyncTime(SynchroRelated synchroRelated) {
         return getMapper().updateSyncTime(synchroRelated);

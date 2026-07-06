@@ -29,7 +29,7 @@ import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 
 @Repository
-public class AppsFormBasedDetailsServiceImpl  extends JpaServiceImpl<AppsFormBasedDetailsMapper,AppsFormBasedDetails> implements AppsFormBasedDetailsService{
+public class AppsFormBasedDetailsServiceImpl  extends JpaServiceImpl<AppsFormBasedDetailsMapper,AppsFormBasedDetails,String> implements AppsFormBasedDetailsService{
 
     protected static final   Cache<String, AppsFormBasedDetails> detailsCache = 
             Caffeine.newBuilder()

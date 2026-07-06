@@ -27,6 +27,6 @@ import org.dromara.mybatis.jpa.IJpaMapper;
  * @author Crystal.sea
  *
  */
-public  interface FileUploadMapper extends IJpaMapper<FileUpload> {
+public  interface FileUploadMapper extends IJpaMapper<FileUpload,String> {
 
 }

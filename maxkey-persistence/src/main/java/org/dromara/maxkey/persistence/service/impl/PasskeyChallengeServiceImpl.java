@@ -35,7 +35,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional
-public class PasskeyChallengeServiceImpl extends JpaServiceImpl<PasskeyChallengeMapper, PasskeyChallenge> implements PasskeyChallengeService {
+public class PasskeyChallengeServiceImpl extends JpaServiceImpl<PasskeyChallengeMapper, PasskeyChallenge,String> implements PasskeyChallengeService {
     
     private static final Logger _logger = LoggerFactory.getLogger(PasskeyChallengeServiceImpl.class);
     

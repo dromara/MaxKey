@@ -22,7 +22,7 @@ import java.util.List;
 import org.dromara.maxkey.entity.permissions.Permission;
 import org.dromara.mybatis.jpa.service.IJpaService;
 
-public interface PermissionService  extends IJpaService<Permission>{
+public interface PermissionService  extends IJpaService<Permission,String>{
 
     public boolean insertGroupPrivileges(List<Permission> rolePermissionsList) ;
     

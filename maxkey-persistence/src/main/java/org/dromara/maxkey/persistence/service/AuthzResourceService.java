@@ -28,7 +28,7 @@ import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.entity.permissions.Resources;
 import org.dromara.mybatis.jpa.service.IJpaService;
 
-public interface AuthzResourceService   extends IJpaService<UserInfo>{
+public interface AuthzResourceService   extends IJpaService<UserInfo,String>{
     
     /**
      * 根据主体获取用户对应得应用资源清单

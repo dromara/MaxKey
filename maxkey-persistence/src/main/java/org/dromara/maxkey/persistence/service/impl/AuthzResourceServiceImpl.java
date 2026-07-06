@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class AuthzResourceServiceImpl   extends JpaServiceImpl<AuthzResourceMapper,UserInfo> implements AuthzResourceService{
+public class AuthzResourceServiceImpl   extends JpaServiceImpl<AuthzResourceMapper,UserInfo,String> implements AuthzResourceService{
     private static final Logger logger = LoggerFactory.getLogger(AuthzResourceServiceImpl.class);
 
     /**

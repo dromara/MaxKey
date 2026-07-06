@@ -19,7 +19,7 @@ package org.maxkey.util;
 
 import org.dromara.maxkey.id.SnowFlakeId;
 import org.joda.time.DateTime;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class SonwFlakeIdTest {
 

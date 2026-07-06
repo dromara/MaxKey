@@ -24,7 +24,7 @@ import java.util.List;
 import org.dromara.maxkey.entity.permissions.Roles;
 import org.dromara.mybatis.jpa.service.IJpaService;
 
-public interface RolesService  extends IJpaService<Roles> {
+public interface RolesService  extends IJpaService<Roles,String> {
 
     public List<Roles> queryDynamicRoles(Roles groups);
     

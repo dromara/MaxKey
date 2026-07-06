@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class RoleMemberServiceImpl  extends JpaServiceImpl<RoleMemberMapper,RoleMember> implements RoleMemberService{
+public class RoleMemberServiceImpl  extends JpaServiceImpl<RoleMemberMapper,RoleMember,String> implements RoleMemberService{
     static final  Logger _logger = LoggerFactory.getLogger(RoleMemberServiceImpl.class);
 
     public int addDynamicRoleMember(Roles dynamicGroup) {

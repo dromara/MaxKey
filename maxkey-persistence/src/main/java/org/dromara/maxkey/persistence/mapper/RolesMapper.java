@@ -27,7 +27,7 @@ import org.dromara.mybatis.jpa.IJpaMapper;
  *
  */
 
-public  interface RolesMapper extends IJpaMapper<Roles> {
+public  interface RolesMapper extends IJpaMapper<Roles,String> {
 
     public List<Roles> queryDynamicRoles(Roles groups);
     

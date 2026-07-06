@@ -21,7 +21,7 @@ import org.dromara.maxkey.entity.history.HistoryLogin;
 import org.dromara.mybatis.jpa.service.IJpaService;
 import org.dromara.mybatis.jpa.entity.JpaPageResults;
 
-public interface HistoryLoginService  extends IJpaService<HistoryLogin>{
+public interface HistoryLoginService  extends IJpaService<HistoryLogin,String>{
 
     public JpaPageResults<HistoryLogin> queryOnlineSession(HistoryLogin historyLogin);
     

@@ -22,7 +22,7 @@ import org.dromara.maxkey.entity.OrganizationsCast;
 import org.dromara.maxkey.entity.idm.Organizations;
 import org.dromara.mybatis.jpa.IJpaMapper;
 
-public interface OrganizationsCastMapper extends IJpaMapper<OrganizationsCast> {
+public interface OrganizationsCastMapper extends IJpaMapper<OrganizationsCast,String> {
 
     public List<Organizations> queryOrgs(Organizations organization);
     

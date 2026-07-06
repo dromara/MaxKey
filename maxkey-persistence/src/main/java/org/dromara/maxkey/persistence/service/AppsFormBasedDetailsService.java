@@ -20,7 +20,7 @@ package org.dromara.maxkey.persistence.service;
 import org.dromara.maxkey.entity.apps.AppsFormBasedDetails;
 import org.dromara.mybatis.jpa.service.IJpaService;
 
-public interface AppsFormBasedDetailsService  extends IJpaService<AppsFormBasedDetails>{
+public interface AppsFormBasedDetailsService  extends IJpaService<AppsFormBasedDetails,String>{
 
     public  AppsFormBasedDetails  get(String id,boolean cached) ;
 }

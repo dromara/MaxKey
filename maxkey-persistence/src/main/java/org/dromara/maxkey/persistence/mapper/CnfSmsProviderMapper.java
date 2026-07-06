@@ -20,6 +20,6 @@ package org.dromara.maxkey.persistence.mapper;
 import org.dromara.maxkey.entity.cnf.CnfSmsProvider;
 import org.dromara.mybatis.jpa.IJpaMapper;
 
-public interface CnfSmsProviderMapper extends IJpaMapper<CnfSmsProvider> {
+public interface CnfSmsProviderMapper extends IJpaMapper<CnfSmsProvider,String> {
 
 }

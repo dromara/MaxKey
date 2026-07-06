@@ -32,7 +32,7 @@ import org.dromara.mybatis.jpa.entity.JpaEntity;
  * @author Crystal.sea
  *
  */
-public  interface ReportMapper extends IJpaMapper<JpaEntity> {
+public  interface ReportMapper extends IJpaMapper<JpaEntity,String> {
     
     public Integer analysisDay(HashMap<String,Object> reportParameter);
     

@@ -29,7 +29,7 @@ import org.dromara.mybatis.jpa.IJpaMapper;
  *
  */
 
-public  interface RoleMemberMapper extends IJpaMapper<RoleMember> {
+public  interface RoleMemberMapper extends IJpaMapper<RoleMember,String> {
     
     public List<RoleMember> memberInRole(RoleMember entity);
     

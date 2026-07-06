@@ -27,7 +27,7 @@ import org.dromara.mybatis.jpa.IJpaMapper;
  * @author Crystal.sea
  *
  */
-public  interface AppsFormBasedDetailsMapper extends IJpaMapper<AppsFormBasedDetails> {
+public  interface AppsFormBasedDetailsMapper extends IJpaMapper<AppsFormBasedDetails,String> {
     
     public  AppsFormBasedDetails  getAppDetails(String id) ;
 }

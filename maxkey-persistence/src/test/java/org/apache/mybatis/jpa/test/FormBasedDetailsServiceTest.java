@@ -25,8 +25,8 @@ import java.util.List;
 import org.dromara.maxkey.entity.apps.AppsFormBasedDetails;
 import org.dromara.maxkey.persistence.service.AppsFormBasedDetailsService;
 import org.dromara.mybatis.jpa.spring.MybatisJpaContext;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -118,7 +118,7 @@ public class FormBasedDetailsServiceTest {
         _logger.info("findAll "+service.findAll());
     }
     
-    @Before
+    @BeforeAll
     public void initSpringContext(){
         if(context!=null) {
             return;

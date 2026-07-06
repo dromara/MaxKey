@@ -23,7 +23,7 @@ import org.dromara.maxkey.entity.AccountsStrategy;
 import org.dromara.maxkey.entity.permissions.Roles;
 import org.dromara.mybatis.jpa.service.IJpaService;
 
-public interface AccountsStrategyService  extends IJpaService<AccountsStrategy> {
+public interface AccountsStrategyService  extends IJpaService<AccountsStrategy,String> {
 
     public List<Roles> queryDynamicGroups(Roles groups);
     

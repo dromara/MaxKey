@@ -22,7 +22,7 @@ import java.util.Date;
 
 import org.dromara.maxkey.id.UUIDGenerator;
 import org.dromara.maxkey.id.uuid.UUID;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class UUIDGeneratorTest {
     

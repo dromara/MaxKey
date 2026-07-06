@@ -42,7 +42,7 @@ import net.sourceforge.pinyin4j.format.HanyuPinyinVCharType;
 import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
 
 @Repository
-public class AccountsServiceImpl  extends JpaServiceImpl<AccountsMapper,Accounts>  implements AccountsService{
+public class AccountsServiceImpl  extends JpaServiceImpl<AccountsMapper,Accounts,String>  implements AccountsService{
   
     @Autowired
     UserInfoService  userInfoService;

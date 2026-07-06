@@ -19,6 +19,6 @@ package org.dromara.maxkey.persistence.mapper;
 import org.dromara.maxkey.entity.cnf.CnfEmailSenders;
 import org.dromara.mybatis.jpa.IJpaMapper;
 
-public interface CnfEmailSendersMapper extends IJpaMapper<CnfEmailSenders> {
+public interface CnfEmailSendersMapper extends IJpaMapper<CnfEmailSenders,String> {
 
 }

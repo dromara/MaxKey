@@ -31,7 +31,7 @@ import org.dromara.mybatis.jpa.IJpaMapper;
  * @author Crystal.sea
  *
  */
-public  interface AppsMapper extends IJpaMapper<Apps> {
+public  interface AppsMapper extends IJpaMapper<Apps,String> {
     
     public int insertApp(Apps app);
     

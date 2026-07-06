@@ -109,7 +109,7 @@ public class HttpRequestAdapter {
                     e.printStackTrace();
                 }
             }else if(mediaType.equals(ContentType.APPLICATION_JSON)) {
-                String jsonString = JsonUtils.gsonToString(parameterMap);
+                String jsonString = JsonUtils.toString(parameterMap);
                 StringEntity stringEntity =new StringEntity(jsonString, "UTF-8");
                 stringEntity.setContentType(ContentType.APPLICATION_JSON);
                 httpMethod.setEntity(stringEntity);
@@ -143,7 +143,7 @@ public class HttpRequestAdapter {
         buildHeader(httpMethod,headers);  
         
         // 封装put请求参数
-        String jsonString = JsonUtils.gsonToString(data);
+        String jsonString = JsonUtils.toString(data);
         StringEntity stringEntity =new StringEntity(jsonString, "UTF-8");
         stringEntity.setContentType(ContentType.APPLICATION_JSON);
         httpMethod.setEntity(stringEntity);
@@ -174,7 +174,7 @@ public class HttpRequestAdapter {
         buildHeader(httpMethod,headers);  
         
         // 封装put请求参数
-        String jsonString = JsonUtils.gsonToString(data);
+        String jsonString = JsonUtils.toString(data);
         StringEntity stringEntity =new StringEntity(jsonString, "UTF-8");
         stringEntity.setContentType(ContentType.APPLICATION_JSON);
         httpMethod.setEntity(stringEntity);

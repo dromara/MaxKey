@@ -27,7 +27,7 @@ import org.dromara.mybatis.jpa.IJpaMapper;
  * @author Crystal.sea
  *
  */
-public  interface AppsCasDetailsMapper extends IJpaMapper<AppsCasDetails> {
+public  interface AppsCasDetailsMapper extends IJpaMapper<AppsCasDetails,String> {
     
     public  AppsCasDetails  getAppDetails(String id) ;
 }

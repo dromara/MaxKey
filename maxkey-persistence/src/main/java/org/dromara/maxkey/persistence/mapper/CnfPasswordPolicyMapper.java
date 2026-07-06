@@ -27,7 +27,7 @@ import org.dromara.mybatis.jpa.IJpaMapper;
  * @author Crystal.sea
  *
  */
-public  interface CnfPasswordPolicyMapper extends IJpaMapper<CnfPasswordPolicy> {
+public  interface CnfPasswordPolicyMapper extends IJpaMapper<CnfPasswordPolicy,String> {
     
 
 }

@@ -19,7 +19,7 @@ package org.maxkey.rest;
 
 import org.dromara.maxkey.http.AuthorizationHeader;
 import org.dromara.maxkey.http.AuthorizationHeaderUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class AuthorizationHeaderTest {
     

@@ -24,7 +24,8 @@ import java.util.Map;
 
 import org.dromara.maxkey.crypto.KeyPairUtil;
 import org.dromara.maxkey.crypto.signature.RsaSigner;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
 
 
 public final class RsaSignerTest  {

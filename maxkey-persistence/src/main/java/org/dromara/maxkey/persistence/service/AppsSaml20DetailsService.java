@@ -20,7 +20,7 @@ package org.dromara.maxkey.persistence.service;
 import org.dromara.maxkey.entity.apps.AppsSAML20Details;
 import org.dromara.mybatis.jpa.service.IJpaService;
 
-public interface AppsSaml20DetailsService  extends IJpaService<AppsSAML20Details>{
+public interface AppsSaml20DetailsService  extends IJpaService<AppsSAML20Details,String>{
 
     public  AppsSAML20Details  get(String id , boolean cached);
 }

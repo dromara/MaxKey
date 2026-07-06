@@ -20,6 +20,6 @@ package org.dromara.maxkey.persistence.service;
 import org.dromara.maxkey.entity.apps.AppsAdapters;
 import org.dromara.mybatis.jpa.service.IJpaService;
 
-public interface AppsAdaptersService  extends IJpaService<AppsAdapters>{
+public interface AppsAdaptersService  extends IJpaService<AppsAdapters,String>{
 
 }

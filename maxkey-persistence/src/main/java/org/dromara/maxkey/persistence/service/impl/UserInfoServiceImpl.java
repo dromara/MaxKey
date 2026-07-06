@@ -48,7 +48,7 @@ import org.springframework.stereotype.Repository;
  *
  */
 @Repository
-public class UserInfoServiceImpl extends JpaServiceImpl<UserInfoMapper,UserInfo> implements UserInfoService{
+public class UserInfoServiceImpl extends JpaServiceImpl<UserInfoMapper,UserInfo,String> implements UserInfoService{
     static final  Logger _logger = LoggerFactory.getLogger(UserInfoServiceImpl.class);
     
     @Autowired

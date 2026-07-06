@@ -21,7 +21,7 @@ import org.dromara.maxkey.constants.ConstsStatus;
 import org.dromara.maxkey.entity.Institutions;
 import org.dromara.mybatis.jpa.IJpaMapper;
 
-public interface InstitutionsMapper extends IJpaMapper<Institutions> {
+public interface InstitutionsMapper extends IJpaMapper<Institutions,String> {
 
     @Select("select * from  mxk_institutions where  (id = #{value} or domain = #{value} or consoledomain = #{value} ) and status = " + ConstsStatus.ACTIVE)
     public Institutions findByDomain(String domain);

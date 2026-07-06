@@ -24,6 +24,6 @@ import org.dromara.mybatis.jpa.service.impl.JpaServiceImpl;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class HistoryConnectorServiceImpl  extends JpaServiceImpl<HistoryConnectorMapper,HistoryConnector> implements HistoryConnectorService{
+public class HistoryConnectorServiceImpl  extends JpaServiceImpl<HistoryConnectorMapper,HistoryConnector,String> implements HistoryConnectorService{
 
 }

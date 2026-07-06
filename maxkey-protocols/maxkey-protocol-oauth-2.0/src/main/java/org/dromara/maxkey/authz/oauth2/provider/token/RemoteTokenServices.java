@@ -29,7 +29,6 @@
  *******************************************************************************/
 package org.dromara.maxkey.authz.oauth2.provider.token;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Base64;
 import java.util.Map;
@@ -43,12 +42,10 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
-import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.util.Assert;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.DefaultResponseErrorHandler;
 import org.springframework.web.client.RestOperations;
 import org.springframework.web.client.RestTemplate;
 
@@ -77,15 +74,6 @@ public class RemoteTokenServices implements ResourceServerTokenServices {
 
     public RemoteTokenServices() {
         restTemplate = new RestTemplate();
-        ((RestTemplate) restTemplate).setErrorHandler(new DefaultResponseErrorHandler() {
-            @Override
-            // Ignore 400
-            public void handleError(ClientHttpResponse response) throws IOException {
-                if (response.getStatusCode().value() != 400) {
-                    super.handleError(response);
-                }
-            }
-        });
     }
 
     public void setRestTemplate(RestOperations restTemplate) {

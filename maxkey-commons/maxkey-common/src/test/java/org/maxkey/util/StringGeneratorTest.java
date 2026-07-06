@@ -20,7 +20,7 @@ package org.maxkey.util;
 import java.util.UUID;
 
 import org.dromara.maxkey.util.StringGenerator;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class StringGeneratorTest {
     @Test

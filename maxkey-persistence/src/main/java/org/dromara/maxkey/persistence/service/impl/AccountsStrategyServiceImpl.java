@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class AccountsStrategyServiceImpl  extends JpaServiceImpl<AccountsStrategyMapper,AccountsStrategy> implements AccountsStrategyService{
+public class AccountsStrategyServiceImpl  extends JpaServiceImpl<AccountsStrategyMapper,AccountsStrategy,String> implements AccountsStrategyService{
     static final  Logger _logger = LoggerFactory.getLogger(AccountsStrategyServiceImpl.class);
 
     public List<Roles> queryDynamicGroups(Roles groups){

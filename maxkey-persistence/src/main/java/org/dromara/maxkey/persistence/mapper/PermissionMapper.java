@@ -30,7 +30,7 @@ import org.dromara.mybatis.jpa.IJpaMapper;
  *
  */
 
-public  interface PermissionMapper extends IJpaMapper<Permission> {
+public  interface PermissionMapper extends IJpaMapper<Permission,String> {
     
     public int insertGroupPrivileges(List<Permission> groupPrivilegesList);
     

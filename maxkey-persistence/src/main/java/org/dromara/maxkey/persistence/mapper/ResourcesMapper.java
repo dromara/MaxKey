@@ -28,6 +28,6 @@ import org.dromara.mybatis.jpa.IJpaMapper;
  *
  */
 
-public  interface ResourcesMapper extends IJpaMapper<Resources> {
+public  interface ResourcesMapper extends IJpaMapper<Resources,String> {
 
 }

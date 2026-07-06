@@ -24,6 +24,6 @@ import org.dromara.mybatis.jpa.service.impl.JpaServiceImpl;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class FileUploadServiceImpl  extends JpaServiceImpl<FileUploadMapper,FileUpload> implements FileUploadService{
+public class FileUploadServiceImpl  extends JpaServiceImpl<FileUploadMapper,FileUpload,String> implements FileUploadService{
 
 }

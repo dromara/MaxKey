@@ -31,7 +31,7 @@ import org.dromara.mybatis.jpa.IJpaMapper;
  *
  */
 
-public  interface AccountsStrategyMapper extends IJpaMapper<AccountsStrategy> {
+public  interface AccountsStrategyMapper extends IJpaMapper<AccountsStrategy,String> {
 
     public List<Roles> queryDynamicGroups(Roles groups);
 }

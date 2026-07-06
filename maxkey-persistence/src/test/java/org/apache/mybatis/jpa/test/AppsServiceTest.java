@@ -22,8 +22,8 @@ import java.util.Date;
 import org.dromara.maxkey.entity.apps.Apps;
 import org.dromara.maxkey.persistence.service.AppsService;
 import org.dromara.mybatis.jpa.spring.MybatisJpaContext;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -57,7 +57,7 @@ public class AppsServiceTest {
     
     
     
-    @Before
+    @BeforeAll
     public void initSpringContext(){
         if(context!=null) {
             return;

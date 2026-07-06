@@ -25,6 +25,6 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public class CnfLdapContextServiceImpl  extends JpaServiceImpl<CnfLdapContextMapper,CnfLdapContext> implements CnfLdapContextService{
+public class CnfLdapContextServiceImpl  extends JpaServiceImpl<CnfLdapContextMapper,CnfLdapContext,String> implements CnfLdapContextService{
  
 }

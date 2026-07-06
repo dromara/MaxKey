@@ -23,7 +23,7 @@ import java.util.Map;
 import org.dromara.mybatis.jpa.service.IJpaService;
 import org.dromara.mybatis.jpa.entity.JpaEntity;
 
-public interface ReportService  extends IJpaService<JpaEntity>{
+public interface ReportService  extends IJpaService<JpaEntity,String>{
 
     public Integer analysisDay(HashMap<String,Object> reportParameter) ;
     

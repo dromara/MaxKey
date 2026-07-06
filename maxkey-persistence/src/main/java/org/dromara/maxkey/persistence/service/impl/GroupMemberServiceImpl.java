@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class GroupMemberServiceImpl  extends JpaServiceImpl<GroupMemberMapper,GroupMember> implements GroupMemberService{
+public class GroupMemberServiceImpl  extends JpaServiceImpl<GroupMemberMapper,GroupMember,String> implements GroupMemberService{
     static final  Logger _logger = LoggerFactory.getLogger(GroupMemberServiceImpl.class);
 
     public int addDynamicMember(Groups dynamicGroup) {

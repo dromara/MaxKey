@@ -23,7 +23,7 @@ import org.dromara.maxkey.entity.cnf.CnfPasswordPolicy;
 import org.dromara.mybatis.jpa.service.IJpaService;
 import org.passay.Rule;
 
-public interface CnfPasswordPolicyService  extends IJpaService<CnfPasswordPolicy>{
+public interface CnfPasswordPolicyService  extends IJpaService<CnfPasswordPolicy,String>{
     
     public CnfPasswordPolicy getPasswordPolicy();
     

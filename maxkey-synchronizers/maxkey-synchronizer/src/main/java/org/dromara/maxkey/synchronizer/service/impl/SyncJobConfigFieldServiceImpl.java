@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class SyncJobConfigFieldServiceImpl extends JpaServiceImpl<SyncJobConfigFieldMapper,SyncJobConfigField>  implements SyncJobConfigFieldService {
+public class SyncJobConfigFieldServiceImpl extends JpaServiceImpl<SyncJobConfigFieldMapper,SyncJobConfigField,String>  implements SyncJobConfigFieldService {
 
     public List<SyncJobConfigField> findByJobIdAndObjectType(Long jobId, String objectType) {
 

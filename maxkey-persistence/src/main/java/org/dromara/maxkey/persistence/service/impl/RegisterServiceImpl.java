@@ -27,7 +27,7 @@ import org.dromara.mybatis.jpa.service.impl.JpaServiceImpl;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class RegisterServiceImpl  extends JpaServiceImpl<RegisterMapper,Register> implements RegisterService{
+public class RegisterServiceImpl  extends JpaServiceImpl<RegisterMapper,Register,String> implements RegisterService{
     
     public UserInfo findByEmail(String email){
         List<UserInfo> listUserInfo=getMapper().findByEmail(email);

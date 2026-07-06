@@ -25,7 +25,7 @@ import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.mybatis.jpa.service.IJpaService;
 import org.dromara.mybatis.jpa.entity.JpaPageResults;
 
-public interface GroupMemberService  extends IJpaService<GroupMember>{
+public interface GroupMemberService  extends IJpaService<GroupMember,String>{
 
     public int addDynamicMember(Groups dynamicGroup) ;
     

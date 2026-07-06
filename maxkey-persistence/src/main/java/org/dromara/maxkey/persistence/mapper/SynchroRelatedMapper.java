@@ -28,7 +28,7 @@ import org.dromara.mybatis.jpa.IJpaMapper;
  * @author Crystal.sea
  *
  */
-public  interface SynchroRelatedMapper extends IJpaMapper<SynchroRelated> {
+public  interface SynchroRelatedMapper extends IJpaMapper<SynchroRelated,String> {
     @Update("update mxk_synchro_related set synctime = #{syncTime} where id= #{id} ")
     public int updateSyncTime(SynchroRelated synchroRelated);
 }

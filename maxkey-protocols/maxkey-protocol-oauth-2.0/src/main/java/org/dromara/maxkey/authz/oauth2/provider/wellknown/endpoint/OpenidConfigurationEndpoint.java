@@ -17,9 +17,10 @@
 
 package org.dromara.maxkey.authz.oauth2.provider.wellknown.endpoint;
 
-import com.alibaba.cloud.commons.lang.StringUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+
+import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.authz.oauth2.common.OAuth2Constants;
 import org.dromara.maxkey.authz.oauth2.provider.endpoint.AbstractEndpoint;
 import org.dromara.maxkey.authz.oauth2.provider.wellknown.OpenidConfiguration;

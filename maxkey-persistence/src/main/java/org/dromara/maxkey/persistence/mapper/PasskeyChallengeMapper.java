@@ -30,7 +30,7 @@ import org.dromara.mybatis.jpa.IJpaMapper;
  * 
  * @author MaxKey Team
  */
-public interface PasskeyChallengeMapper extends IJpaMapper<PasskeyChallenge> {
+public interface PasskeyChallengeMapper extends IJpaMapper<PasskeyChallenge,String> {
     
     /**
      * 根据挑战ID查询挑战数据

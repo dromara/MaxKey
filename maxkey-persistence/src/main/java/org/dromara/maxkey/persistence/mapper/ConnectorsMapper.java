@@ -28,6 +28,6 @@ import org.dromara.mybatis.jpa.IJpaMapper;
  *
  */
 
-public  interface ConnectorsMapper extends IJpaMapper<Connectors> {
+public  interface ConnectorsMapper extends IJpaMapper<Connectors,String> {
     
 }

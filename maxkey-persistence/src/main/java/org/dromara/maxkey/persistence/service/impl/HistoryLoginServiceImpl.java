@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class HistoryLoginServiceImpl  extends JpaServiceImpl<HistoryLoginMapper,HistoryLogin> implements HistoryLoginService{
+public class HistoryLoginServiceImpl  extends JpaServiceImpl<HistoryLoginMapper,HistoryLogin,String> implements HistoryLoginService{
     private static Logger logger = LoggerFactory.getLogger(HistoryLoginServiceImpl.class);
     
     public JpaPageResults<HistoryLogin> queryOnlineSession(HistoryLogin historyLogin) {

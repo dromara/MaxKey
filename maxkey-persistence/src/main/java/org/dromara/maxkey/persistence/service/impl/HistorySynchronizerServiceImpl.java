@@ -24,6 +24,6 @@ import org.dromara.mybatis.jpa.service.impl.JpaServiceImpl;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class HistorySynchronizerServiceImpl  extends JpaServiceImpl<HistorySynchronizerMapper,HistorySynchronizer> implements HistorySynchronizerService{
+public class HistorySynchronizerServiceImpl  extends JpaServiceImpl<HistorySynchronizerMapper,HistorySynchronizer,String> implements HistorySynchronizerService{
 
 }

@@ -27,7 +27,7 @@ import org.dromara.mybatis.jpa.service.IJpaService;
  * 
  * @author MaxKey Team
  */
-public interface UserPasskeyService extends IJpaService<UserPasskey> {
+public interface UserPasskeyService extends IJpaService<UserPasskey,String> {
     
     /**
      * 根据用户ID查询所有Passkey凭据

@@ -24,7 +24,7 @@ import org.dromara.maxkey.entity.AccountsStrategy;
 import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.mybatis.jpa.service.IJpaService;
 
-public interface AccountsService  extends IJpaService<Accounts>{
+public interface AccountsService  extends IJpaService<Accounts,String>{
 
    public boolean updateStatus(Accounts accounts) ;
    

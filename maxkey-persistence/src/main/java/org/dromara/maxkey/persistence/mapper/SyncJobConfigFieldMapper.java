@@ -24,7 +24,7 @@ import org.dromara.mybatis.jpa.IJpaMapper;
 import java.util.List;
 
 
-public interface SyncJobConfigFieldMapper extends IJpaMapper<SyncJobConfigField> {
+public interface SyncJobConfigFieldMapper extends IJpaMapper<SyncJobConfigField,String> {
     /*@Select("SELECT * FROM sync_job_config_field WHERE job_id = #{jobId} AND object_type = #{objectType}")*/
     public List<SyncJobConfigField> findByJobIdAndObjectType(@Param("jobId") Long jobId, @Param("objectType") String objectType);
 

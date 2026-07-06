@@ -20,6 +20,6 @@ package org.dromara.maxkey.persistence.service;
 import org.dromara.maxkey.entity.history.HistoryConnector;
 import org.dromara.mybatis.jpa.service.IJpaService;
 
-public interface HistoryConnectorService  extends IJpaService<HistoryConnector>{
+public interface HistoryConnectorService  extends IJpaService<HistoryConnector,String>{
 
 }

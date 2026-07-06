@@ -122,7 +122,7 @@ public class FeishuOrganizationService extends AbstractSynchronizerService imple
         HashMap<String,String> headers =new HashMap<String,String>();
         headers.put("Authorization", AuthorizationHeaderUtils.createBearer(access_token));
         String responseBody = request.get(String.format(DEPTS_URL, deptId),headers);
-        FeishuDeptsResponse deptsResponse  =JsonUtils.gsonStringToObject(responseBody, FeishuDeptsResponse.class);
+        FeishuDeptsResponse deptsResponse  =JsonUtils.stringToObject(responseBody, FeishuDeptsResponse.class);
         
         _logger.trace("response : " + responseBody);
 
@@ -134,7 +134,7 @@ public class FeishuOrganizationService extends AbstractSynchronizerService imple
         HashMap<String,String> headers =new HashMap<String,String>();
         headers.put("Authorization", AuthorizationHeaderUtils.createBearer(access_token));
         String responseBody = request.get(String.format(url, deptId),headers);
-        FeishuDeptsResponse deptsResponse  =JsonUtils.gsonStringToObject(responseBody, FeishuDeptsResponse.class);
+        FeishuDeptsResponse deptsResponse  =JsonUtils.stringToObject(responseBody, FeishuDeptsResponse.class);
         
         _logger.trace("response : " + responseBody);
 

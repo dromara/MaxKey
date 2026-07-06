@@ -19,7 +19,8 @@ package org.maxkey.crypto;
 
 import org.dromara.maxkey.crypto.Base64Utils;
 import org.dromara.maxkey.crypto.DigestUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
 
 public class Base64UtilsTest {
 

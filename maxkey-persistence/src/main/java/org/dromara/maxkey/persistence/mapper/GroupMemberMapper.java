@@ -32,7 +32,7 @@ import org.dromara.mybatis.jpa.IJpaMapper;
  *
  */
 
-public  interface GroupMemberMapper extends IJpaMapper<GroupMember> {
+public  interface GroupMemberMapper extends IJpaMapper<GroupMember,String> {
     
     public List<GroupMember> memberIn(GroupMember entity);
     public List<GroupMember> memberNotIn(GroupMember entity);

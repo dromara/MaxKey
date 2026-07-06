@@ -24,7 +24,7 @@ import org.dromara.mybatis.jpa.service.impl.JpaServiceImpl;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class HistoryLoginAppsServiceImpl  extends JpaServiceImpl<HistoryLoginAppsMapper,HistoryLoginApps> implements HistoryLoginAppsService{
+public class HistoryLoginAppsServiceImpl  extends JpaServiceImpl<HistoryLoginAppsMapper,HistoryLoginApps,String> implements HistoryLoginAppsService{
 
     @Override
     public boolean  insert(HistoryLoginApps loginAppsHistory){

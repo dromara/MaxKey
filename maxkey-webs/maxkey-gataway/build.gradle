@@ -7,7 +7,7 @@ apply plugin: 'java'
 dependencies {
          implementation project(":maxkey-commons:maxkey-common")
          implementation project(":maxkey-starter:maxkey-starter-web-static")
-         
+         /*
          //spring-cloud gateway server
          implementation group: 'org.springframework.cloud', name: 'spring-cloud-gateway-server', version: "${springcloudVersion}"
          implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-gateway', version: "${springcloudVersion}"
@@ -50,4 +50,5 @@ dependencies {
          implementation group: 'jakarta.annotation', name: 'jakarta.annotation-api', version: "${jakartaannotationVersion}"
          implementation group: 'io.lettuce', name: 'lettuce-core', version: "${lettuceVersion}"
          implementation group: 'io.netty', name: 'netty-all', version: "${nettyVersion}"
+         */
 }

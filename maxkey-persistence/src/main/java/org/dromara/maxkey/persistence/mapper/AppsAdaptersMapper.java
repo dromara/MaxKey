@@ -27,7 +27,7 @@ import org.dromara.mybatis.jpa.IJpaMapper;
  * @author Crystal.sea
  *
  */
-public  interface AppsAdaptersMapper extends IJpaMapper<AppsAdapters> {
+public  interface AppsAdaptersMapper extends IJpaMapper<AppsAdapters,String> {
     
 
 }

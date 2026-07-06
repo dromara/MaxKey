@@ -32,7 +32,7 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 
 
 @Repository
-public class InstitutionsServiceImpl  extends JpaServiceImpl<InstitutionsMapper,Institutions> implements InstitutionsService{
+public class InstitutionsServiceImpl  extends JpaServiceImpl<InstitutionsMapper,Institutions,String> implements InstitutionsService{
      static final Logger _logger = LoggerFactory.getLogger(InstitutionsServiceImpl.class);
      
     private static final String DEFAULT_INSTID = "1";

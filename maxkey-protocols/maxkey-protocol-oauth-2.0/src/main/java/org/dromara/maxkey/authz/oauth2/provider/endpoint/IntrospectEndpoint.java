@@ -87,7 +87,7 @@ public class IntrospectEndpoint {
             _logger.error("OAuth2Exception ", e);
         }
         
-        httpResponseAdapter.write(response,JsonUtils.gsonToString(introspection),"json"); 
+        httpResponseAdapter.write(response,JsonUtils.toString(introspection),"json"); 
     }
     
     public boolean clientAuthenticate(AuthorizationHeader headerCredential) {

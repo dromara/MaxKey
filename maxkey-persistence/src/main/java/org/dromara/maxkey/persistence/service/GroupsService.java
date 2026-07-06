@@ -22,7 +22,7 @@ import java.util.List;
 import org.dromara.maxkey.entity.idm.Groups;
 import org.dromara.mybatis.jpa.service.IJpaService;
 
-public interface GroupsService  extends IJpaService<Groups>{
+public interface GroupsService  extends IJpaService<Groups,String>{
 
     public List<Groups> queryDynamicGroups(Groups groups);
     

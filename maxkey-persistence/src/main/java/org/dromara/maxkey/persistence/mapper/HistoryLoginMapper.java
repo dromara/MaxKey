@@ -27,7 +27,7 @@ import org.dromara.mybatis.jpa.IJpaMapper;
  * @author Crystal.sea
  *
  */
-public interface HistoryLoginMapper extends IJpaMapper<HistoryLogin> {
+public interface HistoryLoginMapper extends IJpaMapper<HistoryLogin,String> {
     
     public List<HistoryLogin> queryOnlineSession(HistoryLogin historyLogin);
     

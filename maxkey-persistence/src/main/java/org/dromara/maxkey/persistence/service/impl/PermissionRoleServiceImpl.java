@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class PermissionRoleServiceImpl  extends JpaServiceImpl<PermissionRoleMapper,PermissionRole> implements PermissionRoleService{
+public class PermissionRoleServiceImpl  extends JpaServiceImpl<PermissionRoleMapper,PermissionRole,String> implements PermissionRoleService{
     static final Logger _logger = LoggerFactory.getLogger(PermissionRoleServiceImpl.class);
  
     

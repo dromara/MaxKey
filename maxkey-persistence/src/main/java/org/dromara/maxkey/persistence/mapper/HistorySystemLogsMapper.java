@@ -27,7 +27,7 @@ import org.dromara.mybatis.jpa.IJpaMapper;
  * @author Crystal.sea
  *
  */
-public  interface HistorySystemLogsMapper extends IJpaMapper<HistorySystemLogs> {
+public  interface HistorySystemLogsMapper extends IJpaMapper<HistorySystemLogs,String> {
     
 
 }

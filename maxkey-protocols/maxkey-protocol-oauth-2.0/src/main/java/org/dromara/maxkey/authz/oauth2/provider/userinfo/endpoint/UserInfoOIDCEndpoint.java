@@ -103,7 +103,7 @@ public class UserInfoOIDCEndpoint {
         String access_token =  RequestTokenUtils.resolveAccessToken(request);
         _logger.debug("access_token {}" , access_token);
         if (!StringGenerator.uuidMatches(access_token)) {
-            return JsonUtils.gsonToString(accessTokenFormatError(access_token));
+            return JsonUtils.toString(accessTokenFormatError(access_token));
         }
         
         String principal = "";

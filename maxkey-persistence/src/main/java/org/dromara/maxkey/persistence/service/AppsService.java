@@ -22,7 +22,7 @@ import org.dromara.maxkey.entity.apps.Apps;
 import org.dromara.maxkey.entity.apps.UserApps;
 import org.dromara.mybatis.jpa.service.IJpaService;
 
-public interface AppsService extends IJpaService<Apps>{
+public interface AppsService extends IJpaService<Apps,String>{
     
     public boolean insertApp(Apps app) ;
     

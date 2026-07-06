@@ -33,7 +33,7 @@ import org.dromara.mybatis.jpa.IJpaMapper;
  * 
  * @author MaxKey Team
  */
-public interface UserPasskeyMapper extends IJpaMapper<UserPasskey> {
+public interface UserPasskeyMapper extends IJpaMapper<UserPasskey,String> {
     
     /**
      * 根据用户ID查询所有Passkey凭据

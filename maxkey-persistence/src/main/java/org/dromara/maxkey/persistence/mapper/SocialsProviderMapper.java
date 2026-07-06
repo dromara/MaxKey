@@ -25,7 +25,7 @@ import org.dromara.mybatis.jpa.IJpaMapper;
  * @author Crystal.Sea
  *
  */
-public interface SocialsProviderMapper  extends IJpaMapper<SocialsProvider>{
+public interface SocialsProviderMapper  extends IJpaMapper<SocialsProvider,String>{
 
     
 }

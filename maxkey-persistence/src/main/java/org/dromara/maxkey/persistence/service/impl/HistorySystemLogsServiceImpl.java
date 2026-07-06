@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class HistorySystemLogsServiceImpl  extends JpaServiceImpl<HistorySystemLogsMapper,HistorySystemLogs> implements HistorySystemLogsService{
+public class HistorySystemLogsServiceImpl  extends JpaServiceImpl<HistorySystemLogsMapper,HistorySystemLogs,String> implements HistorySystemLogsService{
     static final Logger _logger = LoggerFactory.getLogger(HistorySystemLogsServiceImpl.class);
 
     public void insert(String topic,Object entity,String action,String result,UserInfo operator) {
@@ -89,7 +89,7 @@ public class HistorySystemLogsServiceImpl  extends JpaServiceImpl<HistorySystemL
         systemLog.setUsername(operator.getUsername());
         systemLog.setDisplayName(operator.getDisplayName());
         systemLog.setInstId(operator.getInstId());
-        systemLog.setJsonCotent(JsonUtils.gsonToString(entity));
+        systemLog.setJsonCotent(JsonUtils.toString(entity));
         systemLog.setExecuteTime(new Date());
         _logger.trace("System Log {}" ,systemLog);
         getMapper().insert(systemLog);

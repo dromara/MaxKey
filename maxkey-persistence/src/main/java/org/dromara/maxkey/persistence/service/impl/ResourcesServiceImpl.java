@@ -26,7 +26,7 @@ import org.dromara.mybatis.jpa.service.impl.JpaServiceImpl;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ResourcesServiceImpl  extends JpaServiceImpl<ResourcesMapper,Resources> implements ResourcesService{
+public class ResourcesServiceImpl  extends JpaServiceImpl<ResourcesMapper,Resources,String> implements ResourcesService{
     
     public List<Resources> queryResourcesTree(Resources resource){
        return  getMapper().fetchPageResults(resource);

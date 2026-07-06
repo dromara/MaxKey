@@ -20,7 +20,7 @@ package org.dromara.maxkey.persistence.service;
 import org.dromara.maxkey.entity.OrganizationsCast;
 import org.dromara.mybatis.jpa.service.IJpaService;
 
-public interface OrganizationsCastService  extends IJpaService<OrganizationsCast>{
+public interface OrganizationsCastService  extends IJpaService<OrganizationsCast,String>{
 
     public boolean updateCast(OrganizationsCast organizationsCast) ;
 

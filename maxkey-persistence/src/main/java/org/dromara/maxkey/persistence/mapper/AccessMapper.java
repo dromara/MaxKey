@@ -30,7 +30,7 @@ import org.dromara.mybatis.jpa.IJpaMapper;
  *
  */
 
-public  interface AccessMapper extends IJpaMapper<Access> {
+public  interface AccessMapper extends IJpaMapper<Access,String> {
     
     public List<Access>appsInGroup(Access entity);
     

@@ -25,6 +25,6 @@ import org.dromara.mybatis.jpa.IJpaMapper;
  * @author Crystal.sea
  *
  */
-public interface HistoryConnectorMapper extends IJpaMapper<HistoryConnector> {
+public interface HistoryConnectorMapper extends IJpaMapper<HistoryConnector,String> {
 
 }

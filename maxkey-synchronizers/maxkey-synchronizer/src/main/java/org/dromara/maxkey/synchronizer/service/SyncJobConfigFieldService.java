@@ -22,7 +22,7 @@ import org.dromara.maxkey.entity.SyncJobConfigField;
 import org.dromara.mybatis.jpa.service.IJpaService;
 import java.util.List;
 
-public interface SyncJobConfigFieldService extends IJpaService<SyncJobConfigField> {
+public interface SyncJobConfigFieldService extends IJpaService<SyncJobConfigField,String> {
 
     public List<SyncJobConfigField> findByJobIdAndObjectType(Long jobId, String objectType) ;
 

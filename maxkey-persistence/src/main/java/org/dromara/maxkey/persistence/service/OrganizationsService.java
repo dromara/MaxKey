@@ -23,7 +23,7 @@ import org.dromara.maxkey.entity.idm.Organizations;
 import org.dromara.mybatis.jpa.service.IJpaService;
 
 
-public interface OrganizationsService  extends IJpaService<Organizations>{
+public interface OrganizationsService  extends IJpaService<Organizations,String>{
 
      public void saveOrUpdate(Organizations organization) ;
      

@@ -50,7 +50,7 @@ import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 
 @Repository
-public class CnfPasswordPolicyServiceImpl  extends JpaServiceImpl<CnfPasswordPolicyMapper,CnfPasswordPolicy> implements CnfPasswordPolicyService{
+public class CnfPasswordPolicyServiceImpl  extends JpaServiceImpl<CnfPasswordPolicyMapper,CnfPasswordPolicy,String> implements CnfPasswordPolicyService{
     static final Logger _logger = LoggerFactory.getLogger(CnfPasswordPolicyServiceImpl.class);
     
     //Dictionary topWeakPassword Source

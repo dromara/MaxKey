@@ -28,7 +28,7 @@ import org.dromara.mybatis.jpa.IJpaMapper;
  *
  */
 
-public  interface PermissionRoleMapper extends IJpaMapper<PermissionRole> {
+public  interface PermissionRoleMapper extends IJpaMapper<PermissionRole,String> {
     
     public int insertPermissionRoles(List<PermissionRole> permissionRolesList);
     

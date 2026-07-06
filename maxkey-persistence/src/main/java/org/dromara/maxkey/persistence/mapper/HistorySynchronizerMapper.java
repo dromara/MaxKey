@@ -25,6 +25,6 @@ import org.dromara.mybatis.jpa.IJpaMapper;
  * @author Crystal.sea
  *
  */
-public interface HistorySynchronizerMapper extends IJpaMapper<HistorySynchronizer> {
+public interface HistorySynchronizerMapper extends IJpaMapper<HistorySynchronizer,String> {
 
 }

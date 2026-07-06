@@ -78,7 +78,7 @@ public class UserInfoEndpoint {
             String access_token =  RequestTokenUtils.resolveAccessToken(request);
             _logger.debug("access_token {}" , access_token);
             if (!StringGenerator.uuidMatches(access_token)) {
-                httpResponseAdapter.write(response,JsonUtils.gsonToString(accessTokenFormatError(access_token)),"json"); 
+                httpResponseAdapter.write(response,JsonUtils.toString(accessTokenFormatError(access_token)),"json"); 
             }
             
             OAuth2Authentication oAuth2Authentication =null;
@@ -111,7 +111,7 @@ public class UserInfoEndpoint {
                 HashMap<String,Object>authzException=new HashMap<String,Object>();
                 authzException.put(OAuth2Exception.ERROR, e.getOAuth2ErrorCode());
                 authzException.put(OAuth2Exception.DESCRIPTION,e.getMessage());
-                httpResponseAdapter.write(response,JsonUtils.gsonToString(authzException),"json"); 
+                httpResponseAdapter.write(response,JsonUtils.toString(authzException),"json"); 
             }
     }
     

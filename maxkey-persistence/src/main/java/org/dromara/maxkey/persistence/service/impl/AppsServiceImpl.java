@@ -32,7 +32,7 @@ import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 
 @Repository
-public class AppsServiceImpl extends JpaServiceImpl<AppsMapper,Apps> implements AppsService{
+public class AppsServiceImpl extends JpaServiceImpl<AppsMapper,Apps,String> implements AppsService{
     //maxkey-mgt
     public static final      String MGT_APP_ID         = "622076759805923328";
     

@@ -22,7 +22,8 @@ import java.security.KeyPair;
 import org.dromara.maxkey.crypto.Base64Utils;
 import org.dromara.maxkey.crypto.HexUtils;
 import org.dromara.maxkey.crypto.RSAUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
 
 
 public class RSAUtilsTest {

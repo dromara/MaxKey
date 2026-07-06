@@ -71,7 +71,7 @@ public class WorkweixinUsersService extends AbstractSynchronizerService implemen
                 // 根据微信部门ID，拉取微信用户列表, 这里拉取的是直属员工
                 HttpRequestAdapter request = new HttpRequestAdapter();
                 String responseBody = request.get(String.format(USERS_URL, access_token, relatedOrg.getOriginId()));
-                WorkWeixinUsersResponse usersResponse = JsonUtils.gsonStringToObject(responseBody, WorkWeixinUsersResponse.class);
+                WorkWeixinUsersResponse usersResponse = JsonUtils.stringToObject(responseBody, WorkWeixinUsersResponse.class);
                 _logger.trace("response : {}", responseBody);
 
                 if (usersResponse == null || usersResponse.getErrcode() != 0 || usersResponse.getUserlist() == null) {

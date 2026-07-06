@@ -36,7 +36,7 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public class OrganizationsServiceImpl  extends JpaServiceImpl<OrganizationsMapper,Organizations> implements OrganizationsService{
+public class OrganizationsServiceImpl  extends JpaServiceImpl<OrganizationsMapper,Organizations,String> implements OrganizationsService{
     static final Logger _logger = LoggerFactory.getLogger(OrganizationsServiceImpl.class);
 
      @Override

@@ -26,7 +26,7 @@ import org.dromara.mybatis.jpa.service.IJpaService;
  * @author Crystal.Sea
  *
  */
-public interface UserInfoService extends IJpaService<UserInfo> {
+public interface UserInfoService extends IJpaService<UserInfo,String> {
     
     public boolean insert(UserInfo userInfo,boolean passwordEncoder) ;
     

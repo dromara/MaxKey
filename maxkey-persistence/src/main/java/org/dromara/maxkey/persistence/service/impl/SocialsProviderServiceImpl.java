@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class SocialsProviderServiceImpl  extends JpaServiceImpl<SocialsProviderMapper,SocialsProvider> implements SocialsProviderService{
+public class SocialsProviderServiceImpl  extends JpaServiceImpl<SocialsProviderMapper,SocialsProvider,String> implements SocialsProviderService{
     static final  Logger _logger = LoggerFactory.getLogger(SocialsProviderServiceImpl.class);
     
 }

@@ -24,6 +24,6 @@ import org.dromara.mybatis.jpa.service.impl.JpaServiceImpl;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class AccessServiceImpl  extends JpaServiceImpl<AccessMapper,Access> implements AccessService{
+public class AccessServiceImpl  extends JpaServiceImpl<AccessMapper,Access,String> implements AccessService{
 
 }

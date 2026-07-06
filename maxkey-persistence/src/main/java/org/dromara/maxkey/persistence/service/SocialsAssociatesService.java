@@ -24,7 +24,7 @@ import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.mybatis.jpa.service.IJpaService;
 
 
-public interface SocialsAssociatesService  extends IJpaService<SocialsAssociate>{
+public interface SocialsAssociatesService  extends IJpaService<SocialsAssociate,String>{
 
     public List<SocialsAssociate>  queryByUser(UserInfo user);
      

@@ -38,7 +38,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class RolesServiceImpl  extends JpaServiceImpl<RolesMapper,Roles> implements RolesService{
+public class RolesServiceImpl  extends JpaServiceImpl<RolesMapper,Roles,String> implements RolesService{
     static final  Logger _logger = LoggerFactory.getLogger(RolesServiceImpl.class);
     
     @Autowired

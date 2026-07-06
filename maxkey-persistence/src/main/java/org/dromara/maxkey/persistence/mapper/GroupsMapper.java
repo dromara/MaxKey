@@ -30,7 +30,7 @@ import org.dromara.mybatis.jpa.IJpaMapper;
  *
  */
 
-public  interface GroupsMapper extends IJpaMapper<Groups> {
+public  interface GroupsMapper extends IJpaMapper<Groups,String> {
 
     public List<Groups> queryDynamic(Groups groups);
     

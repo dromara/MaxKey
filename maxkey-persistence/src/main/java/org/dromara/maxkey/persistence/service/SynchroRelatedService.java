@@ -23,7 +23,7 @@ import org.dromara.maxkey.entity.SynchroRelated;
 import org.dromara.maxkey.entity.Synchronizers;
 import org.dromara.mybatis.jpa.service.IJpaService;
 
-public interface SynchroRelatedService  extends IJpaService<SynchroRelated>{
+public interface SynchroRelatedService  extends IJpaService<SynchroRelated,String>{
 
     public int updateSyncTime(SynchroRelated synchroRelated);
     

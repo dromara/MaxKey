@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class SynchronizersServiceImpl  extends JpaServiceImpl<SynchronizersMapper,Synchronizers> implements SynchronizersService{
+public class SynchronizersServiceImpl  extends JpaServiceImpl<SynchronizersMapper,Synchronizers,String> implements SynchronizersService{
     static final  Logger _logger = LoggerFactory.getLogger(SynchronizersServiceImpl.class);
     
 }

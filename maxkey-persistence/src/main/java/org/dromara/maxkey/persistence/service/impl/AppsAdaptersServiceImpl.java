@@ -24,6 +24,6 @@ import org.dromara.mybatis.jpa.service.impl.JpaServiceImpl;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class AppsAdaptersServiceImpl  extends JpaServiceImpl<AppsAdaptersMapper,AppsAdapters> implements AppsAdaptersService{
+public class AppsAdaptersServiceImpl  extends JpaServiceImpl<AppsAdaptersMapper,AppsAdapters,String> implements AppsAdaptersService{
 
 }

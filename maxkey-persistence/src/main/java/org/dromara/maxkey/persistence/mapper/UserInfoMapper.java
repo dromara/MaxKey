@@ -32,7 +32,7 @@ import org.dromara.mybatis.jpa.IJpaMapper;
  * @author Crystal.Sea
  *
  */
-public interface UserInfoMapper  extends IJpaMapper<UserInfo>{
+public interface UserInfoMapper  extends IJpaMapper<UserInfo,String>{
     
     //login query
     public UserInfo findByAppIdAndUsername(UserInfo userInfo);
