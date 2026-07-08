@@ -19,6 +19,7 @@ package org.dromara.maxkey.entity.idm;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import org.dromara.mybatis.jpa.entity.JpaEntity;
 
@@ -85,6 +86,8 @@ public class Groups extends JpaEntity implements Serializable {
     private String instId;
 
     private String instName;
+    
+    List<String> orgIds;
 
     public Groups() {
     }
@@ -240,7 +243,15 @@ public class Groups extends JpaEntity implements Serializable {
         this.instName = instName;
     }
 
-    @Override
+    public List<String> getOrgIds() {
+		return orgIds;
+	}
+
+	public void setOrgIds(List<String> orgIds) {
+		this.orgIds = orgIds;
+	}
+
+	@Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("Groups [id=");
