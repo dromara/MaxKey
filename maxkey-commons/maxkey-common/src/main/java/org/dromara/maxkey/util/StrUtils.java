@@ -27,6 +27,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 public final class StrUtils {
@@ -237,12 +238,12 @@ public final class StrUtils {
 
     public static List<String> string2List(String string, String split) {
         String[] strs = {};
-        if (string != null && !string.equals("")) {
+        if (StringUtils.isNotEmpty(string)) {
             strs = string.split(split);
         }
         ArrayList<String> resultList = new ArrayList<String>(0);
         for (int i = 0; i < strs.length; i++) {
-            if (strs[i] != null && !strs[i].equals("")) {
+            if (StringUtils.isNotEmpty(strs[i])) {
                 resultList.add(strs[i]);
             }
         }
@@ -252,11 +253,11 @@ public final class StrUtils {
 
     public static String list2String(List<String> list, String split) {
         String string = "";
-        if (list == null) {
+        if (CollectionUtils.isEmpty(list)) {
             return string;
         }
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i) != null && !list.get(i).equals("")) {
+            if (StringUtils.isNotEmpty(list.get(i))) {
                 string += list.get(i) + split;
             }
         }
