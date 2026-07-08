@@ -155,8 +155,12 @@
 		<if test="filters != null and filters != ''">
 				and (${filters})
 		</if>
-		<if test="orgIdsList != null and orgIdsList != ''">
-				and u.departmentid in( ${orgIdsList})
+		<if test="orgIds != null and orgIds.size() > 0">
+				and u.departmentid in(
+				<foreach collection="orgIds" item="item" separator=",">
+					#{item}
+				</foreach>
+				)
 		</if>
     </update>
     
@@ -172,8 +176,12 @@
 				<if test="filters != null and filters != ''">
 						and (${filters})
 				</if>
-				<if test="orgIdsList != null and orgIdsList != ''">
-						and u.departmentid in ( ${orgIdsList})
+				<if test="orgIds != null and orgIds.size() > 0">
+						and u.departmentid in ( 
+						<foreach collection="orgIds" item="item" separator=",">
+							#{item}
+						</foreach>
+						)
 				</if>
 			)
     </delete>

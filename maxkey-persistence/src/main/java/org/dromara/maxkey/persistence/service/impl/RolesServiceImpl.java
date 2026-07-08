@@ -64,23 +64,10 @@ public class RolesServiceImpl  extends JpaServiceImpl<RolesMapper,Roles,String> 
     
     public void refreshDynamicRoles(Roles dynamicRole){
         if(dynamicRole.getCategory().equals(Roles.Category.DYNAMIC)) {
-            
-            if(StringUtils.isNotBlank(dynamicRole.getOrgIdsList())) {
-                String []orgIds = dynamicRole.getOrgIdsList().split(",");
-                StringBuffer orgIdFilters = new StringBuffer();
-                for(String orgId : orgIds) {
-                    if(StringUtils.isNotBlank(orgId)) {
-                        if(orgIdFilters.length() > 0) {
-                            orgIdFilters.append(",");
-                        }
-                        orgIdFilters.append("'").append(orgId).append("'");
-                    }
-                }
-                if(orgIdFilters.length() > 0) {
-                    dynamicRole.setOrgIdsList(orgIdFilters.toString());
-                }
+        	if(StringUtils.isNotBlank(dynamicRole.getOrgIdsList())) {
+        		dynamicRole.setOrgIds(StrUtils.string2List(dynamicRole.getOrgIdsList(), "','"));
+                _logger.debug("OrgIds {}" , dynamicRole.getOrgIds());
             }
-            
             String filters = dynamicRole.getFilters();
             _logger.debug("filters {}" , filters);
             if(StringUtils.isNotBlank(filters)) {

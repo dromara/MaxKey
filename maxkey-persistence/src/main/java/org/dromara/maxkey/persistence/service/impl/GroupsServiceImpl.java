@@ -62,23 +62,10 @@ public class GroupsServiceImpl  extends JpaServiceImpl<GroupsMapper,Groups,Strin
     
     public void refreshDynamicGroups(Groups dynamicGroup){
         if(dynamicGroup.getCategory().equals(Roles.Category.DYNAMIC)) {
-            
-            if(StringUtils.isNotBlank(dynamicGroup.getOrgIdsList())) {
-                String []orgIds = dynamicGroup.getOrgIdsList().split(",");
-                StringBuffer orgIdFilters = new StringBuffer();
-                for(String orgId : orgIds) {
-                    if(StringUtils.isNotBlank(orgId)) {
-                        if(orgIdFilters.length() > 0) {
-                            orgIdFilters.append(",");
-                        }
-                        orgIdFilters.append("'").append(orgId).append("'");
-                    }
-                }
-                if(orgIdFilters.length() > 0) {
-                    dynamicGroup.setOrgIdsList(orgIdFilters.toString());
-                }
+        	if(StringUtils.isNotBlank(dynamicGroup.getOrgIdsList())) {
+                dynamicGroup.setOrgIds(StrUtils.string2List(dynamicGroup.getOrgIdsList(), "','"));
+                _logger.debug("OrgIds {}" , dynamicGroup.getOrgIds());
             }
-            
             String filters = dynamicGroup.getFilters();
             if(StringUtils.isNotBlank(filters)) {
                 if(StrUtils.filtersSQLInjection(filters.toLowerCase())) {  
