@@ -505,6 +505,8 @@ public final class StrUtils {
         sqlInjection.add("truncate");
         sqlInjection.add("update");
         sqlInjection.add("insert");
+        sqlInjection.add("union");
+        sqlInjection.add("sleep");
         sqlInjection.add("and");
         sqlInjection.add("or");
     }
