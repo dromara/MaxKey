@@ -193,11 +193,11 @@
     		instid
     	)
     	select 
-    		concat('${id}_',u.id) id,
-    		'${id}' groupid,
+    		concat(#{id} , u.id) id,
+    		#{id} groupid,
     		u.id memberid,
     		'USER-DYNAMIC' type,
-    		'${instId}' instid
+    		#{instId} instid
     	from mxk_userinfo u
 		where not exists(
 				select  1 from mxk_group_member gm 
