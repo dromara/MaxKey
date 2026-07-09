@@ -65,7 +65,7 @@ public class RolesServiceImpl  extends JpaServiceImpl<RolesMapper,Roles,String> 
     public void refreshDynamicRoles(Roles dynamicRole){
         if(dynamicRole.getCategory().equals(Roles.Category.DYNAMIC)) {
         	if(StringUtils.isNotBlank(dynamicRole.getOrgIdsList())) {
-        		dynamicRole.setOrgIds(StrUtils.string2List(dynamicRole.getOrgIdsList(), "','"));
+        		dynamicRole.setOrgIds(StrUtils.string2List(dynamicRole.getOrgIdsList(), ","));
                 _logger.debug("OrgIds {}" , dynamicRole.getOrgIds());
             }
             String filters = dynamicRole.getFilters();
