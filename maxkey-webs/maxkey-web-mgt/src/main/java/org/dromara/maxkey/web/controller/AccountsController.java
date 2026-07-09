@@ -26,11 +26,9 @@ import org.dromara.maxkey.constants.ConstsAct;
 import org.dromara.maxkey.constants.ConstsActResult;
 import org.dromara.maxkey.crypto.password.PasswordReciprocal;
 import org.dromara.maxkey.entity.Accounts;
-import org.dromara.maxkey.entity.AccountsStrategy;
 import org.dromara.maxkey.entity.Message;
 import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.service.AccountsService;
-import org.dromara.maxkey.persistence.service.AccountsStrategyService;
 import org.dromara.maxkey.persistence.service.AppsService;
 import org.dromara.maxkey.persistence.service.HistorySystemLogsService;
 import org.dromara.maxkey.persistence.service.UserInfoService;
@@ -58,9 +56,6 @@ public class AccountsController {
 
     @Autowired
     AccountsService accountsService;
-    
-    @Autowired
-    AccountsStrategyService accountsStrategyService;
     
     @Autowired
     AppsService appsService;
@@ -174,15 +169,6 @@ public class AccountsController {
             return new Message<>(Message.FAIL);
         }
         
-    }
-    
-    @GetMapping(value = "/generate")
-    public Message<String> generate(@ModelAttribute Accounts account) {
-        AccountsStrategy accountsStrategy = accountsStrategyService.get(account.getStrategyId());
-           UserInfo  userInfo  = userInfoService.get(account.getUserId());
-        return new Message<>(
-                Message.SUCCESS,accountsService.generateAccount(userInfo,accountsStrategy)
-            );
     }
 
 }

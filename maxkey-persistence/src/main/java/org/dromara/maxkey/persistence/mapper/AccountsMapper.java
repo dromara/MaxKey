@@ -26,8 +26,6 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.dromara.maxkey.entity.Accounts;
-import org.dromara.maxkey.entity.AccountsStrategy;
-import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.mybatis.jpa.IJpaMapper;
 
 /**
@@ -35,11 +33,6 @@ import org.dromara.mybatis.jpa.IJpaMapper;
  *
  */
 public  interface AccountsMapper extends IJpaMapper<Accounts,String> {
-    
-
-    public List<UserInfo> queryUserNotInStrategy(AccountsStrategy strategy);
-    
-    public long deleteByStrategy(AccountsStrategy strategy);
     
     public List<Accounts> queryByAppIdAndDate(Accounts account);
     

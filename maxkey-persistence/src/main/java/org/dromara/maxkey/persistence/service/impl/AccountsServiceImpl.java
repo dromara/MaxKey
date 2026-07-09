@@ -23,11 +23,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.constants.ConstsStatus;
 import org.dromara.maxkey.crypto.password.PasswordReciprocal;
 import org.dromara.maxkey.entity.Accounts;
-import org.dromara.maxkey.entity.AccountsStrategy;
 import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.mapper.AccountsMapper;
 import org.dromara.maxkey.persistence.service.AccountsService;
-import org.dromara.maxkey.persistence.service.AccountsStrategyService;
 import org.dromara.maxkey.persistence.service.OrganizationsCastService;
 import org.dromara.maxkey.persistence.service.UserInfoService;
 import org.dromara.mybatis.jpa.service.impl.JpaServiceImpl;
@@ -46,9 +44,6 @@ public class AccountsServiceImpl  extends JpaServiceImpl<AccountsMapper,Accounts
   
     @Autowired
     UserInfoService  userInfoService;
-    
-    @Autowired
-    AccountsStrategyService accountsStrategyService;
     
     @Autowired
     OrganizationsCastService organizationsCastService;
@@ -80,49 +75,7 @@ public class AccountsServiceImpl  extends JpaServiceImpl<AccountsMapper,Accounts
        return false;
    }
    
-   public void refreshByStrategy(AccountsStrategy strategy) {
-       if(StringUtils.isNotBlank(strategy.getOrgIdsList())) {
-           strategy.setOrgIdsList("'"+strategy.getOrgIdsList().replace(",", "','")+"'");
-       }
-       List<UserInfo>  userList = queryUserNotInStrategy(strategy);
-       for(UserInfo user : userList) {
-           Accounts account = new Accounts();
-           account.setAppId(strategy.getAppId());
-           account.setAppName(strategy.getAppName());
-           
-           account.setUserId(user.getId());
-           account.setUsername(user.getUsername());
-           account.setDisplayName(user.getDisplayName());
-           account.setRelatedUsername(generateAccount(user,strategy));
-           account.setRelatedPassword(PasswordReciprocal.getInstance().encode(userInfoService.randomPassword()));
-           
-           account.setInstId(strategy.getInstId());
-           account.setCreateType("automatic");
-           account.setStatus(ConstsStatus.ACTIVE);
-           account.setStrategyId(strategy.getId());
-           
-           insert(account);
-       }
-       deleteByStrategy(strategy);
-   }
-   public void refreshAllByStrategy() {
-       AccountsStrategy queryStrategy = new AccountsStrategy();
-       queryStrategy.setCreateType("automatic");
-       for( AccountsStrategy strategy : accountsStrategyService.query(queryStrategy)) {
-           refreshByStrategy(strategy);
-       }
-   }
    
-   
-   public List<UserInfo> queryUserNotInStrategy(AccountsStrategy strategy){
-       return getMapper().queryUserNotInStrategy(strategy);
-   }
-   
-   public long deleteByStrategy(AccountsStrategy strategy) {
-       return getMapper().deleteByStrategy(strategy);
-   }
-    
-    
    public List<Accounts> queryByAppIdAndDate(Accounts account) {
        return getMapper().queryByAppIdAndDate(account);
    }
@@ -131,63 +84,6 @@ public class AccountsServiceImpl  extends JpaServiceImpl<AccountsMapper,Accounts
        return getMapper().queryByAppIdAndAccount(appId,relatedUsername);
    }
    
-   
-   public String generateAccount(UserInfo  userInfo,AccountsStrategy accountsStrategy) {
-       String shortAccount = generateAccount(userInfo,accountsStrategy,true);
-       String account = generateAccount(userInfo,accountsStrategy,false);
-       String accountResult = shortAccount;
-       List<Accounts> accountsList =getMapper().queryByAppIdAndAccount(accountsStrategy.getAppId(),shortAccount +accountsStrategy.getSuffixes());
-       if(!accountsList.isEmpty()) {
-           if(accountsStrategy.getMapping().equalsIgnoreCase("email")) {
-               accountResult = account;
-               accountsList =getMapper().queryByAppIdAndAccount(accountsStrategy.getAppId(),account + accountsStrategy.getSuffixes());
-           }
-           if(!accountsList.isEmpty()) {
-                for(int i =1 ;i < 100 ;i++) {
-                    accountResult = account + i;
-                    accountsList =getMapper().queryByAppIdAndAccount(accountsStrategy.getAppId(),accountResult + accountsStrategy.getSuffixes());
-                    if(accountsList.isEmpty()) {
-                        break;
-                    }
-                }
-           }
-       }
-       if(StringUtils.isNotBlank(accountsStrategy.getSuffixes())){
-           accountResult = accountResult + accountsStrategy.getSuffixes();
-       }
-       return accountResult;
-   }
-   
-   
-    private String generateAccount(UserInfo  userInfo,AccountsStrategy strategy,boolean isShort) {
-        String account = "";
-        if(strategy.getMapping().equalsIgnoreCase("username")) {
-            account = userInfo.getUsername();
-        }else if(strategy.getMapping().equalsIgnoreCase("mobile")) {
-            account = userInfo.getMobile();
-        }else if(strategy.getMapping().equalsIgnoreCase("email")) {
-            try {
-                if(isShort) {
-                    account = getPinYinShortName(userInfo.getDisplayName());
-                }else {
-                    account = getPinYinName(userInfo.getDisplayName());
-                }
-            }catch(Exception e) {
-                e.printStackTrace();
-            }
-        }else if(strategy.getMapping().equalsIgnoreCase("employeeNumber")) {
-            account = userInfo.getEmployeeNumber();
-        }else if(strategy.getMapping().equalsIgnoreCase("windowsAccount")) {
-            account = userInfo.getWindowsAccount();
-        }else if(strategy.getMapping().equalsIgnoreCase("idCardNo")) {
-            account = userInfo.getIdCardNo();
-        }else {
-            account = userInfo.getUsername();
-        }
-        
-        return account;
-    }
-    
     public static String getPinYinName(String name) throws BadHanyuPinyinOutputFormatCombination {
         HanyuPinyinOutputFormat pinyinFormat = new        HanyuPinyinOutputFormat();
         pinyinFormat.setCaseType(HanyuPinyinCaseType.LOWERCASE);
