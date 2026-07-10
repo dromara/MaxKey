@@ -43,7 +43,7 @@ public class InjectInstAspect {
     
     static final String INSTID_FIELD	= "instId";
     
-    @Pointcut("@annotation(org.maxkey.authn.annotation.InjectInst)")
+    @Pointcut("@annotation(org.dromara.maxkey.authn.annotation.InjectInst)")
     public void injectInstMethods() {
     }
     
