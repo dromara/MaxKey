@@ -86,7 +86,7 @@ public class AuthorizationUtils {
                 Session session = sessionManager.get(sessionId);
                 if(session != null) {
                     setAuthentication(session.getAuthentication());
-                    _logger.debug("{} Automatic authenticated .",bearerType);
+                    _logger.trace("{} Automatic authenticated .",bearerType);
                 }else {
                     //time out
                     _logger.debug("Session timeout .");
@@ -101,10 +101,10 @@ public class AuthorizationUtils {
     }
 
     public static Session getSession(SessionManager sessionManager, String authorization) throws ParseException {
-        _logger.debug("get session by authorization {}", authorization);
+        _logger.trace("get session by authorization {}", authorization);
         SignedJWT signedJWT = SignedJWT.parse(authorization);
         String sessionId = signedJWT.getJWTClaimsSet().getJWTID();
-        _logger.debug("sessionId {}", sessionId);
+        _logger.trace("sessionId {}", sessionId);
         return sessionManager.get(sessionId);
     }
 
