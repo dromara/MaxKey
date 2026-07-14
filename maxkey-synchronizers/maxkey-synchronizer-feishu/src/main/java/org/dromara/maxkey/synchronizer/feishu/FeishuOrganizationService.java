@@ -31,14 +31,12 @@ import org.dromara.maxkey.http.AuthorizationHeaderUtils;
 import org.dromara.maxkey.http.HttpRequestAdapter;
 import org.dromara.maxkey.synchronizer.AbstractSynchronizerService;
 import org.dromara.maxkey.synchronizer.ISynchronizerService;
-import org.dromara.maxkey.entity.SyncJobConfigField;
+import org.dromara.maxkey.entity.SynchroAssociation;
 import org.dromara.maxkey.synchronizer.feishu.entity.FeishuDepts;
 import org.dromara.maxkey.synchronizer.feishu.entity.FeishuDeptsResponse;
-import org.dromara.maxkey.synchronizer.service.SyncJobConfigFieldService;
 import org.dromara.maxkey.util.JsonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import static org.dromara.maxkey.synchronizer.utils.FieldUtil.*;
@@ -49,11 +47,6 @@ public class FeishuOrganizationService extends AbstractSynchronizerService imple
     
     String access_token;
     private static final Integer ORG_TYPE = 2;
-
-
-
-    @Autowired
-    private SyncJobConfigFieldService syncJobConfigFieldService;
     
     static String DEPTS_URL = "https://open.feishu.cn/open-apis/contact/v3/departments/%s/children?page_size=50";
     static String ROOT_DEPT_URL = "https://open.feishu.cn/open-apis/contact/v3/departments/%s";
@@ -215,9 +208,9 @@ public class FeishuOrganizationService extends AbstractSynchronizerService imple
         //key是maxkey的属性，value是其他应用的属性
         Map<String,String> filedMap = new HashMap<>();
         //根据job id查询属性映射表
-        List<SyncJobConfigField> syncJobConfigFieldList = syncJobConfigFieldService.findByJobId(jobId);
+        List<SynchroAssociation> syncJobConfigFieldList = synchroAssociationService.findBySyncId(jobId);
         //获取组织属性映射
-        for(SyncJobConfigField element:syncJobConfigFieldList){
+        for(SynchroAssociation element:syncJobConfigFieldList){
             if(Integer.parseInt(element.getObjectType()) == ORG_TYPE.intValue()){
                 filedMap.put(element.getTargetField(), element.getSourceField());
             }
@@ -233,12 +226,5 @@ public class FeishuOrganizationService extends AbstractSynchronizerService imple
         this.access_token = access_token;
     }
 
-    public SyncJobConfigFieldService getSyncJobConfigFieldService() {
-        return syncJobConfigFieldService;
-    }
-
-    public void setSyncJobConfigFieldService(SyncJobConfigFieldService syncJobConfigFieldService) {
-        this.syncJobConfigFieldService = syncJobConfigFieldService;
-    }
 
 }

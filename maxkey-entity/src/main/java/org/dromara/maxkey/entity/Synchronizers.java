@@ -19,6 +19,7 @@ package org.dromara.maxkey.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.dromara.mybatis.jpa.annotations.PartitionKey;
 import org.dromara.mybatis.jpa.entity.JpaEntity;
 
 import jakarta.persistence.Column;
@@ -96,6 +97,7 @@ public class Synchronizers extends JpaEntity implements Serializable {
     String service;
 
     @Column
+    @PartitionKey
     private String instId;
 
     private String instName;

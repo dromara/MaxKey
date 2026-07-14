@@ -21,6 +21,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+
+import org.dromara.mybatis.jpa.annotations.PartitionKey;
 import org.dromara.mybatis.jpa.entity.JpaEntity;
 
 import java.io.Serializable;
@@ -33,8 +35,8 @@ import java.util.Date;
  */
 
 @Entity
-@Table(name = "SYNC_JOB_CONFIG_FIELD")
-public class SyncJobConfigField extends JpaEntity implements Serializable {
+@Table(name = "MXK_SYNCHRO_ASSOCIATION")
+public class SynchroAssociation extends JpaEntity implements Serializable {
 
     private static final long serialVersionUID =  6784822536779144306L;
 
@@ -50,7 +52,7 @@ public class SyncJobConfigField extends JpaEntity implements Serializable {
      * 同步任务ID
      */
     @Column
-    private Long jobId;
+    private Long syncId;
 
     /**
      * 规则名
@@ -117,6 +119,10 @@ public class SyncJobConfigField extends JpaEntity implements Serializable {
      */
        @Column
     private Date updateTime;
+       
+   @Column
+   @PartitionKey
+   String instId;
 
     public Long getId() {
         return id;
@@ -126,15 +132,15 @@ public class SyncJobConfigField extends JpaEntity implements Serializable {
         this.id = id;
     }
 
-    public Long getJobId() {
-        return jobId;
-    }
+	public Long getSyncId() {
+		return syncId;
+	}
+	
+    public void setSyncId(Long syncId) {
+		this.syncId = syncId;
+	}
 
-    public void setJobId(Long jobId) {
-        this.jobId = jobId;
-    }
-
-    public String getName() {
+	public String getName() {
         return name;
     }
 
@@ -221,5 +227,14 @@ public class SyncJobConfigField extends JpaEntity implements Serializable {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
+
+	public String getInstId() {
+		return instId;
+	}
+
+	public void setInstId(String instId) {
+		this.instId = instId;
+	}
+    
 }
 

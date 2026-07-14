@@ -15,20 +15,21 @@
  */
  
 
-package org.dromara.maxkey.synchronizer.service;
+package org.dromara.maxkey.persistence.service;
 
-import org.dromara.maxkey.entity.SyncJobConfigField;
+import org.dromara.maxkey.entity.SynchroAssociation;
 
 import org.dromara.mybatis.jpa.service.IJpaService;
 import java.util.List;
 
-public interface SyncJobConfigFieldService extends IJpaService<SyncJobConfigField,String> {
+public interface SynchroAssociationService extends IJpaService<SynchroAssociation,String> {
 
-    public List<SyncJobConfigField> findByJobIdAndObjectType(Long jobId, String objectType) ;
+    public List<SynchroAssociation> findBySyncIdAndObjectType(Long syncId, String objectType) ;
 
     public void deleteFieldMapById(Long id);
 
-    public List<SyncJobConfigField> findByJobId(Long jobId) ;
-
+    public List<SynchroAssociation> findBySyncId(Long syncId) ;
+    
+    public List<SynchroAssociation> findBySyncId(Long syncId,String instId) ;
 
 }

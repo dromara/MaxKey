@@ -35,10 +35,10 @@ import org.dromara.maxkey.entity.idm.Organizations;
 import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.ldap.LdapUtils;
 import org.dromara.maxkey.ldap.constants.InetOrgPerson;
+import org.dromara.maxkey.persistence.service.SynchroAssociationService;
 import org.dromara.maxkey.synchronizer.AbstractSynchronizerService;
 import org.dromara.maxkey.synchronizer.ISynchronizerService;
-import org.dromara.maxkey.entity.SyncJobConfigField;
-import org.dromara.maxkey.synchronizer.service.SyncJobConfigFieldService;
+import org.dromara.maxkey.entity.SynchroAssociation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,8 +50,6 @@ import static org.dromara.maxkey.synchronizer.utils.FieldUtil.setFieldValue;
 @Service
 public class LdapUsersService extends AbstractSynchronizerService  implements ISynchronizerService{
     final static Logger _logger = LoggerFactory.getLogger(LdapUsersService.class);
-    @Autowired
-    public SyncJobConfigFieldService syncJobConfigFieldService;
 
     private static final Integer USER_TYPE = 1;
     LdapUtils ldapUtils;
@@ -327,9 +325,9 @@ public class LdapUsersService extends AbstractSynchronizerService  implements IS
     public Map<String,String> getFieldMap(Long jobId){
         Map<String,String> userFieldMap = new HashMap<>();
         //根据job id查询属性映射表
-        List<SyncJobConfigField> syncJobConfigFieldList = syncJobConfigFieldService.findByJobId(jobId);
+        List<SynchroAssociation> syncJobConfigFieldList = synchroAssociationService.findBySyncId(jobId);
         //获取用户属性映射
-        for(SyncJobConfigField element:syncJobConfigFieldList){
+        for(SynchroAssociation element:syncJobConfigFieldList){
             if(Integer.parseInt(element.getObjectType()) == USER_TYPE.intValue()){
                 userFieldMap.put(element.getTargetField(), element.getSourceField());
             }
@@ -346,11 +344,4 @@ public class LdapUsersService extends AbstractSynchronizerService  implements IS
         this.ldapUtils = ldapUtils;
     }
 
-    public SyncJobConfigFieldService getSyncJobConfigFieldService() {
-        return syncJobConfigFieldService;
-    }
-
-    public void setSyncJobConfigFieldService(SyncJobConfigFieldService syncJobConfigFieldService) {
-        this.syncJobConfigFieldService = syncJobConfigFieldService;
-    }
 }

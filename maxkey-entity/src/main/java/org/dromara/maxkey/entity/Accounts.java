@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.dromara.maxkey.entity.idm.UserInfo;
+import org.dromara.mybatis.jpa.annotations.PartitionKey;
 import org.dromara.mybatis.jpa.entity.JpaEntity;
 import org.hibernate.validator.constraints.Length;
 
@@ -70,6 +71,7 @@ public class Accounts extends JpaEntity implements Serializable {
     private int status;
     
     @Column
+    @PartitionKey
     private String instId;
     
     private String instName;

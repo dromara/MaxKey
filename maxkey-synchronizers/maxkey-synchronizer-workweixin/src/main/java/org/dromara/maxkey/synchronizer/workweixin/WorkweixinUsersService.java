@@ -19,13 +19,13 @@ package org.dromara.maxkey.synchronizer.workweixin;
 
 import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.constants.ConstsStatus;
-import org.dromara.maxkey.entity.SyncJobConfigField;
+import org.dromara.maxkey.entity.SynchroAssociation;
 import org.dromara.maxkey.entity.SynchroRelated;
 import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.http.HttpRequestAdapter;
+import org.dromara.maxkey.persistence.service.SynchroAssociationService;
 import org.dromara.maxkey.synchronizer.AbstractSynchronizerService;
 import org.dromara.maxkey.synchronizer.ISynchronizerService;
-import org.dromara.maxkey.synchronizer.service.SyncJobConfigFieldService;
 import org.dromara.maxkey.synchronizer.workweixin.entity.WorkWeixinUsers;
 import org.dromara.maxkey.synchronizer.workweixin.entity.WorkWeixinUsersResponse;
 import org.dromara.maxkey.util.JsonUtils;
@@ -46,8 +46,6 @@ import static org.dromara.maxkey.synchronizer.utils.FieldUtil.*;
 public class WorkweixinUsersService extends AbstractSynchronizerService implements ISynchronizerService {
     final static Logger _logger = LoggerFactory.getLogger(WorkweixinUsersService.class);
 
-    @Autowired
-    public SyncJobConfigFieldService syncJobConfigFieldService;
     private static final Integer USER_TYPE = 1;
     String access_token;
 
@@ -262,9 +260,9 @@ public class WorkweixinUsersService extends AbstractSynchronizerService implemen
     public Map<String, String> getFieldMap(Long jobId) {
         Map<String, String> userFieldMap = new HashMap<>();
         //根据job id查询属性映射表
-        List<SyncJobConfigField> syncJobConfigFieldList = syncJobConfigFieldService.findByJobId(jobId);
+        List<SynchroAssociation> syncJobConfigFieldList = synchroAssociationService.findBySyncId(jobId);
         //获取用户属性映射
-        for (SyncJobConfigField element : syncJobConfigFieldList) {
+        for (SynchroAssociation element : syncJobConfigFieldList) {
             if (Integer.parseInt(element.getObjectType()) == USER_TYPE.intValue()) {
                 userFieldMap.put(element.getTargetField(), element.getSourceField());
             }
@@ -356,13 +354,5 @@ public class WorkweixinUsersService extends AbstractSynchronizerService implemen
             userInfoService.update(localUser);
             _logger.info("[同步微信用户] 用户 {} (originId={}) 已标记为禁用，userState=WITHDRAWN。", localUser.getUsername(), orphanRelation.getOriginId());
         }
-    }
-
-    public SyncJobConfigFieldService getSyncJobConfigFieldService() {
-        return syncJobConfigFieldService;
-    }
-
-    public void setSyncJobConfigFieldService(SyncJobConfigFieldService syncJobConfigFieldService) {
-        this.syncJobConfigFieldService = syncJobConfigFieldService;
     }
 }

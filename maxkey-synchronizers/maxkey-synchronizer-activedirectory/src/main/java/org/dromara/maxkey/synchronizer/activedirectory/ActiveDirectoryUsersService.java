@@ -37,10 +37,10 @@ import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.ldap.LdapUtils;
 import org.dromara.maxkey.ldap.activedirectory.ActiveDirectoryUtils;
 import org.dromara.maxkey.ldap.activedirectory.constants.ActiveDirectoryUser;
+import org.dromara.maxkey.persistence.service.SynchroAssociationService;
 import org.dromara.maxkey.synchronizer.AbstractSynchronizerService;
 import org.dromara.maxkey.synchronizer.ISynchronizerService;
-import org.dromara.maxkey.entity.SyncJobConfigField;
-import org.dromara.maxkey.synchronizer.service.SyncJobConfigFieldService;
+import org.dromara.maxkey.entity.SynchroAssociation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,8 +51,6 @@ import static org.dromara.maxkey.synchronizer.utils.FieldUtil.setFieldValue;
 @Service
 public class ActiveDirectoryUsersService extends AbstractSynchronizerService    implements ISynchronizerService{
     final static Logger _logger = LoggerFactory.getLogger(ActiveDirectoryUsersService.class);
-    @Autowired
-    private SyncJobConfigFieldService syncJobConfigFieldService;
 
     private static final Integer USER_TYPE = 1;
     ActiveDirectoryUtils ldapUtils;
@@ -301,9 +299,9 @@ public class ActiveDirectoryUsersService extends AbstractSynchronizerService    
     public Map<String,String> getFieldMap(Long jobId){
         Map<String,String> fieldMap = new HashMap<>();
         //根据job id查询属性映射表
-        List<SyncJobConfigField> syncJobConfigFieldList = syncJobConfigFieldService.findByJobId(jobId);
+        List<SynchroAssociation> syncJobConfigFieldList = synchroAssociationService.findBySyncId(jobId);
         //获取用户属性映射
-        for(SyncJobConfigField element:syncJobConfigFieldList){
+        for(SynchroAssociation element:syncJobConfigFieldList){
             if(Integer.parseInt(element.getObjectType()) == USER_TYPE.intValue()){
                 fieldMap.put(element.getTargetField(), element.getSourceField());
             }
@@ -317,13 +315,5 @@ public class ActiveDirectoryUsersService extends AbstractSynchronizerService    
 
     public void setLdapUtils(ActiveDirectoryUtils ldapUtils) {
         this.ldapUtils = ldapUtils;
-    }
-
-    public SyncJobConfigFieldService getSyncJobConfigFieldService() {
-        return syncJobConfigFieldService;
-    }
-
-    public void setSyncJobConfigFieldService(SyncJobConfigFieldService syncJobConfigFieldService) {
-        this.syncJobConfigFieldService = syncJobConfigFieldService;
     }
 }

@@ -18,13 +18,13 @@
 package org.dromara.maxkey.synchronizer.workweixin;
 
 import org.dromara.maxkey.constants.ConstsStatus;
-import org.dromara.maxkey.entity.SyncJobConfigField;
+import org.dromara.maxkey.entity.SynchroAssociation;
 import org.dromara.maxkey.entity.SynchroRelated;
 import org.dromara.maxkey.entity.idm.Organizations;
 import org.dromara.maxkey.http.HttpRequestAdapter;
+import org.dromara.maxkey.persistence.service.SynchroAssociationService;
 import org.dromara.maxkey.synchronizer.AbstractSynchronizerService;
 import org.dromara.maxkey.synchronizer.ISynchronizerService;
-import org.dromara.maxkey.synchronizer.service.SyncJobConfigFieldService;
 import org.dromara.maxkey.synchronizer.workweixin.entity.WorkWeixinDepts;
 import org.dromara.maxkey.synchronizer.workweixin.entity.WorkWeixinDeptsResponse;
 import org.dromara.maxkey.util.JsonUtils;
@@ -48,8 +48,7 @@ public class WorkweixinOrganizationService extends AbstractSynchronizerService i
     static final Logger _logger = LoggerFactory.getLogger(WorkweixinOrganizationService.class);
 
     String access_token;
-    @Autowired
-    private SyncJobConfigFieldService syncJobConfigFieldService;
+    
     private static final Integer ORG_TYPE = 2;
     static String DEPTS_URL = "https://qyapi.weixin.qq.com/cgi-bin/department/list?access_token=%s";
     static long ROOT_DEPT_ID = 1;
@@ -261,9 +260,9 @@ public class WorkweixinOrganizationService extends AbstractSynchronizerService i
     public Map<String, String> getFieldMap(Long jobId) {
         Map<String, String> filedMap = new HashMap<>();
         //根据job id查询属性映射表
-        List<SyncJobConfigField> syncJobConfigFieldList = syncJobConfigFieldService.findByJobId(jobId);
+        List<SynchroAssociation> syncJobConfigFieldList = synchroAssociationService.findBySyncId(jobId);
         //获取组织属性映射
-        for (SyncJobConfigField element : syncJobConfigFieldList) {
+        for (SynchroAssociation element : syncJobConfigFieldList) {
             if (Integer.parseInt(element.getObjectType()) == ORG_TYPE) {
                 filedMap.put(element.getTargetField(), element.getSourceField());
             }
@@ -370,11 +369,4 @@ public class WorkweixinOrganizationService extends AbstractSynchronizerService i
         this.access_token = access_token;
     }
 
-    public SyncJobConfigFieldService getSyncJobConfigFieldService() {
-        return syncJobConfigFieldService;
-    }
-
-    public void setSyncJobConfigFieldService(SyncJobConfigFieldService syncJobConfigFieldService) {
-        this.syncJobConfigFieldService = syncJobConfigFieldService;
-    }
 }

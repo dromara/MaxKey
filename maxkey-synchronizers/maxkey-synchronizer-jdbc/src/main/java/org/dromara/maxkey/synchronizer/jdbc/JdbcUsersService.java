@@ -25,12 +25,10 @@ import org.dromara.maxkey.entity.history.HistorySynchronizer;
 import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.synchronizer.AbstractSynchronizerService;
 import org.dromara.maxkey.synchronizer.ISynchronizerService;
-import org.dromara.maxkey.entity.SyncJobConfigField;
-import org.dromara.maxkey.synchronizer.service.SyncJobConfigFieldService;
+import org.dromara.maxkey.entity.SynchroAssociation;
 import org.dromara.maxkey.util.JdbcUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.InvocationTargetException;
@@ -48,9 +46,6 @@ import static org.dromara.maxkey.synchronizer.utils.FieldUtil.setFieldValue;
 @Service
 public class JdbcUsersService extends AbstractSynchronizerService implements ISynchronizerService {
     static final  Logger _logger = LoggerFactory.getLogger(JdbcUsersService.class);
-    
-    @Autowired
-    public SyncJobConfigFieldService syncJobConfigFieldService;
 
     private static final Integer USER_TYPE = 1;
     static ArrayList<ColumnFieldMapper> mapperList = new ArrayList<>();
@@ -229,22 +224,14 @@ public class JdbcUsersService extends AbstractSynchronizerService implements ISy
     public Map<String,String> getFieldMap(Long jobId){
         Map<String,String> fieldMap = new HashMap<>();
         //根据job id查询属性映射表
-        List<SyncJobConfigField> syncJobConfigFieldList = syncJobConfigFieldService.findByJobId(jobId);
+        List<SynchroAssociation> syncJobConfigFieldList = synchroAssociationService.findBySyncId(jobId);
         //获取用户属性映射
-        for(SyncJobConfigField element:syncJobConfigFieldList){
+        for(SynchroAssociation element:syncJobConfigFieldList){
             if(Integer.parseInt(element.getObjectType()) == USER_TYPE.intValue()){
                 fieldMap.put(element.getTargetField(), element.getSourceField());
             }
         }
         return fieldMap;
-    }
-
-    public SyncJobConfigFieldService getSyncJobConfigFieldService() {
-        return syncJobConfigFieldService;
-    }
-
-    public void setSyncJobConfigFieldService(SyncJobConfigFieldService syncJobConfigFieldService) {
-        this.syncJobConfigFieldService = syncJobConfigFieldService;
     }
 
     static {

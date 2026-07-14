@@ -18,24 +18,24 @@
 package org.dromara.maxkey.persistence.mapper;
 
 import org.apache.ibatis.annotations.Param;
-import org.dromara.maxkey.entity.SyncJobConfigField;
+import org.dromara.maxkey.entity.SynchroAssociation;
 import org.dromara.mybatis.jpa.IJpaMapper;
 
 import java.util.List;
 
 
-public interface SyncJobConfigFieldMapper extends IJpaMapper<SyncJobConfigField,String> {
+public interface SynchroAssociationMapper extends IJpaMapper<SynchroAssociation,String> {
     /*@Select("SELECT * FROM sync_job_config_field WHERE job_id = #{jobId} AND object_type = #{objectType}")*/
-    public List<SyncJobConfigField> findByJobIdAndObjectType(@Param("jobId") Long jobId, @Param("objectType") String objectType);
+    public List<SynchroAssociation> findBySyncIdAndObjectType(@Param("syncId") Long jobId, @Param("objectType") String objectType);
 
-    public List<SyncJobConfigField> findByJobId(Long jobId);
+    public List<SynchroAssociation> findBySyncId(Long syncId);
 
 
     void deleteFieldMapById(Long id);
 
-    void deleteFiledMapByjobId(Long jobId);
+    void deleteFiledMapBySyncId(Long syncId);
 
-    void deleteByJobIdAndObjectType(@Param("jobId") Long jobId, @Param("objectType") String objectType);
+    void deleteBySyncIdAndObjectType(@Param("syncId") Long syncId, @Param("objectType") String objectType);
 }
 
 

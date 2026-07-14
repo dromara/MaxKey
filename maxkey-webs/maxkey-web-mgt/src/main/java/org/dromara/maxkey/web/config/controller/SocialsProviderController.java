@@ -69,8 +69,8 @@ public class SocialsProviderController {
     }
     
     @RequestMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Message<?> get(@PathVariable String id) {
-        SocialsProvider socialsProvider=socialsProviderService.get(id);
+    public Message<?> get(@PathVariable String id, @CurrentUser UserInfo currentUser) {
+        SocialsProvider socialsProvider=socialsProviderService.get(id,currentUser.getInstId());
         socialsProvider.setClientSecret(PasswordReciprocal.getInstance().decoder(socialsProvider.getClientSecret()));
         return new Message<SocialsProvider>(socialsProvider);
     }
@@ -106,7 +106,7 @@ public class SocialsProviderController {
     @RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public Message<?> delete(@RequestParam List<String> ids,@CurrentUser UserInfo currentUser) {
         logger.debug("-delete  ids : {} " , ids);
-        if (socialsProviderService.deleteBatch(ids)) {
+        if (socialsProviderService.deleteBatch(ids,currentUser.getInstId())) {
              return new Message<SocialsProvider>(Message.SUCCESS);
         } else {
             return new Message<SocialsProvider>(Message.FAIL);

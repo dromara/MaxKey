@@ -36,10 +36,10 @@ import org.dromara.maxkey.entity.history.HistorySynchronizer;
 import org.dromara.maxkey.entity.idm.Organizations;
 import org.dromara.maxkey.ldap.LdapUtils;
 import org.dromara.maxkey.ldap.constants.OrganizationalUnit;
+import org.dromara.maxkey.persistence.service.SynchroAssociationService;
 import org.dromara.maxkey.synchronizer.AbstractSynchronizerService;
 import org.dromara.maxkey.synchronizer.ISynchronizerService;
-import org.dromara.maxkey.entity.SyncJobConfigField;
-import org.dromara.maxkey.synchronizer.service.SyncJobConfigFieldService;
+import org.dromara.maxkey.entity.SynchroAssociation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,8 +51,6 @@ import static org.dromara.maxkey.synchronizer.utils.FieldUtil.setFieldValue;
 @Service
 public class LdapOrganizationService extends AbstractSynchronizerService  implements ISynchronizerService{
     final static Logger _logger = LoggerFactory.getLogger(LdapOrganizationService.class);
-    @Autowired
-    private SyncJobConfigFieldService syncJobConfigFieldService;
 
     private static final Integer ORG_TYPE = 2;
     LdapUtils ldapUtils;
@@ -279,9 +277,9 @@ public class LdapOrganizationService extends AbstractSynchronizerService  implem
     public Map<String,String> getFieldMap(Long jobId){
         Map<String,String> userFiledMap = new HashMap<>();
         //根据job id查询属性映射表
-        List<SyncJobConfigField> syncJobConfigFieldList = syncJobConfigFieldService.findByJobId(jobId);
+        List<SynchroAssociation> syncJobConfigFieldList = synchroAssociationService.findBySyncId(jobId);
         //获取用户属性映射
-        for(SyncJobConfigField element:syncJobConfigFieldList){
+        for(SynchroAssociation element:syncJobConfigFieldList){
             if(Integer.parseInt(element.getObjectType()) == ORG_TYPE.intValue()){
                 userFiledMap.put(element.getTargetField(), element.getSourceField());
             }
@@ -296,13 +294,5 @@ public class LdapOrganizationService extends AbstractSynchronizerService  implem
 
     public void setLdapUtils(LdapUtils ldapUtils) {
         this.ldapUtils = ldapUtils;
-    }
-
-    public SyncJobConfigFieldService getSyncJobConfigFieldService() {
-        return syncJobConfigFieldService;
-    }
-
-    public void setSyncJobConfigFieldService(SyncJobConfigFieldService syncJobConfigFieldService) {
-        this.syncJobConfigFieldService = syncJobConfigFieldService;
     }
 }

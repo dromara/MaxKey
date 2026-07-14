@@ -28,13 +28,11 @@ import org.dromara.maxkey.entity.SynchroRelated;
 import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.synchronizer.AbstractSynchronizerService;
 import org.dromara.maxkey.synchronizer.ISynchronizerService;
-import org.dromara.maxkey.entity.SyncJobConfigField;
-import org.dromara.maxkey.synchronizer.service.SyncJobConfigFieldService;
+import org.dromara.maxkey.entity.SynchroAssociation;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.dingtalk.api.DefaultDingTalkClient;
 import com.dingtalk.api.DingTalkClient;
@@ -51,11 +49,6 @@ public class DingtalkUsersService  extends AbstractSynchronizerService implement
     String access_token;
 
     private static final Integer USER_TYPE = 1;
-
-
-
-    @Autowired
-    private SyncJobConfigFieldService syncJobConfigFieldService;
 
     
     public void sync() {
@@ -197,9 +190,9 @@ public class DingtalkUsersService  extends AbstractSynchronizerService implement
     public Map<String,String> getFieldMap(Long jobId){
         Map<String,String> userFieldMap = new HashMap<>();
         //根据job id查询属性映射表
-        List<SyncJobConfigField> syncJobConfigFieldList = syncJobConfigFieldService.findByJobId(jobId);
+        List<SynchroAssociation> syncJobConfigFieldList = synchroAssociationService.findBySyncId(jobId);
         //获取用户属性映射
-        for(SyncJobConfigField element:syncJobConfigFieldList){
+        for(SynchroAssociation element:syncJobConfigFieldList){
             if(Integer.parseInt(element.getObjectType()) == USER_TYPE.intValue()){
                 userFieldMap.put(element.getTargetField(), element.getSourceField());
             }
@@ -211,14 +204,6 @@ public class DingtalkUsersService  extends AbstractSynchronizerService implement
 
     public void setAccess_token(String access_token) {
         this.access_token = access_token;
-    }
-
-    public SyncJobConfigFieldService getSyncJobConfigFieldService() {
-        return syncJobConfigFieldService;
-    }
-
-    public void setSyncJobConfigFieldService(SyncJobConfigFieldService syncJobConfigFieldService) {
-        this.syncJobConfigFieldService = syncJobConfigFieldService;
     }
 
 }

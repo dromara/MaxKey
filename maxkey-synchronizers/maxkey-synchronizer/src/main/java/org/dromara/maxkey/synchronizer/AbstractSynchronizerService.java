@@ -28,6 +28,7 @@ import org.dromara.maxkey.entity.idm.Organizations;
 import org.dromara.maxkey.persistence.service.HistorySynchronizerService;
 import org.dromara.maxkey.persistence.service.OrganizationsService;
 import org.dromara.maxkey.persistence.service.SocialsAssociatesService;
+import org.dromara.maxkey.persistence.service.SynchroAssociationService;
 import org.dromara.maxkey.persistence.service.SynchroRelatedService;
 import org.dromara.maxkey.persistence.service.UserInfoService;
 import org.slf4j.Logger;
@@ -35,17 +36,23 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public abstract class AbstractSynchronizerService {
-    private static final Logger _logger = 
-            LoggerFactory.getLogger(AbstractSynchronizerService.class);
+    private static final Logger _logger = LoggerFactory.getLogger(AbstractSynchronizerService.class);
     
     @Autowired
     protected OrganizationsService organizationsService;
+    
     @Autowired
     protected UserInfoService userInfoService;
+    
     @Autowired
     protected SynchroRelatedService synchroRelatedService;
+    
     @Autowired
     protected SocialsAssociatesService socialsAssociatesService;
+    
+    @Autowired
+    public SynchroAssociationService synchroAssociationService;
+    
     @Autowired
     protected HistorySynchronizerService historySynchronizerService;
     
@@ -176,6 +183,21 @@ public abstract class AbstractSynchronizerService {
     public void setSynchroRelatedService(SynchroRelatedService synchroRelatedService) {
         this.synchroRelatedService = synchroRelatedService;
     }
-    
+
+	public SocialsAssociatesService getSocialsAssociatesService() {
+		return socialsAssociatesService;
+	}
+
+	public void setSocialsAssociatesService(SocialsAssociatesService socialsAssociatesService) {
+		this.socialsAssociatesService = socialsAssociatesService;
+	}
+
+	public SynchroAssociationService getSynchroAssociationService() {
+		return synchroAssociationService;
+	}
+
+	public void setSynchroAssociationService(SynchroAssociationService synchroAssociationService) {
+		this.synchroAssociationService = synchroAssociationService;
+	}
     
 }

@@ -15,7 +15,7 @@
  */
  
 
-package org.dromara.maxkey.web.controller;
+package org.dromara.maxkey.web.idm.controller;
 
 import java.util.List;
 
@@ -86,8 +86,8 @@ public class AccountsController {
     }
 
     @GetMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Message<Accounts> get(@PathVariable String id) {
-        Accounts account=accountsService.get(id);
+    public Message<Accounts> get(@PathVariable String id,@CurrentUser UserInfo currentUser) {
+        Accounts account=accountsService.get(id,currentUser.getInstId());
         account.setRelatedPassword(PasswordReciprocal.getInstance().decoder(account.getRelatedPassword()));
         return new Message<>(account);
     }
@@ -157,7 +157,7 @@ public class AccountsController {
     public Message<Accounts> delete(@RequestParam List<String> ids,@CurrentUser UserInfo currentUser) {
         _logger.debug("-delete ids : {} " , ids);
         
-        if (accountsService.deleteBatch(ids)) {
+        if (accountsService.deleteBatch(ids,currentUser.getInstId())) {
             systemLog.insert(
                     ConstsEntryType.ACCOUNT, 
                     ids, 

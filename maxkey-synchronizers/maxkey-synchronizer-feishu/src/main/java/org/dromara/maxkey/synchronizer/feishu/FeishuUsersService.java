@@ -29,14 +29,12 @@ import org.dromara.maxkey.http.AuthorizationHeaderUtils;
 import org.dromara.maxkey.http.HttpRequestAdapter;
 import org.dromara.maxkey.synchronizer.AbstractSynchronizerService;
 import org.dromara.maxkey.synchronizer.ISynchronizerService;
-import org.dromara.maxkey.entity.SyncJobConfigField;
+import org.dromara.maxkey.entity.SynchroAssociation;
 import org.dromara.maxkey.synchronizer.feishu.entity.FeishuUsers;
 import org.dromara.maxkey.synchronizer.feishu.entity.FeishuUsersResponse;
-import org.dromara.maxkey.synchronizer.service.SyncJobConfigFieldService;
 import org.dromara.maxkey.util.JsonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
@@ -45,8 +43,7 @@ import static org.dromara.maxkey.synchronizer.utils.FieldUtil.*;
 @Service
 public class FeishuUsersService extends AbstractSynchronizerService implements ISynchronizerService{
     final static Logger _logger = LoggerFactory.getLogger(FeishuUsersService.class);
-    @Autowired
-    private SyncJobConfigFieldService syncJobConfigFieldService;
+
     String access_token;
     private static final Integer USER_TYPE = 1;
     
@@ -190,9 +187,9 @@ public class FeishuUsersService extends AbstractSynchronizerService implements I
     public Map<String,String> getFiledMap(Long jobId){
         Map<String,String> fieldMap = new HashMap<>();
         //根据job id查询属性映射表
-        List<SyncJobConfigField> syncJobConfigFieldList = syncJobConfigFieldService.findByJobId(jobId);
+        List<SynchroAssociation> syncJobConfigFieldList = synchroAssociationService.findBySyncId(jobId);
         //获取用户属性映射
-        for(SyncJobConfigField element:syncJobConfigFieldList){
+        for(SynchroAssociation element:syncJobConfigFieldList){
             if(Integer.parseInt(element.getObjectType()) == USER_TYPE.intValue()){
                 fieldMap.put(element.getTargetField(), element.getSourceField());
             }
@@ -203,13 +200,5 @@ public class FeishuUsersService extends AbstractSynchronizerService implements I
     public void setAccess_token(String access_token) {
         this.access_token = access_token;
     }
-    public SyncJobConfigFieldService getSyncJobConfigFieldService() {
-        return syncJobConfigFieldService;
-    }
-
-    public void setSyncJobConfigFieldService(SyncJobConfigFieldService syncJobConfigFieldService) {
-        this.syncJobConfigFieldService = syncJobConfigFieldService;
-    }
-
 
 }

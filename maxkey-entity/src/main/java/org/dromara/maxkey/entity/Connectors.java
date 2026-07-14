@@ -20,6 +20,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import org.dromara.maxkey.pretty.impl.JsonPretty;
+import org.dromara.mybatis.jpa.annotations.PartitionKey;
 import org.dromara.mybatis.jpa.entity.JpaEntity;
 
 import jakarta.persistence.Column;
@@ -65,6 +66,7 @@ public class Connectors extends JpaEntity implements Serializable {
     String status;
 
     @Column
+    @PartitionKey
     private String instId;
 
     private String instName;

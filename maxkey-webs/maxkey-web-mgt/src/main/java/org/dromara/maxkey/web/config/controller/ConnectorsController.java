@@ -49,8 +49,8 @@ public class ConnectorsController {
     }
     
     @GetMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Message<Connectors> get(@PathVariable String id) {
-        Connectors connector = connectorsService.get(id);
+    public Message<Connectors> get(@PathVariable String id,@CurrentUser UserInfo currentUser) {
+        Connectors connector = connectorsService.get(id,currentUser.getInstId());
         if(StringUtils.isNotBlank(connector.getCredentials())) {
             connector.setCredentials(PasswordReciprocal.getInstance().decoder(connector.getCredentials()));
         }
@@ -86,7 +86,7 @@ public class ConnectorsController {
     @DeleteMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public Message<Connectors> delete(@RequestParam List<String> ids,@CurrentUser UserInfo currentUser) {
         logger.debug("-delete  ids : {} " , ids);
-        if (connectorsService.deleteBatch(ids)) {
+        if (connectorsService.deleteBatch(ids,currentUser.getInstId())) {
              return new Message<>(Message.SUCCESS);
         } else {
             return new Message<>(Message.FAIL);

@@ -27,10 +27,10 @@ import java.util.concurrent.LinkedBlockingQueue;
 import org.dromara.maxkey.constants.ConstsStatus;
 import org.dromara.maxkey.entity.SynchroRelated;
 import org.dromara.maxkey.entity.idm.Organizations;
+import org.dromara.maxkey.persistence.service.SynchroAssociationService;
 import org.dromara.maxkey.synchronizer.AbstractSynchronizerService;
 import org.dromara.maxkey.synchronizer.ISynchronizerService;
-import org.dromara.maxkey.entity.SyncJobConfigField;
-import org.dromara.maxkey.synchronizer.service.SyncJobConfigFieldService;
+import org.dromara.maxkey.entity.SynchroAssociation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,8 +50,6 @@ import static org.dromara.maxkey.synchronizer.utils.FieldUtil.*;
 public class DingtalkOrganizationService  extends AbstractSynchronizerService implements ISynchronizerService{
     final static Logger _logger = LoggerFactory.getLogger(DingtalkOrganizationService.class);
 
-    @Autowired
-    private SyncJobConfigFieldService syncJobConfigFieldService;
     private static final Integer ORG_TYPE = 2;
     
     static Long ROOT_DEPT_ID = 1L;
@@ -215,9 +213,9 @@ public class DingtalkOrganizationService  extends AbstractSynchronizerService im
     public Map<String,String> getFieldMap(Long jobId){
         Map<String,String> FieldMap = new HashMap<>();
         //根据job id查询属性映射表
-        List<SyncJobConfigField> syncJobConfigFieldList = syncJobConfigFieldService.findByJobId(jobId);
+        List<SynchroAssociation> syncJobConfigFieldList = synchroAssociationService.findBySyncId(jobId);
         //获取用户属性映射
-        for(SyncJobConfigField element:syncJobConfigFieldList){
+        for(SynchroAssociation element:syncJobConfigFieldList){
             if(Integer.parseInt(element.getObjectType()) == ORG_TYPE.intValue()){
                 FieldMap.put(element.getTargetField(), element.getSourceField());
             }
@@ -234,13 +232,4 @@ public class DingtalkOrganizationService  extends AbstractSynchronizerService im
     public void setAccess_token(String access_token) {
         this.access_token = access_token;
     }
-
-    public SyncJobConfigFieldService getSyncJobConfigFieldService() {
-        return syncJobConfigFieldService;
-    }
-
-    public void setSyncJobConfigFieldService(SyncJobConfigFieldService syncJobConfigFieldService) {
-        this.syncJobConfigFieldService = syncJobConfigFieldService;
-    }
-    
 }
