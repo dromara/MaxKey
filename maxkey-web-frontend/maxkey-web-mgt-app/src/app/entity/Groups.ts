@@ -22,7 +22,6 @@ export class Groups extends BaseEntity {
   groupCode!: String;
   groupName!: String;
   category!: String;
-  filters!: String;
   orgIdsList!: String;
   isdefault!: String;
 

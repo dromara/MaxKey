@@ -39,12 +39,13 @@
         and ac.userid = u.id
         and ac.createtype='automatic'
         )
-        <if test="filters != null and filters != ''">
-            and (${filters})
-        </if>
-        <if test="orgIdsList != null and orgIdsList != ''">
-            and u.departmentid in( ${orgIdsList})
-        </if>
+        <if test="orgIds != null and orgIds.size() > 0">
+				and u.departmentid in ( 
+				<foreach collection="orgIds" item="item" separator=",">
+	                #{item}
+	            </foreach>
+				)
+		</if>
     </select>
 
     <delete id="deleteByStrategy" parameterType="AccountsStrategy">
@@ -58,12 +59,13 @@
         from mxk_userinfo u
         where instid = #{instId}
         and u.id=ac.userid
-        <if test="filters != null and filters != ''">
-            and (${filters})
-        </if>
-        <if test="orgIdsList != null and orgIdsList != ''">
-            and u.departmentid in ( ${orgIdsList})
-        </if>
+        <if test="orgIds != null and orgIds.size() > 0">
+				and u.departmentid in ( 
+				<foreach collection="orgIds" item="item" separator=",">
+                    #{item}
+                </foreach>
+				)
+		</if>
         )
     </delete>
 </mapper>

@@ -205,9 +205,6 @@
 					and gm.memberid=u.id
 					and gm.type='USER-DYNAMIC'
 			)
-		<if test="filters != null and filters != ''">
-				and (${filters})
-		</if>
 		<if test="orgIds != null and orgIds.size() > 0">
 				and u.departmentid in( 
 				<foreach collection="orgIds" item="item" separator=",">
@@ -226,9 +223,6 @@
 		    	from mxk_userinfo u
 		    	where 1 = 1 
 		    		and u.id=gm.memberid
-				<if test="filters != null and filters != ''">
-						and (${filters})
-				</if>
 				<if test="orgIds != null and orgIds.size() > 0">
 						and u.departmentid in ( 
 						<foreach collection="orgIds" item="item" separator=",">

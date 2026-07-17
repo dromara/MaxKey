@@ -24,7 +24,6 @@ export class Roles extends BaseEntity {
   appId!: String;
   appName!: String;
   category!: String;
-  filters!: String;
   orgIdsList!: String;
   isdefault!: String;
 

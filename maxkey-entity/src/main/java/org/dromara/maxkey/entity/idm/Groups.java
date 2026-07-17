@@ -60,9 +60,6 @@ public class Groups extends JpaEntity implements Serializable {
     
     @Column
     String category;
-
-    @Column
-    String filters ;
     
     @Column
     String orgIdsList;
@@ -200,7 +197,6 @@ public class Groups extends JpaEntity implements Serializable {
     public void setDefaultAllUser() {
         this.category = "dynamic";
         this.orgIdsList ="";
-        this.filters ="";
     }
 
     public String getCategory() {
@@ -209,14 +205,6 @@ public class Groups extends JpaEntity implements Serializable {
 
     public void setCategory(String category) {
         this.category = category;
-    }
-
-    public String getFilters() {
-        return filters;
-    }
-
-    public void setFilters(String filters) {
-        this.filters = filters;
     }
 
     public String getOrgIdsList() {
@@ -262,8 +250,6 @@ public class Groups extends JpaEntity implements Serializable {
         builder.append(groupName);
         builder.append(", category=");
         builder.append(category);
-        builder.append(", filters=");
-        builder.append(filters);
         builder.append(", orgIdsList=");
         builder.append(orgIdsList);
         builder.append(", isdefault=");

@@ -66,18 +66,6 @@ public class GroupsServiceImpl  extends JpaServiceImpl<GroupsMapper,Groups,Strin
                 dynamicGroup.setOrgIds(StrUtils.string2List(dynamicGroup.getOrgIdsList(), ","));
                 _logger.debug("OrgIds {}" , dynamicGroup.getOrgIds());
             }
-            String filters = dynamicGroup.getFilters();
-            if(StringUtils.isNotBlank(filters)) {
-                if(StrUtils.filtersSQLInjection(filters.toLowerCase())) {  
-                    _logger.info("filters include SQL Injection Attack Risk.");
-                    return;
-                }
-                //replace & with AND, | with OR
-                filters = filters.replace("&", " AND ").replace("|", " OR ");
-                
-                dynamicGroup.setFilters(filters);
-            }
-        
             groupMemberService.deleteDynamicMember(dynamicGroup);
             groupMemberService.addDynamicMember(dynamicGroup);
             

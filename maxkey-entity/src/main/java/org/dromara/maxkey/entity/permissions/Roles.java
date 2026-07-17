@@ -59,9 +59,6 @@ public class Roles extends JpaEntity implements Serializable {
     
     @Column
     String category;
-
-    @Column
-    String filters ;
     
     @Column
     String orgIdsList;
@@ -202,7 +199,6 @@ public class Roles extends JpaEntity implements Serializable {
     public void setDefaultAllUser() {
         this.category = Category.DYNAMIC;
         this.orgIdsList ="";
-        this.filters ="";
     }
 
     public String getCategory() {
@@ -211,14 +207,6 @@ public class Roles extends JpaEntity implements Serializable {
 
     public void setCategory(String category) {
         this.category = category;
-    }
-
-    public String getFilters() {
-        return filters;
-    }
-
-    public void setFilters(String filters) {
-        this.filters = filters;
     }
 
     public String getOrgIdsList() {
@@ -272,8 +260,6 @@ public class Roles extends JpaEntity implements Serializable {
         builder.append(roleName);
         builder.append(", category=");
         builder.append(category);
-        builder.append(", filters=");
-        builder.append(filters);
         builder.append(", orgIdsList=");
         builder.append(orgIdsList);
         builder.append(", isdefault=");

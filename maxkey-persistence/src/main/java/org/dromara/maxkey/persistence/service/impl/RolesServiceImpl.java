@@ -68,20 +68,6 @@ public class RolesServiceImpl  extends JpaServiceImpl<RolesMapper,Roles,String> 
         		dynamicRole.setOrgIds(StrUtils.string2List(dynamicRole.getOrgIdsList(), ","));
                 _logger.debug("OrgIds {}" , dynamicRole.getOrgIds());
             }
-            String filters = dynamicRole.getFilters();
-            _logger.debug("filters {}" , filters);
-            if(StringUtils.isNotBlank(filters)) {
-                if(StrUtils.filtersSQLInjection(filters.toLowerCase())) {  
-                    _logger.info("filters include SQL Injection Attack Risk.");
-                    return;
-                }
-                //replace & with AND, | with OR
-                filters = filters.replace("&", " AND ").replace("\\|", " OR ");
-                
-                _logger.debug("set filters {}" , filters);
-                dynamicRole.setFilters(filters);
-            }
-        
             roleMemberService.deleteDynamicRoleMember(dynamicRole);
             roleMemberService.addDynamicRoleMember(dynamicRole);
         

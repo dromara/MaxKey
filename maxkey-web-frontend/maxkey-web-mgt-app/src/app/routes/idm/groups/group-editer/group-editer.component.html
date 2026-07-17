@@ -52,20 +52,6 @@
         </nz-tree-select>
       </nz-form-control>
     </nz-form-item>
-    <nz-form-item *ngIf="form.model.category == 'dynamic'">
-      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="filters">{{ 'mxk.groups.filters' | i18n }}</nz-form-label>
-      <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid filters!">
-        <textarea
-          rows="4"
-          nz-input
-          [(ngModel)]="form.model.filters"
-          [ngModelOptions]="{ standalone: true }"
-          nz-input
-          name="filters"
-          id="filters"
-        ></textarea>
-      </nz-form-control>
-    </nz-form-item>
     <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="description">{{ 'mxk.text.description' | i18n }}</nz-form-label>
       <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid encoding!">
