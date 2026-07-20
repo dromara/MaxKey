@@ -143,6 +143,10 @@ public class MfaAuthenticationProvider extends AbstractAuthenticationProvider {
                 _logger.debug("login captcha valid error.");
                 throw new BadCredentialsException(message);
             }
+        }else {
+        	String message = WebContext.getI18nValue("login.mfa.enabled.false");
+            _logger.debug(" error {} .",message);
+        	throw new BadCredentialsException(message);
         }
     }
 
