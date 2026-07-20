@@ -68,7 +68,6 @@ public class GroupsServiceImpl  extends JpaServiceImpl<GroupsMapper,Groups,Strin
             }
             groupMemberService.deleteDynamicMember(dynamicGroup);
             groupMemberService.addDynamicMember(dynamicGroup);
-            
         }
     }
     

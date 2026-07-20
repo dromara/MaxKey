@@ -21,11 +21,14 @@
 package org.dromara.maxkey.authz.cas.endpoint.validate;
 
 
+import org.apache.commons.lang3.Strings;
 import org.dromara.maxkey.authn.SignPrincipal;
 import org.dromara.maxkey.authz.cas.endpoint.CasBaseAuthorizeEndpoint;
 import org.dromara.maxkey.authz.cas.response.Service10ResponseBuilder;
 import org.dromara.maxkey.authz.cas.ticket.CasConstants;
 import org.dromara.maxkey.authz.cas.ticket.Ticket;
+import org.dromara.maxkey.entity.apps.AppsCasDetails;
+import org.dromara.maxkey.http.HttpUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -100,6 +103,13 @@ renew [OPTIONAL] - if this parameter is set, ticket validation will only succeed
         }
         
         if(storedTicket != null){
+        	AppsCasDetails  casDetail = storedTicket.getCasDetails();
+            //serviceValidate接口中service参数必须和ticket中的service一致
+        	String requestCasService  = HttpUtils.requestUrl(service);
+            if(!Strings.CS.equals(requestCasService, casDetail.getService())){
+            	_logger.debug("Ticket {} not valid for register‌ service {} , the request service {}",ticket,casDetail.getService(),requestCasService);
+            	return new Service10ResponseBuilder().failure().serviceResponseBuilder();
+            }
             String principal=((SignPrincipal)storedTicket.getAuthentication().getPrincipal()).getUsername();
             _logger.debug("principal {}",principal);
             return new Service10ResponseBuilder().success()
@@ -107,8 +117,7 @@ renew [OPTIONAL] - if this parameter is set, ticket validation will only succeed
                     .serviceResponseBuilder();
         }else{
             _logger.debug("Ticket not found .");
-            return new Service10ResponseBuilder().failure()
-                    .serviceResponseBuilder();
+            return new Service10ResponseBuilder().failure().serviceResponseBuilder();
         }
     }
 }

@@ -24,6 +24,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.dromara.maxkey.authn.SignPrincipal;
 import org.dromara.maxkey.authz.cas.endpoint.CasBaseAuthorizeEndpoint;
 import org.dromara.maxkey.authz.cas.response.ServiceResponseBuilder;
@@ -33,7 +34,9 @@ import org.dromara.maxkey.authz.cas.ticket.ProxyGrantingTicketImpl;
 import org.dromara.maxkey.authz.cas.ticket.Ticket;
 import org.dromara.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.dromara.maxkey.constants.ConstsBoolean;
+import org.dromara.maxkey.entity.apps.AppsCasDetails;
 import org.dromara.maxkey.http.HttpResponseConstants;
+import org.dromara.maxkey.http.HttpUtils;
 import org.dromara.maxkey.util.Instance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -78,6 +81,17 @@ public class Cas30AuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
         ServiceResponseBuilder serviceResponseBuilder=new ServiceResponseBuilder(format);
         
         if(storedTicket!=null){
+        	AppsCasDetails  casDetail = storedTicket.getCasDetails();
+            //serviceValidate接口中service参数必须和ticket中的service一致
+            String requestCasService  = HttpUtils.requestUrl(service);
+            if(!Strings.CS.equals(requestCasService, casDetail.getService())){
+            	_logger.debug("Ticket {} not valid for register‌ service {} , the request service {}",ticket,casDetail.getService(),requestCasService);
+            	serviceResponseBuilder.failure()
+                    .setCode(CasConstants.ERROR_CODE.INVALID_SERVICE)
+                    .setDescription("Ticket "+ticket+" not valid for this service "+requestCasService);
+            	httpResponseAdapter.write(response,serviceResponseBuilder.serviceResponseBuilder(),format);
+            }
+            
             SignPrincipal authentication = ((SignPrincipal)storedTicket.getAuthentication().getPrincipal());
             if(StringUtils.isNotBlank(pgtUrl)) {
                 ProxyGrantingTicketIOUImpl proxyGrantingTicketIOUImpl =new ProxyGrantingTicketIOUImpl();
