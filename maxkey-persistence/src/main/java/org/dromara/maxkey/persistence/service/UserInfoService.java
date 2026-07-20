@@ -46,6 +46,8 @@ public interface UserInfoService extends IJpaService<UserInfo,String> {
 
     public UserInfo findByUsername(String username) ;
     
+    public UserInfo findByUsernameAndInstId(String username,String instId);
+    
     public UserInfo findByEmailMobile(String emailMobile) ;
     
     public UserInfo findByAppIdAndUsername(String appId,String username);

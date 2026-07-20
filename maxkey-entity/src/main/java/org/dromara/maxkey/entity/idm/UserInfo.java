@@ -25,6 +25,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import org.dromara.mybatis.jpa.annotations.PartitionKey;
 import org.dromara.mybatis.jpa.entity.JpaEntity;
 
 import jakarta.persistence.Column;
@@ -284,6 +285,7 @@ public class UserInfo extends JpaEntity  implements Serializable {
     String description;
 
     @Column
+    @PartitionKey
     private String instId;
 
     private String instName;

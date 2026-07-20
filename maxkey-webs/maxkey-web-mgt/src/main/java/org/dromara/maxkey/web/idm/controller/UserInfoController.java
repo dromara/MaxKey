@@ -90,6 +90,7 @@ public class UserInfoController {
     @GetMapping(value={"/query"}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public Message<?> query(@ModelAttribute UserInfo userInfo,@CurrentUser UserInfo currentUser) {
         logger.debug("-query  :" + userInfo);
+        userInfo.setInstId(currentUser.getInstId());
         if (userInfoService.query(userInfo)!=null) {
              return new Message<UserInfo>(Message.SUCCESS);
         } else {
@@ -98,15 +99,15 @@ public class UserInfoController {
     }
     
     @GetMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Message<?> get(@PathVariable String id) {
-        UserInfo userInfo=userInfoService.get(id);
+    public Message<?> get(@PathVariable String id,@CurrentUser UserInfo currentUser) {
+        UserInfo userInfo=userInfoService.get(id,currentUser.getInstId());
         userInfo.trans();
         return new Message<UserInfo>(userInfo);
     }
     
     @GetMapping(value = { "/getByUsername/{username}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Message<?> getByUsername(@PathVariable String username) {
-        UserInfo userInfo=userInfoService.findByUsername(username);
+    public Message<?> getByUsername(@PathVariable String username,@CurrentUser UserInfo currentUser) {
+        UserInfo userInfo=userInfoService.findByUsernameAndInstId(username,currentUser.getInstId());
         userInfo.trans();
         return new Message<UserInfo>(userInfo);
     }
@@ -167,7 +168,7 @@ public class UserInfoController {
     public Message<?> delete(@RequestParam List<String> ids,@CurrentUser UserInfo currentUser) {
         logger.debug("-delete  ids : {} " , ids);
         
-        if (userInfoService.deleteBatch(ids)) {
+        if (userInfoService.deleteBatch(ids,currentUser.getInstId())) {
             systemLog.insert(
                     ConstsEntryType.USERINFO, 
                     ids, 
@@ -211,6 +212,7 @@ public class UserInfoController {
             @RequestBody ChangePassword changePassword,
             @CurrentUser UserInfo currentUser) {
         logger.debug("UserId {}",changePassword.getUserId());
+        changePassword.setInstId(currentUser.getInstId());
         changePassword.setPasswordSetType(ConstsPasswordSetType.PASSWORD_NORMAL);
         if(userInfoService.changePassword(changePassword,true)) {
             systemLog.insert(
@@ -254,8 +256,9 @@ public class UserInfoController {
      * @return
      */
     @PutMapping("/updateAuthnType")
-    public Message<UserInfo> updateAuthnType(@RequestBody UserInfo userInfo) {
+    public Message<UserInfo> updateAuthnType(@RequestBody UserInfo userInfo,@CurrentUser UserInfo currentUser) {
         logger.debug("updateAuthnType {}",userInfo);
+        userInfo.setInstId(currentUser.getInstId());
         if (userInfoService.updateAuthnType(userInfo)) {
             return new Message<>(Message.SUCCESS);
         } 

@@ -110,6 +110,7 @@
 			passwordlastsettime		=	current_timestamp
 		where 
 			id	=	#{userId}
+			and instid = #{instId} 
     </update>
     
     <update id="updateSharedSecret" parameterType="UserInfo" >
@@ -162,6 +163,7 @@
 			modifieddate		=	current_timestamp
 		where 
 			id	=	#{id}
+			and instid = #{instId} 
     </update>
     
     <update id="updateEmail" parameterType="UserInfo" >

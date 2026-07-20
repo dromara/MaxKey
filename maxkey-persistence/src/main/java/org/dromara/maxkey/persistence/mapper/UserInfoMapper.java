@@ -19,6 +19,7 @@ package org.dromara.maxkey.persistence.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.dromara.maxkey.constants.ConstsStatus;
@@ -37,8 +38,11 @@ public interface UserInfoMapper  extends IJpaMapper<UserInfo,String>{
     //login query
     public UserInfo findByAppIdAndUsername(UserInfo userInfo);
     
-    @Select("select * from  mxk_userinfo where username = #{value} and status = " + ConstsStatus.ACTIVE)
-    public UserInfo findByUsername(String username);
+    @Select("select * from  mxk_userinfo where username = #{username} and status = " + ConstsStatus.ACTIVE)
+    public UserInfo findByUsername(@Param("username")String username);
+    
+    @Select("select * from  mxk_userinfo where username = #{username} and instid = #{instId} and status = " + ConstsStatus.ACTIVE)
+    public UserInfo findByUsernameAndInstId(@Param("username")String username,@Param("instId")String instId);
     
     @Select("select * from  mxk_userinfo where ( email = #{value} or mobile= #{value} ) and status = " + ConstsStatus.ACTIVE)
     public UserInfo findByEmailMobile(String emailMobile);
@@ -74,6 +78,6 @@ public interface UserInfoMapper  extends IJpaMapper<UserInfo,String>{
     @Update("update mxk_userinfo set gridlist =  #{gridList} where id = #{id}")
     public int     updateGridList(UserInfo userInfo) ;
     
-    @Update("update mxk_userinfo set status =  #{status} where id = #{id}")
+    @Update("update mxk_userinfo set status =  #{status} where id = #{id} and instid = #{instId} ")
        public int     updateStatus(UserInfo userInfo) ;
 }

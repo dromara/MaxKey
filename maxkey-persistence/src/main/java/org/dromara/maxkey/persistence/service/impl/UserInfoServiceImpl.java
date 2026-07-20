@@ -376,4 +376,9 @@ public class UserInfoServiceImpl extends JpaServiceImpl<UserInfoMapper,UserInfo,
         return getMapper().updateStatus(userInfo) > 0;
     }
 
+	@Override
+	public UserInfo findByUsernameAndInstId(String username, String instId) {
+		return getMapper().findByUsernameAndInstId(username,instId) ;
+	}
+
 }
