@@ -90,66 +90,67 @@ public class AppsOAuth20Details extends Apps  implements Serializable {
     /**
      * 
      */
-    public AppsOAuth20Details(Apps application, BaseClientDetails baseClientDetails) {
-        super();
-        this.id = application.getId();
-        this.setAppName(application.getAppName());
-        this.setLoginUrl(application.getLoginUrl());
-        this.setLogoutUrl(application.getLogoutUrl());
-        this.setLogoutType(application.getLogoutType());
-        this.setCategory(application.getCategory());
-        this.setProtocol(application.getProtocol());
-        this.setIcon(application.getIcon());
-        this.clientId = application.getId();
+    public static AppsOAuth20Details build(Apps app, BaseClientDetails baseClientDetails) {
+    	AppsOAuth20Details detail = new AppsOAuth20Details();
+    	detail.id = app.getId();
+    	detail.setAppName(app.getAppName());
+    	detail.setLoginUrl(app.getLoginUrl());
+    	detail.setLogoutUrl(app.getLogoutUrl());
+    	detail.setLogoutType(app.getLogoutType());
+    	detail.setCategory(app.getCategory());
+    	detail.setProtocol(app.getProtocol());
+    	detail.setIcon(app.getIcon());
+    	detail.clientId = app.getId();
 
-        this.setSortIndex(application.getSortIndex());
-        this.setVendor(application.getVendor());
-        this.setVendorUrl(application.getVendorUrl());
-        this.setVisible(application.getVisible());
+    	detail.setSortIndex(app.getSortIndex());
+    	detail.setVendor(app.getVendor());
+    	detail.setVendorUrl(app.getVendorUrl());
+    	detail.setVisible(app.getVisible());
         
-        this.setIsAdapter(application.getIsAdapter());
-        this.setAdapter(application.getAdapter());
-        this.setAdapterId(application.getAdapterId());
-        this.setAdapterName(application.getAdapterName());
-        this.setFrequently(application.getFrequently());
-        this.setStatus(application.getStatus());
-        this.setInducer(application.getInducer());
-        this.setExtendAttr(application.getExtendAttr());
-        this.setIsExtendAttr(application.getIsExtendAttr());
+    	detail.setIsAdapter(app.getIsAdapter());
+    	detail.setAdapter(app.getAdapter());
+    	detail.setAdapterId(app.getAdapterId());
+    	detail.setAdapterName(app.getAdapterName());
+    	detail.setFrequently(app.getFrequently());
+    	detail.setStatus(app.getStatus());
+    	detail.setInducer(app.getInducer());
+    	detail.setExtendAttr(app.getExtendAttr());
+    	detail.setIsExtendAttr(app.getIsExtendAttr());
+    	detail.setResourceMgt(app.getResourceMgt());
+    	detail.setOpenapiRight(app.getOpenapiRight());
         
-        this.clientSecret = baseClientDetails.getClientSecret();
-        this.scope = StringUtils
+    	detail.clientSecret = baseClientDetails.getClientSecret();
+    	detail.scope = StringUtils
                 .collectionToCommaDelimitedString(baseClientDetails.getScope());
-        this.resourceIds = StringUtils
+    	detail.resourceIds = StringUtils
                 .collectionToCommaDelimitedString(baseClientDetails.getResourceIds());
-        this.authorizedGrantTypes = StringUtils
+    	detail.authorizedGrantTypes = StringUtils
                 .collectionToCommaDelimitedString(baseClientDetails.getAuthorizedGrantTypes());
-        this.registeredRedirectUris = StringUtils
+    	detail.registeredRedirectUris = StringUtils
                 .collectionToCommaDelimitedString(baseClientDetails.getRegisteredRedirectUri());
-        this.authorities = StringUtils
+    	detail.authorities = StringUtils
                 .collectionToCommaDelimitedString(baseClientDetails.getAuthorities());
-        this.accessTokenValiditySeconds = baseClientDetails.getAccessTokenValiditySeconds();
-        this.refreshTokenValiditySeconds = baseClientDetails.getRefreshTokenValiditySeconds();
-        this.approvalPrompt = baseClientDetails.isAutoApprove("all") + "";
+    	detail.accessTokenValiditySeconds = baseClientDetails.getAccessTokenValiditySeconds();
+    	detail.refreshTokenValiditySeconds = baseClientDetails.getRefreshTokenValiditySeconds();
+    	detail.approvalPrompt = baseClientDetails.isAutoApprove("all") + "";
 
-        this.audience = baseClientDetails.getAudience();
-        this.issuer = baseClientDetails.getIssuer();
+    	detail.audience = baseClientDetails.getAudience();
+    	detail.issuer = baseClientDetails.getIssuer();
         
-        this.algorithm = baseClientDetails.getAlgorithm();
-        this.algorithmKey = baseClientDetails.getAlgorithmKey();
-        this.encryptionMethod = baseClientDetails.getEncryptionMethod();
+    	detail.algorithm = baseClientDetails.getAlgorithm();
+    	detail.algorithmKey = baseClientDetails.getAlgorithmKey();
+    	detail.encryptionMethod = baseClientDetails.getEncryptionMethod();
         
-        this.signature = baseClientDetails.getSignature();
-        this.signatureKey = baseClientDetails.getSignatureKey();
+    	detail.signature = baseClientDetails.getSignature();
+    	detail.signatureKey = baseClientDetails.getSignatureKey();
         
-        this.approvalPrompt = baseClientDetails.getApprovalPrompt();
+    	detail.approvalPrompt = baseClientDetails.getApprovalPrompt();
         
-        this.pkce = baseClientDetails.getPkce();
-        this.instId = baseClientDetails.getInstId();
-        this.subject = baseClientDetails.getSubject();
-        this.userInfoResponse = baseClientDetails.getUserInfoResponse();
-        
-
+    	detail.pkce = baseClientDetails.getPkce();
+    	detail.instId = baseClientDetails.getInstId();
+    	detail.subject = baseClientDetails.getSubject();
+    	detail.userInfoResponse = baseClientDetails.getUserInfoResponse();
+        return detail;
     }
 
     public String getPkce() {

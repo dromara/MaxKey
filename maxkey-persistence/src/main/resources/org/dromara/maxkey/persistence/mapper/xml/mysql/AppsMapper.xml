@@ -21,6 +21,9 @@
 		<if test="vendor != null and vendor != ''">
 			and vendor 		= #{vendor}
 		</if>
+		<if test="resourceMgt != null and resourceMgt != ''">
+			and resourceMgt 		= #{resourceMgt}
+		</if>
 		
 	</sql>
 	
@@ -69,6 +72,8 @@
 			credentials,
 			
 			visible,
+			resourceMgt,
+			openapiRight,
 			
 			sortindex,
 			
@@ -111,6 +116,8 @@
 			#{credentials},
 			
 			#{visible},
+			#{resourceMgt},
+			#{openapiRight},
 			
 			#{sortIndex},
 			
@@ -163,6 +170,8 @@
 			principal			=	#{principal},
 			credentials			=	#{credentials},
 			visible				=	#{visible},
+			resourceMgt			=	#{resourceMgt},
+			openapiRight		=	#{openapiRight},
 			sortindex			=	#{sortIndex},
 			
 			modifiedby			=	#{modifiedBy},

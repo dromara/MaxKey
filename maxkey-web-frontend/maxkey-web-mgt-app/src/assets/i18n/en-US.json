@@ -279,6 +279,8 @@
 			"tab.custom": "Custom",
 			"extendapi.tab": "API",
 			"resources":"Resources",
+      "resourceMgt": "Resource Management",
+      "openapiRight": "OpenAPI Right",
 			"permission":"Permission",
 			"role":"Roles",
 			"id": "App Id",

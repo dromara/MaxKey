@@ -281,6 +281,8 @@
 			"tab.custom": "自訂屬性",
 			"extendapi.tab": "API配置",
 			"resources":"資源",
+      "resourceMgt": "資源管理",
+      "openapiRight": "OpenAPI 權限",
 			"permission":"權限",
 			"role":"角色",
 			"id": "應用編碼",

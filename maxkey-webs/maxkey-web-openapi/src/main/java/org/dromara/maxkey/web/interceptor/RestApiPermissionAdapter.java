@@ -67,17 +67,16 @@ public class RestApiPermissionAdapter  implements AsyncHandlerInterceptor  {
     public boolean preHandle(HttpServletRequest request,HttpServletResponse response, Object handler) throws Exception {
         logger.trace("Rest API Permission Adapter pre handle");
          AuthorizationHeader headerCredential = AuthorizationHeaderUtils.resolve(request);
-         
+         Apps app = null;
         //判断应用的AppId和Secret
         if(headerCredential != null){
             UsernamePasswordAuthenticationToken authenticationToken = null;
             if(headerCredential.isBasic()) {
-                if(StringUtils.isNotBlank(headerCredential.getUsername())&&
-                        StringUtils.isNotBlank(headerCredential.getCredential())
-                        ) {
+                if(StringUtils.isNotBlank(headerCredential.getUsername())
+                		&& StringUtils.isNotBlank(headerCredential.getCredential())) {
                     String appId = headerCredential.getUsername();
                     String credential = headerCredential.getCredential();
-                    Apps app = appsService.get(appId, true);
+                    app = appsService.get(appId, true);
                     if(app != null ) {
                         if(    PasswordReciprocal.getInstance().matches(credential, app.getSecret())) {
                             ArrayList<SimpleGrantedAuthority> grantedAuthoritys = new ArrayList<>();
@@ -93,25 +92,27 @@ public class RestApiPermissionAdapter  implements AsyncHandlerInterceptor  {
                 }
             }else if(StringUtils.isNotBlank(headerCredential.getCredential())){
                 logger.trace("Authentication bearer {}" , headerCredential.getCredential());
-                OAuth2Authentication oauth2Authentication = 
-                        oauth20TokenServices.loadAuthentication(headerCredential.getCredential());
-                
+                OAuth2Authentication oauth2Authentication = oauth20TokenServices.loadAuthentication(headerCredential.getCredential());
                 if(oauth2Authentication != null) {
+                	//使用clientId作为用户名，应用密码作为密码
                     logger.trace("Authentication token {}" , oauth2Authentication.getPrincipal().toString());
-                    authenticationToken= new UsernamePasswordAuthenticationToken(
-                            new User(
-                                    oauth2Authentication.getPrincipal().toString(), 
-                                    "CLIENT_SECRET", 
-                                    oauth2Authentication.getAuthorities()), 
-                            "PASSWORD", 
-                            oauth2Authentication.getAuthorities()
-                    );
+                    app = appsService.get(oauth2Authentication.getPrincipal().toString(), true);
+                    User user = new User(oauth2Authentication.getPrincipal().toString(), "CLIENT_SECRET", oauth2Authentication.getAuthorities());
+                    authenticationToken= new UsernamePasswordAuthenticationToken(user, "PASSWORD", oauth2Authentication.getAuthorities());
                 }else {
                     logger.trace("Authentication token is null ");
                 }
             }
             
-            if(authenticationToken !=null && authenticationToken.isAuthenticated()) {
+            if(authenticationToken !=null && authenticationToken.isAuthenticated() && app != null) {
+            	if("read".equalsIgnoreCase(app.getOpenapiRight())) {
+					if(request.getMethod().equalsIgnoreCase("GET")) {
+						AuthorizationUtils.setAuthentication(authenticationToken);
+		                return true;
+					}else {
+						return false;
+					}
+            	}
                 AuthorizationUtils.setAuthentication(authenticationToken);
                 return true;
             }

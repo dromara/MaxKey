@@ -165,6 +165,10 @@ public class Apps extends JpaEntity implements Serializable {
     @Column
     protected String description;
     @Column
+    String resourceMgt;
+    @Column
+    String openapiRight;
+    @Column
     private String instId;
     
     private String instName;
@@ -175,8 +179,6 @@ public class Apps extends JpaEntity implements Serializable {
         super();
         isSignature = ConstsBoolean.FALSE;
     }
-
-  
 
     public String getId() {
         return id;
@@ -545,16 +547,12 @@ public class Apps extends JpaEntity implements Serializable {
         return modifiedDate;
     }
 
-
-
     /**
      * @param modifiedDate the modifiedDate to set
      */
     public void setModifiedDate(Date modifiedDate) {
         this.modifiedDate = modifiedDate;
     }
-
-
 
     public int getStatus() {
         return status;
@@ -572,8 +570,23 @@ public class Apps extends JpaEntity implements Serializable {
         this.inducer = inducer;
     }
     
+    public String getResourceMgt() {
+		return resourceMgt;
+	}
 
-    public String getLogoutUrl() {
+	public void setResourceMgt(String resourceMgt) {
+		this.resourceMgt = resourceMgt;
+	}
+
+	public String getOpenapiRight() {
+		return openapiRight;
+	}
+
+	public void setOpenapiRight(String openapiRight) {
+		this.openapiRight = openapiRight;
+	}
+
+	public String getLogoutUrl() {
         return logoutUrl;
     }
 

@@ -35,10 +35,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping(value={"/api/idm/Users"})
@@ -51,19 +49,16 @@ public class RestUserInfoController {
     
     @GetMapping(value = "/{id}")
     public UserInfo getUser(
-                                       @PathVariable String id,
-                                       @RequestParam(required = false) String attributes) {
-        _logger.debug("UserInfo id {} , attributes {}", id , attributes);
+                                       @PathVariable String id) {
+        _logger.debug("UserInfo id {}", id );
         UserInfo loadUserInfo = userInfoService.get(id);
         loadUserInfo.setDecipherable(null);
         return loadUserInfo;
     }
 
     @PostMapping
-    public UserInfo create(@RequestBody  UserInfo userInfo,
-                                                      @RequestParam(required = false) String attributes,
-                                                      UriComponentsBuilder builder) {
-        _logger.debug("UserInfo content {} , attributes {}", userInfo , attributes);
+    public UserInfo create(@RequestBody  UserInfo userInfo) {
+        _logger.debug("UserInfo content {} ", userInfo );
         UserInfo loadUserInfo = userInfoService.findByUsername(userInfo.getUsername());
         if(loadUserInfo != null) {
             userInfoService.update(userInfo);
@@ -75,9 +70,8 @@ public class RestUserInfoController {
     
     @PutMapping(value = "/{id}")
     public UserInfo replace(@PathVariable String id,
-                                                       @RequestBody UserInfo userInfo,
-                                                       @RequestParam(required = false) String attributes) {
-        _logger.debug("UserInfo content {} , attributes {}", userInfo , attributes);
+                                                       @RequestBody UserInfo userInfo) {
+        _logger.debug("UserInfo content {} ", userInfo );
         UserInfo loadUserInfo = userInfoService.findByUsername(userInfo.getUsername());
         if(loadUserInfo != null) {
             userInfoService.update(userInfo);

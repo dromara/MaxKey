@@ -35,10 +35,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping(value={"/api/idm/Organization"})
@@ -49,17 +47,14 @@ public class RestOrganizationController {
     OrganizationsService organizationsService;
     
     @GetMapping(value = "/{id}")
-    public Organizations getUser(@PathVariable String id,
-                                       @RequestParam(required = false) String attributes) {
-        _logger.debug("Organizations id {} , attributes {}", id , attributes);
+    public Organizations getUser(@PathVariable String id) {
+        _logger.debug("Organizations id {} ", id );
         return organizationsService.get(id);
     }
 
     @PostMapping
-    public Organizations create(@RequestBody  Organizations org,
-                                                      @RequestParam(required = false) String attributes,
-                                                      UriComponentsBuilder builder) {
-        _logger.debug("Organizations content {} , attributes {}", org , attributes);
+    public Organizations create(@RequestBody  Organizations org) {
+        _logger.debug("Organizations content {} ", org );
         Organizations loadOrg = organizationsService.get(org.getId());
         if(loadOrg == null) {
             organizationsService.insert(org);
@@ -71,9 +66,8 @@ public class RestOrganizationController {
 
     @PutMapping(value = "/{id}")
     public Organizations replace(@PathVariable String id,
-                                                       @RequestBody Organizations org,
-                                                       @RequestParam(required = false) String attributes) {
-        _logger.debug("Organizations id {} , content {} , attributes {}", id , org , attributes);
+                                                       @RequestBody Organizations org) {
+        _logger.debug("Organizations id {} , content {} ", id , org );
         Organizations loadOrg = organizationsService.get(id);
         if(loadOrg == null) {
             organizationsService.insert(org);

@@ -65,7 +65,7 @@ public class OAuth20DetailsController  extends BaseAppContorller {
         BaseClientDetails baseClientDetails=(BaseClientDetails)oauth20JdbcClientDetailsService.loadClientByClientId(id,false);
         Apps application=appsService.get(id);//
         decoderSecret(application);
-        AppsOAuth20Details oauth20Details=new AppsOAuth20Details(application,baseClientDetails);
+        AppsOAuth20Details oauth20Details= AppsOAuth20Details.build(application,baseClientDetails);
         oauth20Details.setSecret(application.getSecret());
         oauth20Details.setClientSecret(application.getSecret());
         logger.debug("forwardUpdate {}" , oauth20Details);
