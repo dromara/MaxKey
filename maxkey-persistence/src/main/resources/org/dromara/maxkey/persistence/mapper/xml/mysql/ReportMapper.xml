@@ -75,7 +75,7 @@
     <select id="analysisMonth" parameterType="java.util.HashMap" resultType="Map">
     	select 
     		count(id) reportcount, 
-			DATE_FORMAT(date(logintime), '%Y-%m-%d') reportstring 
+			DATE_FORMAT(logintime, '%Y-%m-%d') reportstring 
     	from mxk_history_login 
     	where   instid   =   #{instId} 
     		and date(logintime) >date_add(curdate(), interval - day(curdate()) -31 day)
