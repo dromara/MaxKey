@@ -38,18 +38,7 @@ import org.springframework.util.StringUtils;
  */
 public class DefaultRedirectResolver implements RedirectResolver {
 
-    private Collection<String> redirectGrantTypes = Arrays.asList("implicit", "authorization_code");
-
-    private boolean matchSubdomains = true;
-
-    /**
-     * Flag to indicate that requested URIs will match if they are a subdomain of the registered value.
-     * 
-     * @param matchSubdomains the flag value to set (deafult true)
-     */
-    public void setMatchSubdomains(boolean matchSubdomains) {
-        this.matchSubdomains = matchSubdomains;
-    }
+    private Collection<String> redirectGrantTypes = Arrays.asList("authorization_code");
 
     /**
      * Grant types that are permitted to have a redirect uri.
@@ -131,9 +120,6 @@ public class DefaultRedirectResolver implements RedirectResolver {
      * @return true if they match
      */
     protected boolean hostMatches(String registered, String requested) {
-        if (matchSubdomains) {
-            return requested.endsWith(registered);
-        }
         return registered.equals(requested);
     }
 
