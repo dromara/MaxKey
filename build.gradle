@@ -344,6 +344,7 @@ subprojects {
         //json-jackson 3
 		implementation group: "tools.jackson.core", name: "jackson-core", version: "${jackson3Version}"
 		implementation group: "tools.jackson.core", name: "jackson-databind", version: "${jackson3Version}"
+		implementation group: 'tools.jackson.dataformat', name: 'jackson-dataformat-cbor', version: "${jackson3Version}"
 		//jackson2
 		implementation group: "com.fasterxml", name: "classmate", version: "${classmateVersion}"
 		implementation group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "${jacksonAnnotationsVersion}"
