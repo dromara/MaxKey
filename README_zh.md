@@ -12,7 +12,7 @@
         <img src="https://img.shields.io/github/v/release/dromara/MaxKey?style=for-the-badge" />
     </a>
     <a target="_blank" href="https://www.oracle.com/java/technologies/downloads/">
-        <img src="https://img.shields.io/badge/JDK-v17%2B-brightgreen?style=for-the-badge" />
+        <img src="https://img.shields.io/badge/JDK-v21%2B-brightgreen?style=for-the-badge" />
     </a>
     <a target="_blank" href="https://www.mysql.com/">
         <img src="https://img.shields.io/badge/MySQL-8.4%2B-brightgreen?style=for-the-badge" />

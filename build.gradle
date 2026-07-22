@@ -31,9 +31,9 @@ configurations.all {
 
 println  "OS " + System.getProperty("os.name")+ " , ARCH "+System.getProperty("os.arch")
 
-println  "Run with Java version [ " + JavaVersion.VERSION_17 + " ] . Your Java version is [ " + JavaVersion.current() + " ]"
+println  "Run with Java version [ " + JavaVersion.VERSION_21 + " ] . Your Java version is [ " + JavaVersion.current() + " ]"
     
-if (JavaVersion.current() < JavaVersion.VERSION_17) {
+if (JavaVersion.current() < JavaVersion.VERSION_21) {
     throw new GradleException("This build must be run with Java version [ " + JavaVersion.VERSION_17 + " ] or greater. Your Java version is [ " + JavaVersion.current() + " ]")
 }
 
@@ -52,8 +52,8 @@ allprojects {
 
     java {
         //java Version
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
     
     compileJava.options.encoding = 'UTF-8'
