@@ -60,7 +60,7 @@ export class AuditLoginAppsComponent implements OnInit {
       endDatePicker: new Date(),
       pageSize: 10,
       pageNumber: 1,
-      pageSizeOptions: [10, 20, 50]
+      pageSizeOptions: [10, 20, 50, 100]
     },
     results: {
       records: 0,

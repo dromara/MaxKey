@@ -220,10 +220,10 @@ public class LoginEntryPoint {
     @Operation(summary = "登录接口", description = "登录接口",method="POST")
      @PostMapping(value={"/signin"}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public Message<AuthJwt> signin( HttpServletRequest request, HttpServletResponse response,@RequestBody LoginCredential credential) {
+    	 logger.debug("signin credential {}" , credential);
          Message<AuthJwt> authJwtMessage = new Message<>(Message.FAIL);
          if(authTokenService.validateJwtToken(credential.getState())){
              String authType =  credential.getAuthType();
-              logger.debug("Login AuthN Type  {}" , authType);
              if (StringUtils.isNotBlank(authType)){
                  Authentication  authentication = authenticationProvider.authenticate(credential);
                  if(authentication != null) {
