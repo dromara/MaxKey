@@ -68,7 +68,7 @@
 			"website":"Official Website"
 		},
 		"home": {
-			"onlineUsers": "Online",
+			"onlineUsers": "Online Users",
 			"dayCount": "Day Count",
 			"newUsers": "Month News",
 			"activeUsers": "Month Actives",

@@ -67,7 +67,7 @@
 			"website":"官方网站"
 		},
 		"home": {
-			"onlineUsers": "在线",
+			"onlineUsers": "在线用户",
 			"dayCount": "日访问量",
 			"newUsers": "当月新增用户",
 			"activeUsers": "活动用户",

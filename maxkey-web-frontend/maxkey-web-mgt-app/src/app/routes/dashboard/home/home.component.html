@@ -13,8 +13,8 @@
   <div nz-col nzXs="24" nzSm="12" nzMd="6" class="mb-md">
     <div nz-row nzType="flex" nzAlign="middle" class="bg-primary rounded-md">
       <div nz-col nzSpan="12" class="p-md text-white">
-        <div class="h2 mt0">{{ onlineUsers + '/' + totalUsers }}</div>
-        <p class="text-nowrap mb0">{{ 'mxk.home.onlineUsers' | i18n }}/{{ 'mxk.home.totalUsers' | i18n }}</p>
+        <div class="h2 mt0">{{ totalUsers }}</div>
+        <p class="text-nowrap mb0">{{ 'mxk.home.totalUsers' | i18n }}</p>
       </div>
       <div nz-col nzSpan="12">
         <g2-mini-bar
@@ -95,10 +95,14 @@
   <div nz-col nzXs="24" nzMd="24">
     <nz-card [nzBordered]="false" [nzTitle]="dayAccessTitle">
       <ng-template #dayAccessTitle>
-        {{ 'mxk.home.dayAccessCount' | i18n }}-
-        <nz-badge [nzCount]="dayCount" [nzOffset]="[20, 6]" [nzStyle]="{ backgroundColor: '#52c41a' }">
-          <a class="head-badge">{{ 'mxk.home.dayCount' | i18n }}</a>
-        </nz-badge>
+        {{ 'mxk.home.dayAccessCount' | i18n }}<span>&nbsp;&nbsp;</span>
+        <nz-tag [nzColor]="'blue'" nzBordered="disabled"
+          ><i nz-icon nzType="clock-circle"></i>{{ 'mxk.home.dayCount' | i18n }}<span>{{ dayCount }}</span></nz-tag
+        >
+        <nz-tag nzColor="green">
+          <i nz-icon nzType="exclamation-circle"></i>
+          {{ 'mxk.home.onlineUsers' | i18n }}<span>{{ onlineUsers }}</span>
+        </nz-tag>
       </ng-template>
       <!--<g2-bar *ngIf="dayData" height="275" [data]="dayData" color="#fa8c16"></g2-bar>-->
       <g2-bar *ngIf="dayData" height="275" [data]="dayData"></g2-bar>
@@ -107,10 +111,11 @@
   <div nz-col nzXs="24" nzMd="24">
     <nz-card [nzTitle]="monthAccessTitle" [nzBordered]="false">
       <ng-template #monthAccessTitle>
-        {{ 'mxk.home.monthAccessCount' | i18n }}-
-        <nz-badge [nzCount]="activeUsers" [nzOffset]="[20, 6]" [nzStyle]="{ backgroundColor: '#52c41a' }">
-          <a class="head-badge">{{ 'mxk.home.activeUsers' | i18n }}</a>
-        </nz-badge>
+        {{ 'mxk.home.monthAccessCount' | i18n }}<span>&nbsp;&nbsp;</span>
+        <nz-tag nzColor="green">
+          <i nz-icon nzType="exclamation-circle"></i>
+          {{ 'mxk.home.activeUsers' | i18n }}<span>{{ activeUsers }}</span>
+        </nz-tag>
       </ng-template>
       <g2-bar *ngIf="mouthData" height="275" [data]="mouthData"></g2-bar>
     </nz-card>
