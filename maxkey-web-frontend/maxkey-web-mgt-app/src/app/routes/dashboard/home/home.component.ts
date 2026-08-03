@@ -42,11 +42,15 @@ export class HomeComponent implements OnInit {
   //当天统计
   dayCount: number = 0;
 
+  monthCount: number = 0;
+
   totalUsers: number = 0;
 
   totalDepts: number = 0;
 
   totalApps: number = 0;
+
+  totalGroups: number = 0;
   //在线用户
   onlineUsers: number = 0;
   //当日
@@ -112,11 +116,13 @@ export class HomeComponent implements OnInit {
     this.analysisService.dashBoard({}).subscribe(res => {
       this.onlineUsers = res.data.onlineUsers;
       this.dayCount = res.data.dayCount;
+      this.monthCount = res.data.monthCount;
       this.newUsers = res.data.newUsers;
       this.activeUsers = res.data.activeUsers;
       this.totalDepts = res.data.totalDepts;
       this.totalUsers = res.data.totalUsers;
       this.totalApps = res.data.totalApps;
+      this.totalGroups = res.data.totalGroups;
 
       const beginDay = new Date().getTime();
       const fakeY = [7, 5, 4, 2, 4, 7, 5, 6, 5, 9, 6, 3, 1, 5, 3, 6, 5];

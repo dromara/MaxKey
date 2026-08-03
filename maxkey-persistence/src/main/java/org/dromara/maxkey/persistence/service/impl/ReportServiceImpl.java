@@ -30,8 +30,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class ReportServiceImpl  extends JpaServiceImpl<ReportMapper,JpaEntity,String> implements ReportService{
 
-    public Integer analysisDay(HashMap<String,Object> reportParameter) {
-        return getMapper().analysisDay(reportParameter);
+    public Integer analysisDayCount(HashMap<String,Object> reportParameter) {
+        return getMapper().analysisDayCount(reportParameter);
     }
     
     public Integer analysisNewUsers(HashMap<String,Object> reportParameter) {
@@ -101,5 +101,15 @@ public class ReportServiceImpl  extends JpaServiceImpl<ReportMapper,JpaEntity,St
     public List<Map<String,Object>> analysisCountry(HashMap<String,Object> reportParameter){
         return getMapper().analysisCountry(reportParameter);
     }
+
+	@Override
+	public Integer analysisMonthCount(HashMap<String, Object> reportParameter) {
+		return getMapper().analysisMonthCount(reportParameter);
+	}
+
+	@Override
+	public Integer totalGroups(HashMap<String, Object> reportParameter) {
+		return getMapper().totalGroups(reportParameter);
+	}
     
 }

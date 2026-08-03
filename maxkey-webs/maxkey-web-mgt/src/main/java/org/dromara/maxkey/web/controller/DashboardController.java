@@ -44,29 +44,33 @@ public class DashboardController {
     @GetMapping(value={"/dashboard"})
     public Message<?> dashboard(@CurrentUser UserInfo currentUser) {
         logger.debug("dashboard . ");
+        HashMap<String,Object> requestParameter = new HashMap<>();
+        requestParameter.put("instId", currentUser.getInstId());
+        
         HashMap<String,Object> reportParameter = new HashMap<>();
         reportParameter.put("instId", currentUser.getInstId());
+        reportParameter.put("dayCount", reportService.analysisDayCount(requestParameter));
+        reportParameter.put("monthCount", reportService.analysisMonthCount(requestParameter));
+        reportParameter.put("newUsers", reportService.analysisNewUsers(requestParameter));
         
-        reportParameter.put("dayCount", reportService.analysisDay(reportParameter));
-        reportParameter.put("newUsers", reportService.analysisNewUsers(reportParameter));
+        reportParameter.put("onlineUsers", reportService.analysisOnlineUsers(requestParameter));
+        reportParameter.put("activeUsers", reportService.analysisActiveUsers(requestParameter));
         
-        reportParameter.put("onlineUsers", reportService.analysisOnlineUsers(reportParameter));
-        reportParameter.put("activeUsers", reportService.analysisActiveUsers(reportParameter));
+        reportParameter.put("totalUsers", reportService.totalUsers(requestParameter));
+        reportParameter.put("totalDepts", reportService.totalDepts(requestParameter));
+        reportParameter.put("totalApps", reportService.totalApps(requestParameter));
+        reportParameter.put("totalGroups", reportService.totalGroups(requestParameter));
         
-        reportParameter.put("totalUsers", reportService.totalUsers(reportParameter));
-        reportParameter.put("totalDepts", reportService.totalDepts(reportParameter));
-        reportParameter.put("totalApps", reportService.totalApps(reportParameter));
+        reportParameter.put("reportMonth", reportService.analysisMonth(requestParameter));
+        reportParameter.put("reportDayHour", reportService.analysisDayHour(requestParameter));
         
-        reportParameter.put("reportMonth", reportService.analysisMonth(reportParameter));
-        reportParameter.put("reportDayHour", reportService.analysisDayHour(reportParameter));
+        reportParameter.put("reportProvince", reportService.analysisProvince(requestParameter));
         
-        reportParameter.put("reportProvince", reportService.analysisProvince(reportParameter));
+        reportParameter.put("reportCountry", reportService.analysisCountry(requestParameter));
         
-        reportParameter.put("reportCountry", reportService.analysisCountry(reportParameter));
+        reportParameter.put("reportBrowser", reportService.analysisBrowser(requestParameter));
         
-        reportParameter.put("reportBrowser", reportService.analysisBrowser(reportParameter));
-        
-        reportParameter.put("reportApp", reportService.analysisApp(reportParameter));
+        reportParameter.put("reportApp", reportService.analysisApp(requestParameter));
         return new Message<>(reportParameter);
     }
 

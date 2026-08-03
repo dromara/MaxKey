@@ -34,7 +34,9 @@ import org.dromara.mybatis.jpa.entity.JpaEntity;
  */
 public  interface ReportMapper extends IJpaMapper<JpaEntity,String> {
     
-    public Integer analysisDay(HashMap<String,Object> reportParameter);
+    public Integer analysisDayCount(HashMap<String,Object> reportParameter);
+    
+    public Integer analysisMonthCount(HashMap<String,Object> reportParameter);
     
     public Integer analysisNewUsers(HashMap<String,Object> reportParameter);
     
@@ -47,6 +49,8 @@ public  interface ReportMapper extends IJpaMapper<JpaEntity,String> {
     public Integer totalDepts(HashMap<String,Object> reportParameter);
     
     public Integer totalApps(HashMap<String,Object> reportParameter);
+    
+    public Integer totalGroups(HashMap<String,Object> reportParameter);
     
     public List<Map<String,Object>> analysisDayHour(HashMap<String,Object> reportParameter);
     

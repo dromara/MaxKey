@@ -69,7 +69,9 @@
 		"home": {
 			"onlineUsers": "在线用户",
 			"dayCount": "日访问量",
-			"newUsers": "当月新增用户",
+			"monthCount": "当月访问量",
+			"totalGroups": "用户组",
+			"newUsers": "当月新增",
 			"activeUsers": "活动用户",
 			"totalUsers": "用户",
 			"totalDepts": "组织",
