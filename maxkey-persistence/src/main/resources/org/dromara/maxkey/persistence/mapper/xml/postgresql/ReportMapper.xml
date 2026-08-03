@@ -25,14 +25,15 @@
         where instid = #{instId}
           and to_char(createddate,'YYYY-MM')=to_char(current_date,'YYYY-MM')
     </select>
+    
     <!-- 在线用户统计 -->
     <select id="analysisOnlineUsers" parameterType="java.util.HashMap" resultType="Integer">
         select count(*) reportcount
-        from mxk_userinfo
+        from mxk_history_login
         where instid = #{instId}
-          and online = 1
-          and extract(epoch from now() - lastlogintime) &lt; 10000
+          and sessionstatus = 1
     </select>
+    
     <!-- 30天活跃用户统计 -->
     <select id="analysisActiveUsers" parameterType="java.util.HashMap" resultType="Integer">
         select count(*) reportcount
