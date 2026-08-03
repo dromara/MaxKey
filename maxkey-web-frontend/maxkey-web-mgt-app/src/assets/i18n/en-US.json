@@ -69,8 +69,6 @@
 		},
 		"home": {
 			"onlineUsers": "Online Users",
-			"dayCount": "Day Count",
-			"monthCount": "Month Count",
 			"newUsers": "Month News",
 			"activeUsers": "Month Actives",
 			"totalUsers": "Users",
@@ -84,7 +82,7 @@
 			"monthProvinceAccessCount": "30 Day  TOP 10 Access Count",
 			"appName": "App",
 			"browser": "Browser",
-			"accessCount": "Count",
+			"accessCount": "Access Count",
 			"maptype.china":"China",
 			"maptype.world":"World",
 			"number": "Number",

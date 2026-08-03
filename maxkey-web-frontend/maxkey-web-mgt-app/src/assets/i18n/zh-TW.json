@@ -69,8 +69,7 @@
 		},
 		"home": {
 			"onlineUsers": "在線用戶",
-			"dayCount": "日訪問量",
-			"monthCount": "當月訪問量",
+
 			"totalGroups": "用戶組",
 			"newUsers": "當月新增",
 			"activeUsers": "活動用戶",
