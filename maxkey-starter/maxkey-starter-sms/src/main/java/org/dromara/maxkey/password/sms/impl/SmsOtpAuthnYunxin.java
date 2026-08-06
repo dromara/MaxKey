@@ -72,7 +72,7 @@ public class SmsOtpAuthnYunxin extends SmsOtpAuthn {
         HttpPost httpPost = null;
         // 手机号
         String mobile = userInfo.getMobile();
-        if (mobile != null && !mobile.equals("")) {
+        if (mobile != null && !"".equals(mobile)) {
             try {
                 httpPost = new HttpPost(SERVER_URL);
                 String curTime = String.valueOf((new Date()).getTime() / 1000L);

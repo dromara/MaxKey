@@ -56,6 +56,7 @@ public class PasswordPolicyValidatorServiceImpl  implements  PasswordPolicyValid
         
     }
     
+    @Override
     public CnfPasswordPolicy getPasswordPolicy(){
         return cnfPasswordPolicyService.getPasswordPolicy();
     }
@@ -66,6 +67,7 @@ public class PasswordPolicyValidatorServiceImpl  implements  PasswordPolicyValid
      * @param userInfo
      * @return boolean
      */
+   @Override
    public boolean validator(ChangePassword changePassword) {
        
        
@@ -104,6 +106,7 @@ public class PasswordPolicyValidatorServiceImpl  implements  PasswordPolicyValid
    
 
    
+   @Override
    public String generateRandomPassword() {
        CnfPasswordPolicy passwordPolicy = cnfPasswordPolicyService.getPasswordPolicy();
        

@@ -36,6 +36,7 @@ public class ExactMatchRedirectResolver extends DefaultRedirectResolver {
      * @param redirectUri The registered redirect URI.
      * @return Whether the requested redirect URI "matches" the specified redirect URI.
      */
+    @Override
     protected boolean redirectMatches(String requestedRedirect, String redirectUri) {
         return requestedRedirect.equals(redirectUri);
     }

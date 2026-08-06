@@ -53,7 +53,7 @@ public class LdapAuthenticationRealmService {
                 authenticationRealm.setLdapSupport(true);
                 List<IAuthenticationServer> ldapAuthenticationServers = new ArrayList<IAuthenticationServer>();
                 for(CnfLdapContext ldapContext : ldapContexts) { 
-                    if(ldapContext.getProduct().equalsIgnoreCase("ActiveDirectory")) {
+                    if("ActiveDirectory".equalsIgnoreCase(ldapContext.getProduct())) {
                         ActiveDirectoryServer ldapServer = new ActiveDirectoryServer();
                         ActiveDirectoryUtils  ldapUtils  = new ActiveDirectoryUtils(
                                                         ldapContext.getProviderUrl(),
@@ -62,7 +62,7 @@ public class LdapAuthenticationRealmService {
                                                                 ldapContext.getCredentials()),
                                                         ldapContext.getMsadDomain());
                         ldapServer.setActiveDirectoryUtils(ldapUtils);
-                        if(ldapContext.getAccountMapping().equalsIgnoreCase("YES")) {
+                        if("YES".equalsIgnoreCase(ldapContext.getAccountMapping())) {
                             ldapServer.setMapping(true);
                         }
                         ldapAuthenticationServers.add(ldapServer);
@@ -77,7 +77,7 @@ public class LdapAuthenticationRealmService {
                                                     ldapContext.getBasedn());
                         standardLdapServer.setLdapUtils(ldapUtils);
                         standardLdapServer.setFilterAttribute(ldapContext.getFilters());
-                        if(ldapContext.getAccountMapping().equalsIgnoreCase("YES")) {
+                        if("YES".equalsIgnoreCase(ldapContext.getAccountMapping())) {
                             standardLdapServer.setMapping(true);
                         }
                         ldapAuthenticationServers.add(standardLdapServer);

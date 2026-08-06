@@ -41,6 +41,7 @@ public class TokenEnhancerChain implements TokenEnhancer {
      * @see org.dromara.maxkey.authz.oauth2.provider.token.TokenEnhancer#enhance(org.dromara.maxkey.authz.oauth2.common.OAuth2AccessToken,
      * org.dromara.maxkey.authz.oauth2.provider.OAuth2Authentication)
      */
+    @Override
     public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
         OAuth2AccessToken result = accessToken;
         for (TokenEnhancer enhancer : delegates) {

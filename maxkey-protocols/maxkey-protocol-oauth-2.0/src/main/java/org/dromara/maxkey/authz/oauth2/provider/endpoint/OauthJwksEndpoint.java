@@ -84,10 +84,10 @@ public class OauthJwksEndpoint extends AbstractEndpoint {
         }
         if(clientDetails != null) {
             String jwkSetString = "";
-            if(!clientDetails.getSignature().equalsIgnoreCase("none")) {
+            if(!"none".equalsIgnoreCase(clientDetails.getSignature())) {
                 jwkSetString = clientDetails.getSignatureKey();
             }
-            if(!clientDetails.getAlgorithm().equalsIgnoreCase("none")) {
+            if(!"none".equalsIgnoreCase(clientDetails.getAlgorithm())) {
                 if(!StringUtils.hasText(jwkSetString)) {
                     jwkSetString = clientDetails.getAlgorithmKey();
                 }else {

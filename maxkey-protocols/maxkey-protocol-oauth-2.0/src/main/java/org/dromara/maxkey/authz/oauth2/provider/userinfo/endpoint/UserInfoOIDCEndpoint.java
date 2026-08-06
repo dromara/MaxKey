@@ -201,12 +201,12 @@ public class UserInfoOIDCEndpoint {
             JWTClaimsSet userInfoJWTClaims = jwtClaimsSetBuilder.build();
             JWT userInfoJWT=null;
             
-            if(clientDetails.getUserInfoResponse().equalsIgnoreCase("NORMAL")) {
+            if("NORMAL".equalsIgnoreCase(clientDetails.getUserInfoResponse())) {
                 response.setContentType(ContentType.APPLICATION_JSON_UTF8);
                 userJson = userInfoJWTClaims.toString();
             }else if (StringUtils.isNotBlank(clientDetails.getSignature()) 
-                    && !clientDetails.getSignature().equalsIgnoreCase("none")
-                    && clientDetails.getUserInfoResponse().equalsIgnoreCase("ENCRYPTION")) {
+                    && !"none".equalsIgnoreCase(clientDetails.getSignature())
+                    && "ENCRYPTION".equalsIgnoreCase(clientDetails.getUserInfoResponse())) {
                 //需要签名  signed ID token
                 DefaultJwtSigningAndValidationService jwtSignerService = null;
                 try {
@@ -230,8 +230,8 @@ public class UserInfoOIDCEndpoint {
                 
                 userJson = userInfoJWT.serialize();
             }else if (StringUtils.isNotBlank(clientDetails.getAlgorithm())
-                    && !clientDetails.getAlgorithm().equalsIgnoreCase("none")
-                    && clientDetails.getUserInfoResponse().equalsIgnoreCase("SIGNING")
+                    && !"none".equalsIgnoreCase(clientDetails.getAlgorithm())
+                    && "SIGNING".equalsIgnoreCase(clientDetails.getUserInfoResponse())
                     ) {
                 // 需要加密
                 try {

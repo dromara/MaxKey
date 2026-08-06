@@ -76,6 +76,7 @@ public class DefaultUserAuthenticationConverter implements UserAuthenticationCon
                 .arrayToCommaDelimitedString(defaultAuthorities));
     }
 
+    @Override
     public Map<String, ?> convertUserAuthentication(Authentication authentication) {
         Map<String, Object> response = new LinkedHashMap<String, Object>();
         response.put(USERNAME, authentication.getName());
@@ -85,6 +86,7 @@ public class DefaultUserAuthenticationConverter implements UserAuthenticationCon
         return response;
     }
 
+    @Override
     public Authentication extractAuthentication(Map<String, ?> map) {
         if (map.containsKey(USERNAME)) {
             Object principal = map.get(USERNAME);

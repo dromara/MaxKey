@@ -26,6 +26,7 @@ public interface GroupsService  extends IJpaService<Groups,String>{
 
     public List<Groups> queryDynamicGroups(Groups groups);
     
+    @Override
     public boolean deleteById(String groupId) ;
     
     public List<Groups> queryByUserId(String userId);

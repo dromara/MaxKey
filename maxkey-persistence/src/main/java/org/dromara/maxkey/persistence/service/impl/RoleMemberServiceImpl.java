@@ -35,23 +35,28 @@ import org.springframework.stereotype.Repository;
 public class RoleMemberServiceImpl  extends JpaServiceImpl<RoleMemberMapper,RoleMember,String> implements RoleMemberService{
     static final  Logger _logger = LoggerFactory.getLogger(RoleMemberServiceImpl.class);
 
+    @Override
     public int addDynamicRoleMember(Roles dynamicGroup) {
         return getMapper().addDynamicRoleMember(dynamicGroup);
     }
     
+    @Override
     public int deleteDynamicRoleMember(Roles dynamicGroup) {
         return getMapper().deleteDynamicRoleMember(dynamicGroup);
     }
     
+    @Override
     public int deleteByRoleId(String groupId) {
         return getMapper().deleteByRoleId(groupId);
     }
     
+    @Override
     public List<UserInfo> queryMemberByRoleId(String groupId){
         return getMapper().queryMemberByRoleId(groupId);
     }
     
     
+    @Override
     public JpaPageResults<Roles> rolesNoMember(RoleMember entity) {
         entity.build();
         List<Roles> resultslist = null;

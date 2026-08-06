@@ -55,6 +55,7 @@ public class LdapOrganizationService extends AbstractSynchronizerService  implem
     private static final Integer ORG_TYPE = 2;
     LdapUtils ldapUtils;
     
+    @Override
     public void sync() {
         _logger.info("Sync Ldap Organizations ...");
         loadOrgsByInstId(this.synchronizer.getInstId(),Organizations.ROOT_ORG_ID);

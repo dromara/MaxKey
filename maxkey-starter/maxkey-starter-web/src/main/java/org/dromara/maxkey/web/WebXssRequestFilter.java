@@ -43,7 +43,7 @@ public class WebXssRequestFilter  extends GenericFilterBean {
     /**
      * 特殊字符 ' -- #
      */
-    public final static Pattern specialCharacterRegex = Pattern.compile(".*((\\%27)|(')|(\\')|(--)|(\\-\\-)|(\\%23)|(#)).*", Pattern.CASE_INSENSITIVE);
+    public static final  Pattern specialCharacterRegex = Pattern.compile(".*((\\%27)|(')|(\\')|(--)|(\\-\\-)|(\\%23)|(#)).*", Pattern.CASE_INSENSITIVE);
     
     static {
         //add or update

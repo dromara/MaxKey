@@ -64,10 +64,12 @@ public class AccountsServiceImpl  extends JpaServiceImpl<AccountsMapper,Accounts
          return false;
      }
    
+   @Override
    public boolean updateStatus(Accounts accounts) {
        return this.getMapper().updateStatus(accounts) > 0;
    }
    
+   @Override
    public boolean remove(String id) {
        if (super.delete(id)) {
               return true;
@@ -76,11 +78,13 @@ public class AccountsServiceImpl  extends JpaServiceImpl<AccountsMapper,Accounts
    }
    
    
+   @Override
    public List<Accounts> queryByAppIdAndDate(Accounts account) {
        return getMapper().queryByAppIdAndDate(account);
    }
    
-   public List<Accounts> queryByAppIdAndAccount(String appId,String relatedUsername){
+   @Override
+   public List<Accounts> queryByAppIdAndAccount(String appId, String relatedUsername){
        return getMapper().queryByAppIdAndAccount(appId,relatedUsername);
    }
    

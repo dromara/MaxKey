@@ -36,15 +36,15 @@ public abstract class RandomServiceTicketServices implements TicketServices {
          */
         //String ticket = UUID.randomUUID().toString();
         String ticketId = "";
-        if(ticket.getClass().getSimpleName().equalsIgnoreCase("ServiceTicketImpl")){
+        if("ServiceTicketImpl".equalsIgnoreCase(ticket.getClass().getSimpleName())){
             ticketId = generator.getNewTicketId(CasConstants.PREFIX.SERVICE_TICKET_PREFIX);
-        }else if(ticket.getClass().getSimpleName().equalsIgnoreCase("ProxyTicketImpl")){
+        }else if("ProxyTicketImpl".equalsIgnoreCase(ticket.getClass().getSimpleName())){
             ticketId = generator.getNewTicketId(CasConstants.PREFIX.PROXY_TICKET_PREFIX);
-        }else if(ticket.getClass().getSimpleName().equalsIgnoreCase("TicketGrantingTicketImpl")){
+        }else if("TicketGrantingTicketImpl".equalsIgnoreCase(ticket.getClass().getSimpleName())){
             ticketId = generator.getNewTicketId(CasConstants.PREFIX.TICKET_GRANTING_TICKET_PREFIX);
-        }else if(ticket.getClass().getSimpleName().equalsIgnoreCase("ProxyGrantingTicketImpl")){
+        }else if("ProxyGrantingTicketImpl".equalsIgnoreCase(ticket.getClass().getSimpleName())){
             ticketId = generator.getNewTicketId(CasConstants.PREFIX.PROXY_GRANTING_TICKET_PREFIX);
-        }else if(ticket.getClass().getSimpleName().equalsIgnoreCase("ProxyGrantingTicketIOUImpl")){
+        }else if("ProxyGrantingTicketIOUImpl".equalsIgnoreCase(ticket.getClass().getSimpleName())){
             ticketId = generator.getNewTicketId(CasConstants.PREFIX.PROXY_GRANTING_TICKET_IOU_PREFIX);
             return ticketId;
         }else {
@@ -65,15 +65,15 @@ public abstract class RandomServiceTicketServices implements TicketServices {
          */
         //String ticket = UUID.randomUUID().toString();
         String ticketId = "";
-        if(ticket.getClass().getSimpleName().equalsIgnoreCase("ServiceTicketImpl")){
+        if("ServiceTicketImpl".equalsIgnoreCase(ticket.getClass().getSimpleName())){
             ticketId = generator.getNewTicketId(CasConstants.PREFIX.SERVICE_TICKET_PREFIX);
-        }else if(ticket.getClass().getSimpleName().equalsIgnoreCase("ProxyTicketImpl")){
+        }else if("ProxyTicketImpl".equalsIgnoreCase(ticket.getClass().getSimpleName())){
             ticketId = generator.getNewTicketId(CasConstants.PREFIX.PROXY_TICKET_PREFIX);
-        }else if(ticket.getClass().getSimpleName().equalsIgnoreCase("TicketGrantingTicketImpl")){
+        }else if("TicketGrantingTicketImpl".equalsIgnoreCase(ticket.getClass().getSimpleName())){
             ticketId = generator.getNewTicketId(CasConstants.PREFIX.TICKET_GRANTING_TICKET_PREFIX);
-        }else if(ticket.getClass().getSimpleName().equalsIgnoreCase("ProxyGrantingTicketImpl")){
+        }else if("ProxyGrantingTicketImpl".equalsIgnoreCase(ticket.getClass().getSimpleName())){
             ticketId = generator.getNewTicketId(CasConstants.PREFIX.PROXY_GRANTING_TICKET_PREFIX);
-        }else if(ticket.getClass().getSimpleName().equalsIgnoreCase("ProxyGrantingTicketIOUImpl")){
+        }else if("ProxyGrantingTicketIOUImpl".equalsIgnoreCase(ticket.getClass().getSimpleName())){
             ticketId = generator.getNewTicketId(CasConstants.PREFIX.PROXY_GRANTING_TICKET_IOU_PREFIX);
             return ticketId;
         }else {

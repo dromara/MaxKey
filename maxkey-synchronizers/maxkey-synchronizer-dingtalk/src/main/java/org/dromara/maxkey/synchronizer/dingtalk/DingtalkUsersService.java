@@ -51,6 +51,7 @@ public class DingtalkUsersService  extends AbstractSynchronizerService implement
     private static final Integer USER_TYPE = 1;
 
     
+    @Override
     public void sync() {
         _logger.info("Sync Dingtalk Users...");
         try {
@@ -148,19 +149,19 @@ public class DingtalkUsersService  extends AbstractSynchronizerService implement
             try {
                 Object sourceValue = null;
 
-                if(sourceProperty.equals("email")){
+                if("email".equals(sourceProperty)){
                     userInfo.setEmail(StringUtils.isBlank(user.getEmail())? user.getUserid() +"@maxkey.top":user.getEmail());
                     continue;
                 }
-                if(sourceProperty.equals("active")){
+                if("active".equals(sourceProperty)){
                     userInfo.setStatus(user.getActive()?ConstsStatus.ACTIVE:ConstsStatus.INACTIVE);
                     continue;
                 }
-                if(sourceProperty.equals("remark")){
+                if("remark".equals(sourceProperty)){
                     userInfo.setDescription("dingtalk "+user.getRemark());
                     continue;
                 }
-                if(sourceProperty.equals("hiredDate")){
+                if("hiredDate".equals(sourceProperty)){
                     userInfo.setEntryDate(new DateTime(user.getHiredDate()).toString(DateTimeFormat.forPattern("yyyy-MM-dd")));
                     continue;
                 }

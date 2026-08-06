@@ -62,17 +62,17 @@ public class TimeBasedOtpAuthn extends AbstractOtpAuthn {
         byte[] byteSharedSecret = Base32Utils.decode(sharedSecret);
         String hexSharedSecret = Hex.encodeHexString(byteSharedSecret);
         String timeBasedToken = "";
-        if (crypto.equalsIgnoreCase("HmacSHA1")) {
+        if ("HmacSHA1".equalsIgnoreCase(crypto)) {
             timeBasedToken = TimeBasedOTP.genOTP(
                     hexSharedSecret,
                     Long.toHexString(currentTimeSeconds / interval).toUpperCase() + "",
                     digits + "");
-        } else if (crypto.equalsIgnoreCase("HmacSHA256")) {
+        } else if ("HmacSHA256".equalsIgnoreCase(crypto)) {
             timeBasedToken = TimeBasedOTP.genOTPHmacSHA256(
                     hexSharedSecret,
                     Long.toHexString(currentTimeSeconds / interval).toUpperCase() + "", 
                     digits + "");
-        } else if (crypto.equalsIgnoreCase("HmacSHA512")) {
+        } else if ("HmacSHA512".equalsIgnoreCase(crypto)) {
             timeBasedToken = TimeBasedOTP.genOTPHmacSHA512(
                     hexSharedSecret,
                     Long.toHexString(currentTimeSeconds / interval).toUpperCase() + "", 

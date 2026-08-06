@@ -85,7 +85,7 @@ public class HttpHeaderEntryPoint implements AsyncHandlerInterceptor {
          _logger.trace("HttpHeader username : " + httpHeaderUsername);
         
         
-         if(httpHeaderUsername==null||httpHeaderUsername.equals("")){
+         if(httpHeaderUsername==null|| "".equals(httpHeaderUsername)){
              _logger.info("Authentication fail HttpHeader is null . ");
              return false;
          }

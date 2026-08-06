@@ -49,10 +49,11 @@ public class PasswordPolicyException extends Exception {
 
     @Override
     public String getMessage() {
-        if(filedValue!=null)
+        if(filedValue!=null) {
             return WebContext.getI18nValue(getKey(), new Object[]{filedValue});
-        else
-            return  WebContext.getI18nValue(getKey());
+        } else {
+            return WebContext.getI18nValue(getKey());
+        }
     }
     
 }

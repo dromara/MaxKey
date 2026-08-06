@@ -175,7 +175,9 @@ public class SnowFlakeId {
             while (interfaces.hasMoreElements()) {
                 NetworkInterface iface = interfaces.nextElement();
                 // 过滤掉无效接口
-                if (iface.isLoopback() || iface.isVirtual() || !iface.isUp()) continue;
+                if (iface.isLoopback() || iface.isVirtual() || !iface.isUp()) {
+                    continue;
+                }
 
                 byte[] mac = iface.getHardwareAddress();
                 if (mac != null && mac.length > 0) {

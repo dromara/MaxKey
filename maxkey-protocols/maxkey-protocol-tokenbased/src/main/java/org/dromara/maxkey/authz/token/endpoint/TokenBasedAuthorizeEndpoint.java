@@ -96,7 +96,7 @@ public class TokenBasedAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
                 tokenBasedDetails.getAlgorithmKey(), 
                 tokenBasedDetails.getAlgorithm());
         
-        if(tokenBasedDetails.getTokenType().equalsIgnoreCase("POST")) {
+        if("POST".equalsIgnoreCase(tokenBasedDetails.getTokenType())) {
             return adapter.authorize(modelAndView);
         }else {
             _logger.debug("Cookie Name : {}" ,tokenBasedDetails.getCookieName());

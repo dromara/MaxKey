@@ -346,7 +346,7 @@ public class UserInfoController {
         userInfo.setNickName(ExcelUtils.getValue(row, 6));
         // 性别
         String gender = ExcelUtils.getValue(row, 7);
-        userInfo.setGender(gender.equals("") ? 1 : Integer.valueOf(gender));
+        userInfo.setGender("".equals(gender) ? 1 : Integer.valueOf(gender));
         // 语言偏好
         userInfo.setPreferredLanguage(ExcelUtils.getValue(row, 8));
         // 时区

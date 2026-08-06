@@ -68,15 +68,15 @@ public class ExtendApiTimestampSignAdapter extends AbstractAuthorizeAdapter {
         ExtraAttrs extraAttrs=null;
         if(details.getIsExtendAttr()==1){
             extraAttrs=new ExtraAttrs(details.getExtendAttr());
-            if(extraAttrs.get("sign") == null || extraAttrs.get("sign").equalsIgnoreCase("md5")) {
+            if(extraAttrs.get("sign") == null || "md5".equalsIgnoreCase(extraAttrs.get("sign"))) {
                 
-            }else if(extraAttrs.get("sign").equalsIgnoreCase("sha") || extraAttrs.get("sign").equalsIgnoreCase("sha1")) {
+            }else if("sha".equalsIgnoreCase(extraAttrs.get("sign")) || "sha1".equalsIgnoreCase(extraAttrs.get("sign"))) {
                 token =DigestUtils.shaHex(code+key+timestamp);
-            }else if(extraAttrs.get("sign").equalsIgnoreCase("sha256")) {
+            }else if("sha256".equalsIgnoreCase(extraAttrs.get("sign"))) {
                 token =DigestUtils.sha256Hex(code+key+timestamp);
-            }else if(extraAttrs.get("sign").equalsIgnoreCase("sha384")) {
+            }else if("sha384".equalsIgnoreCase(extraAttrs.get("sign"))) {
                 token =DigestUtils.sha384Hex(code+key+timestamp);
-            }else if(extraAttrs.get("sign").equalsIgnoreCase("sha512")) {
+            }else if("sha512".equalsIgnoreCase(extraAttrs.get("sign"))) {
                 token =DigestUtils.sha512Hex(code+key+timestamp);
             }
         }

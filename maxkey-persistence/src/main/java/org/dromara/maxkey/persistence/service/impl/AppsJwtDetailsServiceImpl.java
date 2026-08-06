@@ -38,6 +38,7 @@ public class AppsJwtDetailsServiceImpl  extends JpaServiceImpl<AppsJwtDetailsMap
                 .build();
 
     
+    @Override
     public  AppsJwtDetails  get(String id , boolean cached) {
         AppsJwtDetails details = null;
         if(cached) {

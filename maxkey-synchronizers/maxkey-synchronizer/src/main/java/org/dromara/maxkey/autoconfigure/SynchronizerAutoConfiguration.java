@@ -60,7 +60,7 @@ public class SynchronizerAutoConfiguration   implements InitializingBean {
              List<Synchronizers> synchronizerList = querySynchronizers(jdbcTemplate);
              for(Synchronizers synchronizer : synchronizerList) {
                  if(synchronizer.getScheduler()!=null 
-                         && !synchronizer.getScheduler().equals("")
+                         && !"".equals(synchronizer.getScheduler())
                          && CronExpression.isValidExpression(synchronizer.getScheduler())) {
                      _logger.debug("synchronizer details : {}" , synchronizer);
                      buildJob(scheduler,synchronizer);

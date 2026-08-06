@@ -40,6 +40,7 @@ public class OAuth20UserApprovalHandler extends ApprovalStoreUserApprovalHandler
      * 
      * @param clientDetailsService a client details service
      */
+    @Override
     public void setClientDetailsService(ClientDetailsService clientDetailsService) {
         this.clientDetailsService = clientDetailsService;
         super.setClientDetailsService(clientDetailsService);

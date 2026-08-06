@@ -44,7 +44,7 @@ public class RedisConnectionFactory {
         if (jedisPool == null) {
             _logger.debug("init Jedis Pool .");
             try {
-                if (this.hostName == null || hostName.equals("")) {
+                if (this.hostName == null || "".equals(hostName)) {
                     hostName = RedisDefaultConfig.DEFAULT_ADDRESS;
                 }
                 if (port == 0) {
@@ -54,7 +54,7 @@ public class RedisConnectionFactory {
                     timeOut = RedisDefaultConfig.DEFAULT_TIMEOUT;
                 }
 
-                if (this.password == null || this.password.equals("")) {
+                if (this.password == null || "".equals(this.password)) {
                     this.password = null;
                 }
                 jedisPool = new JedisPool(poolConfig, hostName, port, timeOut, password);

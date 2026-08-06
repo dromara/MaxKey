@@ -31,7 +31,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 import org.dromara.maxkey.entity.apps.AppsCasDetails;
-import org.springframework.lang.NonNull;
+import org.jspecify.annotations.NonNull;
 import org.springframework.security.core.Authentication;
 
 import java.util.HashMap;

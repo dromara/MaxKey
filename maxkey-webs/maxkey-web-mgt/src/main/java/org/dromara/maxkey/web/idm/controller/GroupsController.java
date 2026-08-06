@@ -113,7 +113,7 @@ public class GroupsController {
     @RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public Message<?> update(@RequestBody Groups group,@CurrentUser UserInfo currentUser) {
         logger.debug("-update  group : {}" , group);
-        if(group.getId().equalsIgnoreCase("ROLE_ALL_USER")) {
+        if("ROLE_ALL_USER".equalsIgnoreCase(group.getId())) {
             group.setDefaultAllUser();
         }
         group.setInstId(currentUser.getInstId());

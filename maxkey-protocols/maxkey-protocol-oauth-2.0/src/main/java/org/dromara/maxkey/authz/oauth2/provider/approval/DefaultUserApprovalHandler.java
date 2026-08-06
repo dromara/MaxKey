@@ -49,6 +49,7 @@ public class DefaultUserApprovalHandler implements UserApprovalHandler {
      * 
      * @return Whether the specified request has been approved by the current user.
      */
+    @Override
     public boolean isApproved(AuthorizationRequest authorizationRequest, Authentication userAuthentication) {
         if (authorizationRequest.isApproved()) {
             return true;
@@ -56,6 +57,7 @@ public class DefaultUserApprovalHandler implements UserApprovalHandler {
         return false;
     }
 
+    @Override
     public AuthorizationRequest checkForPreApproval(AuthorizationRequest authorizationRequest, Authentication userAuthentication) {
         return authorizationRequest;
     }
@@ -64,7 +66,7 @@ public class DefaultUserApprovalHandler implements UserApprovalHandler {
     public AuthorizationRequest updateAfterApproval(AuthorizationRequest authorizationRequest, Authentication userAuthentication) {
         Map<String, String> approvalParameters = authorizationRequest.getApprovalParameters();
         String flag = approvalParameters.get(approvalParameter);
-        boolean approved = flag != null && flag.toLowerCase().equals("true");
+        boolean approved = flag != null && "true".equals(flag.toLowerCase());
         authorizationRequest.setApproved(approved);
         return authorizationRequest;
     }

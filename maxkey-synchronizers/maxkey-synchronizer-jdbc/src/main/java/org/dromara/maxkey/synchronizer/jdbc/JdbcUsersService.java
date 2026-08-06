@@ -109,7 +109,7 @@ public class JdbcUsersService extends AbstractSynchronizerService implements ISy
         for (ColumnFieldMapper mapper : mapperList) {
             if (meta.getColumnsMap().containsKey(mapper.getColumn())) {
                 Object value = null;
-                if (mapper.getType().equalsIgnoreCase("String")) {
+                if ("String".equalsIgnoreCase(mapper.getType())) {
                     value = rs.getString(mapper.getColumn());
                 } else {
                     value = rs.getInt(mapper.getColumn());
@@ -174,7 +174,7 @@ public class JdbcUsersService extends AbstractSynchronizerService implements ISy
             String column = entry.getValue();
             String field = entry.getKey();
             Object value = null;
-            if(meta.getColumnsMap().containsKey(column) && !field.equals("status") && !field.equals("password")){
+            if(meta.getColumnsMap().containsKey(column) && !"status".equals(field) && !"password".equals(field)){
                 value = rs.getObject(column);
                 if(value!=null){
                     setFieldValue(user,field,value);

@@ -77,9 +77,9 @@ public class ExtendApiCndnsApiMailAdapter extends AbstractAuthorizeAdapter {
         String domain = null;
         if(details.getIsExtendAttr()==1){
             extraAttrs=new ExtraAttrs(details.getExtendAttr());
-            if(extraAttrs.get("action")==null || extraAttrs.get("action").equalsIgnoreCase("getWebMailUrl")) {
+            if(extraAttrs.get("action")==null || "getWebMailUrl".equalsIgnoreCase(extraAttrs.get("action"))) {
                 action = "getWebMailUrl";
-            }else if(extraAttrs.get("action").equalsIgnoreCase("getDomailUrl")){
+            }else if("getDomailUrl".equalsIgnoreCase(extraAttrs.get("action"))){
                 action = "getDomailUrl";
                 domain = extraAttrs.get("domain");
             }
@@ -90,7 +90,7 @@ public class ExtendApiCndnsApiMailAdapter extends AbstractAuthorizeAdapter {
         String tokenMd5 =DigestUtils.md5Hex(details.getCredentials());
         HashMap<String,Object > requestParamenter =new HashMap<String,Object >();
         String redirect_uri = "";
-        if(action.equalsIgnoreCase("getDomailUrl")) {
+        if("getDomailUrl".equalsIgnoreCase(action)) {
             String sign =DigestUtils.md5Hex
                     (String.format(
                             SIGN_STRING,

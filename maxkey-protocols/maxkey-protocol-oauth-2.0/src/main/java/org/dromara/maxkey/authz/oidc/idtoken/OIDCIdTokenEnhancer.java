@@ -88,7 +88,7 @@ public class OIDCIdTokenEnhancer implements TokenEnhancer {
             JWSAlgorithm signingAlg = null;
             String signerKeyId = clientDetails.getClientId() + "_sig";
             try {//jwtSignerService
-                if (StringUtils.isNotBlank(clientDetails.getSignature()) && !clientDetails.getSignature().equalsIgnoreCase("none")) {
+                if (StringUtils.isNotBlank(clientDetails.getSignature()) && !"none".equalsIgnoreCase(clientDetails.getSignature())) {
                     jwtSignerService = new DefaultJwtSigningAndValidationService(
                             clientDetails.getSignatureKey(),
                             signerKeyId,
@@ -116,7 +116,7 @@ public class OIDCIdTokenEnhancer implements TokenEnhancer {
              */
             if(clientDetails.getIssuer()!=null 
                     && jwtSignerService != null
-                    && clientDetails.getIssuer().equalsIgnoreCase("https://self-issued.me") 
+                    && "https://self-issued.me".equalsIgnoreCase(clientDetails.getIssuer())
                     ){
                 builder.claim("sub_jwk", jwtSignerService.getAllPublicKeys().get(signerKeyId));
             }
@@ -148,7 +148,7 @@ public class OIDCIdTokenEnhancer implements TokenEnhancer {
             }
             String idTokenString = "";
             if (StringUtils.isNotBlank(clientDetails.getSignature()) 
-                    && !clientDetails.getSignature().equalsIgnoreCase("none")) {
+                    && !"none".equalsIgnoreCase(clientDetails.getSignature())) {
                 try {
                     builder.claim("kid", signerKeyId);
                     // signed ID token
@@ -162,7 +162,7 @@ public class OIDCIdTokenEnhancer implements TokenEnhancer {
                     _logger.error("Couldn't create Jwt Signing Exception",e);
                 }
             }else if (StringUtils.isNotBlank(clientDetails.getAlgorithm()) 
-                    && !clientDetails.getAlgorithm().equalsIgnoreCase("none")) {
+                    && !"none".equalsIgnoreCase(clientDetails.getAlgorithm())) {
                 try {
                     String encryptionKeyId = clientDetails.getClientId()  + "_enc";
                     DefaultJwtEncryptionAndDecryptionService jwtEncryptionService = 

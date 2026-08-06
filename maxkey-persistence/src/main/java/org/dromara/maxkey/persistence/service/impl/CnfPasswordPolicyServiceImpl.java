@@ -72,6 +72,7 @@ public class CnfPasswordPolicyServiceImpl  extends JpaServiceImpl<CnfPasswordPol
      * init PasswordPolicy and load Rules
      * @return
      */
+    @Override
     public CnfPasswordPolicy getPasswordPolicy() {
         passwordPolicy = passwordPolicyStore.getIfPresent(PASSWORD_POLICY_KEY);
        
@@ -148,11 +149,13 @@ public class CnfPasswordPolicyServiceImpl  extends JpaServiceImpl<CnfPasswordPol
     }
   
  
+   @Override
    public List<Rule> getPasswordPolicyRuleList() {
        getPasswordPolicy();
         return passwordPolicyRuleList;
     }
    
+   @Override
    public void buildTipMessage(CnfPasswordPolicy passwordPolicy){
        
        List<String> policMessageList = new ArrayList<>();

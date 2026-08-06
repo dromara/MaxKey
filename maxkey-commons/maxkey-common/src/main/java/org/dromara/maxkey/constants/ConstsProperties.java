@@ -24,7 +24,7 @@ public class ConstsProperties {
     }
     
     public static String classPathResource(String propertySource,String active) {
-        if(active == null || active.equals("")) {
+        if(active == null || "".equals(active)) {
             return propertySource.replaceAll("classpath:","");
         }
         return propertySource.replace(".", "-"+active+".").replaceAll("classpath:","");

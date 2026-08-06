@@ -331,19 +331,19 @@ public class DefaultJwtEncryptionAndDecryptionService implements JwtEncryptionAn
 
     public EncryptionMethod parseEncryptionMethod(String encryptionMethodName) {
         EncryptionMethod encryptionMethod = null;
-        if(encryptionMethodName.equalsIgnoreCase("A128GCM")) {
+        if("A128GCM".equalsIgnoreCase(encryptionMethodName)) {
             encryptionMethod = EncryptionMethod.A128GCM;
-        }else if(encryptionMethodName.equalsIgnoreCase("A192GCM")) {
+        }else if("A192GCM".equalsIgnoreCase(encryptionMethodName)) {
             encryptionMethod = EncryptionMethod.A192GCM;
-        }else if(encryptionMethodName.equalsIgnoreCase("A256GCM")) {
+        }else if("A256GCM".equalsIgnoreCase(encryptionMethodName)) {
             encryptionMethod = EncryptionMethod.A256GCM;
-        }else if(encryptionMethodName.equalsIgnoreCase("A128CBC_HS256")) {
+        }else if("A128CBC_HS256".equalsIgnoreCase(encryptionMethodName)) {
             encryptionMethod = EncryptionMethod.A128CBC_HS256;
-        }else if(encryptionMethodName.equalsIgnoreCase("A192CBC_HS384")) {
+        }else if("A192CBC_HS384".equalsIgnoreCase(encryptionMethodName)) {
             encryptionMethod = EncryptionMethod.A192CBC_HS384;
-        }else if(encryptionMethodName.equalsIgnoreCase("A256CBC_HS512")) {
+        }else if("A256CBC_HS512".equalsIgnoreCase(encryptionMethodName)) {
             encryptionMethod = EncryptionMethod.A256CBC_HS512;
-        }else if(encryptionMethodName.equalsIgnoreCase("XC20P")) {
+        }else if("XC20P".equalsIgnoreCase(encryptionMethodName)) {
             encryptionMethod = EncryptionMethod.XC20P;
         }
         return encryptionMethod;

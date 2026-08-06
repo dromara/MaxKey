@@ -31,17 +31,20 @@ import java.util.List;
 @Repository
 public class SynchroAssociationServiceImpl extends JpaServiceImpl<SynchroAssociationMapper,SynchroAssociation,String>  implements SynchroAssociationService {
 
+    @Override
     public List<SynchroAssociation> findBySyncIdAndObjectType(Long syncId, String objectType) {
 
         return getMapper().findBySyncIdAndObjectType(syncId,objectType);
     }
 
+    @Override
     public void deleteFieldMapById(Long id){
         ArrayList<String> ids = new ArrayList<>();
         ids.add(String.valueOf(id));
         super.deleteBatch(ids);
     }
 
+    @Override
     public List<SynchroAssociation> findBySyncId(Long syncId) {
         List<SynchroAssociation> list = find(" syncId = ? ",
                 new Object[]{syncId},
@@ -50,7 +53,8 @@ public class SynchroAssociationServiceImpl extends JpaServiceImpl<SynchroAssocia
 
     }
     
-    public List<SynchroAssociation> findBySyncId(Long syncId,String instId) {
+    @Override
+    public List<SynchroAssociation> findBySyncId(Long syncId, String instId) {
         List<SynchroAssociation> list = find(" syncId = ? and instId = ? ",
                 new Object[]{syncId,instId},
                 new int[]{Types.BIGINT,Types.VARCHAR});

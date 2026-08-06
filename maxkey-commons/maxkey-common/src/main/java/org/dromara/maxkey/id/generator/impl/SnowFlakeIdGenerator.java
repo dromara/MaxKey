@@ -24,6 +24,7 @@ public class SnowFlakeIdGenerator implements IdGenerator{
 
     SnowFlakeId snowFlakeId = new SnowFlakeId(0,0);
 
+    @Override
     public String generate(){
       return snowFlakeId.nextId() + "";
     }

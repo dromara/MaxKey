@@ -177,8 +177,8 @@ public class OrganizationsController {
                 nodeCount ++;
                 //root organization node,parentId is null or parentId = -1 or parentId = 0 or  id = instId or id = parentId 
                 if(org.getParentId() == null 
-                        ||org.getParentId().equalsIgnoreCase("0")
-                        ||org.getParentId().equalsIgnoreCase("-1")
+                        || "0".equalsIgnoreCase(org.getParentId())
+                        || "-1".equalsIgnoreCase(org.getParentId())
                         ||org.getId().equalsIgnoreCase(currentUser.getInstId())
                         ||org.getId().equalsIgnoreCase(org.getParentId())
                         ) {
@@ -258,10 +258,10 @@ public class OrganizationsController {
         organization.setDivision(ExcelUtils.getValue(row, 8));
         // 级别
         String level = ExcelUtils.getValue(row, 9);
-        organization.setLevel(level.equals("") ? 1 : Integer.parseInt(level));
+        organization.setLevel("".equals(level) ? 1 : Integer.parseInt(level));
         // 排序
         String sortIndex = ExcelUtils.getValue(row, 10);
-        organization.setSortIndex(sortIndex.equals("") ? 1 : Integer.parseInt(sortIndex));
+        organization.setSortIndex("".equals(sortIndex) ? 1 : Integer.parseInt(sortIndex));
         // 联系人
         organization.setContact(ExcelUtils.getValue(row, 11));
         // 联系电话

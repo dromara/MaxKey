@@ -45,6 +45,7 @@ public class MacSigner implements SignerVerifier {
 
 //    val keyLength = key.getEncoded.length * 8
 
+    @Override
     public byte[] sign(byte[] bytes) {
         try {
             Mac mac = Mac.getInstance(algorithm);
@@ -56,6 +57,7 @@ public class MacSigner implements SignerVerifier {
         }
     }
 
+  @Override
   public void verify(byte[] content, byte[] signature) {
     byte[] signed = sign(content);
     if (!isEqual(signed, signature)) {
@@ -75,6 +77,7 @@ public class MacSigner implements SignerVerifier {
     return xor == 0;
   }
 
+    @Override
     public String algorithm() {
         return algorithm;
     }

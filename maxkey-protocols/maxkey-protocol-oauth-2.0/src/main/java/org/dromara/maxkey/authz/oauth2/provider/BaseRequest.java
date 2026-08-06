@@ -105,28 +105,37 @@ abstract class BaseRequest implements Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         BaseRequest other = (BaseRequest) obj;
         if (clientId == null) {
-            if (other.clientId != null)
+            if (other.clientId != null) {
                 return false;
-        } else if (!clientId.equals(other.clientId))
+            }
+        } else if (!clientId.equals(other.clientId)) {
             return false;
+        }
         if (requestParameters == null) {
-            if (other.requestParameters != null)
+            if (other.requestParameters != null) {
                 return false;
-        } else if (!requestParameters.equals(other.requestParameters))
+            }
+        } else if (!requestParameters.equals(other.requestParameters)) {
             return false;
+        }
         if (scope == null) {
-            if (other.scope != null)
+            if (other.scope != null) {
                 return false;
-        } else if (!scope.equals(other.scope))
+            }
+        } else if (!scope.equals(other.scope)) {
             return false;
+        }
         return true;
     }
 

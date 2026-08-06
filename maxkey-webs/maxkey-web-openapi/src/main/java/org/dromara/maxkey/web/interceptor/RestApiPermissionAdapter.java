@@ -106,7 +106,7 @@ public class RestApiPermissionAdapter  implements AsyncHandlerInterceptor  {
             
             if(authenticationToken !=null && authenticationToken.isAuthenticated() && app != null) {
             	if("read".equalsIgnoreCase(app.getOpenapiRight())) {
-					if(request.getMethod().equalsIgnoreCase("GET")) {
+					if("GET".equalsIgnoreCase(request.getMethod())) {
 						AuthorizationUtils.setAuthentication(authenticationToken);
 		                return true;
 					}else {

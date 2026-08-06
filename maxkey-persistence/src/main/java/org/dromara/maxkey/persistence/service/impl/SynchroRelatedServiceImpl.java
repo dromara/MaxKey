@@ -33,10 +33,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class SynchroRelatedServiceImpl  extends JpaServiceImpl<SynchroRelatedMapper,SynchroRelated,String> implements SynchroRelatedService{
 
+    @Override
     public int updateSyncTime(SynchroRelated synchroRelated) {
         return getMapper().updateSyncTime(synchroRelated);
     }
     
+    @Override
     public List<SynchroRelated> findOrgs(Synchronizers synchronizer) {
         return find(
                 "instid = ? and syncid = ? and objecttype = ? ",
@@ -45,13 +47,15 @@ public class SynchroRelatedServiceImpl  extends JpaServiceImpl<SynchroRelatedMap
                 );
     }
     
-    public SynchroRelated findByOriginId(Synchronizers synchronizer,String originId,String classType) {
+    @Override
+    public SynchroRelated findByOriginId(Synchronizers synchronizer, String originId, String classType) {
         return findOne("instid = ? and syncId = ? and originid = ? and objecttype = ? ",
                  new Object[] { synchronizer.getInstId(),synchronizer.getId(),originId,classType },
                 new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,Types.VARCHAR});
     }
     
-    public void updateSynchroRelated(Synchronizers synchronizer,SynchroRelated synchroRelated,String classType) {
+    @Override
+    public void updateSynchroRelated(Synchronizers synchronizer, SynchroRelated synchroRelated, String classType) {
         SynchroRelated loadSynchroRelated = 
                 findByOriginId(
                         synchronizer,synchroRelated.getOriginId(),classType );

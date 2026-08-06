@@ -43,6 +43,7 @@ import org.springframework.security.core.AuthenticationException;
 public class TwoFactorTotpAuthenticationProvider extends AbstractAuthenticationProvider {
     private static final Logger logger = LoggerFactory.getLogger(TwoFactorTotpAuthenticationProvider.class);
     
+    @Override
     public String getProviderName() {
         return "twoFactorTotp" + PROVIDER_SUFFIX;
     }

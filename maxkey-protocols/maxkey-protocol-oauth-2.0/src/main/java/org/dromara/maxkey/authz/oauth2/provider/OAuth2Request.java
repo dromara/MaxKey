@@ -255,45 +255,59 @@ public class OAuth2Request extends BaseRequest implements Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (!super.equals(obj))
+        }
+        if (!super.equals(obj)) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         OAuth2Request other = (OAuth2Request) obj;
-        if (approved != other.approved)
+        if (approved != other.approved) {
             return false;
+        }
         if (authorities == null) {
-            if (other.authorities != null)
+            if (other.authorities != null) {
                 return false;
+            }
         }
-        else if (!authorities.equals(other.authorities))
+        else if (!authorities.equals(other.authorities)) {
             return false;
+        }
         if (extensions == null) {
-            if (other.extensions != null)
+            if (other.extensions != null) {
                 return false;
+            }
         }
-        else if (!extensions.equals(other.extensions))
+        else if (!extensions.equals(other.extensions)) {
             return false;
+        }
         if (redirectUri == null) {
-            if (other.redirectUri != null)
+            if (other.redirectUri != null) {
                 return false;
+            }
         }
-        else if (!redirectUri.equals(other.redirectUri))
+        else if (!redirectUri.equals(other.redirectUri)) {
             return false;
+        }
         if (resourceIds == null) {
-            if (other.resourceIds != null)
+            if (other.resourceIds != null) {
                 return false;
+            }
         }
-        else if (!resourceIds.equals(other.resourceIds))
+        else if (!resourceIds.equals(other.resourceIds)) {
             return false;
+        }
         if (responseTypes == null) {
-            if (other.responseTypes != null)
+            if (other.responseTypes != null) {
                 return false;
+            }
         }
-        else if (!responseTypes.equals(other.responseTypes))
+        else if (!responseTypes.equals(other.responseTypes)) {
             return false;
+        }
         return true;
     }
 

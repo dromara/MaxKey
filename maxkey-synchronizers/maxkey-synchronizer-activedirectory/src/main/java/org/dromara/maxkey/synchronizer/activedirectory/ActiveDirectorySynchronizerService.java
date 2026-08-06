@@ -41,6 +41,7 @@ public class ActiveDirectorySynchronizerService   implements ISynchronizerServic
         super();
     }
 
+    @Override
     public void sync() {
         _logger.info("Sync ...");
         ActiveDirectoryUtils ldapUtils = new ActiveDirectoryUtils(

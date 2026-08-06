@@ -114,10 +114,10 @@ public class JwtAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
         AppsJwtDetails jwtDetails = jwtDetailsService.get(appId , true);
         if(jwtDetails != null) {
             String jwkSetString = "";
-            if(!jwtDetails.getSignature().equalsIgnoreCase("none")) {
+            if(!"none".equalsIgnoreCase(jwtDetails.getSignature())) {
                 jwkSetString = jwtDetails.getSignatureKey();
             }
-            if(!jwtDetails.getAlgorithm().equalsIgnoreCase("none")) {
+            if(!"none".equalsIgnoreCase(jwtDetails.getAlgorithm())) {
                 if(StringUtils.isBlank(jwkSetString)) {
                     jwkSetString = jwtDetails.getAlgorithmKey();
                 }else {
@@ -127,7 +127,7 @@ public class JwtAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
              
             JWKSetKeyStore jwkSetKeyStore = new JWKSetKeyStore("{\"keys\": [" + jwkSetString + "]}");
             if(StringUtils.isNotBlank(mediaType) 
-                    && mediaType.equalsIgnoreCase("xml")) {
+                    && "xml".equalsIgnoreCase(mediaType)) {
                 response.setContentType(ContentType.APPLICATION_XML_UTF8);
             }else {
                 response.setContentType(ContentType.APPLICATION_JSON_UTF8);

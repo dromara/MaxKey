@@ -77,13 +77,13 @@ public class IpLocationAutoConfiguration {
     public IpLocation builderOfflineProvider(String offlineProvider) {
         IpLocation ipLocationOffLine = null;
         try {
-            if(offlineProvider.equalsIgnoreCase("none")) {
+            if("none".equalsIgnoreCase(offlineProvider)) {
                 //do nothing
                 _logger.debug("IpLocation offline Provider none");
-            }else if(offlineProvider.equalsIgnoreCase("Ip2Region")){
+            }else if("Ip2Region".equalsIgnoreCase(offlineProvider)){
                 ipLocationOffLine = ip2regionV2();
                 _logger.debug("IpLocation offline Provider Ip2Region");
-            }else if(offlineProvider.equalsIgnoreCase("GeoIp2")){
+            }else if("GeoIp2".equalsIgnoreCase(offlineProvider)){
                 ipLocationOffLine = geoIP2();
                 _logger.debug("IpLocation offline Provider GeoIp2");
             }

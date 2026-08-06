@@ -68,6 +68,7 @@ public class DefaultOAuth2RequestFactory implements OAuth2RequestFactory {
         this.checkUserScopes = checkUserScopes;
     }
 
+    @Override
     public AuthorizationRequest createAuthorizationRequest(Map<String, String> authorizationParameters) {
 
         String clientId = authorizationParameters.get(OAuth2Constants.PARAMETER.CLIENT_ID);
@@ -92,10 +93,12 @@ public class DefaultOAuth2RequestFactory implements OAuth2RequestFactory {
 
     }
 
+    @Override
     public OAuth2Request createOAuth2Request(AuthorizationRequest request) {
         return request.createOAuth2Request();
     }
 
+    @Override
     public TokenRequest createTokenRequest(Map<String, String> requestParameters, ClientDetails authenticatedClient) {
 
         String clientId = requestParameters.get(OAuth2Constants.PARAMETER.CLIENT_ID);
@@ -121,12 +124,14 @@ public class DefaultOAuth2RequestFactory implements OAuth2RequestFactory {
         return tokenRequest;
     }
 
+    @Override
     public TokenRequest createTokenRequest(AuthorizationRequest authorizationRequest, String grantType) {
         TokenRequest tokenRequest = new TokenRequest(authorizationRequest.getRequestParameters(),
                 authorizationRequest.getClientId(), authorizationRequest.getScope(), grantType);
         return tokenRequest;
     }
 
+    @Override
     public OAuth2Request createOAuth2Request(ClientDetails client, TokenRequest tokenRequest) {
         return tokenRequest.createOAuth2Request(client);
     }

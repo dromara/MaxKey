@@ -41,6 +41,7 @@ public class LdapSynchronizerService  implements ISynchronizerService{
         super();
     }
 
+    @Override
     public void sync() {
         _logger.info("Sync ...");
         LdapUtils ldapUtils = new LdapUtils(

@@ -92,7 +92,7 @@ public class BasicEntryPoint implements   AsyncHandlerInterceptor {
          _logger.info("Authorization : " + basicCredential);
         
         
-         if(basicCredential==null||basicCredential.equals("")){
+         if(basicCredential==null|| "".equals(basicCredential)){
              _logger.info("Authentication fail header Authorization is null . ");
              return false;
          }
@@ -104,11 +104,11 @@ public class BasicEntryPoint implements   AsyncHandlerInterceptor {
          }else{
              return false;
          }
-         if(headerCredential.getUsername()==null||headerCredential.getUsername().equals("")){
+         if(headerCredential.getUsername()==null|| "".equals(headerCredential.getUsername())){
              _logger.info("Authentication fail username is null . ");
              return false;
          }
-         if(headerCredential.getCredential()==null||headerCredential.getCredential().equals("")){
+         if(headerCredential.getCredential()==null|| "".equals(headerCredential.getCredential())){
              _logger.info("Authentication fail password is null . ");
              return false;
          }

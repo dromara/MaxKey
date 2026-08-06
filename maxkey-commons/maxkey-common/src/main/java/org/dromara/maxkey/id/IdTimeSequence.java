@@ -72,7 +72,7 @@ public class IdTimeSequence {
     }
     
     public static final String initNode(String nodeNumber){
-        if(NODE_NUMBER.equals("--")){
+        if("--".equals(NODE_NUMBER)){
             if(StringUtils.isNotBlank(nodeNumber) 
                     && StringUtils.length(nodeNumber) == 2){
                 NODE_NUMBER = nodeNumber;

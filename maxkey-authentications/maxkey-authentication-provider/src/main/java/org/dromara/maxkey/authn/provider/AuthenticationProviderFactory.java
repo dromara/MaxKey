@@ -26,7 +26,7 @@ public class AuthenticationProviderFactory extends AbstractAuthenticationProvide
     
     @Override
     public Authentication authenticate(LoginCredential authentication){
-        if(authentication.getAuthType().equalsIgnoreCase("trusted")) {
+        if("trusted".equalsIgnoreCase(authentication.getAuthType())) {
             //risk remove
             return null;
         }

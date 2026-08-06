@@ -32,7 +32,7 @@ public class HttpResponseAdapter {
                         HttpServletResponse response,
                         String format) {
         
-        if(format == null || format.equalsIgnoreCase("") || format.equalsIgnoreCase(HttpResponseConstants.FORMAT_TYPE.XML)) {
+        if(format == null || "".equalsIgnoreCase(format) || format.equalsIgnoreCase(HttpResponseConstants.FORMAT_TYPE.XML)) {
             response.setContentType(ContentType.APPLICATION_XML_UTF8);
         }else {
             response.setContentType(ContentType.APPLICATION_JSON_UTF8);

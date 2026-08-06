@@ -124,7 +124,7 @@ public class TokenEndpoint extends AbstractEndpoint {
     
             TokenRequest tokenRequest = getOAuth2RequestFactory().createTokenRequest(parameters, authenticatedClient);
     
-            if (clientId != null && !clientId.equals("")) {
+            if (clientId != null && !"".equals(clientId)) {
                 // Only validate the client details if a client authenticated during this
                 // request.
                 if (!clientId.equals(tokenRequest.getClientId())) {

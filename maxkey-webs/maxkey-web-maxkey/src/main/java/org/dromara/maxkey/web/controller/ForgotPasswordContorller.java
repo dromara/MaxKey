@@ -174,11 +174,11 @@ public class ForgotPasswordContorller {
                 AbstractOtpAuthn smsOtpAuthn = smsOtpAuthnService.getByInstId(loadedUserInfo.getInstId());
                 AbstractOtpAuthn mailOtpAuthn =  mailOtpAuthnService.getMailOtpAuthn(loadedUserInfo.getInstId());
                 if (
-                        (forgotType.equalsIgnoreCase("email") 
+                        ("email".equalsIgnoreCase(forgotType)
                                 && mailOtpAuthn !=null 
                                 && mailOtpAuthn.validate(loadedUserInfo, otpCaptcha)) 
                         ||
-                        (forgotType.equalsIgnoreCase("mobile") 
+                        ("mobile".equalsIgnoreCase(forgotType)
                                 && smsOtpAuthn !=null 
                                 && smsOtpAuthn.validate(loadedUserInfo, otpCaptcha))
                    ) {

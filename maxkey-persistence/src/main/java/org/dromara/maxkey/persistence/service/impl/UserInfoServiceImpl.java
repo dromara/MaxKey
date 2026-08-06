@@ -70,7 +70,8 @@ public class UserInfoServiceImpl extends JpaServiceImpl<UserInfoMapper,UserInfo,
         return false;
     }
     
-    public boolean insert(UserInfo userInfo,boolean passwordEncoder) {
+    @Override
+    public boolean insert(UserInfo userInfo, boolean passwordEncoder) {
         if(passwordEncoder) {
             this.passwordEncoder(userInfo);
         }
@@ -91,6 +92,7 @@ public class UserInfoServiceImpl extends JpaServiceImpl<UserInfoMapper,UserInfo,
         return false;
     }
     
+    @Override
     public boolean delete(UserInfo userInfo) {
         if( super.delete(userInfo.getId())){
              return true;
@@ -99,6 +101,7 @@ public class UserInfoServiceImpl extends JpaServiceImpl<UserInfoMapper,UserInfo,
     }
     
     //更新账号状态
+    @Override
     public void accountUpdate(UserInfo userInfo) {
         if(userInfo.getStatus() != ConstsStatus.ACTIVE) {
             if(accountsService==null) {
@@ -114,15 +117,17 @@ public class UserInfoServiceImpl extends JpaServiceImpl<UserInfoMapper,UserInfo,
         }
     }
 
+    @Override
     public UserInfo findUserRelated(String userId) {
         UserInfo loadUserInfo =this.get(userId);
         loadUserInfo.setDepts(getMapper().findDeptsByUserId(userId));
         return loadUserInfo;
     }
     
-    public boolean updateGridList(String gridList,UserInfo userInfo) {
+    @Override
+    public boolean updateGridList(String gridList, UserInfo userInfo) {
         try {
-            if (gridList != null && !gridList.equals("")) {
+            if (gridList != null && !"".equals(gridList)) {
                 userInfo.setGridList(Integer.parseInt(gridList));
                 getMapper().updateGridList(userInfo);
             }
@@ -134,6 +139,7 @@ public class UserInfoServiceImpl extends JpaServiceImpl<UserInfoMapper,UserInfo,
     }
     
     
+    @Override
     public void saveOrUpdate(UserInfo userInfo) {
         UserInfo loadUserInfo = findOne(" username = ? and instid = ?",
                 new Object[] { userInfo.getUsername(),userInfo.getInstId() },
@@ -146,6 +152,7 @@ public class UserInfoServiceImpl extends JpaServiceImpl<UserInfoMapper,UserInfo,
         }
     }
     
+    @Override
     public boolean updateProtectedApps(UserInfo userinfo) {
         try {
             userinfo.setModifiedDate(new Date());
@@ -156,15 +163,18 @@ public class UserInfoServiceImpl extends JpaServiceImpl<UserInfoMapper,UserInfo,
         return false;
     }
 
+    @Override
     public UserInfo findByUsername(String username) {
         return getMapper().findByUsername(username);
     }
     
+    @Override
     public UserInfo findByEmailMobile(String emailMobile) {
         return getMapper().findByEmailMobile(emailMobile);
     }
     
-    public UserInfo findByAppIdAndUsername(String appId,String username){
+    @Override
+    public UserInfo findByAppIdAndUsername(String appId, String username){
         try {
             UserInfo userinfo = new UserInfo();
             userinfo.setUsername(username);
@@ -175,6 +185,7 @@ public class UserInfoServiceImpl extends JpaServiceImpl<UserInfoMapper,UserInfo,
         return null;
     }
     
+    @Override
     public ChangePassword passwordEncoder(UserInfo userInfo) {
         ChangePassword changePassword = null;
         if(StringUtils.isNotBlank(userInfo.getPassword())) {
@@ -190,6 +201,7 @@ public class UserInfoServiceImpl extends JpaServiceImpl<UserInfoMapper,UserInfo,
         return changePassword;
     }
     
+    @Override
     public ChangePassword passwordEncoder(ChangePassword changePassword) {
         //密码不为空，则需要进行加密处理
         if(StringUtils.isNotBlank(changePassword.getPassword())) {
@@ -214,7 +226,8 @@ public class UserInfoServiceImpl extends JpaServiceImpl<UserInfoMapper,UserInfo,
      * @param passwordSetType
      * @return
      */
-    public boolean changePassword(  ChangePassword changePassword) {
+    @Override
+    public boolean changePassword(ChangePassword changePassword) {
         try {
             WebContext.setAttribute(PasswordPolicyValidatorServiceImpl.PASSWORD_POLICY_VALIDATE_RESULT, "");
             UserInfo userInfo = this.findByUsername(changePassword.getUsername());
@@ -252,7 +265,8 @@ public class UserInfoServiceImpl extends JpaServiceImpl<UserInfoMapper,UserInfo,
      * @param passwordPolicy
      * @return
      */
-    public boolean changePassword(ChangePassword changePassword,boolean passwordPolicy) {
+    @Override
+    public boolean changePassword(ChangePassword changePassword, boolean passwordPolicy) {
         try {
             _logger.debug("decipherable old : {}" , changePassword.getDecipherable());
             _logger.debug("decipherable new : {}" , PasswordReciprocal.getInstance().encode(changePassword.getDecipherable()));
@@ -272,10 +286,12 @@ public class UserInfoServiceImpl extends JpaServiceImpl<UserInfoMapper,UserInfo,
         return false;
     }
     
+    @Override
     public String randomPassword() {
         return passwordPolicyValidatorService.generateRandomPassword();
     }
     
+    @Override
     public boolean updateAppLoginPassword(UserInfo userinfo) {
         try {
             userinfo.setModifiedDate(new Date());
@@ -291,6 +307,7 @@ public class UserInfoServiceImpl extends JpaServiceImpl<UserInfoMapper,UserInfo,
      * 锁定用户：islock：1 解锁 5 锁定
      * @param userInfo
      */
+    @Override
     public void locked(UserInfo userInfo) {
         try {
             if(userInfo != null && StringUtils.isNotEmpty(userInfo.getId())) {
@@ -306,6 +323,7 @@ public class UserInfoServiceImpl extends JpaServiceImpl<UserInfoMapper,UserInfo,
      * 用户登录成功后，重置错误密码次数和解锁用户
      * @param userInfo
      */
+    @Override
     public void lockout(UserInfo userInfo) {
         try {
             if(userInfo != null && StringUtils.isNotEmpty(userInfo.getId())) {
@@ -322,6 +340,7 @@ public class UserInfoServiceImpl extends JpaServiceImpl<UserInfoMapper,UserInfo,
      * 更新错误密码次数
      * @param userInfo
      */
+    @Override
     public void badPasswordCount(UserInfo userInfo) {
         try {
             if(userInfo != null && StringUtils.isNotEmpty(userInfo.getId())) {
@@ -338,6 +357,7 @@ public class UserInfoServiceImpl extends JpaServiceImpl<UserInfoMapper,UserInfo,
      * 重置错误密码次数
      * @param userInfo
      */
+    @Override
     public void badPasswordCountReset(UserInfo userInfo) {
         try {
             if(userInfo != null && StringUtils.isNotEmpty(userInfo.getId())) {
@@ -348,30 +368,37 @@ public class UserInfoServiceImpl extends JpaServiceImpl<UserInfoMapper,UserInfo,
         }
     }
 
+    @Override
     public boolean updateSharedSecret(UserInfo userInfo){
         return getMapper().updateSharedSecret(userInfo)>0;
     }
     
+    @Override
     public boolean updatePasswordQuestion(UserInfo userInfo){
         return getMapper().updatePasswordQuestion(userInfo)>0;
     }
     
+    @Override
     public boolean updateAuthnType(UserInfo userInfo){
         return getMapper().updateAuthnType(userInfo)>0;
     }
     
+    @Override
     public boolean updateEmail(UserInfo userInfo){
         return getMapper().updateEmail(userInfo)>0;
     }
     
+    @Override
     public boolean updateMobile(UserInfo userInfo){
         return getMapper().updateMobile(userInfo)>0;
     }
     
+    @Override
     public int updateProfile(UserInfo userInfo){
         return getMapper().updateProfile(userInfo);
     }
     
+    @Override
     public boolean     updateStatus(UserInfo userInfo) {
         return getMapper().updateStatus(userInfo) > 0;
     }

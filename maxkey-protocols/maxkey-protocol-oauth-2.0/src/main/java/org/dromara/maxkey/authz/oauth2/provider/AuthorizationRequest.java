@@ -243,6 +243,7 @@ public class AuthorizationRequest extends BaseRequest implements Serializable {
         this.resourceIds = resourceIds;
     }
 
+    @Override
     public void setClientId(String clientId) {
         super.setClientId(clientId);
     }
@@ -256,6 +257,7 @@ public class AuthorizationRequest extends BaseRequest implements Serializable {
      * 
      * @param scope
      */
+    @Override
     public void setScope(Collection<String> scope) {
         super.setScope(scope);
     }
@@ -269,6 +271,7 @@ public class AuthorizationRequest extends BaseRequest implements Serializable {
      * 
      * @param requestParameters
      */
+    @Override
     public void setRequestParameters(Map<String, String> requestParameters) {
         super.setRequestParameters(requestParameters);
     }
@@ -329,28 +332,37 @@ public class AuthorizationRequest extends BaseRequest implements Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (!super.equals(obj))
+        }
+        if (!super.equals(obj)) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         AuthorizationRequest other = (AuthorizationRequest) obj;
         if (approvalParameters == null) {
-            if (other.approvalParameters != null)
+            if (other.approvalParameters != null) {
                 return false;
-        } else if (!approvalParameters.equals(other.approvalParameters))
+            }
+        } else if (!approvalParameters.equals(other.approvalParameters)) {
             return false;
+        }
         if (responseTypes == null) {
-            if (other.responseTypes != null)
+            if (other.responseTypes != null) {
                 return false;
-        } else if (!responseTypes.equals(other.responseTypes))
+            }
+        } else if (!responseTypes.equals(other.responseTypes)) {
             return false;
+        }
         if (state == null) {
-            if (other.state != null)
+            if (other.state != null) {
                 return false;
-        } else if (!state.equals(other.state))
+            }
+        } else if (!state.equals(other.state)) {
             return false;
+        }
         return true;
     }
 

@@ -44,7 +44,7 @@ public class FormBasedDefaultAdapter extends AbstractAuthorizeAdapter {
         String passwordAlgorithm = details.getPasswordAlgorithm();
         
         if(StringUtils.isBlank(passwordAlgorithm) 
-                || passwordAlgorithm.equalsIgnoreCase("NONE")){
+                || "NONE".equalsIgnoreCase(passwordAlgorithm)){
             //do nothing
         }else if(passwordAlgorithm.indexOf(_HEX) > -1){
             passwordAlgorithm = passwordAlgorithm.substring(0,passwordAlgorithm.indexOf(_HEX));

@@ -111,7 +111,7 @@ public class AttributeStatementGenerator {
         attribute.setName(attributeName);
 
         // urn:oasis:names:tc:SAML:2.0:attrname-format:basic
-        if(nameFormat==null || nameFormat.equals("")) {
+        if(nameFormat==null || "".equals(nameFormat)) {
             nameFormat=Attribute.BASIC;
         }
         

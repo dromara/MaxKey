@@ -47,7 +47,8 @@ public class AuthzResourceServiceImpl   extends JpaServiceImpl<AuthzResourceMapp
      * @param app 
      * @return 资源清单列表
      */
-    public Set<Resources> getResourcesBySubject(UserInfo user,Apps  app){
+    @Override
+    public Set<Resources> getResourcesBySubject(UserInfo user, Apps  app){
         logger.debug("user {} , app {}",user,app);
         Set<Resources> resourcesList = new HashSet<>();
         
@@ -85,6 +86,7 @@ public class AuthzResourceServiceImpl   extends JpaServiceImpl<AuthzResourceMapp
      * @param dto
      * @return
      */
+    @Override
     public List<Resources> queryResourcesByGroupId(QueryAppResourceDto dto) {
         return getMapper().queryResourcesByGroupId(dto);
     }
@@ -94,6 +96,7 @@ public class AuthzResourceServiceImpl   extends JpaServiceImpl<AuthzResourceMapp
      * @param dto
      * @return
      */
+    @Override
     public List<Resources> queryResourcesByRoleId(QueryAppResourceDto dto) {
         return getMapper().queryResourcesByRoleId(dto);
     }

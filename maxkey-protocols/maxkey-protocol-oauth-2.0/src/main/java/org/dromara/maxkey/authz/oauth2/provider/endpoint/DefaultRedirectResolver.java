@@ -49,6 +49,7 @@ public class DefaultRedirectResolver implements RedirectResolver {
         this.redirectGrantTypes = new HashSet<String>(redirectGrantTypes);
     }
 
+    @Override
     public String resolveRedirect(String requestedRedirect, ClientDetails client) throws OAuth2Exception {
 
         Set<String> authorizedGrantTypes = client.getAuthorizedGrantTypes();

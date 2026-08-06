@@ -33,10 +33,12 @@ import org.dromara.maxkey.entity.apps.oauth2.provider.ClientDetails;
  */
 public class DefaultOAuth2RequestValidator implements OAuth2RequestValidator {
 
+    @Override
     public void validateScope(AuthorizationRequest authorizationRequest, ClientDetails client) throws InvalidScopeException {
         validateScope(authorizationRequest.getScope(), client.getScope());
     }
 
+    @Override
     public void validateScope(TokenRequest tokenRequest, ClientDetails client) throws InvalidScopeException {
         validateScope(tokenRequest.getScope(), client.getScope());
     }

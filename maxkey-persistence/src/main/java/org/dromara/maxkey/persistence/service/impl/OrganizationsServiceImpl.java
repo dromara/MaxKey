@@ -55,6 +55,7 @@ public class OrganizationsServiceImpl  extends JpaServiceImpl<OrganizationsMappe
          return false;
      }
  
+     @Override
      public void saveOrUpdate(Organizations organization) {
          Organizations loadOrg =findOne(" id = ? and instid = ?", 
                     new Object[] { organization.getId(), organization.getInstId() },
@@ -66,10 +67,12 @@ public class OrganizationsServiceImpl  extends JpaServiceImpl<OrganizationsMappe
                 update(organization);
             }
      }
+     @Override
      public List<Organizations> queryOrgs(Organizations organization){
          return getMapper().queryOrgs(organization);
      }
      
+     @Override
      public boolean delete(Organizations organization) {
          if(super.delete(organization.getId())){
              return true;
@@ -78,6 +81,7 @@ public class OrganizationsServiceImpl  extends JpaServiceImpl<OrganizationsMappe
      }
 
 
+    @Override
     public void reorgNamePath(String instId) {
         _logger.debug("instId {}", instId);
         if (StringUtils.isBlank(instId)) {
@@ -116,7 +120,7 @@ public class OrganizationsServiceImpl  extends JpaServiceImpl<OrganizationsMappe
     }
 
     boolean isRootOrg(Organizations rootOrg) {
-        if (rootOrg.getParentId() == null || rootOrg.getParentId().equalsIgnoreCase("-1")
+        if (rootOrg.getParentId() == null || "-1".equalsIgnoreCase(rootOrg.getParentId())
                 || rootOrg.getParentId().equalsIgnoreCase(rootOrg.getId())
                 || rootOrg.getParentId().equalsIgnoreCase(rootOrg.getInstId())) {
             return true;
@@ -136,8 +140,9 @@ public class OrganizationsServiceImpl  extends JpaServiceImpl<OrganizationsMappe
         rootOrg.setReorgNamePath(true);
 
         for (Organizations org : orgList) {
-            if (org.isReorgNamePath())
+            if (org.isReorgNamePath()) {
                 continue;
+            }
             if (org.getParentId().equalsIgnoreCase(rootOrg.getId())) {
                 reorg(orgMap, orgList, org);
             }

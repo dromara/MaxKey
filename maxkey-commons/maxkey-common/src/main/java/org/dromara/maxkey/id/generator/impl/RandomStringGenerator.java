@@ -24,6 +24,7 @@ public class RandomStringGenerator implements IdGenerator{
 
     StringGenerator stringGenerator = new StringGenerator();
 
+    @Override
     public String generate(){
          return stringGenerator.randomGenerate();
     }

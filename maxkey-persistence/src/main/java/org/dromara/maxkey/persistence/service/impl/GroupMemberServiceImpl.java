@@ -34,23 +34,28 @@ import org.springframework.stereotype.Repository;
 public class GroupMemberServiceImpl  extends JpaServiceImpl<GroupMemberMapper,GroupMember,String> implements GroupMemberService{
     static final  Logger _logger = LoggerFactory.getLogger(GroupMemberServiceImpl.class);
 
+    @Override
     public int addDynamicMember(Groups dynamicGroup) {
         return getMapper().addDynamicMember(dynamicGroup);
     }
     
+    @Override
     public int deleteDynamicMember(Groups dynamicGroup) {
         return getMapper().deleteDynamicMember(dynamicGroup);
     }
     
+    @Override
     public int deleteByGroupId(String groupId) {
         return getMapper().deleteByGroupId(groupId);
     }
     
+    @Override
     public List<UserInfo> queryMemberByGroupId(String groupId){
         return getMapper().queryMemberByGroupId(groupId);
     }
     
     
+    @Override
     public JpaPageResults<Groups> noMember(GroupMember entity) {
         entity.build();
         List<Groups> resultslist = null;

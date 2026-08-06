@@ -19,13 +19,6 @@ package org.dromara.maxkey.authz.saml20.metadata;
 
 
 import org.opensaml.DefaultBootstrap;
-import org.dromara.maxkey.authz.saml.common.TrustResolver;
-import org.dromara.maxkey.crypto.keystore.KeyStoreLoader;
-import org.opensaml.util.storage.MapBasedStorageService;
-import org.opensaml.util.storage.ReplayCache;
-
-import org.opensaml.common.binding.security.IssueInstantRule;
-import org.opensaml.common.binding.security.MessageReplayRule;
 import org.opensaml.xml.ConfigurationException;
 import org.opensaml.xml.XMLObject;
 import org.opensaml.xml.XMLObjectBuilder;
@@ -37,13 +30,9 @@ import org.opensaml.xml.io.Unmarshaller;
 import org.opensaml.xml.io.UnmarshallerFactory;
 import org.opensaml.xml.io.UnmarshallingException;
 import org.opensaml.xml.parse.BasicParserPool;
-import org.opensaml.xml.security.CriteriaSet;
 import org.opensaml.xml.security.SecurityException;
 import org.opensaml.xml.security.credential.Credential;
-import org.opensaml.xml.security.credential.CredentialResolver;
 import org.opensaml.xml.security.credential.UsageType;
-import org.opensaml.xml.security.criteria.EntityIDCriteria;
-import org.opensaml.xml.security.criteria.UsageCriteria;
 import org.opensaml.xml.security.keyinfo.KeyInfoGenerator;
 import org.opensaml.xml.security.x509.X509KeyInfoGeneratorFactory;
 import org.opensaml.xml.util.XMLHelper;
@@ -54,7 +43,6 @@ import javax.xml.namespace.QName;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.opensaml.common.xml.SAMLConstants;
-import org.opensaml.saml2.core.NameIDType;
 import org.opensaml.saml2.metadata.Company;
 import org.opensaml.saml2.metadata.ContactPerson;
 import org.opensaml.saml2.metadata.ContactPersonTypeEnumeration;
@@ -90,9 +78,6 @@ import org.opensaml.saml2.metadata.impl.SurNameBuilder;
 import org.opensaml.saml2.metadata.impl.TelephoneNumberBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.io.FileSystemResource;
-
-import java.security.KeyStore;
 
 public class MetadataGenerator {
     private static final  Logger logger = LoggerFactory.getLogger(MetadataGenerator.class);
@@ -122,88 +107,7 @@ public class MetadataGenerator {
             e.printStackTrace();
         }
 
-    }
-        
-   public static void main(String args[]) {
-       MetadataGenerator metadataGenerator=new  MetadataGenerator();
-       
-       metadataGenerator.samlmtest();
-   }
-   
-   
-   @SuppressWarnings({ "unchecked", "rawtypes" })
-public  void samlmtest(){
-        try {
-             KeyStoreLoader keyStoreLoader=new  KeyStoreLoader();
-             keyStoreLoader.setKeystorePassword("secret");
-             keyStoreLoader.setKeystoreFile(new FileSystemResource("D:/JavaIDE/cert/idp-keystore.jks"));
-             keyStoreLoader.afterPropertiesSet();
-             KeyStore trustKeyStore =keyStoreLoader.getKeyStore();
-             
-             IssueInstantRule issueInstantRule=new IssueInstantRule(90,300);
-             ReplayCache replayCache=new ReplayCache(new MapBasedStorageService(),14400000);
-             MessageReplayRule messageReplayRule=new MessageReplayRule(replayCache);
-             
-             TrustResolver trustResolver = new TrustResolver(
-                        trustKeyStore,
-                        "idp",
-                        keyStoreLoader.getKeystorePassword(), issueInstantRule,
-                        messageReplayRule,
-                        "POST"
-                    );
-             CredentialResolver credentialResolver=(CredentialResolver)trustResolver.getKeyStoreCredentialResolver();
-             
-             CriteriaSet criteriaSet = new CriteriaSet();
-             
-              criteriaSet.add(new EntityIDCriteria("idp"));
-             
-              criteriaSet.add(new UsageCriteria(UsageType.SIGNING));
-              Credential signingCredential=null;
-             
-             try {
-                  signingCredential = credentialResolver.resolveSingle(criteriaSet);
-            } catch (SecurityException e) {
-                System.out.println("Credential resolve error : "+ e);
-                throw new Exception(e);
-            }
-             
-            IDPSSODescriptor descriptor = buildIDPSSODescriptor();
-
-            descriptor.getSingleSignOnServices().add(getSingleSignOnService("http://sso.maxkey.org/sso",null));
-            
-            descriptor.getSingleSignOnServices().add(getSingleSignOnService("http://sso.maxkey.org/sso",SAMLConstants.SAML2_POST_SIMPLE_SIGN_BINDING_URI));
-            
-            descriptor.getSingleLogoutServices().add(getSingleLogoutService("http://sso.maxkey.org/slo",null));
-                 
-            descriptor.getKeyDescriptors().add(generateEncryptionKeyDescriptor(signingCredential));  
-             
-            descriptor.getKeyDescriptors().add(generateSignKeyDescriptor(signingCredential));  
-             
-            descriptor.getNameIDFormats().add(generateNameIDFormat(NameIDType.TRANSIENT)); 
-            descriptor.getNameIDFormats().add(generateNameIDFormat(NameIDType.PERSISTENT)); 
-            descriptor.getNameIDFormats().add(generateNameIDFormat(NameIDType.EMAIL)); 
-            descriptor.getNameIDFormats().add(generateNameIDFormat(NameIDType.ENTITY));
-             
-            descriptor.getContactPersons().add(getContactPerson("maxkey","shi","ming","shimingxy@163.com","18724229876",null));
-             
-            descriptor.setOrganization(getOrganization("maxkey","maxkey","http://sso.maxkey.org"));
-
-            String entityId="http://www.test.com";
-            
-            EntityDescriptor entityDescriptor=buildEntityDescriptor(entityId,descriptor);
-            
-            String descriptorelementxml=XMLHelper.prettyPrintXML(marshallerMetadata(entityDescriptor));
-             
-            System.out.println("descriptor elementxm:\\n");
-            System.out.println(descriptorelementxml);
-             
-            logger.info(descriptorelementxml);
-          }
-          catch (Exception e) {
-                    e.printStackTrace();
-            }
-   }
-   
+    }  
    
    public IDPSSODescriptor buildIDPSSODescriptor(){
        IDPSSODescriptor idpSSODescriptor = (IDPSSODescriptor) buildXMLObject(IDPSSODescriptor.DEFAULT_ELEMENT_NAME);

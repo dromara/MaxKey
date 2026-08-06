@@ -46,6 +46,7 @@ public class TwoFactorMobileAuthenticationProvider extends AbstractAuthenticatio
 
     SmsOtpAuthnService smsOtpAuthnService;
     
+    @Override
     public String getProviderName() {
         return "twoFactorMobile" + PROVIDER_SUFFIX;
     }

@@ -31,4 +31,19 @@ public class ScimMemberRef extends ScimMultiValuedAttribute{
         this.display    =    display;
         this.value         =    value;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {return false;}
+        if(this.hashCode() == obj.hashCode()) {return true;}
+        if(obj instanceof ScimMemberRef smr){
+            return this.display.equals(smr.display) && this.value.equals(smr.value);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return (this.display+this.value).hashCode();
+    }
 }

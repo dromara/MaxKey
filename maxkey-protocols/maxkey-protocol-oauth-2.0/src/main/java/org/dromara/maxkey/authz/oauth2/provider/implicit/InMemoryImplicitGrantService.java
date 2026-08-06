@@ -33,10 +33,12 @@ public class InMemoryImplicitGrantService implements ImplicitGrantService {
 
     protected final ConcurrentHashMap<TokenRequest, OAuth2Request> requestStore = new ConcurrentHashMap<TokenRequest, OAuth2Request>();
     
+    @Override
     public void store(OAuth2Request originalRequest, TokenRequest tokenRequest) {
         this.requestStore.put(tokenRequest, originalRequest);
     }
 
+    @Override
     public OAuth2Request remove(TokenRequest tokenRequest) {
         OAuth2Request request = this.requestStore.remove(tokenRequest);
         return request;

@@ -66,24 +66,24 @@ public class SmsOtpAuthnService {
             lambdaQuery.eq(CnfSmsProvider::getInstId, instId);
             CnfSmsProvider smsProvider = smsProviderService.get(lambdaQuery);
             if(smsProvider != null ) {
-                if(smsProvider.getProvider().equalsIgnoreCase("aliyun")) {
+                if("aliyun".equalsIgnoreCase(smsProvider.getProvider())) {
                     smsOtpAuthn = new SmsOtpAuthnAliyun(
                             smsProvider.getAppKey(),
                             PasswordReciprocal.getInstance().decoder(smsProvider.getAppSecret()),
                             smsProvider.getTemplateId(), 
                             smsProvider.getSignName());
-                }else if(smsProvider.getProvider().equalsIgnoreCase("tencentcloud")) {
+                }else if("tencentcloud".equalsIgnoreCase(smsProvider.getProvider())) {
                     smsOtpAuthn = new SmsOtpAuthnTencentCloud(
                             smsProvider.getAppKey(),
                             PasswordReciprocal.getInstance().decoder(smsProvider.getAppSecret()),
                             smsProvider.getSmsSdkAppId(), 
                             smsProvider.getTemplateId(), smsProvider.getSignName());
-                }else if(smsProvider.getProvider().equalsIgnoreCase("neteasesms")) {
+                }else if("neteasesms".equalsIgnoreCase(smsProvider.getProvider())) {
                     smsOtpAuthn = new SmsOtpAuthnYunxin(
                             smsProvider.getAppKey(),
                             PasswordReciprocal.getInstance().decoder(smsProvider.getAppSecret()),
                             smsProvider.getTemplateId());
-                }else if(smsProvider.getProvider().equalsIgnoreCase("email")) {
+                }else if("email".equalsIgnoreCase(smsProvider.getProvider())) {
                     LambdaQuery<CnfEmailSenders> emailSenderslambdaQuery = new LambdaQuery<CnfEmailSenders>();
                     emailSenderslambdaQuery.eq(CnfEmailSenders::getInstId, instId);
                     CnfEmailSenders emailSender = emailSendersService.get(emailSenderslambdaQuery);

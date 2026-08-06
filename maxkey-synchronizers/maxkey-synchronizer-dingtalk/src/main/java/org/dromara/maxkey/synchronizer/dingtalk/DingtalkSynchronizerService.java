@@ -44,6 +44,7 @@ public class DingtalkSynchronizerService  implements ISynchronizerService{
         super();
     }
 
+    @Override
     public void sync() throws ApiException {
         _logger.info("Sync ...");
         dingtalkAccessTokenService.setAppkey(synchronizer.getPrincipal());

@@ -46,20 +46,24 @@ public class GroupsServiceImpl  extends JpaServiceImpl<GroupsMapper,Groups,Strin
     @Autowired
     InstitutionsService institutionsService;
     
+    @Override
     public List<Groups> queryDynamicGroups(Groups groups){
         return this.getMapper().queryDynamic(groups);
     }
     
+    @Override
     public boolean deleteById(String groupId) {
         this.delete(groupId);
         groupMemberService.deleteByGroupId(groupId);
         return true;
     }
     
+    @Override
     public List<Groups> queryByUserId(String userId){
         return this.getMapper().queryByUserId(userId);
     }
     
+    @Override
     public void refreshDynamicGroups(Groups dynamicGroup){
         if(dynamicGroup.getCategory().equals(Roles.Category.DYNAMIC)) {
         	if(StringUtils.isNotBlank(dynamicGroup.getOrgIdsList())) {
@@ -71,6 +75,7 @@ public class GroupsServiceImpl  extends JpaServiceImpl<GroupsMapper,Groups,Strin
         }
     }
     
+    @Override
     public void refreshAllDynamicGroups(){
         List<Institutions> instList = 
                 institutionsService.find("where status = ? ", new Object[]{ConstsStatus.ACTIVE}, new int[]{Types.INTEGER});

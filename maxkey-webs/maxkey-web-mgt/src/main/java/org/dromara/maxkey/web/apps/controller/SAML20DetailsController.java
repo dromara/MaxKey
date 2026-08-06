@@ -152,7 +152,7 @@ public class SAML20DetailsController   extends BaseAppContorller {
         }
         
         if(StringUtils.isNotBlank(samlDetails.getFileType())){
-            if(samlDetails.getFileType().equals("certificate")){//certificate file
+            if("certificate".equals(samlDetails.getFileType())){//certificate file
                 try {
                     if(bArrayInputStream != null) {
                         samlDetails.setTrustCert(
@@ -161,7 +161,7 @@ public class SAML20DetailsController   extends BaseAppContorller {
                 } catch (IOException e) {
                     logger.error("read certificate file error .", e);
                 }
-            }else if(samlDetails.getFileType().equals("metadata_file")){//metadata file
+            }else if("metadata_file".equals(samlDetails.getFileType())){//metadata file
                 if(bArrayInputStream != null) {
                     samlDetails = resolveMetaData(samlDetails,bArrayInputStream);
                 }
@@ -177,7 +177,7 @@ public class SAML20DetailsController   extends BaseAppContorller {
             KeyStore keyStore = KeyStoreUtil.clone(keyStoreLoader.getKeyStore(),keyStoreLoader.getKeystorePassword());
         
             KeyStore trustKeyStore = null;
-            if (!samlDetails.getEntityId().equals("")) {
+            if (!"".equals(samlDetails.getEntityId())) {
                 trustKeyStore = KeyStoreUtil.importTrustCertificate(keyStore,samlDetails.getTrustCert(), samlDetails.getEntityId());
             } else {
                 trustKeyStore = KeyStoreUtil.importTrustCertificate(keyStore,samlDetails.getTrustCert());
@@ -209,11 +209,11 @@ public class SAML20DetailsController   extends BaseAppContorller {
         samlDetails.setSpAcsUrl(sPSSODescriptor.getAssertionConsumerServices().get(0).getLocation());
         samlDetails.setEntityId(entityDescriptor.getEntityID());
         
-        if(samlDetails.getIssuer()==null || samlDetails.getIssuer().equals("")) {
+        if(samlDetails.getIssuer()==null || "".equals(samlDetails.getIssuer())) {
             samlDetails.setIssuer(entityDescriptor.getEntityID());
         }
         
-        if(samlDetails.getAudience()==null || samlDetails.getAudience().equals("")) {
+        if(samlDetails.getAudience()==null || "".equals(samlDetails.getAudience())) {
             samlDetails.setAudience(entityDescriptor.getEntityID());
         }
 

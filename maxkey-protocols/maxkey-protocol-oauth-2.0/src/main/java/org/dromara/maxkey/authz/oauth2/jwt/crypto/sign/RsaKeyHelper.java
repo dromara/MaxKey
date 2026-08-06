@@ -52,7 +52,7 @@ class RsaKeyHelper {
 
         try {
             KeyFactory fact = KeyFactory.getInstance("RSA");
-            if (type.equals("RSA PRIVATE KEY")) {
+            if ("RSA PRIVATE KEY".equals(type)) {
                 ASN1Sequence seq = ASN1Sequence.getInstance(content);
                 if (seq.size() != 9) {
                     throw new IllegalArgumentException("Invalid RSA Private Key ASN1 sequence.");
@@ -64,10 +64,10 @@ class RsaKeyHelper {
                     key.getCoefficient());
                 publicKey = fact.generatePublic(pubSpec);
                 privateKey = fact.generatePrivate(privSpec);
-            } else if (type.equals("PUBLIC KEY")) {
+            } else if ("PUBLIC KEY".equals(type)) {
                 KeySpec keySpec = new X509EncodedKeySpec(content);
                 publicKey = fact.generatePublic(keySpec);
-            } else if (type.equals("RSA PUBLIC KEY")) {
+            } else if ("RSA PUBLIC KEY".equals(type)) {
                 ASN1Sequence seq = ASN1Sequence.getInstance(content);
                 org.bouncycastle.asn1.pkcs.RSAPublicKey key = org.bouncycastle.asn1.pkcs.RSAPublicKey.getInstance(seq);
                 RSAPublicKeySpec pubSpec = new RSAPublicKeySpec(key.getModulus(), key.getPublicExponent());

@@ -32,10 +32,12 @@ import org.springframework.stereotype.Repository;
 public class HistoryLoginServiceImpl  extends JpaServiceImpl<HistoryLoginMapper,HistoryLogin,String> implements HistoryLoginService{
     private static Logger logger = LoggerFactory.getLogger(HistoryLoginServiceImpl.class);
     
+    @Override
     public JpaPageResults<HistoryLogin> queryOnlineSession(HistoryLogin historyLogin) {
         return this.fetchPageResults("queryOnlineSession",historyLogin);
     }
     
+     @Override
      public void login(HistoryLogin historyLogin) {
             historyLogin.setId(WebContext.genId());
             if(StringUtils.isBlank(historyLogin.getInstId())) {

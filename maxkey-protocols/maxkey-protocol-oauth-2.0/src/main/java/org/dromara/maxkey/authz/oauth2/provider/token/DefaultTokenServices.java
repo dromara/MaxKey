@@ -88,6 +88,7 @@ public class DefaultTokenServices implements AuthorizationServerTokenServices, R
     /**
      * Initialize these token services. If no random generator is set, one will be created.
      */
+    @Override
     public void afterPropertiesSet() throws Exception {
         Assert.notNull(tokenStore, "tokenStore must be set");
     }
@@ -110,6 +111,7 @@ public class DefaultTokenServices implements AuthorizationServerTokenServices, R
         }
     }
 
+    @Override
     @Transactional
     public OAuth2AccessToken createAccessToken(OAuth2Authentication authentication) throws AuthenticationException {
 
@@ -163,6 +165,7 @@ public class DefaultTokenServices implements AuthorizationServerTokenServices, R
 
     }
 
+    @Override
     @Transactional(noRollbackFor={InvalidTokenException.class, InvalidGrantException.class})
     public OAuth2AccessToken refreshAccessToken(String refreshTokenValue, TokenRequest tokenRequest)
             throws AuthenticationException {
@@ -215,6 +218,7 @@ public class DefaultTokenServices implements AuthorizationServerTokenServices, R
         return accessToken;
     }
 
+    @Override
     public OAuth2AccessToken getAccessToken(OAuth2Authentication authentication) {
         return tokenStore.getAccessToken(authentication);
     }
@@ -254,10 +258,12 @@ public class DefaultTokenServices implements AuthorizationServerTokenServices, R
         return false;
     }
 
+    @Override
     public OAuth2AccessToken readAccessToken(String accessToken) {
         return tokenStore.readAccessToken(accessToken);
     }
 
+    @Override
     public OAuth2Authentication loadAuthentication(String accessTokenValue) throws AuthenticationException,
             InvalidTokenException {
         OAuth2AccessToken accessToken = tokenStore.readAccessToken(accessTokenValue);
@@ -299,6 +305,7 @@ public class DefaultTokenServices implements AuthorizationServerTokenServices, R
         return clientAuth.getClientId();
     }
 
+    @Override
     public boolean revokeToken(String tokenValue) {
         OAuth2AccessToken accessToken = tokenStore.readAccessToken(tokenValue);
         if (accessToken == null) {

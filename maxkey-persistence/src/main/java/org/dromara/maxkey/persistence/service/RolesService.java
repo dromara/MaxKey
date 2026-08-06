@@ -28,6 +28,7 @@ public interface RolesService  extends IJpaService<Roles,String> {
 
     public List<Roles> queryDynamicRoles(Roles groups);
     
+    @Override
     public boolean deleteById(String groupId);
     
     public List<Roles> queryRolesByUserId(String userId);

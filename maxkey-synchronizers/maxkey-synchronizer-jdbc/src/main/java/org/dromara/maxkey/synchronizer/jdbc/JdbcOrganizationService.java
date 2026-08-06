@@ -130,7 +130,7 @@ public class JdbcOrganizationService extends AbstractSynchronizerService impleme
         for (ColumnFieldMapper mapper : mapperList) {
             if (meta.getColumnsMap().containsKey(mapper.getColumn())) {
                 Object value = null;
-                if (mapper.getType().equalsIgnoreCase("String")) {
+                if ("String".equalsIgnoreCase(mapper.getType())) {
                     value = rs.getString(mapper.getColumn());
                 } else {
                     value = rs.getInt(mapper.getColumn());

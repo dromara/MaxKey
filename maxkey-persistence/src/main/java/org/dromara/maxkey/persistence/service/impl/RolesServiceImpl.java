@@ -48,20 +48,24 @@ public class RolesServiceImpl  extends JpaServiceImpl<RolesMapper,Roles,String> 
     InstitutionsService institutionsService;
 
     
+    @Override
     public List<Roles> queryDynamicRoles(Roles groups){
         return this.getMapper().queryDynamicRoles(groups);
     }
     
+    @Override
     public boolean deleteById(String groupId) {
         this.delete(groupId);
         roleMemberService.deleteByRoleId(groupId);
         return true;
     }
     
+    @Override
     public List<Roles> queryRolesByUserId(String userId){
         return this.getMapper().queryRolesByUserId(userId);
     }
     
+    @Override
     public void refreshDynamicRoles(Roles dynamicRole){
         if(dynamicRole.getCategory().equals(Roles.Category.DYNAMIC)) {
         	if(StringUtils.isNotBlank(dynamicRole.getOrgIdsList())) {
@@ -74,6 +78,7 @@ public class RolesServiceImpl  extends JpaServiceImpl<RolesMapper,Roles,String> 
         }
     }
     
+    @Override
     public void refreshAllDynamicRoles(){
         List<Institutions> instList = 
                 institutionsService.find("where status = ? ", new Object[]{ConstsStatus.ACTIVE}, new int[]{Types.INTEGER});

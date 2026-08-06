@@ -44,7 +44,8 @@ import org.springframework.stereotype.Repository;
 public class HistorySystemLogsServiceImpl  extends JpaServiceImpl<HistorySystemLogsMapper,HistorySystemLogs,String> implements HistorySystemLogsService{
     static final Logger _logger = LoggerFactory.getLogger(HistorySystemLogsServiceImpl.class);
 
-    public void insert(String topic,Object entity,String action,String result,UserInfo operator) {
+    @Override
+    public void insert(String topic, Object entity, String action, String result, UserInfo operator) {
         String message = "";
         if(entity != null) {
             if(entity instanceof UserInfo userInfo) {
@@ -78,7 +79,8 @@ public class HistorySystemLogsServiceImpl  extends JpaServiceImpl<HistorySystemL
         insert(topic,message,action,result,operator, entity);
     }
     
-    public void insert(String topic,String message,String action,String result,UserInfo operator,Object entity) {
+    @Override
+    public void insert(String topic, String message, String action, String result, UserInfo operator, Object entity) {
         HistorySystemLogs systemLog = new HistorySystemLogs();
         systemLog.setId(systemLog.generateId());
         systemLog.setTopic(topic);

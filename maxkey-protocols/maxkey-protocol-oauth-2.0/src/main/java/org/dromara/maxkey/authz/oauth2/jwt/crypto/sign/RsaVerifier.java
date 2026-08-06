@@ -45,6 +45,7 @@ public class RsaVerifier implements SignatureVerifier {
         this(RsaKeyHelper.parsePublicKey(key.trim()), RsaSigner.DEFAULT_ALGORITHM);
     }
 
+    @Override
     public void verify(byte[] content, byte[] sig) {
         try {
             Signature signature = Signature.getInstance(algorithm);
@@ -60,6 +61,7 @@ public class RsaVerifier implements SignatureVerifier {
         }
     }
 
+    @Override
     public String algorithm() {
         return algorithm;
     }

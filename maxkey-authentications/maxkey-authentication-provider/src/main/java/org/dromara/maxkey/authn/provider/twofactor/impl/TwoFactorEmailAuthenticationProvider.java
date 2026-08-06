@@ -46,6 +46,7 @@ public class TwoFactorEmailAuthenticationProvider extends AbstractAuthentication
 
     MailOtpAuthnService mailOtpAuthnService;
     
+    @Override
     public String getProviderName() {
         return "twoFactorEmail" + PROVIDER_SUFFIX;
     }

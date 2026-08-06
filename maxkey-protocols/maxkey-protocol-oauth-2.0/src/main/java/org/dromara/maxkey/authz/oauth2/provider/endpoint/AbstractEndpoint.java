@@ -88,6 +88,7 @@ public class AbstractEndpoint implements InitializingBean {
     protected MomentaryService momentaryService;
     
     
+    @Override
     public void afterPropertiesSet() throws Exception {
         if (tokenGranter == null) {
             //ClientDetailsService clientDetails = clientDetailsService();

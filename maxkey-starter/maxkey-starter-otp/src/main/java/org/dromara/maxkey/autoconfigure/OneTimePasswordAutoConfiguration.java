@@ -125,7 +125,7 @@ public class OneTimePasswordAutoConfiguration {
             @Value("${spring.mail.properties.mailotp.message.type:text}")
             String messageType
     ) {
-        if(messageType!= null && messageType.equalsIgnoreCase("html")) {
+        if(messageType!= null && "html".equalsIgnoreCase(messageType)) {
             Resource resource = new ClassPathResource("messages/email/forgotpassword.html");
             try {
                 BufferedReader bufferedReader =new BufferedReader(new InputStreamReader(resource.getInputStream()));

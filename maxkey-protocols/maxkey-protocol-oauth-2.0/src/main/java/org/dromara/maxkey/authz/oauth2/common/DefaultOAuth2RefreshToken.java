@@ -52,6 +52,7 @@ public class DefaultOAuth2RefreshToken implements Serializable, OAuth2RefreshTok
     /* (non-Javadoc)
      * @see org.springframework.security.oauth2.common.IFOO#getValue()
      */
+    @Override
     @JsonValue
     public String getValue() {
         return value;

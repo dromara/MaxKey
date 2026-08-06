@@ -85,25 +85,25 @@ public class BeanConvert {
             }
             String fillValue=valueMap.get(fieldName).toString();
             LogFactory.getLog(BeanConvert.class).debug("map2Bean() field "+(i++)+" : "+fieldName+" = "+fillValue+" type : "+fieldType);  
-            if(fieldType.equals("java.lang.String")){
+            if("java.lang.String".equals(fieldType)){
                 value=String.valueOf(fillValue);
-            }else if(fieldType.equals("int")){
+            }else if("int".equals(fieldType)){
                 value=Integer.parseInt(fillValue);
-            }else if(fieldType.equals("java.lang.Integer")){
+            }else if("java.lang.Integer".equals(fieldType)){
                 value=Integer.parseInt(fillValue);
-            }else if(fieldType.equals("long")){
+            }else if("long".equals(fieldType)){
                 value=Long.parseLong(fillValue);
-            }else if(fieldType.equals("java.lang.Long")){
+            }else if("java.lang.Long".equals(fieldType)){
                 value= Long.parseLong(fillValue);
-            }else if(fieldType.equals("double")){
+            }else if("double".equals(fieldType)){
                 value=(double)Double.valueOf(fillValue);
-            }else if(fieldType.equals("java.lang.Double")){
+            }else if("java.lang.Double".equals(fieldType)){
                 value=Double.valueOf(fillValue);
-            }else if(fieldType.equals("float")){
+            }else if("float".equals(fieldType)){
                 value=Float.parseFloat(fillValue);
-            }else if(fieldType.equals("java.lang.Float")){
+            }else if("java.lang.Float".equals(fieldType)){
                 value=Float.parseFloat(fillValue);
-            }else if(fieldType.equals("java.util.Date")){ 
+            }else if("java.util.Date".equals(fieldType)){
                 try {
                     if(fillValue.length()==10){
                         fillValue+=" 00:00:00";
@@ -114,15 +114,15 @@ public class BeanConvert {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-            }else if(fieldType.equals("java.lang.Object")){
+            }else if("java.lang.Object".equals(fieldType)){
                 value=valueMap.get(fieldName);
-            }else if(fieldType.equals("char")){
+            }else if("char".equals(fieldType)){
                 value=Character.valueOf(fillValue.charAt(0));
-            }else if(fieldType.equals("boolean")){
+            }else if("boolean".equals(fieldType)){
                 value=Boolean.parseBoolean(fillValue);
-            }else if(fieldType.equals("short")){
+            }else if("short".equals(fieldType)){
                 value=Short.parseShort(fillValue);
-            }else if(fieldType.equals("byte")){
+            }else if("byte".equals(fieldType)){
                 value=Byte.parseByte(fillValue);
             }
 

@@ -106,42 +106,50 @@ public class Access extends Apps implements Serializable{
     }
 
 
+    @Override
     public String getId() {
         return id;
     }
 
 
+    @Override
     public void setId(String id) {
         this.id = id;
     }
 
 
+    @Override
     public String getInstId() {
         return instId;
     }
 
 
+    @Override
     public void setInstId(String instId) {
         this.instId = instId;
     }
 
 
+    @Override
     public String getInstName() {
         return instName;
     }
 
 
+    @Override
     public void setInstName(String instName) {
         this.instName = instName;
     }
 
 
 
+    @Override
     public String getAppName() {
         return appName;
     }
 
 
+    @Override
     public void setAppName(String appName) {
         this.appName = appName;
     }

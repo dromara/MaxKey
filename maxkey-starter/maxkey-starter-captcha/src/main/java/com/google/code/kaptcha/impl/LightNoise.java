@@ -71,7 +71,7 @@ public class LightNoise extends Configurable implements NoiseProducer
 
         // creates an iterator to define the boundary of the flattened curve
         PathIterator pi = cc.getPathIterator(null, 2);
-        Point2D tmp[] = new Point2D[200];
+        Point2D [] tmp = new Point2D[200];
         int i = 0;
 
         // while pi is iterating the curve, adds points to tmp array

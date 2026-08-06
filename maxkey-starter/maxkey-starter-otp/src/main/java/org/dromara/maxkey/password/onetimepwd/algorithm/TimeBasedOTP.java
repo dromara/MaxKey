@@ -161,7 +161,7 @@ public class TimeBasedOTP {
         Date d = new Date();
         Long k = d.getTime() / 1000;
 
-        long testTime[] = { d.getTime() };
+        long [] testTime = { d.getTime() };
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         df.setTimeZone(TimeZone.getTimeZone("UTC"));
 

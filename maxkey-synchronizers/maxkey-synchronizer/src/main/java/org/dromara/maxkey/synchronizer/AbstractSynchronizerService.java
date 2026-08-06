@@ -65,12 +65,12 @@ public abstract class AbstractSynchronizerService {
     
     public HashMap<String,Organizations> loadOrgsByInstId(String instId,String rootOrgId) {
         List<Organizations> orgsList = organizationsService.find("instid = '" + instId + "'");
-        if(rootOrgId== null || rootOrgId.equals("")) {
+        if(rootOrgId== null || "".equals(rootOrgId)) {
             rootOrgId="1";
         }
         
         for(Organizations org : orgsList) {
-           if(org.getId().equals(rootOrgId) && rootOrgId.equals("1")) {
+           if(org.getId().equals(rootOrgId) && "1".equals(rootOrgId)) {
                rootOrganization = org; 
                rootOrganization.setNamePath("/"+rootOrganization.getOrgName());
                rootOrganization.setCodePath("/1");

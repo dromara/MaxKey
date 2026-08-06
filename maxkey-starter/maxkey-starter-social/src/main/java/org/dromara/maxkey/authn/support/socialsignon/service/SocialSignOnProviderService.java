@@ -90,61 +90,61 @@ public class SocialSignOnProviderService{
                 .redirectUri(getRedirectUri(baseUri , provider))
                 .build();
         
-        if(provider.equalsIgnoreCase("WeChatOpen")) {
+        if("WeChatOpen".equalsIgnoreCase(provider)) {
             authRequest = new AuthWeChatOpenRequest(authConfig);
-        }else if(provider.equalsIgnoreCase("sinaweibo")) {
+        }else if("sinaweibo".equalsIgnoreCase(provider)) {
             authRequest = new AuthWeiboRequest(authConfig);
-        }else if(provider.equalsIgnoreCase("qq")) {
+        }else if("qq".equalsIgnoreCase(provider)) {
             authRequest = new AuthQqRequest(authConfig);
-        }else if(provider.equalsIgnoreCase("Alipay")) {
+        }else if("Alipay".equalsIgnoreCase(provider)) {
             String alipayPublicKey = "";
             authRequest = new AuthAlipayRequest(authConfig,alipayPublicKey);
-        }else if(provider.equalsIgnoreCase("Twitter")) {
+        }else if("Twitter".equalsIgnoreCase(provider)) {
             authRequest = new AuthTwitterRequest(authConfig);
-        }else if(provider.equalsIgnoreCase("google")) {
+        }else if("google".equalsIgnoreCase(provider)) {
             authRequest = new AuthGoogleRequest(authConfig);
-        }else if(provider.equalsIgnoreCase("microsoft")) {
+        }else if("microsoft".equalsIgnoreCase(provider)) {
             authRequest = new AuthMicrosoftRequest(authConfig);
-        }else if(provider.equalsIgnoreCase("Linkedin")) {
+        }else if("Linkedin".equalsIgnoreCase(provider)) {
             authRequest = new AuthLinkedinRequest(authConfig);
-        }else if(provider.equalsIgnoreCase("DingTalk")) {
+        }else if("DingTalk".equalsIgnoreCase(provider)) {
             authRequest = new AuthDingTalkRequest(authConfig);
-        }else if(provider.equalsIgnoreCase("gitee")) {
+        }else if("gitee".equalsIgnoreCase(provider)) {
             authRequest = new AuthGiteeRequest(authConfig);
-        }else if(provider.equalsIgnoreCase("Baidu")) {
+        }else if("Baidu".equalsIgnoreCase(provider)) {
             authRequest = new AuthBaiduRequest(authConfig);
-        }else if(provider.equalsIgnoreCase("Douyin")) {
+        }else if("Douyin".equalsIgnoreCase(provider)) {
             authRequest = new AuthDouyinRequest(authConfig);
-        }else if(provider.equalsIgnoreCase("Eleme")) {
+        }else if("Eleme".equalsIgnoreCase(provider)) {
             authRequest = new AuthElemeRequest(authConfig);
-        }else if(provider.equalsIgnoreCase("Feishu")) {
+        }else if("Feishu".equalsIgnoreCase(provider)) {
             //authRequest = new AuthFeishuRequest(authConfig);
             authRequest = new AuthFeishu2Request(authConfig);
-        }else if(provider.equalsIgnoreCase("Github")) {
+        }else if("Github".equalsIgnoreCase(provider)) {
             authRequest = new AuthGithubRequest(authConfig);
-        }else if(provider.equalsIgnoreCase("Gitlab")) {
+        }else if("Gitlab".equalsIgnoreCase(provider)) {
             authRequest = new AuthGitlabRequest(authConfig);
-        }else if(provider.equalsIgnoreCase("Huawei")) {
+        }else if("Huawei".equalsIgnoreCase(provider)) {
             authRequest = new AuthHuaweiRequest(authConfig);
-        }else if(provider.equalsIgnoreCase("jd")) {
+        }else if("jd".equalsIgnoreCase(provider)) {
             authRequest = new AuthJdRequest(authConfig);
-        }else if(provider.equalsIgnoreCase("Meituan")) {
+        }else if("Meituan".equalsIgnoreCase(provider)) {
             authRequest = new AuthMeituanRequest(authConfig);
-        }else if(provider.equalsIgnoreCase("Mi")) {
+        }else if("Mi".equalsIgnoreCase(provider)) {
             authRequest = new AuthMiRequest(authConfig);
-        }else if(provider.equalsIgnoreCase("Oschina")) {
+        }else if("Oschina".equalsIgnoreCase(provider)) {
             authRequest = new AuthOschinaRequest(authConfig);
-        }else if(provider.equalsIgnoreCase("Taobao")) {
+        }else if("Taobao".equalsIgnoreCase(provider)) {
             authRequest = new AuthTaobaoRequest(authConfig);
-        }else if(provider.equalsIgnoreCase("Toutiao")) {
+        }else if("Toutiao".equalsIgnoreCase(provider)) {
             authRequest = new AuthToutiaoRequest(authConfig);
-        }else if(provider.equalsIgnoreCase("WeChatQyQrcode")) {
+        }else if("WeChatQyQrcode".equalsIgnoreCase(provider)) {
             authRequest = new AuthWeChatEnterpriseQrcodeRequest(authConfig);
-        }else if(provider.equalsIgnoreCase("workweixin")) {
+        }else if("workweixin".equalsIgnoreCase(provider)) {
             authRequest = new AuthWeChatEnterpriseWebRequestCost(authConfig);
-        }else if(provider.equalsIgnoreCase("welink")) {
+        }else if("welink".equalsIgnoreCase(provider)) {
             authRequest = new AuthHuaweiWeLinkRequest(authConfig);
-        }else if(provider.equalsIgnoreCase("maxkey")) {
+        }else if("maxkey".equalsIgnoreCase(provider)) {
             authRequest = new AuthMaxkeyRequest(authConfig);
         }
 
@@ -168,23 +168,23 @@ public class SocialSignOnProviderService{
                     authUser.getBlog(),
                     authUser.getAvatar());
             _logger.debug("RawUserInfo {}",authUser.getRawUserInfo());
-            if(provider.equalsIgnoreCase("WeChatOpen")) {
+            if("WeChatOpen".equalsIgnoreCase(provider)) {
                 return authUser.getUuid();
-            }else if(provider.equalsIgnoreCase("sinaweibo")) {
+            }else if("sinaweibo".equalsIgnoreCase(provider)) {
                 return authUser.getUuid();
-            }else if(provider.equalsIgnoreCase("qq")) {
+            }else if("qq".equalsIgnoreCase(provider)) {
                 return authUser.getUuid();
-            }else if(provider.equalsIgnoreCase("Alipay")) {
+            }else if("Alipay".equalsIgnoreCase(provider)) {
                 return authUser.getUuid();
-            }else if(provider.equalsIgnoreCase("Twitter")) {
+            }else if("Twitter".equalsIgnoreCase(provider)) {
                 return authUser.getUuid();
-            }else if(provider.equalsIgnoreCase("google")) {
+            }else if("google".equalsIgnoreCase(provider)) {
                 return authUser.getUuid();
-            }else if(provider.equalsIgnoreCase("microsoft")) {
+            }else if("microsoft".equalsIgnoreCase(provider)) {
                 return authUser.getUuid();
-            }else if(provider.equalsIgnoreCase("Linkedin")) {
+            }else if("Linkedin".equalsIgnoreCase(provider)) {
                 return authUser.getUuid();
-            }else if(provider.equalsIgnoreCase("DingTalk")) {
+            }else if("DingTalk".equalsIgnoreCase(provider)) {
                 return authUser.getUuid();
             }else {
                 return authUser.getUuid();
@@ -207,11 +207,11 @@ public class SocialSignOnProviderService{
                 _logger.debug("Social Provider {} ({})" ,
                         socialsProvider.getProvider()  ,socialsProvider.getProviderName());
                 
-                if(socialsProvider.getDisplay().equals("true")) {
+                if("true".equals(socialsProvider.getDisplay())) {
                     socialSignOnProviders.add(new SocialsProvider(socialsProvider));
                 }
                 
-                if(socialsProvider.getScanCode().equalsIgnoreCase("true")) {
+                if("true".equalsIgnoreCase(socialsProvider.getScanCode())) {
                     socialsLogin.setQrScan(socialsProvider.getProvider());
                 }
                 

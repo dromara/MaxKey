@@ -85,6 +85,7 @@ public class LoginServiceImpl  implements LoginService{
 
     }
 
+    @Override
     public UserInfo find(String username, String password) {
         List<UserInfo> listUserInfo = null ;
         if( LOGIN_ATTRIBUTE_TYPE == 1) {
@@ -98,6 +99,7 @@ public class LoginServiceImpl  implements LoginService{
         return (CollectionUtils.isNotEmpty(listUserInfo) ? listUserInfo.get(0) : null);
     }
 
+    @Override
     public List<UserInfo> findByUsername(String username, String password) {
         return jdbcTemplate.query(
                 DEFAULT_USERINFO_SELECT_STATEMENT,
@@ -106,6 +108,7 @@ public class LoginServiceImpl  implements LoginService{
             );
     }
 
+    @Override
     public List<UserInfo> findByUsernameOrMobile(String username, String password) {
         return jdbcTemplate.query(
                  DEFAULT_USERINFO_SELECT_STATEMENT_USERNAME_MOBILE,
@@ -114,6 +117,7 @@ public class LoginServiceImpl  implements LoginService{
             );
     }
 
+    @Override
     public List<UserInfo> findByUsernameOrMobileOrEmail(String username, String password) {
         return jdbcTemplate.query(
                  DEFAULT_USERINFO_SELECT_STATEMENT_USERNAME_MOBILE_EMAIL,
@@ -129,6 +133,7 @@ public class LoginServiceImpl  implements LoginService{
      * @param userInfo
      * @return boolean
      */
+    @Override
     public boolean passwordPolicyValid(UserInfo userInfo) {
         
         CnfPasswordPolicy passwordPolicy = cnfPasswordPolicyService.getPasswordPolicy();
@@ -180,6 +185,7 @@ public class LoginServiceImpl  implements LoginService{
          return true;
      }
     
+    @Override
     public void applyPasswordPolicy(UserInfo userInfo) {
         CnfPasswordPolicy passwordPolicy = cnfPasswordPolicyService.getPasswordPolicy();
         
@@ -228,6 +234,7 @@ public class LoginServiceImpl  implements LoginService{
      * 
      * @param userInfo
      */
+    @Override
     public void lockUser(UserInfo userInfo) {
         try {
             if (userInfo != null 
@@ -247,6 +254,7 @@ public class LoginServiceImpl  implements LoginService{
      * 
      * @param userInfo
      */
+    @Override
     public void unlockUser(UserInfo userInfo) {
         try {
             if (userInfo != null && StringUtils.isNotEmpty(userInfo.getId())) {
@@ -263,6 +271,7 @@ public class LoginServiceImpl  implements LoginService{
      * 
      * @param userInfo
      */
+    @Override
     public void resetAttempts(UserInfo userInfo) {
         try {
             if (userInfo != null && StringUtils.isNotEmpty(userInfo.getId())) {
@@ -291,6 +300,7 @@ public class LoginServiceImpl  implements LoginService{
         }
     }
     
+    @Override
     public void plusBadPasswordCount(UserInfo userInfo) {
         if (userInfo != null && StringUtils.isNotEmpty(userInfo.getId())) {
             setBadPasswordCount(userInfo.getId(),userInfo.getBadPasswordCount());
@@ -303,12 +313,14 @@ public class LoginServiceImpl  implements LoginService{
         }
     }
     
+    @Override
     public void resetBadPasswordCount(UserInfo userInfo) {
         if (userInfo != null && StringUtils.isNotEmpty(userInfo.getId()) && userInfo.getBadPasswordCount()>0) {
             setBadPasswordCount(userInfo.getId(),0);
         }
     }
 
+    @Override
     public List<GrantedAuthority> queryAuthorizedApps(List<GrantedAuthority> grantedAuthoritys) {
         String grantedAuthorityString="'ROLE_ALL_USER'";
         for(GrantedAuthority grantedAuthority : grantedAuthoritys) {
@@ -318,6 +330,7 @@ public class LoginServiceImpl  implements LoginService{
         ArrayList<GrantedAuthority> listAuthorizedApps = (ArrayList<GrantedAuthority>) jdbcTemplate.query(
                 String.format(DEFAULT_MYAPPS_SELECT_STATEMENT, grantedAuthorityString),
                 new RowMapper<GrantedAuthority>() {
+            @Override
             public GrantedAuthority mapRow(ResultSet rs, int rowNum) throws SQLException {
                 return new SimpleGrantedAuthority(rs.getString("id"));
             }
@@ -327,8 +340,10 @@ public class LoginServiceImpl  implements LoginService{
         return listAuthorizedApps;
     }
 
+    @Override
     public List<Groups> queryGroups(UserInfo userInfo) {
         List<Groups> listRoles = jdbcTemplate.query(GROUPS_SELECT_STATEMENT, new RowMapper<Groups>() {
+            @Override
             public Groups mapRow(ResultSet rs, int rowNum) throws SQLException {
                 return new Groups(rs.getString("id"), rs.getString("groupcode"),rs.getString("groupname"), 0);
             }
@@ -344,6 +359,7 @@ public class LoginServiceImpl  implements LoginService{
      * @param userInfo
      * @return ArrayList<GrantedAuthority>
      */
+    @Override
     public List<GrantedAuthority> grantAuthority(UserInfo userInfo) {
         // query Groups for user
         List<Groups> listGroups = queryGroups(userInfo);
@@ -366,6 +382,7 @@ public class LoginServiceImpl  implements LoginService{
     }
 
 
+    @Override
     public void updateLastLogin(UserInfo userInfo) {
         jdbcTemplate.update(LOGIN_USERINFO_UPDATE_STATEMENT,
                 new Object[] {
@@ -486,7 +503,7 @@ public class LoginServiceImpl  implements LoginService{
             userInfo.setDescription(rs.getString("description"));
             userInfo.setTheme(rs.getString("theme"));
             userInfo.setInstId(rs.getString("instid"));
-            if (userInfo.getTheme() == null || userInfo.getTheme().equalsIgnoreCase("")) {
+            if (userInfo.getTheme() == null || "".equalsIgnoreCase(userInfo.getTheme())) {
                 userInfo.setTheme("default");
             }
 

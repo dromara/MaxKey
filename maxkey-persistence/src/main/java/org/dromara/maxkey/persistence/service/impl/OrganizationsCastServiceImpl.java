@@ -31,6 +31,7 @@ public class OrganizationsCastServiceImpl  extends JpaServiceImpl<OrganizationsC
     static final  Logger _logger = LoggerFactory.getLogger(OrganizationsCastServiceImpl.class);
 
 
+    @Override
     public boolean updateCast(OrganizationsCast organizationsCast) {
         return getMapper().updateCast(organizationsCast) > 0;
     }

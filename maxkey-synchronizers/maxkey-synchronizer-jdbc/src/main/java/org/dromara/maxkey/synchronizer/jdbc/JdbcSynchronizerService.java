@@ -40,6 +40,7 @@ public class JdbcSynchronizerService   implements ISynchronizerService{
         super();
     }
 
+    @Override
     public void sync() {
         _logger.info("Sync ...");
         jdbcOrganizationService.setSynchronizer(synchronizer);

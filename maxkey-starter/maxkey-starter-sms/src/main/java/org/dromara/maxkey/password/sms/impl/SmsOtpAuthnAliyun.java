@@ -64,7 +64,7 @@ public class SmsOtpAuthnAliyun extends SmsOtpAuthn {
     public boolean produce(UserInfo userInfo) {
         // 手机号
         String mobile = userInfo.getMobile();
-        if (mobile != null && !mobile.equals("")) {
+        if (mobile != null && !"".equals(mobile)) {
             try {
                 DefaultProfile profile = DefaultProfile.getProfile(
                                     "cn-hangzhou", accessKeyId, accessSecret);

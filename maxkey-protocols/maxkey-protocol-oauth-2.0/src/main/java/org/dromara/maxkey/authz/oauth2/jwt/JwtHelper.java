@@ -208,6 +208,7 @@ class JwtHeader implements BinaryFormat {
         this.parameters = parameters;
     }
 
+    @Override
     public byte[] bytes() {
         return bytes;
     }
@@ -261,6 +262,7 @@ class JwtImpl implements Jwt {
      *
      * @param verifier the signature verifier
      */
+    @Override
     public void verifySignature(SignatureVerifier verifier) {
         verifier.verify(signingInput(), crypto);
      }
@@ -274,14 +276,17 @@ class JwtImpl implements Jwt {
    *
    * @return the encoded header, claims and crypto segments concatenated with "." characters
    */
+    @Override
     public byte[] bytes() {
         return concat(b64UrlEncode(header.bytes()), JwtHelper.PERIOD, b64UrlEncode(content), JwtHelper.PERIOD, b64UrlEncode(crypto));
     }
 
+    @Override
     public String getClaims() {
         return utf8Decode(content);
     }
 
+    @Override
     public String getEncoded() {
         return utf8Decode(bytes());
     }

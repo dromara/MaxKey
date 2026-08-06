@@ -98,19 +98,19 @@ public abstract class AbstractAuthorizeAdapter {
         String value = "";
         if(StringUtils.isBlank(userAttr)) {
             value = userInfo.getUsername();
-        }else if(userAttr.equalsIgnoreCase("username")){
+        }else if("username".equalsIgnoreCase(userAttr)){
             value = userInfo.getUsername();
-        }else if(userAttr.equalsIgnoreCase("userId")){
+        }else if("userId".equalsIgnoreCase(userAttr)){
             value = userInfo.getId();
-        }else if(userAttr.equalsIgnoreCase("email")){
+        }else if("email".equalsIgnoreCase(userAttr)){
             value = userInfo.getEmail();
-        }else if(userAttr.equalsIgnoreCase("mobile")){
+        }else if("mobile".equalsIgnoreCase(userAttr)){
             value = userInfo.getMobile();
-        }else if(userAttr.equalsIgnoreCase("workEmail")) {
+        }else if("workEmail".equalsIgnoreCase(userAttr)) {
             value = userInfo.getWorkEmail();
-        }else if(userAttr.equalsIgnoreCase("windowsAccount")){
+        }else if("windowsAccount".equalsIgnoreCase(userAttr)){
             value = userInfo.getWindowsAccount();
-        }else if(userAttr.equalsIgnoreCase("employeeNumber")){
+        }else if("employeeNumber".equalsIgnoreCase(userAttr)){
             value = userInfo.getEmployeeNumber();
         }else {
             value = userInfo.getId();

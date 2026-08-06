@@ -42,13 +42,13 @@ public class OtpSecret {
      * @return generated secret
      */
     public static final byte[] generate(String crypto) {
-        if (crypto.equalsIgnoreCase("HmacSHA1") || crypto.equalsIgnoreCase("HMAC-SHA-1")) {
+        if ("HmacSHA1".equalsIgnoreCase(crypto) || "HMAC-SHA-1".equalsIgnoreCase(crypto)) {
             return generate();
         }
-        if (crypto.equalsIgnoreCase("HmacSHA256") || crypto.equalsIgnoreCase("HMAC-SHA-256")) {
+        if ("HmacSHA256".equalsIgnoreCase(crypto) || "HMAC-SHA-256".equalsIgnoreCase(crypto)) {
             return generate32();
         }
-        if (crypto.equalsIgnoreCase("HmacSHA512") || crypto.equalsIgnoreCase("HMAC-SHA-512")) {
+        if ("HmacSHA512".equalsIgnoreCase(crypto) || "HMAC-SHA-512".equalsIgnoreCase(crypto)) {
             return generate64();
         }
         return generate();

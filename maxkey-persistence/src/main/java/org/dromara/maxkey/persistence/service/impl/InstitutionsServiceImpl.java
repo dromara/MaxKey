@@ -42,10 +42,12 @@ public class InstitutionsServiceImpl  extends JpaServiceImpl<InstitutionsMapper,
                     .expireAfterWrite(60, TimeUnit.MINUTES)
                     .build();
     
+     @Override
      public Institutions findByDomain(String domain) {
          return getMapper().findByDomain(domain);
      }
      
+     @Override
      public Institutions get(String instIdOrDomain) {
             _logger.trace(" instId {}" , instIdOrDomain);
             Institutions inst = getByDomain(instIdOrDomain);

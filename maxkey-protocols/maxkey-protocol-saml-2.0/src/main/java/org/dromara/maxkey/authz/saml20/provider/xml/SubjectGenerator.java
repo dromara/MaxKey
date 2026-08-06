@@ -51,34 +51,34 @@ public class SubjectGenerator {
                             UserInfo userInfo) {
         String nameIdValue = userInfo.getUsername();
         String nameIDType = NameIDType.UNSPECIFIED;
-        if(saml20Details.getNameidFormat().equalsIgnoreCase("persistent")) {
+        if("persistent".equalsIgnoreCase(saml20Details.getNameidFormat())) {
             nameIDType = NameIDType.PERSISTENT;
-        }else if(saml20Details.getNameidFormat().equalsIgnoreCase("transient")) {
+        }else if("transient".equalsIgnoreCase(saml20Details.getNameidFormat())) {
             nameIDType = NameIDType.TRANSIENT;
-        }else if(saml20Details.getNameidFormat().equalsIgnoreCase("unspecified")) {
+        }else if("unspecified".equalsIgnoreCase(saml20Details.getNameidFormat())) {
             nameIDType = NameIDType.UNSPECIFIED;
-        }else if(saml20Details.getNameidFormat().equalsIgnoreCase("emailAddress")) {
-            if(userInfo.getEmail()!=null && !userInfo.getEmail().equals("")) {
+        }else if("emailAddress".equalsIgnoreCase(saml20Details.getNameidFormat())) {
+            if(userInfo.getEmail()!=null && !"".equals(userInfo.getEmail())) {
                 nameIdValue = userInfo.getEmail();
             }
             nameIDType = NameIDType.EMAIL;
-        }else if(saml20Details.getNameidFormat().equalsIgnoreCase("X509SubjectName")) {
+        }else if("X509SubjectName".equalsIgnoreCase(saml20Details.getNameidFormat())) {
             nameIDType = NameIDType.X509_SUBJECT;
-        }else if(saml20Details.getNameidFormat().equalsIgnoreCase("WindowsDomainQualifiedName")) {
-            if(userInfo.getWindowsAccount()!=null && !userInfo.getWindowsAccount().equals("")) {
+        }else if("WindowsDomainQualifiedName".equalsIgnoreCase(saml20Details.getNameidFormat())) {
+            if(userInfo.getWindowsAccount()!=null && !"".equals(userInfo.getWindowsAccount())) {
                 nameIdValue = userInfo.getWindowsAccount();
             }
             nameIDType = NameIDType.WIN_DOMAIN_QUALIFIED;
-        }else if(saml20Details.getNameidFormat().equalsIgnoreCase("entity")) {
+        }else if("entity".equalsIgnoreCase(saml20Details.getNameidFormat())) {
             nameIDType = NameIDType.ENTITY;
-        }else if(saml20Details.getNameidFormat().equalsIgnoreCase("custom")) {
+        }else if("custom".equalsIgnoreCase(saml20Details.getNameidFormat())) {
             
-        }else if(saml20Details.getNameidFormat().equalsIgnoreCase("Mobile")) {
-            if(userInfo.getMobile()!=null && !userInfo.getMobile().equals("")) {
+        }else if("Mobile".equalsIgnoreCase(saml20Details.getNameidFormat())) {
+            if(userInfo.getMobile()!=null && !"".equals(userInfo.getMobile())) {
                 nameIdValue = userInfo.getMobile();
             }
-        }else if(saml20Details.getNameidFormat().equalsIgnoreCase("EmployeeNumber")) {
-            if(userInfo.getEmployeeNumber()!=null && !userInfo.getEmployeeNumber().equals("")) {
+        }else if("EmployeeNumber".equalsIgnoreCase(saml20Details.getNameidFormat())) {
+            if(userInfo.getEmployeeNumber()!=null && !"".equals(userInfo.getEmployeeNumber())) {
                 nameIdValue = userInfo.getEmployeeNumber();
             }
         }
@@ -87,9 +87,9 @@ public class SubjectGenerator {
             nameIdValue = nameIdValue + saml20Details.getNameIdSuffix();
         }
         
-        if(saml20Details.getNameIdConvert().equalsIgnoreCase("uppercase")) {
+        if("uppercase".equalsIgnoreCase(saml20Details.getNameIdConvert())) {
             nameIdValue = nameIdValue.toUpperCase();
-        }else if(saml20Details.getNameIdConvert().equalsIgnoreCase("lowercase")) {
+        }else if("lowercase".equalsIgnoreCase(saml20Details.getNameIdConvert())) {
             nameIdValue = nameIdValue.toLowerCase();
         }else {
             //do nothing

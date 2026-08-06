@@ -37,6 +37,7 @@ public class AppsSaml20DetailsServiceImpl  extends JpaServiceImpl<AppsSaml20Deta
                 .maximumSize(200000)
                 .build();
     
+    @Override
     public  AppsSAML20Details  get(String id , boolean cached){
         AppsSAML20Details details = null;
         if(cached) {

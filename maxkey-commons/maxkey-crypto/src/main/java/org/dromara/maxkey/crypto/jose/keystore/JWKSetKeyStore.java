@@ -145,9 +145,9 @@ public class JWKSetKeyStore {
     public String toString(String mediaType){
         StringBuffer metaDataString = new StringBuffer("");
         //RSA Only
-        if(jwkSet.getKeys().get(0).getKeyType().getValue().equalsIgnoreCase("RSA")) {
+        if("RSA".equalsIgnoreCase(jwkSet.getKeys().get(0).getKeyType().getValue())) {
             
-            if(StringUtils.isNotBlank(mediaType) && mediaType.equalsIgnoreCase("XML")) {
+            if(StringUtils.isNotBlank(mediaType) && "XML".equalsIgnoreCase(mediaType)) {
             
                 metaDataString.append("<RSAKeyValue>").append("\n");
                 for(JWK jwk : jwkSet.getKeys()) {

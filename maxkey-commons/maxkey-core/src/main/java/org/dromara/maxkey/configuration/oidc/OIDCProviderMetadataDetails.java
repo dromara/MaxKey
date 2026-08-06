@@ -44,66 +44,82 @@ public class OIDCProviderMetadataDetails implements OIDCProviderMetadata {
 
     protected Set<String> responseTypesSupported;
 
+    @Override
     public String getIssuer() {
         return issuer;
     }
 
+    @Override
     public void setIssuer(String issuer) {
         this.issuer = issuer;
     }
 
+    @Override
     public URI getAuthorizationEndpoint() {
         return authorizationEndpoint;
     }
 
+    @Override
     public void setAuthorizationEndpoint(URI authorizationEndpoint) {
         this.authorizationEndpoint = authorizationEndpoint;
     }
 
+    @Override
     public URI getTokenEndpoint() {
         return tokenEndpoint;
     }
 
+    @Override
     public void setTokenEndpoint(URI tokenEndpoint) {
         this.tokenEndpoint = tokenEndpoint;
     }
 
+    @Override
     public URI getUserinfoEndpoint() {
         return userinfoEndpoint;
     }
 
+    @Override
     public void setUserinfoEndpoint(URI userinfoEndpoint) {
         this.userinfoEndpoint = userinfoEndpoint;
     }
 
+    @Override
     public URI getJwksUri() {
         return jwksUri;
     }
 
+    @Override
     public void setJwksUri(URI jwksUri) {
         this.jwksUri = jwksUri;
     }
 
+    @Override
     public URI getRegistrationEndpoint() {
         return registrationEndpoint;
     }
 
+    @Override
     public void setRegistrationEndpoint(URI registrationEndpoint) {
         this.registrationEndpoint = registrationEndpoint;
     }
 
+    @Override
     public Set<String> getScopesSupported() {
         return scopesSupported;
     }
 
+    @Override
     public void setScopesSupported(Set<String> scopesSupported) {
         this.scopesSupported = scopesSupported;
     }
 
+    @Override
     public Set<String> getResponseTypesSupported() {
         return responseTypesSupported;
     }
 
+    @Override
     public void setResponseTypesSupported(Set<String> responseTypesSupported) {
         this.responseTypesSupported = responseTypesSupported;
     }

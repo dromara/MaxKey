@@ -65,7 +65,7 @@ public class JwtAlgorithms {
     }
 
     static String enc(CipherMetadata cipher) {
-        if (!cipher.algorithm().equalsIgnoreCase("AES/CBC/PKCS5Padding")) {
+        if (!"AES/CBC/PKCS5Padding".equalsIgnoreCase(cipher.algorithm())) {
             throw new IllegalArgumentException("Unknown or unsupported algorithm");
         }
         if (cipher.keySize() == 128) {

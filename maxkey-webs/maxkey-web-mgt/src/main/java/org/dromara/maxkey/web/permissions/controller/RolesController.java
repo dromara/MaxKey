@@ -113,7 +113,7 @@ public class RolesController {
     @PutMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public Message<Roles> update(@RequestBody Roles role,@CurrentUser UserInfo currentUser) {
         _logger.debug("-update  group : {}" , role);
-        if(role.getId().equalsIgnoreCase("ROLE_ALL_USER")) {
+        if("ROLE_ALL_USER".equalsIgnoreCase(role.getId())) {
             role.setDefaultAllUser();
         }
         role.setModifiedBy(currentUser.getId());

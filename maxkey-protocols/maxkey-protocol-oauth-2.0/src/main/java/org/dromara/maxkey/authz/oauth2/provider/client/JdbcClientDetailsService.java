@@ -125,7 +125,8 @@ public class JdbcClientDetailsService implements ClientDetailsService, ClientReg
         this.passwordEncoder = passwordEncoder;
     }
 
-    public ClientDetails loadClientByClientId(String clientId,boolean cached) {
+    @Override
+    public ClientDetails loadClientByClientId(String clientId, boolean cached) {
         // cache in memory
         ClientDetails details = null;
         try {
@@ -152,6 +153,7 @@ public class JdbcClientDetailsService implements ClientDetailsService, ClientReg
         return details;
     }
 
+    @Override
     public void addClientDetails(ClientDetails clientDetails) throws ClientAlreadyExistsException {
         try {
             jdbcTemplate.update(insertClientDetailsSql, getFields(clientDetails));
@@ -160,6 +162,7 @@ public class JdbcClientDetailsService implements ClientDetailsService, ClientReg
         }
     }
 
+    @Override
     public void updateClientDetails(ClientDetails clientDetails) throws NoSuchClientException {
         int count = jdbcTemplate.update(updateClientDetailsSql, getFieldsForUpdate(clientDetails));
         if (count != 1) {
@@ -168,6 +171,7 @@ public class JdbcClientDetailsService implements ClientDetailsService, ClientReg
         detailsCache.invalidate(clientDetails.getClientId());
     }
 
+    @Override
     public void updateClientSecret(String clientId, String secret) throws NoSuchClientException {
         int count = jdbcTemplate.update(updateClientSecretSql, passwordEncoder.encode(secret), clientId);
         if (count != 1) {
@@ -175,6 +179,7 @@ public class JdbcClientDetailsService implements ClientDetailsService, ClientReg
         }
     }
 
+    @Override
     public void removeClientDetails(String clientId) throws NoSuchClientException {
         int count = jdbcTemplate.update(deleteClientDetailsSql, clientId);
         if (count != 1) {
@@ -182,6 +187,7 @@ public class JdbcClientDetailsService implements ClientDetailsService, ClientReg
         }
     }
 
+    @Override
     public List<ClientDetails> listClientDetails() {
         return listFactory.getList(findClientDetailsSql, Collections.<String, Object>emptyMap(), rowMapper);
     }
@@ -292,6 +298,7 @@ public class JdbcClientDetailsService implements ClientDetailsService, ClientReg
     private static class ClientDetailsRowMapper implements RowMapper<ClientDetails> {
         private JsonMapper mapper = createJsonMapper();
 
+        @Override
         public ClientDetails mapRow(ResultSet rs, int rowNum) throws SQLException {
             BaseClientDetails details = new BaseClientDetails(rs.getString(1), rs.getString(3), rs.getString(4),
                     rs.getString(5), rs.getString(7), rs.getString(6));

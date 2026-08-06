@@ -54,6 +54,7 @@ public class LdapUsersService extends AbstractSynchronizerService  implements IS
     private static final Integer USER_TYPE = 1;
     LdapUtils ldapUtils;
     
+    @Override
     public void sync() {
         _logger.info("Sync Ldap Users ...");
         loadOrgsByInstId(this.synchronizer.getInstId(),Organizations.ROOT_ORG_ID);
@@ -186,7 +187,7 @@ public class LdapUsersService extends AbstractSynchronizerService  implements IS
             userInfo.setHomePhoneNumber(LdapUtils.getAttributeStringValue(InetOrgPerson.HOMEPHONE,attributeMap));
             userInfo.setHomeAddressFormatted(LdapUtils.getAttributeStringValue(InetOrgPerson.HOMEPOSTALADDRESS,attributeMap));
             
-            if(LdapUtils.getAttributeStringValue(InetOrgPerson.MOBILE,attributeMap).equals("")) {
+            if("".equals(LdapUtils.getAttributeStringValue(InetOrgPerson.MOBILE,attributeMap))) {
                 userInfo.setMobile(userInfo.getId());
             }else {
                 userInfo.setMobile(LdapUtils.getAttributeStringValue(InetOrgPerson.MOBILE,attributeMap));
@@ -261,23 +262,23 @@ public class LdapUsersService extends AbstractSynchronizerService  implements IS
                     }
                 }
                 value = LdapUtils.getAttributeStringValue(sourceAttr,attributeMap);
-                if(targetAttr.equals("formattedName")){
+                if("formattedName".equals(targetAttr)){
                     userInfo.setFormattedName(LdapUtils.getAttributeStringValue(InetOrgPerson.SN,attributeMap)+
                             LdapUtils.getAttributeStringValue(InetOrgPerson.GIVENNAME,attributeMap));
                     continue;
                 }
                 //只配置 username 到 uid 的映射关系
                 ///只配置 windowsAccount 到 uid 的映射关系
-                if (targetAttr.equals("username") || targetAttr.equals("windowsAccount")) {
-                    if (sourceAttr.equals("uid") && StringUtils.isBlank(value)) {
+                if ("username".equals(targetAttr) || "windowsAccount".equals(targetAttr)) {
+                    if ("uid".equals(sourceAttr) && StringUtils.isBlank(value)) {
                         value = LdapUtils.getAttributeStringValue(InetOrgPerson.CN,attributeMap);
                     }else{
                         value = LdapUtils.getAttributeStringValue(InetOrgPerson.UID,attributeMap);
                     }
                     //只配置 nickName 到 initials 的映射关系
                     //只配置 nameZhShortSpell 到 initials 的映射关系
-                } else if (targetAttr.equals("nickName") || targetAttr.equals("nameZhShortSpell")) {
-                    if (sourceAttr.equals("initials") && StringUtils.isBlank(value)) {
+                } else if ("nickName".equals(targetAttr) || "nameZhShortSpell".equals(targetAttr)) {
+                    if ("initials".equals(sourceAttr) && StringUtils.isBlank(value)) {
                         value = LdapUtils.getAttributeStringValue(InetOrgPerson.SN,attributeMap) +
                                 LdapUtils.getAttributeStringValue(InetOrgPerson.GIVENNAME,attributeMap);
                     }else{
@@ -285,15 +286,15 @@ public class LdapUsersService extends AbstractSynchronizerService  implements IS
                     }
 
                     //只配置 displayName 到 displayName 的映射关系
-                } else if (targetAttr.equals("displayName")) {
-                    if (sourceAttr.equals("displayName") && StringUtils.isBlank(value)) {
+                } else if ("displayName".equals(targetAttr)) {
+                    if ("displayName".equals(sourceAttr) && StringUtils.isBlank(value)) {
                         value = LdapUtils.getAttributeStringValue(InetOrgPerson.SN,attributeMap) +
                                 LdapUtils.getAttributeStringValue(InetOrgPerson.GIVENNAME,attributeMap);
                     }else {
                         value = LdapUtils.getAttributeStringValue(InetOrgPerson.DISPLAYNAME,attributeMap);
                     }
-                } else if (targetAttr.equals("mobile")) {
-                    if (sourceAttr.equals("mobile") && StringUtils.isBlank(value)) {
+                } else if ("mobile".equals(targetAttr)) {
+                    if ("mobile".equals(sourceAttr) && StringUtils.isBlank(value)) {
                         value = (String) getFieldValue(userInfo,"id");
                     }else {
                         value = LdapUtils.getAttributeStringValue(InetOrgPerson.MOBILE,attributeMap);

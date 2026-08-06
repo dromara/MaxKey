@@ -92,17 +92,20 @@ public class ApprovalStoreUserApprovalHandler implements UserApprovalHandler, In
         this.approvalExpirySeconds = approvalExpirySeconds;
     }
 
+    @Override
     public void afterPropertiesSet() {
         Assert.state(approvalStore != null, "ApprovalStore must be provided");
         Assert.state(requestFactory != null, "OAuth2RequestFactory must be provided");
     }
 
+    @Override
     public boolean isApproved(AuthorizationRequest authorizationRequest, Authentication userAuthentication) {
         return authorizationRequest.isApproved();
     }
 
+    @Override
     public AuthorizationRequest checkForPreApproval(AuthorizationRequest authorizationRequest,
-            Authentication userAuthentication) {
+                                                    Authentication userAuthentication) {
 
         String clientId = authorizationRequest.getClientId();
         Collection<String> requestedScopes = authorizationRequest.getScope();
@@ -187,8 +190,9 @@ public class ApprovalStoreUserApprovalHandler implements UserApprovalHandler, In
      * 
      * @return An approved request if all scopes have been approved by the current user.
      */
+    @Override
     public AuthorizationRequest updateAfterApproval(AuthorizationRequest authorizationRequest,
-            Authentication userAuthentication) {
+                                                    Authentication userAuthentication) {
         // Get the approved scopes
         Set<String> requestedScopes = authorizationRequest.getScope();
         Set<String> approvedScopes = new HashSet<String>();

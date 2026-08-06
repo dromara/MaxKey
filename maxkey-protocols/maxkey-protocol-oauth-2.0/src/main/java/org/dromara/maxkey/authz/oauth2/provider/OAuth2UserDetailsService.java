@@ -37,6 +37,7 @@ public class OAuth2UserDetailsService implements UserDetailsService {
     
     LoginService loginRepository;
     
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserInfo userInfo;
         try {

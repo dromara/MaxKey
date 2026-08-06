@@ -50,6 +50,7 @@ public abstract class AbstractTokenGranter implements TokenGranter {
         this.requestFactory = requestFactory;
     }
 
+    @Override
     public OAuth2AccessToken grant(String grantType, TokenRequest tokenRequest) {
 
         if (!this.grantType.equals(grantType)) {

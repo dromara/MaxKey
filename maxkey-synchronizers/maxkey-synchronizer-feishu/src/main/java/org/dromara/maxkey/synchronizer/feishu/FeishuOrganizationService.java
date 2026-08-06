@@ -51,6 +51,7 @@ public class FeishuOrganizationService extends AbstractSynchronizerService imple
     static String DEPTS_URL = "https://open.feishu.cn/open-apis/contact/v3/departments/%s/children?page_size=50";
     static String ROOT_DEPT_URL = "https://open.feishu.cn/open-apis/contact/v3/departments/%s";
     static String ROOT_DEPT_ID = "0";
+    @Override
     public void sync() {
         _logger.info("Sync Feishu Organizations ...");
 

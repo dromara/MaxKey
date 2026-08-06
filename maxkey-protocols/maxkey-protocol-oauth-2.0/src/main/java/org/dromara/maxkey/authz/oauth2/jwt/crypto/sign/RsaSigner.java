@@ -48,6 +48,7 @@ public class RsaSigner implements Signer {
         this(loadPrivateKey(sshKey));
     }
 
+    @Override
     public byte[] sign(byte[] bytes) {
         try {
             Signature signature = Signature.getInstance(algorithm);
@@ -60,6 +61,7 @@ public class RsaSigner implements Signer {
         }
     }
 
+    @Override
     public String algorithm() {
         return algorithm;
     }

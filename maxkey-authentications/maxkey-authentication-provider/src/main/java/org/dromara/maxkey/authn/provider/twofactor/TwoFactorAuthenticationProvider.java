@@ -54,6 +54,7 @@ public class TwoFactorAuthenticationProvider extends AbstractAuthenticationProvi
 
     Map<String,AbstractAuthenticationProvider> twoFactorProvider = new HashMap<>();
     
+    @Override
     public String getProviderName() {
         return "twoFactor" + PROVIDER_SUFFIX;
     }

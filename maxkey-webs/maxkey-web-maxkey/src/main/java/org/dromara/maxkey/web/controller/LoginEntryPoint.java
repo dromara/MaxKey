@@ -229,7 +229,7 @@ public class LoginEntryPoint {
                  if(authentication != null) {
                      AuthJwt authJwt = authTokenService.genAuthJwt(authentication);
                      if(StringUtils.isNotBlank(credential.getRemeberMe())
-                             &&credential.getRemeberMe().equalsIgnoreCase("true")) {
+                             && "true".equalsIgnoreCase(credential.getRemeberMe())) {
                          String remeberMe = remeberMeManager.createRemeberMe(authentication, request, response);
                          authJwt.setRemeberMe(remeberMe);
                      }

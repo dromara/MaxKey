@@ -55,6 +55,7 @@ public class ActiveDirectoryUsersService extends AbstractSynchronizerService    
     private static final Integer USER_TYPE = 1;
     ActiveDirectoryUtils ldapUtils;
     
+    @Override
     public void sync() {
         _logger.info("Sync ActiveDirectory Users...");
         loadOrgsByInstId(this.synchronizer.getInstId(),Organizations.ROOT_ORG_ID);
@@ -177,7 +178,7 @@ public class ActiveDirectoryUsersService extends AbstractSynchronizerService    
             userInfo.setWorkPostalCode(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.POSTALCODE,attributeMap));//
             userInfo.setWorkAddressFormatted(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.POSTOFFICEBOX,attributeMap));//
             
-            if(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.MOBILE,attributeMap).equals("")) {
+            if("".equals(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.MOBILE,attributeMap))) {
                 userInfo.setMobile(userInfo.getId());
             }else {
                 userInfo.setMobile(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.MOBILE,attributeMap));//
@@ -242,16 +243,16 @@ public class ActiveDirectoryUsersService extends AbstractSynchronizerService    
             String sourceProperty = entry.getValue();
             try {
                 
-                if(sourceProperty.equals("orgName")){
+                if("orgName".equals(sourceProperty)){
                     userInfo.setDepartment(deptOrg.getOrgName());
                     continue;
                 }
-                if(sourceProperty.equals("id")){
+                if("id".equals(sourceProperty)){
                     userInfo.setDepartmentId(deptOrg.getId());
                     continue;
                 }
-                if(sourceProperty.equals("mobile")){
-                    userInfo.setMobile(LdapUtils.getAttributeStringValue(sourceProperty, attributeMap).equals("")?
+                if("mobile".equals(sourceProperty)){
+                    userInfo.setMobile("".equals(LdapUtils.getAttributeStringValue(sourceProperty, attributeMap))?
                             userInfo.getId():LdapUtils.getAttributeStringValue(sourceProperty,attributeMap));
                     continue;
                 }

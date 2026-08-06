@@ -205,6 +205,7 @@ public class JwtAccessTokenConverter implements TokenEnhancer, AccessTokenConver
         }
     }
 
+    @Override
     public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
         DefaultOAuth2AccessToken result = new DefaultOAuth2AccessToken(accessToken);
         Map<String, Object> info = new LinkedHashMap<String, Object>(accessToken.getAdditionalInformation());
@@ -260,6 +261,7 @@ public class JwtAccessTokenConverter implements TokenEnhancer, AccessTokenConver
         }
     }
 
+    @Override
     public void afterPropertiesSet() throws Exception {
         // Check the signing and verification keys match
         if (signer instanceof RsaSigner) {

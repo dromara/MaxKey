@@ -64,16 +64,16 @@ public class LocaleTagDirective implements TemplateDirectiveModel {
         
         if (code == null) {
             message = RequestContextUtils.getLocale(request).getLanguage();
-        } else if (code.equals("global.application.version")
-                || code.equals("application.version")) {
+        } else if ("global.application.version".equals(code)
+                || "application.version".equals(code)) {
             message = WebContext.properties.getProperty("application.formatted-version");
-        } else if (code.equals("global.logo")) {
+        } else if ("global.logo".equals(code)) {
 
             if(!message.startsWith("http")) {
                 message = request.getContextPath() + message;
             }
-        }else if (code.equals("global.title")
-                    ||code.equals("global.consoleTitle")) {
+        }else if ("global.title".equals(code)
+                    || "global.consoleTitle".equals(code)) {
    
         } else {
             try {

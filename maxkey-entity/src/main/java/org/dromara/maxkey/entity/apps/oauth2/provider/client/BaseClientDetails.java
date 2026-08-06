@@ -172,6 +172,7 @@ public class BaseClientDetails implements ClientDetails {
         }
     }
 
+    @Override
     @com.fasterxml.jackson.annotation.JsonIgnore
     public String getClientId() {
         return clientId;
@@ -191,7 +192,7 @@ public class BaseClientDetails implements ClientDetails {
             return false;
         }
         for (String auto : autoApproveScopes) {
-            if (auto.equals("true") || scope.matches(auto)) {
+            if ("true".equals(auto) || scope.matches(auto)) {
                 return true;
             }
         }
@@ -203,11 +204,13 @@ public class BaseClientDetails implements ClientDetails {
         return autoApproveScopes;
     }
     
+    @Override
     @com.fasterxml.jackson.annotation.JsonIgnore
     public boolean isSecretRequired() {
         return this.clientSecret != null;
     }
 
+    @Override
     @com.fasterxml.jackson.annotation.JsonIgnore
     public String getClientSecret() {
         return clientSecret;
@@ -217,11 +220,13 @@ public class BaseClientDetails implements ClientDetails {
         this.clientSecret = clientSecret;
     }
 
+    @Override
     @com.fasterxml.jackson.annotation.JsonIgnore
     public boolean isScoped() {
         return this.scope != null && !this.scope.isEmpty();
     }
 
+    @Override
     public Set<String> getScope() {
         return scope;
     }
@@ -231,6 +236,7 @@ public class BaseClientDetails implements ClientDetails {
                 : new LinkedHashSet<String>(scope);
     }
 
+    @Override
     @com.fasterxml.jackson.annotation.JsonIgnore
     public Set<String> getResourceIds() {
         return resourceIds;
@@ -241,6 +247,7 @@ public class BaseClientDetails implements ClientDetails {
                 .<String> emptySet() : new LinkedHashSet<String>(resourceIds);
     }
 
+    @Override
     @com.fasterxml.jackson.annotation.JsonIgnore
     public Set<String> getAuthorizedGrantTypes() {
         return authorizedGrantTypes;
@@ -251,6 +258,7 @@ public class BaseClientDetails implements ClientDetails {
                 authorizedGrantTypes);
     }
 
+    @Override
     @com.fasterxml.jackson.annotation.JsonIgnore
     public Set<String> getRegisteredRedirectUri() {
         return registeredRedirectUris;
@@ -274,6 +282,7 @@ public class BaseClientDetails implements ClientDetails {
                 .toArray(new String[values.size()])));
     }
 
+    @Override
     @com.fasterxml.jackson.annotation.JsonIgnore
     public Collection<GrantedAuthority> getAuthorities() {
         return authorities;
@@ -285,6 +294,7 @@ public class BaseClientDetails implements ClientDetails {
         this.authorities = new ArrayList<GrantedAuthority>(authorities);
     }
 
+    @Override
     @com.fasterxml.jackson.annotation.JsonIgnore
     public Integer getAccessTokenValiditySeconds() {
         return accessTokenValiditySeconds;
@@ -294,6 +304,7 @@ public class BaseClientDetails implements ClientDetails {
         this.accessTokenValiditySeconds = accessTokenValiditySeconds;
     }
 
+    @Override
     @com.fasterxml.jackson.annotation.JsonIgnore
     public Integer getRefreshTokenValiditySeconds() {
         return refreshTokenValiditySeconds;
@@ -309,6 +320,7 @@ public class BaseClientDetails implements ClientDetails {
                 additionalInformation);
     }
 
+    @Override
     @com.fasterxml.jackson.annotation.JsonAnyGetter
     public Map<String, Object> getAdditionalInformation() {
         return Collections.unmodifiableMap(this.additionalInformation);
@@ -319,6 +331,7 @@ public class BaseClientDetails implements ClientDetails {
         this.additionalInformation.put(key, value);
     }
     
+    @Override
     public String getIssuer() {
         return issuer;
     }
@@ -327,6 +340,7 @@ public class BaseClientDetails implements ClientDetails {
         this.issuer = issuer;
     }
 
+    @Override
     public String getAudience() {
         return audience;
     }
@@ -335,6 +349,7 @@ public class BaseClientDetails implements ClientDetails {
         this.audience = audience;
     }
 
+    @Override
     public String getAlgorithm() {
         return algorithm;
     }
@@ -343,6 +358,7 @@ public class BaseClientDetails implements ClientDetails {
         this.algorithm = algorithm;
     }
 
+    @Override
     public String getAlgorithmKey() {
         return algorithmKey;
     }
@@ -351,6 +367,7 @@ public class BaseClientDetails implements ClientDetails {
         this.algorithmKey = algorithmKey;
     }
 
+    @Override
     public String getEncryptionMethod() {
         return encryptionMethod;
     }
@@ -359,6 +376,7 @@ public class BaseClientDetails implements ClientDetails {
         this.encryptionMethod = encryptionMethod;
     }
 
+    @Override
     public String getSignature() {
         return signature;
     }
@@ -367,6 +385,7 @@ public class BaseClientDetails implements ClientDetails {
         this.signature = signature;
     }
 
+    @Override
     public String getSignatureKey() {
         return signatureKey;
     }
@@ -376,6 +395,7 @@ public class BaseClientDetails implements ClientDetails {
     }
 
     
+    @Override
     public String getSubject() {
         return subject;
     }
@@ -384,6 +404,7 @@ public class BaseClientDetails implements ClientDetails {
         this.subject = subject;
     }
 
+    @Override
     public String getUserInfoResponse() {
         return userInfoResponse;
     }
@@ -392,6 +413,7 @@ public class BaseClientDetails implements ClientDetails {
         this.userInfoResponse = userInfoResponse;
     }
 
+    @Override
     public String getApprovalPrompt() {
         return approvalPrompt;
     }
@@ -400,6 +422,7 @@ public class BaseClientDetails implements ClientDetails {
         this.approvalPrompt = approvalPrompt;
     }
  
+    @Override
     public String getPkce() {
         return pkce;
     }
@@ -408,6 +431,7 @@ public class BaseClientDetails implements ClientDetails {
         this.pkce = pkce;
     }
 
+    @Override
     public String getProtocol() {
         return protocol;
     }
@@ -460,57 +484,78 @@ public class BaseClientDetails implements ClientDetails {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         BaseClientDetails other = (BaseClientDetails) obj;
-        if (accessTokenValiditySeconds != other.accessTokenValiditySeconds)
+        if (!accessTokenValiditySeconds.equals(other.accessTokenValiditySeconds)) {
             return false;
-        if (refreshTokenValiditySeconds != other.refreshTokenValiditySeconds)
+        }
+        if (!refreshTokenValiditySeconds.equals( other.refreshTokenValiditySeconds)) {
             return false;
+        }
         if (authorities == null) {
-            if (other.authorities != null)
+            if (other.authorities != null) {
                 return false;
-        } else if (!authorities.equals(other.authorities))
+            }
+        } else if (!authorities.equals(other.authorities)) {
             return false;
+        }
         if (authorizedGrantTypes == null) {
-            if (other.authorizedGrantTypes != null)
+            if (other.authorizedGrantTypes != null) {
                 return false;
-        } else if (!authorizedGrantTypes.equals(other.authorizedGrantTypes))
+            }
+        } else if (!authorizedGrantTypes.equals(other.authorizedGrantTypes)) {
             return false;
+        }
         if (clientId == null) {
-            if (other.clientId != null)
+            if (other.clientId != null) {
                 return false;
-        } else if (!clientId.equals(other.clientId))
+            }
+        } else if (!clientId.equals(other.clientId)) {
             return false;
+        }
         if (clientSecret == null) {
-            if (other.clientSecret != null)
+            if (other.clientSecret != null) {
                 return false;
-        } else if (!clientSecret.equals(other.clientSecret))
+            }
+        } else if (!clientSecret.equals(other.clientSecret)) {
             return false;
+        }
         if (registeredRedirectUris == null) {
-            if (other.registeredRedirectUris != null)
+            if (other.registeredRedirectUris != null) {
                 return false;
-        } else if (!registeredRedirectUris.equals(other.registeredRedirectUris))
+            }
+        } else if (!registeredRedirectUris.equals(other.registeredRedirectUris)) {
             return false;
+        }
         if (resourceIds == null) {
-            if (other.resourceIds != null)
+            if (other.resourceIds != null) {
                 return false;
-        } else if (!resourceIds.equals(other.resourceIds))
+            }
+        } else if (!resourceIds.equals(other.resourceIds)) {
             return false;
+        }
         if (scope == null) {
-            if (other.scope != null)
+            if (other.scope != null) {
                 return false;
-        } else if (!scope.equals(other.scope))
+            }
+        } else if (!scope.equals(other.scope)) {
             return false;
+        }
         if (additionalInformation == null) {
-            if (other.additionalInformation != null)
+            if (other.additionalInformation != null) {
                 return false;
-        } else if (!additionalInformation.equals(other.additionalInformation))
+            }
+        } else if (!additionalInformation.equals(other.additionalInformation)) {
             return false;
+        }
         return true;
     }
 

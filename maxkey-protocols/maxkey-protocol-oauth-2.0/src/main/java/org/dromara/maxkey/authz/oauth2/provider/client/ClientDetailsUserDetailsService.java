@@ -42,6 +42,7 @@ public class ClientDetailsUserDetailsService implements UserDetailsService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         ClientDetails clientDetails;
         try {

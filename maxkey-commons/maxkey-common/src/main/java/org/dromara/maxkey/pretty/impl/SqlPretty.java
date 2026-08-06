@@ -206,7 +206,7 @@ public class SqlPretty implements Pretty{
                     on();
                 }
 
-                else if ( afterBetween && lcToken.equals( "and" ) ) {
+                else if ( afterBetween && "and".equals(lcToken) ) {
                     misc();
                     afterBetween = false;
                 }

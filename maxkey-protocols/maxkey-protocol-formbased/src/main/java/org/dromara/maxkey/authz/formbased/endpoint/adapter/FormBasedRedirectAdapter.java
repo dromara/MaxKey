@@ -39,7 +39,7 @@ public class FormBasedRedirectAdapter extends AbstractAuthorizeAdapter {
         AppsFormBasedDetails details=(AppsFormBasedDetails)app;
         
         String password = account.getRelatedPassword();
-        if(null==details.getPasswordAlgorithm()||details.getPasswordAlgorithm().equals("")){
+        if(null==details.getPasswordAlgorithm()|| "".equals(details.getPasswordAlgorithm())){
         }else if(details.getPasswordAlgorithm().indexOf("HEX")>-1){
             password = DigestUtils.digestHex(account.getRelatedPassword(),details.getPasswordAlgorithm().substring(0, details.getPasswordAlgorithm().indexOf("HEX")));
         }else{
@@ -61,7 +61,7 @@ public class FormBasedRedirectAdapter extends AbstractAuthorizeAdapter {
             WebContext.setAttribute("formbased_redirect_submint", "formbased_redirect_submint");
         }else{
             modelAndView.setViewName("authorize/formbased_redirect_post_submint");
-            if(details.getAuthorizeView()!=null&&!details.getAuthorizeView().equals("")){
+            if(details.getAuthorizeView()!=null&&!"".equals(details.getAuthorizeView())){
                 modelAndView.setViewName("authorize/"+details.getAuthorizeView());
             }
             WebContext.removeAttribute("formbased_redirect_submint");

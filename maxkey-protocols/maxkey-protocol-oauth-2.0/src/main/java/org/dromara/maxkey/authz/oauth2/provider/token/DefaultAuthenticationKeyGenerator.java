@@ -38,6 +38,7 @@ public class DefaultAuthenticationKeyGenerator implements AuthenticationKeyGener
 
     private static final String USERNAME = "username";
 
+    @Override
     public String extractKey(OAuth2Authentication authentication) {
         Map<String, String> values = new LinkedHashMap<String, String>();
         OAuth2Request authorizationRequest = authentication.getOAuth2Request();

@@ -37,6 +37,7 @@ public class DefaultJdbcListFactory implements JdbcListFactory {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    @Override
     public <T> List<T> getList(String sql, Map<String, Object> parameters, RowMapper<T> rowMapper) {
         return jdbcTemplate.query(sql, parameters, rowMapper);
     }

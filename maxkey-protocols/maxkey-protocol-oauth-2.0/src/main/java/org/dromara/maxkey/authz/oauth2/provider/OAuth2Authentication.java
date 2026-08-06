@@ -47,10 +47,12 @@ public class OAuth2Authentication extends AbstractAuthenticationToken {
         this.userAuthentication = userAuthentication;
     }
 
+    @Override
     public Object getCredentials() {
         return "";
     }
 
+    @Override
     public Object getPrincipal() {
         return this.userAuthentication == null ? this.storedRequest.getClientId() : this.userAuthentication
                 .getPrincipal();

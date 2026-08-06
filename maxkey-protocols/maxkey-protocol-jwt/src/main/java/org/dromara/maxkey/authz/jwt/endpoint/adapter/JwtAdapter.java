@@ -96,7 +96,7 @@ public class JwtAdapter extends AbstractAuthorizeAdapter {
 
     @Override
     public Object sign(Object data,String signatureKey,String signature) {
-        if(!jwtDetails.getSignature().equalsIgnoreCase("none")) {
+        if(!"none".equalsIgnoreCase(jwtDetails.getSignature())) {
             try {
                 DefaultJwtSigningAndValidationService jwtSignerService = 
                             new DefaultJwtSigningAndValidationService(
@@ -125,7 +125,7 @@ public class JwtAdapter extends AbstractAuthorizeAdapter {
 
     @Override
     public Object encrypt(Object data, String algorithmKey, String algorithm) {
-        if(!jwtDetails.getAlgorithm().equalsIgnoreCase("none")) {
+        if(!"none".equalsIgnoreCase(jwtDetails.getAlgorithm())) {
             try {
                 DefaultJwtEncryptionAndDecryptionService jwtEncryptionService = 
                             new DefaultJwtEncryptionAndDecryptionService(

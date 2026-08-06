@@ -130,6 +130,7 @@ public class InMemoryTokenStore implements TokenStore {
         return expiryQueue.size();
     }
 
+    @Override
     public OAuth2AccessToken getAccessToken(OAuth2Authentication authentication) {
         String key = authenticationKeyGenerator.extractKey(authentication);
         OAuth2AccessToken accessToken = authenticationToAccessTokenStore.get(key);
@@ -142,14 +143,17 @@ public class InMemoryTokenStore implements TokenStore {
         return accessToken;
     }
 
+    @Override
     public OAuth2Authentication readAuthentication(OAuth2AccessToken token) {
         return readAuthentication(token.getValue());
     }
 
+    @Override
     public OAuth2Authentication readAuthentication(String token) {
         return this.authenticationStore.get(token);
     }
 
+    @Override
     public OAuth2Authentication readAuthenticationForRefreshToken(OAuth2RefreshToken token) {
         return readAuthenticationForRefreshToken(token.getValue());
     }
@@ -158,6 +162,7 @@ public class InMemoryTokenStore implements TokenStore {
         return this.refreshTokenAuthenticationStore.get(token);
     }
 
+    @Override
     public void storeAccessToken(OAuth2AccessToken token, OAuth2Authentication authentication) {
         if (this.flushCounter.incrementAndGet() >= this.flushInterval) {
             flush();
@@ -204,10 +209,12 @@ public class InMemoryTokenStore implements TokenStore {
         store.get(key).add(token);
     }
 
+    @Override
     public void removeAccessToken(OAuth2AccessToken accessToken) {
         removeAccessToken(accessToken.getValue());
     }
 
+    @Override
     public OAuth2AccessToken readAccessToken(String tokenValue) {
         return this.accessTokenStore.get(tokenValue);
     }
@@ -233,15 +240,18 @@ public class InMemoryTokenStore implements TokenStore {
         }
     }
 
+    @Override
     public void storeRefreshToken(OAuth2RefreshToken refreshToken, OAuth2Authentication authentication) {
         this.refreshTokenStore.put(refreshToken.getValue(), refreshToken);
         this.refreshTokenAuthenticationStore.put(refreshToken.getValue(), authentication);
     }
 
+    @Override
     public OAuth2RefreshToken readRefreshToken(String tokenValue) {
         return this.refreshTokenStore.get(tokenValue);
     }
 
+    @Override
     public void removeRefreshToken(OAuth2RefreshToken refreshToken) {
         removeRefreshToken(refreshToken.getValue());
     }
@@ -252,6 +262,7 @@ public class InMemoryTokenStore implements TokenStore {
         this.refreshTokenToAccessTokenStore.remove(tokenValue);
     }
 
+    @Override
     public void removeAccessTokenUsingRefreshToken(OAuth2RefreshToken refreshToken) {
         removeAccessTokenUsingRefreshToken(refreshToken.getValue());
     }
@@ -263,12 +274,14 @@ public class InMemoryTokenStore implements TokenStore {
         }
     }
 
+    @Override
     public Collection<OAuth2AccessToken> findTokensByClientIdAndUserName(String clientId, String userName) {
         Collection<OAuth2AccessToken> result = userNameToAccessTokenStore.get(getApprovalKey(clientId, userName));
         return result != null ? Collections.<OAuth2AccessToken> unmodifiableCollection(result) : Collections
                 .<OAuth2AccessToken> emptySet();
     }
 
+    @Override
     public Collection<OAuth2AccessToken> findTokensByClientId(String clientId) {
         Collection<OAuth2AccessToken> result = clientIdToAccessTokenStore.get(clientId);
         return result != null ? Collections.<OAuth2AccessToken> unmodifiableCollection(result) : Collections
@@ -294,6 +307,7 @@ public class InMemoryTokenStore implements TokenStore {
             this.expiry = date.getTime();
         }
 
+        @Override
         public int compareTo(Delayed other) {
             if (this == other) {
                 return 0;
@@ -302,6 +316,7 @@ public class InMemoryTokenStore implements TokenStore {
             return (diff == 0 ? 0 : ((diff < 0) ? -1 : 1));
         }
 
+        @Override
         public long getDelay(TimeUnit unit) {
             return expiry - System.currentTimeMillis();
         }

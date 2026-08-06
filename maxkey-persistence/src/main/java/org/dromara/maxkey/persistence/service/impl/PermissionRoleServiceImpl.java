@@ -33,14 +33,17 @@ public class PermissionRoleServiceImpl  extends JpaServiceImpl<PermissionRoleMap
     static final Logger _logger = LoggerFactory.getLogger(PermissionRoleServiceImpl.class);
  
     
+    @Override
     public boolean insertPermissionRoles(List<PermissionRole> permissionRolesList) {
         return getMapper().insertPermissionRoles(permissionRolesList)>0;
     }
     
+    @Override
     public boolean deletePermissionRoles(List<PermissionRole> permissionRolesList) {
          return getMapper().deletePermissionRoles(permissionRolesList)>=0;
      }
     
+    @Override
     public List<PermissionRole> queryPermissionRoles(PermissionRole permissionRole){
         return getMapper().queryPermissionRoles(permissionRole);
     }    

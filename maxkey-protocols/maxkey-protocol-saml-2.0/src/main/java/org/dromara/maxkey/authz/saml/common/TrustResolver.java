@@ -71,7 +71,7 @@ public class TrustResolver {
         initPolicyRule();
         
         SecurityPolicyDelegate securityPolicyDelegate = new SecurityPolicyDelegate();
-        if(binding.equalsIgnoreCase("post")){
+        if("post".equalsIgnoreCase(binding)){
             securityPolicyDelegate.addSecurityPolicy(signatureSecurityPolicyRule);
         }
         securityPolicyDelegate.addSecurityPolicy(issueInstantRule);
@@ -88,7 +88,7 @@ public class TrustResolver {
             IssueInstantRule issueInstantRule,
             MessageReplayRule messageReplayRule) {
         SecurityPolicyDelegate securityPolicyDelegate = new SecurityPolicyDelegate();
-        if(binding.equalsIgnoreCase("post")){
+        if("post".equalsIgnoreCase(binding)){
             securityPolicyDelegate.addSecurityPolicy(signatureSecurityPolicyRule);
         }
         securityPolicyDelegate.addSecurityPolicy(issueInstantRule);

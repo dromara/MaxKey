@@ -25,6 +25,7 @@ public interface InstitutionsService  extends IJpaService<Institutions,String>{
      public Institutions findByDomain(String domain) ;
 
 
+     @Override
      public Institutions get(String instIdOrDomain) ;
 
      /**

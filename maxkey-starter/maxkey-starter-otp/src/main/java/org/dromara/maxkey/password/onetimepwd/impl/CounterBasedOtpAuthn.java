@@ -44,19 +44,19 @@ public class CounterBasedOtpAuthn extends AbstractOtpAuthn {
         byte[] byteSharedSecret = Base32Utils.decode(userInfo.getSharedSecret());
         String hexSharedSecret = Hex.encodeHexString(byteSharedSecret);
         String counterBasedToken = "";
-        if (crypto.equalsIgnoreCase("HmacSHA1")) {
+        if ("HmacSHA1".equalsIgnoreCase(crypto)) {
             counterBasedToken = TimeBasedOTP.genOTP(
                     hexSharedSecret, 
                     userInfo.getSharedCounter(), 
                     "" + digits
                     );
-        } else if (crypto.equalsIgnoreCase("HmacSHA256")) {
+        } else if ("HmacSHA256".equalsIgnoreCase(crypto)) {
             counterBasedToken = TimeBasedOTP.genOTPHmacSHA256(
                     hexSharedSecret, 
                     userInfo.getSharedCounter(),
                     "" + digits
                     );
-        } else if (crypto.equalsIgnoreCase("HmacSHA512")) {
+        } else if ("HmacSHA512".equalsIgnoreCase(crypto)) {
             counterBasedToken = TimeBasedOTP.genOTPHmacSHA512(
                     hexSharedSecret, 
                     userInfo.getSharedCounter(),

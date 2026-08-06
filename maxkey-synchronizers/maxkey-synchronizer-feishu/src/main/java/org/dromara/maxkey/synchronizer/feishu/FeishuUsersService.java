@@ -49,6 +49,7 @@ public class FeishuUsersService extends AbstractSynchronizerService implements I
     
     static String USERS_URL="https://open.feishu.cn/open-apis/contact/v3/users/find_by_department?department_id=%s&page_size=50";
     
+    @Override
     public void sync() {
         _logger.info("Sync Feishu Users...");
         try {
@@ -146,7 +147,7 @@ public class FeishuUsersService extends AbstractSynchronizerService implements I
 
             try {
                 Object sourceValue = null;
-                if(sourceProperty.equals("status")){
+                if("status".equals(sourceProperty)){
                     if (user.getStatus().isIs_activated()) {
                         setFieldValue(userInfo, "status", ConstsStatus.ACTIVE);
                     } else {

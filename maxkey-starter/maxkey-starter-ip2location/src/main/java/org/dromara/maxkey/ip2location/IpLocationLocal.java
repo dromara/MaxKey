@@ -27,7 +27,7 @@ public class IpLocationLocal extends AbstractIpLocation implements IpLocation{
     
     @Override
     public Region region(String ipAddress) {
-        if(ipAddress.equals("127.0.0.1") || ipAddress.equals("0:0:0:0:0:0:0:1")) {
+        if("127.0.0.1".equals(ipAddress) || "0:0:0:0:0:0:0:1".equals(ipAddress)) {
             return new Region("local");
         }
         return null;

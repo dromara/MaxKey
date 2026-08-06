@@ -48,6 +48,7 @@ public interface TicketGrantingTicket extends Ticket {
      *
      * @return the authentication
      */
+    @Override
     Authentication getAuthentication();
 
     /**

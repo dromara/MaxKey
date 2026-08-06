@@ -122,6 +122,7 @@ public class TokenEndpointAuthenticationFilter implements Filter {
         this.authenticationDetailsSource = authenticationDetailsSource;
     }
 
+    @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException,
             ServletException {
         _logger.debug("Authentication TokenEndpoint ");
@@ -309,9 +310,11 @@ public class TokenEndpointAuthenticationFilter implements Filter {
         return OAuth2Utils.parseParameterList(request.getParameter(OAuth2Constants.PARAMETER.SCOPE));
     }
     
+    @Override
     public void init(FilterConfig filterConfig) throws ServletException {
     }
 
+    @Override
     public void destroy() {
     }
     

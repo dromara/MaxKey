@@ -42,6 +42,7 @@ public class WorkweixinSynchronizerService  implements ISynchronizerService{
         super();
     }
 
+    @Override
     public void sync() throws Exception {
         _logger.info("Sync ...");
         workweixinAccessTokenService.setCorpid(synchronizer.getPrincipal());

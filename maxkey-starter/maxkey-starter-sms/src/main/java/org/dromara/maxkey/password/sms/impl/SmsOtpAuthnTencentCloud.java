@@ -67,7 +67,7 @@ public class SmsOtpAuthnTencentCloud extends SmsOtpAuthn {
     public boolean produce(UserInfo userInfo) {
         // 手机号
         String mobile = userInfo.getMobile();
-        if (mobile != null && !mobile.equals("")) {
+        if (mobile != null && !"".equals(mobile)) {
             try {
                 Credential cred = new Credential(secretId, secretKey);
                 
@@ -89,7 +89,7 @@ public class SmsOtpAuthnTencentCloud extends SmsOtpAuthn {
                 SendSmsResponse resp = client.SendSms(req);
                 
                 logger.debug("responseString " + SendSmsRequest.toJsonString(resp));
-                if (resp.getSendStatusSet()[0].getCode().equalsIgnoreCase("Ok")) {
+                if ("Ok".equalsIgnoreCase(resp.getSendStatusSet()[0].getCode())) {
                     this.optTokenStore.store(
                             userInfo, 
                             token, 

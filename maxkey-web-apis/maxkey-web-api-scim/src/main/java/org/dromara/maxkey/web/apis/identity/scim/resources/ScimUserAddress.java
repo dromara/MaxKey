@@ -75,9 +75,11 @@ public class ScimUserAddress extends ScimMultiValuedAttribute implements Seriali
     public void setCountry(String country) {
         this.country = country;
     }
+    @Override
     public String getType() {
         return type;
     }
+    @Override
     public void setType(String type) {
         this.type = type;
     }

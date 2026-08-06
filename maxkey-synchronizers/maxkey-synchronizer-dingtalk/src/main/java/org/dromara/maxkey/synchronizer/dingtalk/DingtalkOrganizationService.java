@@ -56,6 +56,7 @@ public class DingtalkOrganizationService  extends AbstractSynchronizerService im
     
     String access_token;
     
+    @Override
     public void sync() {
         _logger.info("Sync Dingtalk Organizations ...");
         LinkedBlockingQueue<Long> deptsQueue = new LinkedBlockingQueue<Long>();

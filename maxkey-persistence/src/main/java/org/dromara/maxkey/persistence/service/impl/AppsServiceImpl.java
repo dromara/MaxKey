@@ -43,29 +43,35 @@ public class AppsServiceImpl extends JpaServiceImpl<AppsMapper,Apps,String> impl
                                             .expireAfterWrite(30, TimeUnit.MINUTES)
                                             .build();
     
+    @Override
     public boolean insertApp(Apps app) {
         return ((AppsMapper)super.getMapper()).insertApp(app)>0;
     };
+    @Override
     public boolean updateApp(Apps app) {
         return ((AppsMapper)super.getMapper()).updateApp(app)>0;
     };
     
+    @Override
     public boolean updateExtendAttr(Apps app) {
         return ((AppsMapper)super.getMapper()).updateExtendAttr(app)>0;
     }
     
+    @Override
     public List<UserApps> queryMyApps(UserApps userApplications){
         return getMapper().queryMyApps(userApplications);
     }
 
     //cache for running
+    @Override
     public void put(String appId, Apps appDetails) {
         detailsCacheStore.put(appId + DETAIL_SUFFIX, appDetails);
     }
     
+    @Override
     public Apps get(String appId, boolean cached) {
         if(StringUtils.isNotBlank(appId) 
-        		&& appId.equalsIgnoreCase("maxkey_mgt") ) {
+        		&& "maxkey_mgt".equalsIgnoreCase(appId) ) {
         	appId = MGT_APP_ID ;
         }
         Apps appDetails = null;

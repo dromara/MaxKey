@@ -35,10 +35,12 @@ public class ScimEnterpriseUser extends ScimUser {
         schemas.add(SCHEMA);
     }
 
+    @Override
     public ScimEnterprise getEnterprise() {
         return enterprise;
     }
 
+    @Override
     public void setEnterprise(ScimEnterprise enterprise) {
         this.enterprise = enterprise;
     }

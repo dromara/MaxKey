@@ -138,47 +138,47 @@ public class ApplicationsController extends BaseAppContorller {
     public Message<String> generateSecret(@PathVariable String type,@RequestParam(required=false) String id) throws JOSEException {
         String secret="";
         type=type.toLowerCase();
-        if(type.equals("des")){
+        if("des".equals(type)){
             secret=StringGenerator.generateKey(ReciprocalUtils.Algorithm.DES);
-        }else if(type.equals("desede")){
+        }else if("desede".equals(type)){
             secret=StringGenerator.generateKey(ReciprocalUtils.Algorithm.DESede);
-        }else if(type.equals("aes")){
+        }else if("aes".equals(type)){
             secret=StringGenerator.generateKey(ReciprocalUtils.Algorithm.AES);
-        }else if(type.equals("blowfish")){
+        }else if("blowfish".equals(type)){
             secret=StringGenerator.generateKey(ReciprocalUtils.Algorithm.Blowfish);
-        }else if(type.equalsIgnoreCase("RS256")
-                ||type.equalsIgnoreCase("RS384")
-                ||type.equalsIgnoreCase("RS512")) {
+        }else if("RS256".equalsIgnoreCase(type)
+                || "RS384".equalsIgnoreCase(type)
+                || "RS512".equalsIgnoreCase(type)) {
             RSAKey rsaJWK = new RSAKeyGenerator(2048)
                     .keyID(id + "_sig")
                     .keyUse(KeyUse.SIGNATURE)
                     .algorithm(new JWSAlgorithm(type.toUpperCase(), Requirement.OPTIONAL))
                     .generate();
             secret = rsaJWK.toJSONString();
-        }else if(type.equalsIgnoreCase("HS256")
-                ||type.equalsIgnoreCase("HS384")
-                ||type.equalsIgnoreCase("HS512")) {
+        }else if("HS256".equalsIgnoreCase(type)
+                || "HS384".equalsIgnoreCase(type)
+                || "HS512".equalsIgnoreCase(type)) {
             OctetSequenceKey octKey=  new OctetSequenceKeyGenerator(2048)
                     .keyID(id + "_sig")
                     .keyUse(KeyUse.SIGNATURE)
                     .algorithm(new JWSAlgorithm(type.toUpperCase(), Requirement.OPTIONAL))
                     .generate();
             secret = octKey.toJSONString();
-        }else if(type.equalsIgnoreCase("RSA1_5")
-                ||type.equalsIgnoreCase("RSA_OAEP")
-                ||type.equalsIgnoreCase("RSA-OAEP-256")) {
+        }else if("RSA1_5".equalsIgnoreCase(type)
+                || "RSA_OAEP".equalsIgnoreCase(type)
+                || "RSA-OAEP-256".equalsIgnoreCase(type)) {
             RSAKey rsaJWK = new RSAKeyGenerator(2048)
                     .keyID(id + "_enc")
                     .keyUse(KeyUse.ENCRYPTION)
                     .algorithm(new JWEAlgorithm(type.toUpperCase(), Requirement.OPTIONAL))
                     .generate();
             secret = rsaJWK.toJSONString();
-        }else if(type.equalsIgnoreCase("A128KW")
-                ||type.equalsIgnoreCase("A192KW")
-                ||type.equalsIgnoreCase("A256KW")
-                ||type.equalsIgnoreCase("A128GCMKW")
-                ||type.equalsIgnoreCase("A192GCMKW")
-                ||type.equalsIgnoreCase("A256GCMKW")) {
+        }else if("A128KW".equalsIgnoreCase(type)
+                || "A192KW".equalsIgnoreCase(type)
+                || "A256KW".equalsIgnoreCase(type)
+                || "A128GCMKW".equalsIgnoreCase(type)
+                || "A192GCMKW".equalsIgnoreCase(type)
+                || "A256GCMKW".equalsIgnoreCase(type)) {
             int keyLength = Integer.parseInt(type.substring(1, 4));
             OctetSequenceKey octKey=  new OctetSequenceKeyGenerator(keyLength)
                     .keyID(id + "_enc")

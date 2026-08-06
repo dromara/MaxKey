@@ -251,31 +251,31 @@ public class BeanUtil {
         } catch (IllegalArgumentException e1) {
             e1.printStackTrace();
         } 
-        if(fieldType.equals("java.lang.String")){
+        if("java.lang.String".equals(fieldType)){
             if(String.valueOf(fillValue)==null) {
                 isFieldNotEmpty= false;
             }
-        }else if(fieldType.equals("int")){
+        }else if("int".equals(fieldType)){
             if(Integer.parseInt(fillValue)==0) {
                 isFieldNotEmpty= false;
             }
-        }else if(fieldType.equals("long")){
+        }else if("long".equals(fieldType)){
             if(Long.parseLong(fillValue)==0) {
                 isFieldNotEmpty= false;
             }
-        }else if(fieldType.equals("java.lang.Long")){
+        }else if("java.lang.Long".equals(fieldType)){
             if(Long.parseLong(fillValue)==0) {
                 isFieldNotEmpty= false;
             }
-        }else if(fieldType.equals("double")){
+        }else if("double".equals(fieldType)){
             if(Double.valueOf(fillValue)==0.0d) {
                 isFieldNotEmpty= false;
             }
-        }else if(fieldType.equals("float")){
+        }else if("float".equals(fieldType)){
             if(Float.parseFloat(fillValue)==0.0f) {
                 isFieldNotEmpty= false;
             }
-        }else if(fieldType.equals("java.util.Date")){ 
+        }else if("java.util.Date".equals(fieldType)){
             try {
                 value=BeanUtil.get(entity, field.getName());
             } catch (IllegalArgumentException e) {
@@ -284,7 +284,7 @@ public class BeanUtil {
             if(value==null) {
                 isFieldNotEmpty= false;
             }
-        }else if(fieldType.equals("java.lang.Object")){
+        }else if("java.lang.Object".equals(fieldType)){
             try {
                 value=BeanUtil.get(entity, field.getName());
             } catch (IllegalArgumentException e) {
@@ -293,17 +293,17 @@ public class BeanUtil {
             if(value==null) {
                 isFieldNotEmpty= false;
             }
-        }else if(fieldType.equals("char")){
+        }else if("char".equals(fieldType)){
             if(Character.valueOf(fillValue.charAt(0))=='\u0000') {
                 isFieldNotEmpty= false;
             }
-        }else if(fieldType.equals("boolean")){
+        }else if("boolean".equals(fieldType)){
             value=Boolean.parseBoolean(fillValue);
-        }else if(fieldType.equals("short")){
+        }else if("short".equals(fieldType)){
             if(Short.parseShort(fillValue)==0) {
                 isFieldNotEmpty= false;
             }
-        }else if(fieldType.equals("byte")){
+        }else if("byte".equals(fieldType)){
             if(Byte.parseByte(fillValue)==0) {
                 isFieldNotEmpty= false;
             }

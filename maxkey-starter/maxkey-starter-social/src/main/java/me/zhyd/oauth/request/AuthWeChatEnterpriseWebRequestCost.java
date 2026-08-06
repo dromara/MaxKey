@@ -49,6 +49,7 @@ public class AuthWeChatEnterpriseWebRequestCost extends AbstractAuthWeChatEnterp
         super(config, AuthDefaultSource.WECHAT_ENTERPRISE_WEB, authStateCache);
     }
 
+    @Override
     public String authorize(String state) {
         return UrlBuilder.fromBaseUrl(this.source.authorize()).queryParam("appid", this.config.getClientId()).queryParam("redirect_uri", this.config.getRedirectUri()).queryParam("response_type", "code").queryParam("scope", this.getScopes(",", false, AuthScopeUtils.getDefaultScopes(AuthWeChatEnterpriseWebScope.values()))).queryParam("state", this.getRealState(state).concat("#wechat_redirect")).build();
     }

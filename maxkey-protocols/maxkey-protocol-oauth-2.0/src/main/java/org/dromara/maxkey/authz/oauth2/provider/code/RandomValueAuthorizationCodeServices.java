@@ -37,6 +37,7 @@ public abstract class RandomValueAuthorizationCodeServices implements Authorizat
 
     protected abstract OAuth2Authentication remove(String code);
 
+    @Override
     public String createAuthorizationCode(OAuth2Authentication authentication) {
         //String code = generator.generate();
         /*
@@ -48,6 +49,7 @@ public abstract class RandomValueAuthorizationCodeServices implements Authorizat
         return code;
     }
 
+    @Override
     public OAuth2Authentication consumeAuthorizationCode(String code)
             throws InvalidGrantException {
         OAuth2Authentication auth = this.remove(code);

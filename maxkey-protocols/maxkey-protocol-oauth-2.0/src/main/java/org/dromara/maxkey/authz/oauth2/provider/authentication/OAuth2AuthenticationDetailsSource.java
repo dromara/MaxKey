@@ -27,6 +27,7 @@ import jakarta.servlet.http.HttpServletRequest;
 public class OAuth2AuthenticationDetailsSource implements
         AuthenticationDetailsSource<HttpServletRequest, OAuth2AuthenticationDetails> {
 
+    @Override
     public OAuth2AuthenticationDetails buildDetails(HttpServletRequest context) {
         return new OAuth2AuthenticationDetails(context);
     }

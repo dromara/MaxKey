@@ -20,6 +20,7 @@ package org.dromara.maxkey.entity.permissions;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.dromara.maxkey.entity.authz.vo.AppResourcesVo;
 import org.dromara.mybatis.jpa.entity.JpaEntity;
 
 import jakarta.persistence.Column;
@@ -291,4 +292,16 @@ public class Resources  extends JpaEntity implements Serializable {
         return builder.toString();
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof Resources r){
+            return id.equals(r.id);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
 }

@@ -89,7 +89,7 @@ public class OpenidConfigurationEndpoint extends AbstractEndpoint {
         
         if(clientDetails != null) {
             openidConfig.setClient_id(clientId);
-            if(param.equals("RequestParam")){
+            if("RequestParam".equals(param)){
                 StringBuffer jwksUri = new StringBuffer(baseUrl + OAuth2Constants.ENDPOINT.ENDPOINT_BASE + "/jwks");
                 jwksUri.append("?");
                 jwksUri.append("client_id").append("=").append(clientDetails.getClientId());

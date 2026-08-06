@@ -30,51 +30,63 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class ReportServiceImpl  extends JpaServiceImpl<ReportMapper,JpaEntity,String> implements ReportService{
 
+    @Override
     public Integer analysisDayCount(HashMap<String,Object> reportParameter) {
         return getMapper().analysisDayCount(reportParameter);
     }
     
+    @Override
     public Integer analysisNewUsers(HashMap<String,Object> reportParameter) {
         return getMapper().analysisNewUsers(reportParameter);
     }
     
+    @Override
     public Integer analysisOnlineUsers(HashMap<String,Object> reportParameter) {
         return getMapper().analysisOnlineUsers(reportParameter);
     }
     
+    @Override
     public Integer analysisActiveUsers(HashMap<String,Object> reportParameter) {
         return getMapper().analysisActiveUsers(reportParameter);
     }
     
+    @Override
     public Integer totalUsers(HashMap<String,Object> reportParameter) {
         return getMapper().totalUsers(reportParameter);
     }
     
+    @Override
     public Integer totalDepts(HashMap<String,Object> reportParameter) {
         return getMapper().totalDepts(reportParameter);
     }
     
+    @Override
     public Integer totalApps(HashMap<String,Object> reportParameter) {
         return getMapper().totalApps(reportParameter);
     }
     
+    @Override
     public List<Map<String,Object>> analysisDayHour(HashMap<String,Object> reportParameter){
         return getMapper().analysisDayHour(reportParameter);
     }
     
+    @Override
     public List<Map<String,Object>> analysisMonth(HashMap<String,Object> reportParameter){
         return getMapper().analysisMonth(reportParameter);
     }
     
     
+    @Override
     public List<Map<String,Object>> analysisBrowser(HashMap<String,Object> reportParameter){
         return getMapper().analysisBrowser(reportParameter);
     }
     
+    @Override
     public List<Map<String,Object>> analysisApp(HashMap<String,Object> reportParameter){
         return getMapper().analysisApp(reportParameter);
     }
     
+    @Override
     public List<Map<String,Object>> analysisProvince(HashMap<String,Object> reportParameter){
         List<Map<String,Object>> maps = getMapper().analysisProvince(reportParameter);
         if(null == maps) {
@@ -98,6 +110,7 @@ public class ReportServiceImpl  extends JpaServiceImpl<ReportMapper,JpaEntity,St
         return maps;
     }
     
+    @Override
     public List<Map<String,Object>> analysisCountry(HashMap<String,Object> reportParameter){
         return getMapper().analysisCountry(reportParameter);
     }
