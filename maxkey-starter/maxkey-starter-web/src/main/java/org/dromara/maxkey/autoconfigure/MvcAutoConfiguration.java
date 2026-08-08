@@ -120,7 +120,8 @@ public class MvcAutoConfiguration implements WebMvcConfigurer {
     @Bean(name = "jaxb2Marshaller")
     Jaxb2Marshaller jaxb2Marshaller() {
         Jaxb2Marshaller jaxb2Marshaller = new Jaxb2Marshaller();
-        jaxb2Marshaller.setClassesToBeBound(org.dromara.maxkey.entity.xml.UserInfoXML.class);
+        //xml entity mapper
+        //jaxb2Marshaller.setClassesToBeBound(org.dromara.maxkey.entity.xml.UserInfoXML.class);
         return jaxb2Marshaller;
     }
 
