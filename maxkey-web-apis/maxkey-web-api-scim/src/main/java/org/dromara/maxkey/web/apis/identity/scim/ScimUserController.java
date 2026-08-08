@@ -44,12 +44,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.converter.json.MappingJacksonValue;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -74,17 +76,17 @@ public class ScimUserController {
     @Autowired
     GroupsService groupsService;
     
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public MappingJacksonValue get(@PathVariable String id,
+    @GetMapping(value = "/{id}")
+    public ScimUser get(@PathVariable String id,
                                        @RequestParam(required = false) String attributes) {
         _logger.debug("ScimUser id {} , attributes {}", id , attributes);
         UserInfo userInfo = userInfoService.get(id);
         ScimUser scimUser = userInfo2ScimUser(userInfo);
-        return new MappingJacksonValue(scimUser);
+        return scimUser;
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public MappingJacksonValue create(@RequestBody  ScimUser user,
+    @PostMapping
+    public ScimUser create(@RequestBody  ScimUser user,
                                       @RequestParam(required = false) String attributes,
                                       UriComponentsBuilder builder) throws IOException {
         _logger.debug("ScimUser {} , attributes {}", user , attributes);
@@ -93,8 +95,8 @@ public class ScimUserController {
         return get(userInfo.getId(),attributes);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public MappingJacksonValue replace(@PathVariable String id,
+    @PutMapping(value = "/{id}")
+    public ScimUser replace(@PathVariable String id,
                                        @RequestBody ScimUser user,
                                        @RequestParam(required = false) String attributes)
             throws IOException {
@@ -104,20 +106,20 @@ public class ScimUserController {
         return get(id,attributes);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable final String id) {
         _logger.debug("ScimUser id {} ", id );
         userInfoService.delete(id);
     }
 
-    @RequestMapping(method = RequestMethod.GET)
-    public MappingJacksonValue searchWithGet(@ModelAttribute ScimParameters requestParameters) {
+    @GetMapping
+    public ScimSearchResult<ScimUser> searchWithGet(@ModelAttribute ScimParameters requestParameters) {
         return searchWithPost(requestParameters);
     }
 
-    @RequestMapping(value = "/.search", method = RequestMethod.POST)
-    public MappingJacksonValue searchWithPost(@ModelAttribute ScimParameters requestParameters) {
+    @PostMapping(value = "/.search")
+    public ScimSearchResult<ScimUser> searchWithPost(@ModelAttribute ScimParameters requestParameters) {
         requestParameters.parse();
         _logger.debug("requestParameters {} ",requestParameters);
         UserInfo queryModel = new UserInfo();
@@ -135,7 +137,7 @@ public class ScimUserController {
                         orgResults.getRecords(),
                         queryModel.getPageSize(),
                         requestParameters.getStartIndex());  
-        return new MappingJacksonValue(scimSearchResult);
+        return scimSearchResult;
     }
     
     public ScimUser userInfo2ScimUser(UserInfo userInfo) {

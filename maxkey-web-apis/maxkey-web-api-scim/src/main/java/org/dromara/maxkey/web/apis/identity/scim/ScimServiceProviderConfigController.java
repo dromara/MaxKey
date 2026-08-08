@@ -18,6 +18,8 @@
 package org.dromara.maxkey.web.apis.identity.scim;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,7 +34,7 @@ public class ScimServiceProviderConfigController {
     public static final int MAX_RESULTS = 500;
     public static final int MAX_RESULTS_LIMIT = 5000;
     
-    @RequestMapping
+    @GetMapping
     @ResponseBody
     public ServiceProviderConfig getConfig() {
         return ServiceProviderConfig.INSTANCE;
