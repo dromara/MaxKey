@@ -20,7 +20,6 @@ package org.dromara.maxkey.entity.permissions;
 import java.io.Serializable;
 import java.util.Date;
 
-import org.dromara.maxkey.entity.authz.vo.AppResourcesVo;
 import org.dromara.mybatis.jpa.entity.JpaEntity;
 
 import jakarta.persistence.Column;

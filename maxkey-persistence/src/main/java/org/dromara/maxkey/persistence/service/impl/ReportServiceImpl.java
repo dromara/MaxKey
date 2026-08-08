@@ -18,9 +18,10 @@
 package org.dromara.maxkey.persistence.service.impl;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.dromara.maxkey.entity.dto.InstDto;
 import org.dromara.maxkey.persistence.mapper.ReportMapper;
 import org.dromara.maxkey.persistence.service.ReportService;
 import org.dromara.mybatis.jpa.entity.JpaEntity;
@@ -31,64 +32,64 @@ import org.springframework.stereotype.Repository;
 public class ReportServiceImpl  extends JpaServiceImpl<ReportMapper,JpaEntity,String> implements ReportService{
 
     @Override
-    public Integer analysisDayCount(HashMap<String,Object> reportParameter) {
-        return getMapper().analysisDayCount(reportParameter);
+    public Integer analysisDayCount(InstDto inst) {
+        return getMapper().analysisDayCount(inst);
     }
     
     @Override
-    public Integer analysisNewUsers(HashMap<String,Object> reportParameter) {
-        return getMapper().analysisNewUsers(reportParameter);
+    public Integer analysisNewUsers(InstDto inst) {
+        return getMapper().analysisNewUsers(inst);
     }
     
     @Override
-    public Integer analysisOnlineUsers(HashMap<String,Object> reportParameter) {
-        return getMapper().analysisOnlineUsers(reportParameter);
+    public Integer analysisOnlineUsers(InstDto inst) {
+        return getMapper().analysisOnlineUsers(inst);
     }
     
     @Override
-    public Integer analysisActiveUsers(HashMap<String,Object> reportParameter) {
-        return getMapper().analysisActiveUsers(reportParameter);
+    public Integer analysisActiveUsers(InstDto inst) {
+        return getMapper().analysisActiveUsers(inst);
     }
     
     @Override
-    public Integer totalUsers(HashMap<String,Object> reportParameter) {
-        return getMapper().totalUsers(reportParameter);
+    public Integer totalUsers(InstDto inst) {
+        return getMapper().totalUsers(inst);
     }
     
     @Override
-    public Integer totalDepts(HashMap<String,Object> reportParameter) {
-        return getMapper().totalDepts(reportParameter);
+    public Integer totalDepts(InstDto inst) {
+        return getMapper().totalDepts(inst);
     }
     
     @Override
-    public Integer totalApps(HashMap<String,Object> reportParameter) {
-        return getMapper().totalApps(reportParameter);
+    public Integer totalApps(InstDto inst) {
+        return getMapper().totalApps(inst);
     }
     
     @Override
-    public List<Map<String,Object>> analysisDayHour(HashMap<String,Object> reportParameter){
-        return getMapper().analysisDayHour(reportParameter);
+    public List<Map<String,Object>> analysisDayHour(InstDto inst){
+        return getMapper().analysisDayHour(inst);
     }
     
     @Override
-    public List<Map<String,Object>> analysisMonth(HashMap<String,Object> reportParameter){
-        return getMapper().analysisMonth(reportParameter);
+    public List<Map<String,Object>> analysisMonth(InstDto inst){
+        return getMapper().analysisMonth(inst);
     }
     
     
     @Override
-    public List<Map<String,Object>> analysisBrowser(HashMap<String,Object> reportParameter){
-        return getMapper().analysisBrowser(reportParameter);
+    public List<Map<String,Object>> analysisBrowser(InstDto inst){
+        return getMapper().analysisBrowser(inst);
     }
     
     @Override
-    public List<Map<String,Object>> analysisApp(HashMap<String,Object> reportParameter){
-        return getMapper().analysisApp(reportParameter);
+    public List<Map<String,Object>> analysisApp(InstDto inst){
+        return getMapper().analysisApp(inst);
     }
     
     @Override
-    public List<Map<String,Object>> analysisProvince(HashMap<String,Object> reportParameter){
-        List<Map<String,Object>> maps = getMapper().analysisProvince(reportParameter);
+    public List<Map<String,Object>> analysisProvince(InstDto inst){
+        List<Map<String,Object>> maps = getMapper().analysisProvince(inst);
         if(null == maps) {
             return new ArrayList<>();
         }
@@ -111,18 +112,18 @@ public class ReportServiceImpl  extends JpaServiceImpl<ReportMapper,JpaEntity,St
     }
     
     @Override
-    public List<Map<String,Object>> analysisCountry(HashMap<String,Object> reportParameter){
-        return getMapper().analysisCountry(reportParameter);
+    public List<Map<String,Object>> analysisCountry(InstDto inst){
+        return getMapper().analysisCountry(inst);
     }
 
 	@Override
-	public Integer analysisMonthCount(HashMap<String, Object> reportParameter) {
-		return getMapper().analysisMonthCount(reportParameter);
+	public Integer analysisMonthCount(InstDto inst) {
+		return getMapper().analysisMonthCount(inst);
 	}
 
 	@Override
-	public Integer totalGroups(HashMap<String, Object> reportParameter) {
-		return getMapper().totalGroups(reportParameter);
+	public Integer totalGroups(InstDto inst) {
+		return getMapper().totalGroups(inst);
 	}
     
 }

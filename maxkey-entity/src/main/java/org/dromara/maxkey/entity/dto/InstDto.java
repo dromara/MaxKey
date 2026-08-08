@@ -17,10 +17,15 @@
 package org.dromara.maxkey.entity.dto;
 
 public class InstDto {
+	
 	String instId;
 
 	public InstDto() {
 		super();
+	}
+	
+	public InstDto(String instId) {
+		this.instId = instId;
 	}
 
 	public String getInstId() {

@@ -17,10 +17,10 @@
 
 package org.dromara.maxkey.web.controller;
 
-import java.util.HashMap;
-
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.entity.Message;
+import org.dromara.maxkey.entity.dto.DashboardVo;
+import org.dromara.maxkey.entity.dto.InstDto;
 import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.service.ReportService;
 import org.slf4j.Logger;
@@ -42,36 +42,35 @@ public class DashboardController {
     ReportService reportService;
 
     @GetMapping(value={"/dashboard"})
-    public Message<?> dashboard(@CurrentUser UserInfo currentUser) {
+    public Message<DashboardVo> dashboard(@CurrentUser UserInfo currentUser) {
         logger.debug("dashboard . ");
-        HashMap<String,Object> requestParameter = new HashMap<>();
-        requestParameter.put("instId", currentUser.getInstId());
         
-        HashMap<String,Object> reportParameter = new HashMap<>();
-        reportParameter.put("instId", currentUser.getInstId());
-        reportParameter.put("dayCount", reportService.analysisDayCount(requestParameter));
-        reportParameter.put("monthCount", reportService.analysisMonthCount(requestParameter));
-        reportParameter.put("newUsers", reportService.analysisNewUsers(requestParameter));
+        InstDto inst = new InstDto(currentUser.getInstId());
         
-        reportParameter.put("onlineUsers", reportService.analysisOnlineUsers(requestParameter));
-        reportParameter.put("activeUsers", reportService.analysisActiveUsers(requestParameter));
+        DashboardVo dbVo = new DashboardVo(currentUser.getInstId());
+        dbVo.setDayCount(reportService.analysisDayCount(inst));
+        dbVo.setMonthCount(reportService.analysisMonthCount(inst));
+        dbVo.setNewUsers(reportService.analysisNewUsers(inst));
         
-        reportParameter.put("totalUsers", reportService.totalUsers(requestParameter));
-        reportParameter.put("totalDepts", reportService.totalDepts(requestParameter));
-        reportParameter.put("totalApps", reportService.totalApps(requestParameter));
-        reportParameter.put("totalGroups", reportService.totalGroups(requestParameter));
+        dbVo.setOnlineUsers(reportService.analysisOnlineUsers(inst));
+        dbVo.setActiveUsers(reportService.analysisActiveUsers(inst));
         
-        reportParameter.put("reportMonth", reportService.analysisMonth(requestParameter));
-        reportParameter.put("reportDayHour", reportService.analysisDayHour(requestParameter));
+        dbVo.setTotalUsers(reportService.totalUsers(inst));
+        dbVo.setTotalDepts(reportService.totalDepts(inst));
+        dbVo.setTotalApps(reportService.totalApps(inst));
+        dbVo.setTotalGroups(reportService.totalGroups(inst));
         
-        reportParameter.put("reportProvince", reportService.analysisProvince(requestParameter));
+        dbVo.setReportMonth(reportService.analysisMonth(inst));
+        dbVo.setReportDayHour(reportService.analysisDayHour(inst));
         
-        reportParameter.put("reportCountry", reportService.analysisCountry(requestParameter));
+        dbVo.setReportProvince(reportService.analysisProvince(inst));
         
-        reportParameter.put("reportBrowser", reportService.analysisBrowser(requestParameter));
+        dbVo.setReportCountry(reportService.analysisCountry(inst));
         
-        reportParameter.put("reportApp", reportService.analysisApp(requestParameter));
-        return new Message<>(reportParameter);
+        dbVo.setReportBrowser(reportService.analysisBrowser(inst));
+        
+        dbVo.setReportApp(reportService.analysisApp(inst));
+        return new Message<>(dbVo);
     }
 
 }

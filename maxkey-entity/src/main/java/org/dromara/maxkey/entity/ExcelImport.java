@@ -89,13 +89,15 @@ public class ExcelImport extends JpaEntity {
     
     public Workbook biuldWorkbook() throws IOException {
         workbook = null;
-        inputStream = excelFile.getInputStream();
-        if (excelFile.getOriginalFilename().toLowerCase().endsWith(".xls")) {
-            workbook = new HSSFWorkbook(inputStream);
-        } else if (excelFile.getOriginalFilename().toLowerCase().endsWith(".xlsx")) {
-            workbook = new XSSFWorkbook(inputStream);
-        } else {
-            throw new RuntimeException("Excel suffix error.");
+        if(isExcelNotEmpty()) {
+	        inputStream = excelFile.getInputStream();
+	        if (excelFile.getOriginalFilename().toLowerCase().endsWith(".xls")) {
+	            workbook = new HSSFWorkbook(inputStream);
+	        } else if (excelFile.getOriginalFilename().toLowerCase().endsWith(".xlsx")) {
+	            workbook = new XSSFWorkbook(inputStream);
+	        } else {
+	            throw new RuntimeException("Excel suffix error.");
+	        }
         }
         return workbook;
     }
