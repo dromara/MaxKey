@@ -19,6 +19,7 @@ package org.dromara.maxkey.authn.realm;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.dromara.maxkey.authn.SignPrincipal;
 import org.dromara.maxkey.authn.realm.ldap.LdapAuthenticationRealmService;
@@ -102,7 +103,7 @@ public abstract class AbstractAuthenticationRealm {
      * @param userInfo
      * @return ArrayList<GrantedAuthority>
      */
-    public List<GrantedAuthority> grantAuthority(UserInfo userInfo) {
+    public Set<GrantedAuthority> grantAuthority(UserInfo userInfo) {
         return loginService.grantAuthority(userInfo);
     }
     
@@ -112,7 +113,7 @@ public abstract class AbstractAuthenticationRealm {
      * @param grantedAuthoritys
      * @return ArrayList<GrantedAuthority Apps>
      */
-    public List<GrantedAuthority> queryAuthorizedApps(List<GrantedAuthority> grantedAuthoritys) {
+    public Set<GrantedAuthority> queryAuthorizedApps(Set<GrantedAuthority> grantedAuthoritys) {
         return loginService.queryAuthorizedApps(grantedAuthoritys);
     }
 

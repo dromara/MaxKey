@@ -18,7 +18,7 @@
 package org.dromara.maxkey.authn;
 
 import java.util.Collection;
-import java.util.List;
+import java.util.Set;
 
 import org.dromara.maxkey.authn.session.Session;
 import org.dromara.maxkey.entity.idm.UserInfo;
@@ -39,9 +39,9 @@ public class SignPrincipal implements  UserDetails {
     
     int       twoFactor;
     
-    List<GrantedAuthority> grantedAuthority;
+    Set<GrantedAuthority> grantedAuthority;
     
-    List<GrantedAuthority> grantedAuthorityApps;
+    Set<GrantedAuthority> grantedAuthorityApps;
     
     boolean authenticated;
     
@@ -117,7 +117,7 @@ public class SignPrincipal implements  UserDetails {
         return grantedAuthority;
     }
 
-    public List<GrantedAuthority> getGrantedAuthority() {
+    public Set<GrantedAuthority> getGrantedAuthority() {
         return grantedAuthority;
     }
 
@@ -129,7 +129,7 @@ public class SignPrincipal implements  UserDetails {
         this.userDetails = userDetails;
     }
 
-    public void setGrantedAuthority(List<GrantedAuthority> grantedAuthority) {
+    public void setGrantedAuthority(Set<GrantedAuthority> grantedAuthority) {
         this.grantedAuthority = grantedAuthority;
     }
 
@@ -180,11 +180,11 @@ public class SignPrincipal implements  UserDetails {
         return this.enabled;
     }
 
-    public List<GrantedAuthority> getGrantedAuthorityApps() {
+    public Set<GrantedAuthority> getGrantedAuthorityApps() {
         return grantedAuthorityApps;
     }
 
-    public void setGrantedAuthorityApps(List<GrantedAuthority> grantedAuthorityApps) {
+    public void setGrantedAuthorityApps(Set<GrantedAuthority> grantedAuthorityApps) {
         this.grantedAuthorityApps = grantedAuthorityApps;
     }
 

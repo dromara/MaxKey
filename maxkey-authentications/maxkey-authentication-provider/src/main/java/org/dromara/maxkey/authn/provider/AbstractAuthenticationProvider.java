@@ -18,7 +18,7 @@
 package org.dromara.maxkey.authn.provider;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.authn.LoginCredential;
@@ -125,7 +125,7 @@ public abstract class AbstractAuthenticationProvider {
         //set session with principal
         SignPrincipal principal = new SignPrincipal(userInfo,session);
 
-        List<GrantedAuthority> grantedAuthoritys = authenticationRealm.grantAuthority(userInfo);
+        Set<GrantedAuthority> grantedAuthoritys = authenticationRealm.grantAuthority(userInfo);
         principal.setAuthenticated(true);
 
         for(GrantedAuthority administratorsAuthority : grantedAdministratorsAuthoritys) {
