@@ -21,7 +21,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -321,13 +323,13 @@ public class LoginServiceImpl  implements LoginService{
     }
 
     @Override
-    public List<GrantedAuthority> queryAuthorizedApps(List<GrantedAuthority> grantedAuthoritys) {
+    public Set<GrantedAuthority> queryAuthorizedApps(Set<GrantedAuthority> grantedAuthoritys) {
         String grantedAuthorityString="'ROLE_ALL_USER'";
         for(GrantedAuthority grantedAuthority : grantedAuthoritys) {
             grantedAuthorityString += ",'"+ grantedAuthority.getAuthority()+"'";
         }
 
-        ArrayList<GrantedAuthority> listAuthorizedApps = (ArrayList<GrantedAuthority>) jdbcTemplate.query(
+        List<GrantedAuthority> listAuthorizedApps = (ArrayList<GrantedAuthority>) jdbcTemplate.query(
                 String.format(DEFAULT_MYAPPS_SELECT_STATEMENT, grantedAuthorityString),
                 new RowMapper<GrantedAuthority>() {
             @Override
@@ -335,9 +337,12 @@ public class LoginServiceImpl  implements LoginService{
                 return new SimpleGrantedAuthority(rs.getString("id"));
             }
         });
-
-        _logger.debug("list Authorized Apps  {}" , listAuthorizedApps);
-        return listAuthorizedApps;
+        Set<GrantedAuthority> authorizedApps = new HashSet<>();
+        for(GrantedAuthority grantedAuthority : listAuthorizedApps) {
+        	authorizedApps.add(grantedAuthority);
+        }
+        _logger.debug("Authorized Apps  {}" , authorizedApps);
+        return authorizedApps;
     }
 
     @Override
@@ -360,12 +365,12 @@ public class LoginServiceImpl  implements LoginService{
      * @return ArrayList<GrantedAuthority>
      */
     @Override
-    public List<GrantedAuthority> grantAuthority(UserInfo userInfo) {
+    public Set<GrantedAuthority> grantAuthority(UserInfo userInfo) {
         // query Groups for user
         List<Groups> listGroups = queryGroups(userInfo);
 
         //set default groups
-        ArrayList<GrantedAuthority> grantedAuthority = new ArrayList<>();
+        Set<GrantedAuthority> grantedAuthority = new HashSet<>();
         grantedAuthority.add(ConstsRoles.ROLE_USER);
         grantedAuthority.add(ConstsRoles.ROLE_ALL_USER);
         grantedAuthority.add(ConstsRoles.ROLE_ORDINARY_USER);

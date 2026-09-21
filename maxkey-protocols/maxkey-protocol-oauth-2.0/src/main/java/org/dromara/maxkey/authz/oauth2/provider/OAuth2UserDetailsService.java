@@ -12,7 +12,7 @@
  */
 package org.dromara.maxkey.authz.oauth2.provider;
 
-import java.util.List;
+import java.util.Set;
 
 import org.dromara.maxkey.authn.SignPrincipal;
 import org.dromara.maxkey.authn.provider.AbstractAuthenticationProvider;
@@ -53,7 +53,7 @@ public class OAuth2UserDetailsService implements UserDetailsService {
         //set OnlineTicket
         principal.setSessionId(onlineTicket.getId());
         
-        List<GrantedAuthority> grantedAuthoritys = loginRepository.grantAuthority(userInfo);
+        Set<GrantedAuthority> grantedAuthoritys = loginRepository.grantAuthority(userInfo);
         principal.setAuthenticated(true);
         
         for(GrantedAuthority administratorsAuthority : AbstractAuthenticationProvider.grantedAdministratorsAuthoritys) {

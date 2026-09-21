@@ -18,6 +18,7 @@
 package org.dromara.maxkey.persistence.service;
 
 import java.util.List;
+import java.util.Set;
 
 import org.dromara.maxkey.entity.idm.Groups;
 import org.dromara.maxkey.entity.idm.UserInfo;
@@ -72,7 +73,7 @@ public interface LoginService {
     
     public void resetBadPasswordCount(UserInfo userInfo);
 
-    public List<GrantedAuthority> queryAuthorizedApps(List<GrantedAuthority> grantedAuthoritys);
+    public Set<GrantedAuthority> queryAuthorizedApps(Set<GrantedAuthority> grantedAuthoritys);
 
     public List<Groups> queryGroups(UserInfo userInfo) ;
 
@@ -82,7 +83,7 @@ public interface LoginService {
      * @param userInfo
      * @return ArrayList<GrantedAuthority>
      */
-    public List<GrantedAuthority> grantAuthority(UserInfo userInfo) ;
+    public Set<GrantedAuthority> grantAuthority(UserInfo userInfo) ;
 
 
     public void updateLastLogin(UserInfo userInfo) ;

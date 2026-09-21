@@ -44,7 +44,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.util.Map;
-import java.util.List;
+import java.util.Set;
 import java.util.ArrayList;
 
 /**
@@ -94,7 +94,7 @@ public class PasskeyAuthenticationEndpoint {
 
             
             // 获取用户权限
-            List<GrantedAuthority> grantedAuthoritys = authenticationRealm.grantAuthority(userInfo);
+            Set<GrantedAuthority> grantedAuthoritys = authenticationRealm.grantAuthority(userInfo);
             
             // 检查管理员权限
             for(GrantedAuthority administratorsAuthority : grantedAdministratorsAuthoritys) {
