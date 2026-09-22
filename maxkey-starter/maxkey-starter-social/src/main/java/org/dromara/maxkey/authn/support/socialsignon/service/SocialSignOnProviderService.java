@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.dromara.maxkey.authn.support.socialsignon.token.RedisTokenStore;
-import org.dromara.maxkey.constants.ConstsTimeInterval;
 import org.dromara.maxkey.crypto.password.PasswordReciprocal;
 import org.dromara.maxkey.entity.SocialsProvider;
 import org.dromara.maxkey.entity.SocialsProviderLogin;
@@ -49,7 +48,7 @@ public class SocialSignOnProviderService{
     
     protected static final Cache<String, SocialsProviderLogin> socialsProviderLoginStore = 
             Caffeine.newBuilder()
-                .expireAfterWrite(ConstsTimeInterval.ONE_HOUR, TimeUnit.MINUTES)
+                .expireAfterWrite(60, TimeUnit.MINUTES)
                 .build();
     
     HashMap<String ,SocialsProvider>socialSignOnProviderMaps = new HashMap<>();
