@@ -1,6 +1,6 @@
 echo off
 echo set env
-set JAVA_HOME=C:\IDE\jdk-17
+set JAVA_HOME=C:\IDE\jdk-21
 set GRADLE_HOME=C:\ide\gradle-9.1.0
 
 set MXK_VERSION=4.1.12
