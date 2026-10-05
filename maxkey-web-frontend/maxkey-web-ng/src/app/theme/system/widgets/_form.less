@@ -1,0 +1,17 @@
+.search__form-mixin(@enabled) when(@enabled = true) {
+  /**
+   * Search form, [Demo](https://ng-alain.surge.sh/#/pro/list/table-list)
+   *
+   * 搜索表单, [示例](https://ng-alain.gitee.io/#/pro/list/table-list)
+   */
+  .search__form {
+    .@{ant-prefix}-form-item {
+      margin-right: 0;
+      margin-bottom: @form-item-margin-bottom;
+    }
+    .@{ant-prefix}-form-item-control {
+      flex: 1;
+    }
+  }
+}
+.search__form-mixin(@search__form-enabled);

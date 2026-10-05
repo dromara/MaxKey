@@ -1,0 +1,15 @@
+@form-state-visual-feedback-enabled: false;
+
+.form-state-visual-feedback-mixin(@enabled) when(@enabled = true) {
+  .ng-invalid {
+    &:focus {
+      box-shadow: 0 0 @outline-blur-size @outline-width fade-out(@error-color, 0.8);
+    }
+
+    &,
+    &:hover {
+      border-color: @error-color;
+    }
+  }
+}
+.form-state-visual-feedback-mixin(@form-state-visual-feedback-enabled);

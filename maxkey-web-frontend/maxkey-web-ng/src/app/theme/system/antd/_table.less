@@ -1,0 +1,115 @@
+.antTableEvenBG() when (iscolor(@nz-table-even-background)) {
+  > tr:nth-child(4n + 3) {
+    background: @nz-table-even-background;
+  }
+}
+
+.@{ant-prefix}-table {
+  // 限定单元格的图像大小
+  td {
+    > img,
+    .img {
+      max-width: @nz-table-img-max-width;
+      max-height: @nz-table-img-max-height;
+      border-radius: @nz-table-img-radius;
+      vertical-align: middle;
+
+      &:not(:last-child) {
+        margin-right: @nz-table-img-margin-right;
+      }
+    }
+  }
+
+  // 表格响应式
+  &-rep {
+    &__title {
+      display: none;
+    }
+
+    &__hide-header-footer {
+      .@{ant-prefix}-table-title,
+      .@{ant-prefix}-table-footer {
+        display: none;
+      }
+    }
+  }
+
+  // 奇偶背景
+  &-tbody {
+    .antTableEvenBG();
+  }
+}
+
+[dir='rtl'] {
+  .@{ant-prefix}-table {
+    td {
+      > img,
+      .img {
+        margin-right: inherit;
+        margin-left: @nz-table-img-margin-right;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: @nz-table-rep-max-width) {
+  .@{ant-prefix}-table-rep {
+    &__title {
+      display: inline-block;
+      width: @nz-table-rep-column-name-width;
+      padding-right: @nz-table-rep-column-name-padding-right;
+      color: @nz-table-rep-column-name-color;
+      text-align: @nz-table-rep-column-name-text-align;
+    }
+
+    &__hide-header-footer {
+      .@{ant-prefix}-table-title,
+      .@{ant-prefix}-table-footer {
+        display: block;
+      }
+    }
+    .@{ant-prefix}-table {
+      table {
+        table-layout: auto !important;
+      }
+
+      table,
+      col {
+        width: 100% !important;
+        min-width: auto !important;
+      }
+
+      &-thead {
+        display: none;
+      }
+
+      &-title {
+        text-align: center;
+        background: @nz-table-rep-header-background;
+      }
+
+      &-tbody {
+        > tr {
+          &:nth-child(4n + 3) {
+            background: @nz-table-rep-even-background;
+          }
+
+          > td {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: @nz-table-rep-padding-vertical @nz-table-rep-padding-horizontal;
+            border-bottom: none;
+            text-align: left !important;
+            white-space: inherit;
+
+            .@{ant-prefix}-table-rep__title + *:not(.@{ant-prefix}-avatar) {
+              flex: 1;
+              word-break: break-all;
+            }
+          }
+        }
+      }
+    }
+  }
+}

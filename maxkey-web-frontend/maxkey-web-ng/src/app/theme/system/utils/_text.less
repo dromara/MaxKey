@@ -1,0 +1,183 @@
+/**
+ * The inline contents are aligned to the left edge of the line box
+ *
+ * 文本对齐方式：左边
+ */
+.text-left {
+  text-align: left !important;
+}
+
+/**
+ * The inline contents are aligned to the center edge of the line box
+ *
+ * 文本对齐方式：中间
+ */
+.text-center {
+  text-align: center !important;
+}
+
+/**
+ * The inline contents are aligned to the right edge of the line box
+ *
+ * 文本对齐方式：左边
+ */
+.text-right {
+  text-align: right !important;
+}
+
+/**
+ * Set text to lower case
+ *
+ * 设置文本为小写
+ */
+.text-lowercase {
+  text-transform: lowercase !important;
+}
+
+/**
+ * Set text to upper case
+ *
+ * 设置文本为大写
+ */
+.text-uppercase {
+  text-transform: uppercase !important;
+}
+
+/**
+ * Is a keyword that converts the first letter of each word to uppercase
+ *
+ * 设置每个单词以大写字母开头
+ */
+.text-capitalize {
+  text-transform: capitalize !important;
+}
+
+/**
+ * Set text to strikethrough
+ *
+ * 设置文本为删除线
+ */
+.text-deleted {
+  text-decoration: line-through;
+}
+
+/**
+ * Sequences of whitespace will collapse into a single whitespace. Text will never wrap to the next line. The text continues on the same line until a `<br>` tag is encountered
+ *
+ * 文本不会换行，文本会在在同一行上继续，直到遇到 `<br>` 标签为止
+ */
+.text-nowrap {
+  white-space: nowrap !important;
+}
+
+/**
+ * Whitespace is preserved by the browser. Text will wrap when necessary, and on line breaks
+ *
+ * 保留空白符序列，但是正常地进行换行
+ */
+.text-wrap {
+  white-space: pre-wrap !important;
+}
+
+/**
+ * Truncate text and end with `...`
+ *
+ * 截短文本，并以 `...` 结尾
+ */
+.text-truncate {
+  .text-truncate();
+}
+
+/**
+ * Normal font weight. Same as `400`
+ *
+ * 普通字体粗细
+ */
+.font-weight-normal {
+  font-weight: normal;
+}
+
+/**
+ * Bold font weight. Same as `400`
+ *
+ * 粗体
+ */
+.font-weight-bold {
+  font-weight: 700;
+}
+
+/**
+ * Italic font style
+ *
+ * 斜体
+ */
+.font-italic {
+  font-style: italic;
+}
+
+/**
+ * `12px` text size
+ *
+ * `12px` 文本大小
+ */
+.text-xs {
+  font-size: @text-xs !important;
+}
+
+/**
+ * `14px` text size
+ *
+ * `14px` 文本大小
+ */
+.text-sm {
+  font-size: @text-sm !important;
+}
+
+/**
+ * `16px` text size
+ *
+ * `16px` 文本大小
+ */
+.text-md {
+  font-size: @text-md !important;
+}
+
+/**
+ * `18px` text size
+ *
+ * `18px` 文本大小
+ */
+.text-lg {
+  font-size: @text-lg !important;
+}
+
+/**
+ * `22px` text size
+ *
+ * `22px` 文本大小
+ */
+.text-xl {
+  font-size: @text-xl !important;
+}
+
+/**
+ * `28px` text size
+ *
+ * `28px` 文本大小
+ */
+.text-xxl {
+  font-size: @text-xxl !important;
+}
+
+.text-rtl-mixin(@enabled) when(@enabled=true) {
+  [dir='rtl'] {
+    .text-left {
+      text-align: right !important;
+    }
+
+    .text-right {
+      text-align: left !important;
+    }
+  }
+}
+.text-rtl-mixin(@rtl-enabled);

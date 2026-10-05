@@ -1,0 +1,47 @@
+// Color contrast
+.color-yiq(@color) {
+  .yiq-mixin (@v) when (@v >= 150) {
+    color: #111;
+  }
+  .yiq-mixin (@v) when (default()) {
+    color: #fff;
+  }
+
+  @r: red(@color);
+  @g: green(@color);
+  @b: blue(@color);
+
+  @yiq: (((@r * 299) + (@g * 587) + (@b * 114)) / 1000);
+  .yiq-mixin(@yiq);
+}
+
+// Basic loop
+.for(@adList, @adCode) {
+  & {
+    .loop(@adI:1) when (@adI =< length(@adList)) {
+      @adIndex: @adI - 1;
+      @adItem: extract(@adList, @adI);
+
+      @adCode();
+
+      .loop(@adI + 1);
+    }
+    .loop();
+  }
+}
+
+.for-each(@adList, @adCode) {
+  & {
+    .loop(@adI:1) when (@adI =< length(@adList)) {
+      @adIndex: @adI - 1;
+      @adItem: extract(@adList, @adI);
+      @adKey: extract(@adItem, 1);
+      @adValue: extract(@adItem, 2);
+
+      @adCode();
+
+      .loop(@adI + 1);
+    }
+    .loop();
+  }
+}

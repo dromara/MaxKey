@@ -1,0 +1,46 @@
+.widget-hafl-mixin(@enabled) when(@enabled=true) {
+  /**
+   * Hafl image, [Demo](https://ng-alain.surge.sh/#/pro/list/table-list)
+   *
+   * 半图, [示例](https://ng-alain.gitee.io/#/pro/list/table-list)，结构示例：
+   * ```html
+   *  <div class="half-float half-float-md">
+   *    <img src="./assets/tmp/img/half-float-bg-1.jpg" />
+   *    <div class="half-float-bottom rounded-circle bg-grey-lighter">
+   *      <img class="p-sm" src="./assets/tmp/img/1.png" />
+   *    </div>
+   *  </div>
+   * ```
+   * ![image](https://user-images.githubusercontent.com/2987467/103075935-9ac13200-4607-11eb-8524-363ee2944c0c.png)
+   */
+  .half-float {
+    position: relative;
+
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    .half-float-bottom {
+      position: absolute;
+      z-index: 2;
+      left: 50%;
+    }
+
+    /* stylelint-disable-next-line order/order */
+    .for-each(@hafl-float-size, {
+      &.half-float-@{adKey} {
+        margin-bottom: ((@adValue / 2) + 10);
+        .half-float-bottom {
+          bottom: -(@adValue / 2);
+          width: @adValue;
+          height: @adValue;
+          margin-left: -(@adValue / 2);
+        }
+      }
+    });
+  }
+}
+
+.widget-hafl-mixin(@hafl-enabled);
