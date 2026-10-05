@@ -1,0 +1,50 @@
+.widget-masonry-mixin(@enabled) when(@enabled=true) {
+  /**
+   * Masonry layout, [Demo](https://ng-alain.surge.sh/#/style/gridmasonry)
+   *
+   * 瀑布流布局, [示例](https://ng-alain.gitee.io/#/style/gridmasonry)，结构示例：
+   * ```html
+   *  <div class="row-masonry row-masonry-xl-8 row-masonry-lg-5 row-masonry-md-4 row-masonry-sm-3 row-masonry-xs-2">
+   *    <div class="col-masonry">col1</div>
+   *    <div class="col-masonry">col2</div>
+   *    <div class="col-masonry">col3</div>
+   *    <div class="col-masonry">col4</div>
+   *    <div class="col-masonry">col5</div>
+   *  </div>
+   * ```
+   */
+  .row-masonry {
+    position: relative;
+    column-gap: @masonry-column-gap;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+
+    > .col-masonry {
+      display: inline-block;
+      width: 100%;
+      min-height: 1em;
+      margin-bottom: 15px;
+    }
+
+    img {
+      max-width: 100%;
+    }
+  }
+
+  /* stylelint-disable-next-line order/order */
+  .for-each(@grid-breakpoints, {
+    @media only screen and (min-width: @adValue) {
+      .loopColumn(@pos: 1) when (@pos < 10) {
+        .row-masonry-@{adKey}-@{pos} {
+          column-count: @pos;
+          columns: @pos;
+        }
+        .loopColumn(@pos + 1);
+      }
+      .loopColumn();
+    }
+  });
+}
+
+.widget-masonry-mixin(@masonry-enabled);

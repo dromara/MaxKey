@@ -1,0 +1,136 @@
+.@{ant-prefix}-drawer {
+  &-left,
+  &-right {
+    @media (min-width: @drawer-sm) {
+      .drawer-sm {
+        width: auto !important;
+        max-width: @drawer-sm;
+      }
+    }
+
+    @media (max-width: (@drawer-sm - 1)) {
+      .drawer-sm {
+        width: 100% !important;
+      }
+    }
+
+    @media (min-width: @drawer-md) {
+      .drawer-md {
+        width: auto !important;
+        max-width: @drawer-md;
+      }
+    }
+
+    @media (max-width: (@drawer-md - 1)) {
+      .drawer-md {
+        width: 100% !important;
+      }
+    }
+
+    @media (min-width: @drawer-lg) {
+      .drawer-lg {
+        width: auto !important;
+        max-width: @drawer-lg;
+      }
+    }
+
+    @media (max-width: (@drawer-lg - 1)) {
+      .drawer-lg {
+        width: 100% !important;
+      }
+    }
+
+    @media (min-width: @drawer-xl) {
+      .drawer-xl {
+        width: auto !important;
+        max-width: @drawer-xl;
+      }
+    }
+
+    @media (max-width: (@drawer-xl - 1)) {
+      .drawer-xl {
+        width: 100% !important;
+      }
+    }
+  }
+
+  &-top,
+  &-bottom {
+    @media (min-height: @drawer-sm-height) {
+      .drawer-sm {
+        height: auto !important;
+        max-height: @drawer-sm-height;
+      }
+    }
+
+    @media (max-height: (@drawer-sm-height - 1)) {
+      .drawer-sm {
+        height: 100% !important;
+      }
+    }
+
+    @media (min-height: @drawer-md-height) {
+      .drawer-md {
+        height: auto !important;
+        max-height: @drawer-md-height;
+      }
+    }
+
+    @media (max-height: (@drawer-md-height - 1)) {
+      .drawer-md {
+        height: 100% !important;
+      }
+    }
+
+    @media (min-height: @drawer-lg-height) {
+      .drawer-lg {
+        height: auto !important;
+        max-height: @drawer-lg-height;
+      }
+    }
+
+    @media (max-height: (@drawer-lg-height - 1)) {
+      .drawer-lg {
+        height: 100% !important;
+      }
+    }
+
+    @media (min-height: @drawer-xl-height) {
+      .drawer-xl {
+        height: auto !important;
+        max-height: @drawer-xl-height;
+      }
+    }
+
+    @media (max-height: (@drawer-xl-height - 1)) {
+      .drawer-xl {
+        height: 100% !important;
+      }
+    }
+  }
+}
+
+.drawer {
+  &-footer {
+    /**
+      * Drawer bottom area for use in drawer target components
+      *
+      * 抽屉底部区域，用于抽屉目标组件内使用，一般完整用法：
+      * ```html
+      * <div class="drawer-footer">
+      *   <button nz-button (click)="cancel()">Cancel</button>
+      *   <button nz-button nzType="primary" (click)="ok()">OK</button>
+      * </div>
+      * ```
+      */
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: @drawer-footer-padding-vertical @drawer-body-padding;
+    border-top: @border-width-base @border-style-base @border-color-split;
+    border-radius: 0 0 @border-radius-base @border-radius-base;
+    text-align: right;
+    background: @popover-background;
+  }
+}

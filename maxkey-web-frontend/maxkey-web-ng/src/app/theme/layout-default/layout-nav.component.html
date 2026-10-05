@@ -1,0 +1,151 @@
+<ng-template #icon let-i>
+  @if (i) {
+    @switch (i.type) {
+      @case ('icon') {
+        <nz-icon
+          class="sidebar-nav__item-icon"
+          [nzType]="i.value"
+          [nzTheme]="i.theme"
+          [nzSpin]="i.spin"
+          [nzTwotoneColor]="i.twoToneColor"
+          [nzIconfont]="i.iconfont"
+          [nzRotate]="i.rotate"
+        />
+      }
+      @case ('iconfont') {
+        <nz-icon class="sidebar-nav__item-icon" [nzIconfont]="i.iconfont" />
+      }
+      @case ('img') {
+        <img [src]="i.value" class="sidebar-nav__item-icon sidebar-nav__item-img" />
+      }
+      @case ('svg') {
+        <span class="sidebar-nav__item-icon sidebar-nav__item-svg" [innerHTML]="i.value"></span>
+      }
+      @default {
+        <nz-icon class="sidebar-nav__item-icon {{ i.value }}" />
+      }
+    }
+  }
+</ng-template>
+<ng-template #navMenu let-ls>
+  <div nz-row style="margin: 0 24px 24px" class="ant-row">
+    <div nz-col nzMd="3" class="ant-col ant-col-md-3"></div>
+    <div nz-col nzMd="18" class="ant-col ant-col-md-18">
+      <ul nz-menu nzMode="horizontal" nzTheme="dark" style="text-align: left">
+        <!--一级菜单-->
+        @for (mnav of ls; track mnav._id) {
+          <ng-container>
+            @if (mnav._hidden !== true) {
+              @if (mnav.render_type === 'divider') {
+                <li class="nz-menu-divider"></li>
+              } @else {
+                <!--<li
+                  nz-menu-item
+                  style="min-width: 80px"
+                  [class.sidebar-nav__selected]="mnav._selected"
+                  [class.sidebar-nav__open]="mnav.open"
+                >-->
+
+                <!-- link -->
+                @if (mnav.children.length === 0) {
+                  <li nz-menu-item style="min-width: 80px">
+                    <!--<a
+                      (click)="to(mnav)"
+                      [attr.data-id]="mnav._id"
+                      class="sidebar-nav__item-link"
+                      [class.sidebar-nav__item-disabled]="mnav.disabled"
+                      (mouseenter)="closeSubMenu()"
+                    >-->
+                    @if (mnav.externalLink === '') {
+                      <a (click)="to(mnav)" [attr.data-id]="mnav._id" (mouseenter)="closeSubMenu()">
+                        @if (mnav._needIcon) {
+                          @if (collapsed) {
+                            <span nz-tooltip nzTooltipPlacement="right" [nzTooltipTitle]="mnav._text">
+                              <ng-template [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="{ $implicit: mnav.icon }" />
+                            </span>
+                          } @else {
+                            <ng-template [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="{ $implicit: mnav.icon }" />
+                          }
+                        }
+                        <span class="sidebar-nav__item-text" [innerHTML]="mnav._text" [attr.title]="mnav.text"></span>
+                      </a>
+                    } @else {
+                      <a href="#{{ mnav.externalLink }}" target="_blank">
+                        <ng-template [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="{ $implicit: mnav.icon }" />
+                        <span class="sidebar-nav__item-text" [innerHTML]="mnav._text" [attr.title]="mnav.text"></span>
+                      </a>
+                    }
+                  </li>
+                } @else if (mnav.children.length > 0) {
+                  <!--二级菜单 {{ mnav.icon.value + '' }} -->
+                  <li
+                    nz-submenu
+                    style="min-width: 80px"
+                    [nzTitle]="mnav.text"
+                    nzIcon="{{ mnav.icon.value }}"
+                    nzTriggerSubMenuAction="click"
+                  >
+                    <ul>
+                      <!--
+                        <a (click)="toggleOpen(mnav)" (mouseenter)="showSubMenu($event, mnav)" class="sidebar-nav__item-link">
+                          <ng-template [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="{ $implicit: mnav.icon }" />
+                          <span class="sidebar-nav__item-text" [innerHTML]="mnav._text" [attr.title]="mnav.text"></span>
+                          <nz-icon class="sidebar-nav__sub-arrow"></nz-icon>
+                        </a>
+                        -->
+                      <!--二级菜单-->
+                      @for (snav of mnav.children; track $index) {
+                        <ng-container>
+                          @if (snav.children.length === 0 && mnav.disabled === false) {
+                            <li nz-menu-item>
+                              <a href="#{{ snav.link }}">{{ snav.text }}</a>
+                            </li>
+                          }
+                          @if (snav.children.length > 0) {
+                            <li nz-submenu [nzTitle]="snav.text">
+                              <ul>
+                                <!--三级菜单-->
+                                @for (tnav of snav.children; track $index) {
+                                  <ng-container>
+                                    @if (tnav.children.length === 0 && mnav.disabled === false) {
+                                      <li nz-menu-item>
+                                        <a href="#{{ tnav.link }}">{{ tnav.text }}</a>
+                                      </li>
+                                    }
+                                  </ng-container>
+                                }
+                              </ul>
+                            </li>
+                          }
+                        </ng-container>
+                      }
+                    </ul>
+                  </li>
+                }
+              }
+            }
+          </ng-container>
+        }
+      </ul>
+    </div>
+    <div nz-col nzMd="3" class="ant-col ant-col-md-3"></div>
+  </div>
+</ng-template>
+@for (group of list(); track group._id) {
+  @if (group.group) {
+    <li class="sidebar-nav__item sidebar-nav__group-title">
+      <span [innerHTML]="group._text"></span>
+    </li>
+  }
+  <ng-template [ngTemplateOutlet]="navMenu" [ngTemplateOutletContext]="{ $implicit: group.children }" />
+}
+<!--<ul class="sidebar-nav">
+  @for (group of list(); track group._id) {
+    @if (group.group) {
+      <li class="sidebar-nav__item sidebar-nav__group-title">
+        <span [innerHTML]="group._text"></span>
+      </li>
+    }
+    <ng-template [ngTemplateOutlet]="tree" [ngTemplateOutletContext]="{ $implicit: group.children }" />
+  }
+</ul>-->

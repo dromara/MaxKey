@@ -1,0 +1,11 @@
+.router-ant() {
+  .router-ant-mixin(@enabled) when(@enabled=true) {
+    router-outlet + * {
+      display: block;
+      // animation-fill-mode: both;
+      animation-name: @router-animation-name; // fadeIn;
+      animation-duration: @router-animation-duration;
+    }
+  }
+  .router-ant-mixin(@router-animation-enabled);
+}

@@ -1,0 +1,132 @@
+// Small screen / tablet
+@media (min-width: @screen-sm) {
+  .modal-sm .@{ant-prefix}-modal {
+    width: auto !important;
+    max-width: @modal-sm;
+  }
+}
+
+// Medium screen / desktop
+@media (min-width: @screen-md) {
+  .modal-md .@{ant-prefix}-modal {
+    width: auto !important;
+    max-width: @modal-md;
+  }
+}
+
+// Large screen / wide desktop
+@media (min-width: @screen-lg) {
+  .modal-lg .@{ant-prefix}-modal {
+    width: auto !important;
+    max-width: @modal-lg;
+  }
+}
+
+// Extra large screen / large descktop
+@media (min-width: @screen-xl) {
+  .modal-xl .@{ant-prefix}-modal {
+    width: auto !important;
+    max-width: @modal-xl;
+  }
+}
+
+.modal {
+  &-header {
+    /**
+      * The top area of the nz-modal, used when customizing modal component
+      *
+      * 模态框顶部，用于自定义模态框组件时自定义顶部时使用，一般完整用法：
+      * ```html
+      * <div class="modal-header">
+      *   <div class="modal-title">Title</div>
+      * </div>
+      * This is content
+      * <div class="modal-footer">
+      *   <button nz-button (click)="cancel()">Cancel</button>
+      *   <button nz-button nzType="primary" (click)="ok()">OK</button>
+      * </div>
+      * ```
+      */
+    display: flex;
+    justify-content: space-between;
+    margin: -@margin-lg -@margin-lg @margin-lg -@margin-lg;
+    padding: @modal-header-padding;
+    border-bottom: @border-width-base @border-style-base @border-color-split;
+    border-radius: @border-radius-base @border-radius-base 0 0;
+    background: @component-background;
+  }
+
+  &-title {
+    /**
+      * The top area title of the nz-modal, for example:
+      *
+      * 模态框顶部标题，例如：
+      * ```html
+      * <div class="modal-header">
+      *   <div class="modal-title">Title</div>
+      * </div>
+      * ```
+      */
+    margin: 0;
+    font-size: @font-size-lg;
+    font-weight: 500;
+    line-height: 22px;
+    color: @modal-heading-color;
+    overflow-wrap: break-word !important;
+
+    small {
+      margin-left: @layout-gutter;
+      font-size: 12px;
+      color: @muted-color;
+    }
+  }
+
+  &-spin {
+    display: block;
+    min-height: 150px;
+    line-height: 150px;
+    text-align: center;
+  }
+
+  &-footer {
+    /**
+      * The footer area of the nz-modal
+      *
+      * 模态框底部区域
+      */
+    margin: @margin-lg -@margin-lg -@margin-lg -@margin-lg;
+    padding: @modal-footer-padding-vertical @modal-footer-padding-horizontal;
+    border-top: @border-width-base @border-style-base @border-color-split;
+    border-radius: 0 0 @border-radius-base @border-radius-base;
+    text-align: right;
+  }
+
+  &-include-tabs {
+    /**
+      * Whether the content of the modal is wrapped with `nz-tabs`, to clear the extra margin
+      *
+      * 模态框内容是否包裹 `nz-tabs`，清除带来的多余边距
+      */
+    nz-tabset,
+    nz-tabs {
+      margin-top: -16px;
+    }
+  }
+
+  &-body-nopadding {
+    /**
+      * Clear inner margin of modal content
+      *
+      * 模态框-清除对话框内容内边距
+      */
+    .@{ant-prefix}-modal-body {
+      padding: 0 !important;
+    }
+  }
+}
+
+.MODAL-DRAG {
+  &-HANDLE {
+    cursor: move;
+  }
+}

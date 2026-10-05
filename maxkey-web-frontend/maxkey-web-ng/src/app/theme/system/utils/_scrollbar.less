@@ -1,0 +1,75 @@
+.scrollbar-mixin(@element-name) {
+  .scrollbar-inner-mixin(@enabled) when(@enabled=true) {
+    @{element-name} {
+      // FireFox
+      scrollbar-color: @scrollbar-track-color @scrollbar-thumb-color;
+      scrollbar-width: thin;
+      // Other
+      &::-webkit-scrollbar {
+        width: @scrollbar-height;
+        height: @scrollbar-width;
+      }
+
+      &::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 @scrollbar-width @scrollbar-track-color;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: @scrollbar-thumb-color;
+        outline: 1px solid #333;
+      }
+    }
+  }
+  /* stylelint-disable-next-line order/order */
+  .scrollbar-inner-mixin(@scrollbar-enabled);
+}
+
+// 自定义div scrollbar
+@scrollbar-prefix: ~'.scrollbar';
+@{scrollbar-prefix} {
+  overflow: auto;
+
+  &-x {
+    overflow: auto hidden;
+  }
+
+  &-y {
+    overflow: hidden auto;
+  }
+}
+
+// scrollbar
+.scrollbar-default-mixin(@enabled) when(@enabled=true) {
+  .scrollbar-mixin(
+    ~'body, @{scrollbar-prefix}, .@{ant-prefix}-dialog-wrap, .@{ant-prefix}-drawer-body, .@{ant-prefix}-drawer-wrapper-body, .@{ant-prefix}-anchor-wrapper, textarea.@{ant-prefix}-input'
+  );
+}
+.scrollbar-default-mixin(@scrollbar-enabled);
+
+// table
+.scrollbar-table-mixin(@enabled) when(@enabled=true) {
+  .scrollbar-mixin(~'.@{ant-prefix}-table-header, .@{ant-prefix}-table-body');
+}
+.scrollbar-table-mixin(@scrollbar-table-enabled);
+
+/**
+ * Hide scrollbar
+ *
+ * 隐藏滚动条
+ */
+.hide-scrollbar {
+  scrollbar-color: transparent transparent;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    width: 1px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: transparent;
+  }
+}

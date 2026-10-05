@@ -1,0 +1,256 @@
+@root-entry-name: default;
+
+// grey
+@grey-1:  #ffffff;
+@grey-2:  #fafafa;
+@grey-3:  #f5f5f5;
+@grey-4:  #f0f0f0;
+@grey-5:  #d9d9d9;
+@grey-6:  #bfbfbf;
+@grey-7:  #8c8c8c;
+@grey-8:  #595959;
+@grey-9:  #434343;
+@grey-10: #262626;
+@grey-11: #1f1f1f;
+@grey-12: #141414;
+@grey-13: #000000;
+
+@color-light-index:      5;
+@color-basic-index:      6;
+@color-dark-index:       7;
+
+@color-light-position:      2;
+@color-basic-position:      3;
+@color-dark-position:       4;
+@color-no-list:             1, 2, 3, 4, 5, 6, 7, 8, 9, 10;
+
+@colors:
+  red      @red-5           @red-6            @red-7,
+  volcano    @volcano-5       @volcano-6        @volcano-7,
+  orange   @orange-5        @orange-6         @orange-7,
+  gold     @gold-5          @gold-6           @gold-7,
+  yellow   @yellow-5        @yellow-6         @yellow-7,
+  lime     @lime-5          @lime-6           @lime-7,
+  green    @green-5         @green-6          @green-7,
+  cyan     @cyan-5          @cyan-6           @cyan-7,
+  blue     @blue-5          @blue-6           @blue-7,
+  geekblue   @geekblue-5      @geekblue-6       @geekblue-7,
+  purple   @purple-5        @purple-6         @purple-7,
+  magenta  @magenta-5       @magenta-6        @magenta-7,
+  grey     @grey-5          @grey-6           @grey-7;
+
+// Alias
+@aliasColors:
+  primary    @primary-color,
+  success    @success-color,
+  error      @error-color,
+  warning    @warning-color,
+  info       @info-color,
+  processing @processing-color,
+  highlight  @highlight-color,
+  normal     @normal-color;
+
+// Grey patch
+@greyColorer: lighter @grey-3, darker  @grey-9;
+
+// Layout Gutter
+@layout-gutter: 8px;
+
+@xs:    (@layout-gutter / 2); // 4px
+@sm:    @layout-gutter;     // 8px
+@md:    (@layout-gutter * 2); // 16px
+@lg:    (@layout-gutter * 3); // 24px
+@xl:    (@layout-gutter * 4); // 32px
+@xxl:   (@layout-gutter * 6); // 48px
+
+@grid-breakpoints:
+  xs @screen-xs,
+  sm @screen-sm,
+  md @screen-md,
+  lg @screen-lg,
+  xl @screen-xl;
+
+@mobile-min: @screen-md-min;
+@mobile-max: @screen-md-min - 1px;
+
+// spaceing
+@spacings:
+  0  0,
+  xs @xs,
+  sm @sm,
+  md @md,
+  lg @lg,
+  xl @xl,
+  xxl @xxl;
+
+// 是否启用RTL支持
+@rtl-enabled: true;
+
+// type
+@ul-ol-margin:      18px;
+
+// position
+@zindex-base:       100;
+@zindex-fixed:      @zindex-base;
+@zindex:            @zindex-base;
+
+// 文本
+@text-xs:       @font-size-base - 2;  // 12px
+@text-sm:       @font-size-base + 0;  // 14px
+@text-md:       @font-size-base + 2;  // 16px
+@text-lg:       @font-size-base + 4;  // 18px
+@text-xl:       @font-size-base + 8;  // 22px
+@text-xxl:      @font-size-base + 14; // 28px
+
+// icon
+@icon-sm:       @font-size-base * 2;  // 14px * 2 = 28px
+@icon-md:       @font-size-base * 4;  // 14px * 4 = 56px
+@icon-lg:       @font-size-base * 6;  // 14px * 6 = 84px
+@icon-xl:       @font-size-base * 8;  // 14px * 8 = 112px
+@icon-xxl:      @font-size-base * 10; // 14px * 10 = 140px
+
+// 宽度
+@widths:
+  xs @layout-gutter * 10, // 80px
+  sm @layout-gutter * 20, // 160px
+  md @layout-gutter * 30, // 240px
+  lg @layout-gutter * 40, // 320px
+  xl @layout-gutter * 50, // 400px
+  xxl @layout-gutter * 60, // 480px
+  10 10%,
+  20 20%,
+  30 30%,
+  40 40%,
+  50 50%,
+  60 60%,
+  70 70%,
+  80 80%,
+  90 90%,
+  100 100%;
+
+// 圆角
+@border-radius-md:       @border-radius-base; // 4px
+@border-radius-lg:       @border-radius-base + 2px; // 6px
+
+@muted-color:  @grey-7;
+
+// scrollbar
+@scrollbar-enabled:         true;
+@scrollbar-width:           6px;
+@scrollbar-height:          6px;
+@scrollbar-track-color:     fade(@black, 30%);
+@scrollbar-thumb-color:     transparent;
+@scrollbar-table-enabled:   false;
+
+// type
+// ==========
+
+/** font-size https://ant.design/docs/spec/font-cn#字号 */
+@font-size-large:         @font-size-base + 8;  // 20px
+@font-size-small:         @font-size-base;      // 12px
+
+@h1-font-size:            @font-size-base + 20; // 32px
+@h2-font-size:            @font-size-base + 12; // 24px
+@h3-font-size:            @font-size-base + 8;  // 20px
+@h4-font-size:            @font-size-base + 4;  // 16px
+@h5-font-size:            @font-size-base + 2;  // 14px
+@h6-font-size:            @font-size-base;      // 12px
+
+@enable-all-colors:           false;
+
+// Code
+@code-border-color:       @border-color-base;
+@code-bg:                 @tag-default-bg;
+
+@drawer-xl: 1200px;
+@drawer-lg: 900px;
+@drawer-md: 600px;
+@drawer-sm: 300px;
+@drawer-xl-height: 800px;
+@drawer-lg-height: 600px;
+@drawer-md-height: 400px;
+@drawer-sm-height: 200px;
+
+@modal-xl: 1200px;
+@modal-lg: 900px;
+@modal-md: 600px;
+@modal-sm: 300px;
+
+// router ant
+@router-animation-enabled: false;
+@router-animation-name: antFadeIn;
+@router-animation-duration: 1s;
+
+// 生成旋转数量
+@rotate-count: 24;
+
+// COMPONENTS
+@preserve-white-spaces-enabled: true;
+// 搜索框与表格
+@preserve-sf-and-st-spaces: @layout-gutter * 2;
+// 按钮间
+@preserve-buttons-spaces: @layout-gutter;
+
+// table
+@nz-table-img-radius: 4px;
+@nz-table-img-margin-right: 4px;
+@nz-table-img-max-height: 32px;
+@nz-table-img-max-width: 32px;
+@nz-table-even-background: none;
+@nz-table-rep-max-width: @mobile-max;
+@nz-table-rep-min-width: @nz-table-rep-max-width + 1;
+@nz-table-rep-header-background: @border-color-split;
+@nz-table-rep-even-background: @item-hover-bg;
+@nz-table-rep-padding-vertical: (@table-padding-vertical / 2);
+@nz-table-rep-padding-horizontal: (@table-padding-horizontal / 2);
+@nz-table-rep-column-name-width: 100px;
+@nz-table-rep-column-name-text-align: right;
+@nz-table-rep-column-name-padding-right: 8px;
+@nz-table-rep-column-name-color: fade(@black, 50%);
+
+// Forced to turn off Modal animation
+@forced-turn-off-nz-modal-animation-enabled: false;
+
+@sf-title-text-align: left;
+@sf-optional-color: fade(@black, 35%);
+@sf-optional-margin: 2px;
+@sf-inline-ant-select-min-width: 100px;
+@sf-widget-array-type-card-remove-bg: fade(@black, 26%);
+
+@yn-yes-color: @blue-6;
+@yn-no-color: @grey-7;
+
+@setting-drawer-enabled: true;
+@setting-drawer-width: 500px;
+
+@theme-btn-enabled: true;
+
+@enabled-util-align: true;
+@enabled-util-border: true;
+@enabled-util-code: true;
+@enabled-util-color: true;
+@enabled-util-display: true;
+@enabled-util-float: true;
+@enabled-util-icon: true;
+@enabled-util-img: true;
+@enabled-util-position: true;
+@enabled-util-overflow: true;
+@enabled-util-responsive: true;
+@enabled-util-spacing: true;
+@enabled-util-text: true;
+@enabled-util-width: true;
+@enabled-util-scrollbar: true;
+@enabled-util-other: true;
+
+// 中心元素
+@abs-enabled: false;
+// 搜索表单
+@search__form-enabled: true;
+@search-form-bg: #fbfbfb;
+@search-form-radius: 4px;
+// 半图
+@hafl-enabled: true;
+@hafl-float-size: sm @layout-gutter * 8, md @layout-gutter * 10, lg @layout-gutter * 12;
+// 瀑布流
+@masonry-enabled: true;
+@masonry-column-gap: @layout-gutter * 2;

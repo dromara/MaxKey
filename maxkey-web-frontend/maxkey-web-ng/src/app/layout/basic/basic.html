@@ -1,0 +1,115 @@
+<layout-default [options]="options" [asideUser]="asideUserTpl" [content]="contentTpl" [customError]="null">
+  @if (inst.custom) {
+    <layout-default-header-item direction="left">
+      <a href="#">
+        <img src="{{ inst.logo }}" alt="logo" style="height: 50px; height: 50px; float: left" />
+        <div class="alain-default__header-title"> {{ inst.title }} </div>
+      </a>
+    </layout-default-header-item>
+  } @else {
+    <layout-default-header-item direction="left">
+      <a href="#">
+        <img src="./assets/logo.png" alt="logo" style="height: 50px; height: 50px; float: left" />
+        <div class="alain-default__header-title">
+          <span style="color: #000099">Max</span>
+          <span style="color: #ffd700">Key</span>
+          {{ 'mxk.title' | i18n }}
+        </div>
+      </a>
+    </layout-default-header-item>
+  }
+  <!--
+      <layout-default-header-item direction="left">
+        <a layout-default-header-item-trigger href="//github.com/ng-alain/ng-alain" target="_blank">
+          <nz-icon nzType="github" />
+        </a>
+      </layout-default-header-item>
+      <layout-default-header-item direction="left" hidden="mobile">
+        <a layout-default-header-item-trigger routerLink="/passport/lock">
+          <nz-icon nzType="lock" />
+        </a>
+      </layout-default-header-item>
+      <layout-default-header-item direction="left" hidden="pc">
+        <div layout-default-header-item-trigger (click)="searchToggleStatus.set(!searchToggleStatus())">
+          <nz-icon nzType="search" />
+        </div>
+      </layout-default-header-item>
+      <layout-default-header-item direction="middle">
+        <header-search [(toggleChange)]="searchToggleStatus" />
+      </layout-default-header-item>
+
+      <layout-default-header-item direction="right">
+        <header-notify />
+      </layout-default-header-item>
+      <layout-default-header-item direction="right" hidden="mobile">
+        <header-task />
+      </layout-default-header-item>
+      <layout-default-header-item direction="right" hidden="mobile">
+        <header-icon />
+      </layout-default-header-item>-->
+  <layout-default-header-item direction="right">
+    <header-user />
+  </layout-default-header-item>
+  <layout-default-header-item direction="right" hidden="mobile">
+    <div layout-default-header-item-trigger nz-dropdown [nzDropdownMenu]="settingsMenu" nzTrigger="click" nzPlacement="bottomRight">
+      <nz-icon nzType="setting" />
+    </div>
+    <nz-dropdown-menu #settingsMenu="nzDropdownMenu">
+      <div nz-menu style="width: 200px">
+        <div nz-menu-item>
+          <header-rtl />
+        </div>
+        <div nz-menu-item>
+          <header-fullscreen />
+        </div>
+        <div nz-menu-item>
+          <header-clear-storage />
+        </div>
+        <div nz-menu-item>
+          <header-i18n />
+        </div>
+      </div>
+    </nz-dropdown-menu>
+  </layout-default-header-item>
+  <layout-default-header-item direction="right">
+    <div layout-default-header-item-trigger nz-dropdown nzTrigger="click" nzPlacement="bottomRight">
+      <div (click)="logout()">
+        <span nz-icon nzType="logout" nzTheme="outline" class="mr-sm"></span>
+        <!--{{ 'menu.account.logout' | i18n }}-->
+      </div>
+    </div>
+  </layout-default-header-item>
+  <ng-template #asideUserTpl>
+    <div nz-dropdown nzTrigger="click" [nzDropdownMenu]="userMenu" class="alain-default__aside-user">
+      <nz-avatar class="alain-default__aside-user-avatar" [nzSrc]="user.avatar" />
+      <div class="alain-default__aside-user-info">
+        <strong>{{ user.name }}</strong>
+        <p class="mb0">{{ user.email }}</p>
+      </div>
+    </div>
+    <nz-dropdown-menu #userMenu="nzDropdownMenu">
+      <ul nz-menu>
+        <li nz-menu-item routerLink="/pro/account/center">{{ 'menu.account.center' | i18n }}</li>
+        <li nz-menu-item routerLink="/pro/account/settings">{{ 'menu.account.settings' | i18n }}</li>
+      </ul>
+    </nz-dropdown-menu>
+  </ng-template>
+  <ng-template #contentTpl>
+    <router-outlet />
+  </ng-template>
+</layout-default>
+<div style="border-top: 1px solid #e5e5e5; min-height: 120px; text-shadow: 0 1px 0 #fff; margin: 0; text-align: center">
+  <div style="margin-top: 16px">
+    {{ CONSTS.PRODUCT_NAME }}<br />
+    Version {{ CONSTS.VERSION }}<br />
+    Copyright
+    <nz-icon nzType="copyright" />
+    {{ copyrightYear }}
+    <a href="{{ CONSTS.HOME_PAGE }}" target="_blank"> {{ CONSTS.HOME_PAGE }} </a>. <br />
+    {{ CONSTS.LICENSE }}
+  </div>
+</div>
+@if (showSettingDrawer) {
+  <setting-drawer />
+}
+<theme-btn />

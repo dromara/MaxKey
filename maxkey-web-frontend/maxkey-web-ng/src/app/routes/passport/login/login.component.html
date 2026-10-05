@@ -1,0 +1,146 @@
+<form nz-form [formGroup]="form" (ngSubmit)="submit()" role="form">
+  @if (switchTab) {
+    <nz-radio-group [(ngModel)]="loginType" [ngModelOptions]="{ standalone: true }" nzSize="large" style="margin-bottom: 8px; width: 100%">
+      <label nz-radio-button nzValue="normal" style="width: 50%; text-align: center">
+        <nz-icon nzType="user" nzTheme="outline" />
+        {{ 'mxk.login.tab-credentials' | i18n }}
+      </label>
+      <label nz-radio-button nzValue="mobile" style="width: 50%; text-align: center" class="d-none">
+        <nz-icon nzType="mobile" nzTheme="outline" />
+        {{ 'mxk.login.tab-mobile' | i18n }}
+      </label>
+      <label nz-radio-button nzValue="qrscan" style="width: 50%; text-align: center" (click)="getScanQrCode()">
+        <nz-icon nzType="qrcode" nzTheme="outline" />{{ 'mxk.login.tab-qrscan' | i18n }}
+      </label>
+    </nz-radio-group>
+  }
+  @if (loginType == 'normal') {
+    <div nz-row>
+      @if (error) {
+        <nz-alert style="width: 100%" nzType="error" [nzMessage]="error" [nzShowIcon]="true" class="mb-lg" />
+      }
+      <nz-form-item style="width: 100%">
+        <nz-form-control nzErrorTip="">
+          <nz-input-wrapper>
+            <nz-icon nzInputAddonBefore nzType="user" />
+            <input nzSize="large" nz-input formControlName="userName" placeholder="{{ 'mxk.login.text.username' | i18n }}" />
+          </nz-input-wrapper>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item style="width: 100%">
+        <nz-form-control nzErrorTip="">
+          <nz-input-wrapper>
+            <nz-icon nzInputAddonBefore nzType="key" />
+            <input
+              [type]="passwordVisible ? 'text' : 'password'"
+              nz-input
+              placeholder="{{ 'mxk.login.text.password' | i18n }}"
+              formControlName="password"
+              nzSize="large"
+            />
+            <nz-icon nzInputSuffix [nzType]="passwordVisible ? 'eye' : 'eye-invisible'" (click)="passwordVisible = !passwordVisible" />
+          </nz-input-wrapper>
+          <ng-template #suffixTemplate>
+            <nz-icon [nzType]="passwordVisible ? 'eye-invisible' : 'eye'" (click)="passwordVisible = !passwordVisible" />
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+      @if (captchaType != 'NONE') {
+        <nz-form-item style="width: 100%">
+          <nz-form-control nzErrorTip="">
+            <nz-space-compact nzSize="large">
+              <nz-input-wrapper>
+                <nz-icon nzInputAddonBefore nzType="lock" />
+                <input type="text" formControlName="captcha" nz-input placeholder="{{ 'mxk.login.text.captcha' | i18n }}" />
+                <nz-icon nzInputSuffix><img style="height: 38px" src="{{ imageCaptcha }}" (click)="getImageCaptcha()" /></nz-icon>
+              </nz-input-wrapper>
+            </nz-space-compact>
+          </nz-form-control>
+        </nz-form-item>
+      }
+    </div>
+  }
+  @if (loginType == 'mobile') {
+    <div nz-row>
+      <nz-form-item style="width: 100%">
+        <nz-form-control [nzErrorTip]="">
+          <nz-input-wrapper>
+            <nz-icon nzInputAddonBefore nzType="mobile" />
+            <input nzSize="large" nz-input formControlName="mobile" placeholder="{{ 'mxk.login.text.mobile' | i18n }}" />
+          </nz-input-wrapper>
+          <ng-template #mobileErrorTip let-i>
+            @if (i.errors.required) {
+              <ng-container>
+                {{ 'validation.phone-number.required' | i18n }}
+              </ng-container>
+            }
+            @if (i.errors.pattern) {
+              <ng-container>
+                {{ 'validation.phone-number.wrong-format' | i18n }}
+              </ng-container>
+            }
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item style="width: 100%">
+        <nz-form-control [nzErrorTip]="'' | i18n">
+          <nz-space-compact nzSize="large" style="width: 100%">
+            <nz-input-wrapper>
+              <nz-icon nzInputPrefix nzType="mail" />
+              <input nz-input formControlName="otpCaptcha" placeholder="{{ 'mxk.login.text.captcha' | i18n }}" />
+            </nz-input-wrapper>
+            <button type="button" nz-button nzSize="large" (click)="sendOtpCode()" [disabled]="count > 0" nzBlock [nzLoading]="loading">
+              {{ count ? count + 's' : ('app.register.get-verification-code' | i18n) }}
+            </button>
+          </nz-space-compact>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  }
+  @if (loginType == 'qrscan') {
+    <div nz-row>
+      <div class="qrcode" id="div_qrcodelogin" style="background: #fff; padding: 20px"></div>
+      @if (qrexpire) {
+        <div id="qrexpire" style="width: 100%; text-align: center; background: #fff; padding-bottom: 20px">
+          二维码过期 <a href="javascript:void(0);" (click)="getScanQrCode()">刷新</a>
+        </div>
+      }
+    </div>
+  }
+  @if (loginType == 'normal' || loginType == 'mobile') {
+    <nz-form-item>
+      <nz-col [nzSpan]="12">
+        <label nz-checkbox formControlName="remember">{{ 'mxk.login.remember-me' | i18n }}</label>
+      </nz-col>
+      <nz-col [nzSpan]="12" class="text-right">
+        <a class="forgot" routerLink="/passport/forgot">{{ 'mxk.login.forgot-password' | i18n }}</a>
+      </nz-col>
+    </nz-form-item>
+    <nz-form-item>
+      <button nz-button type="submit" nzType="primary" nzSize="large" [nzLoading]="loading" nzBlock>
+        {{ 'app.login.login' | i18n }}
+      </button>
+    </nz-form-item>
+  }
+  @if (passkeyEnabled) {
+    <nz-form-item>
+      <button nz-button type="button" nzType="default" nzSize="large" (click)="passkeyLogin()" nzBlock>
+        <nz-icon nzType="safety-certificate" nzTheme="outline" />
+        {{ 'mxk.login.passkey-login' | i18n }}
+      </button>
+    </nz-form-item>
+  }
+</form>
+@if (loginType == 'normal') {
+  <div class="other">
+    {{ 'app.login.sign-in-with' | i18n }}
+    @for (provd of socials.providers; track provd) {
+      <ng-container>
+        <nz-icon nz-tooltip nzTooltipTitle="{{ provd.providerName }}" (click)="socialauth(provd.provider)" nz-icon class="icon">
+          <img src="{{ provd.icon }}" style="width: 32px" />
+        </nz-icon>
+      </ng-container>
+    }
+    <a class="register d-none" routerLink="/passport/register">{{ 'mxk.login.signup' | i18n }}</a>
+  </div>
+}

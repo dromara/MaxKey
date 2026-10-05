@@ -1,0 +1,54 @@
+.preserve-white-spaces-mixin(@enabled) when(@enabled=true) {
+  sf + st {
+    margin-top: @preserve-sf-and-st-spaces;
+  }
+
+  // button + button
+  .@{ant-prefix}-btn:not(.ant-btn-link) + .@{ant-prefix}-btn,
+  .@{ant-prefix}-btn:not(.ant-btn-link) + nz-popconfirm,
+  nz-popconfirm + .@{ant-prefix}-btn,
+  nz-popconfirm + nz-popconfirm,
+  .@{ant-prefix}-btn:not(.ant-btn-link) + nz-space-compact,
+  nz-space-compact + .@{ant-prefix}-btn,
+  .@{ant-prefix}-btn:not(.ant-btn-link) + nz-dropdown,
+  nz-dropdown + .@{ant-prefix}-btn,
+  nz-popconfirm + nz-space-compact,
+  nz-space-compact + nz-popconfirm {
+    margin-left: @preserve-buttons-spaces;
+  }
+  .@{ant-prefix}-btn-group {
+    .@{ant-prefix}-btn + .@{ant-prefix}-btn {
+      margin-left: -1px;
+    }
+  }
+
+  // fix ng-zorro-antd components
+  .@{ant-prefix}-transfer-operation {
+    .@{ant-prefix}-btn + .@{ant-prefix}-btn {
+      margin-left: initial;
+    }
+  }
+
+  .preserve-white-spaces-rtl-mixin(@enabled) when(@enabled=true) {
+    [dir='rtl'] {
+      // button + button
+      .@{ant-prefix}-btn + .@{ant-prefix}-btn,
+      .@{ant-prefix}-btn + nz-popconfirm,
+      nz-popconfirm + .@{ant-prefix}-btn,
+      nz-popconfirm + nz-popconfirm,
+      .@{ant-prefix}-btn + nz-space-compact,
+      nz-space-compact + .@{ant-prefix}-btn,
+      .@{ant-prefix}-btn + nz-dropdown,
+      nz-dropdown + .@{ant-prefix}-btn,
+      nz-popconfirm + nz-space-compact,
+      nz-space-compact + nz-popconfirm {
+        margin-right: @preserve-buttons-spaces;
+        margin-left: inherit;
+      }
+    }
+  }
+  /* stylelint-disable-next-line order/order */
+  .preserve-white-spaces-rtl-mixin(@rtl-enabled);
+}
+
+.preserve-white-spaces-mixin(@preserve-white-spaces-enabled);

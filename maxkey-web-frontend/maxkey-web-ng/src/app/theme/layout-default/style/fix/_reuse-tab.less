@@ -1,0 +1,75 @@
+@alain-default-aside-width: @alain-default-aside-wd + @alain-default-content-padding;
+@alain-default-aside-collapsed-width: @alain-default-aside-collapsed-wd + @alain-default-content-padding;
+
+@{reuse-tab-prefix} {
+  margin: 0 -@alain-default-content-padding;
+}
+
+@{alain-default-prefix}__fixed {
+  @{reuse-tab-prefix} {
+    position: fixed;
+    z-index: @zindex-fixed + 1;
+    top: @alain-default-header-hg;
+    right: @alain-default-content-padding;
+    left: @alain-default-aside-width;
+  }
+}
+
+@{alain-default-prefix}__collapsed {
+  @{reuse-tab-prefix} {
+    left: @alain-default-aside-collapsed-width;
+  }
+}
+
+@{alain-default-prefix}__hide-aside {
+  @{reuse-tab-prefix} {
+    left: @alain-default-content-padding;
+  }
+}
+
+@{alain-default-prefix}__hide-header {
+  @{reuse-tab-prefix} {
+    top: 0;
+  }
+}
+
+@media (min-width: @mobile-min) {
+  @{alain-default-prefix}__fixed {
+    @{reuse-tab-prefix} {
+      + router-outlet {
+        display: block;
+        height: @reuse-tab-height;
+      }
+    }
+  }
+}
+
+@media (max-width: @mobile-max) {
+  @{alain-default-prefix}__fixed {
+    @{reuse-tab-prefix} {
+      position: unset;
+      width: initial;
+      margin-top: @reuse-tab-height;
+    }
+  }
+}
+
+.layout-default-reuse-tab-rtl-mixin(@enabled) when(@enabled=true) {
+  [dir='rtl'] {
+    @{alain-default-prefix}__fixed {
+      @{reuse-tab-prefix} {
+        right: @alain-default-aside-width;
+        left: @alain-default-content-padding;
+      }
+    }
+
+    @{alain-default-prefix}__collapsed {
+      @{reuse-tab-prefix} {
+        right: @alain-default-aside-collapsed-width;
+        left: 0;
+      }
+    }
+  }
+}
+
+.layout-default-reuse-tab-rtl-mixin(@rtl-enabled);

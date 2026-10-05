@@ -1,0 +1,36 @@
+@theme-btn-prefix: ~'.theme-btn';
+
+.widget-theme-btn-mixin(@enabled) when(@enabled=true) {
+  @{theme-btn-prefix} {
+    cursor: pointer;
+    position: fixed;
+    z-index: 2147483640;
+    right: 32px;
+    bottom: 102px;
+    display: flex;
+    flex-direction: column;
+
+    &-active {
+      width: 44px;
+      height: 44px;
+      font-size: 22px;
+      line-height: 44px;
+      color: @primary-color;
+    }
+
+    .ant-avatar {
+      color: #000;
+      background-color: #fff;
+      box-shadow: @shadow-2;
+      transition: color 0.3s;
+
+      &:hover {
+        color: @primary-color;
+      }
+    }
+  }
+
+  @import './rtl.less';
+}
+
+.widget-theme-btn-mixin(@theme-btn-enabled);

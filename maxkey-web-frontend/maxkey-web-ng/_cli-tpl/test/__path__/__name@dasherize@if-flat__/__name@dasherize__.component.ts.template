@@ -1,0 +1,21 @@
+import { Component, OnInit<% if(!!viewEncapsulation) { %>, ViewEncapsulation<% }%><% if(changeDetection !== 'Default') { %>, ChangeDetectionStrategy<% }%>, inject } from '@angular/core';
+import { _HttpClient } from '@delon/theme';
+import { NzMessageService } from 'ng-zorro-antd/message';<% if(standalone) {%>
+import { SHARED_IMPORTS } from '@shared';<%}%>
+
+@Component({
+  selector: '<%= selector %>',<% if(standalone) {%>
+  standalone: true,
+  imports: [...SHARED_IMPORTS],<%}%>
+  templateUrl: './<%= dasherize(name) %>.component.html',<% if(!inlineStyle) { %><% } else { %>
+  styleUrls: ['./<%= dasherize(name) %>.component.<%= styleext %>']<% } %><% if(!!viewEncapsulation) { %>,
+  encapsulation: ViewEncapsulation.<%= viewEncapsulation %><% } if (changeDetection !== 'Default') { %>,
+  changeDetection: ChangeDetectionStrategy.<%= changeDetection %><% } %>
+})
+export class <%= componentName %> implements OnInit {
+  private readonly http = inject(_HttpClient);
+  private readonly msgSrv = inject(NzMessageService);
+
+  ngOnInit() { }
+
+}
