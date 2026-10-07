@@ -1,0 +1,43 @@
+.widget-abs-mixin(@enabled) when(@enabled=true) {
+  .abs-center-container {
+    position: relative;
+  }
+
+  .abs-center {
+    position: absolute;
+    inset: 0;
+    overflow: auto;
+    margin: auto;
+
+    &.abs-fixed {
+      position: fixed;
+      z-index: 999;
+    }
+
+    &.abs-right {
+      right: 20px;
+      left: auto;
+      text-align: right;
+    }
+
+    &.abs-left {
+      right: auto;
+      left: 20px;
+      text-align: left;
+    }
+  }
+
+  @media (max-width: 320px) {
+    .abs-center {
+      padding: 0 10px;
+    }
+  }
+
+  @media (max-height: @mobile-max) {
+    .abs-center {
+      position: relative;
+    }
+  }
+}
+
+.widget-abs-mixin(@abs-enabled);

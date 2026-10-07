@@ -1,0 +1,49 @@
+name: Deploy website
+
+# on: push
+
+on:
+  push:
+    branches:
+      - 'publish-**'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: Install node modules
+        run: pnpm install --no-frozen-lockfile
+
+      - name: build
+        shell: bash
+        run: bash ./scripts/_ci/deploy-pipelines.sh
+
+      - name: deploy-to-surge
+        uses: dswistowski/surge-sh-action@v1
+        with:
+          login: ${{ secrets.SURGE_LOGIN }}
+          token: ${{ secrets.SURGE_TOKEN }}
+          domain: https://ng-alain.surge.sh
+          project: ./dist/ng-alain/browser
+
+      - name: Replace base href for gh-pages
+        uses: jacobtomlinson/gha-find-replace@v2
+        with:
+          find: '<base href="/">'
+          replace: '<base href="/ng-alain/">'
+          include: '*.html'
+          regex: false
+
+      - name: deploy-to-gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./dist/ng-alain/browser
+          emptyCommits: false

@@ -1,0 +1,140 @@
+// see https://ant.design/docs/spec/colors#Neutral-color-application
+@border-color: @border-color-split;
+@border-grids: sm @border-radius-sm, md @border-radius-md, lg @border-radius-lg;
+
+/**
+ * Set the four border to `1px`
+ *
+ * 设置四个边框为 `1px`
+ */
+.border {
+  border: 1px solid @border-color !important;
+}
+
+@border-width-list: 0, 1;
+
+.for(@border-width-list, {
+  .border-css-mixin(@i) when(@i > 0) {
+    @css-value-comment: ~'1px';
+    @css-value: ~'@{i}px solid @{border-color}';
+  }
+
+  .border-css-mixin(@i) when(default()) {
+    @css-value-comment: ~'0px';
+    @css-value: 0;
+  }
+
+  .border-css-mixin(@adIndex);
+
+  .border-@{adIndex} {
+    genComment('@{css-value-comment}', 'Set the border size to {0}', '设置边框大小为 {0}');
+    border: @css-value !important;
+  }
+
+  .border-top-@{adIndex} {
+    genComment('@{css-value-comment}', 'Set the top border size to {0}', '设置上边框大小为 {0}');
+    border-top: @css-value !important;
+  }
+
+  .border-right-@{adIndex} {
+    genComment('@{css-value-comment}', 'Set the right border size to {0}', '设置右边框大小为 {0}');
+    border-right: @css-value !important;
+  }
+
+  .border-bottom-@{adIndex} {
+    genComment('@{css-value-comment}', 'Set the bottom border size to {0}', '设置下边框大小为 {0}');
+    border-bottom: @css-value !important;
+  }
+
+  .border-left-@{adIndex} {
+    genComment('@{css-value-comment}', 'Set the left border size to {0}', '设置左边框大小为 {0}');
+    border-left: @css-value !important;
+  }
+});
+
+// color
+.for-each(@colors, {
+  .border-@{adKey} {
+    @border-colors-color: extract(@adItem, @color-basic-position);
+    genCommentColor('@{border-colors-color}', 'Set the border color to {0}', '设置边框颜色为 {0}');
+    border-color: @border-colors-color !important;
+  }
+});
+
+.for-each(@aliasColors, {
+  .border-@{adKey} {
+    genComment('@{adValue}', 'Set the border color to {0}', '设置边框颜色为 {0}');
+    border-color: @adValue !important;
+  }
+});
+
+// Border-radius
+.for-each(@border-grids, {
+  .rounded-@{adKey} {
+    genComment('@{adValue}', 'Set the border radius to {0}', '设置边框圆角为 {0}');
+    border-radius: @adValue;
+  }
+
+  .rounded-top-left-@{adKey} {
+    genComment('@{adValue}', 'Set the border top-left corner to {0}', '设置左上角边框圆角为 {0}');
+    border-top-left-radius: @adValue;
+  }
+
+  .rounded-top-right-@{adKey} {
+    genComment('@{adValue}', 'Set the border top-right corner to {0}', '设置右上角边框圆角为 {0}');
+    border-top-right-radius: @adValue;
+  }
+
+  .rounded-bottom-left-@{adKey} {
+    genComment('@{adValue}', 'Set the border bottom-left corner to {0}', '设置左下角边框圆角为 {0}');
+    border-bottom-left-radius: @adValue;
+  }
+
+  .rounded-bottom-right-@{adKey} {
+    genComment('@{adValue}', 'Set the border bottom-right corner to {0}', '设置右下角边框圆角为 {0}');
+    border-bottom-right-radius: @adValue;
+  }
+});
+
+/**
+ * Set circular border
+ *
+ * 设置圆形边框
+ */
+.rounded-circle {
+  border-radius: 50%;
+}
+
+/**
+ * Set frameless
+ *
+ * 设置无框
+ */
+.rounded-0 {
+  border-radius: 0;
+}
+
+/**
+ * Set the border color to white
+ *
+ * 设置边框颜色为白色
+ */
+.border-white {
+  border-color: #fff !important;
+}
+
+/**
+ * TODO: 旋转，无法理解只能放在这里，否则 stylelint 无法通过
+ */
+.rotate-loop(@i) when (@i > 0) {
+  @num: @i * 15;
+
+  .rotate-@{num} {
+    genComment('@{num}', 'Element transform to {0} degree', '元素旋转 {0} 度');
+    transform: rotate(~'@{num}deg');
+  }
+
+  .rotate-loop(@i - 1);
+}
+
+.rotate-loop(@rotate-count);

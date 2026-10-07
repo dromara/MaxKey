@@ -1,0 +1,55 @@
+<form nz-form [formGroup]="form" (ngSubmit)="submit()" role="form">
+  @if (error) {
+    <nz-alert nzType="error" [nzMessage]="error" [nzShowIcon]="true" class="mb-lg" />
+  }
+  <nz-form-item style="width: 100%">
+    <nz-form-control nzErrorTip="">
+      <nz-input-wrapper>
+        <nz-icon nzInputPrefix nzType="user" />
+        <input
+          nz-input
+          formControlName="userName"
+          placeholder="{{ 'mxk.login.text.username' | i18n }}"
+          style="font-weight: bold"
+          nzSize="large"
+        />
+      </nz-input-wrapper>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item style="width: 100%">
+    <nz-form-control nzErrorTip="">
+      <nz-input-wrapper>
+        <nz-icon nzInputPrefix nzType="key" style="color: #ffd700" />
+        <input
+          [type]="passwordVisible ? 'text' : 'password'"
+          nz-input
+          placeholder="{{ 'mxk.login.text.password' | i18n }}"
+          formControlName="password"
+          style="font-weight: bold"
+          nzSize="large"
+        />
+        <nz-icon nzInputSuffix [nzType]="passwordVisible ? 'eye' : 'eye-invisible'" (click)="passwordVisible = !passwordVisible" />
+      </nz-input-wrapper>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item style="width: 100%">
+    <nz-form-control nzErrorTip="">
+      <nz-input-wrapper>
+        <nz-icon nzInputPrefix nzType="lock" />
+        <input
+          style="font-weight: bold"
+          type="text"
+          formControlName="captcha"
+          nz-input
+          placeholder="{{ 'mxk.login.text.captcha' | i18n }}"
+        />
+        <nz-icon nzInputSuffix><img style="height: 38px" src="{{ imageCaptcha }}" (click)="getImageCaptcha()" /></nz-icon>
+      </nz-input-wrapper>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <button nz-button type="submit" nzType="primary" nzSize="large" [nzLoading]="loading" nzBlock>
+      {{ 'app.login.login' | i18n }}
+    </button>
+  </nz-form-item>
+</form>

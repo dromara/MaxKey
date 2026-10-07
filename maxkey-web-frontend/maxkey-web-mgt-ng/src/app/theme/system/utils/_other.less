@@ -1,0 +1,88 @@
+/**
+ * The cursor is a pointer that indicates a link. Typically an image of a pointing hand
+ *
+ * 悬浮于连接上时，通常为手
+ */
+.point {
+  cursor: pointer;
+}
+
+.no {
+  &-resize {
+    /**
+     * The element offers no user-controllable method for resizing it.
+     *
+     * 元素不能被用户缩放
+     */
+    resize: none;
+    min-width: 100%;
+    max-width: 100%;
+  }
+
+  &-data {
+    /**
+     * No data elements
+     *
+     * 无数据元素
+     */
+    font-size: 16px;
+    line-height: 64px;
+    color: fade(@text-color, 25%);
+    text-align: center;
+
+    i {
+      position: relative;
+      top: 3px;
+      margin-right: 16px;
+      font-size: 24px;
+    }
+  }
+}
+
+/**
+  * Block element horizontally centered
+  *
+  * 块元素水平居中
+  */
+.block-center {
+  margin: 0 auto;
+}
+
+/**
+  * The background is centered vertically
+  *
+  * 背景垂直居中
+  */
+.bg-center {
+  background-position: center center;
+  background-size: cover;
+}
+
+/**
+  * Page loading
+  *
+  * 页面 loading
+  */
+.page-loading {
+  position: absolute;
+  z-index: 10000;
+  inset: 0;
+  padding-top: 200px;
+  text-align: center;
+  background: @background-color-base;
+}
+
+.color-weak {
+  display: block;
+  filter: invert(80%);
+}
+
+/**
+  * Disable style, Cannot respond to any events
+  *
+  * 禁用样式，不可响应任何事件
+  */
+.disabled {
+  pointer-events: none;
+  color: @disabled-color;
+}

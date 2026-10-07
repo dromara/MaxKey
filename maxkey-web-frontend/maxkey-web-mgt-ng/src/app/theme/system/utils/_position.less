@@ -1,0 +1,70 @@
+/**
+ * Positioning method: nothing
+ *
+ * 定位方式：无
+ */
+.position-static {
+  position: static !important;
+}
+
+/**
+ * The element is positioned relative to its normal position, so "left:20px" adds 20 pixels to the element's LEFT position
+ *
+ * 生成相对定位的元素，相对于其正常位置进行定位
+ */
+.position-relative {
+  position: relative !important;
+}
+
+/**
+ * The element is positioned relative to its first positioned (not static) ancestor element
+ *
+ * 定位方式：绝对，相对于 static 定位以外的第一个父元素进行定位
+ */
+.position-absolute {
+  position: absolute !important;
+}
+
+/**
+ * The element is positioned relative to the browser window
+ *
+ * 定位方式：绝对，相对于浏览器窗口进行定位
+ */
+.position-fixed {
+  position: fixed !important;
+}
+
+/**
+ * The element is positioned based on the user's scroll position
+ *
+ * 定位方式：粘性，基于用户的滚动位置来定位
+ */
+.position-sticky {
+  position: sticky !important;
+}
+
+/**
+ * Full screen fixed top
+ *
+ * 全屏固定顶部
+ */
+.fixed-top {
+  position: fixed;
+  z-index: @zindex-fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+}
+
+/**
+ * Full screen fixed bottom
+ *
+ * 全屏固定底部
+ */
+.fixed-bottom {
+  position: fixed;
+  z-index: @zindex-fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}

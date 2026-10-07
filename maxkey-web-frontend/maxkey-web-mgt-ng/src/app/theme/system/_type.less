@@ -1,0 +1,84 @@
+.h1,
+.h2,
+.h3 {
+  small,
+  .small {
+    font-size: 65%;
+  }
+}
+
+.h4,
+.h5,
+.h6 {
+  small,
+  .small {
+    font-size: 75%;
+  }
+}
+
+.h1 {
+  font-size: @h1-font-size;
+}
+
+.h2 {
+  font-size: @h2-font-size;
+}
+
+.h3 {
+  font-size: @h3-font-size;
+}
+
+.h4 {
+  font-size: @h4-font-size;
+}
+
+.h5 {
+  font-size: @h5-font-size;
+}
+
+.h6 {
+  font-size: @h6-font-size;
+}
+
+// List
+.list-styled {
+  padding-left: @ul-ol-margin;
+  list-style: inherit;
+}
+
+.list-unstyled {
+  padding-left: 0;
+  list-style: none;
+}
+
+// Forms
+fieldset {
+  border: none;
+}
+
+// Display
+.display-1 {
+  font-size: 32px;
+}
+
+.display-2 {
+  font-size: 24px;
+}
+
+.display-3 {
+  font-size: 20px;
+}
+
+.type-rtl-mixin(@enabled) when(@enabled=true) {
+  // List
+  .list-styled {
+    padding-right: @ul-ol-margin;
+    padding-left: 0;
+  }
+
+  .list-unstyled {
+    padding-right: 0;
+    padding-left: inherit;
+  }
+}
+.type-rtl-mixin(@rtl-enabled);

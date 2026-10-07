@@ -1,0 +1,78 @@
+// You can directly set the default theme
+// - `default` Default theme
+// - `dark` Import the official dark less style file
+// - `compact` Import the official compact less style file
+// - `variable` Import the official compact less style file
+@import '../app/theme/theme-default.less';
+
+// ==========The following is the custom theme variable area==========
+// The theme paraments can be generated at https://ng-alain.github.io/ng-alain/
+// @primary-color: #f50;
+@alain-default-aside-nav-selected-text-color: white;
+
+.table-list-toolbar {
+  margin-bottom: 10px;
+}
+
+.mxk-tabs-nav {
+  width: 100%;
+}
+
+.ant-table-row {
+  height: 49px;
+}
+
+.ant-table-selection-column {
+  width: 48px;
+}
+
+.table-action-column-1 {
+  width: 80px;
+}
+
+.table-action-column-2 {
+  width: 160px;
+}
+
+.table-action-column-3 {
+  width: 240px;
+}
+
+.table-action-column-4 {
+  width: 320px;
+}
+
+.table-column-1 {
+  width: 80px;
+}
+
+.table-column-2 {
+  width: 160px;
+}
+
+.table-column-id {
+  width: 80px;
+}
+
+.table-column-datetime {
+  width: 150px;
+}
+
+.table-column-3 {
+  width: 240px;
+}
+
+.ant-input-group-addon:last-child {
+  left: -1px;
+  padding: 0;
+  border: 0;
+}
+
+.sidebar-nav__item-link:hover {
+  color: yellow;
+  background-color: @primary-color;
+}
+
+.sidebar-nav__selected > .sidebar-nav__item-link {
+  background-color: @primary-color;
+}

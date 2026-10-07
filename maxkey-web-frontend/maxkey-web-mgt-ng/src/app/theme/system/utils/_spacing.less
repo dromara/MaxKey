@@ -1,0 +1,99 @@
+@mp-list: margin m, padding p;
+
+.loop-mp(@infix, @adKey, @adValue, @i: 1) when (@i =< length(@mp-list)) {
+  @item: extract(@mp-list, @i);
+  @abbrev: extract(@item, 2);
+  @prop: extract(@item, 1);
+
+  .@{abbrev}@{infix} {
+    genComment('@{adValue}', 'Set the @{prop} size to {0}', '设置 @{prop} 大小为 {0}');
+    @{prop}: @adValue !important;
+  }
+
+  .@{abbrev}t@{infix} {
+    genComment('@{adValue}', 'Set the @{prop}-top size to {0}', '设置 @{prop}-top 大小为 {0}');
+    @{prop}-top: @adValue !important;
+  }
+
+  .@{abbrev}r@{infix} {
+    genComment('@{adValue}', 'Set the @{prop}-right size to {0}', '设置 @{prop}-right 大小为 {0}');
+    @{prop}-right: @adValue !important;
+  }
+
+  .@{abbrev}b@{infix} {
+    genComment('@{adValue}', 'Set the @{prop}-bottom size to {0}', '设置 @{prop}-bottom 大小为 {0}');
+    @{prop}-bottom: @adValue !important;
+  }
+
+  .@{abbrev}l@{infix} {
+    genComment('@{adValue}', 'Set the @{prop}-left size to {0}', '设置 @{prop}-left 大小为 {0}');
+    @{prop}-left: @adValue !important;
+  }
+
+  .@{abbrev}x@{infix} {
+    genComment('@{adValue}', 'Set the @{prop} horizontal (left & right) size to {0}', '设置 @{prop} 水平（即左与右）大小为 {0}');
+    @{prop}-right: @adValue !important;
+    @{prop}-left: @adValue !important;
+  }
+
+  .@{abbrev}y@{infix} {
+    genComment('@{adValue}', 'Set the @{prop} vertical (top & bottom) size to {0}', '设置 @{prop} 垂直（即上与下）大小为 {0}');
+    @{prop}-top: @adValue !important;
+    @{prop}-bottom: @adValue !important;
+  }
+
+  .loop-mp(@infix, @adKey, @adValue, @i + 1);
+}
+
+.loop-mp-rtl(@infix, @adKey, @adValue, @i: 1) when (@i =< length(@mp-list)) {
+  @item: extract(@mp-list, @i);
+  @abbrev: extract(@item, 2);
+  @prop: extract(@item, 1);
+
+  // 无须设置注释
+  [dir="rtl"] {
+    .@{abbrev}r@{infix} {
+      @{prop}-left: @adValue !important;
+      @{prop}-right: inherit !important;
+    }
+
+    .@{abbrev}l@{infix} {
+      @{prop}-right: @adValue !important;
+      @{prop}-left: inherit !important;
+    }
+  }
+
+  .loop-mp-rtl(@infix, @adKey, @adValue, @i + 1);
+}
+
+.spacings-loop(@type) {
+  .for-each(@spacings, {
+    .infix-mixin(@adKey) when(@adKey =0) {
+      @infix: 0;
+    }
+
+    .infix-mixin(@adKey) when(default()) {
+      @infix: ~'-@{adKey}';
+    }
+
+    .infix-mixin(@adKey);
+
+    .loop-mp-fn-mixin(@type) when(@type ='lrt') {
+      .loop-mp(@infix, @adKey, @adValue, 1);
+    }
+
+    .loop-mp-fn-mixin(@type) when(default()) {
+      .loop-mp-rtl(@infix, @adKey, @adValue, 1);
+    }
+
+    .loop-mp-fn-mixin(@type);
+  });
+}
+
+.spacings-loop('lrt');
+
+.spacings-rtl-mixin(@enabled) when(@enabled=true) {
+  .spacings-loop('rtl');
+}
+
+.spacings-rtl-mixin(@rtl-enabled);

@@ -1,0 +1,26 @@
+.for-each(@widths, {
+  .width-@{adKey} {
+    genComment('@{adValue}', 'Specify the width as {0}', '指定宽度为 {0}');
+    width: @adValue !important;
+  }
+
+  .max-width-@{adKey} {
+    genComment('@{adValue}', 'Specify the maximum width as {0}', '指定最大宽度为 {0}');
+    max-width: @adValue !important;
+  }
+
+  .min-width-@{adKey} {
+    genComment('@{adValue}', 'Specify the minimum width as {0}', '指定最小宽度为 {0}');
+    min-width: @adValue !important;
+  }
+});
+
+@media (max-width: @mobile-max) {
+
+  /* stylelint-disable-next-line rule-empty-line-before */
+  .width-sm,
+  .max-width-sm,
+  .min-width-sm {
+    width: 100% !important;
+  }
+}

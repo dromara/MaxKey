@@ -1,0 +1,282 @@
+/*
+ * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import { Component, ChangeDetectorRef, ViewContainerRef, Input, OnInit, inject } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { I18NService } from '@core';
+import { _HttpClient, ALAIN_I18N_TOKEN, SettingsService } from '@delon/theme';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzModalRef, NzModalService, NZ_MODAL_DATA } from 'ng-zorro-antd/modal';
+import { NzUploadFile, NzUploadChangeParam } from 'ng-zorro-antd/upload';
+
+import { AppsOauth20Details } from '../../../entity/AppsOauth20Details';
+import { ExtraAttr } from '../../../entity/ExtraAttr';
+import { IModalDataApp } from '../../../entity/IModalDataApp';
+import { AppsOauth20DetailsService } from '../../../service/apps-oauth20-details.service';
+import { AppsService } from '../../../service/apps.service';
+import { SHARED_IMPORTS } from '../../../shared/shared-imports';
+import { SelectAdaptersComponent } from '../../config/adapters/select-adapters/select-adapters.component';
+
+const getBase64 = (file: File): Promise<string | ArrayBuffer | null> =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
+@Component({
+  selector: 'app-app-oauth20-details-editer',
+  templateUrl: './app-oauth20-details-editer.component.html',
+  styles: [
+    `
+      nz-tabset {
+        width: 90%;
+      }
+
+      nz-form-item {
+        width: 50%;
+      }
+    `
+  ],
+  styleUrls: ['./app-oauth20-details-editer.component.less'],
+  imports: [SHARED_IMPORTS]
+})
+export class AppOauth20DetailsEditerComponent implements OnInit {
+  modalData = inject<IModalDataApp>(NZ_MODAL_DATA);
+
+  form: {
+    submitting: boolean;
+    model: AppsOauth20Details;
+  } = {
+    submitting: false,
+    model: new AppsOauth20Details()
+  };
+
+  formGroup: FormGroup = new FormGroup({});
+
+  fileList: NzUploadFile[] = [];
+
+  previewImage: string | ArrayBuffer | undefined | null = '';
+  previewVisible = false;
+
+  extraAttrIndex: number = 1;
+  extraAttrEditCache: Record<string, { edit: boolean; data: ExtraAttr }> = {};
+  extraAttrListOfData: ExtraAttr[] = [];
+
+  private readonly modal: NzModalRef = inject(NzModalRef);
+  private readonly modalService: NzModalService = inject(NzModalService);
+  private readonly appsService: AppsService = inject(AppsService);
+  private readonly appsOauth20DetailsService: AppsOauth20DetailsService = inject(AppsOauth20DetailsService);
+  private readonly viewContainerRef: ViewContainerRef = inject(ViewContainerRef);
+  private readonly fb: FormBuilder = inject(FormBuilder);
+  private readonly msg: NzMessageService = inject(NzMessageService);
+  private readonly i18n: I18NService = inject<I18NService>(ALAIN_I18N_TOKEN);
+  private readonly cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
+
+  ngOnInit(): void {
+    if (this.modalData.isEdit) {
+      this.appsOauth20DetailsService.get(`${this.modalData.id}`).subscribe(res => {
+        this.form.model.init(res.data);
+        //console.log(this.form.model);
+        this.previewImage = this.form.model.iconBase64.toString();
+        this.fileList = [
+          {
+            uid: this.form.model.id.toString(),
+            name: this.form.model.appName.toString(),
+            status: 'done',
+            url: this.previewImage
+          }
+        ];
+        this.initExtraAttr(res.data);
+      });
+    } else {
+      this.appsOauth20DetailsService.init().subscribe(res => {
+        this.form.model.id = res.data.id;
+        this.form.model.protocol = res.data.protocol;
+        this.form.model.secret = res.data.secret;
+        this.form.model.clientId = this.form.model.id;
+        this.form.model.clientSecret = this.form.model.secret;
+      });
+    }
+    this.cdr.detectChanges();
+  }
+
+  handlePreview = async (file: NzUploadFile): Promise<void> => {
+    let preview;
+    if (!file.url) {
+      preview = await getBase64(file.originFileObj!);
+    }
+    this.previewImage = file.url || preview;
+    this.previewVisible = true;
+  };
+
+  uploadImageChange(uploadChange: NzUploadChangeParam): void {
+    if (uploadChange.file.status === 'done') {
+      this.form.model.iconId = uploadChange.file.response.data;
+      this.cdr.detectChanges();
+    }
+  }
+
+  onGenerate(e: MouseEvent): void {
+    e.preventDefault();
+  }
+
+  onSelectAlgorithm(value: string): void {
+    this.appsService.generateKeys(this.form.model.id, value).subscribe(res => {
+      this.form.model.algorithmKey = res.data;
+    });
+  }
+
+  onSelectSignature(value: string): void {
+    this.appsService.generateKeys(this.form.model.id, value).subscribe(res => {
+      this.form.model.signatureKey = res.data;
+    });
+  }
+
+  onGenerateSecret(): void {
+    this.appsService.generateSecret('base').subscribe(res => {
+      this.form.model.secret = res.data;
+      this.form.model.clientSecret = this.form.model.secret;
+      this.cdr.detectChanges();
+    });
+  }
+
+  onSelectAdapter(): void {
+    const modal = this.modalService.create({
+      nzContent: SelectAdaptersComponent,
+      nzViewContainerRef: this.viewContainerRef,
+      nzData: {
+        protocol: 'OAuth_v2.0'
+      },
+      nzOnOk: () => new Promise(resolve => setTimeout(resolve, 1000))
+    });
+    // Return a result when closed
+    modal.afterClose.subscribe(result => {
+      if (result.refresh) {
+        this.form.model.adapter = result.data.adapter;
+        this.form.model.adapterName = result.data.name;
+        this.form.model.adapterId = result.data.id;
+      }
+    });
+  }
+
+  onClose(e: MouseEvent): void {
+    e.preventDefault();
+    this.modal.destroy({ refresh: false });
+  }
+
+  onSubmit(e: MouseEvent): void {
+    e.preventDefault();
+    this.form.submitting = true;
+    this.form.model.trans();
+    //console.log(this.form.model);
+    (this.modalData.isEdit
+      ? this.appsOauth20DetailsService.update(this.form.model)
+      : this.appsOauth20DetailsService.add(this.form.model)
+    ).subscribe(res => {
+      if (res.code == 0) {
+        this.msg.success(this.i18n.fanyi(this.modalData.isEdit ? 'mxk.alert.update.success' : 'mxk.alert.add.success'));
+      } else {
+        this.msg.error(this.i18n.fanyi(this.modalData.isEdit ? 'mxk.alert.update.error' : 'mxk.alert.add.error'));
+      }
+      this.form.submitting = false;
+      this.modal.destroy({ refresh: true });
+      this.cdr.detectChanges();
+    });
+  }
+
+  initExtraAttr(extraData: any): void {
+    if (extraData.extendAttr != null && extraData.extendAttr != '') {
+      let extraAttrDataArray = JSON.parse(extraData.extendAttr);
+      console.log(extraAttrDataArray);
+      const data = [];
+      while (this.extraAttrIndex <= extraAttrDataArray.length) {
+        let extraAttrData = extraAttrDataArray[this.extraAttrIndex - 1];
+        data.push({
+          id: `${this.extraAttrIndex}`,
+          attr: extraAttrData.attr,
+          type: extraAttrData.type,
+          value: extraAttrData.value
+        });
+        this.extraAttrIndex++;
+      }
+      this.extraAttrListOfData = data;
+      this.updateExtraAttrEditCache();
+    }
+  }
+
+  addExtraAttrRow(e: MouseEvent): void {
+    e.preventDefault();
+    this.extraAttrListOfData = [
+      ...this.extraAttrListOfData,
+      {
+        id: `${this.extraAttrIndex}`,
+        attr: `Attr ${this.extraAttrIndex}`,
+        type: 'string',
+        value: `value ${this.extraAttrIndex}`
+      }
+    ];
+    this.updateExtraAttrEditCache();
+    this.startExtraAttrEdit(`${this.extraAttrIndex}`);
+    this.extraAttrIndex++;
+  }
+
+  deleteExtraAttrRow(id: string): void {
+    this.extraAttrListOfData = this.extraAttrListOfData.filter(d => d.id !== id);
+    this.submitExtraAttr();
+  }
+
+  startExtraAttrEdit(id: string): void {
+    this.extraAttrEditCache[id].edit = true;
+  }
+
+  cancelExtraAttrEdit(id: string): void {
+    const index = this.extraAttrListOfData.findIndex(item => item.id === id);
+    console.log(index);
+    this.extraAttrEditCache[id] = {
+      data: { ...this.extraAttrListOfData[index] },
+      edit: false
+    };
+  }
+
+  saveExtraAttrEdit(id: string): void {
+    const index = this.extraAttrListOfData.findIndex(item => item.id === id);
+    Object.assign(this.extraAttrListOfData[index], this.extraAttrEditCache[id].data);
+    this.extraAttrEditCache[id].edit = false;
+    this.submitExtraAttr();
+  }
+
+  submitExtraAttr() {
+    let extraAttrString = JSON.stringify(this.extraAttrListOfData);
+    this.appsService.updateExtendAttr({ id: this.form.model.id, extendAttr: extraAttrString }).subscribe(res => {
+      if (res.code == 0) {
+        this.msg.success(this.i18n.fanyi('mxk.alert.update.success'));
+      } else {
+        this.msg.error(this.i18n.fanyi('mxk.alert.update.error'));
+      }
+      this.cdr.detectChanges();
+    });
+  }
+
+  updateExtraAttrEditCache(): void {
+    this.extraAttrListOfData.forEach(item => {
+      this.extraAttrEditCache[item.id] = {
+        edit: false,
+        data: { ...item }
+      };
+    });
+  }
+}

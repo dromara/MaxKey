@@ -1,0 +1,53 @@
+<div class="container">
+  <div nz-row style="border-bottom: 1px solid #e5e5e5; min-height: 60px; text-shadow: 0 1px 0 #fff">
+    <div nz-col nzMd="2"></div>
+    <div nz-col nzMd="2" style="text-align: right">
+      @if (!inst.custom) {
+        <img style="margin-top: 6px" class="logo" src="./assets/logo.png" />
+      }
+      @if (inst.custom) {
+        <img style="margin-top: 6px" class="logo" src="{{ inst.logo }}" />
+      }
+    </div>
+    <div nz-col nzMd="10">
+      @if (!inst.custom) {
+        <div class="title">
+          <span style="color: #000099">Max</span>
+          <span style="color: #ffd700">Key</span>
+          {{ 'mxk.title' | i18n }}
+        </div>
+      }
+      @if (inst.custom) {
+        <div class="title">{{ inst.title }}</div>
+      }
+    </div>
+    <div nz-col nzMd="6"></div>
+    <div nz-col nzXs="0" nzSm="0" nzMd="2">
+      <header-i18n showLangText="false" class="langs" />
+    </div>
+    <div nz-col nzMd="2"></div>
+  </div>
+
+  <div class="wrap">
+    <div class="top" nz-col nzXs="0" nzSm="0" nzMd="24">
+      @if (!inst.custom) {
+        <div class="desc">
+          <b>{{ 'mxk.login.title.sub' | i18n }}</b>
+        </div>
+      }
+    </div>
+    <router-outlet />
+    <global-footer style="border-top: 1px solid #e5e5e5; min-height: 60px; text-shadow: 0 1px 0 #fff">
+      <div style="margin-top: 20px">
+        {{ CONSTS.PRODUCT_NAME }}<br />
+        Version {{ CONSTS.VERSION }}<br />
+        Copyright
+        <i nz-icon nzType="copyright"></i>
+        {{ copyrightYear }}
+        <a href="{{ CONSTS.HOME_PAGE }}" target="_blank"> {{ CONSTS.HOME_PAGE }} </a>. <br />
+        {{ CONSTS.LICENSE }}
+      </div>
+    </global-footer>
+  </div>
+</div>
+<theme-btn />

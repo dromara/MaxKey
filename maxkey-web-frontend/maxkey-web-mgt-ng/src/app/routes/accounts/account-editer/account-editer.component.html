@@ -1,0 +1,137 @@
+<div *nzModalTitle> {{ modalData.isEdit ? ('mxk.text.edit' | i18n) : ('mxk.text.add' | i18n) }} </div>
+<div>
+  <form nz-form [formGroup]="formGroup" (ngSubmit)="onSubmit($event)" se-container="1">
+    <nz-form-item style="display: none">
+      <nz-form-label [nzMd]="6" nzFor="id">{{ 'mxk.text.id' | i18n }}</nz-form-label>
+      <nz-form-control [nzMd]="18" nzErrorTip="The input is not valid id!">
+        <input
+          [(ngModel)]="form.model.id"
+          disabled="{{ modalData.isEdit }}"
+          [ngModelOptions]="{ standalone: true }"
+          nz-input
+          name="id"
+          id="id"
+        />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item style="display: none">
+      <nz-form-label [nzSm]="6" [nzXs]="24" readonly nzRequired nzFor="userId">{{ 'mxk.users.id' | i18n }} </nz-form-label>
+      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid minLength!">
+        <input [(ngModel)]="form.model.userId" [ngModelOptions]="{ standalone: true }" nz-input name="userId" id="userId" />
+      </nz-form-control>
+    </nz-form-item>
+    @if (!modalData.isEdit && modalData.username == '') {
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="displayName">{{ 'mxk.users.displayName' | i18n }} </nz-form-label>
+        <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid displayName!">
+          <nz-input-wrapper>
+            <input
+              [(ngModel)]="form.model.displayName"
+              readonly
+              [ngModelOptions]="{ standalone: true }"
+              nz-input
+              name="displayName"
+              id="displayName"
+            />
+            <button nz-button nzType="primary" nzSearch (click)="onSelectUser($event)">{{ 'mxk.text.select' | i18n }}</button>
+          </nz-input-wrapper>
+        </nz-form-control>
+      </nz-form-item>
+    }
+    @if (modalData.isEdit || modalData.username !== '') {
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="displayName">{{ 'mxk.users.displayName' | i18n }} </nz-form-label>
+        <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid displayName!">
+          <input
+            [(ngModel)]="form.model.displayName"
+            disabled
+            [ngModelOptions]="{ standalone: true }"
+            nz-input
+            name="displayName"
+            id="displayName"
+          />
+        </nz-form-control>
+      </nz-form-item>
+    }
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="username">{{ 'mxk.users.username' | i18n }} </nz-form-label>
+      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid username!">
+        <input
+          [(ngModel)]="form.model.username"
+          disabled="true"
+          [ngModelOptions]="{ standalone: true }"
+          nz-input
+          name="username"
+          id="username"
+        />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item style="display: none">
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="appId">{{ 'mxk.apps.id' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid appId!">
+        <input [(ngModel)]="form.model.appId" readonly [ngModelOptions]="{ standalone: true }" nz-input name="appId" id="appId" />
+      </nz-form-control>
+    </nz-form-item>
+    @if (modalData.isEdit) {
+      <nz-form-item>
+        <nz-form-label nzRequired [nzSm]="6" [nzXs]="24" nzFor="appName">{{ 'mxk.apps.name' | i18n }}</nz-form-label>
+        <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid appName!">
+          <input
+            [(ngModel)]="form.model.appName"
+            disabled="true"
+            [ngModelOptions]="{ standalone: true }"
+            nz-input
+            name="appName"
+            id="appName"
+          />
+        </nz-form-control>
+      </nz-form-item>
+    }
+    @if (!modalData.isEdit && modalData.username == '') {
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="appName">{{ 'mxk.apps.name' | i18n }}</nz-form-label>
+        <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid appName!">
+          <nz-input-wrapper>
+            <input [(ngModel)]="form.model.appName" [ngModelOptions]="{ standalone: true }" nz-input name="appName" id="appName" />
+            <button nz-button nzType="primary" nzSearch (click)="onSelectApp($event)">{{ 'mxk.text.select' | i18n }}</button>
+          </nz-input-wrapper>
+        </nz-form-control>
+      </nz-form-item>
+    }
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="relatedUsername">{{ 'mxk.accounts.relatedUsername' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid relatedUsername!">
+        <input
+          [(ngModel)]="form.model.relatedUsername"
+          [ngModelOptions]="{ standalone: true }"
+          nz-input
+          disabled="{{ modalData.isEdit }}"
+          name="relatedUsername"
+          id="relatedUsername"
+        />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="relatedPassword">{{ 'mxk.accounts.relatedPassword' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid relatedPassword!">
+        <nz-input-wrapper>
+          <i nz-icon [nzType]="passwordVisible ? 'eye-invisible' : 'eye'" (click)="passwordVisible = !passwordVisible"></i>
+          <input
+            [(ngModel)]="form.model.relatedPassword"
+            [ngModelOptions]="{ standalone: true }"
+            nz-input
+            [type]="passwordVisible ? 'text' : 'password'"
+            name="relatedPassword"
+            id="relatedPassword"
+          />
+          <button nz-button nzType="primary" nzSearch (click)="onPassword($event)">{{ 'mxk.text.generate' | i18n }}</button>
+        </nz-input-wrapper>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</div>
+
+<div *nzModalFooter>
+  <button nz-button nzType="default" (click)="onClose($event)">{{ 'mxk.text.close' | i18n }}</button>
+  <button nz-button nzType="primary" (click)="onSubmit($event)">{{ 'mxk.text.submit' | i18n }}</button>
+</div>

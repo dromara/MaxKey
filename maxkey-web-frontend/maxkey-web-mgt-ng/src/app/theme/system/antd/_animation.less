@@ -1,0 +1,10 @@
+.forced-turn-off-nz-modal-animation-mixin(@enabled) when(@enabled=true) {
+  .@{ant-prefix}-modal {
+    &,
+    &-mask {
+      animation-duration: unset !important;
+    }
+  }
+}
+
+.forced-turn-off-nz-modal-animation-mixin(@forced-turn-off-nz-modal-animation-enabled);

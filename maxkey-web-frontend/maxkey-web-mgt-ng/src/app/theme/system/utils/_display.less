@@ -1,0 +1,284 @@
+/**
+ * Turns off the display of an element
+ *
+ * 隐藏元素
+ */
+.d-none {
+  display: none !important;
+}
+
+/**
+ * The element generates a block element box, generating line breaks both before and after the element when in the normal flow.
+ *
+ * 块级元素，此元素前后会带有换行符
+ */
+.d-block {
+  display: block !important;
+}
+
+/**
+ * The element generates one or more inline element boxes that do not generate line breaks before or after themselves
+ *
+ * 内联元素，元素前后没有换行符
+ */
+.d-inline-block {
+  display: inline-block !important;
+}
+
+/**
+ * The element behaves like a block element and lays out its content according to the flexbox model
+ *
+ * 设置弹性盒模型 `flex`
+ */
+.d-flex {
+  display: flex !important;
+}
+
+/**
+ * The element behaves like an inline element and lays out its content according to the flexbox model
+ *
+ * 设置弹性盒模型 `flex`，并使用内联元素
+ */
+.d-inline-flex {
+  display: inline-flex !important;
+}
+
+/**
+ * Pack flex items from the start
+ *
+ * 设置弹性容器主轴为：从行首起始位置开始排列
+ */
+.justify-content-start {
+  justify-content: flex-start !important;
+}
+
+/**
+ * Pack flex items from the end
+ *
+ * 设置弹性容器主轴为：从行尾位置开始排列
+ */
+.justify-content-end {
+  justify-content: flex-end !important;
+}
+
+/**
+ * Pack items around the center
+ *
+ * 设置弹性容器主轴为：居中排列
+ */
+.justify-content-center {
+  justify-content: center !important;
+}
+
+/**
+ * Distribute items evenly, The first item is flush with the start, the last is flush with the end
+ *
+ * 设置弹性容器主轴为：均匀排列每个元素，首个元素放置于起点，末尾元素放置于终点
+ */
+.justify-content-between {
+  justify-content: space-between !important;
+}
+
+/**
+ * Distribute items evenly, Items have a half-size space on either end
+ *
+ * 设置弹性容器主轴为：均匀排列每个元素，每个元素周围分配相同的空间
+ */
+.justify-content-around {
+  justify-content: space-around !important;
+}
+
+/**
+ * Equivalent to 'start'. Note that justify-items is ignored in Flexbox layouts.
+ *
+ * 设置弹性容器轴线对齐方式为：从行首起始位置开始排列
+ */
+.align-items-start {
+  align-items: flex-start !important;
+}
+
+/**
+ * Equivalent to 'end'. Note that justify-items is ignored in Flexbox layouts.
+ *
+ * 设置弹性容器轴线对齐方式为：从行尾位置开始排列
+ */
+.align-items-end {
+  align-items: flex-end !important;
+}
+
+/**
+ * Pack items around the center
+ *
+ * 设置弹性容器轴线对齐方式为：居中排列
+ */
+.align-items-center {
+  align-items: center !important;
+}
+
+/**
+ * Baseline alignment
+ *
+ * 设置弹性容器轴线对齐方式为：基线对齐
+ */
+.align-items-baseline {
+  align-items: baseline !important;
+}
+
+/**
+ * If the combined size of the items is less than the size of the alignment container, any auto-sized items have their size increased equally (not proportionally), while still respecting the constraints imposed by max-height/max-width (or equivalent functionality), so that the combined size exactly fills the alignment container.
+ *
+ * 设置弹性容器轴线对齐方式为：元素被拉伸以适应容器
+ */
+.align-items-stretch {
+  align-items: stretch !important;
+}
+
+/**
+ * Pack flex items from the start
+ *
+ * 设置弹性容器内容项分配方式为：从起始点开始放置flex元素
+ */
+.align-content-start {
+  align-content: flex-start !important;
+}
+
+/**
+ * Pack flex items from the end
+ *
+ * 设置弹性容器内容项分配方式为：从终止点开始放置flex元素
+ */
+.align-content-end {
+  align-content: flex-end !important;
+}
+
+/**
+ * Pack items around the center
+ *
+ * 设置弹性容器内容项分配方式为：将项目放置在中点
+ */
+.align-content-center {
+  align-content: center !important;
+}
+
+/**
+ * Distribute items evenly, The first item is flush with the start, the last is flush with the end
+ *
+ * 设置弹性容器内容项分配方式为：均匀分布项目第一项与起始点齐平，最后一项与终止点齐平
+ */
+.align-content-between {
+  align-content: space-between !important;
+}
+
+/**
+ * Distribute items evenly, Items have a half-size space, on either end
+ *
+ * 设置弹性容器内容项分配方式为：均匀分布项目项目在两端有一半大小的空间
+ */
+.align-content-around {
+  align-content: space-around !important;
+}
+
+/**
+ * Distribute items evenly, Stretch 'auto'-sized items to fit the container
+ *
+ * 设置弹性容器内容项分配方式为：均匀分布项目拉伸‘自动’-大小的项目以充满容器
+ */
+.align-content-stretch {
+  align-content: stretch !important;
+}
+
+.align-self-auto {
+  align-self: auto !important;
+}
+
+.align-self-start {
+  align-self: flex-start !important;
+}
+
+.align-self-end {
+  align-self: flex-end !important;
+}
+
+.align-self-center {
+  align-self: center !important;
+}
+
+.align-self-baseline {
+  align-self: baseline !important;
+}
+
+.align-self-stretch {
+  align-self: stretch !important;
+}
+
+/**
+ * 让所有弹性盒模型对象的子元素都有相同的长度，且忽略它们内部的内容
+ */
+.flex-1 {
+  flex: 1 !important;
+}
+
+/**
+ * 设置弹性盒模型对象的子元素为垂直显示
+ */
+.flex-column {
+  flex-direction: column !important;
+}
+
+/**
+ * 设置弹性盒模型对象的子元素为垂直相反显示
+ */
+.flex-column-reverse {
+  flex-direction: column-reverse !important;
+}
+
+/**
+ * 设置弹性盒模型对象的子元素在必要的时候拆行
+ */
+.flex-wrap {
+  flex-wrap: wrap !important;
+}
+
+/**
+ * 设置弹性盒模型对象的子元素不拆行或不拆列
+ */
+.flex-nowrap {
+  flex-wrap: nowrap !important;
+}
+
+.flex-shrink-0 {
+  flex-shrink: 0 !important;
+}
+
+.flex-shrink-1 {
+  flex-shrink: 1 !important;
+}
+
+.flex-grow-0 {
+  flex-grow: 0 !important;
+}
+
+.flex-grow-1 {
+  flex-grow: 1 !important;
+}
+
+/**
+ * Vertical and centered
+ *
+ * 垂直并居中
+ */
+.flex-center {
+  display: flex !important;
+  align-items: center !important;
+}
+
+/**
+ * Vertical and centered, and there is a space between the main axis elements (for example: the two elements are on the left and right sides, and the middle is left blank)
+ *
+ * 垂直并居中，且主轴元素之间留有空白（例如：两个元素分别在左右两边，中间留空）
+ */
+.flex-center-between {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+}

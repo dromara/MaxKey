@@ -1,0 +1,114 @@
+<h3>{{ 'app.register.register' | i18n }}</h3>
+<form nz-form [formGroup]="form" (ngSubmit)="submit()" role="form">
+  @if (error) {
+    <nz-alert nzType="error" [nzMessage]="error" [nzShowIcon]="true" class="mb-lg" />
+  }
+  <nz-form-item>
+    <nz-form-control [nzErrorTip]="mailErrorTip">
+      <nz-input-wrapper>
+        <nz-icon nzType="user" />
+        <input nz-input formControlName="mail" placeholder="Email" />
+      </nz-input-wrapper>
+      <ng-template #mailErrorTip let-i>
+        @if (i.errors?.required) {
+          <ng-container>{{ 'validation.email.required' | i18n }}</ng-container>
+        }
+        @if (i.errors?.email) {
+          <ng-container>{{ 'validation.email.wrong-format' | i18n }}</ng-container>
+        }
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control [nzErrorTip]="'validation.password.required' | i18n">
+      <nz-input-wrapper
+        nzSize="large"
+        nzAddonBeforeIcon="lock"
+        nz-popover
+        nzPopoverPlacement="right"
+        nzPopoverTrigger="focus"
+        [(nzPopoverVisible)]="visible"
+        nzPopoverOverlayClassName="register-password-cdk"
+        [nzPopoverOverlayStyle]="{ 'width.px': 240 }"
+        [nzPopoverContent]="pwdCdkTpl"
+      >
+        <input nz-input type="password" formControlName="password" placeholder="Password" />
+      </nz-input-wrapper>
+      <ng-template #pwdCdkTpl>
+        <div style="padding: 4px 0">
+          <ng-container>
+            @if (status === 'ok') {
+              <div class="success">{{ 'validation.password.strength.strong' | i18n }}</div>
+            } @else if (status === 'pass') {
+              <div class="warning">{{ 'validation.password.strength.medium' | i18n }}</div>
+            } @else if (status === 'error') {
+              <div class="error">{{ 'validation.password.strength.short' | i18n }}</div>
+            }
+          </ng-container>
+          <div class="progress-{{ status }}">
+            <nz-progress [nzPercent]="progress" [nzStatus]="passwordProgressMap[status]" [nzStrokeWidth]="6" [nzShowInfo]="false" />
+          </div>
+          <p class="mt-sm">{{ 'validation.password.strength.msg' | i18n }}</p>
+        </div>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control [nzErrorTip]="confirmErrorTip">
+      <nz-input-wrapper nzSize="large">
+        <nz-icon nzType="lock" />
+        <input nz-input type="password" formControlName="confirm" placeholder="Confirm Password" />
+      </nz-input-wrapper>
+      <ng-template #confirmErrorTip let-i>
+        @if (i.errors?.required) {
+          <ng-container>{{ 'validation.confirm-password.required' | i18n }}</ng-container>
+        }
+        @if (i.errors?.matchControl) {
+          <ng-container>{{ 'validation.password.twice' | i18n }}</ng-container>
+        }
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control [nzErrorTip]="mobileErrorTip">
+      <nz-input-wrapper>
+        <nz-select formControlName="mobilePrefix" style="width: 100px">
+          <nz-option nzLabel="+86" nzValue="+86" />
+          <nz-option nzLabel="+87" nzValue="+87" />
+        </nz-select>
+        <input formControlName="mobile" nz-input placeholder="Phone number" />
+      </nz-input-wrapper>
+      <ng-template #mobileErrorTip let-i>
+        @if (i.errors?.required) {
+          <ng-container>{{ 'validation.phone-number.required' | i18n }}</ng-container>
+        }
+        @if (i.errors?.pattern) {
+          <ng-container>{{ 'validation.phone-number.wrong-format' | i18n }}</ng-container>
+        }
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control [nzErrorTip]="'validation.verification-code.required' | i18n">
+      <nz-row [nzGutter]="8">
+        <nz-col [nzSpan]="16">
+          <nz-input-wrapper nzSize="large">
+            <nz-icon nzType="mail" />
+            <input nz-input formControlName="captcha" placeholder="Captcha" />
+          </nz-input-wrapper>
+        </nz-col>
+        <nz-col [nzSpan]="8">
+          <button type="button" nz-button nzSize="large" (click)="getCaptcha()" [disabled]="count > 0" nzBlock [nzLoading]="loading">
+            {{ count ? count + 's' : ('app.register.get-verification-code' | i18n) }}
+          </button>
+        </nz-col>
+      </nz-row>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <button nz-button nzType="primary" nzSize="large" type="submit" [nzLoading]="loading" class="submit">
+      {{ 'app.register.register' | i18n }}
+    </button>
+    <a class="login" routerLink="/passport/login">{{ 'app.register.sign-in' | i18n }}</a>
+  </nz-form-item>
+</form>

@@ -1,0 +1,37 @@
+/*
+ * Copyright [2024] [MaxKey of copyright http://www.maxkey.top]
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import { Component, OnInit, inject } from '@angular/core';
+import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
+
+import { SHARED_IMPORTS } from '../../../shared/shared-imports';
+
+@Component({
+  selector: 'app-select-protocol',
+  templateUrl: './select-protocol.component.html',
+  styleUrls: ['./select-protocol.component.less'],
+  imports: [SHARED_IMPORTS]
+})
+export class SelectProtocolComponent implements OnInit {
+  private readonly modalRef: NzModalRef = inject(NzModalRef);
+
+  ngOnInit(): void {}
+
+  onSelect(e: MouseEvent, protocol: string): void {
+    e.preventDefault();
+    this.modalRef.destroy({ refresh: true, data: protocol });
+  }
+}

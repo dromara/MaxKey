@@ -1,0 +1,661 @@
+<div *nzModalTitle> {{ modalData.isEdit ? ('mxk.text.edit' | i18n) : ('mxk.text.add' | i18n) }} </div>
+<div>
+  <form nz-form [formGroup]="formGroup" (ngSubmit)="onSubmit($event)" se-container="1">
+    <nz-tabs style="width: 100%">
+      <nz-tab nzTitle="{{ 'mxk.apps.tab.basic' | i18n }}">
+        <div nz-row>
+          <nz-form-item>
+            <nz-form-item style="width: 100%">
+              <nz-form-label [nzMd]="8" nzRequired nzFor="id">{{ 'mxk.text.id' | i18n }}</nz-form-label>
+              <nz-form-control [nzMd]="16" nzErrorTip="The input is not valid id!">
+                <input [(ngModel)]="form.model.id" readonly [ngModelOptions]="{ standalone: true }" nz-input name="id" id="id" />
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item style="width: 100%">
+              <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired nzFor="secret">{{ 'mxk.apps.secret' | i18n }} </nz-form-label>
+              <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid secret!">
+                <nz-input-search nzEnterButton="{{ 'mxk.text.generate' | i18n }}" (nzSearch)="onGenerateSecret()">
+                  <input
+                    [(ngModel)]="form.model.secret"
+                    readonly
+                    [ngModelOptions]="{ standalone: true }"
+                    nz-input
+                    name="secret"
+                    id="secret"
+                  />
+                </nz-input-search>
+              </nz-form-control>
+            </nz-form-item>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired nzFor="icon">{{ 'mxk.apps.icon' | i18n }}</nz-form-label>
+            <div nz-col class="clearfix" nzSm="16" nzXs="24">
+              <nz-upload
+                nzAction="/file/upload/"
+                nzListType="picture-card"
+                [(nzFileList)]="fileList"
+                nzName="uploadFile"
+                [nzShowButton]="fileList.length < 1"
+                [nzShowUploadList]="{ showPreviewIcon: true, showRemoveIcon: true }"
+                [nzPreview]="handlePreview"
+                (nzChange)="uploadImageChange($event)"
+              >
+                <div>
+                  <i nz-icon nzType="plus"></i>
+                  <div style="margin-top: 8px">Upload</div>
+                </div>
+              </nz-upload>
+              <nz-modal [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null" (nzOnCancel)="previewVisible = false">
+                <ng-template #modalContent>
+                  <img [src]="previewImage" width="100%" />
+                </ng-template>
+              </nz-modal>
+            </div>
+
+            <nz-form-control
+              style="display: none"
+              [nzSm]="16"
+              [nzMd]="16"
+              [nzXs]="36"
+              [nzXl]="48"
+              nzErrorTip="The input is not valid icon!"
+            >
+              <input
+                [(ngModel)]="form.model.iconId"
+                disabled="true"
+                [ngModelOptions]="{ standalone: true }"
+                nz-input
+                name="icon"
+                id="icon"
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-row>
+          <nz-form-item>
+            <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired nzFor="appName">{{ 'mxk.apps.name' | i18n }} </nz-form-label>
+            <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid name!">
+              <input [(ngModel)]="form.model.appName" [ngModelOptions]="{ standalone: true }" nz-input name="appName" id="appName" />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="frequently">{{ 'mxk.apps.frequently' | i18n }}</nz-form-label>
+            <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid frequently!">
+              <nz-radio-group [(ngModel)]="form.model.frequently" [ngModelOptions]="{ standalone: true }" nzButtonStyle="solid">
+                <label nz-radio-button nzValue="yes">{{ 'mxk.text.yes' | i18n }}</label>
+                <label nz-radio-button nzValue="no">{{ 'mxk.text.no' | i18n }}</label>
+              </nz-radio-group>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-row>
+          <nz-form-item>
+            <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired nzFor="protocol">{{ 'mxk.apps.protocol' | i18n }} </nz-form-label>
+            <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid protocol!">
+              <nz-select [(ngModel)]="form.model.protocol" [ngModelOptions]="{ standalone: true }" name="protocol">
+                <nz-option nzValue="OAuth_v2.0" nzLabel="OAuth v2.0" />
+                <nz-option nzValue="OAuth_v2.1" nzLabel="OAuth v2.1" />
+                <nz-option nzValue="OpenID_Connect_v1.0" nzLabel="OpenID Connect 1.0" />
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="category">{{ 'mxk.apps.category' | i18n }}</nz-form-label>
+            <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid category!">
+              <nz-select [(ngModel)]="form.model.category" [ngModelOptions]="{ standalone: true }" name="category" id="category">
+                <nz-option nzValue="none" nzLabel="{{ 'mxk.apps.category.none' | i18n }}" />
+                <nz-option nzValue="1011" nzLabel="{{ 'mxk.apps.category.1011' | i18n }}" />
+                <nz-option nzValue="1012" nzLabel="{{ 'mxk.apps.category.1012' | i18n }}" />
+                <nz-option nzValue="1013" nzLabel="{{ 'mxk.apps.category.1013' | i18n }}" />
+                <nz-option nzValue="1014" nzLabel="{{ 'mxk.apps.category.1014' | i18n }}" />
+                <nz-option nzValue="1015" nzLabel="{{ 'mxk.apps.category.1015' | i18n }}" />
+                <nz-option nzValue="1016" nzLabel="{{ 'mxk.apps.category.1016' | i18n }}" />
+                <nz-option nzValue="1017" nzLabel="{{ 'mxk.apps.category.1017' | i18n }}" />
+                <nz-option nzValue="1111" nzLabel="{{ 'mxk.apps.category.1111' | i18n }}" />
+                <nz-option nzValue="1112" nzLabel="{{ 'mxk.apps.category.1112' | i18n }}" />
+                <nz-option nzValue="1113" nzLabel="{{ 'mxk.apps.category.1113' | i18n }}" />
+                <nz-option nzValue="1114" nzLabel="{{ 'mxk.apps.category.1114' | i18n }}" />
+                <nz-option nzValue="1211" nzLabel="{{ 'mxk.apps.category.1211' | i18n }}" />
+                <nz-option nzValue="1212" nzLabel="{{ 'mxk.apps.category.1212' | i18n }}" />
+                <nz-option nzValue="1213" nzLabel="{{ 'mxk.apps.category.1213' | i18n }}" />
+                <nz-option nzValue="1214" nzLabel="{{ 'mxk.apps.category.1214' | i18n }}" />
+                <nz-option nzValue="1215" nzLabel="{{ 'mxk.apps.category.1215' | i18n }}" />
+                <nz-option nzValue="1311" nzLabel="{{ 'mxk.apps.category.1311' | i18n }}" />
+                <nz-option nzValue="1411" nzLabel="{{ 'mxk.apps.category.1411' | i18n }}" />
+                <nz-option nzValue="1511" nzLabel="{{ 'mxk.apps.category.1511' | i18n }}" />
+                <nz-option nzValue="1512" nzLabel="{{ 'mxk.apps.category.1512' | i18n }}" />
+                <nz-option nzValue="1611" nzLabel="{{ 'mxk.apps.category.1611' | i18n }}" />
+                <nz-option nzValue="1711" nzLabel="{{ 'mxk.apps.category.1711' | i18n }}" />
+                <nz-option nzValue="1712" nzLabel="{{ 'mxk.apps.category.1712' | i18n }}" />
+                <nz-option nzValue="1811" nzLabel="{{ 'mxk.apps.category.1811' | i18n }}" />
+                <nz-option nzValue="1812" nzLabel="{{ 'mxk.apps.category.1812' | i18n }}" />
+                <nz-option nzValue="1911" nzLabel="{{ 'mxk.apps.category.1911' | i18n }}" />
+                <nz-option nzValue="1912" nzLabel="{{ 'mxk.apps.category.1912' | i18n }}" />
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-row>
+          <nz-form-item style="width: 100%">
+            <nz-form-label [nzSm]="4" [nzXs]="24" nzRequired nzFor="loginUrl">{{ 'mxk.apps.loginUrl' | i18n }} </nz-form-label>
+            <nz-form-control [nzSm]="20" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid loginUrl!">
+              <input [(ngModel)]="form.model.loginUrl" [ngModelOptions]="{ standalone: true }" nz-input name="loginUrl" id="loginUrl" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-row>
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="status">{{ 'mxk.text.status' | i18n }} </nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid status!">
+              <nz-switch
+                [(ngModel)]="form.model.switch_status"
+                [ngModelOptions]="{ standalone: true }"
+                name="status"
+                [nzCheckedChildren]="statuscheckedTemplate"
+                [nzUnCheckedChildren]="statusunCheckedTemplate"
+              />
+              <ng-template #statuscheckedTemplate><i nz-icon nzType="check"></i></ng-template>
+              <ng-template #statusunCheckedTemplate><i nz-icon nzType="close"></i></ng-template>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="isExtendAttr">{{ 'mxk.apps.isExtendAttr' | i18n }} </nz-form-label>
+            <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid isExtendAttr!">
+              <nz-radio-group [(ngModel)]="form.model.isExtendAttr" [ngModelOptions]="{ standalone: true }" nzButtonStyle="solid">
+                <label nz-radio-button nzValue="0">{{ 'mxk.text.no' | i18n }}</label>
+                <label nz-radio-button nzValue="1">{{ 'mxk.text.yes' | i18n }}</label>
+              </nz-radio-group>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </nz-tab>
+      <nz-tab nzTitle="{{ 'mxk.apps.oauth.v2.0.tab' | i18n }}">
+        <div nz-row>
+          <nz-form-item style="width: 100%">
+            <nz-form-label [nzSm]="4" [nzXs]="24" nzRequired nzFor="registeredRedirectUris">{{
+              'mxk.apps.oauth.registeredRedirectUris' | i18n
+            }}</nz-form-label>
+            <nz-form-control [nzSm]="20" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid registeredRedirectUris!">
+              <textarea
+                [(ngModel)]="form.model.registeredRedirectUris"
+                [ngModelOptions]="{ standalone: true }"
+                nz-input
+                name="registeredRedirectUris"
+                id="registeredRedirectUris"
+              ></textarea>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-row>
+          <nz-form-item style="width: 100%">
+            <nz-form-label [nzSm]="4" [nzXs]="24" nzRequired nzFor="GrantTypes">{{ 'mxk.apps.oauth.GrantTypes' | i18n }} </nz-form-label>
+            <nz-form-control [nzSm]="20" [nzMd]="20" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid authorizedGrantTypes!">
+              <nz-select
+                [(ngModel)]="form.model.select_authorizedGrantTypes"
+                nzMode="multiple"
+                nzPlaceHolder="Please select"
+                [ngModelOptions]="{ standalone: true }"
+                name="authorizedGrantTypes"
+              >
+                <nz-option nzValue="authorization_code" nzLabel="authorization_code" />
+                <nz-option nzValue="password" nzLabel="password" />
+                <nz-option nzValue="client_credentials" nzLabel="client_credentials" />
+                <nz-option nzValue="implicit" nzLabel="implicit" />
+                <nz-option nzValue="id_token" nzLabel="id_token" />
+                <nz-option nzValue="token" nzLabel="token" />
+                <nz-option nzValue="refresh_token" nzLabel="refresh_token" />
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-row>
+          <nz-form-item>
+            <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired nzFor="subject">{{ 'mxk.apps.oauth.subject' | i18n }} </nz-form-label>
+            <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid subject!">
+              <nz-select [(ngModel)]="form.model.subject" [ngModelOptions]="{ standalone: true }" name="subject" id="subject">
+                <nz-option nzValue="username" nzLabel="{{ 'mxk.users.username' | i18n }}" />
+                <nz-option nzValue="employeeNumber" nzLabel="{{ 'mxk.users.employeeNumber' | i18n }}" />
+                <nz-option nzValue="email" nzLabel="{{ 'mxk.users.email' | i18n }}" />
+                <nz-option nzValue="mobile" nzLabel="{{ 'mxk.users.mobile' | i18n }}" />
+                <nz-option nzValue="windowsaccount" nzLabel="{{ 'mxk.users.windowsAccount' | i18n }}" />
+                <nz-option nzValue="userId" nzLabel="{{ 'mxk.users.id' | i18n }}" />
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired nzFor="scope">{{ 'mxk.apps.oauth.scope' | i18n }} </nz-form-label>
+            <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid scope!">
+              <nz-select
+                [(ngModel)]="form.model.select_scope"
+                [ngModelOptions]="{ standalone: true }"
+                nzMode="multiple"
+                nzPlaceHolder="Please select"
+              >
+                <nz-option nzValue="read" nzLabel="read" />
+                <nz-option nzValue="write" nzLabel="write" />
+                <nz-option nzValue="trust" nzLabel="trust" />
+                <nz-option nzValue="openid" nzLabel="openid" />
+                <nz-option nzValue="profile" nzLabel="profile" />
+                <nz-option nzValue="email" nzLabel="email" />
+                <nz-option nzValue="phone" nzLabel="phone" />
+                <nz-option nzValue="address" nzLabel="address" />
+                <nz-option nzValue="all" nzLabel="all" />
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-row>
+          <nz-form-item>
+            <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired nzFor="approvalPrompt">{{
+              'mxk.apps.oauth.approvalPrompt' | i18n
+            }}</nz-form-label>
+            <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid approvalPrompt!">
+              <nz-radio-group [(ngModel)]="form.model.approvalPrompt" [ngModelOptions]="{ standalone: true }" nzButtonStyle="solid">
+                <label nz-radio-button nzValue="force">{{ 'mxk.apps.oauth.approvalPrompt.force' | i18n }}</label>
+                <label nz-radio-button nzValue="auto">{{ 'mxk.apps.oauth.approvalPrompt.auto' | i18n }}</label>
+              </nz-radio-group>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired nzFor="pkce">PKCE</nz-form-label>
+            <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid PKCE!">
+              <nz-radio-group [(ngModel)]="form.model.pkce" [ngModelOptions]="{ standalone: true }" nzButtonStyle="solid">
+                <label nz-radio-button nzValue="yes">{{ 'mxk.text.yes' | i18n }}</label>
+                <label nz-radio-button nzValue="no">{{ 'mxk.text.no' | i18n }}</label>
+              </nz-radio-group>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-row>
+          <nz-form-item>
+            <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired nzFor="accessTokenValiditySeconds">{{
+              'mxk.apps.oauth.accessTokenValiditySeconds' | i18n
+            }}</nz-form-label>
+            <nz-form-control
+              [nzSm]="16"
+              [nzMd]="16"
+              [nzXs]="36"
+              [nzXl]="48"
+              nzErrorTip="The input is not valid accessTokenValiditySeconds!"
+            >
+              <nz-input-number
+                [(ngModel)]="form.model.accessTokenValiditySeconds"
+                [ngModelOptions]="{ standalone: true }"
+                nz-input
+                name="accessTokenValiditySeconds"
+                id="accessTokenValiditySeconds"
+                nzAddonAfter="{{ 'mxk.text.second' | i18n }}"
+              />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired nzFor="refreshTokenValiditySeconds">{{
+              'mxk.apps.oauth.refreshTokenValiditySeconds' | i18n
+            }}</nz-form-label>
+            <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid expires!">
+              <nz-input-number
+                [(ngModel)]="form.model.refreshTokenValiditySeconds"
+                [ngModelOptions]="{ standalone: true }"
+                nz-input
+                name="refreshTokenValiditySeconds"
+                id="refreshTokenValiditySeconds"
+                nzAddonAfter="{{ 'mxk.text.second' | i18n }}"
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </nz-tab>
+      @if (form.model.protocol == 'OpenID_Connect_v1.0') {
+        <nz-tab nzTitle="{{ 'mxk.apps.oauth.connect.tab' | i18n }}">
+          <div nz-row>
+            <nz-form-item>
+              <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="issuer">{{ 'mxk.apps.oauth.connect.issuer' | i18n }} </nz-form-label>
+              <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid issuer!">
+                <input [(ngModel)]="form.model.issuer" [ngModelOptions]="{ standalone: true }" nz-input name="issuer" id="issuer" />
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="audience">{{ 'mxk.apps.oauth.connect.audience' | i18n }} </nz-form-label>
+              <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid audience!">
+                <input [(ngModel)]="form.model.audience" [ngModelOptions]="{ standalone: true }" nz-input name="audience" id="audience" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div nz-row>
+            <nz-form-item>
+              <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="signature">{{ 'mxk.apps.oauth.connect.signature' | i18n }} </nz-form-label>
+              <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid signature!">
+                <nz-select
+                  (ngModelChange)="onSelectSignature($event)"
+                  [(ngModel)]="form.model.signature"
+                  [ngModelOptions]="{ standalone: true }"
+                  name="signature"
+                  id="signature"
+                >
+                  <nz-option nzValue="NONE" nzLabel="NONE" />
+                  <nz-option nzValue="RS256" nzLabel="RS256" />
+                  <nz-option nzValue="RS384" nzLabel="RS384" />
+                  <nz-option nzValue="RS512" nzLabel="RS512" />
+                  <nz-option nzValue="HS256" nzLabel="HS256" />
+                  <nz-option nzValue="HS384" nzLabel="HS384" />
+                  <nz-option nzValue="HS512" nzLabel="HS512" />
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item>
+              <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="userInfoResponse">{{
+                'mxk.apps.oauth.connect.userInfoResponse' | i18n
+              }}</nz-form-label>
+              <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid userInfoResponse!">
+                <nz-select
+                  [(ngModel)]="form.model.userInfoResponse"
+                  [ngModelOptions]="{ standalone: true }"
+                  name="userInfoResponse"
+                  id="userInfoResponse"
+                >
+                  <nz-option nzValue="NORMAL" nzLabel="NORMAL" />
+                  <nz-option nzValue="SIGNING" nzLabel="SIGNING" />
+                  <nz-option nzValue="ENCRYPTION" nzLabel="ENCRYPTION" />
+                  <nz-option nzValue="SIGNING_ENCRYPTION" nzLabel="SIGNING_ENCRYPTION" />
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-row>
+            <nz-form-item style="width: 100%">
+              <nz-form-label [nzSm]="4" [nzXs]="24" nzFor="signatureKey">{{ 'mxk.apps.oauth.connect.signatureKey' | i18n }}</nz-form-label>
+              <nz-form-control [nzSm]="20" [nzMd]="20" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid signatureKey!">
+                <textarea
+                  [(ngModel)]="form.model.signatureKey"
+                  [ngModelOptions]="{ standalone: true }"
+                  nz-input
+                  name="signatureKey"
+                  id="signatureKey"
+                ></textarea>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-row>
+            <nz-form-item>
+              <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="algorithm">{{ 'mxk.apps.oauth.connect.algorithm' | i18n }} </nz-form-label>
+              <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid algorithm!">
+                <nz-select
+                  (ngModelChange)="onSelectAlgorithm($event)"
+                  [(ngModel)]="form.model.algorithm"
+                  [ngModelOptions]="{ standalone: true }"
+                  name="algorithm"
+                  id="algorithm"
+                >
+                  <nz-option nzValue="NONE" nzLabel="NONE" />
+                  <nz-option nzValue="RSA1_5" nzLabel="RSA1_5" />
+                  <nz-option nzValue="RSA_OAEP" nzLabel="RSA_OAEP" />
+                  <nz-option nzValue="RSA-OAEP-256" nzLabel="RSA-OAEP-256" />
+                  <nz-option nzValue="A128KW" nzLabel="A128KW" />
+                  <nz-option nzValue="A192KW" nzLabel="A192KW" />
+                  <nz-option nzValue="A256KW" nzLabel="A256KW" />
+                  <nz-option nzValue="A128GCMKW" nzLabel="A128GCMKW" />
+                  <nz-option nzValue="A192GCMKW" nzLabel="A192GCMKW" />
+                  <nz-option nzValue="A256GCMKW" nzLabel="A256GCMKW" />
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="encryptionMethod">{{
+                'mxk.apps.oauth.connect.encryptionMethod' | i18n
+              }}</nz-form-label>
+              <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid encryptionMethod!">
+                <nz-select
+                  [(ngModel)]="form.model.encryptionMethod"
+                  [ngModelOptions]="{ standalone: true }"
+                  name="encryptionMethod"
+                  id="encryptionMethod"
+                >
+                  <nz-option nzValue="A128GCM" nzLabel="A128GCM" />
+                  <nz-option nzValue="A192GCM" nzLabel="A192GCM" />
+                  <nz-option nzValue="A256GCM" nzLabel="A256GCM" />
+                  <nz-option nzValue="A128CBC-HS256" nzLabel="A128CBC-HS256" />
+                  <nz-option nzValue="A192CBC-HS384" nzLabel="A192CBC-HS384" />
+                  <nz-option nzValue="A256CBC-HS512" nzLabel="A256CBC-HS512" />
+                  <nz-option nzValue="XC20P" nzLabel="XC20P" />
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-row>
+            <nz-form-item style="width: 100%">
+              <nz-form-label [nzSm]="4" [nzXs]="24" nzFor="algorithmKey">{{ 'mxk.apps.oauth.connect.algorithmKey' | i18n }}</nz-form-label>
+              <nz-form-control [nzSm]="20" [nzMd]="20" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid algorithmKey!">
+                <textarea
+                  [(ngModel)]="form.model.algorithmKey"
+                  [ngModelOptions]="{ standalone: true }"
+                  nz-input
+                  name="algorithmKey"
+                  id="algorithmKey"
+                ></textarea>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </nz-tab>
+      }
+      <nz-tab nzTitle="{{ 'mxk.apps.tab.extra' | i18n }}">
+        <div nz-row>
+          <nz-form-item>
+            <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="logoutUrl">{{ 'mxk.apps.logoutUrl' | i18n }}</nz-form-label>
+            <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid logoutUrl!">
+              <input [(ngModel)]="form.model.logoutUrl" [ngModelOptions]="{ standalone: true }" nz-input name="logoutUrl" id="logoutUrl" />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="logoutType">{{ 'mxk.apps.logoutType' | i18n }}</nz-form-label>
+            <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid logoutType!">
+              <nz-select [(ngModel)]="form.model.logoutType" [ngModelOptions]="{ standalone: true }" name="logoutType" id="logoutType">
+                <nz-option nzValue="0" nzLabel="{{ 'mxk.apps.logoutType.none' | i18n }}" />
+                <nz-option nzValue="1" nzLabel="{{ 'mxk.apps.logoutType.back_channel' | i18n }}" />
+                <nz-option nzValue="2" nzLabel="{{ 'mxk.apps.logoutType.front_channel' | i18n }}" />
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-row>
+          <nz-form-item>
+            <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="visible">{{ 'mxk.apps.visible' | i18n }}</nz-form-label>
+            <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid visible!">
+              <nz-select [(ngModel)]="form.model.visible" [ngModelOptions]="{ standalone: true }" name="visible" id="visible">
+                <nz-option nzValue="0" nzLabel="{{ 'mxk.apps.visible.hidden' | i18n }}" />
+                <nz-option nzValue="1" nzLabel="{{ 'mxk.apps.visible.all' | i18n }}" />
+                <nz-option nzValue="2" nzLabel="{{ 'mxk.apps.visible.internet' | i18n }}" />
+                <nz-option nzValue="3" nzLabel="{{ 'mxk.apps.visible.intranet' | i18n }}" />
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="sortIndex">{{ 'mxk.text.sortIndex' | i18n }}</nz-form-label>
+            <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid sortIndex!">
+              <input [(ngModel)]="form.model.sortIndex" [ngModelOptions]="{ standalone: true }" nz-input name="sortIndex" id="sortIndex" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-row>
+          <nz-form-item>
+            <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="vendor">{{ 'mxk.apps.vendor' | i18n }}</nz-form-label>
+            <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid vendor!">
+              <input [(ngModel)]="form.model.vendor" [ngModelOptions]="{ standalone: true }" nz-input name="vendor" id="vendor" />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="vendorUrl">{{ 'mxk.apps.vendor.url' | i18n }}</nz-form-label>
+            <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid vendorUrl!">
+              <input [(ngModel)]="form.model.vendorUrl" [ngModelOptions]="{ standalone: true }" nz-input name="vendorUrl" id="vendorUrl" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-row>
+          <nz-form-item>
+            <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="isAdapter">{{ 'mxk.apps.isAdapter' | i18n }}</nz-form-label>
+            <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid isAdapter!">
+              <nz-select [(ngModel)]="form.model.isAdapter" [ngModelOptions]="{ standalone: true }" name="isAdapter" id="isAdapter">
+                <nz-option nzValue="0" nzLabel="{{ 'mxk.apps.isAdapter.no' | i18n }}" />
+                <nz-option nzValue="1" nzLabel="{{ 'mxk.apps.isAdapter.yes' | i18n }}" />
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="adapterName">{{ 'mxk.apps.adapter' | i18n }}</nz-form-label>
+            <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid adapterName!">
+              <nz-input-search nzEnterButton="{{ 'mxk.text.select' | i18n }}" (nzSearch)="onSelectAdapter()">
+                <input
+                  [(ngModel)]="form.model.adapterName"
+                  [ngModelOptions]="{ standalone: true }"
+                  nz-input
+                  name="adapterName"
+                  id="adapterName"
+                />
+              </nz-input-search>
+              <input
+                type="hidden"
+                [(ngModel)]="form.model.adapterId"
+                [ngModelOptions]="{ standalone: true }"
+                nz-input
+                name="adapterId"
+                id="adapterId"
+              />
+              <input
+                type="hidden"
+                [(ngModel)]="form.model.adapter"
+                [ngModelOptions]="{ standalone: true }"
+                nz-input
+                name="adapter"
+                id="adapter"
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-row>
+          <nz-form-item>
+            <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="resourceMgt">{{ 'mxk.apps.resourceMgt' | i18n }}</nz-form-label>
+            <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid resourceMgt!">
+              <nz-select [(ngModel)]="form.model.resourceMgt" [ngModelOptions]="{ standalone: true }" name="resourceMgt" id="resourceMgt">
+                <nz-option nzValue="n" nzLabel="{{ 'mxk.text.no' | i18n }}" />
+                <nz-option nzValue="y" nzLabel="{{ 'mxk.text.yes' | i18n }}" />
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="openapiRight">{{ 'mxk.apps.openapiRight' | i18n }}</nz-form-label>
+            <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid openapiRight!">
+              <nz-select
+                [(ngModel)]="form.model.openapiRight"
+                [ngModelOptions]="{ standalone: true }"
+                name="openapiRight"
+                id="openapiRight"
+              >
+                <nz-option nzValue="read" nzLabel="Read" />
+                <nz-option nzValue="write" nzLabel="Write" />
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-row>
+          <nz-form-item>
+            <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="inducer">{{ 'mxk.apps.inducer' | i18n }}</nz-form-label>
+            <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid inducer!">
+              <nz-select [(ngModel)]="form.model.inducer" [ngModelOptions]="{ standalone: true }" name="isAdapter" id="inducer">
+                <nz-option nzValue="IDP" nzLabel="IDP" />
+                <nz-option nzValue="SP" nzLabel="SP" />
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item />
+        </div>
+        <div nz-row>
+          <nz-form-item style="width: 100%">
+            <nz-form-label [nzSm]="4" [nzXs]="24" nzFor="description">{{ 'mxk.text.description' | i18n }} </nz-form-label>
+            <nz-form-control [nzSm]="20" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid description!">
+              <input
+                [(ngModel)]="form.model.description"
+                [ngModelOptions]="{ standalone: true }"
+                nz-input
+                name="description"
+                id="description"
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </nz-tab>
+      @if (modalData.isEdit && form.model.isExtendAttr === '1') {
+        <nz-tab nzTitle="{{ 'mxk.apps.tab.custom' | i18n }}">
+          <button nz-button (click)="addExtraAttrRow($event)" nzType="primary">{{ 'mxk.text.add' | i18n }}</button>
+          <nz-table #editRowTable nzBordered [nzData]="extraAttrListOfData" nzTableLayout="fixed">
+            <thead>
+              <tr>
+                <th nzWidth="25%">{{ 'mxk.custom.extraAttr.attr' | i18n }}</th>
+                <th nzWidth="15%">{{ 'mxk.custom.extraAttr.type' | i18n }}</th>
+                <th nzWidth="40%">{{ 'mxk.custom.extraAttr.value' | i18n }}</th>
+                <th>{{ 'mxk.text.action' | i18n }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (data of editRowTable.data; track data) {
+                <tr>
+                  @if (!extraAttrEditCache[data.id].edit) {
+                    <ng-container>
+                      <td>{{ data.attr }}</td>
+                      <td>{{ data.type }}</td>
+                      <td>{{ data.value }}</td>
+                      <td>
+                        <button nz-button type="button" (click)="startExtraAttrEdit(data.id)" style="float: left">{{
+                          'mxk.text.edit' | i18n
+                        }}</button>
+                        <button nz-button type="button" (click)="deleteExtraAttrRow(data.id)" nzDanger>{{
+                          'mxk.text.delete' | i18n
+                        }}</button>
+                      </td>
+                    </ng-container>
+                  } @else {
+                    <ng-template #editTemplate>
+                      <td
+                        ><input
+                          type="text"
+                          nz-input
+                          [(ngModel)]="extraAttrEditCache[data.id].data.attr"
+                          [ngModelOptions]="{ standalone: true }"
+                      /></td>
+                      <td
+                        ><input
+                          type="text"
+                          nz-input
+                          [(ngModel)]="extraAttrEditCache[data.id].data.type"
+                          [ngModelOptions]="{ standalone: true }"
+                      /></td>
+                      <td
+                        ><input
+                          type="text"
+                          nz-input
+                          [(ngModel)]="extraAttrEditCache[data.id].data.value"
+                          [ngModelOptions]="{ standalone: true }"
+                      /></td>
+                      <td>
+                        <button nz-button type="button" (click)="saveExtraAttrEdit(data.id)" style="float: left">{{
+                          'mxk.text.submit' | i18n
+                        }}</button>
+                      </td>
+                    </ng-template>
+                  }
+                </tr>
+              }
+            </tbody>
+          </nz-table>
+        </nz-tab>
+      }
+    </nz-tabs>
+  </form>
+</div>
+
+<div *nzModalFooter>
+  <button nz-button nzType="default" (click)="onClose($event)">{{ 'mxk.text.close' | i18n }}</button>
+  <button nz-button nzType="primary" (click)="onSubmit($event)">{{ 'mxk.text.submit' | i18n }}</button>
+</div>

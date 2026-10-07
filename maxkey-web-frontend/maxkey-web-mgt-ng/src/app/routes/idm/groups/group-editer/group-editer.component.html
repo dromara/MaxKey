@@ -1,0 +1,76 @@
+<div *nzModalTitle> {{ modalData.isEdit ? ('mxk.text.edit' | i18n) : ('mxk.text.add' | i18n) }} </div>
+<div>
+  <form nz-form [formGroup]="formGroup" (ngSubmit)="onSubmit($event)" se-container="1">
+    <nz-form-item class="d-none">
+      <nz-form-label [nzMd]="6" nzRequired nzFor="id">{{ 'mxk.text.id' | i18n }}</nz-form-label>
+      <nz-form-control [nzMd]="18" nzErrorTip="The input is not valid id!">
+        <input [(ngModel)]="form.model.id" disabled="{{ modalData.isEdit }}" [ngModelOptions]="{ standalone: true }" nz-input name="id" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzMd]="6" nzRequired nzFor="groupCode">{{ 'mxk.text.id' | i18n }}</nz-form-label>
+      <nz-form-control [nzMd]="18" nzErrorTip="The input is not valid id!">
+        <input [(ngModel)]="form.model.groupCode" [ngModelOptions]="{ standalone: true }" nz-input name="groupCode" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="groupName">{{ 'mxk.groups.name' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid minLength!">
+        <input [(ngModel)]="form.model.groupName" [ngModelOptions]="{ standalone: true }" nz-input name="groupName" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="dynamic">{{ 'mxk.groups.category' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid status!">
+        <nz-radio-group [(ngModel)]="form.model.category" [ngModelOptions]="{ standalone: true }" nzButtonStyle="solid">
+          <label nz-radio-button nzValue="static">{{ 'mxk.groups.category.static' | i18n }}</label>
+          <label nz-radio-button nzValue="dynamic">{{ 'mxk.groups.category.dynamic' | i18n }}</label>
+        </nz-radio-group>
+      </nz-form-control>
+    </nz-form-item>
+    @if (form.model.category == 'dynamic') {
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="orgIdsList">{{ 'mxk.groups.orgIdsList' | i18n }}</nz-form-label>
+        <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid upperCase!">
+          <input
+            type="hidden"
+            [(ngModel)]="form.model.orgIdsList"
+            [ngModelOptions]="{ standalone: true }"
+            nz-input
+            name="orgIdsList"
+            id="orgIdsList"
+          />
+          <nz-tree-select
+            nzVirtualHeight="300px"
+            [nzMaxTagCount]="3"
+            [(ngModel)]="selectValues"
+            [ngModelOptions]="{ standalone: true }"
+            [nzNodes]="treeNodes.nodes"
+            nzCheckable
+            nzPlaceHolder="Please select"
+            [nzCheckStrictly]="true"
+          />
+        </nz-form-control>
+      </nz-form-item>
+    }
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="description">{{ 'mxk.text.description' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid encoding!">
+        <textarea
+          rows="4"
+          nz-input
+          [(ngModel)]="form.model.description"
+          [ngModelOptions]="{ standalone: true }"
+          nz-input
+          name="description"
+          id="description"
+        ></textarea>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</div>
+
+<div *nzModalFooter>
+  <button nz-button nzType="default" (click)="onClose($event)">{{ 'mxk.text.close' | i18n }}</button>
+  <button nz-button nzType="primary" (click)="onSubmit($event)">{{ 'mxk.text.submit' | i18n }}</button>
+</div>
