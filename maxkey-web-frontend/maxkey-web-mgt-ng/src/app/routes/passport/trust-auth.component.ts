@@ -28,7 +28,7 @@ import { AuthnService } from '../../service/authn.service';
 })
 export class TrustAuthComponent implements OnInit {
   private readonly authnService = inject(AuthnService);
-  private readonly reuseTabService = inject(ReuseTabService);
+  //private readonly reuseTabService = inject(ReuseTabService);
   private readonly router = inject(Router);
   private readonly settingsSrv = inject(SettingsService);
   private readonly route = inject(ActivatedRoute);
@@ -42,7 +42,7 @@ export class TrustAuthComponent implements OnInit {
         this.router.navigateByUrl('/passport/login');
       } else {
         // 清空路由复用信息
-        this.reuseTabService.clear();
+        //this.reuseTabService.clear();
         // 设置用户Token信息
         this.authnService.auth(res.data);
         this.authnService.navigate({});

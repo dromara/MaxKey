@@ -59,7 +59,7 @@ npm start
 
 ### 生产构建
 ```
-npm start
+npm run build:prod
 
 ```
 
