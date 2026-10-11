@@ -54,6 +54,7 @@ import org.dromara.maxkey.web.WebConstants;
 import org.dromara.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -197,10 +198,10 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
             // Validation is all done, so we can check for auto approval...
             if (authorizationRequest.isApproved()) {
                 if (responseTypes.contains(OAuth2Constants.PARAMETER.TOKEN)) {
-                    return new ModelAndView(getImplicitGrantResponse(authorizationRequest));
+                    return new ModelAndView("redirect:" + getImplicitGrantResponse(authorizationRequest));
                 }
                 if (responseTypes.contains(OAuth2Constants.PARAMETER.CODE)) {
-                    return new ModelAndView(getAuthorizationCodeResponse(authorizationRequest,
+                    return new ModelAndView("redirect:" + getAuthorizationCodeResponse(authorizationRequest,
                             (Authentication) principal));
                 }
             }
@@ -526,6 +527,7 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
         this.redirectResolver = redirectResolver;
     }
 
+    @Autowired
     public void setUserApprovalHandler(UserApprovalHandler userApprovalHandler) {
         this.userApprovalHandler = userApprovalHandler;
     }
