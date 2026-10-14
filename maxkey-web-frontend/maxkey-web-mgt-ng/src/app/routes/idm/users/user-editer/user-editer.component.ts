@@ -82,6 +82,8 @@ export class UserEditerComponent implements OnInit {
     model: new Users()
   };
 
+  passwordVisible: boolean = false;
+
   formGroup: FormGroup = new FormGroup({});
 
   previewImage: string | ArrayBuffer | undefined | null = '';
