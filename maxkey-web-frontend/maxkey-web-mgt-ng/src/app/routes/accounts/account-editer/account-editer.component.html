@@ -24,17 +24,19 @@
       <nz-form-item>
         <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="displayName">{{ 'mxk.users.displayName' | i18n }} </nz-form-label>
         <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid displayName!">
-          <nz-input-wrapper>
-            <input
-              [(ngModel)]="form.model.displayName"
-              readonly
-              [ngModelOptions]="{ standalone: true }"
-              nz-input
-              name="displayName"
-              id="displayName"
-            />
+          <nz-space-compact style="width: 100%">
+            <nz-input-wrapper style="width: 100%">
+              <input
+                [(ngModel)]="form.model.displayName"
+                readonly
+                [ngModelOptions]="{ standalone: true }"
+                nz-input
+                name="displayName"
+                id="displayName"
+              />
+            </nz-input-wrapper>
             <button nz-button nzType="primary" nzSearch (click)="onSelectUser($event)">{{ 'mxk.text.select' | i18n }}</button>
-          </nz-input-wrapper>
+          </nz-space-compact>
         </nz-form-control>
       </nz-form-item>
     }
@@ -91,10 +93,12 @@
       <nz-form-item>
         <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="appName">{{ 'mxk.apps.name' | i18n }}</nz-form-label>
         <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid appName!">
-          <nz-input-wrapper>
-            <input [(ngModel)]="form.model.appName" [ngModelOptions]="{ standalone: true }" nz-input name="appName" id="appName" />
+          <nz-space-compact style="width: 100%">
+            <nz-input-wrapper style="width: 100%">
+              <input [(ngModel)]="form.model.appName" [ngModelOptions]="{ standalone: true }" nz-input name="appName" id="appName" />
+            </nz-input-wrapper>
             <button nz-button nzType="primary" nzSearch (click)="onSelectApp($event)">{{ 'mxk.text.select' | i18n }}</button>
-          </nz-input-wrapper>
+          </nz-space-compact>
         </nz-form-control>
       </nz-form-item>
     }

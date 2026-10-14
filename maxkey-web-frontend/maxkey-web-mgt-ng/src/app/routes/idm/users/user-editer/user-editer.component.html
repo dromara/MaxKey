@@ -47,18 +47,25 @@
             <div nz-row class="{{ modalData.isEdit ? 'passwordhidden' : 'passwordshow' }}">
               <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired nzFor="password">{{ 'mxk.users.password' | i18n }} </nz-form-label>
               <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid password!">
-                <nz-input-wrapper style="width: 100%">
-                  <input
-                    type="text"
-                    nz-input
-                    placeholder="new password"
-                    [(ngModel)]="form.model.password"
-                    [ngModelOptions]="{ standalone: true }"
-                    name="password"
-                    id="password"
-                  />
+                <nz-space-compact style="width: 100%">
+                  <nz-input-wrapper style="width: 100%">
+                    <input
+                      [type]="passwordVisible ? 'text' : 'password'"
+                      nz-input
+                      placeholder="new password"
+                      [(ngModel)]="form.model.password"
+                      [ngModelOptions]="{ standalone: true }"
+                      name="password"
+                      id="password"
+                    />
+                    <nz-icon
+                      nzInputSuffix
+                      [nzType]="passwordVisible ? 'eye' : 'eye-invisible'"
+                      (click)="passwordVisible = !passwordVisible"
+                    />
+                  </nz-input-wrapper>
                   <button nz-button nzType="primary" nzSearch (click)="onPassword($event)">{{ 'mxk.text.generate' | i18n }}</button>
-                </nz-input-wrapper>
+                </nz-space-compact>
               </nz-form-control>
             </div>
             <div nz-row style="width: 100%">
