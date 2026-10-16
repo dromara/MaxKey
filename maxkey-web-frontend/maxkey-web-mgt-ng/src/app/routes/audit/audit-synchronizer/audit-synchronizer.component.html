@@ -100,18 +100,22 @@
   >
     <thead>
       <tr>
-        <th nzAlign="center">{{ 'mxk.history.synchronizer.syncId' | i18n }}</th>
+        <th nzAlign="center" class="table-column-id">{{ 'mxk.text.id' | i18n }}</th>
+        <th nzAlign="center" class="table-column-id">{{ 'mxk.history.synchronizer.syncId' | i18n }}</th>
         <th nzAlign="center">{{ 'mxk.history.synchronizer.syncName' | i18n }}</th>
         <th nzAlign="center">{{ 'mxk.history.synchronizer.objectId' | i18n }}</th>
         <th nzAlign="center">{{ 'mxk.history.synchronizer.objectType' | i18n }}</th>
         <th nzAlign="center">{{ 'mxk.history.synchronizer.objectName' | i18n }}</th>
-        <th nzAlign="center">{{ 'mxk.history.synchronizer.syncTime' | i18n }}</th>
+        <th nzAlign="center" class="table-column-datetime">{{ 'mxk.history.synchronizer.syncTime' | i18n }}</th>
         <th nzAlign="center">{{ 'mxk.history.synchronizer.result' | i18n }}</th>
       </tr>
     </thead>
     <tbody>
       @for (data of query.results.rows; track data) {
         <tr>
+          <td nzAlign="left">
+            <span>{{ data.id }}</span>
+          </td>
           <td nzAlign="left">
             <span>{{ data.syncId }}</span>
           </td>

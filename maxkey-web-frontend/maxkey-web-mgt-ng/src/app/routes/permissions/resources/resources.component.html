@@ -111,7 +111,7 @@
             <th nzAlign="center">{{ 'mxk.resources.resourceType' | i18n }}</th>
             <th nzAlign="center">{{ 'mxk.text.sortIndex' | i18n }}</th>
             <th nzAlign="center">{{ 'mxk.text.status' | i18n }}</th>
-            <th nzAlign="center" class="table_cell_action_2">{{ 'mxk.text.action' | i18n }}</th>
+            <th nzAlign="center" class="table-action-column-2">{{ 'mxk.text.action' | i18n }}</th>
           </tr>
         </thead>
         <tbody>
@@ -134,21 +134,19 @@
                 }
               </td>
               <td nzAlign="center" nzBreakWord="false">
-                <div nz-col>
-                  <button nz-button type="button" (click)="onEdit($event, data.id)">{{ 'mxk.text.edit' | i18n }}</button>
-                  <button
-                    nz-button
-                    type="button"
-                    nz-popconfirm
-                    nzPopconfirmTitle="{{ 'mxk.text.delete.popconfirm.title' | i18n }}"
-                    nzPopconfirmPlacement="left"
-                    [nzCancelText]="'mxk.text.delete.popconfirm.cancelText' | i18n"
-                    [nzOkText]="'mxk.text.delete.popconfirm.okText' | i18n"
-                    (nzOnConfirm)="onDelete(data.id)"
-                    nzDanger
-                    >{{ 'mxk.text.delete' | i18n }}</button
-                  >
-                </div>
+                <button nz-button type="button" (click)="onEdit($event, data.id)">{{ 'mxk.text.edit' | i18n }}</button>
+                <button
+                  nz-button
+                  type="button"
+                  nz-popconfirm
+                  nzPopconfirmTitle="{{ 'mxk.text.delete.popconfirm.title' | i18n }}"
+                  nzPopconfirmPlacement="left"
+                  [nzCancelText]="'mxk.text.delete.popconfirm.cancelText' | i18n"
+                  [nzOkText]="'mxk.text.delete.popconfirm.okText' | i18n"
+                  (nzOnConfirm)="onDelete(data.id)"
+                  nzDanger
+                  >{{ 'mxk.text.delete' | i18n }}</button
+                >
               </td>
             </tr>
           }

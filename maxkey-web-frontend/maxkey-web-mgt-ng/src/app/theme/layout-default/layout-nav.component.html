@@ -29,16 +29,11 @@
 </ng-template>
 <ng-template #tree let-ls>
   @for (i of ls; track i._id) {
-    @if (i._hidden !== true) {
+    @if (i._hidden !== true || i.children.length > 0) {
       @if (i.render_type === 'divider') {
         <li class="sidebar-nav__divider"></li>
       } @else {
-        <li
-          class="sidebar-nav__item"
-          [class.sidebar-nav__selected]="i._selected"
-          [class.sidebar-nav__open]="i.open"
-          style="display: {{ i.isVisible === 'n' ? 'none;' : 'block' }}"
-        >
+        <li class="sidebar-nav__item" [class.sidebar-nav__selected]="i._selected" [class.sidebar-nav__open]="i.open">
           <!-- link -->
           @if (i.children.length === 0 || i.link !== '') {
             <a

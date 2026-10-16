@@ -71,7 +71,7 @@
         <th nzAlign="center">{{ 'mxk.groups.name' | i18n }}</th>
         <th nzAlign="center">{{ 'mxk.groups.category' | i18n }}</th>
         <th nzAlign="center">{{ 'mxk.text.description' | i18n }}</th>
-        <th nzAlign="center" class="table_cell_action_2">{{ 'mxk.text.action' | i18n }}</th>
+        <th nzAlign="center" class="table-action-column-2-more">{{ 'mxk.text.action' | i18n }}</th>
       </tr>
     </thead>
     <tbody>
@@ -97,33 +97,31 @@
           </td>
           <td nzAlign="left">{{ data.description }}</td>
           <td nzAlign="center" nzBreakWord="false">
-            <div nz-col>
-              <button nz-button type="button" (click)="onEdit($event, data.id)">{{ 'mxk.text.edit' | i18n }}</button>
-              <button nz-button nz-dropdown [nzDropdownMenu]="menuMoreAction">
-                {{ 'mxk.text.moreaction' | i18n }}
-                <i nz-icon nzType="down"></i>
-              </button>
+            <button nz-button type="button" (click)="onEdit($event, data.id)">{{ 'mxk.text.edit' | i18n }}</button>
+            <button nz-button nz-dropdown [nzDropdownMenu]="menuMoreAction">
+              {{ 'mxk.text.moreaction' | i18n }}
+              <i nz-icon nzType="down"></i>
+            </button>
 
-              <nz-dropdown-menu #menuMoreAction="nzDropdownMenu">
-                <ul nz-menu>
-                  <li nz-menu-item (click)="onMembers($event, data.id, data.groupName)">{{ 'mxk.groups.member' | i18n }} </li>
-                  <li nz-menu-item (click)="onPermissions($event, data.id, data.groupName)">{{ 'mxk.groups.permissions' | i18n }}</li>
-                  @if (data.roleCode != 'ROLE_ADMINISTRATORS' && data.roleCode != 'ROLE_ALL_USER' && data.roleCode != 'ROLE_MANAGERS') {
-                    <li
-                      nz-menu-item
-                      nz-popconfirm
-                      nzPopconfirmTitle="{{ 'mxk.text.delete.popconfirm.title' | i18n }}"
-                      nzPopconfirmPlacement="left"
-                      [nzCancelText]="'mxk.text.delete.popconfirm.cancelText' | i18n"
-                      [nzOkText]="'mxk.text.delete.popconfirm.okText' | i18n"
-                      (nzOnConfirm)="onDelete(data.id)"
-                      nzDanger
-                      >{{ 'mxk.text.delete' | i18n }}</li
-                    >
-                  }
-                </ul>
-              </nz-dropdown-menu>
-            </div>
+            <nz-dropdown-menu #menuMoreAction="nzDropdownMenu">
+              <ul nz-menu>
+                <li nz-menu-item (click)="onMembers($event, data.id, data.groupName)">{{ 'mxk.groups.member' | i18n }} </li>
+                <li nz-menu-item (click)="onPermissions($event, data.id, data.groupName)">{{ 'mxk.groups.permissions' | i18n }}</li>
+                @if (data.roleCode != 'ROLE_ADMINISTRATORS' && data.roleCode != 'ROLE_ALL_USER' && data.roleCode != 'ROLE_MANAGERS') {
+                  <li
+                    nz-menu-item
+                    nz-popconfirm
+                    nzPopconfirmTitle="{{ 'mxk.text.delete.popconfirm.title' | i18n }}"
+                    nzPopconfirmPlacement="left"
+                    [nzCancelText]="'mxk.text.delete.popconfirm.cancelText' | i18n"
+                    [nzOkText]="'mxk.text.delete.popconfirm.okText' | i18n"
+                    (nzOnConfirm)="onDelete(data.id)"
+                    nzDanger
+                    >{{ 'mxk.text.delete' | i18n }}</li
+                  >
+                }
+              </ul>
+            </nz-dropdown-menu>
           </td>
         </tr>
       }

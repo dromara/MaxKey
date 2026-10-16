@@ -112,7 +112,7 @@
             <th nzAlign="center">{{ 'mxk.users.jobTitle' | i18n }}</th>
             <th nzAlign="center">{{ 'mxk.users.gender' | i18n }}</th>
             <th nzAlign="center">{{ 'mxk.text.status' | i18n }}</th>
-            <th nzAlign="center">{{ 'mxk.text.action' | i18n }}</th>
+            <th nzAlign="center" class="table-action-column-2-more">{{ 'mxk.text.action' | i18n }}</th>
           </tr>
         </thead>
         <tbody>
@@ -155,7 +155,7 @@
                   </a>
                 }
               </td>
-              <td nzAlign="center" nzBreakWord="false" width="180px">
+              <td nzAlign="center" nzBreakWord="false">
                 <button nz-button type="button" (click)="onEdit($event, data.id)">
                   {{ 'mxk.text.edit' | i18n }}
                 </button>

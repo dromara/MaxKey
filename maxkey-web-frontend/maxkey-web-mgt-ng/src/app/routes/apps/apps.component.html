@@ -93,13 +93,13 @@
         <th [nzChecked]="query.checked" [nzIndeterminate]="query.indeterminate" (nzCheckedChange)="onTableAllChecked($event)"></th>
 
         <th nzAlign="center">{{ 'mxk.apps.icon' | i18n }}</th>
-        <th nzAlign="center">{{ 'mxk.text.id' | i18n }}</th>
+        <th nzAlign="center" class="table-column-id">{{ 'mxk.text.id' | i18n }}</th>
         <th nzAlign="center">{{ 'mxk.apps.name' | i18n }}</th>
         <th nzAlign="center">{{ 'mxk.apps.protocol' | i18n }}</th>
         <th nzAlign="center">{{ 'mxk.apps.category' | i18n }}</th>
-        <th nzAlign="center">{{ 'mxk.text.sortIndex' | i18n }}</th>
-        <th nzAlign="center">{{ 'mxk.text.status' | i18n }}</th>
-        <th nzAlign="center" class="table_cell_action_2">{{ 'mxk.text.action' | i18n }}</th>
+        <th nzAlign="center" class="table-column-1">{{ 'mxk.text.sortIndex' | i18n }}</th>
+        <th nzAlign="center" class="table-column-1">{{ 'mxk.text.status' | i18n }}</th>
+        <th nzAlign="center" class="table-action-column-2">{{ 'mxk.text.action' | i18n }}</th>
       </tr>
     </thead>
     <tbody>

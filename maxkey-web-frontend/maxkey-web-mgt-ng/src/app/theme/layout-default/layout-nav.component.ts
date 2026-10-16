@@ -81,6 +81,7 @@ export class LayoutDefaultNavComponent implements OnDestroy {
 
     this.menuSrv.change.pipe(takeUntilDestroyed()).subscribe(data => {
       this.menuSrv.visit(data, (i: Nav, _p, depth) => {
+        //console.log('before processing menu item:', i);
         i._text = this.sanitizer.bypassSecurityTrustHtml(i.text!);
         i._needIcon = depth! <= this.maxLevelIcon() && !!i.icon;
         if (!i._aclResult) {
@@ -90,6 +91,7 @@ export class LayoutDefaultNavComponent implements OnDestroy {
             i._hidden = true;
           }
         }
+        //console.log('after processing menu item:', i);
         const icon = i.icon as MenuIcon;
         if (icon && icon.type === 'svg' && typeof icon.value === 'string') {
           icon.value = this.sanitizer.bypassSecurityTrustHtml(icon.value!);

@@ -100,19 +100,19 @@
   >
     <thead>
       <tr>
-        <th nzAlign="center" style="display: none">{{ 'mxk.history.systemlogs.id' | i18n }}</th>
+        <th nzAlign="center" class="table-column-id">{{ 'mxk.history.systemlogs.id' | i18n }}</th>
         <th nzAlign="center">{{ 'mxk.history.systemlogs.topic' | i18n }}</th>
         <th nzAlign="center">{{ 'mxk.history.systemlogs.message' | i18n }}</th>
         <th nzAlign="center">{{ 'mxk.history.systemlogs.messageAction' | i18n }}</th>
         <th nzAlign="center">{{ 'mxk.history.systemlogs.messageResult' | i18n }}</th>
         <th nzAlign="center">{{ 'mxk.history.systemlogs.displayName' | i18n }}</th>
-        <th nzAlign="center">{{ 'mxk.history.systemlogs.executeTime' | i18n }}</th>
+        <th nzAlign="center" class="table-column-datetime">{{ 'mxk.history.systemlogs.executeTime' | i18n }}</th>
       </tr>
     </thead>
     <tbody>
       @for (data of query.results.rows; track data) {
         <tr>
-          <td nzAlign="left" style="display: none">
+          <td nzAlign="left">
             <span>{{ data.id }}</span>
           </td>
           <td nzAlign="left">{{ data.topic }}</td>

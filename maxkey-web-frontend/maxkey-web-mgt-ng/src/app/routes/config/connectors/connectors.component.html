@@ -67,11 +67,11 @@
     <thead>
       <tr>
         <th [nzChecked]="query.checked" [nzIndeterminate]="query.indeterminate" (nzCheckedChange)="onTableAllChecked($event)"></th>
-        <th nzAlign="center" style="display: none">Id</th>
+        <th nzAlign="center" class="table-column-id">{{ 'mxk.text.id' | i18n }}</th>
         <th nzAlign="center">{{ 'mxk.connectors.connName' | i18n }}</th>
         <th nzAlign="center">{{ 'mxk.connectors.justInTime' | i18n }}</th>
         <th nzAlign="center">{{ 'mxk.text.status' | i18n }}</th>
-        <th nzAlign="center" class="table_cell_action_2">{{ 'mxk.text.action' | i18n }}</th>
+        <th nzAlign="center" class="table-action-column-2">{{ 'mxk.text.action' | i18n }}</th>
       </tr>
     </thead>
     <tbody>
@@ -82,7 +82,7 @@
             [nzDisabled]="data.disabled"
             (nzCheckedChange)="onTableItemChecked(data.id, $event)"
           ></td>
-          <td nzAlign="left" style="display: none">
+          <td nzAlign="left">
             <span>{{ data.id }}</span>
           </td>
 
