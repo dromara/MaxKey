@@ -74,7 +74,7 @@ public class SynchronizerJob  implements Job {
     public Synchronizers readSynchronizer(JobExecutionContext context) {
         Synchronizers jobSynchronizer = (Synchronizers)context.getMergedJobDataMap().get("synchronizer");
         if(synchronizersService == null) {
-            synchronizersService = (SynchronizersService)WebContext.getBean("synchronizersService");
+            synchronizersService = WebContext.getBean("synchronizersService",SynchronizersService.class);
         }
         //read synchronizer by id from database
         Synchronizers synchronizer = synchronizersService.get(jobSynchronizer.getId());
