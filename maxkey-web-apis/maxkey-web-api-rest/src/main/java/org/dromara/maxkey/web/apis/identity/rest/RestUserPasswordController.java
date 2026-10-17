@@ -52,10 +52,11 @@ public class RestUserPasswordController {
     @ResponseBody
     public Message<Boolean> changePassword(@RequestParam(required = true) String username,
                                  @RequestParam(required = true) String password) throws IOException {
-        _logger.debug("UserInfo username {} , password {}", username , password);
+        _logger.debug("Password change requested for username {} ", username);
         //获取认证的应用的信息
         User  principal = (User)AuthorizationUtils.getAuthentication().getPrincipal();
-        Apps app = appsService.get(principal.getUsername());
+        String appId = principal.getUsername();
+        Apps app = appsService.get(appId);
         UserInfo loadUserInfo = userInfoService.findByUsernameAndInstId(username,app.getInstId());
         if(loadUserInfo != null) {
             ChangePassword changePassword  = new ChangePassword(loadUserInfo);
