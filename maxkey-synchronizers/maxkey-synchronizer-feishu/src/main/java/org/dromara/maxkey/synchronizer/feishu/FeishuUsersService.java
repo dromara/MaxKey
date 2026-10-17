@@ -30,6 +30,7 @@ import org.dromara.maxkey.http.HttpRequestAdapter;
 import org.dromara.maxkey.synchronizer.AbstractSynchronizerService;
 import org.dromara.maxkey.synchronizer.ISynchronizerService;
 import org.dromara.maxkey.entity.SynchroAssociation;
+import org.dromara.maxkey.synchronizer.feishu.entity.FeishuUserStatus;
 import org.dromara.maxkey.synchronizer.feishu.entity.FeishuUsers;
 import org.dromara.maxkey.synchronizer.feishu.entity.FeishuUsersResponse;
 import org.dromara.maxkey.util.JsonUtils;
@@ -128,10 +129,11 @@ public class FeishuUsersService extends AbstractSynchronizerService implements I
         userInfo.setWorkAddressFormatted(user.getWork_station());//工作地点
 
         //激活状态: 1=已激活，2=已禁用，4=未激活，5=退出企业。
-        if(user.getStatus().isIs_activated() ) {
-            userInfo.setStatus(ConstsStatus.ACTIVE);
+        //status不为空且Is_activated == true
+        if (user.getStatus() != null && user.getStatus().isIs_activated()) {
+            userInfo.setStatus(ConstsStatus.ACTIVE);   // 在职
         }else {
-            userInfo.setStatus(ConstsStatus.INACTIVE);
+            userInfo.setStatus(ConstsStatus.INACTIVE);// 离职/未激活
         }
         userInfo.setInstId(this.synchronizer.getInstId());
         return userInfo;
