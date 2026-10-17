@@ -60,6 +60,7 @@ const alainConfig: AlainConfig = {
       new RegExp('/login/scanCodeConfirm'),
       new RegExp('/login/sendMagicLink'),
       new RegExp('/login/sendTwoFactorCode'),
+      new RegExp('^/passkey/authentication/'),
       new RegExp('^/login/sendotp/'),
       new RegExp('^/logon/oauth20/scanqrcode/'),
       new RegExp('^/logon/oauth20/callback/'),

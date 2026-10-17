@@ -22,6 +22,7 @@ import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.id.generator.IdGeneratorFactory;
 import org.dromara.maxkey.persistence.service.UserInfoService;
 import org.dromara.maxkey.authn.web.AuthorizationUtils;
+import org.dromara.maxkey.constants.ConstsStatus;
 import org.dromara.maxkey.authn.session.Session;
 import org.dromara.maxkey.authn.SignPrincipal;
 import org.dromara.maxkey.authn.realm.AbstractAuthenticationRealm;
@@ -30,6 +31,7 @@ import org.dromara.maxkey.authn.jwt.AuthJwt;
 import org.dromara.maxkey.authn.jwt.AuthTokenService;
 import org.dromara.maxkey.authn.LoginCredential;
 import org.dromara.maxkey.web.WebContext;
+import org.dromara.mybatis.jpa.query.LambdaQuery;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -236,7 +238,10 @@ public class PasskeyAuthenticationEndpoint {
                 String credentialId = (String) result.get("credentialId");
                 
                 // 获取完整的用户信息
-                UserInfo userInfo = userInfoService.get(userId);
+                LambdaQuery<UserInfo> query = new LambdaQuery<>();
+                query.eq(UserInfo::getId, userId);
+                query.eq(UserInfo::getStatus, ConstsStatus.ACTIVE);
+                UserInfo userInfo = userInfoService.get(query);
                 if (userInfo == null) {
                     _logger.error("User not found for userId: {}", userId);
                     return ResponseEntity.badRequest()
