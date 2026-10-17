@@ -26,6 +26,7 @@ import java.util.TimeZone;
 import org.apache.commons.codec.binary.Hex;
 import org.dromara.maxkey.crypto.Base32Utils;
 import org.dromara.maxkey.crypto.HexUtils;
+import org.dromara.maxkey.password.onetimepwd.algorithm.OtpSecret;
 import org.dromara.maxkey.password.onetimepwd.algorithm.TimeBasedOTP;
 /**
  * goole 
@@ -36,10 +37,10 @@ public class TimeBasedOTPTest {
 
      public static void main(String[] args) {
          
-         //byte[]byteseed=OPTSecret.generate();
+         byte[]byteseed = OtpSecret.generate();
          
         
-         byte[]byteseed= Base32Utils.decode("DCGAGPE2BCDBD6D3FG4NX2QGACVIHXP4");//HexUtils.hex2Bytes( "a1270caecf007f2303cc9db12597a9694ff541aa");
+         //byte[]byteseed= Base32Utils.decode("DCGAGPE2BCDBD6D3FG4NX2QGACVIHXP4");//HexUtils.hex2Bytes( "a1270caecf007f2303cc9db12597a9694ff541aa");
          String seed=Base32Utils.encode(byteseed);
          System.out.println(seed);
          String hexString=Hex.encodeHexString(byteseed);

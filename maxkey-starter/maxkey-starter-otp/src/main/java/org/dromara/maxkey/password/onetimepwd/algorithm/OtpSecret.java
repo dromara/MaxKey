@@ -17,12 +17,13 @@
 
 package org.dromara.maxkey.password.onetimepwd.algorithm;
 
+import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.Random;
 
 public class OtpSecret {
 
-    private static final Random rand = new Random();
+    private static final Random rand = new SecureRandom();
 
     /**
      * Seed for HMAC-SHA1 - 20 bytes Generates random 20 bytes long TOTP Secret.
