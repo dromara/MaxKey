@@ -7,44 +7,45 @@
 
       <div class="mb-lg">
         <button nz-button nzType="primary" nzSize="large" [nzLoading]="loading" (click)="registerPasskey()">
-          <nz-icon nzType="plus-circle" nzTheme="outline"></nz-icon>
+          <nz-icon nzType="plus-circle" nzTheme="outline" />
           注册新的 Passkey
         </button>
       </div>
-
-      <nz-divider nzText="已注册的 Passkey" />
-
-      <nz-table #basicTable [nzData]="passkeyList" [nzShowPagination]="false">
-        <thead>
-          <tr>
-            <th>凭证信息</th>
-            <th>签名统计</th>
-            <th>创建时间</th>
-            <th>最近访问时间</th>
-            <th>操作</th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (data of passkeyList; track data) {
-            <tr>
-              <td>
-                <div class="credential-info">
-                  <div class="credential-id">{{ data.credentialId || data.id }}</div>
-                  <div class="device-type">{{ data.deviceType === 'platform' ? '平台认证器' : '跨平台认证器' }}</div>
-                </div>
-              </td>
-              <td>{{ data.signatureCount || 0 }}</td>
-              <td>{{ data.createdDate }}</td>
-              <td>{{ data.lastUsedDate }}</td>
-              <td>
-                <button nz-button nzType="link" nzDanger nzSize="small" (click)="confirmDeletePasskey(data.credentialId || data.id)">
-                  删除 passkey
-                </button>
-              </td>
-            </tr>
-          }
-        </tbody>
-      </nz-table>
     </div>
   </div>
+
+  <nz-table
+    #dynamicTable
+    [nzData]="passkeyList"
+    [nzShowPagination]="false"
+    nzTableLayout="auto"
+    nzSize="small"
+    nzShowSizeChanger
+    [nzBordered]="true"
+  >
+    <thead>
+      <tr>
+        <th nzAlign="center">凭证信息</th>
+        <th nzAlign="center">签名统计</th>
+        <th nzAlign="center" class="table-column-datetime">创建时间</th>
+        <th nzAlign="center" class="table-column-datetime">最近访问时间</th>
+        <th nzAlign="center" class="table-action-column-2">操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (data of passkeyList; track data) {
+        <tr>
+          <td>{{ data.deviceType === 'platform' ? '平台认证器' : '跨平台认证器' }}[{{ data.credentialId || data.id }}]</td>
+          <td nzAlign="center">{{ data.signatureCount || 0 }}</td>
+          <td>{{ data.createdDate }}</td>
+          <td>{{ data.lastUsedDate }}</td>
+          <td>
+            <button nz-button nzType="link" nzDanger nzSize="small" (click)="confirmDeletePasskey(data.credentialId || data.id)">
+              删除 passkey
+            </button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </nz-table>
 </nz-card>

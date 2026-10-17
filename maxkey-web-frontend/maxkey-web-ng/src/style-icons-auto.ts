@@ -70,7 +70,9 @@ import {
   CompassOutline,
   QrcodeOutline,
   SafetyCertificateFill,
-  SafetyCertificateOutline
+  SafetyCertificateOutline,
+  PlusCircleFill,
+  PlusCircleOutline
 } from '@ant-design/icons-angular/icons';
 
 export const ICONS_AUTO = [
@@ -140,5 +142,7 @@ export const ICONS_AUTO = [
   CompassOutline,
   QrcodeOutline,
   SafetyCertificateFill,
-  SafetyCertificateOutline
+  SafetyCertificateOutline,
+  PlusCircleFill,
+  PlusCircleOutline
 ];

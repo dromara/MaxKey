@@ -17,12 +17,10 @@
         <th nzAlign="center">{{ 'mxk.socialsassociate.icon' | i18n }}</th>
         <th nzAlign="center">{{ 'mxk.socialsassociate.provider' | i18n }}</th>
         <th nzAlign="center">{{ 'mxk.socialsassociate.providerName' | i18n }}</th>
-        <th nzAlign="center">{{ 'mxk.socialsassociate.createdDate' | i18n }}</th>
-        <th nzAlign="center">{{ 'mxk.socialsassociate.updatedDate' | i18n }}</th>
-        <th nzAlign="center">{{ 'mxk.text.status' | i18n }}</th>
-        <th nzAlign="center"
-          ><a>{{ 'mxk.text.action' | i18n }}</a></th
-        >
+        <th nzAlign="center" class="table-column-datetime">{{ 'mxk.socialsassociate.createdDate' | i18n }}</th>
+        <th nzAlign="center" class="table-column-datetime">{{ 'mxk.socialsassociate.updatedDate' | i18n }}</th>
+        <th nzAlign="center" class="table-column-1">{{ 'mxk.text.status' | i18n }}</th>
+        <th nzAlign="center" class="table-action-column-2">{{ 'mxk.text.action' | i18n }}</th>
       </tr>
     </thead>
     <tbody>
@@ -35,26 +33,23 @@
           <td nzAlign="center"> {{ data.provider }}</td>
           <td nzAlign="center"> {{ data.providerName }}</td>
           <td nzAlign="center"> {{ data.createdDate }}</td>
-          <td nzAlign="left">{{ data.updatedDate }}</td>
-          <td nzAlign="left">
-            <nz-icon *ngIf="data.updatedDate" nzType="check-circle" nzTheme="twotone" nzTwotoneColor="#52c41a" />
+          <td nzAlign="center">{{ data.updatedDate }}</td>
+          <td nzAlign="center">
+            @if (data.updatedDate) {
+              <nz-icon nzType="check-circle" nzTheme="twotone" nzTwotoneColor="#52c41a" />
+            }
           </td>
-          <td nzAlign="left" nzBreakWord="false"
-            ><div nz-col>
-              <button
-                *ngIf="data.updatedDate === null"
-                nz-button
-                type="button"
-                (click)="onAdd($event, data.provider)"
-                nzType="primary"
-                style="float: left"
-                >{{ 'mxk.socialsassociate.text.bind' | i18n }}</button
-              >
-              <button *ngIf="data.updatedDate" nz-button type="button" (click)="onDelete($event, data.id)" nzType="primary" nzDanger>{{
-                'mxk.socialsassociate.text.unbind' | i18n
-              }}</button></div
-            ></td
-          >
+          <td nzAlign="center" nzBreakWord="false">
+            @if (data.updatedDate === null) {
+              <button nz-button nzType="link" (click)="onAdd($event, data.provider)">
+                {{ 'mxk.socialsassociate.text.bind' | i18n }}
+              </button>
+            } @else if (data.updatedDate) {
+              <button nz-button nzType="link" (click)="onDelete($event, data.id)" nzDanger>
+                {{ 'mxk.socialsassociate.text.unbind' | i18n }}
+              </button>
+            }
+          </td>
         </tr>
       }
     </tbody>

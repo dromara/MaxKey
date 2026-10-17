@@ -30,7 +30,6 @@ import org.dromara.maxkey.http.HttpRequestAdapter;
 import org.dromara.maxkey.synchronizer.AbstractSynchronizerService;
 import org.dromara.maxkey.synchronizer.ISynchronizerService;
 import org.dromara.maxkey.entity.SynchroAssociation;
-import org.dromara.maxkey.synchronizer.feishu.entity.FeishuUserStatus;
 import org.dromara.maxkey.synchronizer.feishu.entity.FeishuUsers;
 import org.dromara.maxkey.synchronizer.feishu.entity.FeishuUsersResponse;
 import org.dromara.maxkey.util.JsonUtils;
