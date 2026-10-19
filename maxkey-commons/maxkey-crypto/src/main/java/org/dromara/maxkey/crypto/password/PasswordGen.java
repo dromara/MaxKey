@@ -17,6 +17,7 @@
 
 package org.dromara.maxkey.crypto.password;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -35,7 +36,7 @@ public class PasswordGen {
     public static String CHAR_NUMBERS = "0123456789";
     public static String CHAR_SPECIAL = "~@#^()[]*$-+?_&=!%{}/";
     public static String CHAR_DEFAULT = CHAR_LOWERCASE + CHAR_NUMBERS + CHAR_UPPERCASE;
-    private Random random = new Random();
+    private Random random = new SecureRandom();
     public static int DEFAULT_LENGTH = 8;
     private int length;
 
