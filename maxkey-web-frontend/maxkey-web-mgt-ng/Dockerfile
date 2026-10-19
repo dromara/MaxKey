@@ -6,16 +6,6 @@ LABEL authors="MaxKey <support@maxsso.net>"
 
 WORKDIR /usr/src/app
 
-COPY package.json package.json
-
-RUN npm config set registry https://registry.npm.taobao.org && npm i
-
-COPY ./src  ./src
-
-RUN npm install -g @angular/cli
-
-RUN ng build --base-href /maxkey-mgt/
-
 FROM nginx
 
 COPY ./nginx.conf /etc/nginx/conf.d/default.conf

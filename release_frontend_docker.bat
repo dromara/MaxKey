@@ -9,39 +9,33 @@ echo start time %START_TIME%
 
 rem call Set-ExecutionPolicy RemoteSigned -Scope Process
 
-cd ./maxkey-web-frontend/maxkey-web-app
+cd ./maxkey-web-frontend/maxkey-web-ng
 
-rem ng build
-call ng     build --base-href /maxkey/
+call npm install
 
-call docker build -f Dockerfile -t %MXK_REPOSITORY%/maxkey-frontend  .
+rem build
+call npm run build:prod
 
 rem maxkey-frontend:latest
-rem push to docker hub
-call docker push %MXK_REPOSITORY%/maxkey-frontend
+call docker build -f Dockerfile -t %MXK_REPOSITORY%/maxkey-frontend  .
 
 rem maxkey-frontend:$version
 call docker tag  %MXK_REPOSITORY%/maxkey-frontend %MXK_REPOSITORY%/maxkey-frontend:%MXK_VERSION%
-rem push to docker hub
-call docker push %MXK_REPOSITORY%/maxkey-frontend:%MXK_VERSION%
 
 cd ../../
 
-cd ./maxkey-web-frontend/maxkey-web-mgt-app
+cd ./maxkey-web-frontend/maxkey-web-mgt-ng
 
-rem ng build
-call ng     build --base-href /maxkey-mgt/
+call npm install
 
-call docker build -f Dockerfile -t %MXK_REPOSITORY%/maxkey-mgt-frontend  .
+rem build
+call npm run build:prod
 
 rem maxkey-mgt-frontend:latest
-rem push to docker hub
-call docker push %MXK_REPOSITORY%/maxkey-mgt-frontend
+call docker build -f Dockerfile -t %MXK_REPOSITORY%/maxkey-mgt-frontend  .
 
 rem maxkey-mgt-frontend:$version
 call docker tag %MXK_REPOSITORY%/maxkey-mgt-frontend %MXK_REPOSITORY%/maxkey-mgt-frontend:%MXK_VERSION%
-rem push to docker hub
-call docker push %MXK_REPOSITORY%/maxkey-mgt-frontend:%MXK_VERSION%
 
 set END_TIME="%date:~0,10% %time:~0,2%:%time:~3,5%"
 
