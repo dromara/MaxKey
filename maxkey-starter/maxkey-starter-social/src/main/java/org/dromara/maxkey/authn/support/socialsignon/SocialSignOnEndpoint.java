@@ -108,14 +108,15 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
             String originURL = WebContext.getContextPath(request,false);
             SocialsAssociate socialsAssociate = 
                     this.authCallback(userInfo.getInstId(),provider,originURL + applicationConfig.getFrontendUri());
-            socialsAssociate.setSocialUserInfo(accountJsonString);
-            socialsAssociate.setUserId(userInfo.getId());
-            socialsAssociate.setUsername(userInfo.getUsername());
-            socialsAssociate.setInstId(userInfo.getInstId());
-            _logger.debug("Social Bind : {}",socialsAssociate);
-            this.socialsAssociateService.delete(socialsAssociate);
-            this.socialsAssociateService.insert(socialsAssociate);
-            return new Message<>();
+            if(socialsAssociate != null) {
+	            socialsAssociate.setSocialUserInfo(accountJsonString);
+	            socialsAssociate.setUserId(userInfo.getId());
+	            socialsAssociate.setUsername(userInfo.getUsername());
+	            socialsAssociate.setInstId(userInfo.getInstId());
+	            _logger.debug("Social Bind : {}",socialsAssociate);
+	            this.socialsAssociateService.associate(socialsAssociate);
+	            return new Message<>();
+            }
         }catch(Exception e) {
             _logger.error("callback Exception  ",e);
         }

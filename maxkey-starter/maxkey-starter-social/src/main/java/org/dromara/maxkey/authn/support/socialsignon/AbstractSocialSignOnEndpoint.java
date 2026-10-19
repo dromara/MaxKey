@@ -20,6 +20,7 @@
  */
 package org.dromara.maxkey.authn.support.socialsignon;
 
+import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.authn.jwt.AuthTokenService;
 import org.dromara.maxkey.authn.provider.AbstractAuthenticationProvider;
 import org.dromara.maxkey.authn.support.socialsignon.service.SocialSignOnProviderService;
@@ -80,7 +81,7 @@ public class AbstractSocialSignOnEndpoint {
     }
         
     protected SocialsAssociate  authCallback(String instId,String provider,String baseUrl)  throws Exception {
-        SocialsAssociate socialsAssociate = null;
+    	SocialsAssociate socialsAssociate = null;
         AuthCallback authCallback=new AuthCallback();
         authCallback.setCode(WebContext.getRequest().getParameter("code"));
         authCallback.setAuth_code(WebContext.getRequest().getParameter("auth_code"));
@@ -96,25 +97,27 @@ public class AbstractSocialSignOnEndpoint {
                 authCallback.getOauth_verifier(),
                 authCallback.getState());
         
-          if(authRequest == null) {//if authRequest is null renew one
+        if(authRequest == null) {//if authRequest is null renew one
               authRequest=socialSignOnProviderService.getAuthRequest(instId,provider,baseUrl);              
               _logger.debug("session authRequest is null , renew one");
-          }
+        }
           
-          //State time out, re set
-          if(authCallback.getState() != null) {
+        //State time out, re set
+        if(authCallback.getState() != null) {
             authRequest.authorize(WebContext.getRequest().getSession().getId());
         }
           
-          AuthResponse<?> authResponse=authRequest.login(authCallback);
-          _logger.debug("Response  : {}" , authResponse.getData());
-          String socialUserId = socialSignOnProviderService.getAccountId(provider, authResponse);
+        AuthResponse<?> authResponse=authRequest.login(authCallback);
+        _logger.debug("Response  : {}" , authResponse.getData());
+        String socialUserId = socialSignOnProviderService.getAccountId(provider, authResponse);
+       if(StringUtils.isNotEmpty(socialUserId)) {
           socialsAssociate =new SocialsAssociate();
-        socialsAssociate.setProvider(provider);
-        socialsAssociate.setSocialUserId(socialUserId);
-        socialsAssociate.setInstId(instId);
+          socialsAssociate.setProvider(provider);
+          socialsAssociate.setSocialUserId(socialUserId);
+          socialsAssociate.setInstId(instId);
+       }
         
-         return socialsAssociate;
+       return socialsAssociate;
      }
       
 }

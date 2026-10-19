@@ -31,6 +31,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
+import jakarta.transaction.Transactional;
+
 public class JdbcSocialsAssociateService   implements SocialsAssociateService{
     private static final Logger _logger = LoggerFactory.getLogger(JdbcSocialsAssociateService.class);
     
@@ -145,6 +147,14 @@ public class JdbcSocialsAssociateService   implements SocialsAssociateService{
             return socialsAssociate;
         }
     }
+
+	@Override
+	@Transactional
+	public boolean associate(SocialsAssociate socialsAssociate) {
+		this.delete(socialsAssociate);
+        this.insert(socialsAssociate);
+		return true;
+	}
     
 }
 

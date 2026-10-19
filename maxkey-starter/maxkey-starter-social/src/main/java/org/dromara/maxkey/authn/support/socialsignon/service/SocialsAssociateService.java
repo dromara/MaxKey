@@ -34,4 +34,6 @@ public interface SocialsAssociateService{
     
     public boolean update (SocialsAssociate socialsAssociate);
     
+    public boolean associate(SocialsAssociate socialsAssociate);
+    
 }
