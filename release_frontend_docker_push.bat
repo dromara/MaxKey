@@ -9,7 +9,7 @@ echo start time %START_TIME%
 
 rem call Set-ExecutionPolicy RemoteSigned -Scope Process
 
-cd ./maxkey-web-frontend/maxkey-web-app
+cd ./maxkey-web-frontend/maxkey-web-ng
 
 rem maxkey-frontend:latest
 rem push to docker hub
@@ -22,7 +22,7 @@ call docker push %MXK_REPOSITORY%/maxkey-frontend:%MXK_VERSION%
 
 cd ../../
 
-cd ./maxkey-web-frontend/maxkey-web-mgt-app
+cd ./maxkey-web-frontend/maxkey-web-mgt-ng
 
 
 rem maxkey-mgt-frontend:latest
