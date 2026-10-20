@@ -1,4 +1,51 @@
-﻿MaxKey v 4.1.12 2026/06/30
+﻿MaxKey v 4.2.0 2026/10/21
+    *(MAXKEY-261001) springBoot升级至 4.1.0
+    *(MAXKEY-261002) 前端Angular升级至 22
+    *(MAXKEY-261003) JDK升级至21
+    *(MAXKEY-261004) 用户组和角色增加List<String> orgIds，删除组和角色中的自定义filters条件，保留组织动态条件
+    *(MAXKEY-261005) 增加InjectInst, 简化instId自动赋值
+    *(MAXKEY-261006) SyncJobConfigField改名为SynchroAssociation
+    *(MAXKEY-261007) CAS serviceValidate接口中service参数和ticket中的service一致验证
+    *(MAXKEY-261008) 消除LOGIN_MFA_ENABLED=false的潜在风险
+    *(MAXKEY-261009) 增加资源管理控制resourceMgt和api权限管理控制openapiRight
+    *(MAXKEY-261010) 仪表盘优化，当月访问统计/用户组统计，新增用户优化，在线用户统计
+    *(MAXKEY-261011) #269 remove matchSubdomains and implicit from GrantTypes
+    *(MAXKEY-261012) 管理端pageSizeOptions add 100，方便用户查询
+    *(MAXKEY-261013) #IK6LY4 WebXssRequestFilter 误拦截 SAML RelayState 参数
+    *(MAXKEY-261014) #IKACLI 集成dolphinscheduler 失败
+    *(MAXKEY-261015) JWT，会话默认时间，JWT刷新自动刷新
+    *(MAXKEY-261016) 增加maxkey-starter-properties，整合通用文件
+    *(MAXKEY-261017) 密码策略国际化和弱密码配置移到maxkey-starter-properties
+    *(MAXKEY-261018) #IKF4HA GrantedAuthority 改为 Set，消除返回角色重复问题
+    *(MAXKEY-261019) #273 配置修改后不生效，失效时间单位问题
+    *(MAXKEY-261020) #275 钉钉扫码登录：确认扫码后无响应
+    *(MAXKEY-261021) !70 定时任务同步报错
+    *(MAXKEY-261022) 密码策略 最多长度限制 40
+    *(MAXKEY-261023) fix(synchronizer-feishu): 用户同步 NPE 因 status 字段缺失，需判空保护 #271
+    *(MAXKEY-261024) #IKMACP 在 code 失效时会静默删除用户已有的社交账号绑定
+    *(MAXKEY-261025) 密码生产相关的Random 调整为 SecureRandom
+    *(MAXKEY-261026) Update dependabot configuration for weekly checks
+    *(MAXKEY-261027) 前端显示布局、样式优化
+    *(MAXKEY-261028) 安全漏洞修复
+    *(MAXKEY-261029) 移除非必要代码
+    *(MAXKEY-261030) 依赖项引用、更新和升级
+            springVersion                 7.0.8
+            springBootVersion             4.1.0
+            springSecurityVersion         7.1.0
+            springDataVersion             4.1.0
+            tomcatVersion                 11.0.22
+            log4jVersion                  2.25.4
+            freemarkerVersion             2.3.34
+            mybatisjpaextraVersion        3.4.7
+            nimbusjosejwtVersion          10.7
+            jackson3Version               3.0.4
+            jackson3Version               3.0.4
+            druidVersion                  1.2.28
+            nimbusjosejwtVersion          10.7
+            bouncycastleVersion           1.83
+            jodatimeVersion               2.14.0
+            
+MaxKey v 4.1.12 2026/06/30
     *(MAXKEY-260601) 管理端密码修改问题
     *(MAXKEY-260602) remove build_*.gradle，保留*_boot.jar打包方式
     *(MAXKEY-260603) getAppDetails rename to get & cached load
