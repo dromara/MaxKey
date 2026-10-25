@@ -16,19 +16,19 @@
  
 
 package me.zhyd.oauth.request;
-import com.alibaba.fastjson.JSONObject;
 import me.zhyd.oauth.cache.AuthStateCache;
 import me.zhyd.oauth.config.AuthConfig;
 import me.zhyd.oauth.enums.AuthUserGender;
 import me.zhyd.oauth.enums.scope.AuthHuaweiScope;
 import me.zhyd.oauth.exception.AuthException;
+import me.zhyd.oauth.http.UnifiedHttpClient;
+import me.zhyd.oauth.http.UrlBuilder;
 import me.zhyd.oauth.model.AuthCallback;
 import me.zhyd.oauth.model.AuthResponse;
 import me.zhyd.oauth.model.AuthToken;
 import me.zhyd.oauth.model.AuthUser;
 import me.zhyd.oauth.utils.AuthScopeUtils;
-import me.zhyd.oauth.utils.HttpUtils;
-import me.zhyd.oauth.utils.UrlBuilder;
+import tools.jackson.databind.JsonNode;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -54,7 +54,7 @@ public class AuthHuaweiWeLinkRequest  extends AuthDefaultRequest {
      * @see AuthDefaultRequest#authorize(String)
      */
     @Override
-    protected AuthToken getAccessToken(AuthCallback authCallback) {
+    public AuthToken getAccessToken(AuthCallback authCallback) {
         Map<String, String> form = new HashMap<>(8);
         form.put("grant_type", "authorization_code");
         form.put("code", authCallback.getAuthorization_code());
@@ -62,7 +62,7 @@ public class AuthHuaweiWeLinkRequest  extends AuthDefaultRequest {
         form.put("client_secret", config.getClientSecret());
         form.put("redirect_uri", config.getRedirectUri());
 
-        String response = new HttpUtils(config.getHttpConfig()).post(source.accessToken(), form, false).getBody();
+        String response = UnifiedHttpClient.getAdapter().post(source.accessToken(), form, false).getBody();
         return getAuthToken(response);
     }
 
@@ -74,15 +74,15 @@ public class AuthHuaweiWeLinkRequest  extends AuthDefaultRequest {
      * @see AuthDefaultRequest#getAccessToken(AuthCallback)
      */
     @Override
-    protected AuthUser getUserInfo(AuthToken authToken) {
+    public AuthUser getUserInfo(AuthToken authToken) {
         Map<String, String> form = new HashMap<>(7);
         form.put("nsp_ts", System.currentTimeMillis() + "");
         form.put("access_token", authToken.getAccessToken());
         form.put("nsp_fmt", "JS");
         form.put("nsp_svc", "OpenUP.User.getInfo");
 
-        String response = new HttpUtils(config.getHttpConfig()).post(source.userInfo(), form, false).getBody();
-        JSONObject object = JSONObject.parseObject(response);
+        String response = UnifiedHttpClient.getAdapter().post(source.userInfo(), form, false).getBody();
+        JsonNode object = toNode(response);
 
         this.checkResponse(object);
 
@@ -90,9 +90,9 @@ public class AuthHuaweiWeLinkRequest  extends AuthDefaultRequest {
 
         return AuthUser.builder()
             .rawUserInfo(object)
-            .uuid(object.getString("userId"))
-            .username(object.getString("userNameCn"))
-            .nickname(object.getString("userNameCn"))
+            .uuid(object.get("userId").asString(""))
+            .username(object.get("userNameCn").asString(""))
+            .nickname(object.get("userNameCn").asString(""))
             .gender(gender)
             //.avatar(object.getString("headPictureURL"))
             .token(authToken)
@@ -107,26 +107,26 @@ public class AuthHuaweiWeLinkRequest  extends AuthDefaultRequest {
      * @return AuthResponse
      */
     @Override
-    public AuthResponse<Object> refresh(AuthToken authToken) {
+    public AuthResponse<AuthToken> refresh(AuthToken authToken) {
         Map<String, String> form = new HashMap<>(7);
         form.put("client_id", config.getClientId());
         form.put("client_secret", config.getClientSecret());
         form.put("refresh_token", authToken.getRefreshToken());
         form.put("grant_type", "refresh_token");
 
-        String response = new HttpUtils(config.getHttpConfig()).post(source.refresh(), form, false).getBody();
-        return AuthResponse.builder().code(SUCCESS.getCode()).data(getAuthToken(response)).build();
+        String response = UnifiedHttpClient.getAdapter().post(source.refresh(), form, false).getBody();
+        return AuthResponse.<AuthToken>builder().code(SUCCESS.getCode()).data(getAuthToken(response)).build();
     }
 
     private AuthToken getAuthToken(String response) {
-        JSONObject object = JSONObject.parseObject(response);
+    	JsonNode object = toNode(response);
 
         this.checkResponse(object);
 
         return AuthToken.builder()
-            .accessToken(object.getString("access_token"))
-            .expireIn(object.getIntValue("expires_in"))
-            .refreshToken(object.getString("refresh_token"))
+            .accessToken(object.get("access_token").asString(""))
+            .expireIn(object.get("expires_in").asInt(0))
+            .refreshToken(object.get("refresh_token").asString(""))
             .build();
     }
 
@@ -167,8 +167,8 @@ public class AuthHuaweiWeLinkRequest  extends AuthDefaultRequest {
      * @param object obj
      * @return AuthUserGender
      */
-    private AuthUserGender getRealGender(JSONObject object) {
-        int genderCodeInt = object.getIntValue("gender");
+    private AuthUserGender getRealGender(JsonNode object) {
+        int genderCodeInt = object.get("gender").asInt(0);
         String genderCode = genderCodeInt == 1 ? "0" : (genderCodeInt == 0) ? "1" : genderCodeInt + "";
         return AuthUserGender.getRealGender(genderCode);
     }
@@ -178,12 +178,12 @@ public class AuthHuaweiWeLinkRequest  extends AuthDefaultRequest {
      *
      * @param object 接口返回的结果
      */
-    private void checkResponse(JSONObject object) {
-        if (object.containsKey("NSP_STATUS")) {
-            throw new AuthException(object.getString("error"));
+    private void checkResponse(JsonNode object) {
+        if (object.has("NSP_STATUS")) {
+            throw new AuthException(object.get("error").asString(""));
         }
-        if (object.containsKey("error")) {
-            throw new AuthException(object.getString("sub_error") + ":" + object.getString("error_description"));
+        if (object.has("error")) {
+            throw new AuthException(object.get("sub_error").asString("") + ":" + object.get("error_description").asString(""));
         }
     }
 }

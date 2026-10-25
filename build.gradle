@@ -308,8 +308,7 @@ subprojects {
         implementation group: 'net.minidev', name: 'json-smart', version: "${minidevjsonsmartVersion}"
         implementation group: 'net.minidev', name: 'asm', version: "${minidevasmVersion}"
         //oauth third party JustAuth
-        implementation group: 'com.xkcoding.http', name: 'simple-http', version: "${simplehttpVersion}"
-        implementation group: 'me.zhyd.oauth', name: 'JustAuth', version: "${JustAuthVersion}"
+        implementation group: 'org.dromara.justauth', name: 'JustAuth', version: "${JustAuthVersion}"
         //cas
         implementation group: 'org.apereo.cas.client', name: 'cas-client-core', version: "${casclientVersion}"
         //common
@@ -360,7 +359,7 @@ subprojects {
 		implementation group: "com.fasterxml.jackson.module", name: "jackson-module-jaxb-annotations", version: "${jacksonVersion}"
 		implementation group: "com.fasterxml.jackson.module", name: "jackson-module-parameter-names", version: "${jacksonVersion}"
         //json-fastjson
-        implementation group: 'com.alibaba', name: 'fastjson', version: "${fastjsonVersion}"
+        implementation group: 'com.alibaba.fastjson2', name: 'fastjson2', version: "${fastjsonVersion}"
         //reactive
         implementation group: 'org.reactivestreams', name: 'reactive-streams', version: "${reactivestreamsVersion}"
         implementation group: 'io.projectreactor', name: 'reactor-core', version: "${reactorcoreVersion}"

@@ -22,7 +22,6 @@
 
 package me.zhyd.oauth.request;
 
-import com.alibaba.fastjson.JSONObject;
 import me.zhyd.oauth.cache.AuthStateCache;
 import me.zhyd.oauth.config.AuthConfig;
 import me.zhyd.oauth.config.AuthDefaultSource;
@@ -30,17 +29,21 @@ import me.zhyd.oauth.enums.AuthResponseStatus;
 import me.zhyd.oauth.enums.AuthUserGender;
 import me.zhyd.oauth.enums.scope.AuthWeChatEnterpriseWebScope;
 import me.zhyd.oauth.exception.AuthException;
+import me.zhyd.oauth.http.UnifiedHttpClient;
+import me.zhyd.oauth.http.UrlBuilder;
 import me.zhyd.oauth.model.AuthToken;
 import me.zhyd.oauth.model.AuthUser;
 import me.zhyd.oauth.utils.AuthScopeUtils;
-import me.zhyd.oauth.utils.HttpUtils;
-import me.zhyd.oauth.utils.UrlBuilder;
+import tools.jackson.databind.JsonNode;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class AuthWeChatEnterpriseWebRequestCost extends AbstractAuthWeChatEnterpriseRequest {
     static final  Logger _logger = LoggerFactory.getLogger(AuthWeChatEnterpriseWebRequestCost.class);
+    static final String USER_URL = "https://qyapi.weixin.qq.com/cgi-bin/user/get";
+    
     public AuthWeChatEnterpriseWebRequestCost(AuthConfig config) {
         super(config, AuthDefaultSource.WECHAT_ENTERPRISE_WEB);
     }
@@ -55,15 +58,15 @@ public class AuthWeChatEnterpriseWebRequestCost extends AbstractAuthWeChatEnterp
     }
 
     @Override
-    protected AuthUser getUserInfo(AuthToken authToken) {
+    public AuthUser getUserInfo(AuthToken authToken) {
         String response = this.doGetUserInfo(authToken);
-        JSONObject object = this.checkResponse(response);
-        if (!object.containsKey("UserId")) {
+        JsonNode object = this.checkResponse(response);
+        if (!object.has("UserId")) {
             throw new AuthException(AuthResponseStatus.UNIDENTIFIED_PLATFORM, this.source);
         } else {
-            String userId = object.getString("UserId");
+            String userId = object.get("UserId").asString("");
             if (StringUtils.isEmpty(userId)) {
-                userId = object.getString("userid");
+                userId = object.get("userid").asString("");
                 if (StringUtils.isEmpty(userId)) {
                     //如果还是空，则异常
                     throw new AuthException(AuthResponseStatus.UNIDENTIFIED_PLATFORM, this.source);
@@ -74,8 +77,19 @@ public class AuthWeChatEnterpriseWebRequestCost extends AbstractAuthWeChatEnterp
             if (userId.indexOf("/") == -1) {
                 try {
                     String userDetailResponse = this.getUserDetail(authToken.getAccessToken(), userId);
-                    JSONObject userDetail = this.checkResponse(userDetailResponse);
-                    return AuthUser.builder().rawUserInfo(userDetail).username(userDetail.getString("name")).nickname(userDetail.getString("alias")).avatar(userDetail.getString("avatar")).location(userDetail.getString("address")).email(userDetail.getString("email")).uuid(userId).gender(AuthUserGender.getWechatRealGender(userDetail.getString("gender"))).token(authToken).source(this.source.toString()).build();
+                    JsonNode userDetail = this.checkResponse(userDetailResponse);
+                    return AuthUser.builder()
+                    		.rawUserInfo(userDetail)
+                    		.username(userDetail.get("name").asString(""))
+                    		.nickname(userDetail.get("alias").asString(""))
+                    		.avatar(userDetail.get("avatar").asString(""))
+                    		.location(userDetail.get("address").asString(""))
+                    		.email(userDetail.get("email").asString(""))
+                    		.uuid(userId)
+                    		.gender(AuthUserGender.getWechatRealGender(userDetail.get("gender").asString("")))
+                    		.token(authToken)
+                    		.source(this.source.toString())
+                    		.build();
                 }catch (Exception e){
                     _logger.error("get userDetail error:{}",e.getMessage());
                 }
@@ -85,14 +99,14 @@ public class AuthWeChatEnterpriseWebRequestCost extends AbstractAuthWeChatEnterp
     }
 
     private String getUserDetail(String accessToken, String userId) {
-        String userDetailUrl = UrlBuilder.fromBaseUrl("https://qyapi.weixin.qq.com/cgi-bin/user/get").queryParam("access_token", accessToken).queryParam("userid", userId).build();
-        return (new HttpUtils(this.config.getHttpConfig())).get(userDetailUrl).getBody();
+        String userDetailUrl = UrlBuilder.fromBaseUrl(USER_URL).queryParam("access_token", accessToken).queryParam("userid", userId).build();
+        return UnifiedHttpClient.getAdapter().get(userDetailUrl).getBody();
     }
 
-    private JSONObject checkResponse(String response) {
-        JSONObject object = JSONObject.parseObject(response);
-        if (object.containsKey("errcode") && object.getIntValue("errcode") != 0) {
-            throw new AuthException(object.getString("errmsg"), this.source);
+    private JsonNode checkResponse(String response) {
+    	JsonNode object = toNode(response);
+        if (object.has("errcode") && object.get("errcode").asInt() != 0) {
+            throw new AuthException(object.get("errmsg").asString(), this.source);
         } else {
             return object;
         }
