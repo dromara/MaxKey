@@ -43,8 +43,7 @@ import org.springframework.security.core.AuthenticationException;
  */
 public class MobileAuthenticationProvider extends AbstractAuthenticationProvider {
 
-    private static final Logger _logger =
-            LoggerFactory.getLogger(MobileAuthenticationProvider.class);
+    private static final Logger _logger = LoggerFactory.getLogger(MobileAuthenticationProvider.class);
 
     SmsOtpAuthnService smsOtpAuthnService;
     

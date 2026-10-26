@@ -52,8 +52,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetails;
  *
  */
 public abstract class AbstractAuthenticationProvider {
-    private static final Logger _logger =
-            LoggerFactory.getLogger(AbstractAuthenticationProvider.class);
+    private static final Logger _logger = LoggerFactory.getLogger(AbstractAuthenticationProvider.class);
 
     public static String PROVIDER_SUFFIX = "AuthenticationProvider";
 
@@ -145,8 +144,7 @@ public abstract class AbstractAuthenticationProvider {
                         grantedAuthoritys
                 );
 
-        authenticationToken.setDetails(
-                new WebAuthenticationDetails(WebContext.getRequest()));
+        authenticationToken.setDetails(new WebAuthenticationDetails(WebContext.getRequest()));
 
         /*
          *  put Authentication to current session context
@@ -158,10 +156,10 @@ public abstract class AbstractAuthenticationProvider {
             //用户配置二次认证
             principal.setTwoFactor(userInfo.getAuthnType());
             this.sessionManager.createTwoFactor(session.getId(), session);
+        }else {
+	        //create session
+	        this.sessionManager.create(session.getId(), session);
         }
-        
-        //create session
-        this.sessionManager.create(session.getId(), session);
 
         //set Authentication to http session
         AuthorizationUtils.setAuthentication(authenticationToken);
