@@ -34,9 +34,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-import me.zhyd.oauth.model.AuthCallback;
-import me.zhyd.oauth.model.AuthResponse;
-import me.zhyd.oauth.request.AuthRequest;
+import org.dromara.anduin.model.AuthCallback;
+import org.dromara.anduin.model.AuthResponse;
+import org.dromara.anduin.request.AuthRequest;
 
 /**
  * @author Crystal.Sea

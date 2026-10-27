@@ -15,12 +15,12 @@
  */
  
 
-package me.zhyd.oauth.request;
-import me.zhyd.oauth.cache.AuthStateCache;
-import me.zhyd.oauth.config.AuthConfig;
-import me.zhyd.oauth.model.AuthCallback;
-import me.zhyd.oauth.model.AuthToken;
-import me.zhyd.oauth.model.AuthUser;
+package org.dromara.anduin.request;
+import org.dromara.anduin.config.AuthConfig;
+import org.dromara.anduin.cache.AuthStateCache;
+import org.dromara.anduin.model.AuthCallback;
+import org.dromara.anduin.model.AuthToken;
+import org.dromara.anduin.model.AuthUser;
 
 public class AuthMaxkeyRequest extends AuthDefaultRequest {
 

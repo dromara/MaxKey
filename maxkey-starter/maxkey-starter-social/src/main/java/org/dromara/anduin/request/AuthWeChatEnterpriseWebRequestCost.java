@@ -20,20 +20,20 @@
 // (powered by FernFlower decompiler)
 //
 
-package me.zhyd.oauth.request;
+package org.dromara.anduin.request;
 
-import me.zhyd.oauth.cache.AuthStateCache;
-import me.zhyd.oauth.config.AuthConfig;
-import me.zhyd.oauth.config.AuthDefaultSource;
-import me.zhyd.oauth.enums.AuthResponseStatus;
-import me.zhyd.oauth.enums.AuthUserGender;
-import me.zhyd.oauth.enums.scope.AuthWeChatEnterpriseWebScope;
-import me.zhyd.oauth.exception.AuthException;
-import me.zhyd.oauth.http.UnifiedHttpClient;
-import me.zhyd.oauth.http.UrlBuilder;
-import me.zhyd.oauth.model.AuthToken;
-import me.zhyd.oauth.model.AuthUser;
-import me.zhyd.oauth.utils.AuthScopeUtils;
+import org.dromara.anduin.config.AuthConfig;
+import org.dromara.anduin.config.AuthDefaultSource;
+import org.dromara.anduin.cache.AuthStateCache;
+import org.dromara.anduin.enums.AuthResponseStatus;
+import org.dromara.anduin.enums.AuthUserGender;
+import org.dromara.anduin.enums.scope.AuthWeChatEnterpriseWebScope;
+import org.dromara.anduin.exception.AuthException;
+import org.dromara.anduin.http.UnifiedHttpClient;
+import org.dromara.anduin.http.UrlBuilder;
+import org.dromara.anduin.model.AuthToken;
+import org.dromara.anduin.model.AuthUser;
+import org.dromara.anduin.utils.AuthScopeUtils;
 import tools.jackson.databind.JsonNode;
 
 import org.apache.commons.lang3.StringUtils;

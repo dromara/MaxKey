@@ -15,25 +15,25 @@
  */
  
 
-package me.zhyd.oauth.request;
-import me.zhyd.oauth.cache.AuthStateCache;
-import me.zhyd.oauth.config.AuthConfig;
-import me.zhyd.oauth.enums.AuthUserGender;
-import me.zhyd.oauth.enums.scope.AuthHuaweiScope;
-import me.zhyd.oauth.exception.AuthException;
-import me.zhyd.oauth.http.UnifiedHttpClient;
-import me.zhyd.oauth.http.UrlBuilder;
-import me.zhyd.oauth.model.AuthCallback;
-import me.zhyd.oauth.model.AuthResponse;
-import me.zhyd.oauth.model.AuthToken;
-import me.zhyd.oauth.model.AuthUser;
-import me.zhyd.oauth.utils.AuthScopeUtils;
+package org.dromara.anduin.request;
+import org.dromara.anduin.config.AuthConfig;
+import org.dromara.anduin.cache.AuthStateCache;
+import org.dromara.anduin.enums.AuthUserGender;
+import org.dromara.anduin.enums.scope.AuthHuaweiScope;
+import org.dromara.anduin.exception.AuthException;
+import org.dromara.anduin.http.UnifiedHttpClient;
+import org.dromara.anduin.http.UrlBuilder;
+import org.dromara.anduin.model.AuthCallback;
+import org.dromara.anduin.model.AuthResponse;
+import org.dromara.anduin.model.AuthToken;
+import org.dromara.anduin.model.AuthUser;
+import org.dromara.anduin.utils.AuthScopeUtils;
 import tools.jackson.databind.JsonNode;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static me.zhyd.oauth.enums.AuthResponseStatus.SUCCESS;
+import static org.dromara.anduin.enums.AuthResponseStatus.SUCCESS;
 
 public class AuthHuaweiWeLinkRequest  extends AuthDefaultRequest {
 

@@ -24,6 +24,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.dromara.anduin.config.AuthConfig;
+import org.dromara.anduin.request.*;
 import org.dromara.maxkey.authn.support.socialsignon.token.RedisTokenStore;
 import org.dromara.maxkey.crypto.password.PasswordReciprocal;
 import org.dromara.maxkey.entity.SocialsProvider;
@@ -36,10 +38,8 @@ import org.springframework.jdbc.core.RowMapper;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 
-import me.zhyd.oauth.config.AuthConfig;
-import me.zhyd.oauth.model.AuthResponse;
-import me.zhyd.oauth.model.AuthUser;
-import me.zhyd.oauth.request.*;
+import org.dromara.anduin.model.AuthResponse;
+import org.dromara.anduin.model.AuthUser;
 
 public class SocialSignOnProviderService{
     private static final Logger _logger = LoggerFactory.getLogger(SocialSignOnProviderService.class);

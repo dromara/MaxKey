@@ -307,8 +307,8 @@ subprojects {
         //implementation group: 'com.github.stephenc.jcip', name: 'jcip-annotations', version: "${jcipannotationsVersion}"
         implementation group: 'net.minidev', name: 'json-smart', version: "${minidevjsonsmartVersion}"
         implementation group: 'net.minidev', name: 'asm', version: "${minidevasmVersion}"
-        //oauth third party JustAuth
-        implementation group: 'org.dromara.justauth', name: 'JustAuth', version: "${JustAuthVersion}"
+        //oauth third party dromara-anduin
+        implementation group: 'org.dromara.anduin', name: 'dromara-anduin', version: "${dromaraanduinVersion}"
         //cas
         implementation group: 'org.apereo.cas.client', name: 'cas-client-core', version: "${casclientVersion}"
         //common

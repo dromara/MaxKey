@@ -15,37 +15,37 @@
  */
  
 
-package me.zhyd.oauth.config;
+package org.dromara.anduin.request;
 
-import me.zhyd.oauth.request.AuthDefaultRequest;
-import me.zhyd.oauth.request.AuthFeishu2Request;
+import org.dromara.anduin.config.AuthSource;
 
-public enum AuthMxkDefaultSource implements AuthSource {
-     FEISHU2 {
+public enum MaxkeyAuthDefaultSource implements AuthSource{
+
+
+     MAXKEY {
             @Override
             public String authorize() {
-                return "https://passport.feishu.cn/suite/passport/oauth/authorize";
+                return "https://login.welink.huaweicloud.com/connect/oauth2/sns_authorize";
             }
 
             @Override
             public String accessToken() {
-                return "https://passport.feishu.cn/suite/passport/oauth/token";
+                return "https://open.welink.huaweicloud.com/api/auth/v2/tickets";
             }
 
             @Override
             public String userInfo() {
-                return "https://passport.feishu.cn/suite/passport/oauth/userinfo";
+                return "https://open.welink.huaweicloud.com/api/contact/v1/users";
             }
 
             @Override
             public String refresh() {
-                return "https://passport.feishu.cn/suite/passport/oauth/token";
+                return "";
             }
 
             @Override
             public Class<? extends AuthDefaultRequest> getTargetClass() {
-                return AuthFeishu2Request.class;
+                return AuthHuaweiWeLinkRequest.class;
             }
         }
-
 }

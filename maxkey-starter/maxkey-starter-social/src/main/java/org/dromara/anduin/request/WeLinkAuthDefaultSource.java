@@ -15,14 +15,13 @@
  */
  
 
-package me.zhyd.oauth.request;
+package org.dromara.anduin.request;
 
-import me.zhyd.oauth.config.AuthSource;
+import org.dromara.anduin.config.AuthSource;
 
-public enum MaxkeyAuthDefaultSource implements AuthSource{
+public enum WeLinkAuthDefaultSource implements AuthSource{
 
-
-     MAXKEY {
+     HUAWEI_WELINK {
             @Override
             public String authorize() {
                 return "https://login.welink.huaweicloud.com/connect/oauth2/sns_authorize";
