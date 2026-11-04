@@ -76,10 +76,10 @@ public class AppsServiceImpl extends JpaServiceImpl<AppsMapper,Apps,String> impl
         }
         Apps appDetails = null;
         if(cached) {
-            appDetails = detailsCacheStore.getIfPresent(appId + DETAIL_SUFFIX); 
+            appDetails = detailsCacheStore.getIfPresent(appId + DETAIL_SUFFIX);
             if(appDetails == null) {
                 appDetails = this.get(appId);
-                detailsCacheStore.put(appId, appDetails);
+                //应用不存在时返回null,不能写入缓存(Caffeine不允许null值)
             }
         }else {
             appDetails = this.get(appId);

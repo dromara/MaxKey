@@ -22,6 +22,7 @@ import org.dromara.maxkey.authn.provider.AbstractAuthenticationProvider;
 import org.dromara.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.dromara.maxkey.authn.session.SessionManager;
 import org.dromara.maxkey.configuration.ApplicationConfig;
+import org.dromara.maxkey.constants.ConstsStatus;
 import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.web.WebContext;
 import org.slf4j.Logger;
@@ -58,7 +59,15 @@ public class TrustedAuthenticationProvider extends AbstractAuthenticationProvide
     @Override
     public Authentication doAuthenticate(LoginCredential loginCredential) {
         UserInfo loadeduserInfo = loadUserInfo(loginCredential.getUsername(), "");
+        //用户不存在时抛出BadCredentialsException,避免后续空指针并被上层转换为认证失败
+        isUserExist(loginCredential , loadeduserInfo);
         statusValid(loginCredential , loadeduserInfo);
+        //受信免密通道必须严格校验用户状态,锁定或非活动用户不允许登录
+        if (loadeduserInfo.getIsLocked() == ConstsStatus.LOCK) {
+            throw new BadCredentialsException(WebContext.getI18nValue("login.error.locked"));
+        } else if (loadeduserInfo.getStatus() != ConstsStatus.ACTIVE) {
+            throw new BadCredentialsException(WebContext.getI18nValue("login.error.inactive"));
+        }
         if (loadeduserInfo != null) {
             //Validate PasswordPolicy
             //authenticationRealm.getLoginService().passwordPolicyValid(loadeduserInfo);

@@ -43,6 +43,8 @@ public class ConstsLoginType {
 
     public static final String HTTPHEADER         = "HttpHeader";
 
+    public static final String CONGRESS           = "Congress";
+
     
     public static final class TwoFactor{
         /**
