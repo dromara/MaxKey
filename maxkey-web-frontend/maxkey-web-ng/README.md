@@ -31,6 +31,8 @@ nnrm use taobao
 ```
 npm install -g @angular/cli
 
+npm install ng-zorro-antd@22.1.1
+
 npm install ngx-cookie-service
 
 npm install crypto-js

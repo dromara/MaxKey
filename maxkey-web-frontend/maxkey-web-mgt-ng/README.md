@@ -31,7 +31,9 @@ nnrm use taobao
 #### 全局AngularCli
 安装之前请先确保本地已经安装全局 Angular Cli，只有这样才能随时随地在终端使用 ng 命令，可以通过终端窗口中运行：
 ```
-npm install
+npm install -g @angular/cli
+
+npm install ng-zorro-antd@22.1.1
 
 npm install @angular/compiler
 
@@ -47,6 +49,7 @@ npm i --save-dev @types/node
 
 npm install echarts
 
+npm install
 ```
 
 ### 运行
