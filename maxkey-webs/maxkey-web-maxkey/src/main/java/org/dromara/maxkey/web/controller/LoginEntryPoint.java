@@ -25,7 +25,6 @@ import org.dromara.maxkey.authn.jwt.AuthJwt;
 import org.dromara.maxkey.authn.jwt.AuthTokenService;
 import org.dromara.maxkey.authn.provider.AbstractAuthenticationProvider;
 import org.dromara.maxkey.authn.session.SessionManager;
-import org.dromara.maxkey.authn.support.kerberos.KerberosService;
 import org.dromara.maxkey.authn.support.rememberme.AbstractRemeberMeManager;
 import org.dromara.maxkey.authn.support.rememberme.RemeberMe;
 import org.dromara.maxkey.authn.support.socialsignon.service.SocialSignOnProviderService;
@@ -87,9 +86,6 @@ public class LoginEntryPoint {
     SocialsAssociatesService socialsAssociatesService;
 
     @Autowired
-    KerberosService kerberosService;
-
-    @Autowired
     UserInfoService userInfoService;
 
     @Autowired
@@ -140,10 +136,6 @@ public class LoginEntryPoint {
         }
         model.put("passkeyEnabled", passkeyProperties.isEnabled());
         model.put("passkeyAllowedOrigins", passkeyProperties.getRelyingParty().getAllowedOrigins());
-
-        if( applicationConfig.getLoginConfig().isKerberos()){
-            model.put("userDomainUrlJson", kerberosService.buildKerberosProxys());
-        }
 
         Institutions inst = (Institutions)WebContext.getAttribute(WebConstants.CURRENT_INST);
         model.put("inst", inst);

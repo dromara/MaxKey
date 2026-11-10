@@ -1,2 +1,1 @@
 org.dromara.maxkey.autoconfigure.AuthnProviderAutoConfiguration
-org.dromara.maxkey.autoconfigure.JwtAuthnAutoConfiguration

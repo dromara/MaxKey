@@ -17,15 +17,11 @@
 
 package org.dromara.maxkey.autoconfigure;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.dromara.maxkey.authn.listener.SessionListenerAdapter;
 import org.dromara.maxkey.authn.realm.jdbc.JdbcAuthenticationRealm;
 import org.dromara.maxkey.authn.realm.ldap.LdapAuthenticationRealmService;
 import org.dromara.maxkey.authn.session.SessionCategory;
 import org.dromara.maxkey.authn.session.SessionManager;
-import org.dromara.maxkey.authn.support.kerberos.KerberosProxy;
-import org.dromara.maxkey.authn.support.kerberos.RemoteKerberosService;
 import org.dromara.maxkey.configuration.ApplicationConfig;
 import org.dromara.maxkey.ip2location.IpLocationParser;
 import org.dromara.maxkey.password.onetimepwd.MailOtpAuthnService;
@@ -40,7 +36,6 @@ import org.quartz.SchedulerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -75,33 +70,6 @@ public class MaxKeyConfig  {
             );
     }
 
-    @Bean
-    RemoteKerberosService kerberosService(
-            @Value("${maxkey.login.kerberos.default.userdomain}")
-            String userDomain,
-            @Value("${maxkey.login.kerberos.default.fulluserdomain}")
-            String fullUserDomain,
-            @Value("${maxkey.login.kerberos.default.crypto}")
-            String crypto,
-            @Value("${maxkey.login.kerberos.default.redirecturi}")
-            String redirectUri
-    ) {
-        RemoteKerberosService kerberosService = new RemoteKerberosService();
-        KerberosProxy kerberosProxy = new KerberosProxy();
-        
-        kerberosProxy.setCrypto(crypto);
-        kerberosProxy.setFullUserdomain(fullUserDomain);
-        kerberosProxy.setUserdomain(userDomain);
-        kerberosProxy.setRedirectUri(redirectUri);
-        
-        List<KerberosProxy> kerberosProxysList = new ArrayList<>();
-        kerberosProxysList.add(kerberosProxy);
-        kerberosService.setKerberosProxys(kerberosProxysList);
-        
-        logger.debug("RemoteKerberosService inited.");
-        return kerberosService;
-    }
-    
     @Bean
     String sessionListenerAdapter(
             Scheduler scheduler,

@@ -20,8 +20,6 @@ package org.dromara.maxkey.autoconfigure;
 import org.dromara.maxkey.authn.provider.AbstractAuthenticationProvider;
 import org.dromara.maxkey.authn.support.basic.BasicEntryPoint;
 import org.dromara.maxkey.authn.support.httpheader.HttpHeaderEntryPoint;
-import org.dromara.maxkey.authn.support.kerberos.HttpKerberosEntryPoint;
-import org.dromara.maxkey.authn.support.kerberos.KerberosService;
 import org.dromara.maxkey.authn.web.interceptor.PermissionInterceptor;
 import org.dromara.maxkey.configuration.ApplicationConfig;
 import org.dromara.maxkey.web.interceptor.HistorySingleSignOnInterceptor;
@@ -50,13 +48,10 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
     private String httpHeaderName;
     
     @Autowired
-      ApplicationConfig applicationConfig;
+    ApplicationConfig applicationConfig;
     
     @Autowired
     AbstractAuthenticationProvider authenticationProvider ;
-    
-    @Autowired
-    KerberosService kerberosService;
     
     @Autowired
     PermissionInterceptor permissionInterceptor;    
@@ -71,12 +66,6 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         //addPathPatterns 用于添加拦截规则 ， 先把所有路径都加入拦截， 再一个个排除
         //excludePathPatterns 表示改路径不用拦截
-        
-        logger.debug("add Http Kerberos Entry Point");
-        registry.addInterceptor(new HttpKerberosEntryPoint(
-                authenticationProvider,kerberosService,applicationConfig,true))
-            .addPathPatterns("/login");
-        
         
         if(httpHeaderEnable) {
             registry.addInterceptor(new HttpHeaderEntryPoint(httpHeaderName,httpHeaderEnable))
