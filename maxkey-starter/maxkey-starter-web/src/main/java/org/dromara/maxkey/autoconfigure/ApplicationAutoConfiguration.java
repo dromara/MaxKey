@@ -123,32 +123,6 @@ public class ApplicationAutoConfiguration {
     }
 
     /**
-     * spKeyStoreLoader .
-     * @return
-     */
-    @Bean
-    KeyStoreLoader serviceProviderKeyStoreLoader(
-            @Value("${maxkey.saml.v20.sp.issuing.entity.id}") String entityName,
-            @Value("${maxkey.saml.v20.sp.keystore.password}") String keystorePassword,
-            @Value("${maxkey.saml.v20.sp.keystore}") Resource keystoreFile) {
-        KeyStoreLoader keyStoreLoader = new KeyStoreLoader();
-        keyStoreLoader.setEntityName(entityName);
-        keyStoreLoader.setKeystorePassword(keystorePassword);
-        keyStoreLoader.setKeystoreFile(keystoreFile);
-        return keyStoreLoader;
-    }
-
-    /**
-     * spKeyStoreLoader .
-     * @return
-     */
-    @Bean
-    String spIssuingEntityName(
-            @Value("${maxkey.saml.v20.sp.issuing.entity.id}") String spIssuingEntityName) {
-        return spIssuingEntityName;
-    }
-
-    /**
      * Id Generator .
      * @return
      */
