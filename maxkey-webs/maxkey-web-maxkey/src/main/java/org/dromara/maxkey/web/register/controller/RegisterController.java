@@ -15,7 +15,7 @@
  */
  
 
-package org.dromara.maxkey.web.controller;
+package org.dromara.maxkey.web.register.controller;
 
 import java.io.IOException;
 

@@ -22,7 +22,7 @@
 用户在系统 A 点击"跳转到系统 B"时，系统 A 后端发起 HTTP 调用：
 
 ```http
-POST https://{maxkey地址}/sign/authz/congress/create
+POST https://{maxkey地址}/sign/login/congress/request
 Authorization: Basic base64({appId}:{secret})
 Content-Type: application/json
 
@@ -88,7 +88,7 @@ https://{sso域名}/maxkey/#/passport/login?congress={congress}&redirect_uri={BA
 ```
 浏览器          系统A后端                MaxKey                 目标应用B
   │  点击跳转    │                        │                        │
-  │ ──────────→ │ POST /authz/congress/create  (Basic appId:secret) │
+  │ ──────────→ │ POST /login/congress/request  (Basic appId:secret) │
   │             │ ──────────────────────→│ 校验应用 → trusted登录 → 签发congress
   │             │ ←── congress + redirect │
   │ ←─ 302 redirect                       │
@@ -121,5 +121,5 @@ https://{sso域名}/maxkey/#/passport/login?congress={congress}&redirect_uri={BA
 
 ## 实现位置（MaxKey 侧）
 
-- 接口：`maxkey-webs/maxkey-web-maxkey/.../web/controller/CongressAuthorizeController.java`
+- 接口：`maxkey-webs/maxkey-web-maxkey/.../web/auth/controller/LoginCongressController.java`
 - 复用机制：`TrustedAuthenticationProvider`（受信免密登录，与 RememberMe 同通道）、`AuthTokenService.createCongress`（一次性令牌）、前端 `/#/passport/login?congress=`（静默登录入口）

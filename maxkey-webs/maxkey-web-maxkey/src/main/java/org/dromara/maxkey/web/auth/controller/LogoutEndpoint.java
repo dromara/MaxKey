@@ -15,7 +15,7 @@
  */
  
 
-package org.dromara.maxkey.web.controller;
+package org.dromara.maxkey.web.auth.controller;
 
 import java.util.Iterator;
 import java.util.Set;

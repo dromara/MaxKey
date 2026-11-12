@@ -14,12 +14,13 @@
  * limitations under the License.
  */
 
-package org.dromara.maxkey.web.controller;
+package org.dromara.maxkey.web.auth.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
+import org.dromara.maxkey.authn.CongressRequest;
 import org.dromara.maxkey.authn.LoginCredential;
 import org.dromara.maxkey.authn.jwt.AuthTokenService;
 import org.dromara.maxkey.authn.provider.AbstractAuthenticationProvider;
@@ -56,9 +57,9 @@ import java.util.HashMap;
  */
 @Tag(name = "1-5-congress免登签发接口模块")
 @RestController
-@RequestMapping(value = "/authz/congress")
-public class CongressAuthorizeController {
-    static final Logger logger = LoggerFactory.getLogger(CongressAuthorizeController.class);
+@RequestMapping(value = "/login/congress")
+public class LoginCongressController {
+    static final Logger logger = LoggerFactory.getLogger(LoginCongressController.class);
 
     @Autowired
     AuthTokenService authTokenService;
@@ -72,39 +73,15 @@ public class CongressAuthorizeController {
     @Autowired
     AppsService appsService;
 
-    /** 签发请求 . */
-    public static class CongressCreate {
-        // MaxKey 中已存在的用户名
-        String username;
-        // 可选 , 目标单点登录应用ID , 传入则直接返回可302的完整跳转地址
-        String appId;
-
-        public String getUsername() {
-            return username;
-        }
-
-        public void setUsername(String username) {
-            this.username = username;
-        }
-
-        public String getAppId() {
-            return appId;
-        }
-
-        public void setAppId(String appId) {
-            this.appId = appId;
-        }
-    }
-
     @Operation(summary = "congress令牌签发接口",
                 description = "受信应用服务端调用 , Basic(appId:secret)认证 , 为指定用户签发一次性登录令牌",
                 method = "POST")
-    @PostMapping(value = {"/create"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Message<HashMap<String, String>> create(
-            HttpServletRequest request,
-            @RequestBody CongressCreate congressCreate) {
+    @PostMapping(value = {"/request"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public Message<HashMap<String, String>> request(
+            HttpServletRequest httpRequest,
+            @RequestBody CongressRequest congressRequest) {
         // 1.应用 Basic 认证 , 凭据为 MaxKey 应用的 appId 和 secret
-        AuthorizationHeader headerCredential = AuthorizationHeaderUtils.resolve(request);
+        AuthorizationHeader headerCredential = AuthorizationHeaderUtils.resolve(httpRequest);
         if (headerCredential == null || !headerCredential.isBasic()
                 || StringUtils.isBlank(headerCredential.getUsername())
                 || StringUtils.isBlank(headerCredential.getCredential())) {
@@ -127,12 +104,12 @@ public class CongressAuthorizeController {
         }
 
         // 2.参数校验
-        if (congressCreate == null || StringUtils.isBlank(congressCreate.getUsername())) {
+        if (congressRequest == null || StringUtils.isBlank(congressRequest.getUsername())) {
             return new Message<>(Message.FAIL, "username不能为空");
         }
         Apps targetApp = null;
-        if (StringUtils.isNotBlank(congressCreate.getAppId())) {
-            targetApp = appsService.get(congressCreate.getAppId(), false);
+        if (StringUtils.isNotBlank(congressRequest.getAppId())) {
+            targetApp = appsService.get(congressRequest.getAppId(), false);
             if (targetApp == null) {
                 return new Message<>(Message.FAIL, "目标应用不存在");
             }
@@ -145,11 +122,11 @@ public class CongressAuthorizeController {
         Authentication authentication = null;
         try {
             LoginCredential credential = new LoginCredential(
-                    congressCreate.getUsername().trim(), "", ConstsLoginType.CONGRESS);
+            		congressRequest.getUsername().trim(), "", ConstsLoginType.CONGRESS);
             authentication = authenticationProvider.authenticate(credential, true);
         } catch (AuthenticationException e) {
             logger.error("congress create for {} failed : {}",
-                    congressCreate.getUsername(), e.getMessage());
+            		congressRequest.getUsername(), e.getMessage());
             return new Message<>(Message.FAIL, "用户认证失败 , " + e.getMessage());
         }
         if (authentication == null || !authentication.isAuthenticated()) {
@@ -167,7 +144,7 @@ public class CongressAuthorizeController {
             String frontendUri = applicationConfig.getFrontendUri();
             if (!frontendUri.startsWith("http")) {
                 // frontend.uri 为相对路径前缀(如 /maxkey)时 , 补上当前请求的对外地址
-                frontendUri = buildRequestOrigin(request) + frontendUri;
+                frontendUri = buildRequestOrigin(httpRequest) + frontendUri;
             }
             String redirect = frontendUri
                     + "/#/passport/login?congress=" + congress
@@ -177,15 +154,15 @@ public class CongressAuthorizeController {
         }
 
         logger.info("app {} create congress for user {}",
-                headerCredential.getUsername(), congressCreate.getUsername());
+                headerCredential.getUsername(), congressRequest.getUsername());
         return new Message<>(data);
     }
 
     /** 当前请求对外可达的 origin , 如 http://sso.corp.com:21717 . */
-    protected String buildRequestOrigin(HttpServletRequest request) {
-        String scheme = request.getScheme();
-        StringBuilder origin = new StringBuilder(scheme).append("://").append(request.getServerName());
-        int port = request.getServerPort();
+    protected String buildRequestOrigin(HttpServletRequest httpRequest) {
+        String scheme = httpRequest.getScheme();
+        StringBuilder origin = new StringBuilder(scheme).append("://").append(httpRequest.getServerName());
+        int port = httpRequest.getServerPort();
         if (("http".equals(scheme) && port == 80) || ("https".equals(scheme) && port == 443)) {
             return origin.toString();
         }

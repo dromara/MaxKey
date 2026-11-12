@@ -15,7 +15,7 @@
  */
  
 
-package org.dromara.maxkey.web.controller;
+package org.dromara.maxkey.web.forgot.controller;
 
 import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.authn.jwt.AuthTokenService;

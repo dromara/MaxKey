@@ -5,7 +5,4 @@ It permits anyone to use a simple yet powerful template language to reference ob
 below vms is for opensaml
 add-html-body-content.vm
 add-html-head-content.vm
-saml1-post-binding.vm
-saml2-post-artifact-binding.vm
 saml2-post-binding.vm
-saml2-post-simplesign-binding.vm
