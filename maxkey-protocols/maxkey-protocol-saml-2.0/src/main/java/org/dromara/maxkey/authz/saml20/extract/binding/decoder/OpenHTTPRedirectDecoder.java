@@ -15,10 +15,10 @@
  */
  
 
-package org.dromara.maxkey.authz.saml20.binding.decoder;
+package org.dromara.maxkey.authz.saml20.extract.binding.decoder;
 
 import org.opensaml.common.binding.SAMLMessageContext;
-import org.opensaml.saml2.binding.decoding.HTTPPostSimpleSignDecoder;
+import org.opensaml.saml2.binding.decoding.HTTPRedirectDeflateDecoder;
 import org.opensaml.ws.message.decoder.MessageDecodingException;
 import org.opensaml.ws.transport.InTransport;
 import org.opensaml.ws.transport.http.HttpServletRequestAdapter;
@@ -30,16 +30,16 @@ import org.springframework.security.web.util.UrlUtils;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-public class OpenHTTPPostSimpleSignDecoder extends HTTPPostSimpleSignDecoder {
-    private final Logger log = LoggerFactory.getLogger(OpenHTTPPostSimpleSignDecoder.class);
+public class OpenHTTPRedirectDecoder extends HTTPRedirectDeflateDecoder {
+    private final Logger log = LoggerFactory.getLogger(OpenHTTPRedirectDecoder.class);
 
     private String receiverEndpoint;
 
-    public OpenHTTPPostSimpleSignDecoder() {
+    public OpenHTTPRedirectDecoder() {
         super();
     }
 
-    public OpenHTTPPostSimpleSignDecoder(ParserPool pool) {
+    public OpenHTTPRedirectDecoder(ParserPool pool) {
         super(pool);
     }
 
@@ -60,8 +60,7 @@ public class OpenHTTPPostSimpleSignDecoder extends HTTPPostSimpleSignDecoder {
     
     @Override
     @SuppressWarnings("rawtypes")
-    protected void checkEndpointURI(SAMLMessageContext messageContext)
-            throws SecurityException, MessageDecodingException {
+    protected void checkEndpointURI(SAMLMessageContext messageContext)throws SecurityException, MessageDecodingException {
 
         log.debug("Checking SAML message intended destination endpoint against receiver endpoint");
 
@@ -73,14 +72,16 @@ public class OpenHTTPPostSimpleSignDecoder extends HTTPPostSimpleSignDecoder {
         if (messageDestination == null) {
             if (bindingRequires) {
                 log.error("SAML message intended destination endpoint URI required by binding was empty");
-                throw new SecurityException("SAML message intended destination (required by binding) was not present");
+                throw new SecurityException(
+                        "SAML message intended destination (required by binding) was not present");
             } else {
                 log.debug("SAML message intended destination endpoint in message was empty, not required by binding, skipping");
                 return;
             }
         }
 
-        String receiverEndpoint = DatatypeHelper.safeTrimOrNullString(getActualReceiverEndpointURI(messageContext));
+        String receiverEndpoint = DatatypeHelper
+                .safeTrimOrNullString(getActualReceiverEndpointURI(messageContext));
 
         log.debug("Intended message destination endpoint: {}",messageDestination);
         log.debug("Actual message receiver endpoint: {}", receiverEndpoint);
@@ -88,19 +89,25 @@ public class OpenHTTPPostSimpleSignDecoder extends HTTPPostSimpleSignDecoder {
         // 协议头统一（http或https，需要和destination统一）
         if (messageDestination.indexOf("/") != -1
                 && receiverEndpoint.indexOf("/") != -1) {
-            if (!messageDestination.substring(0,messageDestination.indexOf("/"))
-                    .equalsIgnoreCase(receiverEndpoint.substring(0,receiverEndpoint.indexOf("/")))) {
-                
-                receiverEndpoint = messageDestination.substring(0,messageDestination.indexOf("/"))
-                        + receiverEndpoint.substring(receiverEndpoint.indexOf("/"));
+            if (!messageDestination.substring(0,
+                    messageDestination.indexOf("/"))
+                    .equalsIgnoreCase(
+                            receiverEndpoint.substring(0,
+                                    receiverEndpoint.indexOf("/")))) {
+                receiverEndpoint = messageDestination.substring(0,
+                        messageDestination.indexOf("/"))
+                        + receiverEndpoint.substring(receiverEndpoint
+                                .indexOf("/"));
             }
         }
         boolean matched = compareEndpointURIs(messageDestination,
                 receiverEndpoint);
         if (!matched) {
-            log.error("SAML message intended destination endpoint '{}' did not match the recipient endpoint '{}'",
+            log.error(
+                    "SAML message intended destination endpoint '{}' did not match the recipient endpoint '{}'",
                     messageDestination, receiverEndpoint);
-            throw new SecurityException("SAML message intended destination endpoint did not match recipient endpoint");
+            throw new SecurityException(
+                    "SAML message intended destination endpoint did not match recipient endpoint");
         } else {
             log.debug("SAML message intended destination endpoint matched recipient endpoint");
         }
@@ -108,15 +115,14 @@ public class OpenHTTPPostSimpleSignDecoder extends HTTPPostSimpleSignDecoder {
 
     @Override
     @SuppressWarnings("rawtypes")
-    protected String getActualReceiverEndpointURI(
-            SAMLMessageContext messageContext) throws MessageDecodingException {
+    protected String getActualReceiverEndpointURI(SAMLMessageContext messageContext) throws MessageDecodingException {
         InTransport inTransport = messageContext.getInboundMessageTransport();
         if (!(inTransport instanceof HttpServletRequestAdapter)) {
-            throw new MessageDecodingException("Message context InTransport instance was an unsupported type");
+            throw new MessageDecodingException(
+                    "Message context InTransport instance was an unsupported type");
         }
         HttpServletRequest httpRequest = 
                 ((HttpServletRequestAdapter) inTransport).getWrappedRequest();
-
         String requestUrl = UrlUtils.buildFullRequestUrl(httpRequest);
         if(requestUrl.indexOf("?") > -1) {
             return requestUrl.substring(0, requestUrl.indexOf("?"));

@@ -41,8 +41,7 @@ export class AppsSamlDetails extends Apps {
 
   validityInterval!: string;
   /**
-   * Redirect-Post Post-Post IdpInit-Post Redirect-PostSimpleSign
-   * Post-PostSimpleSign IdpInit-PostSimpleSign
+   * Post
    */
 
   binding!: string;

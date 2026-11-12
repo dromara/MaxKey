@@ -19,6 +19,7 @@
 package org.dromara.maxkey.authz.saml20.binding;
 
 import org.dromara.maxkey.authz.saml.common.AuthnRequestInfo;
+import org.dromara.maxkey.authz.saml20.extract.binding.ExtractBindingAdapter;
 import org.dromara.maxkey.entity.apps.AppsSAML20Details;
 import org.opensaml.common.SignableSAMLObject;
 import org.opensaml.saml2.metadata.Endpoint;

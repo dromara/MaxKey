@@ -118,8 +118,8 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
                 .addPathPatterns("/authz/jwt/*")
                 //SAML
                 .addPathPatterns("/authz/saml20/idpinit/*")
-                .addPathPatterns("/authz/saml20/assertion")
-                .addPathPatterns("/authz/saml20/assertion/")
+                .addPathPatterns("/authz/saml20/authorize/assertion")
+                .addPathPatterns("/authz/saml20/authorize/assertion/")
                 //CAS
                 .addPathPatterns("/authz/cas/*")
                 .addPathPatterns("/authz/cas/*/*")
@@ -168,7 +168,7 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
                 .addPathPatterns("/authz/jwt/*")
                 //SAML
                 .addPathPatterns("/authz/saml20/idpinit/*")
-                .addPathPatterns("/authz/saml20/assertion")
+                .addPathPatterns("/authz/saml20/authorize/assertion")
                 //CAS
                 .addPathPatterns("/authz/cas/granting")
                 //OAuth

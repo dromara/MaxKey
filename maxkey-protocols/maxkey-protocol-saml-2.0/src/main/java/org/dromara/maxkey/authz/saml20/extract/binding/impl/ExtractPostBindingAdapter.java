@@ -16,13 +16,13 @@
  
 
 
-package org.dromara.maxkey.authz.saml20.binding.impl;
+package org.dromara.maxkey.authz.saml20.extract.binding.impl;
 
 import java.security.KeyStore;
 
 import org.apache.commons.lang.StringUtils;
 import org.dromara.maxkey.authz.saml.common.TrustResolver;
-import org.dromara.maxkey.authz.saml20.binding.ExtractBindingAdapter;
+import org.dromara.maxkey.authz.saml20.extract.binding.ExtractBindingAdapter;
 import org.dromara.maxkey.crypto.keystore.KeyStoreLoader;
 import org.dromara.maxkey.entity.apps.AppsSAML20Details;
 import org.opensaml.common.binding.BasicSAMLMessageContext;

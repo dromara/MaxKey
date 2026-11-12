@@ -25,7 +25,7 @@ import org.apache.velocity.app.VelocityEngine;
 import org.dromara.maxkey.authz.saml.common.AuthnRequestInfo;
 import org.dromara.maxkey.authz.saml.common.TrustResolver;
 import org.dromara.maxkey.authz.saml20.binding.BindingAdapter;
-import org.dromara.maxkey.authz.saml20.binding.ExtractBindingAdapter;
+import org.dromara.maxkey.authz.saml20.extract.binding.ExtractBindingAdapter;
 import org.dromara.maxkey.crypto.keystore.KeyStoreLoader;
 import org.dromara.maxkey.crypto.keystore.KeyStoreUtil;
 import org.dromara.maxkey.entity.apps.AppsSAML20Details;

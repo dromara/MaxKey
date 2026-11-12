@@ -16,7 +16,7 @@
  
 
 
-package org.dromara.maxkey.authz.saml20.binding;
+package org.dromara.maxkey.authz.saml20.extract.binding;
 
 import java.security.KeyStore;
 

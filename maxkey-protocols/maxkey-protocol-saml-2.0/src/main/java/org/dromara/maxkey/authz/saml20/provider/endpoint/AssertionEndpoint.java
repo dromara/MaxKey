@@ -47,8 +47,6 @@ import jakarta.servlet.http.HttpServletResponse;
 @Controller
 public class AssertionEndpoint {
     private static final  Logger logger = LoggerFactory.getLogger(AssertionEndpoint.class);
-    
-    private BindingAdapter bindingAdapter;
 
     @Autowired
     @Qualifier("endpointGenerator")
@@ -58,13 +56,13 @@ public class AssertionEndpoint {
     @Qualifier("authnResponseGenerator")
     AuthnResponseGenerator authnResponseGenerator;
 
-    @RequestMapping(value = "/authz/saml20/assertion")
+    @RequestMapping(value = "/authz/saml20/authorize/assertion")
     public ModelAndView assertion(
             HttpServletRequest request,
             HttpServletResponse response,
             @CurrentUser UserInfo currentUser) throws Exception {
         logger.debug("saml20 assertion start.");
-        bindingAdapter = (BindingAdapter) request.getSession().getAttribute(
+        BindingAdapter bindingAdapter = (BindingAdapter) request.getSession().getAttribute(
                 WebConstants.AUTHORIZE_SIGN_ON_APP_SAMLV20_ADAPTER);
         logger.debug("saml20 assertion get session samlv20Adapter {}",bindingAdapter);
         AppsSAML20Details saml20Details = bindingAdapter.getSaml20Details();

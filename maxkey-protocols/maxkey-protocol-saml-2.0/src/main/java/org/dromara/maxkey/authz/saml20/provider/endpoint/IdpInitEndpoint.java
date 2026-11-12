@@ -21,7 +21,7 @@ import java.security.KeyStore;
 
 import org.dromara.maxkey.authz.saml.common.AuthnRequestInfo;
 import org.dromara.maxkey.authz.saml20.binding.BindingAdapter;
-import org.dromara.maxkey.authz.saml20.binding.ExtractBindingAdapter;
+import org.dromara.maxkey.authz.saml20.extract.binding.ExtractBindingAdapter;
 import org.dromara.maxkey.crypto.keystore.KeyStoreLoader;
 import org.dromara.maxkey.crypto.keystore.KeyStoreUtil;
 import org.dromara.maxkey.entity.apps.AppsSAML20Details;
@@ -33,9 +33,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -54,12 +53,6 @@ import jakarta.servlet.http.HttpServletResponse;
 public class IdpInitEndpoint {
     private static final  Logger logger = LoggerFactory.getLogger(IdpInitEndpoint.class);
 
-    private BindingAdapter bindingAdapter;
-    
-    @Autowired
-    @Qualifier("postSimpleSignBindingAdapter")
-    private BindingAdapter postSimpleSignBindingAdapter;
-    
     @Autowired
     @Qualifier("postBindingAdapter")
     private BindingAdapter postBindingAdapter;
@@ -86,16 +79,16 @@ public class IdpInitEndpoint {
      *
      */
     @Operation(summary = "SAML 2.0 IDP Init接口", description = "传递参数应用ID",method="GET")
-    @RequestMapping(value = "/authz/saml20/idpinit/{appid}", method=RequestMethod.GET)
+    @GetMapping(value = "/authz/saml20/idpinit/{appid}")
     public ModelAndView authorizeIdpInit(
                 HttpServletRequest request,
                 HttpServletResponse response,
                 @PathVariable("appid") String appId)throws Exception {
-        logger.debug("SAML IDP init , app id is "+appId);
+        logger.debug("SAML IDP init , app id is {}",appId);
         AppsSAML20Details saml20Details = saml20DetailsService.get(appId , true);
         WebContext.setAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP, saml20Details);
         if (saml20Details == null) {
-            logger.error("samlId[" + appId + "] Error .");
+            logger.error("samlId[{}] Error .",appId);
             throw new Exception();
         }
 
@@ -106,13 +99,8 @@ public class IdpInitEndpoint {
         extractRedirectBindingAdapter.setSaml20Detail(saml20Details);
         extractRedirectBindingAdapter.buildSecurityPolicyResolver(trustKeyStore);
         
-        String binding=saml20Details.getBinding();
-        
-        if(binding.endsWith("PostSimpleSign")){
-            bindingAdapter=postSimpleSignBindingAdapter;
-        }else{
-            bindingAdapter=postBindingAdapter;
-        }
+
+        BindingAdapter bindingAdapter = postBindingAdapter;
         
         //AuthnRequestInfo init authnRequestID to null
         bindingAdapter.setAuthnRequestInfo(new AuthnRequestInfo());
@@ -121,9 +109,9 @@ public class IdpInitEndpoint {
         
         request.getSession().setAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP_SAMLV20_ADAPTER, bindingAdapter);
 
-        logger.debug("idp init forwarding to assertion :","/authz/saml20/assertion");
+        logger.debug("idp init forwarding to assertion :{}","/authz/saml20/authorize/assertion");
 
-        return WebContext.forward("/authz/saml20/assertion");
+        return WebContext.forward("/authz/saml20/authorize/assertion");
     }
 
 

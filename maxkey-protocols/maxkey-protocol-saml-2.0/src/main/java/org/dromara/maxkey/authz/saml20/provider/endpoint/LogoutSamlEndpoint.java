@@ -18,7 +18,7 @@
 package org.dromara.maxkey.authz.saml20.provider.endpoint;
 
 import org.apache.commons.lang3.StringUtils;
-import org.dromara.maxkey.authz.saml20.binding.ExtractBindingAdapter;
+import org.dromara.maxkey.authz.saml20.extract.binding.ExtractBindingAdapter;
 import org.dromara.maxkey.authz.saml20.xml.SAML2ValidatorSuite;
 import org.dromara.maxkey.web.WebContext;
 import org.opensaml.common.binding.SAMLMessageContext;

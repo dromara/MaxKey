@@ -25,13 +25,11 @@ import org.apache.velocity.exception.VelocityException;
 import org.dromara.maxkey.authz.saml.common.EndpointGenerator;
 import org.dromara.maxkey.authz.saml.service.IDService;
 import org.dromara.maxkey.authz.saml.service.TimeService;
-import org.dromara.maxkey.authz.saml20.binding.decoder.OpenHTTPPostDecoder;
-import org.dromara.maxkey.authz.saml20.binding.decoder.OpenHTTPPostSimpleSignDecoder;
-import org.dromara.maxkey.authz.saml20.binding.decoder.OpenHTTPRedirectDecoder;
-import org.dromara.maxkey.authz.saml20.binding.impl.ExtractPostBindingAdapter;
-import org.dromara.maxkey.authz.saml20.binding.impl.ExtractRedirectBindingAdapter;
 import org.dromara.maxkey.authz.saml20.binding.impl.PostBindingAdapter;
-import org.dromara.maxkey.authz.saml20.binding.impl.PostSimpleSignBindingAdapter;
+import org.dromara.maxkey.authz.saml20.extract.binding.decoder.OpenHTTPPostDecoder;
+import org.dromara.maxkey.authz.saml20.extract.binding.decoder.OpenHTTPRedirectDecoder;
+import org.dromara.maxkey.authz.saml20.extract.binding.impl.ExtractPostBindingAdapter;
+import org.dromara.maxkey.authz.saml20.extract.binding.impl.ExtractRedirectBindingAdapter;
 import org.dromara.maxkey.authz.saml20.provider.xml.AuthnResponseGenerator;
 import org.dromara.maxkey.authz.saml20.xml.SAML2ValidatorSuite;
 import org.dromara.maxkey.crypto.keystore.KeyStoreLoader;
@@ -239,18 +237,6 @@ public class Saml20AutoConfiguration implements InitializingBean {
     }
 
     /**
-     * OpenHTTPPostSimpleSignDecoder.
-     * @return openHTTPPostSimpleSignDecoder
-     */
-    @Bean(name = "openHTTPPostSimpleSignDecoder")
-    OpenHTTPPostSimpleSignDecoder openHTTPPostSimpleSignDecoder(BasicParserPool samlParserPool,
-                                                             @Value("${maxkey.saml.v20.idp.receiver.endpoint}") String receiverEndpoint) {
-        OpenHTTPPostSimpleSignDecoder decoder = new OpenHTTPPostSimpleSignDecoder(samlParserPool);
-        decoder.setReceiverEndpoint(receiverEndpoint);
-        return decoder;
-    }
-
-    /**
      * OpenHTTPPostDecoder.
      * @return openHTTPPostDecoder
      */
@@ -299,20 +285,6 @@ public class Saml20AutoConfiguration implements InitializingBean {
         adapter.setIssueInstantRule(issueInstantRule);
         adapter.setKeyStoreLoader(keyStoreLoader);
         adapter.setMessageReplayRule(messageReplayRule);
-        return adapter;
-    }
-
-
-    /**
-     * PostSimpleSignBindingAdapter.
-     * @return postSimpleSignBindingAdapter
-     */
-    @Bean(name = "postSimpleSignBindingAdapter")
-    PostSimpleSignBindingAdapter postSimpleSignBindingAdapter(VelocityEngine velocityEngine,
-                                                           @Value("${maxkey.saml.v20.idp.issuer}") String issuerEntityName) {
-        PostSimpleSignBindingAdapter adapter = new PostSimpleSignBindingAdapter();
-        adapter.setVelocityEngine(velocityEngine);
-        adapter.setIssuerEntityName(issuerEntityName);
         return adapter;
     }
 

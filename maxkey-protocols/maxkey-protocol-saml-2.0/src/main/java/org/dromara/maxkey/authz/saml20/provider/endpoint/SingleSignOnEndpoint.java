@@ -21,7 +21,7 @@ import java.security.KeyStore;
 
 import org.dromara.maxkey.authz.saml.common.AuthnRequestInfo;
 import org.dromara.maxkey.authz.saml20.binding.BindingAdapter;
-import org.dromara.maxkey.authz.saml20.binding.ExtractBindingAdapter;
+import org.dromara.maxkey.authz.saml20.extract.binding.ExtractBindingAdapter;
 import org.dromara.maxkey.authz.saml20.xml.SAML2ValidatorSuite;
 import org.dromara.maxkey.crypto.keystore.KeyStoreUtil;
 import org.dromara.maxkey.entity.apps.AppsSAML20Details;
@@ -38,9 +38,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -54,10 +54,6 @@ public class SingleSignOnEndpoint {
     private static final  Logger logger = LoggerFactory.getLogger(SingleSignOnEndpoint.class);
 
     private BindingAdapter bindingAdapter;
-    
-    @Autowired
-    @Qualifier("postSimpleSignBindingAdapter")
-    private BindingAdapter postSimpleSignBindingAdapter;
     
     @Autowired
     @Qualifier("postBindingAdapter")
@@ -79,29 +75,29 @@ public class SingleSignOnEndpoint {
     private AppsSaml20DetailsService saml20DetailsService;
 
     @Operation(summary = "SAML 2.0 SP Init接收接口", description = "传递参数应用ID",method="POST")
-    @RequestMapping(value = "/authz/saml20/{appid}", method=RequestMethod.POST)
+    @PostMapping(value = "/authz/saml20/{appid}")
     public ModelAndView authorizePost(
             HttpServletRequest request,
             HttpServletResponse response,
             @PathVariable("appid") String appId)throws Exception {
-        logger.debug("SAML Authorize Redirect do POST , app id is  "+appId);
+        logger.debug("POST SAML Authorize , app id is  {}",appId);
         return extractSAMLRequest(extractPostBindingAdapter,appId,request);
     }
     
     @Operation(summary = "SAML 2.0 SP Init接收接口", description = "传递参数应用ID",method="GET")
-    @RequestMapping(value = "/authz/saml20/{appid}", method=RequestMethod.GET)
+    @GetMapping(value = "/authz/saml20/{appid}")
     public ModelAndView authorizeRedirect(
             HttpServletRequest request,
             HttpServletResponse response,
             @PathVariable("appid") String appId)throws Exception {
-        logger.debug("SAML Authorize Redirect do GET , app id is  "+appId);
+        logger.debug("GET SAML Authorize , app id is  {}",appId);
         return extractSAMLRequest(extractRedirectBindingAdapter,appId,request);
     }
     
     public ModelAndView extractSAMLRequest(ExtractBindingAdapter extractBindingAdapter,
                                             String appId,
                                             HttpServletRequest request) throws Exception{
-        logger.debug("SAML Redirect Binding , app id is "+appId);
+        logger.debug("SAML Redirect Binding , app id is {}",appId);
         
         extractSaml20Detail(extractBindingAdapter,appId);
 
@@ -109,14 +105,14 @@ public class SingleSignOnEndpoint {
         
         request.getSession().setAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP_SAMLV20_ADAPTER, bindingAdapter);
         
-        return WebContext.forward("/authz/saml20/assertion");
+        return WebContext.forward("/authz/saml20/authorize/assertion");
     }
 
     public void extractSaml20Detail(ExtractBindingAdapter extractBindingAdapter,String samlId) throws Exception{
         AppsSAML20Details  saml20Details  = saml20DetailsService.get(samlId , true);
         WebContext.setAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP, saml20Details);
         if (saml20Details == null) {
-            logger.error("Request SAML APPID [" + samlId + "] is not exist .");
+            logger.error("Request SAML APPID [{}] is not exist .",samlId);
             throw new Exception();
         }
 
@@ -140,35 +136,26 @@ public class SingleSignOnEndpoint {
             messageContext = extractBindingAdapter.extractSAMLMessageContext(request);
             logger.debug("validate SAML AuthnRequest .");
             AuthnRequest authnRequest = (AuthnRequest) messageContext.getInboundSAMLMessage();
-            logger.debug("AuthnRequest ProtocolBinding "+authnRequest.getProtocolBinding());
-            logger.debug("InboundSAMLMessage Id "+messageContext.getInboundSAMLMessageId());
-            logger.debug("AuthnRequest AssertionConsumerServiceURL "+authnRequest.getAssertionConsumerServiceURL());
-            logger.debug("InboundMessage Issuer "+messageContext.getInboundMessageIssuer());
-            logger.debug("InboundSAMLMessage IssueInstant "+messageContext.getInboundSAMLMessageIssueInstant());
-            logger.debug("InboundSAMLMessage RelayState "+messageContext.getRelayState());      
-            logger.debug("AuthnRequest isPassive "+authnRequest.isPassive());
-            logger.debug("AuthnRequest ForceAuthn "+authnRequest.isForceAuthn());
+            logger.debug("AuthnRequest ProtocolBinding {}",authnRequest.getProtocolBinding());
+            logger.debug("InboundSAMLMessage Id {}",messageContext.getInboundSAMLMessageId());
+            logger.debug("AuthnRequest AssertionConsumerServiceURL {}",authnRequest.getAssertionConsumerServiceURL());
+            logger.debug("InboundMessage Issuer {}",messageContext.getInboundMessageIssuer());
+            logger.debug("InboundSAMLMessage IssueInstant {}",messageContext.getInboundSAMLMessageIssueInstant());
+            logger.debug("InboundSAMLMessage RelayState {}",messageContext.getRelayState());      
+            logger.debug("AuthnRequest isPassive {}",authnRequest.isPassive());
+            logger.debug("AuthnRequest ForceAuthn {}",authnRequest.isForceAuthn());
             
             validatorSuite.validate(authnRequest);
             
-
-            logger.debug("Select Authz  Binding.");
-            String binding=extractBindingAdapter.getSaml20Detail().getBinding();
-            
-            if(binding.endsWith("PostSimpleSign")){
-                bindingAdapter=postSimpleSignBindingAdapter;
-                logger.debug("Authz POST Binding is  use PostSimpleSign .");
-            }else{
-                bindingAdapter=postBindingAdapter;
-                logger.debug("Authz POST Binding is  use Post .");
-            }
+            bindingAdapter = postBindingAdapter;
+            logger.debug("Authz POST Binding is  use Post .");
             
             
             AuthnRequestInfo authnRequestInfo = new AuthnRequestInfo(
                                     authnRequest.getAssertionConsumerServiceURL(),
                                     authnRequest.getID());
             
-            logger.debug("AuthnRequest vefified.  Forwarding to AuthnResponder",authnRequestInfo);
+            logger.debug("AuthnRequest vefified.  Forwarding to AuthnResponder {}",authnRequestInfo);
             
             bindingAdapter.setAuthnRequestInfo(authnRequestInfo);
             
@@ -177,18 +164,11 @@ public class SingleSignOnEndpoint {
             String relayState=request.getParameter("RelayState");
             if (relayState != null) {
                 bindingAdapter.setRelayState(relayState);
-                logger.debug("RelayState : ",relayState);
+                logger.debug("RelayState : {}",relayState);
             }
             
-        } catch (MessageDecodingException e1) {
-            logger.error("Exception decoding SAML MessageDecodingException", e1);
-            throw new Exception(e1);
-        } catch (SecurityException e1) {
-            logger.error("Exception decoding SAML SecurityException", e1);
-            throw new Exception(e1);
-        }catch (ValidationException ve) {
-            logger.warn("AuthnRequest Message failed Validation", ve);
-            throw new Exception(ve);
+        } catch (MessageDecodingException |SecurityException | ValidationException e1) {
+            logger.error("Exception decoding SAML Message", e1);
         }
         
     }

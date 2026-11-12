@@ -177,14 +177,7 @@
           <nz-form-item>
             <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired nzFor="binding">{{ 'mxk.apps.saml.binding' | i18n }} </nz-form-label>
             <nz-form-control [nzSm]="20" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid binding!">
-              <nz-select [(ngModel)]="form.model.binding" [ngModelOptions]="{ standalone: true }" nz-input name="binding" id="binding">
-                <nz-option nzValue="Redirect-Post" nzLabel="Redirect-Post" />
-                <nz-option nzValue="Post-Post" nzLabel="Post-Post" />
-                <nz-option nzValue="IdpInit-Post" nzLabel="IdpInit-Post" />
-                <nz-option nzValue="Redirect-PostSimpleSign" nzLabel="Redirect-PostSimpleSign" />
-                <nz-option nzValue="Post-PostSimpleSign" nzLabel="Post-PostSimpleSign" />
-                <nz-option nzValue="IdpInit-PostSimpleSign" nzLabel="IdpInit-PostSimpleSign" />
-              </nz-select>
+              <input [(ngModel)]="form.model.binding" [ngModelOptions]="{ standalone: true }" nz-input disabled />
             </nz-form-control>
           </nz-form-item>
           <nz-form-item>
