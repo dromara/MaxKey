@@ -51,8 +51,8 @@ import java.util.Objects;
  *
  */
 @RestControllerAdvice
-public class GlobalExceptionHandler {
-     private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+public class GlobalRestExceptionHandler {
+     private static final Logger logger = LoggerFactory.getLogger(GlobalRestExceptionHandler.class);
 
     /**
      * 缺少请求体异常处理器
