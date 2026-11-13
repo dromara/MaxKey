@@ -70,20 +70,20 @@ export class AppsSamlDetails extends Apps {
 
   constructor() {
     super();
-    this.fileType = 'certificate';
+    this.fileType = 'metadata_file';
     this.validityInterval = '300';
     this.nameidFormat = 'persistent';
     this.nameIdConvert = 'original';
     this.signature = 'RSAwithSHA1';
     this.digestMethod = 'SHA1';
     this.encrypted = 'no';
-    this.binding = 'Redirect-Post';
+    this.binding = 'Post';
   }
 
   override init(data: any): void {
     Object.assign(this, data);
     super.init(data);
-    this.fileType = 'certificate';
+    this.fileType = 'metadata_file';
     this.metaUrl = '';
     if (this.category == null || this.category == '') {
       this.category = 'NONE';
