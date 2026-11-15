@@ -208,7 +208,7 @@ public class LdapUsersService extends AbstractSynchronizerService  implements IS
             historySynchronizer.setSyncName(this.synchronizer.getName());
             historySynchronizer.setObjectId(userInfo.getId());
             historySynchronizer.setObjectName(userInfo.getUsername());
-            historySynchronizer.setObjectType(Organizations.class.getSimpleName());
+            historySynchronizer.setObjectType(UserInfo.class.getSimpleName());
             historySynchronizer.setInstId(synchronizer.getInstId());
             historySynchronizer.setResult("success");
             this.historySynchronizerService.insert(historySynchronizer);
@@ -315,7 +315,7 @@ public class LdapUsersService extends AbstractSynchronizerService  implements IS
         historySynchronizer.setSyncName(this.synchronizer.getName());
         historySynchronizer.setObjectId(userInfo.getId());
         historySynchronizer.setObjectName(userInfo.getUsername());
-        historySynchronizer.setObjectType(Organizations.class.getSimpleName());
+        historySynchronizer.setObjectType(UserInfo.class.getSimpleName());
         historySynchronizer.setInstId(synchronizer.getInstId());
         historySynchronizer.setResult("success");
         this.historySynchronizerService.insert(historySynchronizer);
