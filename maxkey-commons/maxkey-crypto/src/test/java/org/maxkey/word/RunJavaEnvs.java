@@ -21,8 +21,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
 
-import org.apache.commons.lang.SystemUtils;
 import org.apache.commons.lang3.ArchUtils;
+import org.apache.commons.lang3.SystemUtils;
 
 public class RunJavaEnvs {
 

@@ -21,7 +21,7 @@ package org.dromara.maxkey.web;
 
 import java.io.IOException;
 
-import org.apache.commons.lang.SystemUtils;
+import org.apache.commons.lang3.SystemUtils;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

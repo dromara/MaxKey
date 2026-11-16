@@ -23,8 +23,8 @@ import java.util.Objects;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import org.apache.commons.lang.SystemUtils;
 import org.apache.commons.lang3.ArchUtils;
+import org.apache.commons.lang3.SystemUtils;
 import org.apache.commons.lang3.arch.Processor;
 import org.dromara.maxkey.util.PathUtils;
 import org.slf4j.Logger;
