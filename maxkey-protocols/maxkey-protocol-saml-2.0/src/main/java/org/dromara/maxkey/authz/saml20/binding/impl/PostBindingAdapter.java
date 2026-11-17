@@ -20,8 +20,8 @@ package org.dromara.maxkey.authz.saml20.binding.impl;
 
 import java.security.KeyStore;
 
-import org.apache.commons.lang.Validate;
-import org.apache.velocity.app.VelocityEngine;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Validate;
 import org.dromara.maxkey.authz.saml.common.AuthnRequestInfo;
 import org.dromara.maxkey.authz.saml.common.TrustResolver;
 import org.dromara.maxkey.authz.saml20.binding.BindingAdapter;
@@ -32,12 +32,10 @@ import org.dromara.maxkey.entity.apps.AppsSAML20Details;
 import org.opensaml.common.SignableSAMLObject;
 import org.opensaml.common.binding.BasicSAMLMessageContext;
 import org.opensaml.common.binding.decoding.SAMLMessageDecoder;
-import org.opensaml.common.binding.encoding.SAMLMessageEncoder;
-import org.opensaml.saml2.binding.encoding.HTTPPostEncoder;
+import org.opensaml.saml2.binding.encoding.HTTPPostSignEncoder;
 import org.opensaml.saml2.metadata.Endpoint;
 import org.opensaml.ws.message.encoder.MessageEncodingException;
 import org.opensaml.ws.security.SecurityPolicyResolver;
-import org.opensaml.ws.transport.http.HttpServletResponseAdapter;
 import org.opensaml.xml.security.CriteriaSet;
 import org.opensaml.xml.security.SecurityException;
 import org.opensaml.xml.security.credential.Credential;
@@ -48,20 +46,16 @@ import org.opensaml.xml.security.criteria.EntityIDCriteria;
 import org.opensaml.xml.security.criteria.UsageCriteria;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.InitializingBean;
+import org.springframework.web.servlet.ModelAndView;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-
-public class PostBindingAdapter implements BindingAdapter, InitializingBean{
+public class PostBindingAdapter implements BindingAdapter{
     private static final  Logger logger = LoggerFactory.getLogger(PostBindingAdapter.class);
 
-    static final String SAML_REQUEST_POST_PARAM_NAME = "SAMLRequest";
-    static final String SAML_RESPONSE_POST_PARAM_NAME = "SAMLResponse";
+    static final String SAML_ACTION 	= "action";
+    static final String SAML_RELAYSTATE 	= "RelayState";
+    static final String SAML_RESPONSE 	= "SAMLResponse";
 
-    protected VelocityEngine velocityEngine;
-
-    protected SAMLMessageEncoder encoder;    
+    protected  HTTPPostSignEncoder encoder = new HTTPPostSignEncoder();    
     protected  String issuerEntityName;
     
     protected CredentialResolver credentialResolver;
@@ -90,35 +84,32 @@ public class PostBindingAdapter implements BindingAdapter, InitializingBean{
         
         this.securityPolicyResolver = securityPolicyResolver;
     }
-
-
-    public void setVelocityEngine(VelocityEngine velocityEngine) {
-        this.velocityEngine = velocityEngine;
-    }
     
     @Override
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    public void sendSAMLMessage(SignableSAMLObject samlMessage,
-                                Endpoint endpoint, 
-                                HttpServletRequest request,
-                                HttpServletResponse response) throws MessageEncodingException {
-        
-        HttpServletResponseAdapter outTransport = new HttpServletResponseAdapter(response, false);
-        
+    public ModelAndView sendSAMLMessage(SignableSAMLObject samlMessage,Endpoint endpoint) throws MessageEncodingException {
+    	ModelAndView modelAndView = new ModelAndView("saml/saml2-post-binding");
         BasicSAMLMessageContext messageContext = new BasicSAMLMessageContext();
         
         if (relayState!=null) {
             messageContext.setRelayState(relayState);
         }
         
-        messageContext.setOutboundMessageTransport(outTransport);
         messageContext.setPeerEntityEndpoint(endpoint);
         messageContext.setOutboundSAMLMessage(samlMessage);
         messageContext.setOutboundMessageIssuer(issuerEntityName);
         messageContext.setOutboundSAMLMessageSigningCredential(signingCredential);
         
-        encoder.encode(messageContext);
+        modelAndView.addObject(SAML_ACTION, endpoint.getLocation());
         
+        String encodeSAMLResponse = encoder.doSignEncode(messageContext);
+        logger.debug("encode SAMLResponse {}",encodeSAMLResponse);
+        modelAndView.addObject(SAML_RESPONSE,encodeSAMLResponse);
+        
+        if(StringUtils.isNotBlank(messageContext.getRelayState())) {
+        	modelAndView.addObject(SAML_RELAYSTATE,messageContext.getRelayState());
+        }
+        return modelAndView;
     }
 
 
@@ -163,11 +154,6 @@ public class PostBindingAdapter implements BindingAdapter, InitializingBean{
         return spSigningCredential;
     }
     
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        encoder = new HTTPPostEncoder(velocityEngine,"/templates/saml2-post-binding.vm");
-    }
-
     /**
      * @param securityPolicyResolver the securityPolicyResolver to set
      */

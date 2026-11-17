@@ -1,3 +1,4 @@
+<!--
 ##
 ## Velocity Template for SAML 2 HTTP-POST binding
 ##
@@ -7,10 +8,10 @@
 ## RelayState - String - the relay state for the message
 ## SAMLRequest - String - the Base64 encoded SAML Request
 ## SAMLResponse - String - the Base64 encoded SAML Response
-
+-->
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
     <head>
-    #parse ( "/templates/add-html-head-content.vm" )
+    	<#include   "add-html-head-content.ftl" >
     </head>
     <body onload="document.forms[0].submit()">
         <noscript>
@@ -22,11 +23,11 @@
         
         <form action="${action}" method="post">
             <div>
-                #if($RelayState)<input type="hidden" name="RelayState" value="${RelayState}"/>#end
+                <#if RelayState??><input type="hidden" name="RelayState" value="${RelayState}"/></#if>
                 
-                #if($SAMLRequest)<input type="hidden" name="SAMLRequest" value="${SAMLRequest}"/>#end
+                <#if SAMLRequest??><input type="hidden" name="SAMLRequest" value="${SAMLRequest}"/></#if>
                 
-                #if($SAMLResponse)<input type="hidden" name="SAMLResponse" value="${SAMLResponse}"/>#end
+                <#if SAMLResponse??><input type="hidden" name="SAMLResponse" value="${SAMLResponse}"/></#if>
                 
             </div>
             <noscript>
@@ -35,6 +36,6 @@
                 </div>
             </noscript>
         </form>
-        #parse ( "/templates/add-html-body-content.vm" )
+        	<#include   "add-html-body-content.ftl" >
     </body>
 </html>

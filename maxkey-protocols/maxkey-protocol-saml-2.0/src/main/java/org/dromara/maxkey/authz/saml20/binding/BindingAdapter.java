@@ -26,9 +26,7 @@ import org.opensaml.saml2.metadata.Endpoint;
 import org.opensaml.ws.message.encoder.MessageEncodingException;
 import org.opensaml.ws.security.SecurityPolicyResolver;
 import org.opensaml.xml.security.credential.Credential;
-
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * 
@@ -38,7 +36,7 @@ import jakarta.servlet.http.HttpServletResponse;
  */
 public interface BindingAdapter {
 
-    public void sendSAMLMessage(SignableSAMLObject samlMessage, Endpoint endpoint, HttpServletRequest request, HttpServletResponse response) throws MessageEncodingException;
+    public ModelAndView sendSAMLMessage(SignableSAMLObject samlMessage, Endpoint endpoint) throws MessageEncodingException;
     
     public void setSecurityPolicyResolver(SecurityPolicyResolver securityPolicyResolver);
     

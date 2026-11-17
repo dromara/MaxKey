@@ -49,7 +49,7 @@ public class ConditionsGenerator {
         audience.setAudienceURI(audienceUrl);
         
         audienceRestriction.getAudiences().add(audience);
-        logger.debug("Audience URL "+audienceUrl);
+        logger.debug("Audience URL {}",audienceUrl);
         return audienceRestriction;
         
     }

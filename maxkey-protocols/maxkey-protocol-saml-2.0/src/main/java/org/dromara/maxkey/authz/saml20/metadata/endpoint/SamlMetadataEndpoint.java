@@ -18,7 +18,7 @@
 package org.dromara.maxkey.authz.saml20.metadata.endpoint;
 
 
-import org.apache.commons.lang.Validate;
+import org.apache.commons.lang3.Validate;
 import org.dromara.maxkey.authz.saml.common.TrustResolver;
 import org.dromara.maxkey.authz.saml20.metadata.MetadataGenerator;
 import org.dromara.maxkey.constants.ContentType;

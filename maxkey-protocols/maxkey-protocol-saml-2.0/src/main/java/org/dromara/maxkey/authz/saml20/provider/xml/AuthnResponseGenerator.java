@@ -29,6 +29,7 @@ import org.dromara.maxkey.constants.ConstsBoolean;
 import org.dromara.maxkey.entity.apps.AppsSAML20Details;
 import org.dromara.maxkey.entity.idm.UserInfo;
 import org.opensaml.Configuration;
+import org.opensaml.common.SAMLVersion;
 import org.opensaml.saml2.core.Assertion;
 import org.opensaml.saml2.core.EncryptedAssertion;
 import org.opensaml.saml2.core.Response;
@@ -111,11 +112,14 @@ public class AuthnResponseGenerator {
         
         authResponse.setIssuer(issuerGenerator.generateIssuer());
         authResponse.setID(idService.generateID());
+        authResponse.setVersion(SAMLVersion.VERSION_20);
         authResponse.setIssueInstant(timeService.getCurrentDateTime());
         authResponse.setInResponseTo(authnRequestInfo.getAuthnRequestID());
         authResponse.setDestination(saml20Details.getSpAcsUrl());
         authResponse.setStatus(statusGenerator.generateStatus(StatusCode.SUCCESS_URI));
-        logger.debug("authResponse.isSigned "+authResponse.isSigned());
+        
+        logger.debug("authResponse.getStatus().getElementQName().getNamespaceURI {}",authResponse.getStatus().getElementQName().getNamespaceURI());
+        logger.debug("authResponse.isSigned {}",authResponse.isSigned());
         return authResponse;
     }
     

@@ -1,2 +1,4 @@
+<!--
 ## Stub file that one can replace with Velocity template (and thus HTML) content
 ## to be placed into the sBODY section of the response
+-->

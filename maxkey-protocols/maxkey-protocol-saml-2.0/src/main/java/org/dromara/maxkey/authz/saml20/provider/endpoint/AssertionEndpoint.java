@@ -93,12 +93,11 @@ public class AssertionEndpoint {
         // we could use a different adapter to send the response based on
         // request issuer...
         try {
-            bindingAdapter.sendSAMLMessage(authResponse, endpoint, request,response);
+        	return bindingAdapter.sendSAMLMessage(authResponse, endpoint);
         } catch (MessageEncodingException mee) {
             logger.error("Exception encoding SAML message", mee);
             throw new Exception(mee);
         }
-        return null;
     }
     
     

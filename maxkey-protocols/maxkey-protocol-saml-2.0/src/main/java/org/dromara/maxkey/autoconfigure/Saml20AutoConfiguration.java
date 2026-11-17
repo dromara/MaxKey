@@ -17,11 +17,6 @@
 
 package org.dromara.maxkey.autoconfigure;
 
-import java.io.IOException;
-import java.util.Properties;
-
-import org.apache.velocity.app.VelocityEngine;
-import org.apache.velocity.exception.VelocityException;
 import org.dromara.maxkey.authz.saml.common.EndpointGenerator;
 import org.dromara.maxkey.authz.saml.service.IDService;
 import org.dromara.maxkey.authz.saml.service.TimeService;
@@ -43,20 +38,18 @@ import org.opensaml.xml.ConfigurationException;
 import org.opensaml.xml.parse.BasicParserPool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.ui.velocity.VelocityEngineFactoryBean;
 
 @AutoConfiguration
 @ComponentScan(basePackages = {
         "org.maxkey.authz.saml20.provider.endpoint",
         "org.maxkey.authz.saml20.metadata.endpoint",
 })
-public class Saml20AutoConfiguration implements InitializingBean {
+public class Saml20AutoConfiguration {
     private static final  Logger _logger = LoggerFactory.getLogger(Saml20AutoConfiguration.class);
 
     /**
@@ -172,25 +165,6 @@ public class Saml20AutoConfiguration implements InitializingBean {
     }
 
     /**
-     * VelocityEngineFactoryBean.
-     * @return velocityEngine
-     * @throws IOException 
-     * @throws VelocityException 
-     */
-    @SuppressWarnings({"deprecation"})
-    @Bean(name = "velocityEngine")
-    VelocityEngine velocityEngine() throws VelocityException, IOException {
-        VelocityEngineFactoryBean factory = new VelocityEngineFactoryBean();
-        factory.setPreferFileSystemAccess(false);
-        Properties velocityProperties = new Properties();
-        velocityProperties.put("resource.loader", "classpath");
-        velocityProperties.put("classpath.resource.loader.class", 
-                "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
-        factory.setVelocityProperties(velocityProperties);
-        return factory.createVelocityEngine();
-    }
-
-    /**
      * ReplayCache.
      * @return replayCache
      */
@@ -293,20 +267,10 @@ public class Saml20AutoConfiguration implements InitializingBean {
      * @return postBindingAdapter
      */
     @Bean(name = "postBindingAdapter")
-    PostBindingAdapter postBindingAdapter(VelocityEngine velocityEngine,
-                                       @Value("${maxkey.saml.v20.idp.issuer}") String issuerEntityName) {
+    PostBindingAdapter postBindingAdapter(@Value("${maxkey.saml.v20.idp.issuer}") String issuerEntityName) {
         PostBindingAdapter adapter = new PostBindingAdapter();
-        adapter.setVelocityEngine(velocityEngine);
         adapter.setIssuerEntityName(issuerEntityName);
         return adapter;
     }
-    
-    
-    
    
-
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        
-    }
 }
