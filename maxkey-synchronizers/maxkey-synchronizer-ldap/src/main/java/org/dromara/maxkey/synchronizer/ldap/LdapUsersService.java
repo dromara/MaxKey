@@ -110,7 +110,7 @@ public class LdapUsersService extends AbstractSynchronizerService  implements IS
 
             //ldapUtils.close();
         } catch (NamingException e) {
-            e.printStackTrace();
+            _logger.error("Sync Ldap Users error", e);
         }
         
     }
@@ -137,6 +137,12 @@ public class LdapUsersService extends AbstractSynchronizerService  implements IS
         _logger.info("deptNamePath  " + deptNamePath);
         
        Organizations  deptOrg = orgsNamePathMap.get(deptNamePath);
+        if(deptOrg == null) {
+            //department not synchronized, keep the user under the root organization instead of failing the whole sync
+            _logger.warn("Organization {} not found for user {} , use root organization {}",
+                            deptNamePath, nameInNamespace, rootOrganization.getNamePath());
+            deptOrg = rootOrganization;
+        }
         userInfo.setDepartment(deptOrg.getOrgName());
         userInfo.setDepartmentId(deptOrg.getId());
         
@@ -214,7 +220,7 @@ public class LdapUsersService extends AbstractSynchronizerService  implements IS
             this.historySynchronizerService.insert(historySynchronizer);
            
         } catch (NamingException e) {
-            e.printStackTrace();
+            _logger.error("Build user {} error", nameInNamespace, e);
         }
         return userInfo;
     }
@@ -239,6 +245,12 @@ public class LdapUsersService extends AbstractSynchronizerService  implements IS
         _logger.info("deptNamePath  " + deptNamePath);
         
         Organizations  deptOrg = orgsNamePathMap.get(deptNamePath);
+        if(deptOrg == null) {
+            //department not synchronized, keep the user under the root organization instead of failing the whole sync
+            _logger.warn("Organization {} not found for user {} , use root organization {}",
+                            deptNamePath, nameInNamespace, rootOrganization.getNamePath());
+            deptOrg = rootOrganization;
+        }
 
         userInfo.setLdapDn(nameInNamespace);
         userInfo.setId(userInfo.generateId());
@@ -303,7 +315,7 @@ public class LdapUsersService extends AbstractSynchronizerService  implements IS
 
                 setFieldValue(userInfo, targetAttr,value);
             }catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
-                e.printStackTrace();
+                _logger.error("Set field {} of user {} error", targetAttr, nameInNamespace, e);
             } catch (NamingException e) {
                 throw new RuntimeException(e);
             }

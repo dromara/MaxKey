@@ -50,18 +50,19 @@ public class LdapSynchronizerService  implements ISynchronizerService{
                 synchronizer.getCredentials(),
                 synchronizer.getUserBasedn());
         ldapUtils.openConnection();
-        
-        ldapOrganizationService.setSynchronizer(synchronizer);
-        ldapUsersService.setSynchronizer(synchronizer);
-        
-        ldapOrganizationService.setLdapUtils(ldapUtils);
-        ldapUsersService.setLdapUtils(ldapUtils);
-        
-        
-        ldapOrganizationService.sync();
-        ldapUsersService.sync();
-        
-        ldapUtils.close();
+        try {
+            ldapOrganizationService.setSynchronizer(synchronizer);
+            ldapUsersService.setSynchronizer(synchronizer);
+
+            ldapOrganizationService.setLdapUtils(ldapUtils);
+            ldapUsersService.setLdapUtils(ldapUtils);
+
+            ldapOrganizationService.sync();
+            ldapUsersService.sync();
+        } finally {
+            //close the LDAP connection even if the organization or user sync fails
+            ldapUtils.close();
+        }
     }
 
     public LdapUsersService getLdapUsersService() {
