@@ -119,7 +119,7 @@ public class LdapOrganizationService extends AbstractSynchronizerService  implem
             }
             //ldapUtils.close();
         } catch (NamingException e) {
-            e.printStackTrace();
+            _logger.error("Sync Ldap Organizations error", e);
         }
         
     }
