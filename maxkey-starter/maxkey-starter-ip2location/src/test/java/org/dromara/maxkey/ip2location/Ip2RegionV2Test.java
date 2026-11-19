@@ -17,7 +17,7 @@
 
 package org.dromara.maxkey.ip2location;
 
-import org.dromara.maxkey.ip2location.offline.Ip2regionV2;
+import org.dromara.maxkey.ip2location.provider.Ip2regionV2;
 import org.lionsoul.ip2region.xdb.Searcher;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.StreamUtils;

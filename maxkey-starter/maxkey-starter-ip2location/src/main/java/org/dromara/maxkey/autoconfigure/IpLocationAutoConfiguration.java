@@ -17,10 +17,11 @@
 
 package org.dromara.maxkey.autoconfigure;
 
+import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.ip2location.IpLocation;
 import org.dromara.maxkey.ip2location.IpLocationParser;
-import org.dromara.maxkey.ip2location.offline.GeoIP2V4;
-import org.dromara.maxkey.ip2location.offline.Ip2regionV2;
+import org.dromara.maxkey.ip2location.provider.GeoIP2V4;
+import org.dromara.maxkey.ip2location.provider.Ip2regionV2;
 import org.lionsoul.ip2region.xdb.Searcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -71,26 +72,26 @@ public class IpLocationAutoConfiguration {
     
     /**
      * builder offline provider IpLocation
-     * @param offlineProvider
+     * @param provider
      * @return IpLocation
      */
-    public IpLocation builderOfflineProvider(String offlineProvider) {
-        IpLocation ipLocationOffLine = null;
+    public IpLocation builderIpLocationProvider(String provider) {
+        IpLocation ipLocation = null;
         try {
-            if("none".equalsIgnoreCase(offlineProvider)) {
+            if(StringUtils.isBlank(provider)|| "none".equalsIgnoreCase(provider)) {
                 //do nothing
-                _logger.debug("IpLocation offline Provider none");
-            }else if("Ip2Region".equalsIgnoreCase(offlineProvider)){
-                ipLocationOffLine = ip2regionV2();
-                _logger.debug("IpLocation offline Provider Ip2Region");
-            }else if("GeoIp2".equalsIgnoreCase(offlineProvider)){
-                ipLocationOffLine = geoIP2();
-                _logger.debug("IpLocation offline Provider GeoIp2");
+                _logger.debug("IpLocation Provider none");
+            }else if("Ip2Region".equalsIgnoreCase(provider)){
+            	ipLocation = ip2regionV2();
+                _logger.debug("IpLocation Provider Ip2Region");
+            }else if("GeoIp2".equalsIgnoreCase(provider)){
+            	ipLocation = geoIP2();
+                _logger.debug("IpLocation Provider GeoIp2");
             }
         }catch(Exception e) {
-            _logger.error("builder Offline IpLocation error", e);
+            _logger.error("builder  IpLocation error", e);
         }
-        return ipLocationOffLine;
+        return ipLocation;
     }
     
 
@@ -98,20 +99,18 @@ public class IpLocationAutoConfiguration {
     /**
      * IP转换区域地址解析
      * @param isIplocation 是否转换
-     * @param onlineProvider 在线转换实现提供商none/Ip138
-     * @param offlineProvider 离线转换实现提供商none/Ip2Region/GeoIp2
+     * @param provider 离线转换实现提供商none/Ip2Region/GeoIp2
      * @return IpLocationParser
      * @throws Exception
      */
     @Bean 
     IpLocationParser ipLocationParser(
             @Value("${maxkey.login.iplocation:true}") boolean isIplocation,
-            @Value("${maxkey.login.iplocation.online.provider:none}") String onlineProvider,
-            @Value("${maxkey.login.iplocation.offline.provider:Ip2Region}") String offlineProvider) throws Exception {
+            @Value("${maxkey.login.iplocation.provider:Ip2Region}") String provider) throws Exception {
         return new IpLocationParser(
                 isIplocation,
                 null,
-                builderOfflineProvider(offlineProvider)
+                builderIpLocationProvider(provider)
         );
     }
     
