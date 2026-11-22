@@ -121,7 +121,7 @@ public class JdbcAuthenticationRealm extends AbstractAuthenticationRealm {
                     }
                 }
             }catch(Exception e) {
-                _logger.debug("passwordvalid Exception : {}" , e);
+                _logger.debug("passwordvalid Exception : {}" , e.getMessage());
             }
         }
         _logger.debug("passwordvalid : {}" , passwordMatches);
