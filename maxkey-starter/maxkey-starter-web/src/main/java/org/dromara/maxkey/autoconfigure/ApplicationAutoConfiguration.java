@@ -58,7 +58,7 @@ public class ApplicationAutoConfiguration {
 
     @Bean
     PasswordReciprocal passwordReciprocal() {
-        return new PasswordReciprocal();
+        return PasswordReciprocal.getInstance();
     }
 
     @Bean
