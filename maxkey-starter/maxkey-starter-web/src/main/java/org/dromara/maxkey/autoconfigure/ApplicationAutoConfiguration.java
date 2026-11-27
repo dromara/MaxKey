@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.sql.DataSource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.constants.ConstsPersistence;
 import org.dromara.maxkey.crypto.keystore.KeyStoreLoader;
 import org.dromara.maxkey.crypto.password.LdapShaPasswordEncoder;
@@ -57,8 +58,15 @@ public class ApplicationAutoConfiguration {
     static final  Logger _logger = LoggerFactory.getLogger(ApplicationAutoConfiguration.class);
 
     @Bean
-    PasswordReciprocal passwordReciprocal() {
-        return PasswordReciprocal.getInstance();
+    PasswordReciprocal passwordReciprocal(
+    		@Value("${maxkey.crypto.reciprocal:}") String reciprocalKey) {
+    	if(StringUtils.length(reciprocalKey) < 22) {
+			_logger.warn("Production Environment [maxkey.crypto.reciprocal] The reciprocal key length is less than 22, which is not secure enough.");
+		}else {
+			PasswordReciprocal.setReciprocalKey(reciprocalKey);
+		}
+    	_logger.debug("init PasswordReciprocal .");
+    	return PasswordReciprocal.getInstance();
     }
 
     @Bean
