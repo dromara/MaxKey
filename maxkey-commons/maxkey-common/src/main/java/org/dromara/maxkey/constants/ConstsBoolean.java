@@ -17,6 +17,8 @@
 
 package org.dromara.maxkey.constants;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * Define int for boolean 0 false 1 true.
  * 
@@ -25,11 +27,20 @@ package org.dromara.maxkey.constants;
  */
 public class ConstsBoolean {
 
-    public static final int FALSE     = 0;
+    public static final int FALSE     	= 0;
+    
+    public static final int TRUE     	= 1;
+    
+    
+    public static final String YES     	= "yes";
 
-    public static  final int TRUE     = 1;
+    public static final String NO     	= "no";
+    
+    public static final String Y     	= "y";
 
-    private int value                 = FALSE;
+    public static final String N     	= "n";
+
+    private int value                	= FALSE;
 
     public ConstsBoolean() {
 
@@ -51,12 +62,17 @@ public class ConstsBoolean {
         return TRUE == value;
     }
     
-    public static boolean isYes(String value) {
-        return "YES".equalsIgnoreCase(value);
-    }
-
     public static boolean isFalse(int value) {
         return FALSE == value;
     }
+    
+    public static boolean isTrue(String value) {
+        return StringUtils.isNotBlank(value) && (YES.equalsIgnoreCase(value) || Y.equalsIgnoreCase(value));
+    }
+    
+    public static boolean isFalse(String value) {
+    	return !isTrue(value);
+    }
+    
 
 }

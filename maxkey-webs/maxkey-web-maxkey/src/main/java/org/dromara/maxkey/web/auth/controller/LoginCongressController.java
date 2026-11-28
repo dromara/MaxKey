@@ -25,6 +25,7 @@ import org.dromara.maxkey.authn.LoginCredential;
 import org.dromara.maxkey.authn.jwt.AuthTokenService;
 import org.dromara.maxkey.authn.provider.AbstractAuthenticationProvider;
 import org.dromara.maxkey.configuration.ApplicationConfig;
+import org.dromara.maxkey.constants.ConstsBoolean;
 import org.dromara.maxkey.constants.ConstsLoginType;
 import org.dromara.maxkey.crypto.Base64Utils;
 import org.dromara.maxkey.crypto.password.PasswordReciprocal;
@@ -101,6 +102,10 @@ public class LoginCongressController {
         }
         if (!secretMatched) {
             return new Message<>(Message.FAIL, "应用ID或Secret不正确");
+        }
+        //验证CongressRight权限
+        if (!ConstsBoolean.isTrue(app.getCongressRight()) ) {
+            return new Message<>(Message.FAIL, "应用无权限");
         }
 
         // 2.参数校验

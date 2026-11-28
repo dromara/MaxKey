@@ -118,6 +118,7 @@ public class AppsOAuth20Details extends Apps  implements Serializable {
     	detail.setIsExtendAttr(app.getIsExtendAttr());
     	detail.setResourceMgt(app.getResourceMgt());
     	detail.setOpenapiRight(app.getOpenapiRight());
+    	detail.setCongressRight(app.getCongressRight());
         
     	detail.clientSecret = baseClientDetails.getClientSecret();
     	detail.scope = StringUtils

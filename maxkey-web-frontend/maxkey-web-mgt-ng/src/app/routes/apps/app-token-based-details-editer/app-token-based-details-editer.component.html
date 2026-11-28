@@ -141,6 +141,20 @@
           </nz-form-item>
         </div>
         <div nz-row>
+          <nz-form-item style="width: 100%">
+            <nz-form-label [nzSm]="4" [nzXs]="24" nzFor="description">{{ 'mxk.text.description' | i18n }} </nz-form-label>
+            <nz-form-control [nzSm]="20" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid description!">
+              <input
+                [(ngModel)]="form.model.description"
+                [ngModelOptions]="{ standalone: true }"
+                nz-input
+                name="description"
+                id="description"
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-row>
           <nz-form-item>
             <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="status">{{ 'mxk.text.status' | i18n }} </nz-form-label>
             <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid status!">
@@ -393,16 +407,18 @@
           </nz-form-item>
         </div>
         <div nz-row>
-          <nz-form-item style="width: 100%">
-            <nz-form-label [nzSm]="4" [nzXs]="24" nzFor="description">{{ 'mxk.text.description' | i18n }} </nz-form-label>
-            <nz-form-control [nzSm]="20" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid description!">
-              <input
-                [(ngModel)]="form.model.description"
+          <nz-form-item>
+            <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="congressRight">{{ 'mxk.apps.congressRight' | i18n }}</nz-form-label>
+            <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid resourceMgt!">
+              <nz-select
+                [(ngModel)]="form.model.congressRight"
                 [ngModelOptions]="{ standalone: true }"
-                nz-input
-                name="description"
-                id="description"
-              />
+                name="congressRight"
+                id="congressRight"
+                >">
+                <nz-option nzValue="n" nzLabel="{{ 'mxk.text.no' | i18n }}" />
+                <nz-option nzValue="y" nzLabel="{{ 'mxk.text.yes' | i18n }}" />
+              </nz-select>
             </nz-form-control>
           </nz-form-item>
         </div>

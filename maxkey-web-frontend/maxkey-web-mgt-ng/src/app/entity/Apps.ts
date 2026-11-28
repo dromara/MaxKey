@@ -42,6 +42,7 @@ export class Apps extends BaseEntity {
   extendAttr!: string;
   resourceMgt!: string;
   openapiRight!: string;
+  congressRight!: string;
   userPropertys!: string;
   isSignature!: string;
   isAdapter!: string;

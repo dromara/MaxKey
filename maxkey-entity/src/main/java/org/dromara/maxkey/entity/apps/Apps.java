@@ -88,6 +88,7 @@ public class Apps extends JpaEntity implements Serializable {
     private int visible;
     
     //引导方式 IDP OR SP,default is IDP
+    @Column
     private String inducer;
     /*
      * vendor
@@ -165,9 +166,11 @@ public class Apps extends JpaEntity implements Serializable {
     @Column
     protected String description;
     @Column
-    String resourceMgt;
+    protected String resourceMgt;
     @Column
-    String openapiRight;
+    protected String openapiRight;
+    @Column
+    protected String congressRight;
     @Column
     private String instId;
     
@@ -584,6 +587,14 @@ public class Apps extends JpaEntity implements Serializable {
 
 	public void setOpenapiRight(String openapiRight) {
 		this.openapiRight = openapiRight;
+	}
+
+	public String getCongressRight() {
+		return congressRight;
+	}
+
+	public void setCongressRight(String congressRight) {
+		this.congressRight = congressRight;
 	}
 
 	public String getLogoutUrl() {
