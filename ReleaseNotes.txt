@@ -1,4 +1,37 @@
-﻿MaxKey v 4.2.0 2026/10/21
+﻿MaxKey v 4.2.1 2026/12/xx
+    *(MAXKEY-261201) springBoot升级至 4.2.0
+    *(MAXKEY-261202) 增加Congress信任和CongressRight权限，授权应用可以通过接口登录到maxkey
+    *(MAXKEY-261203) PasswordReciprocal增强，用户可以配置外部密钥，兼容老版本的密码
+    *(MAXKEY-261204) 增加生产环境默认密钥风险警示
+    *(MAXKEY-261205) SAML功能优化 opensaml 依赖 freemarker
+    *(MAXKEY-261206) IpLocation 优化
+    *(MAXKEY-261207) #280 fix: keep the LDAP sync running and logged when it hits errors by @vasipallyn
+    *(MAXKEY-261208) #279 fix: record user sync history with the UserInfo object type by @vasipallyn
+    *(MAXKEY-261209) MVC全局异常处理器
+    *(MAXKEY-261210) SAML优化，简化配置参数
+    *(MAXKEY-261211) 前端 npm install ng-zorro-antd@22.1.1
+    *(MAXKEY-261212) remove samlClient support
+    *(MAXKEY-261213) remove JwtLoginService KerberosProxy
+    *(MAXKEY-261214) remove CasRestV1  CasRestV1Endpoint and CasRestV1UsersEndpoint
+    *(MAXKEY-261215) remove wsfederation
+    *(MAXKEY-261216) dromara-anduin 依赖
+    *(MAXKEY-261217) 登录会话二次认证漏洞修复
+    *(MAXKEY-261218) 移除非必要代码和代码优化
+    *(MAXKEY-261219) 依赖项引用、更新和升级
+            springVersion                   7.1.0
+            springBootVersion               4.2.0
+            springDataVersion               4.2.0
+            springSecurityVersion           7.2.0
+            springcloudVersion              5.1.0
+            freemarkerVersion               2.3.35
+            log4jVersion                    2.26.1
+            slf4jVersion                    2.0.20
+            jacksonAnnotationsVersion       2.23
+            jacksonVersion                  2.23.0
+            jackson3Version                 3.3.0
+            nettyVersion                    4.2.21.Final
+
+MaxKey v 4.2.0 2026/10/21
     *(MAXKEY-261001) springBoot升级至 4.1.0
     *(MAXKEY-261002) 前端Angular升级至 22
     *(MAXKEY-261003) JDK升级至21
